@@ -8,9 +8,9 @@
 
 - **Última actualización**: 18-Jul-2026
 - **Fase activa**: Fase 0 — El corazón del juego (diseño con los niños)
-- **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más. Avance parcial: entrevistas de Maxi (2, semilla) y Sofía (8, estrella — cumplió 8 en junio 2026) completadas en `docs/perfil-jugadores.md`; **falta solo Nicole (5)** para cerrar la tarjeta. Además, adelanto visual de HE-D2 (sigue ⬜): estilo aprobado por el PO y sprites SVG de los 3 hermanos en `assets/fuentes_svg/personajes/`
-- **Próximo en cola**: HE-04 (base de audio, Dev — solo depende de HE-01 ✅). HE-D2 y HE-D3 esperan a HE-D1; HE-13 heredará la decisión pendiente sobre Recraft MCP para fondos
-- **Bloqueos**: ninguno formal; HE-D1 requiere tiempo presencial del PO con los niños — hasta completar la entrevista de Nicole (5) en `docs/perfil-jugadores.md`, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar. Pendientes derivados para HE-D2: confirmar insignia de cinturón de Sofía (propuesta: pony); la de Nicole sigue provisional (estrella)
+- **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más. Las 3 entrevistas de `docs/perfil-jugadores.md` tienen ya los datos esenciales para diseñar: Maxi (2, semilla) ✅, Sofía (8, estrella) ✅ y Nicole (5, brote) **parcial** — le faltan 3 campos que el PO completará: apps/juegos que usa, qué la asusta/aburre y sueños/mundos. Como dos de esos campos están en el alcance explícito de la tarjeta, HE-D1 no cumple aún el DoD (punto 1) y sigue 🔄. Además, adelanto visual de HE-D2 (sigue ⬜): sprites SVG de los 3 hermanos + celebraciones de Maxi y Sofía en `assets/fuentes_svg/personajes/`
+- **Próximo en cola**: HE-04 (base de audio, Dev — solo depende de HE-01 ✅). HE-D2 y HE-D3 esperan al cierre formal de HE-D1; HE-13 heredará la decisión pendiente sobre Recraft MCP para fondos
+- **Bloqueos**: ninguno formal; para cerrar HE-D1 el PO debe completar los 3 campos pendientes de la ficha de Nicole en `docs/perfil-jugadores.md` — hasta entonces, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar. Pendientes derivados para HE-D2: confirmar insignias de cinturón — pony para Sofía y **corazón rosa para Nicole** (ambas propuestas, sin confirmar); sprite `sofia_celebracion` pendiente de aprobación de Sofía/PO
 - **Avance general**: 2/39 tarjetas ✅ (HE-01 y HE-03 cerradas 18-Jul-2026; la deuda de HE-01 — conexión viva de godot-mcp — quedó saldada en HE-03)
 
 ---

@@ -38,15 +38,46 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
 
 ## Nicole (5 años) — nivel brote
 
-**Entrevista: pendiente**
+**Entrevista: 18-Jul-2026** *(parcial — el PO irá completando los campos pendientes)*
 
-- **Personalidad**:
-- **Animales y colores favoritos**:
-- **Personajes / historias que ama hoy**:
-- **Apps / juegos que ya usa**:
-- **Qué la asusta o aburre**:
-- **Gesto de celebración real**:
-- **Sueños / mundos que le fascinan**:
+- **Personalidad**: adorable y siempre contenta; muy popular en su colegio — elegida «mejor
+  compañera» todos los años; muy chistosa y divertida; muy solidaria, le gusta compartir.
+  La más extrovertida de los tres: hace amigos con facilidad y habla con otros niños sin
+  ningún miedo a hacer el ridículo. Muchísima imaginación; le encanta dibujar y pintar.
+  Muy femenina, muy cariñosa y regalona de su papá.
+- **Animales y colores favoritos**: caballos, ponys, gatitos y jirafas. Color favorito:
+  **rosa** (confirma su traje y su mochila rosa del sprite).
+- **Personajes / historias que ama hoy**: las guerreras k-pop, la princesa Sofía y las
+  princesas Disney.
+- **Apps / juegos que ya usa**: *pendiente*.
+- **Qué la asusta o aburre**: *pendiente*.
+- **Gesto de celebración real**: el corazón coreano (dedos índice y pulgar cruzados) con
+  una expresión tierna, como lo hacen las coreanas.
+- **Sueños / mundos que le fascinan**: *pendiente*.
+
+**Implicaciones de diseño**:
+
+- **Dibujar y pintar es su territorio**: los minijuegos de expresión libre (p. ej. «Pinta
+  con Coco» del Planeta Arcoíris) son su gancho seguro; darle pinceles, colores y la
+  posibilidad de guardar/mostrar sus creaciones.
+- **Social y sin miedo al ridículo**: disfrutará los momentos de voz, canto y baile; los
+  anfitriones de planeta pueden conversarle mucho — la interacción social del juego
+  (saludar, ayudar a los habitantes) conecta con su solidaridad.
+- **Compartir como mecánica emocional**: escenas donde ayudar o regalar algo a otro
+  personaje la representan (sinergia con el Planeta Corazón de emociones y empatía).
+- **Estética**: rosa como color dominante de sus variantes; princesas y realeza mágica
+  como inspiración de ambientes (sin copiar IP); las guerreras k-pop son gusto compartido
+  con Sofía — la música k-pop-ish del Planeta Melodía les sirve a ambas.
+- **Temas de contenido**: caballos/ponys, gatitos y jirafas en sus variantes de minijuegos.
+- **Su celebración en el juego**: replicar su gesto real — corazón coreano con los dedos y
+  expresión tierna (combina con su sonrisita pícara del sprite).
+- **Ojo con la equidad**: Sofía siente celos de ella — celebraciones y recompensas siempre
+  equivalentes entre ambas, sin comparaciones (ver ficha de Sofía).
+- **Insignia del cinturón (propuesta)**: un **corazón rosa** — une su gesto del corazón
+  coreano con su personalidad cariñosa, y la distingue del pony propuesto para Sofía.
+  Pendiente de confirmación del PO/Nicole.
+- *Pendientes por completar*: apps/juegos que usa (afinará mecánicas de su nivel brote),
+  miedos/aburrimientos (qué evitar) y sueños (temas de sus mundos).
 
 ---
 
