@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
+  <!-- Nicole (5 anios) - pose base: saludando alegre, traje blanco con rosa -->
+  <defs>
+    <radialGradient id="brillo_estrella" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE38A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFE38A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- sombra en el suelo -->
+  <ellipse cx="256" cy="722" rx="118" ry="17" fill="#2B3350" opacity="0.12"/>
+
+  <!-- pelo trasero: largo y ondulado cayendo por la espalda -->
+  <path d="M 176 150 Q 140 210 152 300 Q 142 360 160 420 Q 150 460 174 480 Q 196 470 192 430
+           L 320 430 Q 316 470 338 480 Q 362 460 352 420 Q 370 360 360 300 Q 372 210 336 150 Z"
+        fill="#3B2A20" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- brazo derecho de Nicole (izquierda del que mira): saludando arriba -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 200 350 L 148 290 L 130 216" stroke="#2B3350" stroke-width="42"/>
+    <path d="M 200 350 L 148 290 L 130 216" stroke="#F7F9FC" stroke-width="30"/>
+    <path d="M 140 274 L 134 252" stroke="#F26CA8" stroke-width="28"/>
+  </g>
+  <circle cx="126" cy="204" r="21" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- brazo izquierdo: mano en la cadera -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 314 350 L 362 408 L 334 462" stroke="#2B3350" stroke-width="42"/>
+    <path d="M 314 350 L 362 408 L 334 462" stroke="#F7F9FC" stroke-width="30"/>
+    <path d="M 352 420 L 346 432" stroke="#F26CA8" stroke-width="28"/>
+  </g>
+  <circle cx="332" cy="468" r="20" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- piernas -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M 220 510 L 220 640" stroke="#2B3350" stroke-width="46"/>
+    <path d="M 220 510 L 220 640" stroke="#F7F9FC" stroke-width="34"/>
+    <path d="M 292 510 L 292 640" stroke="#2B3350" stroke-width="46"/>
+    <path d="M 292 510 L 292 640" stroke="#F7F9FC" stroke-width="34"/>
+  </g>
+  <!-- rodilleras rosadas -->
+  <circle cx="220" cy="588" r="16" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="292" cy="588" r="16" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="215" cy="583" r="5.5" fill="#FAD1E3"/>
+  <circle cx="287" cy="583" r="5.5" fill="#FAD1E3"/>
+
+  <!-- botas -->
+  <g>
+    <rect x="189" y="634" width="64" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="189" y="675" width="64" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+    <rect x="199" y="650" width="44" height="10" rx="5" fill="#FAD1E3"/>
+    <rect x="259" y="634" width="64" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="259" y="675" width="64" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+    <rect x="269" y="650" width="44" height="10" rx="5" fill="#FAD1E3"/>
+  </g>
+
+  <!-- faldita del traje -->
+  <path d="M 176 486 L 336 486 L 352 540 L 160 540 Z" fill="#F26CA8" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M 190 492 L 202 534 M 232 492 L 238 534 M 274 492 L 280 534 M 316 492 L 322 534"
+        fill="none" stroke="#D94F8E" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- torso -->
+  <path d="M 200 330 L 312 330 Q 332 330 334 352 L 342 498 L 170 498 L 178 352 Q 180 330 200 330 Z"
+        fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <!-- franjas rosadas de hombros -->
+  <path d="M 200 332 L 240 332 L 232 372 L 186 372 Z" fill="#F26CA8"/>
+  <path d="M 312 332 L 272 332 L 280 372 L 326 372 Z" fill="#F26CA8"/>
+  <!-- estrella del pecho con brillo -->
+  <circle cx="256" cy="406" r="58" fill="url(#brillo_estrella)"/>
+  <g transform="translate(256,406) scale(0.94)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#FFCB3D" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+    <polygon points="0,-24 5.9,-8.1 22.9,-7.4 9.5,3.1 14.1,19.5 0,10 -14.1,19.5 -9.5,3.1 -22.9,-7.4 -5.9,-8.1"
+             fill="#FFE38A"/>
+  </g>
+
+  <!-- cinturon con insignia provisional (estrella, se personaliza tras su entrevista) -->
+  <rect x="172" y="480" width="168" height="26" rx="12" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="256" cy="493" r="19" fill="#FDEFF5" stroke="#2B3350" stroke-width="5"/>
+  <g transform="translate(256,494) scale(0.26)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#F26CA8"/>
+  </g>
+
+  <!-- cuello -->
+  <rect x="218" y="306" width="76" height="26" rx="12" fill="#E9D3DE" stroke="#2B3350" stroke-width="5"/>
+
+  <!-- cabeza -->
+  <circle cx="256" cy="200" r="88" fill="#F2C29B" stroke="#2B3350" stroke-width="6"/>
+  <!-- pelo delantero: ondas y flequillo con diadema rosa -->
+  <path d="M 168 202 Q 162 122 232 104 Q 256 90 286 106 Q 350 122 344 202
+           Q 336 180 318 178 Q 324 160 306 156 Q 300 170 282 166 Q 286 150 268 148 Q 258 162 240 160
+           Q 240 144 224 148 Q 222 164 206 170 Q 198 158 188 166 Q 192 182 168 202 Z"
+        fill="#3B2A20" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M 174 168 Q 256 120 338 168" fill="none" stroke="#F26CA8" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="338" cy="166" r="10" fill="#FAD1E3" stroke="#2B3350" stroke-width="4"/>
+  <!-- ojos grandes con pestanias -->
+  <ellipse cx="222" cy="212" rx="15" ry="20" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <ellipse cx="290" cy="212" rx="15" ry="20" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <circle cx="224" cy="215" r="8.5" fill="#5B3A21"/>
+  <circle cx="288" cy="215" r="8.5" fill="#5B3A21"/>
+  <circle cx="226" cy="218" r="4" fill="#2B1B10"/>
+  <circle cx="286" cy="218" r="4" fill="#2B1B10"/>
+  <circle cx="221" cy="210" r="2.8" fill="#FFFFFF"/>
+  <circle cx="283" cy="210" r="2.8" fill="#FFFFFF"/>
+  <g stroke="#2B3350" stroke-width="4" stroke-linecap="round">
+    <line x1="208" y1="196" x2="202" y2="190"/>
+    <line x1="216" y1="192" x2="212" y2="185"/>
+    <line x1="304" y1="196" x2="310" y2="190"/>
+    <line x1="296" y1="192" x2="300" y2="185"/>
+  </g>
+  <!-- cejas -->
+  <path d="M 208 184 Q 222 177 236 184" fill="none" stroke="#3B2A20" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 276 184 Q 290 177 304 184" fill="none" stroke="#3B2A20" stroke-width="6" stroke-linecap="round"/>
+  <!-- nariz -->
+  <path d="M 251 238 Q 256 243 261 238" fill="none" stroke="#D99A6C" stroke-width="5" stroke-linecap="round"/>
+  <!-- sonrisa abierta -->
+  <path d="M 230 256 Q 256 284 282 256 Q 256 266 230 256 Z" fill="#8A4436" stroke="#2B3350" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M 236 258 Q 256 264 276 258 L 272 254 Q 256 259 240 254 Z" fill="#FFFFFF"/>
+  <!-- mejillas -->
+  <ellipse cx="192" cy="242" rx="12" ry="8" fill="#F79FAE" opacity="0.55"/>
+  <ellipse cx="320" cy="242" rx="12" ry="8" fill="#F79FAE" opacity="0.55"/>
+
+  <!-- casco burbuja -->
+  <circle cx="256" cy="188" r="138" fill="#FFD9EA" fill-opacity="0.14" stroke="#F0A8C8" stroke-width="7"/>
+  <path d="M 158 122 Q 202 62 270 66" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.55"/>
+  <!-- estrellita antena -->
+  <line x1="256" y1="52" x2="256" y2="30" stroke="#2B3350" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(256,18) scale(0.30)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#FFCB3D" stroke="#2B3350" stroke-width="10" stroke-linejoin="round"/>
+  </g>
+</svg>

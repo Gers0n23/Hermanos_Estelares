@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
+  <!-- Sofia (7 anios) - pose base: hermana mayor segura, brazos cruzados, traje rosa -->
+  <defs>
+    <radialGradient id="brillo_estrella" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE38A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFE38A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- sombra en el suelo -->
+  <ellipse cx="256" cy="734" rx="118" ry="16" fill="#2B3350" opacity="0.12"/>
+
+  <!-- pelo trasero: rizado con mucho volumen cayendo por la espalda -->
+  <g fill="#33241B" stroke="#2B3350" stroke-width="6">
+    <circle cx="168" cy="180" r="42"/>
+    <circle cx="344" cy="180" r="42"/>
+    <circle cx="150" cy="250" r="40"/>
+    <circle cx="362" cy="250" r="40"/>
+    <circle cx="146" cy="322" r="38"/>
+    <circle cx="366" cy="322" r="38"/>
+    <circle cx="152" cy="392" r="36"/>
+    <circle cx="360" cy="392" r="36"/>
+    <circle cx="166" cy="452" r="32"/>
+    <circle cx="346" cy="452" r="32"/>
+    <path d="M 168 150 Q 256 96 344 150 L 366 340 L 346 470 L 166 470 L 146 340 Z" stroke="none"/>
+  </g>
+
+  <!-- piernas (largas, es la mas alta) -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M 222 512 L 222 656" stroke="#2B3350" stroke-width="46"/>
+    <path d="M 222 512 L 222 656" stroke="#F26CA8" stroke-width="34"/>
+    <path d="M 290 512 L 290 656" stroke="#2B3350" stroke-width="46"/>
+    <path d="M 290 512 L 290 656" stroke="#F26CA8" stroke-width="34"/>
+  </g>
+  <!-- rodilleras -->
+  <circle cx="222" cy="598" r="16" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="290" cy="598" r="16" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="217" cy="593" r="5.5" fill="#FAD1E3"/>
+  <circle cx="285" cy="593" r="5.5" fill="#FAD1E3"/>
+
+  <!-- botas -->
+  <g>
+    <rect x="191" y="650" width="64" height="58" rx="15" fill="#F26CA8" stroke="#2B3350" stroke-width="6"/>
+    <rect x="191" y="689" width="64" height="19" rx="9" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+    <rect x="201" y="665" width="44" height="10" rx="5" fill="#FAD1E3"/>
+    <rect x="257" y="650" width="64" height="58" rx="15" fill="#F26CA8" stroke="#2B3350" stroke-width="6"/>
+    <rect x="257" y="689" width="64" height="19" rx="9" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+    <rect x="267" y="665" width="44" height="10" rx="5" fill="#FAD1E3"/>
+  </g>
+
+  <!-- torso: traje rosa -->
+  <path d="M 202 328 L 310 328 Q 330 328 332 350 L 340 504 L 172 504 L 180 350 Q 182 328 202 328 Z"
+        fill="#F26CA8" stroke="#2B3350" stroke-width="6"/>
+  <!-- panel claro central -->
+  <path d="M 218 332 L 294 332 L 300 500 L 212 500 Z" fill="#FBE3EE"/>
+  <!-- franjas de hombros -->
+  <path d="M 202 330 L 240 330 L 234 368 L 188 368 Z" fill="#FFFFFF"/>
+  <path d="M 310 330 L 272 330 L 278 368 L 324 368 Z" fill="#FFFFFF"/>
+  <!-- estrella del pecho con brillo -->
+  <circle cx="256" cy="398" r="56" fill="url(#brillo_estrella)"/>
+  <g transform="translate(256,398) scale(0.9)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#FFCB3D" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+    <polygon points="0,-24 5.9,-8.1 22.9,-7.4 9.5,3.1 14.1,19.5 0,10 -14.1,19.5 -9.5,3.1 -22.9,-7.4 -5.9,-8.1"
+             fill="#FFE38A"/>
+  </g>
+
+  <!-- cinturon con insignia provisional (estrella, se personaliza tras su entrevista) -->
+  <rect x="174" y="486" width="164" height="26" rx="12" fill="#FFFFFF" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="256" cy="499" r="19" fill="#FDEFF5" stroke="#2B3350" stroke-width="5"/>
+  <g transform="translate(256,500) scale(0.26)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#D94F8E"/>
+  </g>
+
+  <!-- brazos cruzados de hermana mayor (encima del torso) -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 314 350 Q 306 420 226 442" stroke="#2B3350" stroke-width="44"/>
+    <path d="M 314 350 Q 306 420 226 442" stroke="#F26CA8" stroke-width="32"/>
+    <path d="M 198 350 Q 206 418 286 440" stroke="#2B3350" stroke-width="44"/>
+    <path d="M 198 350 Q 206 418 286 440" stroke="#F26CA8" stroke-width="32"/>
+    <path d="M 208 380 L 210 394" stroke="#FFFFFF" stroke-width="30"/>
+    <path d="M 304 380 L 302 394" stroke="#FFFFFF" stroke-width="30"/>
+  </g>
+  <circle cx="222" cy="444" r="19" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="290" cy="442" r="19" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- cuello -->
+  <rect x="220" y="300" width="72" height="26" rx="12" fill="#E9D3DE" stroke="#2B3350" stroke-width="5"/>
+
+  <!-- cabeza -->
+  <circle cx="256" cy="192" r="82" fill="#E8B58C" stroke="#2B3350" stroke-width="6"/>
+  <!-- aretes -->
+  <circle cx="176" cy="204" r="6" fill="#FFCB3D" stroke="#2B3350" stroke-width="3"/>
+  <circle cx="336" cy="204" r="6" fill="#FFCB3D" stroke="#2B3350" stroke-width="3"/>
+  <!-- pelo delantero rizado con flequillo -->
+  <path d="M 176 196 Q 168 118 240 102 Q 258 92 280 104 Q 346 116 336 196
+           Q 330 176 312 174 Q 318 158 300 154 Q 294 168 276 164 Q 280 148 262 146 Q 252 160 236 158
+           Q 236 142 220 146 Q 218 162 202 168 Q 196 156 186 164 Q 190 180 176 196 Z"
+        fill="#33241B" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
+  <g fill="#33241B" stroke="#2B3350" stroke-width="5">
+    <circle cx="180" cy="140" r="22"/>
+    <circle cx="216" cy="112" r="24"/>
+    <circle cx="258" cy="102" r="24"/>
+    <circle cx="298" cy="112" r="24"/>
+    <circle cx="332" cy="140" r="22"/>
+  </g>
+  <!-- audifonos rosados sobre el pelo -->
+  <path d="M 176 160 Q 256 104 336 160" fill="none" stroke="#F26CA8" stroke-width="14" stroke-linecap="round"/>
+  <ellipse cx="176" cy="196" rx="16" ry="22" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <ellipse cx="336" cy="196" rx="16" ry="22" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <ellipse cx="176" cy="196" rx="7" ry="12" fill="#FAD1E3"/>
+  <ellipse cx="336" cy="196" rx="7" ry="12" fill="#FAD1E3"/>
+  <!-- ojos con pestanias -->
+  <ellipse cx="224" cy="202" rx="14" ry="19" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <ellipse cx="288" cy="202" rx="14" ry="19" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <circle cx="226" cy="205" r="8" fill="#4A2C18"/>
+  <circle cx="286" cy="205" r="8" fill="#4A2C18"/>
+  <circle cx="228" cy="208" r="4" fill="#2B1B10"/>
+  <circle cx="284" cy="208" r="4" fill="#2B1B10"/>
+  <circle cx="223" cy="200" r="2.6" fill="#FFFFFF"/>
+  <circle cx="281" cy="200" r="2.6" fill="#FFFFFF"/>
+  <g stroke="#2B3350" stroke-width="4" stroke-linecap="round">
+    <line x1="211" y1="187" x2="205" y2="181"/>
+    <line x1="218" y1="183" x2="214" y2="176"/>
+    <line x1="301" y1="187" x2="307" y2="181"/>
+    <line x1="294" y1="183" x2="298" y2="176"/>
+  </g>
+  <!-- cejas -->
+  <path d="M 210 176 Q 224 169 238 176" fill="none" stroke="#33241B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 274 176 Q 288 169 302 176" fill="none" stroke="#33241B" stroke-width="6" stroke-linecap="round"/>
+  <!-- nariz -->
+  <path d="M 251 228 Q 256 233 261 228" fill="none" stroke="#C98F63" stroke-width="5" stroke-linecap="round"/>
+  <!-- sonrisa segura y calida -->
+  <path d="M 230 248 Q 256 272 282 248" fill="none" stroke="#2B3350" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 276 246 Q 284 250 284 258" fill="none" stroke="#2B3350" stroke-width="5" stroke-linecap="round"/>
+  <!-- mejillas -->
+  <ellipse cx="196" cy="232" rx="11" ry="8" fill="#E88A96" opacity="0.5"/>
+  <ellipse cx="316" cy="232" rx="11" ry="8" fill="#E88A96" opacity="0.5"/>
+
+  <!-- casco burbuja -->
+  <circle cx="256" cy="182" r="132" fill="#FFD9EA" fill-opacity="0.14" stroke="#F0A8C8" stroke-width="7"/>
+  <path d="M 162 118 Q 204 60 268 62" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.55"/>
+  <!-- estrellita antena -->
+  <line x1="256" y1="52" x2="256" y2="30" stroke="#2B3350" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(256,18) scale(0.30)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#FFCB3D" stroke="#2B3350" stroke-width="10" stroke-linejoin="round"/>
+  </g>
+</svg>
