@@ -1,0 +1,30 @@
+; Los Hermanos Estelares — proyecto Godot 4
+; Config base según docs/stack-tecnico.md §1:
+; 1280x720, stretch canvas_items + expand, renderer Mobile, input unificado tactil+mouse.
+
+config_version=5
+
+[application]
+
+config/name="Los Hermanos Estelares"
+config/description="Tres hermanos ayudan a la estrella Estelita a recuperar sus destellos visitando planetas con minijuegos. Un regalo para Maxi, Nicole y Sofia."
+run/main_scene="res://escenas/nucleo/placeholder.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+
+renderer/rendering_method="mobile"
+renderer/rendering_method.mobile="mobile"

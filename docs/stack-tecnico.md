@@ -15,7 +15,7 @@
 | Resolución base | 1280×720, stretch `canvas_items` + aspect `expand` | Se adapta a cualquier tablet/monitor sin deformar |
 | Entrada | Unificada táctil+mouse (`emulate_mouse_from_touch` y viceversa) | Un solo código de input para tablet y PC |
 
-**Estado**: Godot **no está instalado** aún en esta máquina (verificado 17-Jul-2026). Instalación = primera tarjeta del tablero. Recomendado: `winget install GodotEngine.GodotEngine` o descarga directa (versión estándar, no .NET).
+**Estado**: Godot **4.7.1 stable instalado** vía winget el 18-Jul-2026 (versión estándar, no .NET). Ejecutable de consola: `C:\Users\gcordero\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.1-stable_win64_console.exe` (misma ruta configurada como `GODOT_PATH` en `.mcp.json`). Proyecto base (`project.godot`) creado en la raíz con la config de esta tabla; verificado ejecutando en headless y en ventana (Vulkan Forward Mobile) sin errores.
 
 ## 2. Arquitectura del juego (Godot)
 
