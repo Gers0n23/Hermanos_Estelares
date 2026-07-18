@@ -8,10 +8,10 @@
 
 - **Última actualización**: 18-Jul-2026
 - **Fase activa**: Fase 0 — El corazón del juego (diseño con los niños)
-- **En curso (WIP)**: HE-D1 (PO) y HE-01 (Dev) — 2/2, límite alcanzado
-- **Próximo en cola**: HE-D2 y HE-D3 (ambas dependen de HE-D1)
+- **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más
+- **Próximo en cola**: HE-03 (pipeline de assets, Dev — solo depende de HE-01 ✅ y ejercita la conexión viva de godot-mcp); alternativa HE-04 (base de audio). HE-D2 y HE-D3 esperan a HE-D1
 - **Bloqueos**: ninguno formal; HE-D1 requiere tiempo presencial del PO con los niños — hasta que se registre `docs/perfil-jugadores.md`, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar
-- **Avance general**: 0/39 tarjetas ✅ (planificación completada 17-Jul-2026; herramientas IA investigadas y Fase 0 de diseño agregada 18-Jul-2026)
+- **Avance general**: 1/39 tarjetas ✅ (HE-01 cerrada 18-Jul-2026; nota: la conexión viva del MCP se ejercitará en HE-03/HE-05)
 
 ---
 
