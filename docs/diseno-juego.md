@@ -3,7 +3,7 @@
 > **Fuente de verdad del diseño.** Cualquier implementación debe respetar lo que dice este documento.
 > Si el diseño cambia (los niños crecen, un minijuego no funciona en la práctica), se actualiza aquí primero.
 
-- **Última actualización**: 17-Jul-2026
+- **Última actualización**: 18-Jul-2026
 - **Plataformas**: Táctil-primero (tablet Android), jugable también en PC con mouse
 - **Motor**: Godot 4.x — 2D exclusivamente
 - **Idioma del juego**: Español (narración por voz, mínimo texto en pantalla)
@@ -15,25 +15,42 @@
 
 ### La historia
 
-Una noche, mientras los tres hermanos miran el cielo desde su jardín, una pequeña estrella cae
-cerca de su casa. Se llama **Estelita**, y está triste: al caer perdió sus **destellos** —
-las chispas de luz que hacían brillar su constelación.
+Una tarde cualquiera, los tres hermanos juegan en el **living de su casa** — y en su
+imaginación, donde todo es posible, comienza la aventura: una estrellita fugaz choca
+contra la ventana. Es **Estelita**, y trae una noticia increíble: el **Coleccionauta**,
+un alienígena chistoso que recorre la galaxia coleccionando «las cosas más increíbles
+del universo», acaba de llevarse a **papá** — le pareció el papá más increíble de todos
+y quiere quedárselo para su colección.
 
-Los hermanos deciden ayudarla. Estelita los convierte en los **Hermanos Estelares**
-y los lleva en su nave-estrella a visitar **planetas divertidos**, donde los destellos
-quedaron escondidos. En cada planeta viven aventuras, aprenden cosas nuevas y recuperan
-destellos. Cada destello recuperado **enciende una estrella en el cielo de su casa**:
-el mapa del progreso es literalmente el cielo nocturno iluminándose.
+Estelita los convierte en los **Hermanos Estelares**: les entrega trajes espaciales con
+estrellas de poder y su nave-estrella… a la que le faltan piezas para un viaje tan largo.
+Para llegar al lejano planeta del Coleccionauta deberán visitar **planetas divertidos**,
+aprender nuevas habilidades en cada uno (colores, números, letras, música, emociones) y
+ganarse la **pieza de la nave** que cada mundo guarda. Los minijuegos otorgan **destellos**,
+la energía estelar que hace brillar los trajes y volar la nave.
+
+En el planeta final no hay batalla: los hermanos descubren que el Coleccionauta no es
+malo — solo está solito y nunca aprendió a pedir las cosas. Le enseñan que **los amigos
+no se coleccionan: se hacen**, rescatan a papá entre risas y vuelven a casa con un amigo
+nuevo que promete visitarlos. Y en el living, papá los abraza y los llama a comer: la
+aventura queda lista para jugarse otra vez.
 
 ### El mensaje
 
-El hilo narrativo enseña, sin sermones, que **ayudar a otros, intentarlo juntos y aprender
-cosas nuevas hace que el mundo brille más**. Cada planeta refuerza además un tema concreto
-(colores, números, emociones... ver §4).
+El hilo narrativo enseña, sin sermones, que **juntos son capaces de cosas enormes**:
+tres hermanos que se organizan, aprenden y no se rinden pueden cruzar la galaxia y
+rescatar a su papá. Y de regalo, la lección del final: los amigos se hacen pidiendo,
+compartiendo y jugando. Cada planeta refuerza además un tema concreto (colores,
+números, emociones... ver §4).
 
 ### Tono
 
-- Cálido, tierno y celebratorio. **Nunca hay derrota, castigo ni presión de tiempo** para los pequeños.
+- Cálido, celebratorio y **de aventura empoderadora**: los niños son los héroes, nunca las víctimas.
+- **El secuestro jamás da miedo**: todo ocurre en su propio juego imaginado, el Coleccionauta es
+  cómico y torpe, y papá aparece en video-llamadas divertidas durante el viaje, siempre tranquilo
+  y haciendo chistes («¡estoy bien! aunque este alien no se sabe ninguna adivinanza…»).
+- **Nunca hay derrota, castigo ni presión de tiempo** para los pequeños; la misión avanza al ritmo
+  de ellos — jamás un «apúrate que papá espera».
 - Equivocarse siempre recibe ánimo ("¡casi! inténtalo otra vez") y acertar recibe fiesta (confeti, estrellitas, sonidos alegres).
 - Humor físico simple: animales que estornudan, planetas que hacen cosquillas, rebotes exagerados.
 
@@ -45,9 +62,9 @@ cosas nuevas hace que el mundo brille más**. Cada planeta refuerza además un t
 
 | Personaje | Edad | Rol en la historia | Perfil de juego |
 |---|---|---|---|
-| **Maxi** | 2 años | El pequeño explorador valiente. Su curiosidad encuentra destellos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
-| **Nicole** | 5 años | La artista del grupo. Con imaginación y color resuelve lo que parece imposible. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
-| **Sofía** | 8 años | La hermana mayor, líder e ingeniosa. Lee las pistas y guía la misión. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
+| **Maxi** | 2 años | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
+| **Nicole** | 5 años | La embajadora artista: se hace amiga de los habitantes de cada planeta sin ningún miedo, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
+| **Sofía** | 8 años | La líder de la misión: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
 
 Cada personaje tiene **la misma aventura con distinta profundidad**: el minijuego es el mismo
 en lo visual y narrativo, pero su dificultad se adapta al perfil seleccionado (ver §5).
@@ -60,8 +77,10 @@ proporciones redondas. Cada uno con un gesto característico de celebración.
 
 ### Personajes de apoyo
 
-- **Estelita** — la estrella guía. Narradora del juego: da instrucciones por voz, anima, celebra. Flota en pantalla como ayudante permanente; tocarla repite la instrucción.
-- **Habitantes de los planetas** — un personaje anfitrión por planeta (ver §4), que da contexto a los minijuegos ("¡mis frutas se mezclaron, ayúdame a ordenarlas por color!").
+- **Estelita** — la estrellita guía (no es parte de la familia: es el personaje mágico del juego imaginado). Choca contra la ventana del living, les entrega los trajes con estrellas de poder y pilotea la nave. Narradora del juego: da instrucciones por voz, anima, celebra. Flota en pantalla como ayudante permanente; tocarla repite la instrucción.
+- **El Coleccionauta** *(nombre provisional — validar con los niños en HE-D2)* — el alienígena coleccionista. Chistoso, torpe y para nada malvado: colecciona «las cosas más increíbles del universo» y se llevó a papá para su colección porque le pareció increíble (y porque está solito). En el final aprende a pedir las cosas y se vuelve amigo de la familia.
+- **Papá** — el secuestrado más feliz de la galaxia. Aparece en video-llamadas cómicas desde la colección del alien, siempre tranquilo y bromista; su rescate es la gran escena final. *(Idealmente con la voz real de papá — ver P2.)*
+- **Habitantes de los planetas** — un personaje anfitrión por planeta (ver §4), que da contexto a los minijuegos ("¡mis frutas se mezclaron, ayúdame a ordenarlas por color!") y guarda la pieza de la nave de su mundo.
 
 ---
 
@@ -70,16 +89,18 @@ proporciones redondas. Cada uno con un gesto característico de celebración.
 ```
 Pantalla de título (tocar para empezar)
    └── Selección de personaje (3 retratos grandes — define el perfil de dificultad)
-         └── Mapa Estelar (hub): la nave navega entre planetas
+         └── Mapa Estelar (hub): la nave navega entre planetas, rumbo al planeta del Coleccionauta
                ├── Planeta 1..6 (cada uno con 3-4 minijuegos + 1 escena de historia)
-               │      └── Minijuego → celebración → destello recuperado → vuelta al mapa
-               └── El cielo de casa (pantalla de progreso: estrellas encendidas)
+               │      └── Minijuego → celebración → destellos ganados → vuelta al mapa
+               │      └── Planeta completado → escena de historia → pieza de la nave
+               ├── El hangar estelar (pantalla de progreso: la nave armándose pieza a pieza)
+               └── Planeta final: el rescate de papá (se abre al reunir las piezas)
 Zona de padres (acceso con candado: ajustes, progreso por hijo, volumen)
 ```
 
 - **Sesiones cortas**: un minijuego completo dura 2-5 minutos. Siempre se puede salir al mapa sin perder nada.
-- **Progreso por perfil**: cada hermano tiene su propio avance (destellos y estrellas encendidas). Se guarda automáticamente, sin preguntar.
-- **Desbloqueo generoso**: los planetas se desbloquean en orden pero con muy poca exigencia (1-2 destellos). La progresión motiva, no frustra.
+- **Progreso por perfil**: cada hermano tiene su propio avance (destellos y piezas de la nave). Se guarda automáticamente, sin preguntar.
+- **Desbloqueo generoso**: los planetas se desbloquean en orden pero con muy poca exigencia (1-2 destellos). La progresión motiva, no frustra. El planeta final se abre al reunir las piezas de la nave.
 
 ---
 
@@ -135,7 +156,8 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 ### Escena de historia por planeta
 
 Al recuperar todos los destellos de un planeta, se reproduce una **escena animada corta**
-(15-30 s, sin interacción) donde el anfitrión agradece y Estelita brilla más.
+(15-30 s, sin interacción) donde el anfitrión agradece, entrega la **pieza de la nave**
+de su mundo y, de regalo, llega una video-llamada cómica de papá desde la colección.
 Son la recompensa narrativa y el "pegamento" del guion.
 
 ---

@@ -9,7 +9,7 @@ Esta guía orienta a Claude Code al trabajar en este repositorio.
 
 ## Descripción del proyecto
 
-**Los Hermanos Estelares** es un juego 2D en **Godot 4 (GDScript)** donde tres hermanos ayudan a la estrella Estelita a recuperar sus destellos visitando planetas con minijuegos educativos. Cada niño selecciona su personaje y eso adapta la dificultad de los mismos minijuegos a su edad (niveles semilla/brote/estrella). Táctil-primero (tablet Android), jugable en PC; arte cartoon vectorial (SVG); 100% offline, sin texto obligatorio (todo narrado por voz).
+**Los Hermanos Estelares** es un juego 2D en **Godot 4 (GDScript)** donde tres hermanos, jugando en el living de su casa, imaginan una aventura espacial: guiados por la estrellita Estelita, visitan planetas con minijuegos educativos para reunir las piezas de su nave y rescatar a papá, "secuestrado" por un alienígena coleccionista chistoso. Cada niño selecciona su personaje y eso adapta la dificultad de los mismos minijuegos a su edad (niveles semilla/brote/estrella). Táctil-primero (tablet Android), jugable en PC; arte cartoon vectorial (SVG); 100% offline, sin texto obligatorio (todo narrado por voz).
 
 Documentos fuente de verdad — **léelos antes de implementar cualquier cosa**:
 
