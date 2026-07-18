@@ -68,7 +68,7 @@ Investigación realizada el 18-Jul-2026 (fuentes al pie). El ecosistema Godot+Cl
 ### 4.1 Capa de conocimiento — skills de GDScript
 
 - **[GodotPrompter](https://github.com/jame581/GodotPrompter)** (MIT, gratuito, activo): 54 skills de mejores prácticas Godot 4.3+ que Claude carga bajo demanda — incluye justo lo que este juego necesita: `2d-essentials`, `animation-system` (AnimationPlayer/AnimationTree), `audio-system` (buses, pooling de SFX), `save-load`, controles de jugador, UI responsiva y HUD.
-- Instalación: `claude plugins marketplace add jame581/skillsmith` + `claude plugins install godot-prompter@skillsmith` (tarjeta HE-01).
+- Instalación: `claude plugin marketplace add jame581/skillsmith` + `claude plugin install godot-prompter@skillsmith` (subcomando en singular; verificado e **instalado el 18-Jul-2026** durante la PoC).
 - Reduce el riesgo de "GDScript inventado": el agente sigue patrones idiomáticos verificados en vez de memoria.
 
 ### 4.2 Capa de control — MCP del editor Godot

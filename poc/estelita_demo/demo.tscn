@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://poc0estelita01"]
+
+[ext_resource type="Script" path="res://estelita.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://estelita.svg" id="2_svg"]
+
+[sub_resource type="Gradient" id="grad_noche"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.09, 0.09, 0.25, 1, 0.23, 0.17, 0.45, 1)
+
+[sub_resource type="GradientTexture2D" id="fondo_cielo"]
+gradient = SubResource("grad_noche")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+width = 1280
+height = 720
+
+[sub_resource type="CircleShape2D" id="forma_toque"]
+radius = 130.0
+
+[sub_resource type="Gradient" id="grad_confeti"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0.81, 0.25, 1, 0.55, 0.85, 1, 1, 1, 0.6, 0.8, 0)
+
+[node name="demo" type="Node2D"]
+
+[node name="fondo" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = SubResource("fondo_cielo")
+
+[node name="estelita" type="Area2D" parent="."]
+position = Vector2(640, 380)
+script = ExtResource("1_script")
+
+[node name="sprite" type="Sprite2D" parent="estelita"]
+texture = ExtResource("2_svg")
+
+[node name="colision" type="CollisionShape2D" parent="estelita"]
+shape = SubResource("forma_toque")
+
+[node name="confeti" type="CPUParticles2D" parent="estelita"]
+emitting = false
+amount = 60
+lifetime = 1.4
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 500)
+initial_velocity_min = 250.0
+initial_velocity_max = 520.0
+scale_amount_min = 4.0
+scale_amount_max = 9.0
+color_ramp = SubResource("grad_confeti")

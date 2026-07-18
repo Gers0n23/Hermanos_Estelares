@@ -13,6 +13,9 @@ exports/
 export_credentials.cfg
 *.keystore
 
+# Herramientas externas clonadas (godot-mcp, etc.)
+herramientas/
+
 # Sistema
 Thumbs.db
 .DS_Store

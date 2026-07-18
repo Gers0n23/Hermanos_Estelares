@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Estelita: estrella dorada de puntas redondas con carita tierna -->
+  <g>
+    <!-- brillo exterior suave -->
+    <circle cx="128" cy="128" r="118" fill="#ffd94d" opacity="0.18"/>
+    <!-- cuerpo: estrella de 5 puntas redondeadas -->
+    <path d="M128 18
+             C136 18 141 26 146 42 L156 74 C158 81 164 86 171 87 L204 92
+             C221 95 227 104 215 116 L192 139 C187 144 185 151 186 158 L192 191
+             C195 208 187 214 172 206 L143 190 C136 186 120 186 113 190 L84 206
+             C69 214 61 208 64 191 L70 158 C71 151 69 144 64 139 L41 116
+             C29 104 35 95 52 92 L85 87 C92 86 98 81 100 74 L110 42
+             C115 26 120 18 128 18 Z"
+          fill="#ffcf3f" stroke="#e8a820" stroke-width="6" stroke-linejoin="round"/>
+    <!-- mejillas -->
+    <circle cx="96" cy="138" r="11" fill="#ff9d76" opacity="0.7"/>
+    <circle cx="160" cy="138" r="11" fill="#ff9d76" opacity="0.7"/>
+    <!-- ojos grandes y brillantes -->
+    <ellipse cx="106" cy="114" rx="10" ry="13" fill="#4a3319"/>
+    <ellipse cx="150" cy="114" rx="10" ry="13" fill="#4a3319"/>
+    <circle cx="109" cy="109" r="4" fill="#ffffff"/>
+    <circle cx="153" cy="109" r="4" fill="#ffffff"/>
+    <!-- sonrisa -->
+    <path d="M112 142 Q128 156 144 142" fill="none" stroke="#4a3319" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>
