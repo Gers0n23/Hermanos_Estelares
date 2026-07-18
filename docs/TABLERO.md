@@ -75,9 +75,9 @@
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-13 | Arte del primer planeta: fondo, anfitrión y props según su ficha (HE-D4) | ⬜ Backlog | HE-03, HE-D4 | Dev |
-| HE-14 | Minijuego 1 del planeta (niveles S/B/E según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-15 | Minijuego 2 del planeta (S/B/E según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-16 | Minijuego 3 del planeta (según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-14 | Nivel/minijuego 1 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-15 | Nivel/minijuego 2 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-16 | Nivel/minijuego 3 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
 | HE-17 | Escena de historia del planeta + destellos otorgados + pieza de la nave ganada y visible en "El hangar estelar" (pantalla de progreso que reemplaza a "El cielo de casa", GDD §3 rediseñado) | ⬜ Backlog | HE-14, HE-15, HE-16 | Dev |
 | HE-18 | 🧒 Playtest 1 con Maxi, Nicole y Sofía; registrar observaciones y ajustar | ⬜ Backlog | HE-17 | PO |
 
