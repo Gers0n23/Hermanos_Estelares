@@ -48,7 +48,7 @@
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-01 | Instalar Godot 4.x, crear `project.godot` con config base (720p, canvas_items, input táctil+mouse), estructura de carpetas del stack §3, e instalar GodotPrompter (skills) + godot-mcp (stack §4) | ⬜ Backlog | — | Dev |
+| HE-01 | Instalar Godot 4.x, crear `project.godot` con config base (720p, canvas_items, input táctil+mouse), estructura de carpetas del stack §3, e instalar GodotPrompter (skills) + godot-mcp (stack §4) | 🔄 En curso | — | Dev |
 | HE-02 | Guía de estilo visual: paleta maestra, contorno, tipografía; diseño SVG de los 3 hermanos y Estelita (pose idle) según lo definido en HE-D2, con aprobación de los QA junior | ⬜ Backlog | HE-D2 | Dev + PO |
 | HE-03 | Completar pipeline de assets: probar SVG→PNG por lote, evaluar MCP de generación de imágenes y GDAI MCP; registrar decisión en stack §7 | ⬜ Backlog | HE-01 | Dev |
 | HE-04 | Base de audio: buses música/sfx/voz, autoload `Audio`, descargar paquete sfx CC0 inicial, estructurar `guion_voces.md` (contenido viene de HE-D5) | ⬜ Backlog | HE-01 | Dev |
