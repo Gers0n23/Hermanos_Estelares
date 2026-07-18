@@ -18,7 +18,7 @@
 ## MARCO DE TRABAJO
 
 - **Método**: Scrumban — flujo continuo, backlog priorizado, límite **WIP = 2**.
-- **Roles**: Product Owner = papá (Gerson) con veto de los 3 QA junior (Maxi, Nicole, Sofía); Scrum Master = agente `scrum-master`; Dev = agente `dev-godot` / Claude Code.
+- **Roles**: Product Owner = papá (Gerson) con veto de los 3 QA junior (Maxi, Nicole, Sofía); Scrum Master = agente `scrum-master`; Dev = agente `dev-godot` / Claude Code. **Equipo de agentes especializados** (decisión del PO, 18-Jul-2026, en `.claude/agents/`): `disenador-niveles` (rutas personalizadas, curva, specs en `datos/` + `docs/fichas/`), `disenador-mecanicas` (motores compartidos 2-8 años, game feel, fichas de motor en `docs/fichas/`), `guionista` (guiones/líneas de voz/humor/tono en `docs/guiones/` + guion de grabación familiar), `director-cinematicas` (storyboards y specs cutout en `docs/cinematicas/`), `disenador-personajes` (SVG coherente con guía de estilo, pipeline HE-03), `experto-ux-parvulo` (audita contra GDD §6; informes en `docs/auditorias-ux/` — **hallazgos bloqueantes impiden cerrar tarjeta**) y `tester-qa` (verifica DoD vía Godot headless/godot-mcp; reportes en `docs/qa/` + guías de playtest). **Fronteras**: los diseñadores producen specs y no implementan; `dev-godot` implementa; los auditores no corrigen; solo `scrum-master` edita este tablero.
 - **Estados**: ⬜ Backlog → 🔄 En curso → ✅ Hecho · 🔴 Bloqueado (indicando el bloqueo).
 - **Definición de Hecho (DoD)**:
   1. Lo implementado corre sin errores en el editor de Godot (o el documento/asset está creado y referenciado).
