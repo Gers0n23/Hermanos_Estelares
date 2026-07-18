@@ -112,7 +112,7 @@
 |---|---|---|---|---|
 | HE-28 | Grabar/integrar voces definitivas según `guion_voces.md` (decisión de HE-D5) | ⬜ Backlog | HE-27 | PO + Dev |
 | HE-29 | Música por planeta + mezcla de audio final | ⬜ Backlog | HE-27 | Dev |
-| HE-30 | Cinemática/escena inicial: la caída de Estelita (guion de HE-D5, se puede saltar) | ⬜ Backlog | HE-27 | Dev |
+| HE-30 | Cinemática/escena inicial según la historia rediseñada: el living se transforma + Estelita choca contra la ventana + el Coleccionauta se lleva a papá (guion de HE-D5, se puede saltar; ya no es "la caída de Estelita") | ⬜ Backlog | HE-27 | Dev |
 | HE-31 | Rendimiento y pruebas en tablet real (P3): tiempos de carga, tamaños táctiles, batería | ⬜ Backlog | HE-28 | Dev |
 | HE-32 | Export Android (plantillas, firma, APK) + export Windows | ⬜ Backlog | HE-31 | Dev |
 | HE-33 | 🧒 Playtest final en tablet + correcciones | ⬜ Backlog | HE-32 | PO |
