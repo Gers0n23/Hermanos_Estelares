@@ -102,17 +102,15 @@
     <line x1="294" y1="400" x2="302" y2="400"/>
   </g>
 
-  <!-- cinturon con estuches e insignia provisional (se personaliza tras su entrevista) -->
+  <!-- cinturon con estuches e insignia de corazon rosa (su gesto del corazon coreano) -->
   <rect x="198" y="480" width="116" height="26" rx="12" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
   <rect x="204" y="477" width="24" height="30" rx="6" fill="#FAD1E3" stroke="#2B3350" stroke-width="4"/>
   <rect x="284" y="477" width="24" height="30" rx="6" fill="#FAD1E3" stroke="#2B3350" stroke-width="4"/>
   <line x1="204" y1="489" x2="228" y2="489" stroke="#2B3350" stroke-width="3"/>
   <line x1="284" y1="489" x2="308" y2="489" stroke="#2B3350" stroke-width="3"/>
   <circle cx="256" cy="493" r="19" fill="#FDEFF5" stroke="#2B3350" stroke-width="5"/>
-  <g transform="translate(256,494) scale(0.26)">
-    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
-             fill="#F26CA8"/>
-  </g>
+  <path d="M 256 502 C 254 498 244 491 244 484 C 244 478 251 476 256 482 C 261 476 268 478 268 484 C 268 491 258 498 256 502 Z"
+        fill="#F26CA8"/>
 
   <!-- cuello de piel + collar del traje -->
   <rect x="234" y="270" width="44" height="44" rx="10" fill="#EBBB90" stroke="#2B3350" stroke-width="4"/>
