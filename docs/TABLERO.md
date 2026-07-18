@@ -64,7 +64,7 @@
 | HE-07 | Autoload `Progreso`: perfiles por hermano, destellos/estrellas, guardado automático JSON | ⬜ Backlog | HE-01 | Dev |
 | HE-08 | Mapa Estelar (hub) data-driven desde `datos/planetas.json`: nave navega entre planetas, bloqueados/desbloqueados | ⬜ Backlog | HE-06, HE-07 | Dev |
 | HE-09 | Autoload `Navegacion` + transición de nave-estrella entre escenas | ⬜ Backlog | HE-05 | Dev |
-| HE-10 | Contrato `minijuego_base.gd` (parámetro nivel, señal completado) + escena de celebración reutilizable (confeti, estrellitas, baile) | ⬜ Backlog | HE-07 | Dev |
+| HE-10 | Contrato `minijuego_base.gd` (señal completado) + escena de celebración reutilizable (confeti, estrellitas, baile) — el contrato debe reflejar el nuevo modelo de **motores de mecánica compartidos con contenido/tema data-driven por hermano** (rutas personalizadas, GDD §5 18-Jul-2026), no un simple parámetro de dificultad | ⬜ Backlog | HE-07 | Dev |
 | HE-11 | Estelita ayudante flotante: reproduce/repite instrucciones de voz en cualquier escena | ⬜ Backlog | HE-04 | Dev |
 | HE-12 | Zona de padres con candado adulto: volumen por bus, ver/ajustar nivel por perfil, salir del juego | ⬜ Backlog | HE-07 | Dev |
 
