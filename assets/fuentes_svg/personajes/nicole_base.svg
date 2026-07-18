@@ -17,57 +17,57 @@
 
   <!-- brazo derecho de Nicole (izquierda del que mira): saludando arriba -->
   <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 200 350 L 148 290 L 130 216" stroke="#2B3350" stroke-width="42"/>
-    <path d="M 200 350 L 148 290 L 130 216" stroke="#F7F9FC" stroke-width="30"/>
-    <path d="M 140 274 L 134 252" stroke="#F26CA8" stroke-width="28"/>
+    <path d="M 212 348 L 156 292 L 136 218" stroke="#2B3350" stroke-width="36"/>
+    <path d="M 212 348 L 156 292 L 136 218" stroke="#F7F9FC" stroke-width="25"/>
+    <path d="M 147 278 L 141 256" stroke="#F26CA8" stroke-width="23"/>
   </g>
-  <circle cx="126" cy="204" r="21" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="132" cy="206" r="19" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
 
   <!-- brazo izquierdo: mano en la cadera -->
   <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 314 350 L 362 408 L 334 462" stroke="#2B3350" stroke-width="42"/>
-    <path d="M 314 350 L 362 408 L 334 462" stroke="#F7F9FC" stroke-width="30"/>
-    <path d="M 352 420 L 346 432" stroke="#F26CA8" stroke-width="28"/>
+    <path d="M 300 348 L 348 404 L 326 458" stroke="#2B3350" stroke-width="36"/>
+    <path d="M 300 348 L 348 404 L 326 458" stroke="#F7F9FC" stroke-width="25"/>
+    <path d="M 340 418 L 335 430" stroke="#F26CA8" stroke-width="23"/>
   </g>
-  <circle cx="332" cy="468" r="20" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="324" cy="464" r="18" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
 
   <!-- piernas -->
   <g stroke-linecap="round" fill="none">
-    <path d="M 220 510 L 220 640" stroke="#2B3350" stroke-width="46"/>
-    <path d="M 220 510 L 220 640" stroke="#F7F9FC" stroke-width="34"/>
-    <path d="M 292 510 L 292 640" stroke="#2B3350" stroke-width="46"/>
-    <path d="M 292 510 L 292 640" stroke="#F7F9FC" stroke-width="34"/>
+    <path d="M 228 510 L 228 640" stroke="#2B3350" stroke-width="38"/>
+    <path d="M 228 510 L 228 640" stroke="#F7F9FC" stroke-width="27"/>
+    <path d="M 284 510 L 284 640" stroke="#2B3350" stroke-width="38"/>
+    <path d="M 284 510 L 284 640" stroke="#F7F9FC" stroke-width="27"/>
   </g>
   <!-- rodilleras rosadas -->
-  <circle cx="220" cy="588" r="16" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
-  <circle cx="292" cy="588" r="16" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
-  <circle cx="215" cy="583" r="5.5" fill="#FAD1E3"/>
-  <circle cx="287" cy="583" r="5.5" fill="#FAD1E3"/>
+  <circle cx="228" cy="588" r="14" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="284" cy="588" r="14" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="224" cy="584" r="5" fill="#FAD1E3"/>
+  <circle cx="280" cy="584" r="5" fill="#FAD1E3"/>
 
   <!-- botas -->
   <g>
-    <rect x="189" y="634" width="64" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
-    <rect x="189" y="675" width="64" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
-    <rect x="199" y="650" width="44" height="10" rx="5" fill="#FAD1E3"/>
-    <rect x="259" y="634" width="64" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
-    <rect x="259" y="675" width="64" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
-    <rect x="269" y="650" width="44" height="10" rx="5" fill="#FAD1E3"/>
+    <rect x="199" y="634" width="58" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="199" y="675" width="58" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+    <rect x="208" y="650" width="40" height="10" rx="5" fill="#FAD1E3"/>
+    <rect x="255" y="634" width="58" height="60" rx="15" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="255" y="675" width="58" height="19" rx="9" fill="#F26CA8" stroke="#2B3350" stroke-width="5"/>
+    <rect x="264" y="650" width="40" height="10" rx="5" fill="#FAD1E3"/>
   </g>
 
   <!-- faldita del traje -->
-  <path d="M 176 486 L 336 486 L 352 540 L 160 540 Z" fill="#F26CA8" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M 190 492 L 202 534 M 232 492 L 238 534 M 274 492 L 280 534 M 316 492 L 322 534"
+  <path d="M 196 486 L 316 486 L 334 540 L 178 540 Z" fill="#F26CA8" stroke="#2B3350" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M 208 492 L 218 534 M 240 492 L 246 534 M 268 492 L 274 534 M 300 492 L 308 534"
         fill="none" stroke="#D94F8E" stroke-width="5" stroke-linecap="round"/>
 
-  <!-- torso -->
-  <path d="M 200 330 L 312 330 Q 332 330 334 352 L 342 498 L 170 498 L 178 352 Q 180 330 200 330 Z"
+  <!-- torso: entallado, con cintura -->
+  <path d="M 220 330 L 292 330 Q 308 330 309 348 Q 311 400 305 444 Q 302 474 308 498 L 204 498 Q 210 474 207 444 Q 201 400 203 348 Q 204 330 220 330 Z"
         fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
   <!-- franjas rosadas de hombros -->
-  <path d="M 200 332 L 240 332 L 232 372 L 186 372 Z" fill="#F26CA8"/>
-  <path d="M 312 332 L 272 332 L 280 372 L 326 372 Z" fill="#F26CA8"/>
+  <path d="M 220 332 L 250 332 L 244 368 L 208 368 Z" fill="#F26CA8"/>
+  <path d="M 292 332 L 262 332 L 268 368 L 304 368 Z" fill="#F26CA8"/>
   <!-- estrella del pecho con brillo -->
-  <circle cx="256" cy="406" r="58" fill="url(#brillo_estrella)"/>
-  <g transform="translate(256,406) scale(0.94)">
+  <circle cx="256" cy="400" r="48" fill="url(#brillo_estrella)"/>
+  <g transform="translate(256,400) scale(0.78)">
     <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
              fill="#FFCB3D" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
     <polygon points="0,-24 5.9,-8.1 22.9,-7.4 9.5,3.1 14.1,19.5 0,10 -14.1,19.5 -9.5,3.1 -22.9,-7.4 -5.9,-8.1"
@@ -75,14 +75,15 @@
   </g>
 
   <!-- cinturon con insignia provisional (estrella, se personaliza tras su entrevista) -->
-  <rect x="172" y="480" width="168" height="26" rx="12" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
+  <rect x="198" y="480" width="116" height="26" rx="12" fill="#D94F8E" stroke="#2B3350" stroke-width="5"/>
   <circle cx="256" cy="493" r="19" fill="#FDEFF5" stroke="#2B3350" stroke-width="5"/>
   <g transform="translate(256,494) scale(0.26)">
     <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
              fill="#F26CA8"/>
   </g>
 
-  <!-- cuello -->
+  <!-- cuello de piel + collar del traje -->
+  <rect x="234" y="270" width="44" height="44" rx="10" fill="#F2C29B" stroke="#2B3350" stroke-width="4"/>
   <rect x="218" y="306" width="76" height="26" rx="12" fill="#E9D3DE" stroke="#2B3350" stroke-width="5"/>
 
   <!-- cabeza -->

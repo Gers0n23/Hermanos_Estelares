@@ -37,52 +37,52 @@
 
   <!-- brazo derecho de Maxi (izquierda del que mira): punio arriba -->
   <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 198 352 L 142 262 L 102 176" stroke="#2B3350" stroke-width="44"/>
-    <path d="M 198 352 L 142 262 L 102 176" stroke="#F7F9FC" stroke-width="32"/>
-    <path d="M 132 248 L 122 226" stroke="#3E77CC" stroke-width="30"/>
+    <path d="M 208 350 L 148 264 L 106 178" stroke="#2B3350" stroke-width="38"/>
+    <path d="M 208 350 L 148 264 L 106 178" stroke="#F7F9FC" stroke-width="27"/>
+    <path d="M 138 250 L 128 228" stroke="#3E77CC" stroke-width="25"/>
   </g>
-  <circle cx="98" cy="164" r="23" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="102" cy="166" r="21" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
 
   <!-- brazo izquierdo: abierto hacia atras -->
   <g stroke-linecap="round" fill="none">
-    <path d="M 316 352 L 378 428" stroke="#2B3350" stroke-width="44"/>
-    <path d="M 316 352 L 378 428" stroke="#F7F9FC" stroke-width="32"/>
-    <path d="M 356 402 L 364 412" stroke="#3E77CC" stroke-width="30"/>
+    <path d="M 306 350 L 366 424" stroke="#2B3350" stroke-width="38"/>
+    <path d="M 306 350 L 366 424" stroke="#F7F9FC" stroke-width="27"/>
+    <path d="M 346 400 L 353 409" stroke="#3E77CC" stroke-width="25"/>
   </g>
-  <circle cx="384" cy="436" r="21" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="372" cy="432" r="19" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
 
   <!-- piernas flexionadas por el salto -->
   <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 220 505 L 208 566 L 226 606" stroke="#2B3350" stroke-width="50"/>
-    <path d="M 220 505 L 208 566 L 226 606" stroke="#F7F9FC" stroke-width="38"/>
-    <path d="M 292 505 L 310 562 L 296 602" stroke="#2B3350" stroke-width="50"/>
-    <path d="M 292 505 L 310 562 L 296 602" stroke="#F7F9FC" stroke-width="38"/>
+    <path d="M 224 505 L 212 566 L 228 604" stroke="#2B3350" stroke-width="43"/>
+    <path d="M 224 505 L 212 566 L 228 604" stroke="#F7F9FC" stroke-width="31"/>
+    <path d="M 288 505 L 306 560 L 294 600" stroke="#2B3350" stroke-width="43"/>
+    <path d="M 288 505 L 306 560 L 294 600" stroke="#F7F9FC" stroke-width="31"/>
   </g>
   <!-- rodilleras -->
-  <circle cx="208" cy="562" r="17" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
-  <circle cx="308" cy="558" r="17" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
-  <circle cx="203" cy="557" r="6" fill="#6FA8E8"/>
-  <circle cx="303" cy="553" r="6" fill="#6FA8E8"/>
+  <circle cx="212" cy="562" r="15" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="304" cy="556" r="15" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
+  <circle cx="207" cy="557" r="5.5" fill="#6FA8E8"/>
+  <circle cx="299" cy="551" r="5.5" fill="#6FA8E8"/>
 
   <!-- botas (inclinadas por el salto) -->
-  <g transform="rotate(-10 226 636)">
-    <rect x="193" y="602" width="66" height="62" rx="16" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
-    <rect x="193" y="644" width="66" height="20" rx="10" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
-    <rect x="203" y="618" width="46" height="10" rx="5" fill="#6FD6E8"/>
+  <g transform="rotate(-10 228 634)">
+    <rect x="198" y="602" width="60" height="62" rx="16" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="198" y="644" width="60" height="20" rx="10" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
+    <rect x="207" y="618" width="42" height="10" rx="5" fill="#6FD6E8"/>
   </g>
-  <g transform="rotate(12 296 632)">
-    <rect x="263" y="598" width="66" height="62" rx="16" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
-    <rect x="263" y="640" width="66" height="20" rx="10" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
-    <rect x="273" y="614" width="46" height="10" rx="5" fill="#6FD6E8"/>
+  <g transform="rotate(12 294 630)">
+    <rect x="264" y="598" width="60" height="62" rx="16" fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
+    <rect x="264" y="640" width="60" height="20" rx="10" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
+    <rect x="273" y="614" width="42" height="10" rx="5" fill="#6FD6E8"/>
   </g>
 
-  <!-- torso -->
-  <path d="M 198 330 L 314 330 Q 334 330 336 352 L 344 502 L 168 502 L 176 352 Q 178 330 198 330 Z"
+  <!-- torso: de ninio pequenio, con pancita -->
+  <path d="M 212 330 L 300 330 Q 316 330 317 350 Q 323 420 317 502 L 195 502 Q 189 420 195 350 Q 196 330 212 330 Z"
         fill="#F7F9FC" stroke="#2B3350" stroke-width="6"/>
-  <path d="M 198 332 L 240 332 L 232 374 L 184 374 Z" fill="#3E77CC"/>
-  <path d="M 314 332 L 272 332 L 280 374 L 328 374 Z" fill="#3E77CC"/>
-  <circle cx="256" cy="408" r="62" fill="url(#brillo_estrella)"/>
-  <g transform="translate(256,408)">
+  <path d="M 212 332 L 246 332 L 239 372 L 200 372 Z" fill="#3E77CC"/>
+  <path d="M 300 332 L 266 332 L 273 372 L 312 372 Z" fill="#3E77CC"/>
+  <circle cx="256" cy="406" r="52" fill="url(#brillo_estrella)"/>
+  <g transform="translate(256,406) scale(0.85)">
     <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
              fill="#FFCB3D" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
     <polygon points="0,-24 5.9,-8.1 22.9,-7.4 9.5,3.1 14.1,19.5 0,10 -14.1,19.5 -9.5,3.1 -22.9,-7.4 -5.9,-8.1"
@@ -90,7 +90,7 @@
   </g>
 
   <!-- cinturon con insignia de dinosaurio -->
-  <rect x="168" y="486" width="176" height="28" rx="13" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
+  <rect x="196" y="486" width="120" height="28" rx="13" fill="#3E77CC" stroke="#2B3350" stroke-width="5"/>
   <circle cx="256" cy="500" r="21" fill="#EAF1FF" stroke="#2B3350" stroke-width="5"/>
   <g transform="translate(256,501)" fill="#55B26B">
     <ellipse cx="0" cy="4" rx="11" ry="6"/>
