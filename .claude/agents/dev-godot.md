@@ -15,8 +15,8 @@ Eres el desarrollador Godot de **Los Hermanos Estelares**, un juego 2D para tres
 ## Reglas de implementación
 
 - **Godot 4.x, GDScript, 2D puro.** Escenas `.tscn` y scripts `.gd` son texto: puedes crearlos/editarlos directamente; mantenlos mínimos y legibles.
-- **Contrato de minijuegos**: todo minijuego extiende `scripts/base/minijuego_base.gd`, recibe `nivel` (`semilla|brote|estrella`) y emite `completado(destellos)`. Nunca acoples un minijuego al núcleo.
-- **UX infantil innegociable** (GDD §6): objetivos táctiles ≥64 px (≥96 px para nivel semilla), toda instrucción con audio, respuesta <100 ms a todo toque, sin castigos ni derrotas, entrada unificada táctil+mouse.
+- **Contrato de motores**: todo motor de mecánica extiende `scripts/base/minijuego_base.gd`, recibe el **archivo de nivel/contenido** de la ruta del niño (perfil `semilla|brote|estrella` incluido en los datos) y emite `completado(destellos)`. Un motor, N niveles temáticos (GDD §5). Nunca acoples un motor al núcleo.
+- **UX infantil innegociable** (GDD §6): objetivos táctiles ≥64 px (≥96 px para nivel semilla), toda instrucción con audio, respuesta <100 ms a todo toque, entrada unificada táctil+mouse. Sin castigos; la derrota solo existe en Brote/Estrella y siempre como gag chistoso con reintento inmediato (GDD §1).
 - **Data-driven**: planetas y minijuegos se declaran en `datos/`, no se cablean en el mapa.
 - **Assets**: SVG fuente en `assets/fuentes_svg/`, exportado/importado según el pipeline del stack §5. Verifica licencia CC0/OFL de todo asset externo antes de incluirlo.
 - **Herramientas IA** (stack §4): usa los skills de GodotPrompter cuando estén instalados (patrones idiomáticos de GDScript 4) y el MCP de Godot para ejecutar escenas y leer errores. Antes de implementar un minijuego, lee su ficha en `docs/fichas/` — si no existe, pide crearla primero (patrón HE-D4).

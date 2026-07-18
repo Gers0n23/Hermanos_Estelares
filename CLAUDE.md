@@ -22,6 +22,7 @@ El desarrollo se gestiona con un tablero Kanban en [`docs/TABLERO.md`](docs/TABL
 
 - **Agente `scrum-master`**: único que edita `docs/TABLERO.md`. Estados de tarjeta, WIP=2, Definición de Hecho y registro de avances.
 - **Agente `dev-godot`**: implementa las tarjetas para este stack (Godot 4 2D, escenas/scripts como texto, sprites SVG).
+- **Equipo especializado** (`.claude/agents/`, decisión del PO 18-Jul-2026): `disenador-niveles`, `disenador-mecanicas`, `guionista`, `director-cinematicas`, `disenador-personajes`, `experto-ux-parvulo` y `tester-qa`. Flujo: los diseñadores producen specs (fichas/guiones/storyboards) → `dev-godot` implementa → UX y QA auditan → playtest real con los niños. Los diseñadores no implementan; los auditores no corrigen; nadie salvo `scrum-master` toca el tablero.
 - **Skills**: `/planificar` (siguiente tarjeta), `/avance` (registrar trabajo completado), `/estado-proyecto` (resumen de solo lectura).
 - **Hooks**: al iniciar sesión se inyecta el ESTADO ACTUAL del tablero; tras editar `docs/TABLERO.md` se valida su estructura mínima y se **guarda automáticamente en GitHub** (commit con la entrada del avance + push a origin) — no hagas commits manuales de avances, deja que el hook documente el progreso.
 
