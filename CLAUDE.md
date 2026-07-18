@@ -5,7 +5,7 @@ Esta guía orienta a Claude Code al trabajar en este repositorio.
 ## Información importante
 
 - **Idioma del proyecto**: Español — código, comentarios, documentación y comunicación en español. Nombres de archivos/nodos en minúsculas y sin acentos.
-- **Naturaleza del proyecto**: regalo personal de un papá para sus tres hijos (Maxi 2, Nicole 5, Sofía 7). La calidad que importa es que a ellos les encante — cuida los detalles de ternura, celebración y accesibilidad infantil tanto como el código.
+- **Naturaleza del proyecto**: regalo personal de un papá para sus tres hijos (Maxi 2, Nicole 5, Sofía 8). La calidad que importa es que a ellos les encante — cuida los detalles de ternura, celebración y accesibilidad infantil tanto como el código.
 
 ## Descripción del proyecto
 
@@ -37,7 +37,7 @@ El desarrollo se gestiona con un tablero Kanban en [`docs/TABLERO.md`](docs/TABL
 ## Reglas de oro al desarrollar
 
 1. El diseño personalizado con los niños (Fase 0 del tablero) manda: nada se implementa si contradice sus fichas y el GDD actualizado con sus gustos.
-2. Nada que castigue, apure o frustre a un niño de 2-7 años (GDD §6). Ante la duda, más grande, más lento, más celebración.
+2. Nada que castigue, apure o frustre a un niño de 2-8 años (GDD §6). Ante la duda, más grande, más lento, más celebración.
 3. Un minijuego nunca toca el núcleo; el núcleo nunca conoce minijuegos concretos.
 4. Verifica ejecutando la escena afectada antes de dar por hecha una tarjeta (el DoD lo exige).
 5. Playtest con los niños al cerrar cada fase de contenido — su reacción reordena el backlog.

@@ -47,7 +47,7 @@ cosas nuevas hace que el mundo brille más**. Cada planeta refuerza además un t
 |---|---|---|---|
 | **Maxi** | 2 años | El pequeño explorador valiente. Su curiosidad encuentra destellos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
 | **Nicole** | 5 años | La artista del grupo. Con imaginación y color resuelve lo que parece imposible. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
-| **Sofía** | 7 años | La hermana mayor, líder e ingeniosa. Lee las pistas y guía la misión. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
+| **Sofía** | 8 años | La hermana mayor, líder e ingeniosa. Lee las pistas y guía la misión. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
 
 Cada personaje tiene **la misma aventura con distinta profundidad**: el minijuego es el mismo
 en lo visual y narrativo, pero su dificultad se adapta al perfil seleccionado (ver §5).
@@ -152,7 +152,7 @@ Son la recompensa narrativa y el "pegamento" del guion.
 
 ---
 
-## 6. Diseño de interacción (UX para 2-7 años)
+## 6. Diseño de interacción (UX para 2-8 años)
 
 Reglas obligatorias para toda pantalla del juego:
 

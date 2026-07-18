@@ -25,7 +25,7 @@
   - `Navegacion` — transiciones entre escenas con animación (la nave-estrella como cortina de transición).
 - **Escenas**: una escena por pantalla; cada minijuego es una escena autocontenida que recibe `nivel: semilla|brote|estrella` y emite `senal completado(destellos)`. Contrato único → agregar minijuegos nunca toca el núcleo.
 - **Recursos de datos** (`.tres` o JSON): definición de planetas y minijuegos (nombre, ícono, escena, destellos) para que el mapa estelar se construya por datos.
-- **Tests**: alcance pragmático — smoke tests con [GUT](https://github.com/bitwes/Gut) para `Progreso` y utilidades; los minijuegos se validan jugando (los QA tienen 2, 5 y 7 años 🙂).
+- **Tests**: alcance pragmático — smoke tests con [GUT](https://github.com/bitwes/Gut) para `Progreso` y utilidades; los minijuegos se validan jugando (los QA tienen 2, 5 y 8 años 🙂).
 
 ## 3. Estructura de carpetas
 

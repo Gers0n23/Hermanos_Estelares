@@ -50,14 +50,51 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
 
 ---
 
-## Sofía (7 años) — nivel estrella
+## Sofía (8 años) — nivel estrella
 
-**Entrevista: pendiente**
+**Entrevista: 18-Jul-2026** *(cumplió 8 años en junio de 2026)*
 
-- **Personalidad**:
-- **Animales y colores favoritos**:
-- **Personajes / historias que ama hoy**:
-- **Apps / juegos que ya usa**:
-- **Qué la asusta o aburre**:
-- **Gesto de celebración real**:
-- **Sueños / mundos que le fascinan**:
+- **Personalidad**: muy muy inteligente (la mejor de su curso); buena para leer y resolver
+  desafíos; líder natural muy marcada — los demás niños siempre la siguen; muy buena para
+  bailar y cantar; bromista, con humor inteligente para su edad; le encanta aprender y
+  entiende contextos pensados para niños mayores. Cuida a sus hermanos pequeños como una
+  «mini mamá». Lados sensibles: es llorona y se frustra rápido (más que sus hermanos), y
+  siente celos de hermana con Nicole (no con Maxi), aunque la ama.
+- **Animales y colores favoritos**: ponys, gerbos, perritos y gatitos cachorros. Colores:
+  **rosa y turquesa** (confirma los acentos turquesa de su sprite).
+- **Personajes / historias que ama hoy**: My Melody, Harry Potter, Rumi de *Las guerreras
+  k-pop*; historias entretenidas en general. Es la más culta de los tres y la que más
+  conoce de cultura pop.
+- **Apps / juegos que ya usa**: juega en su teléfono, PlayStation 5 y PC — Roblox, juegos
+  de LEGO en consola, juegos con historia, armar puzzles y juegos para aprender.
+- **Qué la asusta o aburre**: rechazo (no fobia) a arañas y bichos — mejor evitarlos.
+  Considera «de bebés» los juegos muy fáciles. Se frustra rápido cuando algo no le sale.
+- **Gesto de celebración real**: pose femenina — una mano en la cintura, piernas levemente
+  flectadas hacia un lado, el otro brazo estirado haciendo el signo de la paz, guiño de
+  ojo y cabeza levemente ladeada.
+- **Sueños / mundos que le fascinan**: aún no sabe qué quiere ser de grande, pero sabe que
+  será alguien importante y muy inteligente (una líder). Muy curiosa: le encantaría
+  conocer todo tipo de mundos, con datos interesantes acordes a su edad.
+
+**Implicaciones de diseño**:
+
+- **Nivel estrella con desafío real**: lo fácil le parece «de bebés» — sus variantes deben
+  exigir lectura, lógica y puzzles genuinos, con datos curiosos de cada mundo (su
+  curiosidad es el gancho: cada planeta puede enseñarle algo que no sabía).
+- **Frustración = riesgo principal**: se frustra y llora rápido, así que el reto sube pero
+  el fracaso nunca castiga (GDD §6): pistas progresivas, reintentos infinitos sin marcador
+  de errores, y Estelita animando en los tropiezos.
+- **Celos con Nicole**: jamás comparar progreso entre hermanos — nada de rankings ni
+  «tu hermana ya lo logró»; celebraciones equivalentes en tamaño y ternura para las dos.
+- **Rol de líder/mini mamá**: darle momentos de «hermana mayor que guía la misión» (ya
+  coincide con su rol en el GDD §personajes); puede ser la voz que explica la misión a
+  los pequeños.
+- **Música y baile**: canta y baila muy bien — minijuegos o celebraciones musicales
+  conectan con ella (sinergia con la estética k-pop de Rumi).
+- **Su celebración en el juego**: replicar su pose real (mano en cintura, signo de la paz,
+  guiño, cabeza ladeada) como animación de victoria de su personaje.
+- **Temas de contenido**: ponys y cachorros como tema de sus variantes; magia/escuela de
+  magia (Harry Potter) y estética kawaii (My Melody) como inspiración de ambientes —
+  sin copiar IP. Evitar arañas y bichos en cualquier nivel donde ella juegue.
+- **Insignia del cinturón (propuesta)**: un **pony** — su animal favorito, como el
+  dinosaurio de Maxi. Pendiente de confirmación del PO/Sofía.
