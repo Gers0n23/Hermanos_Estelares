@@ -29,6 +29,7 @@
   - Al registrar un avance en este tablero, un hook guarda automáticamente el proyecto en GitHub (commit con la entrada del avance + push a origin).
   - **Lanzamiento por capítulos (seasons, GDD §3 18-Jul-2026)**: el juego se construye y entrega de a un planeta por vez. Cada fase de capítulo cierra con su playtest/entrega a los niños — su reacción **reordena el backlog del capítulo siguiente** (regla de oro 5, es la métrica que manda). Cuidados aprobados por el PO: los planetas no jugables son un tease ilusionante («todavía muy lejos», sin candados ni «próximamente»); cada capítulo cierra en celebración con gancho, nunca en corte; los motores de mecánica nacen reutilizables — lo bespoke es el contenido (regla de oro 3).
   - Nada de la Fase 1 en adelante se implementa si contradice lo definido en la Fase 0: el diseño personalizado es la fuente de verdad.
+  - **Flujo de roles especializado (18-Jul-2026)**: idea/tarjeta → specs de los diseñadores → implementación por `dev-godot` → auditoría UX (`experto-ux-parvulo`) + QA (`tester-qa`) → playtest real con los niños → registro por `scrum-master`. Aplica a todas las tarjetas de diseño y contenido (fichas HE-D4, cinemáticas HE-30/HE-39, personajes, niveles de los capítulos: HE-14/15/16, HE-20, HE-22, HE-24/25/26). Los hallazgos bloqueantes de la auditoría UX impiden marcar ✅ Hecho.
 
 ## FASE 0 — El corazón del juego (diseño con los niños)
 
