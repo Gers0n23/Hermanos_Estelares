@@ -20,7 +20,7 @@
 ## 2. Arquitectura del juego (Godot)
 
 - **Autoloads (singletons)**:
-  - `Progreso` — perfiles de los 3 hermanos, destellos, estrellas, guardado automático (JSON en `user://`).
+  - `Progreso` — perfiles de los 3 hermanos, destellos, estrellas, guardado automático (JSON **versionado** en `user://`, con migraciones al cargar — ver decisión del 18-Jul-2026).
   - `Audio` — buses de música/efectos/voz, reproducción de narraciones con cola.
   - `Navegacion` — transiciones entre escenas con animación (la nave-estrella como cortina de transición).
 - **Escenas**: una escena por pantalla; cada minijuego es una escena autocontenida que recibe `nivel: semilla|brote|estrella` y emite `senal completado(destellos)`. Contrato único → agregar minijuegos nunca toca el núcleo.
@@ -125,3 +125,6 @@ Estilo objetivo: cartoon vectorial (ver GDD §7). Estrategia en capas, de más c
 | 18-Jul-2026 | GDAI MCP: no se adopta por ahora (reevaluar en Fase 2 si hace falta feedback visual) | HE-03: el flujo texto+headless+godot-mcp cubre el ciclo completo sin fricción; GDAI es binario cerrado no auditable y exige editor abierto |
 | 18-Jul-2026 | MCP de generación de imágenes: candidato Recraft (MCP oficial, SVG editable, ~USD 0.04/imagen); decisión de contratar pospuesta a HE-13 | HE-03: no gastar antes de saber si los fondos SVG a mano + CC0 (Kenney) alcanzan; la decisión final es del PO |
 | 18-Jul-2026 | Conexión viva de godot-mcp verificada por stdio JSON-RPC (`initialize`, `get_godot_version` → 4.7.1, `get_project_info` sobre el proyecto) | HE-03: cierra la deuda declarada en HE-01; el servidor responde correcto con el `GODOT_PATH` de `.mcp.json` |
+| 18-Jul-2026 | Rutas personalizadas: motores de mecánica compartidos + niveles data-driven por hermano (reemplaza al modelo "una escena con parámetro `nivel`" del 17-Jul; el contrato `minijuego_base.gd` pasa a recibir el archivo de nivel/contenido) | Decisión del PO (GDD §2/§5): la temática no escala con la dificultad; cada niño necesita contenido de sus gustos |
+| 18-Jul-2026 | Lanzamiento por capítulos (seasons): maqueta del juego completo desde el capítulo 1, pero solo el planeta 1 jugable; un planeta nuevo por actualización | Decisión del PO (GDD §3): pulir cada mundo al máximo sin nada genérico y validar con la reacción de los niños antes de invertir en el siguiente |
+| 18-Jul-2026 | **Guardado versionado desde el día uno**: el JSON de `Progreso` incluye campo `version` y migraciones al cargar; agregar planetas/capítulos por actualización jamás borra progreso | Derivado del lanzamiento por capítulos (GDD §3): las actualizaciones deben ser seguras para las partidas de los niños |

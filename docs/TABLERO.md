@@ -8,10 +8,10 @@
 
 - **Última actualización**: 18-Jul-2026
 - **Fase activa**: Fase 0 — El corazón del juego (diseño con los niños)
-- **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más. Las 3 entrevistas de `docs/perfil-jugadores.md` tienen ya los datos esenciales para diseñar: Maxi (2, semilla) ✅, Sofía (8, estrella) ✅ y Nicole (5, brote) **parcial** — le faltan 3 campos que el PO completará: apps/juegos que usa, qué la asusta/aburre y sueños/mundos. Como dos de esos campos están en el alcance explícito de la tarjeta, HE-D1 no cumple aún el DoD (punto 1) y sigue 🔄. **Su cierre subió de importancia**: las fichas de gustos alimentan directamente las rutas personalizadas del nuevo modelo de jugabilidad (GDD §5, 18-Jul-2026). Además, adelantos informales de HE-D2 (sigue ⬜): sprites SVG de los 3 hermanos + celebraciones en `assets/fuentes_svg/personajes/` (6 SVG con sus 6 PNG en `assets/sprites/personajes/`) y **historia y mensaje aprobados formalmente por el PO** (18-Jul-2026), con 4 cambios de diseño ya aplicados al GDD: lección de cooperación jugable en la misión final (§1), derrota-gag permitida en niveles de Nicole y Sofía (§1), **rutas personalizadas por hermano** en lugar de «mismo minijuego, 3 dificultades» (§2+§5; §4 queda «en revisión» hasta cerrar HE-D1) y nuevo **modo misión familiar** por turnos en el mismo dispositivo (§3)
+- **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más. Las 3 entrevistas de `docs/perfil-jugadores.md` tienen ya los datos esenciales para diseñar: Maxi (2, semilla) ✅, Sofía (8, estrella) ✅ y Nicole (5, brote) **parcial** — le faltan 3 campos que el PO completará: apps/juegos que usa, qué la asusta/aburre y sueños/mundos. Como dos de esos campos están en el alcance explícito de la tarjeta, HE-D1 no cumple aún el DoD (punto 1) y sigue 🔄. **Su cierre subió aún más de importancia**: las fichas alimentan las rutas personalizadas (GDD §5) y ahora también **la elección del planeta 1 y sus temas**, requisito de arranque de la nueva Fase 1 «núcleo + capítulo 1 completo». Además, adelantos informales de HE-D2 (sigue ⬜): sprites SVG de los 3 hermanos + celebraciones, historia y mensaje aprobados formalmente por el PO, y **segunda decisión formal del 18-Jul: lanzamiento por capítulos (seasons)** — el juego se construye y entrega de a un planeta por vez, con la maqueta completa del juego desde el capítulo 1 (roadmap reestructurado en este tablero)
 - **Próximo en cola**: HE-04 (base de audio, Dev — solo depende de HE-01 ✅). HE-D2 y HE-D3 esperan al cierre formal de HE-D1; HE-13 heredará la decisión pendiente sobre Recraft MCP para fondos
-- **Bloqueos**: ninguno formal; para cerrar HE-D1 el PO debe completar los 3 campos pendientes de la ficha de Nicole en `docs/perfil-jugadores.md` — hasta entonces, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar, y **el catálogo definitivo de niveles temáticos por hermano (GDD §9, P5) tampoco puede definirse**. Pendientes derivados para HE-D2: confirmar insignia de cinturón pony para Sofía (la de Nicole — corazón rosa — ya fue **confirmada por el PO** y aplicada al sprite); sprites `sofia_celebracion` y `nicole_celebracion` pendientes de aprobación de cada niña/PO; **validar con los niños el nombre "el Coleccionauta"** (provisional) del alienígena de la nueva historia. Pendiente de sesión: el PO seguirá revisando el resto de sus puntos de feedback del GDD en la próxima conversación
-- **Avance general**: 2/39 tarjetas ✅ (HE-01 y HE-03 cerradas 18-Jul-2026; la deuda de HE-01 — conexión viva de godot-mcp — quedó saldada en HE-03)
+- **Bloqueos**: ninguno formal; para cerrar HE-D1 el PO debe completar los 3 campos pendientes de la ficha de Nicole en `docs/perfil-jugadores.md` — hasta entonces, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar, el catálogo definitivo de niveles temáticos por hermano (GDD §9, P5) no puede definirse, y **tampoco puede elegirse cuál es el planeta 1 y sus temas (requisito de arranque de la Fase 1)**. Pendientes derivados para HE-D2: confirmar insignia de cinturón pony para Sofía (la de Nicole — corazón rosa — ya fue confirmada por el PO y aplicada al sprite); sprites `sofia_celebracion` y `nicole_celebracion` pendientes de aprobación de cada niña/PO; validar con los niños el nombre "el Coleccionauta" (provisional). Pendiente de sesión: el PO seguirá revisando el resto de sus puntos de feedback del GDD en la próxima conversación
+- **Avance general**: 2/44 tarjetas ✅ (HE-01 y HE-03 cerradas 18-Jul-2026; la deuda de HE-01 — conexión viva de godot-mcp — quedó saldada en HE-03). El roadmap fue reestructurado el 18-Jul-2026 al modelo de capítulos: se sumaron 5 tarjetas nuevas (HE-35 a HE-39)
 
 ---
 
@@ -27,24 +27,24 @@
   4. Avance registrado en este tablero.
 - **Reglas especiales del proyecto**:
   - Al registrar un avance en este tablero, un hook guarda automáticamente el proyecto en GitHub (commit con la entrada del avance + push a origin).
-  - Al cerrar cada fase con contenido jugable (3, 4, 5, 6), hay una tarjeta de **playtest con los niños** — su reacción puede reordenar el backlog. Es la métrica que manda.
+  - **Lanzamiento por capítulos (seasons, GDD §3 18-Jul-2026)**: el juego se construye y entrega de a un planeta por vez. Cada fase de capítulo cierra con su playtest/entrega a los niños — su reacción **reordena el backlog del capítulo siguiente** (regla de oro 5, es la métrica que manda). Cuidados aprobados por el PO: los planetas no jugables son un tease ilusionante («todavía muy lejos», sin candados ni «próximamente»); cada capítulo cierra en celebración con gancho, nunca en corte; los motores de mecánica nacen reutilizables — lo bespoke es el contenido (regla de oro 3).
   - Nada de la Fase 1 en adelante se implementa si contradice lo definido en la Fase 0: el diseño personalizado es la fuente de verdad.
 
 ## FASE 0 — El corazón del juego (diseño con los niños)
 
-**Criterio de salida**: historia, personajes, planetas y las fichas de minijuego del primer planeta están definidas, personalizadas con los gustos reales de Maxi, Nicole y Sofía, y aprobadas por el Product Owner.
+**Criterio de salida**: historia, personajes, planetas y las fichas de minijuego del primer planeta están definidas, personalizadas con los gustos reales de Maxi, Nicole y Sofía, y aprobadas por el Product Owner. Incluye decidir **cuál es el planeta 1 y sus temas** (depende de las 3 fichas de HE-D1) — sin eso no arranca la Fase 1.
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-D1 | Sesión de descubrimiento con los niños: qué aman hoy (animales, colores, canciones, personajes, apps/juegos favoritos, qué los asusta o aburre); registrar hallazgos por hijo en `docs/perfil-jugadores.md` | 🔄 En curso | — | PO |
 | HE-D2 | Personalizar guion e historia (GDD §1-§2) con esos hallazgos: personalidad y gesto de celebración de cada hermano, nombre/carácter de Estelita; validar con los niños que sus personajes "sean ellos" | ⬜ Backlog | HE-D1 | PO + Dev |
-| HE-D3 | Validar los 6 planetas (temas, anfitriones, nombres, orden de desarrollo) contra los gustos reales; ajustar GDD §4 — planetas que no emocionen se reemplazan ahora, no después | ⬜ Backlog | HE-D1 | PO + Dev |
+| HE-D3 | Validar los 6 planetas (temas, anfitriones, nombres, orden de desarrollo) contra los gustos reales; ajustar GDD §4 — planetas que no emocionen se reemplazan ahora, no después. Incluye **elegir el planeta 1** (el del capítulo 1) y el orden tentativo de los capítulos siguientes | ⬜ Backlog | HE-D1 | PO + Dev |
 | HE-D4 | Ficha detallada por nivel/minijuego del primer planeta (en `docs/fichas/`): motor de mecánica compartido + contenido temático por hermano según sus rutas personalizadas (nuevo modelo GDD §2+§5, 18-Jul-2026; requiere las 3 fichas de HE-D1 y resolver P5 de GDD §9), assets necesarios, líneas de voz, condición de destello | ⬜ Backlog | HE-D3 | Dev + PO |
 | HE-D5 | Guion narrativo completo sobre la historia rediseñada (GDD §1-§4, 18-Jul-2026): escena de intro (el living se transforma, Estelita choca contra la ventana, el Coleccionauta se lleva a papá), escenas de historia por planeta (entrega de pieza de la nave + video-llamada de papá), **guion de la prueba final cooperativa** (primer intento fallido cómico → cooperación por roles → rescate de papá; ver P6 de GDD §9) y primera versión de `guion_voces.md`; decidir P2 (voces de la familia — sinergia con las video-llamadas de papá) | ⬜ Backlog | HE-D2, HE-D3 | PO + Dev |
 
-## FASE 1 — Cimientos (herramientas y esqueleto)
+## FASE 1 — Núcleo + Capítulo 1 completo
 
-**Criterio de salida**: el proyecto Godot abre, muestra una pantalla placeholder, las herramientas IA (skills + MCP) están operativas y está definida la guía de estilo visual.
+**Criterio de salida**: el **capítulo 1 entregado a los niños en su tablet**: desde la cinemática del secuestro de papá hasta completar el planeta 1 y ganar su pieza de la nave. La **maqueta del juego completo** existe (título, selección de personaje, mapa con todos los planetas visibles como tease ilusionante, hangar estelar, zona de padres) pero **solo el planeta 1 es jugable**, pulido hasta el último detalle: nada de su contenido queda genérico ni placeholder, con las **3 rutas personalizadas completas** y cierre en celebración con gancho. Playtest del capítulo 1 aprobado por los 3 niños. **Requisito de arranque**: HE-D1 cerrada (las fichas de gustos definen el planeta 1 y sus temas).
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
@@ -52,70 +52,81 @@
 | HE-02 | Guía de estilo visual: paleta maestra, contorno, tipografía; diseño SVG de los 3 hermanos y Estelita (pose idle) según lo definido en HE-D2, con aprobación de los QA junior | ⬜ Backlog | HE-D2 | Dev + PO |
 | HE-03 | Completar pipeline de assets: probar SVG→PNG por lote, evaluar MCP de generación de imágenes y GDAI MCP; registrar decisión en stack §7 | ✅ Hecho | HE-01 | Dev |
 | HE-04 | Base de audio: buses música/sfx/voz, autoload `Audio`, descargar paquete sfx CC0 inicial, estructurar `guion_voces.md` (contenido viene de HE-D5) | ⬜ Backlog | HE-01 | Dev |
-
-## FASE 2 — Núcleo del juego
-
-**Criterio de salida**: se puede abrir el juego, elegir hermano, navegar el mapa estelar (con planetas de mentira), y el progreso persiste por perfil.
-
-| ID | Tarjeta | Estado | Dependencias | Responsable |
-|---|---|---|---|---|
 | HE-05 | Pantalla de título animada (cielo estrellado, "tocar para empezar") | ⬜ Backlog | HE-01 | Dev |
 | HE-06 | Selección de personaje: 3 retratos grandes, cada uno saluda con voz/sonido al tocarlo; fija el perfil de nivel | ⬜ Backlog | HE-02, HE-04 | Dev |
-| HE-07 | Autoload `Progreso`: perfiles por hermano, destellos/estrellas, guardado automático JSON | ⬜ Backlog | HE-01 | Dev |
-| HE-08 | Mapa Estelar (hub) data-driven desde `datos/planetas.json`: nave navega entre planetas, bloqueados/desbloqueados | ⬜ Backlog | HE-06, HE-07 | Dev |
+| HE-07 | Autoload `Progreso`: perfiles por hermano, destellos/estrellas, guardado automático JSON — **guardado versionado desde el día uno** (decisión stack §7, 18-Jul-2026): el JSON lleva campo `version` y migraciones al cargar, para que las actualizaciones por capítulos jamás borren progreso | ⬜ Backlog | HE-01 | Dev |
+| HE-08 | Mapa Estelar (hub) data-driven desde `datos/planetas.json`: nave navega entre planetas; **todos los planetas visibles desde el capítulo 1** — los no jugables son un tease ilusionante («todavía muy lejos»), sin candados ni carteles de «próximamente» (GDD §3, seasons) | ⬜ Backlog | HE-06, HE-07 | Dev |
 | HE-09 | Autoload `Navegacion` + transición de nave-estrella entre escenas | ⬜ Backlog | HE-05 | Dev |
-| HE-10 | Contrato `minijuego_base.gd` (señal completado) + escena de celebración reutilizable (confeti, estrellitas, baile) — el contrato debe reflejar el nuevo modelo de **motores de mecánica compartidos con contenido/tema data-driven por hermano** (rutas personalizadas, GDD §5 18-Jul-2026), no un simple parámetro de dificultad | ⬜ Backlog | HE-07 | Dev |
+| HE-10 | Contrato `minijuego_base.gd` (señal completado) + escena de celebración reutilizable (confeti, estrellitas, baile) — el contrato debe reflejar el nuevo modelo de **motores de mecánica compartidos con contenido/tema data-driven por hermano** (rutas personalizadas, GDD §5 18-Jul-2026), no un simple parámetro de dificultad; los motores nacen reutilizables entre capítulos (regla de oro 3) | ⬜ Backlog | HE-07 | Dev |
 | HE-11 | Estelita ayudante flotante: reproduce/repite instrucciones de voz en cualquier escena | ⬜ Backlog | HE-04 | Dev |
 | HE-12 | Zona de padres con candado adulto: volumen por bus, ver/ajustar nivel por perfil, salir del juego | ⬜ Backlog | HE-07 | Dev |
-
-## FASE 3 — Primer planeta (corte vertical)
-
-**Criterio de salida**: el primer planeta definido en Fase 0 completo y pulido de punta a punta — la prueba de que todo el concepto funciona. Playtest aprobado por los 3 niños.
-
-| ID | Tarjeta | Estado | Dependencias | Responsable |
-|---|---|---|---|---|
+| HE-30 | Cinemática/escena inicial del capítulo 1 según la historia rediseñada: el living se transforma + Estelita choca contra la ventana + el Coleccionauta se lleva a papá (guion de HE-D5, se puede saltar) — **movida a Fase 1**: el capítulo 1 empieza aquí | ⬜ Backlog | HE-D5, HE-09 | Dev |
 | HE-13 | Arte del primer planeta: fondo, anfitrión y props según su ficha (HE-D4) | ⬜ Backlog | HE-03, HE-D4 | Dev |
-| HE-14 | Nivel/minijuego 1 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-15 | Nivel/minijuego 2 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-16 | Nivel/minijuego 3 del planeta según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-17 | Escena de historia del planeta + destellos otorgados + pieza de la nave ganada y visible en "El hangar estelar" (pantalla de progreso que reemplaza a "El cielo de casa", GDD §3 rediseñado) | ⬜ Backlog | HE-14, HE-15, HE-16 | Dev |
-| HE-18 | 🧒 Playtest 1 con Maxi, Nicole y Sofía; registrar observaciones y ajustar | ⬜ Backlog | HE-17 | PO |
+| HE-14 | Nivel/minijuego 1 del planeta 1 según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-15 | Nivel/minijuego 2 del planeta 1 según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-16 | Nivel/minijuego 3 del planeta 1 según ficha (motor compartido + contenido por hermano, rutas personalizadas GDD §5) | ⬜ Backlog | HE-10, HE-13 | Dev |
+| HE-17 | Escena de historia del planeta 1 + destellos otorgados + pieza de la nave ganada y visible en "El hangar estelar" (GDD §3) — cierre del capítulo 1 en celebración con gancho, nunca en corte | ⬜ Backlog | HE-14, HE-15, HE-16, HE-30 | Dev |
+| HE-31 | Rendimiento y pruebas en tablet real (P3): tiempos de carga, tamaños táctiles, batería — necesario para entregar el capítulo 1 en la tablet | ⬜ Backlog | HE-17 | Dev |
+| HE-32 | Export Android (plantillas, firma, APK) + export Windows — primera entrega instalable (capítulo 1) | ⬜ Backlog | HE-31 | Dev |
+| HE-18 | 🧒 Playtest del capítulo 1 con Maxi, Nicole y Sofía en la tablet + entrega del capítulo 1; registrar observaciones — su reacción reordena el backlog del capítulo 2 | ⬜ Backlog | HE-32 | PO |
 
-## FASE 4 — Planetas 2 y 3
+## FASE 2 — Capítulo 2 (planeta 2)
 
-**Criterio de salida**: 3 planetas jugables; playtest 2 aprobado.
+**Criterio de salida**: actualización del capítulo 2 entregada e instalada (planeta 2 jugable y pulido, cierre en celebración con gancho); playtest aprobado y reacciones registradas. El orden/tema del planeta puede cambiar según la reacción al capítulo 1.
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-19 | Arte del planeta 2 según su ficha (crear ficha si falta, patrón HE-D4) | ⬜ Backlog | HE-18 | Dev |
-| HE-20 | Minijuegos del planeta 2 + escena de historia | ⬜ Backlog | HE-19 | Dev |
-| HE-21 | Arte del planeta 3 según su ficha | ⬜ Backlog | HE-18 | Dev |
-| HE-22 | Minijuegos del planeta 3 + escena de historia | ⬜ Backlog | HE-21 | Dev |
-| HE-23 | 🧒 Playtest 2; ajustar según reacciones | ⬜ Backlog | HE-20, HE-22 | PO |
+| HE-20 | Minijuegos del planeta 2 (rutas personalizadas) + escena de historia + pieza de la nave + actualización instalable | ⬜ Backlog | HE-19 | Dev |
+| HE-23 | 🧒 Playtest del capítulo 2 + entrega; su reacción reordena el backlog del capítulo 3 | ⬜ Backlog | HE-20 | PO |
 
-## FASE 5 — Planetas 4, 5 y 6
+## FASE 3 — Capítulo 3 (planeta 3)
 
-**Criterio de salida**: los 6 planetas jugables; playtest 3 aprobado.
+**Criterio de salida**: actualización del capítulo 3 entregada; playtest aprobado y reacciones registradas.
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-24 | Arte + minijuegos del planeta 4 + historia (ficha previa, patrón HE-D4) | ⬜ Backlog | HE-23 | Dev |
-| HE-25 | Arte + minijuegos del planeta 5 + historia | ⬜ Backlog | HE-23 | Dev |
-| HE-26 | Arte + minijuegos del planeta 6 + historia | ⬜ Backlog | HE-23 | Dev |
-| HE-27 | 🧒 Playtest 3; ajustar | ⬜ Backlog | HE-24, HE-25, HE-26 | PO |
+| HE-21 | Arte del planeta 3 según su ficha | ⬜ Backlog | HE-23 | Dev |
+| HE-22 | Minijuegos del planeta 3 (rutas personalizadas) + escena de historia + pieza de la nave + actualización instalable | ⬜ Backlog | HE-21 | Dev |
+| HE-35 | 🧒 Playtest del capítulo 3 + entrega; su reacción reordena el backlog del capítulo 4 | ⬜ Backlog | HE-22 | PO |
 
-## FASE 6 — Pulido y entrega v1.0
+## FASE 4 — Capítulo 4 (planeta 4)
 
-**Criterio de salida**: el juego corre instalado en la tablet de los niños, con voces definitivas. 🎁
+**Criterio de salida**: actualización del capítulo 4 entregada; playtest aprobado y reacciones registradas.
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-28 | Grabar/integrar voces definitivas según `guion_voces.md` (decisión de HE-D5) | ⬜ Backlog | HE-27 | PO + Dev |
-| HE-29 | Música por planeta + mezcla de audio final | ⬜ Backlog | HE-27 | Dev |
-| HE-30 | Cinemática/escena inicial según la historia rediseñada: el living se transforma + Estelita choca contra la ventana + el Coleccionauta se lleva a papá (guion de HE-D5, se puede saltar; ya no es "la caída de Estelita") | ⬜ Backlog | HE-27 | Dev |
-| HE-31 | Rendimiento y pruebas en tablet real (P3): tiempos de carga, tamaños táctiles, batería | ⬜ Backlog | HE-28 | Dev |
-| HE-32 | Export Android (plantillas, firma, APK) + export Windows | ⬜ Backlog | HE-31 | Dev |
-| HE-33 | 🧒 Playtest final en tablet + correcciones | ⬜ Backlog | HE-32 | PO |
+| HE-24 | Arte + minijuegos del planeta 4 + historia + pieza de la nave + actualización instalable (ficha previa, patrón HE-D4) | ⬜ Backlog | HE-35 | Dev |
+| HE-36 | 🧒 Playtest del capítulo 4 + entrega; su reacción reordena el backlog del capítulo 5 | ⬜ Backlog | HE-24 | PO |
+
+## FASE 5 — Capítulo 5 (planeta 5)
+
+**Criterio de salida**: actualización del capítulo 5 entregada; playtest aprobado y reacciones registradas.
+
+| ID | Tarjeta | Estado | Dependencias | Responsable |
+|---|---|---|---|---|
+| HE-25 | Arte + minijuegos del planeta 5 + historia + pieza de la nave + actualización instalable | ⬜ Backlog | HE-36 | Dev |
+| HE-37 | 🧒 Playtest del capítulo 5 + entrega; su reacción reordena el backlog del capítulo 6 | ⬜ Backlog | HE-25 | PO |
+
+## FASE 6 — Capítulo 6 (planeta 6)
+
+**Criterio de salida**: actualización del capítulo 6 entregada (las 6 piezas de la nave reunibles); playtest aprobado y reacciones registradas.
+
+| ID | Tarjeta | Estado | Dependencias | Responsable |
+|---|---|---|---|---|
+| HE-26 | Arte + minijuegos del planeta 6 + historia + pieza de la nave + actualización instalable | ⬜ Backlog | HE-37 | Dev |
+| HE-38 | 🧒 Playtest del capítulo 6 + entrega; su reacción alimenta el capítulo final | ⬜ Backlog | HE-26 | PO |
+
+## FASE 7 — Capítulo final y cierre v1.0
+
+**Criterio de salida**: el planeta del Coleccionauta jugable (rescate de papá con la prueba final cooperativa), voces y música definitivas en todo el juego, y la v1.0 completa corriendo instalada en la tablet de los niños. 🎁
+
+| ID | Tarjeta | Estado | Dependencias | Responsable |
+|---|---|---|---|---|
+| HE-39 | Capítulo final: planeta del Coleccionauta — prueba final cooperativa (intento fallido cómico → cooperación por roles → rescate de papá, guion de HE-D5) + modo misión familiar + regreso al living | ⬜ Backlog | HE-38, HE-D5 | Dev |
+| HE-28 | Grabar/integrar voces definitivas según `guion_voces.md` (decisión de HE-D5) — pasada final de consistencia; cada capítulo ya entrega sus voces pulidas | ⬜ Backlog | HE-39 | PO + Dev |
+| HE-29 | Música por planeta + mezcla de audio final — pasada final de consistencia; cada capítulo ya entrega su música pulida | ⬜ Backlog | HE-39 | Dev |
+| HE-33 | 🧒 Playtest final en tablet (juego completo) + correcciones | ⬜ Backlog | HE-28, HE-29 | PO |
 | HE-34 | 🎉 Entrega v1.0 a los Hermanos Estelares | ⬜ Backlog | HE-33 | Toda la familia |
 
 ---
@@ -136,3 +147,4 @@
 - **[18-Jul-2026]** HE-D2 (adelanto visual, sigue ⬜; HE-D1 sigue 🔄 sin cambios) — **Insignia de Nicole confirmada por el PO: corazón rosa**; se reemplazó la estrella provisional del cinturón en `assets/fuentes_svg/personajes/nicole_base.svg` (ya no está pendiente). Creado `assets/fuentes_svg/personajes/nicole_celebracion.svg` con su gesto real: corazón coreano con índice y pulgar cruzados y un corazoncito rosa brotando del gesto, expresión tierna (ojos grandes con brillo extra, sonrisita, mejillas sonrojadas), cabeza levemente ladeada, mano en la cadera, rodillas juntitas con puntas de botas hacia adentro, y corazoncitos/estrellitas de festejo; insignia de corazón también en su cinturón. PNG regenerados con el pipeline de HE-03 (Godot headless): 6 PNG generados, 0 errores; verificación visual de `nicole_base.png` y `nicole_celebracion.png` correcta (en la primera iteración el casco tapaba la mano del gesto; se corrigió bajando el brazo). Pendientes derivados actualizados: confirmar insignia pony de Sofía, aprobación de `sofia_celebracion` y `nicole_celebracion` (mostrárselo a Nicole), y los 3 campos de la entrevista de Nicole en HE-D1 (PO + Dev).
 - **[18-Jul-2026]** HE-D2 (rediseño de la historia por decisión del PO, adelanto informal — sigue ⬜; HE-D1 sigue 🔄 sin cambios) — GDD `docs/diseno-juego.md` §1-§4 reescritos y descripción de `CLAUDE.md` actualizada. **Nueva premisa** (estilo "aventura empoderadora" a lo Jimmy Neutron): los tres hermanos juegan en el living y en su imaginación un alienígena coleccionista chistoso — **el Coleccionauta** (nombre provisional, validar con los niños) — se lleva a **papá** para su colección de "las cosas más increíbles del universo". Estelita (estrellita guía, NO parte de la familia) choca contra la ventana, les da los trajes con estrellas de poder y la nave-estrella incompleta. En cada planeta aprenden habilidades y ganan la **pieza de la nave** de ese mundo; los minijuegos siguen otorgando **destellos** (energía estelar). El planeta final se abre al reunir las piezas: sin batalla — le enseñan al Coleccionauta que "los amigos no se coleccionan, se hacen", rescatan a papá y vuelven al living donde papá los llama a comer. **Salvaguardas de tono (GDD §6)**: el secuestro jamás da miedo — todo es su juego imaginado, el alien es cómico y papá aparece en video-llamadas divertidas y tranquilas durante el viaje, sin presión de rescate. **Decisiones del PO registradas**: solo papá secuestrado (no mamá); alien = coleccionista chistoso; el guía es Estelita (se reusa diseño/nombre); coleccionable = piezas de la nave; la historia queda como adelanto informal de HE-D2. **Roles en §2**: Sofía = líder de la misión (lee pistas, arma el plan); Nicole = embajadora artista (hace amigos con los anfitriones y dibuja recuerdos); Maxi = explorador valiente; nuevos personajes de apoyo: el Coleccionauta y Papá (video-llamadas, sinergia con P2 voces reales). **§3**: hub rumbo al planeta del Coleccionauta, "El hangar estelar" (la nave armándose) reemplaza a "El cielo de casa" como pantalla de progreso, y se añade el planeta final del rescate; **§4**: la escena de historia por planeta entrega la pieza + video-llamada de papá. Impacto anotado en tarjetas: HE-30 (cinemática inicial rediseñada), HE-D5 (hereda este guion) y HE-17 (hangar estelar) (PO + Dev).
 - **[18-Jul-2026]** HE-D2 (adelanto informal, sigue ⬜; HE-D1 sigue 🔄 sin cambios) — Sesión de diseño con el PO: **historia y mensaje aprobados formalmente**, más 4 cambios de diseño aprobados y ya aplicados al GDD `docs/diseno-juego.md`: **(1) §1 Mensaje — lección de cooperación jugable en la misión final**: en el primer intento de la prueba del Coleccionauta cada hermano quiere hacerlo a su manera, pelean y todo sale mal de forma cómica; solo cooperando (Sofía lee/planifica, Nicole hace amigos, Maxi encuentra) superan la prueba y rescatan a papá. **(2) §1 Tono — ajuste del PO**: ahora SÍ se puede perder en los niveles de Nicole y Sofía, pero la derrota es siempre un gag chistoso (risa primero, botón gigante de «¡otra vez!», cero progreso perdido, dificultad nunca imposible para su edad); para Maxi (Semilla) el fallo sigue sin existir; se mantiene cero presión de tiempo narrativa. **(3) §2+§5 Jugabilidad — decisión mayor del PO**: se reemplaza «mismo minijuego, 3 dificultades» por **rutas personalizadas**: motores de mecánica compartidos (emparejar, contar, ordenar, buscar, ritmo) con contenido/temas data-driven por niño según sus gustos (fichas de `docs/perfil-jugadores.md`), pocos niveles pero memorables, escalando de a poco; cualquiera puede jugar los niveles de los otros; en la historia cada hermano tiene su propia misión por planeta según su rol; §4 queda marcada «en revisión» — el catálogo definitivo de niveles temáticos (y si siguen siendo 6 planetas universales o menos con misiones personalizadas) se redefinirá al cerrar HE-D1 con las 3 fichas completas. **(4) §3 — nuevo modo misión familiar**: turnos en el mismo dispositivo, cada hermano juega un nivel de su ruta mientras los demás miran y celebran, avance colectivo; 100% local/offline (no viola el alcance negativo §8); la prueba final cooperativa es el nivel pensado para jugarse así. Se agregaron las preguntas abiertas **P5** (catálogo de niveles temáticos por hermano — requiere fichas de HE-D1) y **P6** (diseño detallado de la prueba final cooperativa y del modo misión familiar) en GDD §9. Personajes de apoyo aprobados por el PO sin cambios. Evidencia (DoD): cambios verificados aplicados en `docs/diseno-juego.md` (§1, §2, §3, §4 nota de revisión, §5 reescrita, §9 P5/P6); no hay código que probar — trabajo de diseño de Fase 0. Impacto anotado en tarjetas: HE-10, HE-14/15/16 y HE-D4 heredan el modelo de motores + rutas personalizadas; HE-D5 hereda el guion de la prueba final cooperativa; el cierre de HE-D1 sube de importancia (las fichas alimentan las rutas personalizadas; los 3 campos pendientes de Nicole siguen siendo el bloqueo). Pendiente de sesión: el PO seguirá revisando el resto de sus puntos de feedback en la próxima conversación (PO + Dev).
+- **[18-Jul-2026]** HE-D2 (adelanto informal, sigue ⬜; HE-D1 sigue 🔄 sin cambios) — Segunda decisión de la sesión de diseño, **aprobada formalmente por el PO: lanzamiento por capítulos (seasons)** — el juego se construye y entrega de a un planeta por vez. El **capítulo 1** va desde la cinemática del secuestro de papá hasta completar el planeta 1 y ganar su pieza de la nave: se construye la **maqueta del juego completo** (título, selección, mapa con todos los planetas visibles, hangar estelar, zona de padres) pero **solo el planeta 1 jugable**, pulido hasta el último detalle (nada genérico ni placeholder). Cada actualización agrega un planeta y la reacción de los niños a cada capítulo reordena el backlog del siguiente (regla de oro 5). Cuidados aprobados: los planetas no jugables son un tease ilusionante («todavía muy lejos», sin candados ni «próximamente»); cada capítulo cierra en celebración con gancho, nunca en corte; el capítulo 1 incluye las 3 rutas personalizadas completas; los motores de mecánica siguen naciendo reutilizables — lo bespoke es el contenido (regla de oro 3). Evidencia (DoD): GDD §3 tiene la nueva subsección «Lanzamiento por capítulos (seasons)» en `docs/diseno-juego.md`; `docs/stack-tecnico.md` §7 registra 3 decisiones nuevas del 18-Jul (rutas personalizadas que reemplazan al modelo «una escena con parámetro nivel» del 17-Jul; lanzamiento por capítulos; **guardado versionado desde el día uno** — JSON de `Progreso` con campo `version` y migraciones al cargar, para que las actualizaciones jamás borren progreso) y la descripción del autoload `Progreso` fue actualizada acorde; trabajo de diseño/documentación, sin código que probar. **Reestructura del tablero aplicada por el SM**: la Fase 1 pasa a ser «Núcleo + Capítulo 1 completo» (fusiona las antiguas Fases 1-3 y absorbe HE-30 cinemática, HE-31 tablet y HE-32 export, necesarios para entregar el capítulo 1); las Fases 2-6 quedan como un capítulo/season por planeta (planetas 2 a 6, orden previo del roadmap, sujeto a la reacción de los niños) con playtest de cierre por capítulo (nuevas tarjetas HE-35 a HE-38); nueva Fase 7 «Capítulo final y cierre v1.0» con HE-39 (planeta del Coleccionauta: prueba cooperativa + rescate de papá) y las pasadas finales HE-28/HE-29/HE-33/HE-34. HE-07 hereda el requisito de guardado versionado y HE-08 el tease de planetas sin candados. **Dependencia anotada**: la elección del planeta 1 y sus temas depende de cerrar HE-D1 (fichas de los 3 niños) — es requisito de arranque de la nueva Fase 1 (PO + Dev).

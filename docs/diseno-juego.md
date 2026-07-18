@@ -108,6 +108,29 @@ proporciones redondas. Cada uno con un gesto característico de celebración.
 
 ## 3. Estructura del juego
 
+### Lanzamiento por capítulos (seasons) *(decisión del PO, 18-Jul-2026)*
+
+El juego se construye y se entrega **de a un planeta por vez**, como capítulos de una serie:
+
+- **Capítulo 1**: desde la cinemática del secuestro de papá hasta completar todas las misiones
+  del planeta 1 y ganar su pieza de la nave. Se construye la **maqueta del juego completo**
+  (título, selección, mapa con todos los planetas visibles, hangar estelar, zona de padres),
+  pero **solo el planeta 1 es jugable** — y ese planeta se define y pule hasta el último
+  detalle para los tres niños: nada de su contenido queda genérico ni placeholder.
+- **Capítulos siguientes**: cada actualización agrega un planeta y desarrolla la historia.
+  La reacción de los niños a cada capítulo reordena el backlog del siguiente (regla de oro 5).
+- **Los planetas aún no jugables jamás se sienten como un muro**: no hay candados ni
+  «próximamente» — se ven en el mapa brillando «todavía muy lejos», y Estelita explica que
+  la nave necesita más piezas para llegar tan lejos. Es un tease ilusionante, no un bloqueo.
+- **Cada capítulo cierra en celebración, nunca en corte**: termina con la fiesta de la pieza
+  conseguida y la video-llamada de papá que deja el gancho del siguiente planeta.
+- **El capítulo 1 ya incluye las 3 rutas personalizadas** (§5) dentro del planeta 1, así el
+  primer playtest valida el modelo completo.
+- Matiz de arquitectura: lo bespoke es el **contenido**; los **motores** de mecánica se
+  construyen reutilizables igual (regla de oro 3) — es lo que hace barato el capítulo 2.
+- Requisito técnico derivado: **guardado versionado desde el día uno** — agregar planetas por
+  actualización jamás puede borrar el progreso (registrado en el stack técnico).
+
 ```
 Pantalla de título (tocar para empezar)
    └── Selección de personaje (3 retratos grandes — define la ruta personalizada)
