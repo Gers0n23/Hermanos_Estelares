@@ -124,3 +124,4 @@
 
 - **[17-Jul-2026]** Planificación inicial: GDD, stack técnico, tablero y harness creados (PO + Dev).
 - **[18-Jul-2026]** Investigación de herramientas IA (GodotPrompter + godot-mcp adoptados, GDAI a evaluar), hook de guardado automático en GitHub, y reestructura del roadmap: nueva Fase 0 de diseño personalizado con los niños (PO + Dev).
+- **[18-Jul-2026]** Planificación Scrumban: HE-D1 (sesión de descubrimiento, PO) y HE-01 (instalación de Godot y herramientas, Dev) pasan a En curso — WIP 2/2 (Scrum Master).
