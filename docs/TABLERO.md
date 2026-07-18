@@ -40,7 +40,7 @@
 | HE-D2 | Personalizar guion e historia (GDD §1-§2) con esos hallazgos: personalidad y gesto de celebración de cada hermano, nombre/carácter de Estelita; validar con los niños que sus personajes "sean ellos" | ⬜ Backlog | HE-D1 | PO + Dev |
 | HE-D3 | Validar los 6 planetas (temas, anfitriones, nombres, orden de desarrollo) contra los gustos reales; ajustar GDD §4 — planetas que no emocionen se reemplazan ahora, no después | ⬜ Backlog | HE-D1 | PO + Dev |
 | HE-D4 | Ficha detallada por minijuego del primer planeta (en `docs/fichas/`): mecánica exacta, los 3 niveles S/B/E, assets necesarios, líneas de voz, condición de destello | ⬜ Backlog | HE-D3 | Dev + PO |
-| HE-D5 | Guion narrativo completo: escena de intro (la caída de Estelita), escenas de historia por planeta y primera versión de `guion_voces.md`; decidir P2 (voces de la familia) | ⬜ Backlog | HE-D2, HE-D3 | PO + Dev |
+| HE-D5 | Guion narrativo completo sobre la historia rediseñada (GDD §1-§4, 18-Jul-2026): escena de intro (el living se transforma, Estelita choca contra la ventana, el Coleccionauta se lleva a papá), escenas de historia por planeta (entrega de pieza de la nave + video-llamada de papá) y primera versión de `guion_voces.md`; decidir P2 (voces de la familia — sinergia con las video-llamadas de papá) | ⬜ Backlog | HE-D2, HE-D3 | PO + Dev |
 
 ## FASE 1 — Cimientos (herramientas y esqueleto)
 
