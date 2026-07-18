@@ -8,9 +8,9 @@
 
 - **Última actualización**: 18-Jul-2026
 - **Fase activa**: Fase 0 — El corazón del juego (diseño con los niños)
-- **En curso (WIP)**: ninguna
-- **Próximo en cola**: HE-D1 (Sesión de descubrimiento con los niños)
-- **Bloqueos**: ninguno
+- **En curso (WIP)**: HE-D1 (PO) y HE-01 (Dev) — 2/2, límite alcanzado
+- **Próximo en cola**: HE-D2 y HE-D3 (ambas dependen de HE-D1)
+- **Bloqueos**: ninguno formal; HE-D1 requiere tiempo presencial del PO con los niños — hasta que se registre `docs/perfil-jugadores.md`, HE-D2/D3/D4/D5 y HE-02 no pueden iniciar
 - **Avance general**: 0/39 tarjetas ✅ (planificación completada 17-Jul-2026; herramientas IA investigadas y Fase 0 de diseño agregada 18-Jul-2026)
 
 ---
