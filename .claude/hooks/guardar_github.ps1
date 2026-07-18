@@ -32,7 +32,7 @@ git -C $root diff --cached --quiet 2>$null
 if ($LASTEXITCODE -eq 0) { exit 0 }  # nada que comitear
 
 $msgFile = Join-Path $env:TEMP 'he_commit_msg.txt'
-@($mensaje, '', 'Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>') | Set-Content $msgFile -Encoding UTF8
+[IO.File]::WriteAllLines($msgFile, @($mensaje, '', 'Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>'), (New-Object Text.UTF8Encoding($false)))
 git -C $root commit -F $msgFile 2>$null | Out-Null
 Remove-Item $msgFile -Force
 
