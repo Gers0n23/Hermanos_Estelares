@@ -1,6 +1,6 @@
 # Los Hermanos Estelares — Stack técnico y estructura del proyecto
 
-- **Última actualización**: 17-Jul-2026
+- **Última actualización**: 18-Jul-2026 (HE-03: pipeline de assets por lote + evaluaciones MCP)
 - Complementa al [GDD](diseno-juego.md). El *qué* está allá; aquí está el *con qué* y el *dónde*.
 
 ---
@@ -78,7 +78,7 @@ Permite a Claude ejecutar el juego, leer errores en vivo y ver el editor en vez 
 | Servidor | Naturaleza | Capacidades | Veredicto |
 |---|---|---|---|
 | **[godot-mcp (Coding-Solo)](https://github.com/Coding-Solo/godot-mcp)** | Open source, minimalista | Lanzar editor, ejecutar proyecto, capturar salida de debug | **Adoptado como base** — gratuito, auditable, suficiente para el ciclo editar→ejecutar→leer errores |
-| **[GDAI MCP](https://gdaimcp.com)** ([plugin](https://github.com/3ddelano/gdai-mcp-plugin-godot)) | Propietario, el más pulido según comparativas 2026 | Crear escenas/nodos/recursos, screenshots automáticos del editor y del juego corriendo, debugger, edición GDScript | **A evaluar en HE-03** — si la fricción de editar `.tscn` como texto resulta alta, se adopta |
+| **[GDAI MCP](https://gdaimcp.com)** ([plugin](https://github.com/3ddelano/gdai-mcp-plugin-godot)) | Propietario (binario cerrado), gratuito, el más pulido según comparativas 2026 | Crear escenas/nodos/recursos, screenshots automáticos del editor y del juego corriendo, debugger, edición GDScript | **Evaluado en HE-03: NO se adopta por ahora** — el flujo texto+headless funciona sin fricción (validado en HE-D2/HE-03), requiere el editor abierto y es binario no auditable. Se reevalúa si en Fase 2 (HE-05+) hace falta feedback visual (screenshots) |
 | Godot MCP Pro / Summer Engine | Comerciales (163 tools / nivel motor) | Control total del editor, generación de assets | Descartados por ahora — sobredimensionados para este alcance |
 
 **Flujo de trabajo resultante**: Claude escribe escenas/scripts como texto (formato `.tscn` legible) con los patrones de GodotPrompter → ejecuta la escena vía godot-mcp → lee errores/salida → corrige. El DoD del tablero exige este ciclo antes de cerrar cualquier tarjeta.
@@ -87,8 +87,15 @@ Permite a Claude ejecutar el juego, leer errores en vivo y ver el editor en vez 
 
 Estilo objetivo: cartoon vectorial (ver GDD §7). Estrategia en capas, de más controlable a más generativa:
 
-1. **SVG generado por código** (disponible hoy, sin instalar nada): Claude escribe los SVG de personajes/props directamente (formas vectoriales redondas se prestan muy bien a esto), se versionan en `assets/fuentes_svg/` y se exportan a PNG. Godot 4 además **importa SVG nativamente**. Conversión por lote: `resvg` o Inkscape CLI.
-2. **MCP de generación de imágenes** (a instalar, tarjeta HE-03): evaluar un servidor MCP de generación (p. ej. Recraft — especializado en vectorial/SVG —, o similar) para fondos y escenas complejas donde dibujar SVG a mano no rinde. Criterio de selección: que produzca vectorial o alta resolución con estilo consistente, y licencia clara.
+1. **SVG generado por código** (operativo desde HE-03): Claude escribe los SVG de personajes/props directamente (formas vectoriales redondas se prestan muy bien a esto), se versionan en `assets/fuentes_svg/` y se exportan a PNG en `assets/sprites/` (misma subestructura). **Conversión por lote** con el rasterizador SVG interno de Godot — sin dependencias externas (`resvg`/Inkscape descartados por innecesarios):
+
+   ```powershell
+   # Desde la raíz del repo (escala opcional con: -- --escala=2.0)
+   & $env:GODOT --headless --path . --script herramientas/exportar_sprites.gd
+   ```
+
+   El script `herramientas/exportar_sprites.gd` recorre `assets/fuentes_svg/` recursivamente, rasteriza cada `.svg` (`Image.load_svg_from_string`) y guarda el `.png` espejo en `assets/sprites/`. La carpeta `herramientas/` tiene `.gdignore` para que Godot no importe tooling (godot-mcp, node_modules) como recursos del juego.
+2. **MCP de generación de imágenes** (evaluado en HE-03, decisión pendiente del PO): el candidato recomendado es el [MCP oficial de Recraft](https://github.com/recraft-ai/mcp-recraft-server) — genera SVG vectorial editable con estilo consistente, ideal para fondos. Requiere API de pago (~USD 0.04/imagen, planes desde USD 10/mes con derechos comerciales). **No se contrata todavía**: se pospone la decisión hasta HE-13 (arte del primer planeta), cuando se sabrá si los fondos dibujados como SVG a mano + bibliotecas CC0 alcanzan. Si alcanzan, no se gasta nada.
 3. **Bibliotecas CC0 de relleno**: [Kenney.nl](https://kenney.nl) (sprites, UI, audio) para props secundarios e íconos — calidad alta, dominio público, estilo compatible con cartoon.
 
 **Animaciones**: cutout con `AnimationPlayer`/`Skeleton2D` sobre las partes del SVG (cabeza, brazos, piernas como nodos separados). Transiciones de pantalla con `Tween` + la nave de Estelita. Partículas de Godot para confeti/destellos (no requieren assets).
@@ -113,3 +120,8 @@ Estilo objetivo: cartoon vectorial (ver GDD §7). Estrategia en capas, de más c
 | 18-Jul-2026 | Adoptar GodotPrompter (skills GDScript) + godot-mcp de Coding-Solo (control del editor); GDAI MCP en evaluación | Investigación §4: cierran el ciclo escribir→ejecutar→leer errores y anclan GDScript idiomático |
 | 18-Jul-2026 | Guardado automático en GitHub al registrar avances del tablero (hook `guardar_github.ps1`) | Documentación continua del progreso pedida por el PO |
 | 18-Jul-2026 | El diseño personalizado con los niños es la Fase 0 del roadmap | Nada se implementa si contradice lo que ellos aman (decisión del PO) |
+| 18-Jul-2026 | Conversión SVG→PNG por lote con el rasterizador interno de Godot (`herramientas/exportar_sprites.gd`), destino canónico `assets/sprites/` | HE-03: cero dependencias externas (resvg/Inkscape innecesarios), mismo motor que consumirá los assets; validado con los 4 sprites de personajes |
+| 18-Jul-2026 | `.gdignore` en `herramientas/` | Godot escaneaba ~900 archivos de tooling (godot-mcp + node_modules) en cada import; no son recursos del juego |
+| 18-Jul-2026 | GDAI MCP: no se adopta por ahora (reevaluar en Fase 2 si hace falta feedback visual) | HE-03: el flujo texto+headless+godot-mcp cubre el ciclo completo sin fricción; GDAI es binario cerrado no auditable y exige editor abierto |
+| 18-Jul-2026 | MCP de generación de imágenes: candidato Recraft (MCP oficial, SVG editable, ~USD 0.04/imagen); decisión de contratar pospuesta a HE-13 | HE-03: no gastar antes de saber si los fondos SVG a mano + CC0 (Kenney) alcanzan; la decisión final es del PO |
+| 18-Jul-2026 | Conexión viva de godot-mcp verificada por stdio JSON-RPC (`initialize`, `get_godot_version` → 4.7.1, `get_project_info` sobre el proyecto) | HE-03: cierra la deuda declarada en HE-01; el servidor responde correcto con el `GODOT_PATH` de `.mcp.json` |
