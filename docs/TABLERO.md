@@ -78,7 +78,7 @@
 | HE-14 | Minijuego 1 del planeta (niveles S/B/E según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
 | HE-15 | Minijuego 2 del planeta (S/B/E según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
 | HE-16 | Minijuego 3 del planeta (según ficha) | ⬜ Backlog | HE-10, HE-13 | Dev |
-| HE-17 | Escena de historia del planeta + destellos otorgados + estrella encendida en el cielo de casa | ⬜ Backlog | HE-14, HE-15, HE-16 | Dev |
+| HE-17 | Escena de historia del planeta + destellos otorgados + pieza de la nave ganada y visible en "El hangar estelar" (pantalla de progreso que reemplaza a "El cielo de casa", GDD §3 rediseñado) | ⬜ Backlog | HE-14, HE-15, HE-16 | Dev |
 | HE-18 | 🧒 Playtest 1 con Maxi, Nicole y Sofía; registrar observaciones y ajustar | ⬜ Backlog | HE-17 | PO |
 
 ## FASE 4 — Planetas 2 y 3
