@@ -6,7 +6,7 @@
 
 ## ESTADO ACTUAL
 
-- **Última actualización**: 18-Jul-2026
+- **Última actualización**: 19-Jul-2026
 - **Fase activa**: Fase 0 — El corazón del juego (diseño con los niños)
 - **En curso (WIP)**: HE-D1 (PO) — 1/2, hay capacidad para 1 tarjeta más. Las 3 entrevistas de `docs/perfil-jugadores.md` tienen ya los datos esenciales para diseñar: Maxi (2, semilla) ✅, Sofía (8, estrella) ✅ y Nicole (5, brote) **parcial** — le faltan 3 campos que el PO completará: apps/juegos que usa, qué la asusta/aburre y sueños/mundos. Como dos de esos campos están en el alcance explícito de la tarjeta, HE-D1 no cumple aún el DoD (punto 1) y sigue 🔄. **Su cierre subió aún más de importancia**: las fichas alimentan las rutas personalizadas (GDD §5) y ahora también **la elección del planeta 1 y sus temas**, requisito de arranque de la nueva Fase 1 «núcleo + capítulo 1 completo». Además, adelantos informales de HE-D2 (sigue ⬜): sprites SVG de los 3 hermanos + celebraciones, historia y mensaje aprobados formalmente por el PO, **segunda decisión formal del 18-Jul: lanzamiento por capítulos (seasons)** — el juego se construye y entrega de a un planeta por vez, con la maqueta completa del juego desde el capítulo 1 (roadmap reestructurado en este tablero), y **tercera decisión formal del 18-Jul: equipo de agentes especializados** — 7 agentes nuevos en `.claude/agents/` con flujo spec → implementación → auditoría UX+QA → playtest (ver Roles y reglas especiales)
 - **Próximo en cola**: HE-04 (base de audio, Dev — solo depende de HE-01 ✅). HE-D2 y HE-D3 esperan al cierre formal de HE-D1; HE-13 heredará la decisión pendiente sobre Recraft MCP para fondos

@@ -9,6 +9,16 @@
       "env": {
         "GODOT_PATH": "C:\\Users\\gcordero\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.1-stable_win64_console.exe"
       }
+    },
+    "mcp-image": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-image"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+        "IMAGE_OUTPUT_DIR": "C:\\Users\\gcordero\\Documents\\Github\\Hermanos_Estelares\\assets\\generadas",
+        "IMAGE_QUALITY": "quality"
+      }
     }
   }
 }

@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqf8n7x4t0wjr"]
+
+[ext_resource type="Script" path="res://scripts/motores/emparejar/motor_emparejar.gd" id="1_motor"]
+[ext_resource type="PackedScene" uid="uid://cfg6qgqxvhvxo" path="res://escenas/minijuegos/emparejar/carta_emparejar.tscn" id="2_carta"]
+
+[node name="motor_emparejar" type="Node2D"]
+script = ExtResource("1_motor")
+ruta_nivel = "res://datos/niveles/piloto_emparejar_estrella_01.json"
+
+[node name="capa_ui" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="capa_ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="centro" type="CenterContainer" parent="capa_ui/ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="tablero" type="GridContainer" parent="capa_ui/ui/centro" node_paths=PackedStringArray()]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+
+[node name="contador_destellos" type="Label" parent="capa_ui/ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 300.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 40
+text = "* 0"
+
+[node name="etiqueta_gag" type="Label" parent="capa_ui/ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -160.0
+offset_right = 260.0
+offset_bottom = -80.0
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+autowrap_mode = 2
+text = "jaja se marearon dando vueltas! vamos, las ordenamos de nuevo (TODO: voz derrota_gag)"
+
+[node name="boton_otra_vez" type="Button" parent="capa_ui/ui"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(240, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 32
+text = "OTRA VEZ"
+
+[node name="boton_estelita" type="Button" parent="capa_ui/ui"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = -136.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 40
+tooltip_text = "Estelita: toca para repetir la instruccion"
+text = "*"
+
+[node name="boton_salir" type="Button" parent="capa_ui/ui"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -136.0
+offset_right = 136.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 32
+tooltip_text = "Salir al mapa"
+text = "<"
+
+[node name="confeti" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(640, 360)
+emitting = false
+one_shot = true
+amount = 80
+lifetime = 1.2
+speed_scale = 1.5
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 150.0
+initial_velocity_max = 420.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color = Color(1, 0.85, 0.3, 1)

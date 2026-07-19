@@ -1,0 +1,78 @@
+{
+  "id_nivel": "piloto_emparejar_estrella_01",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "tema": "ponys_magicos",
+  "modo": "identico",
+  "oculto": true,
+  "disposicion": { "filas": 4, "columnas": 4 },
+  "anfitrion_id": "estelita",
+  "fondo_id": "fondo_pradera_estelar_ponys_01",
+  "limite_intentos": 16,
+  "tiempo_volteo_ms": 850,
+  "lineas_voz": {
+    "intro": "voces/emparejar/estrella_ponys/intro_01.ogg",
+    "pista": "voces/emparejar/estrella_ponys/pista_01.ogg",
+    "acierto_par": [
+      "voces/emparejar/estrella_ponys/acierto_par_01.ogg",
+      "voces/emparejar/estrella_ponys/acierto_par_02.ogg",
+      "voces/emparejar/estrella_ponys/acierto_par_03.ogg"
+    ],
+    "no_es_este": [
+      "voces/emparejar/estrella_ponys/no_es_este_01.ogg",
+      "voces/emparejar/estrella_ponys/no_es_este_02.ogg"
+    ],
+    "victoria_final": "voces/emparejar/estrella_ponys/victoria_final_01.ogg",
+    "derrota_gag": "voces/emparejar/estrella_ponys/derrota_gag_01.ogg"
+  },
+  "pares": [
+    {
+      "id_pareja": "pegaso_rosa",
+      "elemento_a": { "id": "pegaso_rosa_a", "sprite": "sprites/ponys/pony_pegaso_rosa.png" },
+      "elemento_b": { "id": "pegaso_rosa_b", "sprite": "sprites/ponys/pony_pegaso_rosa.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "unicornio_turquesa",
+      "elemento_a": { "id": "unicornio_turquesa_a", "sprite": "sprites/ponys/pony_unicornio_turquesa.png" },
+      "elemento_b": { "id": "unicornio_turquesa_b", "sprite": "sprites/ponys/pony_unicornio_turquesa.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_fuego",
+      "elemento_a": { "id": "pony_fuego_a", "sprite": "sprites/ponys/pony_de_fuego.png" },
+      "elemento_b": { "id": "pony_fuego_b", "sprite": "sprites/ponys/pony_de_fuego.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_nieve",
+      "elemento_a": { "id": "pony_nieve_a", "sprite": "sprites/ponys/pony_de_nieve.png" },
+      "elemento_b": { "id": "pony_nieve_b", "sprite": "sprites/ponys/pony_de_nieve.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_bosque",
+      "elemento_a": { "id": "pony_bosque_a", "sprite": "sprites/ponys/pony_de_bosque.png" },
+      "elemento_b": { "id": "pony_bosque_b", "sprite": "sprites/ponys/pony_de_bosque.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_mar",
+      "elemento_a": { "id": "pony_mar_a", "sprite": "sprites/ponys/pony_de_mar.png" },
+      "elemento_b": { "id": "pony_mar_b", "sprite": "sprites/ponys/pony_de_mar.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_cristal",
+      "elemento_a": { "id": "pony_cristal_a", "sprite": "sprites/ponys/pony_de_cristal.png" },
+      "elemento_b": { "id": "pony_cristal_b", "sprite": "sprites/ponys/pony_de_cristal.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    },
+    {
+      "id_pareja": "pony_arcoiris_secreto",
+      "elemento_a": { "id": "pony_arcoiris_secreto_a", "sprite": "sprites/ponys/pony_arcoiris_legendario.png" },
+      "elemento_b": { "id": "pony_arcoiris_secreto_b", "sprite": "sprites/ponys/pony_arcoiris_legendario.png" },
+      "sprite_dorso": "sprites/comun/dorso_estrella_pony.png"
+    }
+  ]
+}
