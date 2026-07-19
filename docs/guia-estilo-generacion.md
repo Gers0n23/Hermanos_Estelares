@@ -17,8 +17,11 @@ La key **nunca** se escribe en archivos del repo. La salida cruda va a `assets/g
 Toda generación parte adjuntando al menos una imagen ancla — nunca se le pide al modelo que "invente" el estilo o un personaje de memoria:
 
 - **Ancla maestra de estilo**: `assets/hermanosestelares.jpeg` (el póster oficial).
-- **Anclas de personaje**: hojas de referencia por niño (pendientes de generar cuando se habilite facturación): cada hermano en 3/4, frente, perfil y espalda, misma ropa e iluminación, fondo neutro. Se guardarán en `assets/generadas/anclas/` y se promoverán a `assets/anclas/` al aprobarse.
+- **Anclas de personaje** (aprobadas por el PO el 19-Jul-2026, en `assets/anclas/`): `maxi_referencia.png`, `nicole_referencia.png`, `sofia_referencia.png` — cada hermano en 4 vistas (3/4, frente, perfil, espalda), misma ropa e iluminación, fondo neutro.
+- **Ancla de alturas**: `hermanos_alturas.png` (lineup de los tres) — adjuntarla SIEMPRE que aparezcan dos o más hermanos juntos, porque fija la proporción por edad: Maxi (2) llega a la cintura de Sofía, Nicole (5) a su hombro, Sofía (8) es la más alta.
 - Los sprites SVG aprobados (`assets/sprites/personajes/`) sirven de referencia adicional de vestuario y colores.
+
+**Lección aprendida (19-Jul)**: para generar a los tres hermanos juntos NO adjuntar las tres hojas individuales a la vez — el modelo duplica personajes. Anclar con el póster (y/o el lineup de alturas) como referencia única de grupo y describir a cada niño en el texto.
 
 ## 3. Biblia de arte (describir SIEMPRE en el prompt)
 
