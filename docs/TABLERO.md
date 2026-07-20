@@ -37,7 +37,7 @@
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-D1 | Sesión de descubrimiento con los niños: qué aman hoy (animales, colores, canciones, personajes, apps/juegos favoritos, qué los asusta o aburre); registrar hallazgos por hijo en `docs/perfil-jugadores.md` | 🔄 En curso | — | PO |
+| HE-D1 | Sesión de descubrimiento con los niños: qué aman hoy (animales, colores, canciones, personajes, apps/juegos favoritos, qué los asusta o aburre); registrar hallazgos por hijo en `docs/perfil-jugadores.md` | ⬜ Backlog | — | PO |
 | HE-D2 | Personalizar guion e historia (GDD §1-§2) con esos hallazgos: personalidad y gesto de celebración de cada hermano, nombre/carácter de Estelita; validar con los niños que sus personajes "sean ellos" | ⬜ Backlog | HE-D1 | PO + Dev |
 | HE-D3 | Validar los 6 planetas (temas, anfitriones, nombres, orden de desarrollo) contra los gustos reales; ajustar GDD §4 — planetas que no emocionen se reemplazan ahora, no después. Incluye **elegir el planeta 1** (el del capítulo 1) y el orden tentativo de los capítulos siguientes | ⬜ Backlog | HE-D1 | PO + Dev |
 | HE-D4 | Ficha detallada por nivel/minijuego del primer planeta (en `docs/fichas/`): motor de mecánica compartido + contenido temático por hermano según sus rutas personalizadas (nuevo modelo GDD §2+§5, 18-Jul-2026; requiere las 3 fichas de HE-D1 y resolver P5 de GDD §9), assets necesarios, líneas de voz, condición de destello | ⬜ Backlog | HE-D3 | Dev + PO |
