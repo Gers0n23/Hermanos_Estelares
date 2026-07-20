@@ -7,7 +7,7 @@ config_version=5
 [application]
 
 config/name="Los Hermanos Estelares"
-config/description="Tres hermanos ayudan a la estrella Estelita a recuperar sus destellos visitando planetas con minijuegos. Un regalo para Maxi, Nicole y Sofia."
+config/description="Tres hermanos ayudan al alien Cometa a recuperar sus destellos visitando planetas con minijuegos. Un regalo para Maxi, Nicole y Sofia."
 run/main_scene="res://escenas/nucleo/placeholder.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 

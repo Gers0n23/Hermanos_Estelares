@@ -129,7 +129,7 @@ Notas del contrato:
 | Cantidad de pares | 2-3 | 4-6 | 6-10 |
 | `oculto` (memoria) | Siempre `false` — todo visible, sin carga de memoria de trabajo | Opcional; si se usa, `tiempo_volteo_ms` generoso (≥1200 ms) | Sí, modo memoria real; `tiempo_volteo_ms` más ajustado (~800-900 ms) para reto genuino |
 | Ritmo/tiempo | Sin ritmo — cero presión, cualquier orden vale | Ritmo suave opcional vía `limite_intentos` (reto blando, no cronómetro visible) | Puede sumar cronómetro de juego (no narrativo) para el puntaje de estrellas — nunca bloquea, solo puntúa |
-| Ayudas visuales | Halo pulsante constante en los elementos tocables; imán/hitbox extra generoso (≥96 px lógicos, GDD §6.1); un solo objetivo resaltado a la vez si `anfitrion_id` lo narra | Pista por voz tras 2-3 intentos fallidos consecutivos sobre el mismo par (`lineas_voz.pista`); resaltado sutil del segundo elemento si sigue sin encontrarlo tras la pista | Sin ayudas automáticas — puede pedir pista tocando a Estelita (repite instrucción, GDD §6.2), pero no hay resaltado gratuito: el reto es real |
+| Ayudas visuales | Halo pulsante constante en los elementos tocables; imán/hitbox extra generoso (≥96 px lógicos, GDD §6.1); un solo objetivo resaltado a la vez si `anfitrion_id` lo narra | Pista por voz tras 2-3 intentos fallidos consecutivos sobre el mismo par (`lineas_voz.pista`); resaltado sutil del segundo elemento si sigue sin encontrarlo tras la pista | Sin ayudas automáticas — puede pedir pista tocando a Cometa (repite instrucción, GDD §6.2), pero no hay resaltado gratuito: el reto es real |
 | `limite_intentos` | Siempre `null` | Opcional (config del nivel); si se define, activa derrota-gag | Recomendado definir uno holgado para dar sentido al puntaje de estrellas |
 | Fallo posible | **No existe** (§6) | Sí, si el nivel lo configura — derrota-gag suave | Sí — derrota-gag + puntaje 1-3 estrellas según intentos/tiempo |
 | Objetivo a la vez | Sí, implícito (cualquier toque produce algo bueno) | Sí, explícito: la instrucción de voz nombra un elemento o pista a la vez (GDD §5) | No aplica — puede manejar el tablero completo a la vez |
@@ -148,7 +148,7 @@ Notas del contrato:
   tablero, se dispara la **derrota-gag** (GDD §1):
   - Ejemplo de gag (placeholder, a tematizar por `disenador-niveles`): las tarjetas/elementos
     se mezclan solos dando vueltas graciosas al ritmo de una musiquita tonta, el anfitrión se
-    ríe con ellos, Estelita hace un comentario chistoso (`lineas_voz.derrota_gag`).
+    ríe con ellos, Cometa hace un comentario chistoso (`lineas_voz.derrota_gag`).
   - **Reintento de un toque**: botón gigante "¡otra vez!" aparece de inmediato sobre la
     animación del gag.
   - **Cero progreso perdido**: los destellos/piezas ya ganados en el juego no se tocan; dentro

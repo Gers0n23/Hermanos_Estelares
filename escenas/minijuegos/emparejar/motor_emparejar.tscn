@@ -78,7 +78,7 @@ offset_bottom = 120.0
 theme_override_font_sizes/font_size = 32
 text = "OTRA VEZ"
 
-[node name="boton_estelita" type="Button" parent="capa_ui/ui"]
+[node name="boton_cometa" type="Button" parent="capa_ui/ui"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 1
@@ -92,7 +92,7 @@ offset_top = -136.0
 offset_right = -20.0
 offset_bottom = -20.0
 theme_override_font_sizes/font_size = 40
-tooltip_text = "Estelita: toca para repetir la instruccion"
+tooltip_text = "Cometa: toca para repetir la instruccion"
 text = "*"
 
 [node name="boton_salir" type="Button" parent="capa_ui/ui"]

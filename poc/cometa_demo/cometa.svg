@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-  <!-- Estelita: estrella dorada de puntas redondas con carita tierna -->
+  <!-- Cometa (PoC visual provisional, placeholder de estrella dorada con carita tierna) -->
   <g>
     <!-- brillo exterior suave -->
     <circle cx="128" cy="128" r="118" fill="#ffd94d" opacity="0.18"/>

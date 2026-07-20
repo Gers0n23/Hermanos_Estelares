@@ -28,7 +28,7 @@ const DESTELLOS_POR_INTENTO_SOBRANTE := 2
 @onready var _etiqueta_gag: Label = %etiqueta_gag
 @onready var _confeti: CPUParticles2D = %confeti
 @onready var _contador_destellos: Label = %contador_destellos
-@onready var _boton_estelita: Button = %boton_estelita
+@onready var _boton_cometa: Button = %boton_cometa
 @onready var _boton_salir: Button = %boton_salir
 
 var _cartas: Array[CartaEmparejar] = []
@@ -62,7 +62,7 @@ func _ready() -> void:
 	_configurar_desde_nivel()
 	_construir_tablero()
 	_boton_otra_vez.pressed.connect(_reintentar)
-	_boton_estelita.pressed.connect(_al_tocar_estelita)
+	_boton_cometa.pressed.connect(_al_tocar_cometa)
 	_boton_salir.pressed.connect(func() -> void: salir_solicitado.emit())
 	_reproducir_voz("intro", nivel.get("lineas_voz", {}).get("intro", ""))
 
@@ -211,9 +211,9 @@ func _reproducir_voz(clave: String, ruta: String) -> void:
 		print("[voz TODO:%s] %s" % [clave, ruta])
 
 
-## B3 (auditoria UX 18-Jul-2026): tocar a Estelita repite la instruccion (GDD §6.2,
+## B3 (auditoria UX 18-Jul-2026): tocar a Cometa repite la instruccion (GDD §6.2,
 ## obligatoria). Para este piloto reproduce la linea `pista` del nivel.
-func _al_tocar_estelita() -> void:
+func _al_tocar_cometa() -> void:
 	_reproducir_voz("pista", nivel.get("lineas_voz", {}).get("pista", ""))
 
 

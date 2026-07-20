@@ -48,7 +48,7 @@ o aburre").
 - `limite_intentos: 16` (el doble de los 8 pares) — holgado como pide la regla de escalado
   para Estrella ("recomendado definir uno holgado para dar sentido al puntaje de estrellas"),
   nunca imposible de completar para 8 años.
-- Sin ayudas automáticas ni resaltados: Sofía puede pedir que Estelita repita la instrucción
+- Sin ayudas automáticas ni resaltados: Sofía puede pedir que Cometa repita la instrucción
   tocándola, pero el tablero completo está disponible desde el inicio (GDD §6.2, §5).
 
 ## 4. Elementos y disposición
@@ -78,7 +78,7 @@ o aburre").
 Si Sofía agota los 16 intentos sin completar el tablero (algo poco probable con el límite
 holgado, pero posible si se dispersa): las 16 cartas se sueltan de la grilla y **salen
 galopando en círculo** al ritmo de una musiquita tonta de banjo, tropiezan con sus propias
-crines y caen en una pila de patas para arriba, relinchando de risa. Estelita comenta algo
+crines y caen en una pila de patas para arriba, relinchando de risa. Cometa comenta algo
 como "¡jaja, se marearon dando vueltas! vamos, las ordenamos de nuevo". Los pares que Sofía
 ya había acertado quedan resueltos (no los repite); el tablero se reinicia solo con los pares
 pendientes. Botón gigante "¡otra vez!" aparece de inmediato sobre la animación.
@@ -103,7 +103,7 @@ contextos pensados para niños mayores").
 | Clave | Ruta | Texto sugerido |
 |---|---|---|
 | `intro` | `voces/emparejar/estrella_ponys/intro_01.ogg` | "Estos ponys mágicos se escondieron detrás de sus estrellas. ¿Los recuerdas todos, Sofía? A ver esa memoria de líder." |
-| `pista` | `voces/emparejar/estrella_ponys/pista_01.ogg` | "¿Necesitas una pista? Tócame a mí, Estelita, y te recuerdo dónde iba ese." |
+| `pista` | `voces/emparejar/estrella_ponys/pista_01.ogg` | "¿Necesitas una pista? Tócame a mí, Cometa, y te recuerdo dónde iba ese." |
 | `acierto_par_01` | `voces/emparejar/estrella_ponys/acierto_par_01.ogg` | "¡Ese par! Sabía que lo tenías." |
 | `acierto_par_02` | `voces/emparejar/estrella_ponys/acierto_par_02.ogg` | "¡Memoria de campeona!" |
 | `acierto_par_03` | `voces/emparejar/estrella_ponys/acierto_par_03.ogg` | "Uno menos, ¡vas muy bien!" |
@@ -128,7 +128,7 @@ contextos pensados para niños mayores").
   — crin multicolor / brillo — para que el descubrimiento del §7 se note).
 - 1 sprite de dorso temático: `dorso_estrella_pony.png`.
 - 1 fondo: `fondo_pradera_estelar_ponys_01.png` (placeholder aceptable).
-- Anfitrión: se usa `estelita` (ya existente en el proyecto) para no depender de un
+- Anfitrión: se usa `cometa` (ya existente en el proyecto) para no depender de un
   personaje de planeta aún no definido.
 
 ## 10. Validación esperada

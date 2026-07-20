@@ -1,5 +1,5 @@
 extends Area2D
-## Estelita responde al toque con un rebote alegre y confeti.
+## Cometa responde al toque con un rebote alegre y confeti.
 ## PoC del contrato tactil-primero: input unificado toque+mouse.
 
 @onready var sprite: Sprite2D = $sprite
@@ -9,7 +9,7 @@ var _celebrando := false
 
 
 func _ready() -> void:
-	print("[demo] Estelita lista — toca la estrella para celebrar")
+	print("[demo] Cometa listo — toca para celebrar")
 	input_event.connect(_al_recibir_input)
 	_flotar()
 

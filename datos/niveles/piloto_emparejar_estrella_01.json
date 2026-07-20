@@ -6,7 +6,7 @@
   "modo": "identico",
   "oculto": true,
   "disposicion": { "filas": 4, "columnas": 4 },
-  "anfitrion_id": "estelita",
+  "anfitrion_id": "cometa",
   "fondo_id": "fondo_pradera_estelar_ponys_01",
   "limite_intentos": 16,
   "tiempo_volteo_ms": 850,

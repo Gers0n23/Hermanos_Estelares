@@ -83,7 +83,7 @@ func detener_musica() -> void:
 
 
 ## Reproduce una linea de narracion/voz (instrucciones, celebraciones, historia).
-## Si ya habia una voz sonando, la interrumpe: tocar a Estelita para repetir una
+## Si ya habia una voz sonando, la interrumpe: tocar a Cometa para repetir una
 ## instruccion siempre debe volver a sonar de inmediato (GDD §6 regla 2).
 func reproducir_voz(ruta: String) -> void:
 	if ruta == "":

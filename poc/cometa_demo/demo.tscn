@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://poc0estelita01"]
+[gd_scene load_steps=7 format=3 uid="uid://poc0cometa01"]
 
-[ext_resource type="Script" path="res://estelita.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://estelita.svg" id="2_svg"]
+[ext_resource type="Script" path="res://cometa.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://cometa.svg" id="2_svg"]
 
 [sub_resource type="Gradient" id="grad_noche"]
 offsets = PackedFloat32Array(0, 1)
@@ -27,17 +27,17 @@ colors = PackedColorArray(1, 0.81, 0.25, 1, 0.55, 0.85, 1, 1, 1, 0.6, 0.8, 0)
 position = Vector2(640, 360)
 texture = SubResource("fondo_cielo")
 
-[node name="estelita" type="Area2D" parent="."]
+[node name="cometa" type="Area2D" parent="."]
 position = Vector2(640, 380)
 script = ExtResource("1_script")
 
-[node name="sprite" type="Sprite2D" parent="estelita"]
+[node name="sprite" type="Sprite2D" parent="cometa"]
 texture = ExtResource("2_svg")
 
-[node name="colision" type="CollisionShape2D" parent="estelita"]
+[node name="colision" type="CollisionShape2D" parent="cometa"]
 shape = SubResource("forma_toque")
 
-[node name="confeti" type="CPUParticles2D" parent="estelita"]
+[node name="confeti" type="CPUParticles2D" parent="cometa"]
 emitting = false
 amount = 60
 lifetime = 1.4

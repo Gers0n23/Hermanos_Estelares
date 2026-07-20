@@ -44,7 +44,7 @@ Copiar esta tabla para cada escena o motor nuevo que necesite líneas de voz:
 
 | id_línea | personaje | contexto (cuándo suena) | texto guía (a grabar) | archivo (`res://assets/audio/voces/...`) | estado |
 |---|---|---|---|---|---|
-| _ejemplo_intro | Estelita | Al entrar a la escena | _(pendiente de guion)_ | `nucleo/ejemplo_intro.ogg` | pendiente de guion |
+| _ejemplo_intro | Cometa | Al entrar a la escena | _(pendiente de guion)_ | `nucleo/ejemplo_intro.ogg` | pendiente de guion |
 
 ## Claves estándar ya asumidas por el motor "emparejar" (piloto, 18-Jul-2026)
 
@@ -55,7 +55,7 @@ de referencia para que cualquier motor nuevo defina las suyas con el mismo patr�
 | clave | cuándo suena | admite variantes (array) |
 |---|---|---|
 | `intro` | Al entrar al nivel, antes de jugar | No |
-| `pista` | Al tocar a Estelita, o tras varios intentos sin acierto (Brote/Estrella) | No |
+| `pista` | Al tocar a Cometa, o tras varios intentos sin acierto (Brote/Estrella) | No |
 | `acierto_par` | Al completar un par correctamente | Sí |
 | `no_es_este` | Al tocar dos elementos que no forman par (feedback amistoso, nunca "error") | Sí |
 | `victoria_final` | Al completar el nivel entero | No |
