@@ -19,3 +19,6 @@ herramientas/
 # Sistema
 Thumbs.db
 .DS_Store
+
+# Worktrees temporales de subagentes
+.claude/worktrees/
