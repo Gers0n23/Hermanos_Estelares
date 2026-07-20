@@ -43,6 +43,22 @@
 | HE-D4 | Ficha detallada por nivel/minijuego del primer planeta (en `docs/fichas/`): motor de mecánica compartido + contenido temático por hermano según sus rutas personalizadas (nuevo modelo GDD §2+§5, 18-Jul-2026; requiere las 3 fichas de HE-D1 y resolver P5 de GDD §9), assets necesarios, líneas de voz, condición de destello | ⬜ Backlog | HE-D3 | Dev + PO |
 | HE-D5 | Guion narrativo completo sobre la historia rediseñada (GDD §1-§4, 18-Jul-2026): escena de intro (el living se transforma, Estelita choca contra la ventana, el Coleccionauta se lleva a papá), escenas de historia por planeta (entrega de pieza de la nave + video-llamada de papá), **guion de la prueba final cooperativa** (primer intento fallido cómico → cooperación por roles → rescate de papá; ver P6 de GDD §9) y primera versión de `guion_voces.md`; decidir P2 (voces de la familia — sinergia con las video-llamadas de papá) | ⬜ Backlog | HE-D2, HE-D3 | PO + Dev |
 
+## FASE 0.5 — Arte conceptual del universo
+
+**Criterio de salida**: los 8 elementos (Estelita, papá, villano, 6 anfitriones, 6 ambientes, casa, nave) tienen ficha de diseño en texto + al menos una pieza de arte de referencia aprobada por el PO, y `docs/guia-estilo-generacion.md` quedó actualizado con todas las anclas nuevas. HE-A4 y HE-A7 quedan marcadas como confirmadas o pendientes de reconfirmación una vez cierre HE-D3.
+
+| ID | Tarjeta | Estado | Dependencias | Responsable |
+|---|---|---|---|---|
+| HE-A1 | Ficha de diseño de Estelita (apariencia, expresiones, gesto de guía) + arte de referencia (ancla) | ⬜ Backlog | — | disenador-personajes + PO |
+| HE-A2 | Ficha de diseño de Papá (aspecto en video-llamadas, vestuario, expresiones) + arte de referencia | ⬜ Backlog | — | disenador-personajes + PO |
+| HE-A3 | Ficha de diseño del Coleccionauta (aspecto físico definitivo, colección visual, expresiones cómicas) + arte de referencia (ancla) — diseño visual independiente de validar el nombre con los niños (sigue en HE-D2) | ⬜ Backlog | — | disenador-personajes + PO |
+| HE-A4 | Fichas visuales de los 6 anfitriones de planeta (Camaleona Coco, Toby, Octavio, Profesor Plumas, Lila, Mimi) + arte de referencia de cada uno — provisional hasta que HE-D3 confirme el catálogo final de planetas/orden | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A5 | Ficha de diseño de la casa de los niños (el living y su transformación mágica) + arte conceptual — insumo directo de HE-30 (cinemática inicial) | ⬜ Backlog | — | director-cinematicas + disenador-personajes + PO |
+| HE-A6 | Ficha de diseño de la nave-estrella (estado incompleto inicial, piezas por capítulo, diseño final armada) + arte conceptual — insumo directo del hangar estelar (HE-17) y HE-39 | ⬜ Backlog | — | director-cinematicas + disenador-personajes + PO |
+| HE-A7 | Fichas de ambientes de los 6 planetas (fondos, props, atmósfera) + arte conceptual de cada uno — provisional hasta HE-D3; insumo directo de HE-13 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A8 | Arte conceptual general / mood board: póster maestro combinando hermanos, Estelita, villano, casa, nave y planetas — pieza de cierre/consolidación visual | ⬜ Backlog | HE-A1 a HE-A7 | disenador-personajes + PO |
+| HE-A9 | Consolidar todo en `docs/guia-estilo-generacion.md` (nuevas anclas, specs) + aprobación final del PO del paquete completo de arte conceptual — criterio de salida de la fase | ⬜ Backlog | HE-A1 a HE-A8 | PO (+ SM verifica) |
+
 ## FASE 1 — Núcleo + Capítulo 1 completo
 
 **Criterio de salida**: el **capítulo 1 entregado a los niños en su tablet**: desde la cinemática del secuestro de papá hasta completar el planeta 1 y ganar su pieza de la nave. La **maqueta del juego completo** existe (título, selección de personaje, mapa con todos los planetas visibles como tease ilusionante, hangar estelar, zona de padres) pero **solo el planeta 1 es jugable**, pulido hasta el último detalle: nada de su contenido queda genérico ni placeholder, con las **3 rutas personalizadas completas** y cierre en celebración con gancho. Playtest del capítulo 1 aprobado por los 3 niños. **Requisito de arranque**: HE-D1 cerrada (las fichas de gustos definen el planeta 1 y sus temas).
