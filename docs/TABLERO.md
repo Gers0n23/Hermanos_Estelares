@@ -52,7 +52,7 @@
 | HE-01 | Instalar Godot 4.x, crear `project.godot` con config base (720p, canvas_items, input táctil+mouse), estructura de carpetas del stack §3, e instalar GodotPrompter (skills) + godot-mcp (stack §4) | ✅ Hecho | — | Dev |
 | HE-02 | Guía de estilo visual: paleta maestra, contorno, tipografía; diseño SVG de los 3 hermanos y Estelita (pose idle) según lo definido en HE-D2, con aprobación de los QA junior | ⬜ Backlog | HE-D2 | Dev + PO |
 | HE-03 | Completar pipeline de assets: probar SVG→PNG por lote, evaluar MCP de generación de imágenes y GDAI MCP; registrar decisión en stack §7 | ✅ Hecho | HE-01 | Dev |
-| HE-04 | Base de audio: buses música/sfx/voz, autoload `Audio`, descargar paquete sfx CC0 inicial, estructurar `guion_voces.md` (contenido viene de HE-D5) | 🔄 En curso | HE-01 | Dev |
+| HE-04 | Base de audio: buses música/sfx/voz, autoload `Audio`, descargar paquete sfx CC0 inicial, estructurar `guion_voces.md` (contenido viene de HE-D5) | ✅ Hecho | HE-01 | Dev |
 | HE-05 | Pantalla de título animada (cielo estrellado, "tocar para empezar") | ⬜ Backlog | HE-01 | Dev |
 | HE-06 | Selección de personaje: 3 retratos grandes, cada uno saluda con voz/sonido al tocarlo; fija el perfil de nivel | ⬜ Backlog | HE-02, HE-04 | Dev |
 | HE-07 | Autoload `Progreso`: perfiles por hermano, destellos/estrellas, guardado automático JSON — **guardado versionado desde el día uno** (decisión stack §7, 18-Jul-2026): el JSON lleva campo `version` y migraciones al cargar, para que las actualizaciones por capítulos jamás borren progreso | ⬜ Backlog | HE-01 | Dev |

@@ -28,3 +28,11 @@ pointing/emulate_mouse_from_touch=true
 
 renderer/rendering_method="mobile"
 renderer/rendering_method.mobile="mobile"
+
+[audio]
+
+buses/default_bus_layout="res://assets/audio/buses_audio.tres"
+
+[autoload]
+
+Audio="*res://scripts/autoloads/audio.gd"
