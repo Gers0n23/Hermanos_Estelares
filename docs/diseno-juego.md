@@ -3,7 +3,7 @@
 > **Fuente de verdad del diseño.** Cualquier implementación debe respetar lo que dice este documento.
 > Si el diseño cambia (los niños crecen, un minijuego no funciona en la práctica), se actualiza aquí primero.
 
-- **Última actualización**: 18-Jul-2026
+- **Última actualización**: 19-Jul-2026
 - **Plataformas**: Táctil-primero (tablet Android), jugable también en PC con mouse
 - **Motor**: Godot 4.x — 2D exclusivamente
 - **Idioma del juego**: Español (narración por voz, mínimo texto en pantalla)
@@ -16,14 +16,19 @@
 ### La historia
 
 Una tarde cualquiera, los tres hermanos juegan en el **living de su casa** — y en su
-imaginación, donde todo es posible, comienza la aventura: una estrellita fugaz choca
-contra la ventana. Es **Estelita**, y trae una noticia increíble: el **Coleccionauta**,
+imaginación, donde todo es posible, comienza la aventura: una navecita diminuta entra
+dando tumbos por la ventana y aterriza (mal, entre risas) en la alfombra. De adentro
+sale **Cometa** *(nombre provisional — validar con los niños en HE-D2)*, un alien
+pequeño, redondito y muy simpático, y trae una noticia increíble: el **Coleccionauta**,
 un alienígena chistoso que recorre la galaxia coleccionando «las cosas más increíbles
 del universo», acaba de llevarse a **papá** — le pareció el papá más increíble de todos
-y quiere quedárselo para su colección.
+y quiere quedárselo para su colección. Cometa lo sabe de primera mano: él y el
+Coleccionauta se conocen de toda la vida (juntos armaron su primera nave, de chicos, en
+el mismo planeta) y sabe exactamente cómo es, qué le gusta y dónde guarda las cosas.
 
-Estelita los convierte en los **Hermanos Estelares**: les entrega trajes espaciales con
-estrellas de poder y su nave-estrella… a la que le faltan piezas para un viaje tan largo.
+Cometa los convierte en los **Hermanos Estelares**: les entrega trajes espaciales con
+estrellas de poder y su nave-estrella — con la tecnología que él ya conoce de memoria —
+a la que le faltan piezas para un viaje tan largo.
 Para llegar al lejano planeta del Coleccionauta deberán visitar **planetas divertidos**,
 aprender nuevas habilidades en cada uno (colores, números, letras, música, emociones) y
 ganarse la **pieza de la nave** que cada mundo guarda. Los minijuegos otorgan **destellos**,
@@ -46,7 +51,7 @@ números, emociones... ver §4).
 **La lección de la cooperación** *(aprobada por el PO, 18-Jul-2026)*: la misión final
 la vuelve jugable. La primera vez que los hermanos intentan la prueba del Coleccionauta,
 cada uno quiere hacerlo a su manera, discuten... y todo sale mal **de forma cómica**
-(el plan se desarma, la nave estornuda, el Coleccionauta se ríe). Estelita les hace
+(el plan se desarma, la nave estornuda, el Coleccionauta se ríe). Cometa les hace
 notar que separados no funciona: la prueba solo se supera **cooperando**, usando la
 habilidad de cada hermano en secuencia — Sofía lee la pista y arma el plan, Nicole se
 gana la confianza del Coleccionauta, Maxi encuentra lo que nadie más ve. Cuando pelean,
@@ -99,7 +104,7 @@ proporciones redondas. Cada uno con un gesto característico de celebración.
 
 ### Personajes de apoyo
 
-- **Estelita** — la estrellita guía (no es parte de la familia: es el personaje mágico del juego imaginado). Choca contra la ventana del living, les entrega los trajes con estrellas de poder y pilotea la nave. Narradora del juego: da instrucciones por voz, anima, celebra. Flota en pantalla como ayudante permanente; tocarla repite la instrucción.
+- **Cometa** *(nombre provisional — validar con los niños en HE-D2)* — el alien guía (no es parte de la familia: es el personaje mágico del juego imaginado). Pequeño, redondito y muy entusiasta; aterriza (siempre dando tumbos, siempre riéndose de sí mismo) en el living, les entrega los trajes con estrellas de poder y pilotea la nave. **Conoce al Coleccionauta de toda la vida** — se criaron en el mismo planeta y de chicos armaron naves juntos — por eso sabe exactamente cómo tratarlo, qué le gusta y cómo funciona su tecnología (la misma que ahora usan los hermanos). Se alejó de él hace tiempo porque a Cometa no le gustaba coleccionar *cosas*: a él le gusta coleccionar **amigos** (guarda un "álbum de abrazos" con un recuerdo de cada amigo nuevo, nunca objetos en cajas) — un guiño juguetón a la lección final del juego. Narrador del juego: da instrucciones por voz, anima, celebra, nunca regaña ni apura. Flota/rebota en pantalla como ayudante permanente; tocarlo repite la instrucción.
 - **El Coleccionauta** *(nombre provisional — validar con los niños en HE-D2)* — el alienígena coleccionista. Chistoso, torpe y para nada malvado: colecciona «las cosas más increíbles del universo» y se llevó a papá para su colección porque le pareció increíble (y porque está solito). En el final aprende a pedir las cosas y se vuelve amigo de la familia.
 - **Papá** — el secuestrado más feliz de la galaxia. Aparece en video-llamadas cómicas desde la colección del alien, siempre tranquilo y bromista; su rescate es la gran escena final. *(Idealmente con la voz real de papá — ver P2.)*
 - **Habitantes de los planetas** — un personaje anfitrión por planeta (ver §4), que da contexto a los minijuegos ("¡mis frutas se mezclaron, ayúdame a ordenarlas por color!") y guarda la pieza de la nave de su mundo.
@@ -120,7 +125,7 @@ El juego se construye y se entrega **de a un planeta por vez**, como capítulos 
 - **Capítulos siguientes**: cada actualización agrega un planeta y desarrolla la historia.
   La reacción de los niños a cada capítulo reordena el backlog del siguiente (regla de oro 5).
 - **Los planetas aún no jugables jamás se sienten como un muro**: no hay candados ni
-  «próximamente» — se ven en el mapa brillando «todavía muy lejos», y Estelita explica que
+  «próximamente» — se ven en el mapa brillando «todavía muy lejos», y Cometa explica que
   la nave necesita más piezas para llegar tan lejos. Es un tease ilusionante, no un bloqueo.
 - **Cada capítulo cierra en celebración, nunca en corte**: termina con la fiesta de la pieza
   conseguida y la video-llamada de papá que deja el gancho del siguiente planeta.
@@ -194,7 +199,7 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 #### Planeta Melodía
 1. **La banda de Octavio** — tocar instrumentos que suenan de verdad (caja de sonidos). S: libre, todo suena bonito. B: repetir secuencias de 2-3 sonidos (tipo "Simon" muy suave). E: secuencias de 4-6 y ritmos.
 2. **Sigue el ritmo** — tocar burbujas al compás de la música. S: las burbujas explotan al tocarlas, sin compás. B: compás lento y generoso. E: compás real con puntaje de estrellas.
-3. **Canta con Estelita** — canciones infantiles con animación (karaoke visual). Igual para todos; en E aparece la letra escrita.
+3. **Canta con Cometa** — canciones infantiles con animación (karaoke visual). Igual para todos; en E aparece la letra escrita.
 
 #### Planeta Cuenta-Cuentas
 1. **Cosecha contada** — recolectar N frutas que pide el Profesor Plumas. S: tocar frutas y oír el conteo (1, 2, 3...). B: recolectar exactamente la cantidad pedida (hasta 10). E: sumas/restas ("recoge 5 y quita 2").
@@ -248,7 +253,7 @@ Son la recompensa narrativa y el "pegamento" del guion.
 Reglas obligatorias para toda pantalla del juego:
 
 1. **Objetivos táctiles enormes**: mínimo ~96 px lógicos para elementos que Maxi deba tocar; nada interactivo menor a 64 px.
-2. **Todo se narra por voz**: ninguna instrucción depende de saber leer. Tocar a Estelita repite la instrucción.
+2. **Todo se narra por voz**: ninguna instrucción depende de saber leer. Tocar a Cometa repite la instrucción.
 3. **Sin texto para navegar**: navegación por íconos universales (casa, flecha, estrella) + audio.
 4. **Sin dobles toques, sin gestos complejos**: solo tocar y arrastrar. En PC: clic y arrastrar con mouse (mismo código de entrada).
 5. **Respuesta inmediata**: todo elemento tocado reacciona en <100 ms con animación y sonido, aunque sea "incorrecto".
@@ -271,7 +276,7 @@ Reglas obligatorias para toda pantalla del juego:
 
 ### Audio
 
-- **Voz de Estelita**: idealmente grabada por papá/mamá — que la voz que los guía sea la de casa es parte del regalo. Alternativa: TTS en español de calidad como relleno durante el desarrollo, reemplazable después (las líneas de voz viven en archivos, listadas en un guion de grabación).
+- **Voz de Cometa**: idealmente grabada por papá/mamá — que la voz que los guía sea la de casa es parte del regalo. Alternativa: TTS en español de calidad como relleno durante el desarrollo, reemplazable después (las líneas de voz viven en archivos, listadas en un guion de grabación).
 - **Música**: una pieza suave por planeta + tema del mapa. Fuentes CC0 (Kenney, FreePD) o generada.
 - **Efectos**: biblioteca CC0 (Kenney Audio) — pops, campanitas, aplausos, sonidos de animales reales.
 
@@ -292,7 +297,7 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | # | Pregunta | Responsable | Estado |
 |---|---|---|---|
 | P1 | Colores/diseño definitivo de cada hermano (¿los eligen los propios niños?) | Product Owner (papá + hijos) | Abierta |
-| P2 | ¿Grabar voces reales de la familia para Estelita y celebraciones? | Product Owner | Abierta |
+| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | Abierta |
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | Abierta |

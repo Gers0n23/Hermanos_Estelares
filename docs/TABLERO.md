@@ -49,7 +49,7 @@
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-A1 | Ficha de diseño de Estelita (apariencia, expresiones, gesto de guía) + arte de referencia (ancla) | ⬜ Backlog | — | disenador-personajes + PO |
+| HE-A1 | Ficha de diseño de Cometa (alien guía, reemplaza a Estelita) — personalidad, historia con el Coleccionauta, apariencia, expresiones + arte de referencia (ancla) | 🔄 En curso | — | disenador-personajes + PO |
 | HE-A2 | Ficha de diseño de Papá (aspecto en video-llamadas, vestuario, expresiones) + arte de referencia | ⬜ Backlog | — | disenador-personajes + PO |
 | HE-A3 | Ficha de diseño del Coleccionauta (aspecto físico definitivo, colección visual, expresiones cómicas) + arte de referencia (ancla) — diseño visual independiente de validar el nombre con los niños (sigue en HE-D2) | ⬜ Backlog | — | disenador-personajes + PO |
 | HE-A4 | Fichas visuales de los 6 anfitriones de planeta (Camaleona Coco, Toby, Octavio, Profesor Plumas, Lila, Mimi) + arte de referencia de cada uno — provisional hasta que HE-D3 confirme el catálogo final de planetas/orden | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
