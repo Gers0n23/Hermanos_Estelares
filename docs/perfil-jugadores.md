@@ -114,7 +114,7 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
   curiosidad es el gancho: cada planeta puede enseñarle algo que no sabía).
 - **Frustración = riesgo principal**: se frustra y llora rápido, así que el reto sube pero
   el fracaso nunca castiga (GDD §6): pistas progresivas, reintentos infinitos sin marcador
-  de errores, y Estelita animando en los tropiezos.
+  de errores, y Cometa animando en los tropiezos.
 - **Celos con Nicole**: jamás comparar progreso entre hermanos — nada de rankings ni
   «tu hermana ya lo logró»; celebraciones equivalentes en tamaño y ternura para las dos.
 - **Rol de líder/mini mamá**: darle momentos de «hermana mayor que guía la misión» (ya

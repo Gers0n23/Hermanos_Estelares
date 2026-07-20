@@ -38,8 +38,8 @@ Hermanos_Estelares/
 ├── docs/                      # Diseño, stack, tablero, guion de voces
 ├── escenas/
 │   ├── nucleo/                # titulo, seleccion_personaje, mapa_estelar, cielo_casa, zona_padres
-│   ├── ui/                    # botones grandes, estelita_ayudante, celebracion, transicion_nave
-│   ├── personajes/            # maxi, nicole, sofia, estelita, anfitriones
+│   ├── ui/                    # botones grandes, cometa_ayudante, celebracion, transicion_nave
+│   ├── personajes/            # maxi, nicole, sofia, cometa, anfitriones
 │   └── planetas/
 │       ├── arcoiris/          # planeta.tscn + un .tscn por minijuego
 │       ├── animalia/
@@ -100,7 +100,7 @@ Estilo objetivo: cartoon vectorial (ver GDD §7). Estrategia en capas, de más c
 2. **Pipeline generativo de imágenes raster** (decisión del PO, 19-Jul-2026): **Nano Banana Pro** (`gemini-3-pro-image`) vía el MCP [`mcp-image`](https://github.com/shinpr/mcp-image) para fondos, pantallas de carga, tarjetas de minijuegos, key art y fotogramas de cinemáticas. Reglas en [`docs/guia-estilo-generacion.md`](guia-estilo-generacion.md): generación siempre con imágenes ancla (el póster + hojas de referencia de personajes), salida cruda a `assets/generadas/` (staging con `.gdignore`) y promoción a `assets/` solo tras auditoría UX + aprobación del PO. La key vive en la variable de entorno `GEMINI_API_KEY` (nunca en el repo). El candidato Recraft del 18-Jul queda **condicionado a HE-13**: solo se contrata si allí se concluye que hacen falta fondos en SVG editable.
 3. **Bibliotecas CC0 de relleno**: [Kenney.nl](https://kenney.nl) (sprites, UI, audio) para props secundarios e íconos — calidad alta, dominio público, estilo compatible con cartoon. Biblioteca local curada en `assets/terceros/` (con `.gdignore`; material fuente, no importado) con manifiesto de licencias en [`assets/terceros/LICENCIAS.md`](../assets/terceros/LICENCIAS.md); arrancó el 19-Jul-2026 con 4 packs de Kenney (Planets, UI Pack, Interface Sounds, Simple Space).
 
-**Animaciones**: cutout con `AnimationPlayer`/`Skeleton2D` sobre las partes del SVG (cabeza, brazos, piernas como nodos separados). Transiciones de pantalla con `Tween` + la nave de Estelita. Partículas de Godot para confeti/destellos (no requieren assets).
+**Animaciones**: cutout con `AnimationPlayer`/`Skeleton2D` sobre las partes del SVG (cabeza, brazos, piernas como nodos separados). Transiciones de pantalla con `Tween` + la nave-estrella de los hermanos. Partículas de Godot para confeti/destellos (no requieren assets).
 
 **Audio**: sfx y música CC0 (Kenney Audio, FreePD); voces según GDD §7 (grabadas en casa o TTS provisional). Formato: OGG Vorbis.
 

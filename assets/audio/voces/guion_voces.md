@@ -19,7 +19,7 @@
 3. **Estado** de cada línea: `pendiente de guion` (aún no la escribió `guionista`) →
    `pendiente de grabar` (texto listo, falta grabación) → `grabada` (archivo `.ogg` ya
    en `assets/audio/voces/`).
-4. Voz de Estelita y de la familia: ver decisión pendiente **P2** del GDD §9 (grabada
+4. Voz de Cometa y de la familia: ver decisión pendiente **P2** del GDD §9 (grabada
    por la familia vs. TTS de relleno durante desarrollo) — se resuelve en HE-D5.
 
 ## Convención de carpetas y nombres
@@ -28,7 +28,7 @@
 assets/audio/voces/
 ├── guion_voces.md          # este documento
 ├── nucleo/                 # titulo, seleccion_personaje, mapa_estelar, zona_padres
-├── estelita/                # líneas genéricas de Estelita (ayudante flotante, HE-11)
+├── cometa/                  # líneas genéricas de Cometa (ayudante flotante, HE-11)
 ├── emparejar/               # líneas del motor "emparejar" (contrato en su ficha)
 ├── <otro_motor>/            # una carpeta por motor de mecánica compartido (GDD §5)
 └── historia/                 # cinemáticas y escenas de historia por planeta (HE-30, HE-39)
