@@ -86,6 +86,17 @@ Copiar esta tabla para cada escena o motor nuevo que necesite líneas de voz:
 |---|---|---|---|---|---|
 | _ejemplo_intro | Cometa | Al entrar a la escena | _(pendiente de guion)_ | `nucleo/ejemplo_intro.ogg` | pendiente de guion |
 
+## Líneas reales — Pantalla de título (`nucleo/`)
+
+Primera pantalla del juego (HE-05, `escenas/nucleo/titulo.tscn`). Se repite sola cada
+~12 s mientras nadie toca la pantalla, para que ningún niño dependa de leer "Toca para
+comenzar" (GDD §6 regla 2). Voz de Cometa provisional en TTS hasta que P2 se grabe con
+la familia (ver decisión arriba).
+
+| id_línea | personaje | contexto (cuándo suena) | texto guía (a grabar) | archivo | estado |
+|---|---|---|---|---|---|
+| titulo_bienvenida_01 | Cometa | Al entrar a la pantalla de título y cada ~12 s de inactividad | «¡Toca la pantalla para comenzar la aventura!» | `nucleo/titulo_bienvenida_01.ogg` | pendiente de grabar |
+
 ## Líneas reales — Cometa genéricas (`cometa/`)
 
 Líneas del ayudante flotante que no pertenecen a una escena de historia ni a un motor

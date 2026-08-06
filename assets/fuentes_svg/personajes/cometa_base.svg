@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" width="480" height="560">
+  <!-- Cometa (HE-A1) - pose base/idle: de pie, sonrisa tranquila, antena con estrellita.
+       Silueta "gotita": cabeza y cuerpo fusionados en un solo ovalo (sin cuello, sin piernas),
+       coherente con la ficha aprobada por el PO (docs/guia-estilo-generacion.md) y con
+       assets/anclas/cometa_referencia.png (vista frontal, arriba a la derecha). -->
+  <defs>
+    <linearGradient id="cuerpo_cometa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8FEAE4"/>
+      <stop offset="100%" stop-color="#45C6C0"/>
+    </linearGradient>
+    <radialGradient id="brillo_estrella_c" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE38A" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFE38A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- sombra en el suelo -->
+  <ellipse cx="240" cy="470" rx="92" ry="14" fill="#2B3350" opacity="0.12"/>
+
+  <!-- pies (nubs cortitos, flota sobre mini-propulsores invisibles) -->
+  <ellipse cx="205" cy="440" rx="26" ry="16" fill="#37A29C" stroke="#2B3350" stroke-width="6"/>
+  <ellipse cx="275" cy="440" rx="26" ry="16" fill="#37A29C" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- bracito izquierdo: cortito y redondeado, en reposo junto al cuerpo -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M 178 250 Q 150 268 146 296" stroke="#2B3350" stroke-width="30"/>
+    <path d="M 178 250 Q 150 268 146 296" stroke="url(#cuerpo_cometa)" stroke-width="20"/>
+  </g>
+  <circle cx="145" cy="302" r="17" fill="#45C6C0" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- bracito derecho -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M 302 250 Q 330 268 334 296" stroke="#2B3350" stroke-width="30"/>
+    <path d="M 302 250 Q 330 268 334 296" stroke="url(#cuerpo_cometa)" stroke-width="20"/>
+  </g>
+  <circle cx="335" cy="302" r="17" fill="#45C6C0" stroke="#2B3350" stroke-width="6"/>
+
+  <!-- cuerpo: cabeza y torso fusionados en un solo ovalo grande (silueta "gotita") -->
+  <path d="M 240 92
+           C 300 92 316 168 312 214
+           C 309 258 300 300 295 336
+           C 288 386 270 422 240 426
+           C 210 422 192 386 185 336
+           C 180 300 171 258 168 214
+           C 164 168 180 92 240 92 Z"
+        fill="url(#cuerpo_cometa)" stroke="#2B3350" stroke-width="7"/>
+
+  <!-- vientre mas claro -->
+  <ellipse cx="240" cy="330" rx="58" ry="82" fill="#BFF0ED" opacity="0.85"/>
+
+  <!-- brillo superior (peluche pintado) -->
+  <path d="M 205 118 Q 190 150 196 182" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- correa del album de abrazos (cruza el pecho, por debajo de la cara) -->
+  <path d="M 288 272 L 195 372" stroke="#2B3350" stroke-width="18" stroke-linecap="round"/>
+  <path d="M 288 272 L 195 372" stroke="#45C6C0" stroke-width="11" stroke-linecap="round"/>
+  <!-- album (bolsita redonda con corazon dorado) -->
+  <circle cx="190" cy="380" r="34" fill="#9FE5E2" stroke="#2B3350" stroke-width="6"/>
+  <circle cx="190" cy="380" r="24" fill="#BFF0ED" stroke="#2B3350" stroke-width="4"/>
+  <path d="M 190 372 C 184 364 172 366 172 376 C 172 386 190 396 190 396 C 190 396 208 386 208 376 C 208 366 196 364 190 372 Z"
+        fill="#FFCB3D" stroke="#2B3350" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- mejillas -->
+  <ellipse cx="196" cy="256" rx="16" ry="11" fill="#F685B7" opacity="0.7"/>
+  <ellipse cx="284" cy="256" rx="16" ry="11" fill="#F685B7" opacity="0.7"/>
+
+  <!-- cejas expresivas -->
+  <path d="M 196 178 Q 210 170 224 178" fill="none" stroke="#1F6E69" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 256 178 Q 270 170 284 178" fill="none" stroke="#1F6E69" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- ojos enormes, redondos, cafe oscuro con mucho brillo -->
+  <ellipse cx="210" cy="204" rx="19" ry="25" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <ellipse cx="270" cy="204" rx="19" ry="25" fill="#FFFFFF" stroke="#2B3350" stroke-width="4"/>
+  <circle cx="212" cy="208" r="12" fill="#5B3A21"/>
+  <circle cx="268" cy="208" r="12" fill="#5B3A21"/>
+  <circle cx="214" cy="211" r="6" fill="#2B1B10"/>
+  <circle cx="266" cy="211" r="6" fill="#2B1B10"/>
+  <circle cx="207" cy="199" r="4" fill="#FFFFFF"/>
+  <circle cx="263" cy="199" r="4" fill="#FFFFFF"/>
+  <circle cx="217" cy="216" r="2.2" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="273" cy="216" r="2.2" fill="#FFFFFF" opacity="0.8"/>
+
+  <!-- sonrisa tranquila (pose de reposo, boca ancha pero cerrada) -->
+  <path d="M 220 240 Q 240 256 260 240" fill="none" stroke="#2B3350" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- antena con estrellita dorada (rasgo distintivo de su nombre) -->
+  <path d="M 250 100 Q 232 70 214 48" fill="none" stroke="#2B3350" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 250 100 Q 232 70 214 48" fill="none" stroke="#45C6C0" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="208" cy="40" r="34" fill="url(#brillo_estrella_c)"/>
+  <g transform="translate(208,40) scale(0.55)">
+    <polygon points="0,-46 11.2,-15.4 43.7,-14.2 18.1,5.9 27,37.2 0,19 -27,37.2 -18.1,5.9 -43.7,-14.2 -11.2,-15.4"
+             fill="#FFCB3D" stroke="#2B3350" stroke-width="7" stroke-linejoin="round"/>
+    <polygon points="0,-24 5.9,-8.1 22.9,-7.4 9.5,3.1 14.1,19.5 0,10 -14.1,19.5 -9.5,3.1 -22.9,-7.4 -5.9,-8.1"
+             fill="#FFE38A"/>
+  </g>
+  <!-- chispitas de la estelita -->
+  <circle cx="180" cy="60" r="3.5" fill="#FFCB3D" opacity="0.85"/>
+  <circle cx="192" cy="78" r="2.5" fill="#FFCB3D" opacity="0.7"/>
+  <circle cx="168" cy="80" r="2" fill="#FFCB3D" opacity="0.6"/>
+</svg>

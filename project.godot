@@ -8,7 +8,7 @@ config_version=5
 
 config/name="Los Hermanos Estelares"
 config/description="Tres hermanos ayudan al alien Cometa a recuperar sus destellos visitando planetas con minijuegos. Un regalo para Maxi, Nicole y Sofia."
-run/main_scene="res://escenas/nucleo/placeholder.tscn"
+run/main_scene="res://escenas/nucleo/titulo.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 
 [display]

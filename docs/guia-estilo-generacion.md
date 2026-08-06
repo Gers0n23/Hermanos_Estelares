@@ -141,7 +141,57 @@ Toda generación parte adjuntando al menos una imagen ancla — nunca se le pide
 3. `experto-ux-parvulo` audita (§6 del GDD: contraste, legibilidad, nada atemorizante) y el PO aprueba.
 4. Lo aprobado se copia de `assets/generadas/` a su carpeta final y recién ahí lo importa Godot.
 
-## 6. Video (cinemáticas)
+## 6. Arte vectorial SVG de personajes jugables (paleta maestra, contorno, tipografía) — HE-02
+
+Esta sección formaliza, en un solo lugar, las reglas de estilo que ya venían aplicándose de facto en los SVG a mano de `assets/fuentes_svg/personajes/` (Maxi, Nicole, Sofía, Cometa) desde HE-D2. **Complementa** —no reemplaza— la biblia de arte para generación IA de las secciones 1-5: los personajes jugables interactivos (los que el niño toca/anima) se dibujan a mano como SVG con las reglas de este punto; los fondos/tarjetas/cinemáticas decorativos se generan con IA con las reglas de arriba. Pipeline de conversión SVG→PNG documentado en `docs/stack-tecnico.md` §5 (`herramientas/exportar_sprites.gd`, rasterizador interno de Godot, sin dependencias externas).
+
+### 6.1 Contorno
+
+- **Color único de contorno en todo el elenco**: `#2B3350` (azul marino muy oscuro, casi negro pero nunca negro puro — más suave para arte infantil). Ningún personaje usa un color de contorno distinto; es lo que unifica visualmente a hermanos, Cometa y cualquier personaje jugable futuro.
+- **Grosor por tipo de trazo**:
+  - Silueta corporal grande (cabeza, torso, cuerpo fusionado de Cometa, casco burbuja): `stroke-width="6"` a `"7"`.
+  - Detalles de cara (ojos, cejas, boca, nariz) y accesorios pequeños (insignias, hebillas): `stroke-width="4"` a `"5"`.
+  - Líneas finas decorativas (cejas como trazo simple, bigotes de sonrisa): `stroke-width="3"`.
+- **Técnica de "doble trazo" en extremidades** (brazos, piernas, antenas): un `<path>` con `stroke` ancho en `#2B3350` (el contorno) dibujado primero, y el mismo `<path>` repetido encima con `stroke` más angosto en el color de relleno del personaje — así la extremidad se lee como una cápsula redondeada con borde parejo, sin necesitar un `<path>` de relleno con esquinas. Siempre `stroke-linecap="round"` (nunca puntas cuadradas — GDD §6, nada de aristas duras).
+- Todo el elenco usa `fill="none"` + trazos para huesos/extremidades, y `fill` sólido o gradiente para masas de cuerpo (torso, cabeza, cuerpo de Cometa).
+
+### 6.2 Paleta maestra (hex, reutilizada entre personajes para coherencia de mundo)
+
+| Uso | Hex | Personajes que lo usan |
+|---|---|---|
+| Contorno universal | `#2B3350` | Los cuatro (todo el elenco jugable) |
+| Blanco traje / relleno claro | `#FFFFFF`, `#F7F9FC`, `#E4E9F3` | Maxi, Nicole, Sofía (traje) |
+| Dorado estelar (estrella del pecho, antena de Cometa) | `#FFCB3D` (base), `#FFE38A` (brillo/glow) | Los cuatro |
+| Acento Maxi (azul) | `#3E77CC`, `#6FD6E8`, `#BFE4F2`, `#9CC4EE` | Maxi |
+| Acento Nicole (rosado) | `#F26CA8`, `#D94F8E`, `#F0A8C8`, `#FFD9EA`, `#FAD1E3` | Nicole |
+| Acento Sofía (turquesa) | `#45C6C0`, `#9FE5E2`, `#BFF0ED` | Sofía |
+| Mejillas sonrosadas (blush) | `#F26CA8` / `#F685B7` a opacidad 0.4-0.7 (nunca <0.4: a menor opacidad se ve gris al mezclar con pieles/cuerpos oscuros) | Los cuatro |
+| Piel (tonos claro→oscuro) | `#F6D3B2`, `#EBBB90`, `#D69A6E`, `#D79E6F` | Maxi, Nicole, Sofía |
+| Cabello (tonos) | `#4A3226`, `#3B2A20`, `#33241B`, `#5B3A21`, `#2B1B10`, `#4A2C18`, `#2B1D15` | Maxi, Nicole, Sofía |
+| Ojos (iris/pupila, mismo lenguaje "café oscuro con brillo" en todo el elenco, incluido Cometa) | iris `#5B3A21`, pupila `#2B1B10`, brillo `#FFFFFF` | Los cuatro |
+| Casco burbuja transparente | `#BEDCFF` a opacidad ~0.14 de relleno + `#9CC4EE` de borde | Maxi, Nicole, Sofía (Cometa no usa casco, es alien) |
+| Cuerpo de Cometa (turquesa, nuevo pero reutiliza el acento de Sofía por coherencia de familia de color) | `#8FEAE4`→`#45C6C0` (degradé), vientre `#BFF0ED` | Cometa |
+
+Regla práctica al sumar un personaje nuevo: **reusar hex ya existentes de esta tabla siempre que el rasgo sea equivalente** (ojos, dorado de estrellas, blush) y sumar como máximo 2-3 hex propios para su "color de identidad" (p. ej. el turquesa de Cometa, el lavanda de Camaleona Coco en el arte generado por IA) — así todo el elenco se siente del mismo universo sin ser un simple recolor.
+
+### 6.3 Construcción de la cara (reutilizable en todo personaje nuevo)
+
+Ojos grandes y redondos: `<ellipse>` blanca de borde `#2B3350` (rx≈18-19, ry≈24-25) + círculo iris (`r≈11-12`) + círculo pupila (`r≈5.5-6`) + 1-2 círculos blancos de brillo pequeños (highlights). Cejas: trazo curvo simple `stroke-linecap="round"`. Mejillas: elipse blush semitransparente. Esta receta ya se usó en los 3 hermanos y en Cometa (`cometa_base.svg`) — mantiene el "lenguaje de ojos" consistente en todo el elenco jugable, tal como pide la biblia de arte (§3) para el elenco generado por IA.
+
+### 6.4 Lienzo (viewBox)
+
+- **Hermanos (bípedos, de pie)**: `viewBox="0 0 512 768"` — mismo lienzo en las 6 hojas existentes (`maxi/nicole/sofia_base.svg` + `_celebracion.svg`), para que cualquier UI que las posicione (selección de personaje, HUD) pueda tratarlas con el mismo ancla/escala.
+- **Personajes sin silueta bípeda estándar** (Cometa, y cualquier anfitrión futuro que se dibuje a mano en vez de por IA): lienzo propio ajustado a su silueta, mismo contorno/paleta/técnica de doble trazo. `cometa_base.svg` usa `viewBox="0 0 480 560"` (cuerpo compacto y redondo, sin piernas).
+
+### 6.5 Tipografía
+
+El juego **no usa texto obligatorio** (GDD §6) — toda instrucción va narrada por voz. La tipografía solo aparece en UI decorativa/opcional: título del juego, zona de padres (ajustes, futura configuración de voces reales), y rótulos que un adulto pueda necesitar leer, nunca como requisito para que un niño de 2-8 años entienda una pantalla.
+
+- **Decisión confirmada (06-Ago-2026, formalizando la nota tentativa de `docs/stack-tecnico.md` §3)**: **Baloo 2** (Google Fonts, licencia **OFL**) — tipografía redonda, gruesa y amigable, coherente con el contorno redondeado del arte; cubre bien acentos y `ñ` del español. Respaldo si hiciera falta una variante con trazos aún más gruesos para textos muy grandes: **Fredoka** (también OFL).
+- **Estado del asset**: `assets/fuentes/` existe como carpeta destino (`.gitkeep`) pero el archivo de fuente todavía **no se descargó** — no hay ninguna pantalla implementada todavía que renderice texto (HE-05/HE-06 son las primeras candidatas). Descargar e importar el `.ttf`/`.otf` de Baloo 2 queda como tarea trivial de esa tarjeta, no bloquea HE-02 (que es sobre el arte de personajes).
+- Tamaño mínimo legible y contraste alto sobre fondo, siempre con la regla de "objetivo táctil grande" del GDD §6 cuando el texto es también botón.
+
+## 7. Video (cinemáticas)
 
 - Guion (`guionista`) → storyboard (`director-cinematicas`) → fotogramas ancla por plano (FLUX.2 vía `herramientas/generar_imagen.py`) → clip de ~5 s por plano con Veo 3.1 pasando las anclas como *ingredients*.
 - **Un plano = un clip = una sola idea de movimiento.** Sin cortes de cámara dentro del clip.

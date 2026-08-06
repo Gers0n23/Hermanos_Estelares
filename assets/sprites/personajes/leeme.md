@@ -20,3 +20,11 @@ Maxi y Nicole todavía no tienen rig cutout propio (solo Sofía, a la fecha de e
 ellos, `*_base.png`/`*_celebracion.png` siguen siendo el único arte disponible, tanto para
 ícono como para lo que se implemente de personaje jugable, hasta que se decida si también
 migran a rig cutout.
+
+`cometa_base.png` (HE-02, 06-Ago-2026) es el sprite idle/pose de reposo de **Cometa**, el
+alien guía (reemplaza el nombre provisional "Estelita" — ficha aprobada en HE-A1). Mismas
+reglas de estilo que los hermanos (`docs/guia-estilo-generacion.md` §6: contorno `#2B3350`,
+paleta reutilizada, receta de ojos), fuente en
+`assets/fuentes_svg/personajes/cometa_base.svg`. Todavía no tiene rig cutout ni pose de
+celebración propia — eso queda para una tarjeta futura si Cometa necesita animarse más allá
+de un ícono/sprite estático.
