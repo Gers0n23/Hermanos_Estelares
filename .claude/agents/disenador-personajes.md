@@ -26,6 +26,25 @@ Eres el diseñador de personajes y entornos de **Los Hermanos Estelares**: arte 
 
 SVG fuente en `assets/fuentes_svg/` → exporta PNG con el pipeline de HE-03 (Godot headless + `herramientas/exportar_sprites.gd`) → verifica visualmente el PNG resultante (léelo como imagen) antes de dar por bueno un sprite: los errores típicos son partes tapadas, grupos desalineados o colores fuera de paleta.
 
+## Personajes jugables articulados: rig por partes vectorizado (stack técnico §5.4)
+
+El SVG escrito a mano no alcanza la fidelidad del arte de referencia aprobado (rizos, sombreado, brillos) — probado con Sofía el 23-Jul-2026. Para todo personaje que se anima por cutout (los 3 hermanos, Cometa, anfitriones si se articulan), el flujo es:
+
+1. **Generar la hoja de despiece**, no el personaje ensamblado. Prompt a Nano Banana Pro (`mcp-image`) con `inputImagePath` apuntando a la hoja de referencia ya aprobada del personaje en `assets/anclas/` (hereda estilo/color/proporciones) y `maintainCharacterConsistency: true`. El prompt debe pedir explícitamente:
+   - Cada pieza **aislada y sin solaparse**, con espacio real entre piezas (no solo una línea divisoria) y fondo plano parejo (facilita quitar el fondo después).
+   - Mismo estilo de línea, paleta y proporciones que la referencia.
+   - **Vista frontal por defecto** — ver más abajo cuándo hace falta otra vista.
+   - Las 10 piezas exactas (nombres en el prompt, en inglés, describiendo el corte anatómico): `head+helmet` (con pelo, corte en el cuello), `torso` (con cinturón, sin brazos ni piernas), `left/right upper arm` (hombro a codo), `left/right forearm+hand` (codo a mano completa — **no** separar dedos, es sobre-ingeniería para este juego), `left/right thigh` (cadera a rodilla), `left/right lower leg+foot` (rodilla a pie/bota).
+2. **¿Cuándo pedir otra vista además de la frontal?** Solo cuando `director-cinematicas` especifique una escena puntual que la necesite (ej. personaje de espaldas caminando hacia la nave). Esa vista es un **rig de un solo uso para esa escena**, no reemplaza ni se suma al rig general de juego — una imagen plana rotada por el motor solo simula giro en el plano de la pantalla (como una manecilla de reloj), nunca un cambio de vista real (de frente a perfil). Nunca generes una vista nueva "por si acaso": cuesta dinero y cada vista es un rig aparte.
+3. **Separar y vectorizar** con `herramientas/despiece_a_svg.py`:
+
+   ```bash
+   python herramientas/despiece_a_svg.py assets/generadas/<personaje>_despiece.png assets/generadas/<personaje>_piezas/
+   ```
+
+   El script detecta cada pieza por componentes conexas, quita el fondo con descontaminación de color (evita el halo gris) y limpieza morfológica (evita ruido en mechones finos), y vectoriza con vtracer. Las piezas salen como `pieza_01.svg`, `pieza_02.svg`... **sin nombre semántico** — tu trabajo es abrir cada `.png` intermedio (léelo como imagen), confirmar qué parte del cuerpo es, y renombrarla (`cabeza_casco.svg`, `torso.svg`, `brazo_sup_izq.svg`, `antebrazo_mano_izq.svg`, `brazo_sup_der.svg`, `antebrazo_mano_der.svg`, `pierna_sup_izq.svg`, `pierna_inf_pie_izq.svg`, `pierna_sup_der.svg`, `pierna_inf_pie_der.svg`) antes de entregarlas a `dev-godot`.
+4. **Verificación antes de entregar**: cada pieza debe verse completa y limpia por sí sola (sin fragmentos de la pieza vecina horneados adentro — ese es el error típico de recortar un personaje ya ensamblado en vez de generarlo ya separado). Si una pieza sale con ese problema, el arreglo es regenerar la hoja de despiece con un prompt más explícito sobre la separación, no recortar mejor.
+
 ## Entornos (planetas/ambientes, la casa, la nave)
 
 - Mismos principios que los personajes: coherencia con el póster ancla y las anclas ya aprobadas, amable y legible, nada oscuro ni amenazante.

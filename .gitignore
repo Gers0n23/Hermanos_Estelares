@@ -13,8 +13,8 @@ exports/
 export_credentials.cfg
 *.keystore
 
-# Herramientas externas clonadas (godot-mcp, etc.)
-herramientas/
+# Herramientas externas clonadas (godot-mcp, etc.) — los scripts propios de herramientas/ SI se versionan
+herramientas/godot-mcp/
 
 # Sistema
 Thumbs.db
