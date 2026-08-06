@@ -45,7 +45,7 @@
 
 ## FASE 0.5 — Arte conceptual del universo
 
-**Criterio de salida**: los 8 elementos (Estelita, papá, villano, 6 anfitriones, 6 ambientes, casa, nave) tienen ficha de diseño en texto + al menos una pieza de arte de referencia aprobada por el PO, y `docs/guia-estilo-generacion.md` quedó actualizado con todas las anclas nuevas. HE-A4 y HE-A7 quedan marcadas como confirmadas o pendientes de reconfirmación una vez cierre HE-D3.
+**Criterio de salida**: los 8 elementos (Estelita, papá, villano, 6 anfitriones, 6 ambientes, casa, nave) tienen ficha de diseño en texto + al menos una pieza de arte de referencia aprobada por el PO, y `docs/guia-estilo-generacion.md` quedó actualizado con todas las anclas nuevas. HE-A4 (subtareas HE-A4a-f) y HE-A7 (subtareas HE-A7a-f) quedan marcadas como confirmadas o pendientes de reconfirmación una vez cierre HE-D3.
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
