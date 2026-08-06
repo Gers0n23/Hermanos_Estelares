@@ -22,3 +22,6 @@ Thumbs.db
 
 # Worktrees temporales de subagentes
 .claude/worktrees/
+
+# Credenciales locales (ver .env.example). NUNCA subir al repo.
+.env

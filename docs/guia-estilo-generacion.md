@@ -2,15 +2,17 @@
 
 Biblia de arte para todo asset generado con IA (fondos, pantallas de carga, tarjetas de minijuegos, key art, fotogramas de cinemáticas y planos de video). Complementa —no reemplaza— al arte SVG propio de personajes interactivos (stack §5). **Nada generado entra al juego sin pasar la revisión del flujo de aprobación (abajo).**
 
-## 1. Modelos y herramientas aprobadas (PO, 19-Jul-2026)
+## 1. Modelos y herramientas aprobadas (PO, 19-Jul-2026; proveedor de imágenes actualizado 06-Ago-2026)
 
 | Uso | Modelo | Vía |
 |---|---|---|
-| Ilustración raster (fondos, cargas, tarjetas, key art, fotogramas ancla) | **Nano Banana Pro** (`gemini-3-pro-image`) | MCP `mcp-image` (configurado en `.mcp.json`, key en variable de entorno `GEMINI_API_KEY`) |
-| Video de cinemáticas (planos ~5 s con referencia) | **Veo 3.1** (`veo-3.1-generate-preview`, Ingredients to Video) | API Gemini (misma key) |
+| Ilustración raster (fondos, cargas, tarjetas, key art, fotogramas ancla) | **FLUX.2** (`fal-ai/flux-2-pro`) | `herramientas/generar_imagen.py --proveedor fal` (key en `FAL_KEY`, variable de entorno o `.env` — ver `.env.example`) |
+| Video de cinemáticas (planos ~5 s con referencia) | **Veo 3.1** (`veo-3.1-generate-preview`, Ingredients to Video) | API Gemini (`GEMINI_API_KEY`) |
 | Respaldo si un plano no logra consistencia | Motion comic: ilustración fija + paneo/parallax/zoom en Godot | `director-cinematicas` + `dev-godot` |
 
-La key **nunca** se escribe en archivos del repo. La salida cruda va a `assets/generadas/` (staging con `.gdignore`); lo aprobado se copia a su destino final en `assets/`.
+**Cambio de proveedor (06-Ago-2026)**: por decisión del PO, ya no se usa Google directamente para generar imágenes — el proveedor por defecto es fal.ai/FLUX.2, que además acepta hasta **9 imágenes ancla** por generación (vs. 3 con Nano Banana Pro, ver la lección aprendida del §2). Google/`GEMINI_API_KEY` se mantiene solo para Veo 3.1 (video de cinemáticas), no para arte raster. Las anclas ya aprobadas antes de esta fecha (generadas con Nano Banana Pro) siguen vigentes tal cual; el cambio no las invalida.
+
+Las keys **nunca** se escriben en archivos del repo (`.env` está en `.gitignore`). La salida cruda va a `assets/generadas/` (staging con `.gdignore`); lo aprobado se copia a su destino final en `assets/`.
 
 ## 2. Imágenes ancla (obligatorias en todo prompt)
 
@@ -104,7 +106,7 @@ Toda generación parte adjuntando al menos una imagen ancla — nunca se le pide
 
 ## 6. Video (cinemáticas)
 
-- Guion (`guionista`) → storyboard (`director-cinematicas`) → fotogramas ancla por plano (Nano Banana Pro) → clip de ~5 s por plano con Veo 3.1 pasando las anclas como *ingredients*.
+- Guion (`guionista`) → storyboard (`director-cinematicas`) → fotogramas ancla por plano (FLUX.2 vía `herramientas/generar_imagen.py`) → clip de ~5 s por plano con Veo 3.1 pasando las anclas como *ingredients*.
 - **Un plano = un clip = una sola idea de movimiento.** Sin cortes de cámara dentro del clip.
 - Se genera **sin diálogo**: las voces las graba la familia (GDD §7) y se montan encima.
 - Si tras 2-3 intentos un plano no mantiene al personaje idéntico, ese plano se resuelve como motion comic (respaldo aprobado) — nadie espera que el 100% sea video.

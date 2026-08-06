@@ -38,7 +38,7 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
 
 ## Nicole (5 años) — nivel brote
 
-**Entrevista: 18-Jul-2026** *(parcial — el PO irá completando los campos pendientes)*
+**Entrevista: 18-Jul-2026** *(completada 06-Ago-2026)*
 
 - **Personalidad**: adorable y siempre contenta; muy popular en su colegio — elegida «mejor
   compañera» todos los años; muy chistosa y divertida; muy solidaria, le gusta compartir.
@@ -49,11 +49,16 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
   **rosa** (confirma su traje y su mochila rosa del sprite).
 - **Personajes / historias que ama hoy**: las guerreras k-pop, la princesa Sofía y las
   princesas Disney.
-- **Apps / juegos que ya usa**: *pendiente*.
-- **Qué la asusta o aburre**: *pendiente*.
+- **Apps / juegos que ya usa**: en el celular, principalmente Roblox — le gustan los juegos
+  3D donde su personaje/avatar se mueve libremente por un mundo virtual y hace cosas ahí.
+  También le gustan los juegos 2D de "vestir" donde el personaje tiene una casa y va
+  comprando accesorios para ponérselos; en general le encantan las interfaces de crear
+  un personaje y equiparlo con accesorios.
+- **Qué la asusta o aburre**: le dan miedo las arañas y los bichos.
 - **Gesto de celebración real**: el corazón coreano (dedos índice y pulgar cruzados) con
   una expresión tierna, como lo hacen las coreanas.
-- **Sueños / mundos que le fascinan**: *pendiente*.
+- **Sueños / mundos que le fascinan**: jirafas y caballos; le encantarían mundos tipo
+  My Little Pony o de películas infantiles con referencias reconocibles.
 
 **Implicaciones de diseño**:
 
@@ -76,8 +81,18 @@ trajes rosados), estrellas brillantes, planetas y cometas. Así imagina el papá
 - **Insignia del cinturón (propuesta)**: un **corazón rosa** — une su gesto del corazón
   coreano con su personalidad cariñosa, y la distingue del pony propuesto para Sofía.
   Pendiente de confirmación del PO/Nicole.
-- *Pendientes por completar*: apps/juegos que usa (afinará mecánicas de su nivel brote),
-  miedos/aburrimientos (qué evitar) y sueños (temas de sus mundos).
+- **Personalización de personaje/avatar como gancho**: Roblox y los juegos de "vestir"
+  muestran que le encanta crear/equipar un avatar y moverlo por un mundo — el hangar
+  estelar (armar la nave pieza a pieza) y cualquier pantalla de personalización de su
+  propio personaje conectan directo con este gusto ya validado.
+- **Prohibido en su ruta**: nada de arañas ni bichos en ningún nivel, fondo o transición
+  donde juegue Nicole (mismo criterio que la regla equivalente de Sofía con arañas —
+  ver su ficha).
+- **Jirafas y caballos/ponys** confirmados como temas fuertes de sus variantes de
+  contenido, junto con gatitos (ya mencionados arriba).
+- **Estética de mundos**: inspiración tipo My Little Pony / películas infantiles con
+  referencias reconocibles (sin copiar IP) para ambientar sus niveles y el Planeta
+  Arcoíris en particular.
 
 ---
 
