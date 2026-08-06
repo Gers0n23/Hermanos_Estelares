@@ -388,7 +388,7 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | # | Pregunta | Responsable | Estado |
 |---|---|---|---|
 | P1 | Colores/diseño definitivo de cada hermano (¿los eligen los propios niños?) | Product Owner (papá + hijos) | Abierta |
-| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | Abierta |
+| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | **Resuelta (06-Ago-2026)** — se usa voz sintética (TTS) como placeholder durante el desarrollo; la grabación con la familia real queda para más adelante, antes de la pasada final de voces (HE-28), decisión del PO |
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |
