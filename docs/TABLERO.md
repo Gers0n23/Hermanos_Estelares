@@ -35,6 +35,8 @@
 
 **Criterio de salida**: historia, personajes, planetas y las fichas de minijuego del primer planeta están definidas, personalizadas con los gustos reales de Maxi, Nicole y Sofía, y aprobadas por el Product Owner. Incluye decidir **cuál es el planeta 1 y sus temas** (depende de las 3 fichas de HE-D1) — sin eso no arranca la Fase 1.
 
+**✅ FASE CERRADA — 06-Ago-2026.** Las 5 tarjetas (HE-D1 a HE-D5) están ✅ Hecho: fichas de gustos completas, guion e historia personalizados, catálogo de planetas validado con planeta 1 elegido (Arcoíris), ficha de minijuegos del planeta 1 y guion narrativo completo con P2 decidida por el PO. Criterio de salida cumplido en su totalidad. La fase activa transiciona a **Fase 1**.
+
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-D1 | Sesión de descubrimiento con los niños: qué aman hoy (animales, colores, canciones, personajes, apps/juegos favoritos, qué los asusta o aburre); registrar hallazgos por hijo en `docs/perfil-jugadores.md` | ✅ Hecho | — | PO |
