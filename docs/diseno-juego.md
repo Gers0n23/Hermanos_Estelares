@@ -3,7 +3,7 @@
 > **Fuente de verdad del diseño.** Cualquier implementación debe respetar lo que dice este documento.
 > Si el diseño cambia (los niños crecen, un minijuego no funciona en la práctica), se actualiza aquí primero.
 
-- **Última actualización**: 06-Ago-2026 (HE-D3 — §4 catálogo de planetas validado contra gustos reales: se mantienen los 6 planetas, sus anfitriones y su orden 1-6, planeta 1 = Arcoíris confirmado; HE-D2 — §1-§2 personalizados con los hallazgos de `docs/perfil-jugadores.md`: personalidad y gestos de celebración reales de los tres hermanos)
+- **Última actualización**: 06-Ago-2026 (ajuste del PO — §1 guion reordenado: los niños ven al Coleccionauta llevarse a papá y segundos después Cometa llega y estrella su nave, que queda a medio usar y varada en la Tierra con energía justa para el próximo planeta; §2 y §5 — dificultad de Sofía sube levemente y la ruta de Nicole prioriza refuerzo de lectura inicial, acorde a que está aprendiendo a leer ahora mismo. HE-D3 — §4 catálogo de planetas validado contra gustos reales: se mantienen los 6 planetas, sus anfitriones y su orden 1-6, planeta 1 = Arcoíris confirmado; HE-D2 — §1-§2 personalizados con los hallazgos de `docs/perfil-jugadores.md`: personalidad y gestos de celebración reales de los tres hermanos)
 - **Plataformas**: Táctil-primero (tablet Android), jugable también en PC con mouse
 - **Motor**: Godot 4.x — 2D exclusivamente
 - **Idioma del juego**: Español (narración por voz, mínimo texto en pantalla)
@@ -16,25 +16,33 @@
 ### La historia
 
 Una tarde cualquiera, los tres hermanos juegan en el **living de su casa** — y en su
-imaginación, donde todo es posible, comienza la aventura: una navecita diminuta entra
-dando tumbos por la ventana y aterriza (mal, entre risas) en la alfombra. De adentro
-sale **Cometa** *(nombre y ficha visual aprobados por el PO en HE-A1, 18-Jul-2026 —
-la reacción real de los niños al nombre sigue pendiente: requiere un playtest presencial,
-no se puede validar desde una sesión de escritorio; ver nota en §2)*, un alien
-pequeño, redondito y muy simpático, y trae una noticia increíble: el **Coleccionauta**,
-un alienígena chistoso que recorre la galaxia coleccionando «las cosas más increíbles
-del universo», acaba de llevarse a **papá** — le pareció el papá más increíble de todos
-y quiere quedárselo para su colección. Cometa lo sabe de primera mano: él y el
-Coleccionauta se conocen de toda la vida (juntos armaron su primera nave, de chicos, en
-el mismo planeta) y sabe exactamente cómo es, qué le gusta y dónde guarda las cosas.
+imaginación, donde todo es posible, comienza la aventura: de pronto ven aparecer, ahí
+mismo en el living, al **Coleccionauta**, un alienígena chistoso que recorre la galaxia
+coleccionando «las cosas más increíbles del universo». Le pareció que **papá** era el
+papá más increíble de todos y, sin darles tiempo a nada, ¡se lo lleva! Los niños lo ven
+con sus propios ojos: un destello de luz y papá desaparece con él, dejándolos
+boquiabiertos en medio del living.
+
+Apenas unos segundos después, una navecita diminuta entra dando tumbos por la ventana y
+**se estrella** (mal, entre risas) contra la alfombra. De adentro sale **Cometa** *(nombre
+y ficha visual aprobados por el PO en HE-A1, 18-Jul-2026 — la reacción real de los niños
+al nombre sigue pendiente: requiere un playtest presencial, no se puede validar desde una
+sesión de escritorio; ver nota en §2)*, un alien pequeño, redondito y muy simpático: venía
+volando a toda velocidad tratando de alcanzar al Coleccionauta antes de que escapara, y el
+apuro le costó el choque — su nave queda **a medio usar**, varada en la Tierra, con energía
+justa para un solo salto corto: el necesario para llegar al próximo planeta (la "nave fase
+1"). Cometa lo sabe de primera mano: él y el Coleccionauta se conocen de toda la vida
+(juntos armaron su primera nave, de chicos, en el mismo planeta) y sabe exactamente cómo
+es, qué le gusta y dónde guarda las cosas.
 
 Cometa los convierte en los **Hermanos Estelares**: les entrega trajes espaciales con
-estrellas de poder y su nave-estrella — con la tecnología que él ya conoce de memoria —
-a la que le faltan piezas para un viaje tan largo.
+estrellas de poder y los invita a bordo de su nave-estrella — con la tecnología que él ya
+conoce de memoria, aunque dañada y **a la que le faltan piezas** para un viaje tan largo.
 Para llegar al lejano planeta del Coleccionauta deberán visitar **planetas divertidos**,
 aprender nuevas habilidades en cada uno (colores, números, letras, música, emociones) y
-ganarse la **pieza de la nave** que cada mundo guarda. Los minijuegos otorgan **destellos**,
-la energía estelar que hace brillar los trajes y volar la nave.
+ganarse la **pieza de la nave** que cada mundo guarda — reparándola planeta a planeta
+hasta que esté lista para el salto final. Los minijuegos otorgan **destellos**, la energía
+estelar que hace brillar los trajes y volar la nave.
 
 En el planeta final no hay batalla: los hermanos descubren que el Coleccionauta no es
 malo — solo está solito y nunca aprendió a pedir las cosas. Le enseñan que **los amigos
@@ -91,8 +99,8 @@ sesión de descubrimiento — `docs/perfil-jugadores.md`.)*
 | Personaje | Edad | Personalidad | Rol en la historia | Perfil de juego |
 |---|---|---|---|---|
 | **Maxi** | 2 años | Muy despierto, bueno para bailar, actitud muy valiente. Nada lo asusta. | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
-| **Nicole** | 5 años | Extrovertida, adorable y siempre contenta; muy solidaria, comparte sin dudar; hace amigos con facilidad y sin miedo al ridículo; mucha imaginación, ama dibujar y pintar. | La embajadora artista y solidaria: se hace amiga de los habitantes de cada planeta sin ningún miedo, comparte lo que tiene con quien lo necesita, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
-| **Sofía** | 8 años | Muy inteligente, líder natural, buena para leer y resolver desafíos; cuida a sus hermanos chicos como una "mini-mamá"; se frustra rápido, por eso el fracaso nunca castiga. | La líder de la misión y hermana mayor que cuida a los otros dos: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
+| **Nicole** | 5 años | Extrovertida, adorable y siempre contenta; muy solidaria, comparte sin dudar; hace amigos con facilidad y sin miedo al ridículo; mucha imaginación, ama dibujar y pintar. | La embajadora artista y solidaria: se hace amiga de los habitantes de cada planeta sin ningún miedo, comparte lo que tiene con quien lo necesita, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples, **y refuerzo de lectura inicial** (reconocer letras, unir sonido-letra, primeras palabras cortas) *(decisión del PO, 06-Ago-2026: aprender a leer es hoy el reto más grande de Nicole, así que los minijuegos orientados a eso son especialmente bienvenidos en su ruta)*. Instrucciones 100% por voz — el refuerzo de lectura es apoyo, nunca un requisito para avanzar. |
+| **Sofía** | 8 años | Muy inteligente, líder natural, buena para leer y resolver desafíos; cuida a sus hermanos chicos como una "mini-mamá"; se frustra rápido, por eso el fracaso nunca castiga. | La líder de la misión y hermana mayor que cuida a los otros dos: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de frases cortas, sumas y restas (con números algo mayores), lógica, retos de habilidad suaves, con **dificultad levemente mayor** que la definida originalmente *(ajuste del PO, 06-Ago-2026)*. Texto simple apoyado por voz. |
 
 **Rutas personalizadas** *(decisión del PO, 18-Jul-2026 — reemplaza al modelo anterior de
 "mismo minijuego, tres dificultades")*: la temática no escala con la dificultad — a Sofía
@@ -331,8 +339,8 @@ Son la recompensa narrativa y el "pegamento" del guion.
   sin castigo ni bloqueo (jugar la ruta de otro no rompe el progreso propio).
 - Regla de oro por perfil (aplica a los niveles de la ruta de cada uno):
   - **Semilla (Maxi)**: imposible perder, imposible trabarse. Todo lo tocable responde con algo agradable. Nada de texto ni menús intermedios.
-  - **Brote (Nicole)**: se puede "no lograrlo" con derrota-gag y reintento suave inmediato; los errores dan pistas por voz. Máximo un objetivo a la vez.
-  - **Estrella (Sofía)**: se puede perder de verdad — siempre con derrota chistosa, nunca imposible para su edad — y hay puntaje de 1-3 estrellitas para incentivar repetir; completar siempre es posible y siempre se celebra.
+  - **Brote (Nicole)**: se puede "no lograrlo" con derrota-gag y reintento suave inmediato; los errores dan pistas por voz. Máximo un objetivo a la vez. **Refuerzo de lectura inicial** *(decisión del PO, 06-Ago-2026)*: Nicole está aprendiendo a leer ahora mismo, así que su ruta prioriza contenido de letras/sonidos/palabras cortas (mismo espíritu que Planeta Letralandia, ver §4) como complemento bienvenido al resto de su ruta (conteo, formas, memoria...) — nunca la reemplaza ni se vuelve requisito para avanzar.
+  - **Estrella (Sofía)**: se puede perder de verdad — siempre con derrota chistosa, nunca imposible para su edad — y hay puntaje de 1-3 estrellitas para incentivar repetir; completar siempre es posible y siempre se celebra. **Dificultad levemente mayor** *(ajuste del PO, 06-Ago-2026, sobre la definición original de este perfil)*: acorde a que "lo fácil le parece de bebés" (ficha) — el tope de "nunca imposible para su edad" sigue mandando.
 - **Perder nunca frustra** (ver §1 Tono): la derrota es un gag que da risa, reintento inmediato
   con botón gigante y cero progreso perdido.
 - En la zona de padres se podrá **ajustar el perfil de cada niño** manualmente (los niños crecen: en un año Maxi puede pasar a Brote).

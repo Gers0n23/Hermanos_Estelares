@@ -80,7 +80,7 @@
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-01 | Instalar Godot 4.x, crear `project.godot` con config base (720p, canvas_items, input táctil+mouse), estructura de carpetas del stack §3, e instalar GodotPrompter (skills) + godot-mcp (stack §4) | ✅ Hecho | — | Dev |
-| HE-02 | Guía de estilo visual: paleta maestra, contorno, tipografía; diseño SVG de los 3 hermanos y Estelita (pose idle) según lo definido en HE-D2, con aprobación de los QA junior | ⬜ Backlog | HE-D2 | Dev + PO |
+| HE-02 | Guía de estilo visual: paleta maestra, contorno, tipografía; diseño SVG de los 3 hermanos y Estelita (pose idle) según lo definido en HE-D2, con aprobación de los QA junior — nota del SM: la referencia a "Estelita" quedó desactualizada por el rediseño de HE-D2/HE-A1 (el guía es **Cometa**, ficha ya aprobada); usar Cometa en vez de Estelita al ejecutar esta tarjeta. Los SVG base+celebración de los 3 hermanos ya existen en `assets/fuentes_svg/personajes/` (creados iterativamente durante HE-D1/HE-D2) — el trabajo restante es formalizar la guía de estilo escrita, producir el sprite idle de Cometa y conseguir la aprobación de los QA junior | 🔄 En curso | HE-D2 | Dev + PO |
 | HE-03 | Completar pipeline de assets: probar SVG→PNG por lote, evaluar MCP de generación de imágenes y GDAI MCP; registrar decisión en stack §7 | ✅ Hecho | HE-01 | Dev |
 | HE-04 | Base de audio: buses música/sfx/voz, autoload `Audio`, descargar paquete sfx CC0 inicial, estructurar `guion_voces.md` (contenido viene de HE-D5) | ✅ Hecho | HE-01 | Dev |
 | HE-05 | Pantalla de título animada (cielo estrellado, "tocar para empezar") | ⬜ Backlog | HE-01 | Dev |
