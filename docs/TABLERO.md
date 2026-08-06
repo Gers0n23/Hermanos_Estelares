@@ -60,7 +60,7 @@
 | HE-A4f | Ficha visual de Mimi, nube que cambia con las emociones, anfitriona del Planeta Corazón (emociones, empatía, valores) + arte de referencia — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
 | HE-A5 | Ficha de diseño de la casa de los niños (el living y su transformación mágica) + arte conceptual — insumo directo de HE-30 (cinemática inicial) | ✅ Hecho | — | director-cinematicas + disenador-personajes + PO |
 | HE-A6 | Ficha de diseño de la nave-estrella (estado incompleto inicial, piezas por capítulo, diseño final armada) + arte conceptual — insumo directo del hangar estelar (HE-17) y HE-39 | ✅ Hecho | — | director-cinematicas + disenador-personajes + PO |
-| HE-A7a | Ficha de ambiente del Planeta Arcoíris (fondos, props, atmósfera multicolor pastel) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7a | Ficha de ambiente del Planeta Arcoíris (fondos, props, atmósfera multicolor pastel) + arte conceptual — provisional hasta HE-D3 | 🔄 En curso (ficha + arte listos, pendiente de aprobación del PO) | — (provisional) | disenador-personajes + PO |
 | HE-A7b | Ficha de ambiente del Planeta Animalia (fondos, props, atmósfera verdes selva) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
 | HE-A7c | Ficha de ambiente del Planeta Melodía (fondos, props, atmósfera morados y neón suave) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
 | HE-A7d | Ficha de ambiente del Planeta Cuenta-Cuentas (fondos, props, atmósfera azules noche) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
