@@ -60,9 +60,16 @@
 | HE-A4f | Ficha visual de Mimi, nube que cambia con las emociones, anfitriona del Planeta Corazón (emociones, empatía, valores) + arte de referencia — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
 | HE-A5 | Ficha de diseño de la casa de los niños (el living y su transformación mágica) + arte conceptual — insumo directo de HE-30 (cinemática inicial) | ✅ Hecho | — | director-cinematicas + disenador-personajes + PO |
 | HE-A6 | Ficha de diseño de la nave-estrella (estado incompleto inicial, piezas por capítulo, diseño final armada) + arte conceptual — insumo directo del hangar estelar (HE-17) y HE-39 | ✅ Hecho | — | director-cinematicas + disenador-personajes + PO |
-| HE-A7 | Fichas de ambientes de los 6 planetas (fondos, props, atmósfera) + arte conceptual de cada uno — provisional hasta HE-D3; insumo directo de HE-13 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
-| HE-A8 | Arte conceptual general / mood board: póster maestro combinando hermanos, Estelita, villano, casa, nave y planetas — pieza de cierre/consolidación visual | ⬜ Backlog | HE-A1 a HE-A7 | disenador-personajes + PO |
-| HE-A9 | Consolidar todo en `docs/guia-estilo-generacion.md` (nuevas anclas, specs) + aprobación final del PO del paquete completo de arte conceptual — criterio de salida de la fase | ⬜ Backlog | HE-A1 a HE-A8 | PO (+ SM verifica) |
+| HE-A7a | Ficha de ambiente del Planeta Arcoíris (fondos, props, atmósfera multicolor pastel) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7b | Ficha de ambiente del Planeta Animalia (fondos, props, atmósfera verdes selva) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7c | Ficha de ambiente del Planeta Melodía (fondos, props, atmósfera morados y neón suave) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7d | Ficha de ambiente del Planeta Cuenta-Cuentas (fondos, props, atmósfera azules noche) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7e | Ficha de ambiente del Planeta Letralandia (fondos, props, atmósfera naranjas cálidos) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A7f | Ficha de ambiente del Planeta Corazón (fondos, props, atmósfera rosas y celestes) + arte conceptual — provisional hasta HE-D3 | ⬜ Backlog | — (provisional) | disenador-personajes + PO |
+| HE-A8 | Arte conceptual general / mood board: póster maestro combinando hermanos, Estelita, villano, casa, nave y planetas — pieza de cierre/consolidación visual | ⬜ Backlog | HE-A1 a HE-A3, HE-A4a-f, HE-A5, HE-A6, HE-A7a-f | disenador-personajes + PO |
+| HE-A9 | Consolidar todo en `docs/guia-estilo-generacion.md` (nuevas anclas, specs) + aprobación final del PO del paquete completo de arte conceptual — criterio de salida de la fase | ⬜ Backlog | HE-A1 a HE-A3, HE-A4a-f, HE-A5, HE-A6, HE-A7a-f, HE-A8 | PO (+ SM verifica) |
+
+**Nota (HE-A7a-f)**: sea cual sea el planeta que HE-D3 confirme como planeta 1 del capítulo 1, su ficha de ambiente es insumo directo de HE-13 (arte del primer planeta).
 
 ## FASE 1 — Núcleo + Capítulo 1 completo
 
