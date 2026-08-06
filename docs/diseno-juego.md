@@ -3,7 +3,7 @@
 > **Fuente de verdad del diseño.** Cualquier implementación debe respetar lo que dice este documento.
 > Si el diseño cambia (los niños crecen, un minijuego no funciona en la práctica), se actualiza aquí primero.
 
-- **Última actualización**: 19-Jul-2026
+- **Última actualización**: 06-Ago-2026 (HE-D3 — §4 catálogo de planetas validado contra gustos reales: se mantienen los 6 planetas, sus anfitriones y su orden 1-6, planeta 1 = Arcoíris confirmado; HE-D2 — §1-§2 personalizados con los hallazgos de `docs/perfil-jugadores.md`: personalidad y gestos de celebración reales de los tres hermanos)
 - **Plataformas**: Táctil-primero (tablet Android), jugable también en PC con mouse
 - **Motor**: Godot 4.x — 2D exclusivamente
 - **Idioma del juego**: Español (narración por voz, mínimo texto en pantalla)
@@ -18,7 +18,9 @@
 Una tarde cualquiera, los tres hermanos juegan en el **living de su casa** — y en su
 imaginación, donde todo es posible, comienza la aventura: una navecita diminuta entra
 dando tumbos por la ventana y aterriza (mal, entre risas) en la alfombra. De adentro
-sale **Cometa** *(nombre provisional — validar con los niños en HE-D2)*, un alien
+sale **Cometa** *(nombre y ficha visual aprobados por el PO en HE-A1, 18-Jul-2026 —
+la reacción real de los niños al nombre sigue pendiente: requiere un playtest presencial,
+no se puede validar desde una sesión de escritorio; ver nota en §2)*, un alien
 pequeño, redondito y muy simpático, y trae una noticia increíble: el **Coleccionauta**,
 un alienígena chistoso que recorre la galaxia coleccionando «las cosas más increíbles
 del universo», acaba de llevarse a **papá** — le pareció el papá más increíble de todos
@@ -48,14 +50,17 @@ rescatar a su papá. Y de regalo, la lección del final: los amigos se hacen pid
 compartiendo y jugando. Cada planeta refuerza además un tema concreto (colores,
 números, emociones... ver §4).
 
-**La lección de la cooperación** *(aprobada por el PO, 18-Jul-2026)*: la misión final
-la vuelve jugable. La primera vez que los hermanos intentan la prueba del Coleccionauta,
-cada uno quiere hacerlo a su manera, discuten... y todo sale mal **de forma cómica**
-(el plan se desarma, la nave estornuda, el Coleccionauta se ríe). Cometa les hace
-notar que separados no funciona: la prueba solo se supera **cooperando**, usando la
-habilidad de cada hermano en secuencia — Sofía lee la pista y arma el plan, Nicole se
-gana la confianza del Coleccionauta, Maxi encuentra lo que nadie más ve. Cuando pelean,
-las cosas salen mal; cuando cooperan, avanzan y rescatan a papá.
+**La lección de la cooperación** *(aprobada por el PO, 18-Jul-2026; enriquecida con los
+hallazgos de HE-D1, 06-Ago-2026)*: la misión final la vuelve jugable. La primera vez que
+los hermanos intentan la prueba del Coleccionauta, cada uno quiere hacerlo a su manera,
+discuten... y todo sale mal **de forma cómica** (el plan se desarma, la nave estornuda,
+el Coleccionauta se ríe). Cometa les hace notar que separados no funciona: la prueba
+solo se supera **cooperando**, usando la habilidad de cada hermano en secuencia — Sofía
+(la líder, mini-mamá de sus hermanos) lee la pista y arma el plan, Nicole (la más
+sociable y solidaria de los tres) se hace amiga del Coleccionauta compartiendo algo
+suyo con él — un gesto pequeño que le enseña, sin sermón, que así es como se hacen los
+amigos —, y Maxi (el valiente, nada lo asusta) encuentra lo que nadie más ve. Cuando
+pelean, las cosas salen mal; cuando cooperan, avanzan y rescatan a papá.
 
 ### Tono
 
@@ -80,11 +85,14 @@ las cosas salen mal; cuando cooperan, avanzan y rescatan a papá.
 
 ### Los tres hermanos (jugables)
 
-| Personaje | Edad | Rol en la historia | Perfil de juego |
-|---|---|---|---|
-| **Maxi** | 2 años | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
-| **Nicole** | 5 años | La embajadora artista: se hace amiga de los habitantes de cada planeta sin ningún miedo, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
-| **Sofía** | 8 años | La líder de la misión: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
+*(Roles y personalidad actualizados en HE-D2, 06-Ago-2026, con los hallazgos de la
+sesión de descubrimiento — `docs/perfil-jugadores.md`.)*
+
+| Personaje | Edad | Personalidad | Rol en la historia | Perfil de juego |
+|---|---|---|---|---|
+| **Maxi** | 2 años | Muy despierto, bueno para bailar, actitud muy valiente. Nada lo asusta. | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
+| **Nicole** | 5 años | Extrovertida, adorable y siempre contenta; muy solidaria, comparte sin dudar; hace amigos con facilidad y sin miedo al ridículo; mucha imaginación, ama dibujar y pintar. | La embajadora artista y solidaria: se hace amiga de los habitantes de cada planeta sin ningún miedo, comparte lo que tiene con quien lo necesita, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples. Instrucciones 100% por voz. |
+| **Sofía** | 8 años | Muy inteligente, líder natural, buena para leer y resolver desafíos; cuida a sus hermanos chicos como una "mini-mamá"; se frustra rápido, por eso el fracaso nunca castiga. | La líder de la misión y hermana mayor que cuida a los otros dos: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de palabras/frases cortas, sumas y restas, lógica, retos de habilidad suaves. Texto simple apoyado por voz. |
 
 **Rutas personalizadas** *(decisión del PO, 18-Jul-2026 — reemplaza al modelo anterior de
 "mismo minijuego, tres dificultades")*: la temática no escala con la dificultad — a Sofía
@@ -100,12 +108,22 @@ Sofía lidera y lee, Nicole hace amigos y dibuja, Maxi explora y encuentra.
 
 **Diseño visual**: los tres con trajes espaciales del mismo diseño pero color propio
 (a definir en la guía de estilo, tarjeta de Fase 0), cabezas grandes, ojos expresivos,
-proporciones redondas. Cada uno con un gesto característico de celebración.
+proporciones redondas.
+
+**Gesto de celebración canon (validado en HE-D1, 06-Ago-2026)**: cada hermano celebra
+con su gesto real de la vida — así la animación de victoria del juego es, literalmente,
+"ellos mismos" ganando. No son placeholders: son la referencia definitiva para
+`disenador-personajes` (poses de celebración) y `dev-godot` (animación de victoria).
+
+- **Maxi**: grita «¡¡siiii!!» y da unos 3 saltitos con el puño derecho arriba.
+- **Nicole**: el corazón coreano (dedos índice y pulgar cruzados) con expresión tierna.
+- **Sofía**: mano en la cintura, piernas levemente flectadas hacia un lado, el otro
+  brazo estirado en signo de la paz, guiño de ojo y cabeza levemente ladeada.
 
 ### Personajes de apoyo
 
-- **Cometa** *(nombre provisional — validar con los niños en HE-D2)* — el alien guía (no es parte de la familia: es el personaje mágico del juego imaginado). Pequeño, redondito y muy entusiasta; aterriza (siempre dando tumbos, siempre riéndose de sí mismo) en el living, les entrega los trajes con estrellas de poder y pilotea la nave. **Conoce al Coleccionauta de toda la vida** — se criaron en el mismo planeta y de chicos armaron naves juntos — por eso sabe exactamente cómo tratarlo, qué le gusta y cómo funciona su tecnología (la misma que ahora usan los hermanos). Se alejó de él hace tiempo porque a Cometa no le gustaba coleccionar *cosas*: a él le gusta coleccionar **amigos** (guarda un "álbum de abrazos" con un recuerdo de cada amigo nuevo, nunca objetos en cajas) — un guiño juguetón a la lección final del juego. Narrador del juego: da instrucciones por voz, anima, celebra, nunca regaña ni apura. Flota/rebota en pantalla como ayudante permanente; tocarlo repite la instrucción.
-- **El Coleccionauta** *(nombre provisional — validar con los niños en HE-D2)* — el alienígena coleccionista. Chistoso, torpe y para nada malvado: colecciona «las cosas más increíbles del universo» y se llevó a papá para su colección porque le pareció increíble (y porque está solito). En el final aprende a pedir las cosas y se vuelve amigo de la familia.
+- **Cometa** *(nombre y ficha visual de diseño, aprobados por el PO en HE-A1, 18-Jul-2026)* — el alien guía (no es parte de la familia: es el personaje mágico del juego imaginado). Pequeño, redondito y muy entusiasta; aterriza (siempre dando tumbos, siempre riéndose de sí mismo) en el living, les entrega los trajes con estrellas de poder y pilotea la nave. **Conoce al Coleccionauta de toda la vida** — se criaron en el mismo planeta y de chicos armaron naves juntos — por eso sabe exactamente cómo tratarlo, qué le gusta y cómo funciona su tecnología (la misma que ahora usan los hermanos). Se alejó de él hace tiempo porque a Cometa no le gustaba coleccionar *cosas*: a él le gusta coleccionar **amigos** (guarda un "álbum de abrazos" con un recuerdo de cada amigo nuevo, nunca objetos en cajas) — un guiño juguetón a la lección final del juego. Narrador del juego: da instrucciones por voz, anima, celebra, nunca regaña ni apura. Flota/rebota en pantalla como ayudante permanente; tocarlo repite la instrucción. **Pendiente**: el nombre "Cometa" es la decisión de diseño/PO vigente; falta la validación real con Maxi, Nicole y Sofía (mostrarles el arte, decirles el nombre, ver su reacción) — eso solo se puede hacer en un playtest presencial, no en esta revisión de guion, así que **queda anotado como ítem abierto** para la próxima sesión con ellos.
+- **El Coleccionauta** *(nombre y ficha visual de diseño, aprobados por el PO en HE-A3, 18-Jul-2026)* — el alienígena coleccionista. Chistoso, torpe y para nada malvado: colecciona «las cosas más increíbles del universo» y se llevó a papá para su colección porque le pareció increíble (y porque está solito). En el final aprende a pedir las cosas y se vuelve amigo de la familia. **Pendiente**: mismo caso que Cometa — el nombre está aprobado por el PO pero su validación real con los niños queda para el próximo playtest presencial.
 - **Papá** — el secuestrado más feliz de la galaxia. Aparece en video-llamadas cómicas desde la colección del alien, siempre tranquilo y bromista; su rescate es la gran escena final. *(Idealmente con la voz real de papá — ver P2.)*
 - **Habitantes de los planetas** — un personaje anfitrión por planeta (ver §4), que da contexto a los minijuegos ("¡mis frutas se mezclaron, ayúdame a ordenarlas por color!") y guarda la pieza de la nave de su mundo.
 
@@ -163,23 +181,96 @@ Zona de padres (acceso con candado: ajustes, progreso por hijo, volumen)
 
 ## 4. Los planetas (mundos)
 
-> ⚠️ **Sección en revisión** *(18-Jul-2026)*: con la decisión de rutas personalizadas (§2 y §5),
-> los "minijuegos con 3 niveles S/B/E" de abajo pasan a leerse como **motores de mecánica** con
-> ejemplos de escalado. El catálogo definitivo de niveles temáticos por hermano (y si siguen
-> siendo 6 planetas de temas universales o menos planetas con misiones personalizadas dentro)
-> se rediseñará al cerrar HE-D1, con las fichas de gustos de los tres completas.
+> ✅ **Catálogo validado contra los gustos reales** *(HE-D3, 06-Ago-2026 — PO + `disenador-niveles`,
+> con las fichas de `docs/perfil-jugadores.md` ya completas)*: se contrastó cada uno de los 6
+> planetas contra los gustos documentados de Maxi, Nicole y Sofía (detalle debajo de la tabla).
+> Conclusión: **se mantienen los 6 planetas, sus temas, sus nombres y sus anfitriones tal como
+> estaban** — ninguno resultó tan desconectado como para justificar reemplazarlo, y el modelo de
+> "motores de mecánica + contenido por niño" (§2 y §5) es precisamente lo que permite que un
+> planeta de tema universal (colores, animales, música...) se sienta propio de cada hermano vía
+> sus variantes de contenido en `datos/`, sin necesitar un planeta dedicado por gusto. **El orden
+> 1-6 tampoco cambia** — se evaluó adelantar Corazón, pero el orden actual ya está atado a un
+> costo hundido aprobado que lo justifica mejor (ver nota bajo la tabla). El **planeta 1
+> confirmado es Arcoíris**. Lo que queda abierto no es el catálogo en sí sino el
+> detalle fino de las fichas de nivel por hermano dentro de cada planeta — trabajo normal de
+> diseño de niveles (tarjetas de contenido), no un bloqueo de esta tarjeta. Responde también a
+> la pregunta abierta P5 del §9 (marcada resuelta abajo).
 
 Seis planetas, cada uno con un tema de aprendizaje, un anfitrión y 3-4 minijuegos.
 Se desarrollan en este orden (el orden es también el del roadmap):
 
-| # | Planeta | Tema de aprendizaje | Anfitrión | Paleta dominante |
-|---|---|---|---|---|
-| 1 | **Planeta Arcoíris** | Colores y formas | Camaleona Coco (cambia de color) | Multicolor pastel |
-| 2 | **Planeta Animalia** | Animales, sus sonidos y hábitats | Perrito astronauta Toby | Verdes selva |
-| 3 | **Planeta Melodía** | Música, ritmo y sonidos | Pulpo DJ Octavio (8 brazos, 8 instrumentos) | Morados y neón suave |
-| 4 | **Planeta Cuenta-Cuentas** | Números y conteo | Búho contador Profesor Plumas | Azules noche |
-| 5 | **Planeta Letralandia** | Letras, palabras y lectura | Dragoncita lectora Lila | Naranjas cálidos |
-| 6 | **Planeta Corazón** | Emociones, empatía y valores | Nube Mimi (cambia con las emociones) | Rosas y celestes |
+| # | Planeta | Tema de aprendizaje | Anfitrión | Paleta dominante | Por qué conecta con los tres *(HE-D3)* |
+| --- | --- | --- | --- | --- | --- |
+| 1 | **Planeta Arcoíris** | Colores y formas | Camaleona Coco (cambia de color) | Multicolor pastel | **Planeta 1.** Nicole: pintar/dibujar es su gancho más seguro y ya vive aquí (`Pinta con Coco`); sus colores favoritos (rosa) y los de Sofía (rosa/turquesa) caben naturalmente en la paleta "multicolor pastel". Sofía: mezclar colores (azul+amarillo=verde) es un reto real, no "de bebés". Maxi: la mecánica de causa-efecto inmediata (tocar y que pase algo bonito al instante) es ideal a los 2 años aunque Coco no sea su animal favorito — lo que lo engancha a esta edad es la respuesta sensorial, no el personaje. Es además el tema más elemental para abrir el juego (ninguna habilidad previa requerida), coherente con "primer nivel = victoria fácil" (ver principios). |
+| 2 | **Planeta Animalia** | Animales, sus sonidos y hábitats | Perrito astronauta Toby | Verdes selva | La conexión más fuerte de los seis, y con los tres a la vez: caballos/jirafas/gatitos (Nicole), ponys/gerbos/**perritos**/gatitos cachorros (Sofía — Toby es literalmente su animal favorito), y "dinosaurios" + "animales" en general, ficha explícita (Maxi). Es el hogar natural de la variante de dinosaurios de Maxi (ver nota debajo de la tabla). |
+| 3 | **Planeta Melodía** | Música, ritmo y sonidos | Pulpo DJ Octavio (8 brazos, 8 instrumentos) | Morados y neón suave | Bailar y cantar conecta con los tres: Maxi "bueno para bailar" (ficha), Sofía "muy buena para bailar y cantar" (ficha), y la paleta morado/neón ya evoca la estética que Nicole y Sofía comparten (guerreras k-pop / Rumi) sin copiar ninguna IP. |
+| 4 | **Planeta Cuenta-Cuentas** | Números y conteo | Búho contador Profesor Plumas | Azules noche | Tema académico sin anfitrión-mascota favorito de ninguno de los tres, pero necesario para el reto real que pide Sofía (sumas/restas, "lo fácil le parece de bebés") y el conteo de Nicole (hasta 10-20). `El tren numérico` es además una variante natural para el gusto de Maxi por los vehículos/trenes (ver nota debajo). |
+| 5 | **Planeta Letralandia** | Letras, palabras y lectura | Dragoncita lectora Lila | Naranjas cálidos | Entrena la habilidad que Sofía usa para liderar la prueba cooperativa final ("Sofía lee la pista y arma el plan", §1) — llega justo antes de Corazón, así que el jugador la trae fresca. El dragón y los cuentos ilustrados también dan pie a variantes de fantasía/escuela de magia que resuenan con su gusto por Harry Potter, sin copiar la IP. |
+| 6 | **Planeta Corazón** | Emociones, empatía y valores | Nube Mimi (cambia con las emociones) | Rosas y celestes | Último planeta antes de la prueba final — y a propósito: la solidaridad de Nicole ("muy solidaria, le gusta compartir") y la fragilidad emocional de Sofía ("es llorona, se frustra rápido") lo hacen directamente relevante para ambas, y entrena justo el tema del clímax (aprender que los amigos no se coleccionan, se hacen; Nicole "se gana la confianza" del Coleccionauta, §1). Coincide además con que su pieza de nave — el "corazón del motor/núcleo central" — ya está diseñada y aprobada (HE-A6) explícitamente como la **última** pieza, la que enciende toda la nave justo antes del planeta final: moverlo de posición habría exigido retrabajar esa ficha ya aprobada sin necesidad real. |
+
+### Por qué Arcoíris sigue siendo el planeta 1 *(HE-D3)*
+
+- **Onboarding ideal**: colores y formas no requieren ninguna habilidad previa (ni contar, ni
+  leer, ni reconocer animales) — es el tema más fácil de convertir en "victoria fácil que enseña
+  la mecánica sin explicarla" (principio de diseño), válido a la vez para Maxi, Nicole y Sofía.
+- **Conecta de verdad con al menos dos de los tres** (ver tabla): "Pinta con Coco" es el gancho
+  más seguro de Nicole documentado en su ficha, y el reto de mezclar colores es genuinamente un
+  desafío para Sofía, no relleno. Para Maxi la conexión es de mecánica (respuesta sensorial
+  inmediata), no de personaje-favorito — válido a los 2 años, donde eso es lo que importa.
+- **Costo hundido real, no placeholder**: la ficha de Camaleona Coco (HE-A4a) y el ambiente del
+  Planeta Arcoíris (HE-A7a) ya están diseñados y generados (varias iteraciones de arte cada uno,
+  ver `docs/guia-estilo-generacion.md` §3), marcados "provisional hasta que HE-D3 confirme el
+  orden" — esta tarjeta **confirma ese orden**, así que ese trabajo deja de ser provisional y
+  puede pasar a aprobación formal del PO sin rehacerse.
+- **Ningún otro planeta superaba a Arcoíris por margen suficiente para justificar tirar ese
+  trabajo**: Animalia conecta más fuerte con los tres gustos-animal específicos, pero por eso
+  mismo rinde más como "planeta 2 que dispara el enganche" que como plantilla de onboarding
+  (su primer minijuego ya pide reconocer sonidos y hábitats, más carga cognitiva que tocar un
+  color). Melodía conecta con el baile/canto de los tres, pero su anfitrión no tiene el mismo
+  anclaje directo a un gusto ya declarado (a diferencia de "pintar" para Nicole). Con los tres
+  candidatos razonablemente parejos en conexión, el costo hundido de Arcoíris inclina la balanza.
+
+### Por qué el orden 2-6 no cambia (se evaluó y se descartó adelantar Corazón)
+
+Al validar conexiones, Corazón parecía un buen candidato para adelantarse (conecta fuerte con
+Nicole y Sofía, entrena la empatía que la prueba final necesita) — pero moverlo chocaría con un
+costo hundido real: la ficha de la nave-estrella (HE-A6, **aprobada por el PO 19-Jul-2026**,
+`docs/guia-estilo-generacion.md` §3) ya define sus 6 piezas modulares una por planeta, y ata
+explícitamente la pieza 6 — el "corazón del motor / núcleo central" — a ser la **última**, la que
+enciende toda la nave justo antes de la prueba cooperativa ("encaja narrativamente con que sea la
+última pieza justo antes del planeta final: la nave cobra vida del todo antes de la prueba
+cooperativa"). Ese diseño ya aprobado logra el mismo objetivo narrativo que se buscaba al
+adelantar Corazón (el planeta de las emociones preparando el clímax emocional del juego) sin
+tocarlo. **Se mantiene el orden original 1-6**; el único ajuste real de esta tarjeta es confirmar
+el planeta 1.
+
+### Gustos fuertes sin planeta dedicado: dinosaurios y autos de Maxi
+
+Verificado explícitamente (pedido de la tarjeta): los **dinosaurios** de Maxi (tiranosaurio rex,
+spinosaurio, carnotauro — el gusto más fuerte y repetido de su ficha) y su interés por **autos y
+vehículos** (Cars, Sonic, Tayo el autobús) no son hoy el tema central de ningún planeta.
+
+**Decisión: no ameritan un planeta propio, quedan como contenido de ruta personalizada** (§5):
+
+- **Dinosaurios → Planeta Animalia.** Un dinosaurio es, para efectos de diseño, un animal más:
+  encaja sin forzar en "¿Quién habla?" (rugidos de dino como variante de sonido para la ruta de
+  Maxi), "Cada quien a su casa" (dino → volcán/selva prehistórica) y "Escondite animal". No hace
+  falta un séptimo planeta — el GDD §8 además pone un techo explícito de 6 planetas. Esta
+  variante ya estaba insinuada en `docs/perfil-jugadores.md` ("dinosaurios... como temas de sus
+  variantes de contenido"); esta tarjeta la deja explícita en el GDD para que no se pierda al
+  implementar.
+- **Autos/vehículos → "El tren numérico" (Planeta Cuenta-Cuentas).** Ese minijuego ya es, en
+  esencia, una fila de vehículos para ordenar — la variante de Maxi puede reskinearlo como una
+  carrera de autitos/camioncitos en vez de vagones de tren, sin tocar la mecánica.
+- **Nota para el guionista y `disenador-personajes`**: Sonic, Cars, Toy Story, Tayo el autobús y
+  Blippi son personajes/IP con dueño — se usan solo como *referencia de inspiración* para el papá
+  al describir el gusto de Maxi (velocidad, autitos de colores, un autobús simpático), nunca se
+  reproducen ni se nombran en el juego (mismo criterio ya aplicado a Nicole y Sofía con Disney/
+  My Little Pony/Harry Potter/k-pop en `docs/perfil-jugadores.md`).
+- Si en un playtest futuro Maxi reacciona con muchísima más emoción a los dinosaurios que al
+  resto del contenido, la opción de "ascender" dinosaurios a un planeta propio queda abierta para
+  una fase posterior (no se cierra la puerta, pero hoy no hay evidencia suficiente para gastar uno
+  de los 6 cupos de planeta en eso).
 
 ### Minijuegos por planeta (con su adaptación por nivel)
 
@@ -203,13 +294,13 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 
 #### Planeta Cuenta-Cuentas
 1. **Cosecha contada** — recolectar N frutas que pide el Profesor Plumas. S: tocar frutas y oír el conteo (1, 2, 3...). B: recolectar exactamente la cantidad pedida (hasta 10). E: sumas/restas ("recoge 5 y quita 2").
-2. **El tren numérico** — ordenar vagones con números. S: tocar los vagones y oír los números. B: ordenar 1-10. E: completar secuencias con huecos (2, 4, _, 8) y ordenar hasta 20.
+2. **El tren numérico** — ordenar vagones con números. S: tocar los vagones y oír los números. B: ordenar 1-10. E: completar secuencias con huecos (2, 4, _, 8) y ordenar hasta 20. *(variante de contenido para Maxi: reskin como carrera de autitos/camioncitos en vez de vagones — ver "Gustos fuertes sin planeta dedicado" arriba.)*
 3. **Mercado espacial** — "comprar" con monedas estelares. B: pagar cantidades exactas contando. E: sumar precios y calcular vuelto simple. (S no tiene este juego; ve una animación de la tienda con sonidos.)
 
 #### Planeta Letralandia
 1. **Sopa de burbujas** — tocar burbujas con la letra que dice Lila. S: tocar burbujas y oír letras. B: encontrar su inicial y las vocales. E: formar palabras cortas (SOL, LUNA).
 2. **La primera letra** — unir dibujos con su letra inicial. B: 3-4 pares con voz. E: escribir la palabra completa con teclado de letras en pantalla.
-3. **Cuentos de Lila** — cuentos ilustrados cortos narrados por voz, con objetos tocables en cada página. S/B: escuchar y tocar. E: la letra resaltada sigue la narración (fomento de lectura).
+3. **Cuentos de Lila** — cuentos ilustrados cortos narrados por voz, con objetos tocables en cada página. S/B: escuchar y tocar. E: la letra resaltada sigue la narración (fomento de lectura); variante de contenido de "escuela de magia" para Sofía (sin copiar IP — ver nota arriba).
 
 #### Planeta Corazón
 1. **¿Cómo se siente Mimi?** — Mimi muestra una emoción y hay que reconocerla. S: tocar a Mimi y ver/oír emociones. B: elegir la carita correcta entre 3. E: elegir "qué la haría sentir mejor" (escenarios de empatía).
@@ -300,5 +391,6 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | Abierta |
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
-| P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | Abierta |
+| P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |
 | P6 | Diseño detallado de la prueba final cooperativa y del modo misión familiar (flujo de turnos, UI de "le toca a...") | PO + Dev | Abierta |
+| P7 | Nombres "Cometa" y "El Coleccionauta" — aprobados por el PO en HE-A1/HE-A3 (diseño) y confirmados definitivamente por el PO el 06-Ago-2026 (ya no son provisionales). La reacción espontánea de Maxi, Nicole y Sofía al verlos/oírlos en el juego real queda como observación natural del primer playtest, no como aprobación pendiente | PO | Cerrada (nombres definitivos) |
