@@ -35,4 +35,5 @@ buses/default_bus_layout="res://assets/audio/buses_audio.tres"
 
 [autoload]
 
+Progreso="*res://scripts/autoloads/progreso.gd"
 Audio="*res://scripts/autoloads/audio.gd"
