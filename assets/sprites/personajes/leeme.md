@@ -28,3 +28,27 @@ paleta reutilizada, receta de ojos), fuente en
 `assets/fuentes_svg/personajes/cometa_base.svg`. Todavía no tiene rig cutout ni pose de
 celebración propia — eso queda para una tarjeta futura si Cometa necesita animarse más allá
 de un ícono/sprite estático.
+
+## Actualización 07-Ago-2026 — `sofia_base.png` ahora se genera desde el rig cutout
+
+Con el rig de Sofía ya auditado y aprobado (`docs/auditorias-ux/2026-08-05_rig-sofia.md`), el
+PO pidió reemplazar el retrato "oficial" (el que consumen `titulo.tscn`,
+`seleccion_personaje.tscn` y `scripts/nucleo/mapa_estelar.gd`, los tres apuntando al mismo
+`res://assets/sprites/personajes/sofia_base.png`) por arte generado a partir de ese rig, en vez
+del pipeline SVG→PNG plano de HE-D2 descrito arriba.
+
+`sofia_base.png` ya **no** sale de un SVG escrito a mano: se genera con
+`herramientas/renderizar_retrato_sofia.gd` (headless, `godot --headless --path . --script
+herramientas/renderizar_retrato_sofia.gd`), que compone por alfa (CPU, sin viewport/GPU) las 11
+piezas de `assets/sprites/preview_sofia_rig/` en pose de reposo (rotación 0 en todas las
+piezas — el mismo sistema de coordenadas del lienzo de 332×768 de
+`herramientas/armar_rig_sofia_preview.gd`, así que a rotación cero cada pieza ya cae alineada
+sin necesitar reconstruir el árbol de nodos) y centra el resultado en un lienzo de 512×768 para
+mantener el mismo tamaño que el PNG anterior — así ningún `.tscn`/`.gd` necesitó tocarse, todos
+siguen apuntando al mismo path. Volver a ejecutar ese script si las piezas del rig cambian.
+
+`sofia_celebracion.png` **no se tocó**: sigue siendo el arte plano anterior (pose de saludo con
+guiño del pipeline SVG→PNG). El rig cutout hoy solo tiene pose de reposo + una animación de
+saludo de vista previa (`vista_previa_rig_sofia.tscn`), no una pose de celebración diseñada
+para ícono estático — inventar esa pose es una decisión de `disenador-personajes`/PO, pendiente
+si se quiere migrar también el ícono de celebración al rig.

@@ -1,0 +1,381 @@
+[gd_scene format=3 uid="uid://dju8hxpimopo"]
+
+[ext_resource type="Script" uid="uid://dx3tiv1som81c" path="res://scripts/nucleo/seleccion_personaje.gd" id="1_seleccion"]
+[ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_800.tres" id="3_f800"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_700.tres" id="4_f700"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_600.tres" id="5_f600"]
+[ext_resource type="Texture2D" uid="uid://c0hiaxbrv4y8p" path="res://assets/sprites/personajes/maxi_base.png" id="6_maxi"]
+[ext_resource type="Texture2D" uid="uid://cb1u1t7ds6mq2" path="res://assets/sprites/personajes/nicole_base.png" id="7_nicole"]
+[ext_resource type="Texture2D" uid="uid://c1ax3qpgud3ot" path="res://assets/sprites/personajes/sofia_base.png" id="8_sofia"]
+[ext_resource type="Texture2D" uid="uid://bqftvaxa0raat" path="res://assets/sprites/personajes/cometa_base.png" id="9_cometa"]
+[ext_resource type="Shader" uid="uid://dbhnvuqa6y6i2" path="res://assets/shaders/disco_circular.gdshader" id="10_shader"]
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.239, 0.129, 0.471, 1, 0.133, 0.071, 0.322, 1, 0.078, 0.043, 0.196, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.15)
+fill_to = Vector2(1, 0.15)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sombra_maxi"]
+bg_color = Color(0.106, 0.373, 0.612, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tarjeta_maxi"]
+bg_color = Color(0.29, 0.659, 1, 0.16)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.29, 0.659, 1, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retrato_fondo"]
+bg_color = Color(1, 1, 1, 0.06)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.35)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sombra_nicole"]
+bg_color = Color(0.639, 0.255, 0.486, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tarjeta_nicole"]
+bg_color = Color(1, 0.373, 0.682, 0.16)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 0.373, 0.682, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sombra_sofia"]
+bg_color = Color(0.114, 0.498, 0.549, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tarjeta_sofia"]
+bg_color = Color(0.31, 0.847, 0.878, 0.14)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.31, 0.847, 0.878, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_disco"]
+shader = ExtResource("10_shader")
+shader_parameter/escala_de_grises = false
+shader_parameter/desenfoque = 0.0
+shader_parameter/opacidad = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_burbuja"]
+bg_color = Color(1, 1, 1, 0.91)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_volver"]
+bg_color = Color(1, 1, 1, 0.12)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.27)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[node name="seleccion_personaje" type="Node2D" unique_id=1042797460]
+script = ExtResource("1_seleccion")
+
+[node name="fondo" type="TextureRect" parent="." unique_id=1732246501]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+
+[node name="capa_estrellas" type="Node2D" parent="." unique_id=1967484292]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas" unique_id=585566098]
+wait_time = 6.0
+
+[node name="texto_titulo" type="Label" parent="." unique_id=183796152]
+offset_top = 44.0
+offset_right = 1280.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.27)
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("3_f800")
+theme_override_font_sizes/font_size = 46
+text = "¿Quién viaja hoy?"
+horizontal_alignment = 1
+
+[node name="sombra_maxi" type="Panel" parent="." unique_id=1045078274]
+offset_left = 116.0
+offset_top = 146.0
+offset_right = 436.0
+offset_bottom = 558.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sombra_maxi")
+
+[node name="tarjeta_maxi" type="Panel" parent="." unique_id=150657744]
+offset_left = 116.0
+offset_top = 140.0
+offset_right = 436.0
+offset_bottom = 542.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tarjeta_maxi")
+
+[node name="fondo_retrato" type="Panel" parent="tarjeta_maxi" unique_id=1460307660]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 298.0
+offset_bottom = 284.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="retrato" type="TextureRect" parent="tarjeta_maxi/fondo_retrato" unique_id=677690614]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 10.0
+offset_right = 246.0
+offset_bottom = 252.0
+texture = ExtResource("6_maxi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="nombre" type="Label" parent="tarjeta_maxi" unique_id=1000766362]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 300.0
+offset_right = 220.0
+offset_bottom = 348.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_f800")
+theme_override_font_sizes/font_size = 44
+text = "Maxi"
+
+[node name="nivel" type="Label" parent="tarjeta_maxi" unique_id=1959994562]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 350.0
+offset_right = 220.0
+offset_bottom = 380.0
+theme_override_colors/font_color = Color(0.557, 0.914, 1, 1)
+theme_override_fonts/font = ExtResource("5_f600")
+theme_override_font_sizes/font_size = 22
+text = "semilla"
+
+[node name="insignia" type="Panel" parent="tarjeta_maxi" unique_id=1567965688]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 296.0
+offset_right = 298.0
+offset_bottom = 380.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="sombra_nicole" type="Panel" parent="." unique_id=1246878449]
+offset_left = 480.0
+offset_top = 144.0
+offset_right = 800.0
+offset_bottom = 558.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sombra_nicole")
+
+[node name="tarjeta_nicole" type="Panel" parent="." unique_id=631803173]
+offset_left = 480.0
+offset_top = 140.0
+offset_right = 800.0
+offset_bottom = 542.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tarjeta_nicole")
+
+[node name="fondo_retrato" type="Panel" parent="tarjeta_nicole" unique_id=2142739008]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 298.0
+offset_bottom = 284.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="retrato" type="TextureRect" parent="tarjeta_nicole/fondo_retrato" unique_id=778359293]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 10.0
+offset_right = 246.0
+offset_bottom = 252.0
+texture = ExtResource("7_nicole")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="nombre" type="Label" parent="tarjeta_nicole" unique_id=321328066]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 300.0
+offset_right = 220.0
+offset_bottom = 348.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_f800")
+theme_override_font_sizes/font_size = 44
+text = "Nicole"
+
+[node name="nivel" type="Label" parent="tarjeta_nicole" unique_id=1057414442]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 350.0
+offset_right = 220.0
+offset_bottom = 380.0
+theme_override_colors/font_color = Color(1, 0.702, 0.867, 1)
+theme_override_fonts/font = ExtResource("5_f600")
+theme_override_font_sizes/font_size = 22
+text = "brote"
+
+[node name="insignia" type="Panel" parent="tarjeta_nicole" unique_id=954440292]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 296.0
+offset_right = 298.0
+offset_bottom = 380.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="sombra_sofia" type="Panel" parent="." unique_id=1619497744]
+offset_left = 844.0
+offset_top = 144.0
+offset_right = 1164.0
+offset_bottom = 558.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sombra_sofia")
+
+[node name="tarjeta_sofia" type="Panel" parent="." unique_id=1855182909]
+offset_left = 844.0
+offset_top = 140.0
+offset_right = 1164.0
+offset_bottom = 542.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tarjeta_sofia")
+
+[node name="fondo_retrato" type="Panel" parent="tarjeta_sofia" unique_id=1478019565]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 298.0
+offset_bottom = 284.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="retrato" type="TextureRect" parent="tarjeta_sofia/fondo_retrato" unique_id=2115513215]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 10.0
+offset_right = 246.0
+offset_bottom = 252.0
+texture = ExtResource("8_sofia")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="nombre" type="Label" parent="tarjeta_sofia" unique_id=112267539]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 300.0
+offset_right = 220.0
+offset_bottom = 348.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_f800")
+theme_override_font_sizes/font_size = 44
+text = "Sofía"
+
+[node name="nivel" type="Label" parent="tarjeta_sofia" unique_id=1229927358]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 350.0
+offset_right = 220.0
+offset_bottom = 380.0
+theme_override_colors/font_color = Color(0.31, 0.847, 0.878, 1)
+theme_override_fonts/font = ExtResource("5_f600")
+theme_override_font_sizes/font_size = 22
+text = "estrella"
+
+[node name="insignia" type="Panel" parent="tarjeta_sofia" unique_id=1825175222]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 296.0
+offset_right = 298.0
+offset_bottom = 380.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
+
+[node name="cometa_ayuda" type="TextureRect" parent="." unique_id=1945220670]
+material = SubResource("ShaderMaterial_disco")
+offset_left = 44.0
+offset_top = 572.0
+offset_right = 170.0
+offset_bottom = 698.0
+texture = ExtResource("9_cometa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="burbuja_ayuda" type="Panel" parent="." unique_id=1595680734]
+offset_left = 188.0
+offset_top = 601.0
+offset_right = 568.0
+offset_bottom = 669.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_burbuja")
+
+[node name="texto_ayuda" type="Label" parent="burbuja_ayuda" unique_id=1898895318]
+layout_mode = 0
+offset_left = 20.0
+offset_right = 360.0
+offset_bottom = 68.0
+theme_override_colors/font_color = Color(0.227, 0.11, 0.455, 1)
+theme_override_fonts/font = ExtResource("4_f700")
+theme_override_font_sizes/font_size = 26
+text = "¡Toca tu foto para empezar!"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="boton_volver" type="Panel" parent="." unique_id=766038410]
+offset_left = 1148.0
+offset_top = 588.0
+offset_right = 1244.0
+offset_bottom = 684.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_volver")
+
+[node name="texto_volver" type="Label" parent="boton_volver" unique_id=1161208313]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("4_f700")
+theme_override_font_sizes/font_size = 16
+text = "volver"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="temporizador_recordatorio" type="Timer" parent="." unique_id=799136377]
+wait_time = 12.0

@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: vertical game cover key art, 3:4 portrait
+Primary request: Create a dynamic, action-packed cover variation for the family-friendly game "Los Hermanos Estelares", using the attached official poster as the main style and character reference. Ignore the number 3 from the reference image; do not include any number, text, logo, watermark, signature, UI, or title in the generated image.
+Input images: official poster reference for the three sibling astronauts, soft painted cartoon style, space palette, and proportions; height lineup reference for the siblings' relative ages and sizes.
+Scene/backdrop: a magical moon launch pad on a friendly alien planet, with a small star-shaped spaceship blasting off behind the siblings, colorful comet trails, sparkling stars, planets, and safe glowing space dust.
+Subject: the three sibling astronauts are charging forward as a brave team. Maxi, the smallest sibling, laughs with one fist up; Nicole moves with excited painter-explorer energy; Sofia, the tallest sibling, leads confidently with one arm pointing forward. All three wear transparent bubble helmets and their canon white, pink, blue, turquoise, and gold star space suits.
+Style/medium: high-polish digital painted cartoon, warm family adventure key art, rounded shapes, soft clean outlines, atmospheric gradients, saturated but tender colors, not photorealistic, not anime, not 3D plastic.
+Composition/framing: vertical poster composition, cinematic low angle, characters in the lower two thirds, big readable silhouettes, strong diagonal motion from bottom left to upper right. Leave the top 25 percent visually open with stars and nebula glow so the game title can be overlaid later in Godot.
+Lighting/mood: joyful, adventurous, energetic, safe and inviting; warm golden rim light, pink and turquoise glow, no scary darkness.
+Color palette: violet and deep blue space background, golden stars and trails, turquoise and rosy accents, warm sunrise glow on the horizon.
+Materials/textures: soft painted fabric on suits, glossy but clear helmet bubbles, painterly moon rocks, glowing star particles.
+Constraints: keep exactly three sibling astronauts; preserve the sibling height order: Maxi smallest, Nicole middle, Sofia tallest. Keep faces friendly and expressive. No adults, no villains, no danger, no weapons. No text of any kind. No number 3.
+Avoid: duplicate siblings, extra astronauts, scary aliens, realistic faces, uncanny detail, harsh shadows, clutter over the top title area, letters, words, numerals, watermark, signature.

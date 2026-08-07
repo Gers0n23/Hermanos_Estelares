@@ -1,0 +1,325 @@
+[gd_scene format=3 uid="uid://cgwhoua53xndw"]
+
+[ext_resource type="Script" uid="uid://dulf5wevq4vx6" path="res://scripts/nucleo/mapa_estelar.gd" id="1_mapa"]
+[ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+[ext_resource type="Script" uid="uid://by7yo2oyywc05" path="res://scripts/nucleo/camino_estelar.gd" id="3_camino"]
+[ext_resource type="Texture2D" uid="uid://bqftvaxa0raat" path="res://assets/sprites/personajes/cometa_base.png" id="4_cometa"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_800.tres" id="5_f800"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_700.tres" id="6_f700"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_600.tres" id="7_f600"]
+[ext_resource type="Shader" uid="uid://dbhnvuqa6y6i2" path="res://assets/shaders/disco_circular.gdshader" id="8_shader"]
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 0.34, 0.62, 1)
+colors = PackedColorArray(0.043, 0.02, 0.141, 1, 0.09, 0.051, 0.235, 1, 0.173, 0.09, 0.376, 1, 0.29, 0.141, 0.514, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+width = 128
+height = 128
+fill_to = Vector2(0.65, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_disco"]
+shader = ExtResource("8_shader")
+shader_parameter/escala_de_grises = false
+shader_parameter/desenfoque = 0.0
+shader_parameter/opacidad = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_forma_nave"]
+bg_color = Color(1, 1, 1, 0.13)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.67)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0, 0, 0, 0.4)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anillo_retrato"]
+bg_color = Color(1, 1, 1, 0.12)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.29, 0.659, 1, 1)
+corner_radius_top_left = 38
+corner_radius_top_right = 38
+corner_radius_bottom_right = 38
+corner_radius_bottom_left = 38
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boton_hud"]
+bg_color = Color(0, 0, 0, 0.4)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.13)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icono_hangar"]
+bg_color = Color(0.557, 0.914, 1, 0.27)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icono_papas"]
+bg_color = Color(1, 1, 1, 0.27)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_burbuja"]
+bg_color = Color(1, 1, 1, 0.93)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 6
+
+[node name="mapa_estelar" type="Node2D" unique_id=1428822526]
+script = ExtResource("1_mapa")
+
+[node name="fondo" type="TextureRect" parent="." unique_id=1126376672]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+
+[node name="resplandor_1" type="TextureRect" parent="." unique_id=449325677]
+modulate = Color(0.416, 0.229, 0.82, 0.3)
+material = SubResource("ShaderMaterial_disco")
+offset_left = 620.0
+offset_top = -180.0
+offset_right = 1440.0
+offset_bottom = 520.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="resplandor_2" type="TextureRect" parent="." unique_id=1401675927]
+modulate = Color(0.639, 0.255, 0.486, 0.2)
+material = SubResource("ShaderMaterial_disco")
+offset_left = -140.0
+offset_top = 180.0
+offset_right = 760.0
+offset_bottom = 940.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="capa_estrellas_lejos" type="Node2D" parent="." unique_id=1314452589]
+modulate = Color(1, 1, 1, 0.55)
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_lejos" unique_id=284325206]
+wait_time = 9.0
+
+[node name="capa_estrellas_cerca" type="Node2D" parent="." unique_id=1635654068]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_cerca" unique_id=818275373]
+wait_time = 6.0
+
+[node name="camino" type="Node2D" parent="." unique_id=33277288]
+script = ExtResource("3_camino")
+
+[node name="contenedor_planetas" type="Node2D" parent="." unique_id=1442425678]
+
+[node name="nave" type="Node2D" parent="." unique_id=423809457]
+
+[node name="forma_nave" type="Node2D" parent="nave" unique_id=728522328]
+
+[node name="cuerpo_nave" type="Panel" parent="nave/forma_nave" unique_id=519376284]
+offset_left = -82.0
+offset_top = 190.0
+offset_right = 38.0
+offset_bottom = 260.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_forma_nave")
+
+[node name="hud" type="Node2D" parent="." unique_id=1306345128]
+
+[node name="fondo_hud" type="Panel" parent="hud" unique_id=1553740913]
+offset_left = 26.0
+offset_top = 22.0
+offset_right = 470.0
+offset_bottom = 118.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="anillo_retrato" type="Panel" parent="hud" unique_id=325859713]
+offset_left = 38.0
+offset_top = 32.0
+offset_right = 114.0
+offset_bottom = 108.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_anillo_retrato")
+
+[node name="retrato" type="TextureRect" parent="hud/anillo_retrato" unique_id=20735203]
+material = SubResource("ShaderMaterial_disco")
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 70.0
+offset_bottom = 70.0
+texture = ExtResource("4_cometa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="texto_nombre" type="Label" parent="hud" unique_id=426136593]
+offset_left = 126.0
+offset_top = 28.0
+offset_right = 326.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_f800")
+theme_override_font_sizes/font_size = 30
+text = "Maxi"
+
+[node name="texto_nivel" type="Label" parent="hud" unique_id=967856365]
+offset_left = 126.0
+offset_top = 70.0
+offset_right = 326.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0.29, 0.659, 1, 1)
+theme_override_fonts/font = ExtResource("7_f600")
+theme_override_font_sizes/font_size = 18
+text = "semilla"
+
+[node name="grupo_destellos" type="Node2D" parent="hud" unique_id=1003502242]
+position = Vector2(346, 70)
+
+[node name="icono_estrella" type="Polygon2D" parent="hud/grupo_destellos" unique_id=125914028]
+color = Color(1, 0.808, 0.239, 1)
+polygon = PackedVector2Array(0, -20, 4.7, -6.47, 19.02, -6.18, 7.61, 2.47, 11.76, 16.18, 0, 8, -11.76, 16.18, -7.61, 2.47, -19.02, -6.18, -4.7, -6.47)
+
+[node name="texto_destellos" type="Label" parent="hud/grupo_destellos" unique_id=1194982853]
+offset_left = 26.0
+offset_top = -22.0
+offset_right = 110.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(1, 0.808, 0.239, 1)
+theme_override_fonts/font = ExtResource("5_f800")
+theme_override_font_sizes/font_size = 30
+text = "0"
+vertical_alignment = 1
+
+[node name="boton_hangar" type="Panel" parent="." unique_id=1973852939]
+offset_left = 966.0
+offset_top = 22.0
+offset_right = 1054.0
+offset_bottom = 110.0
+pivot_offset = Vector2(44, 44)
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
+
+[node name="icono" type="Panel" parent="boton_hangar" unique_id=857915323]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 64.0
+offset_bottom = 50.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_icono_hangar")
+
+[node name="texto" type="Label" parent="boton_hangar" unique_id=850594459]
+layout_mode = 0
+offset_top = 56.0
+offset_right = 88.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("6_f700")
+theme_override_font_sizes/font_size = 13
+text = "hangar"
+horizontal_alignment = 1
+
+[node name="boton_casa" type="Panel" parent="." unique_id=1705260260]
+offset_left = 1066.0
+offset_top = 22.0
+offset_right = 1154.0
+offset_bottom = 110.0
+pivot_offset = Vector2(44, 44)
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
+
+[node name="icono" type="Polygon2D" parent="boton_casa" unique_id=1000817276]
+position = Vector2(44, 34)
+color = Color(1, 1, 1, 0.75)
+polygon = PackedVector2Array(0, -15, 17, -1.5, 12.24, -1.5, 12.24, 15, -12.24, 15, -12.24, -1.5, -17, -1.5)
+
+[node name="texto" type="Label" parent="boton_casa" unique_id=1638879648]
+layout_mode = 0
+offset_top = 56.0
+offset_right = 88.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("6_f700")
+theme_override_font_sizes/font_size = 13
+text = "casa"
+horizontal_alignment = 1
+
+[node name="boton_papas" type="Panel" parent="." unique_id=1420097827]
+offset_left = 1166.0
+offset_top = 22.0
+offset_right = 1254.0
+offset_bottom = 110.0
+pivot_offset = Vector2(44, 44)
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
+
+[node name="icono" type="Panel" parent="boton_papas" unique_id=1927934565]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 20.0
+offset_right = 57.0
+offset_bottom = 46.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_icono_papas")
+
+[node name="texto" type="Label" parent="boton_papas" unique_id=295164925]
+layout_mode = 0
+offset_top = 56.0
+offset_right = 88.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("6_f700")
+theme_override_font_sizes/font_size = 13
+text = "papás"
+horizontal_alignment = 1
+
+[node name="cometa_mapa" type="TextureRect" parent="." unique_id=2075611822]
+material = SubResource("ShaderMaterial_disco")
+offset_left = 852.0
+offset_top = 608.0
+offset_right = 956.0
+offset_bottom = 712.0
+texture = ExtResource("4_cometa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="burbuja_cometa" type="Panel" parent="." unique_id=660151095]
+offset_left = 942.0
+offset_top = 564.0
+offset_right = 1259.0
+offset_bottom = 634.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_burbuja")
+
+[node name="texto" type="Label" parent="burbuja_cometa" unique_id=1551773100]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 358.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(0.227, 0.11, 0.455, 1)
+theme_override_fonts/font = ExtResource("6_f700")
+theme_override_font_sizes/font_size = 24
+text = "¡Vamos al Planeta Arcoíris!"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="temporizador_recordatorio" type="Timer" parent="." unique_id=1113315631]
+wait_time = 14.0

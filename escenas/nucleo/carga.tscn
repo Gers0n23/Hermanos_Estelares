@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://b8xd1efgsg8r3"]
+
+[ext_resource type="Script" uid="uid://congujpk43b66" path="res://scripts/nucleo/carga.gd" id="1_carga"]
+[ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+[ext_resource type="Script" uid="uid://dl6xgpd2foquv" path="res://scripts/nucleo/anillo_progreso.gd" id="3_anillo"]
+[ext_resource type="Texture2D" uid="uid://bqftvaxa0raat" path="res://assets/sprites/personajes/cometa_base.png" id="4_cometa"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_800.tres" id="5_f800"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_600.tres" id="6_f600"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_700.tres" id="7_f700"]
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.353, 0.184, 0.561, 1, 0.165, 0.082, 0.376, 1, 0.075, 0.039, 0.188, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.62, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="carga" type="Node2D" unique_id=633115136]
+script = ExtResource("1_carga")
+
+[node name="fondo" type="TextureRect" parent="." unique_id=1567729939]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 4
+
+[node name="capa_estrellas" type="Node2D" parent="." unique_id=250977517]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas" unique_id=1999355822]
+wait_time = 6.0
+
+[node name="texto_los" type="Label" parent="." unique_id=594767212]
+offset_left = 96.0
+offset_top = 128.0
+offset_right = 576.0
+offset_bottom = 168.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_f800")
+theme_override_font_sizes/font_size = 30
+text = "LOS"
+
+[node name="texto_hermanos" type="Label" parent="." unique_id=1209025679]
+offset_left = 96.0
+offset_top = 164.0
+offset_right = 700.0
+offset_bottom = 254.0
+theme_override_colors/font_color = Color(1, 0.808, 0.239, 1)
+theme_override_colors/font_shadow_color = Color(0.725, 0.463, 0.102, 1)
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("5_f800")
+theme_override_font_sizes/font_size = 72
+text = "HERMANOS"
+
+[node name="texto_estelares" type="Label" parent="." unique_id=1983466912]
+offset_left = 96.0
+offset_top = 256.0
+offset_right = 640.0
+offset_bottom = 322.0
+theme_override_colors/font_color = Color(1, 0.62, 0.839, 1)
+theme_override_colors/font_shadow_color = Color(0.639, 0.255, 0.486, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("5_f800")
+theme_override_font_sizes/font_size = 58
+text = "ESTELARES"
+
+[node name="texto_calentando" type="Label" parent="." unique_id=345098659]
+offset_left = 96.0
+offset_top = 350.0
+offset_right = 576.0
+offset_bottom = 388.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.73)
+theme_override_fonts/font = ExtResource("6_f600")
+theme_override_font_sizes/font_size = 28
+text = "calentando motores…"
+
+[node name="texto_porcentaje" type="Label" parent="." unique_id=1416236774]
+offset_left = 96.0
+offset_top = 392.0
+offset_right = 576.0
+offset_bottom = 458.0
+theme_override_colors/font_color = Color(0.557, 0.914, 1, 1)
+theme_override_fonts/font = ExtResource("7_f700")
+theme_override_font_sizes/font_size = 52
+text = "0%"
+
+[node name="anillo_progreso" type="Node2D" parent="." unique_id=1392795680]
+position = Vector2(920, 360)
+script = ExtResource("3_anillo")
+
+[node name="cometa_flotante" type="TextureRect" parent="anillo_progreso" unique_id=189878628]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+texture = ExtResource("4_cometa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="navecita_pivote" type="Node2D" parent="anillo_progreso" unique_id=2114029548]
+
+[node name="navecita_forma" type="Polygon2D" parent="anillo_progreso/navecita_pivote" unique_id=904180390]
+position = Vector2(0, -270)
+color = Color(0.31, 0.847, 0.878, 0.55)
+polygon = PackedVector2Array(54, 0, 46.8, 19, 27, 32.9, 0, 38, -27, 32.9, -46.8, 19, -54, 0, -46.8, -19, -27, -32.9, 0, -38, 27, -32.9, 46.8, -19)

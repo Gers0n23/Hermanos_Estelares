@@ -1,66 +1,259 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://1v2v4h6t3t3p"]
 
-[ext_resource type="Script" path="res://scripts/nucleo/titulo.gd" id="1_titulo"]
-[ext_resource type="Script" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+[ext_resource type="Script" uid="uid://cn8i7tt5wae17" path="res://scripts/nucleo/titulo.gd" id="1_titulo"]
+[ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+[ext_resource type="Script" uid="uid://c84hg0dsj5xfd" path="res://scripts/nucleo/anillos_decorativos.gd" id="3_anillos"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_800.tres" id="4_f800"]
+[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_700.tres" id="5_f700"]
+[ext_resource type="Texture2D" uid="uid://c0hiaxbrv4y8p" path="res://assets/sprites/personajes/maxi_base.png" id="6_maxi"]
+[ext_resource type="Texture2D" uid="uid://cb1u1t7ds6mq2" path="res://assets/sprites/personajes/nicole_base.png" id="7_nicole"]
+[ext_resource type="Texture2D" uid="uid://c1ax3qpgud3ot" path="res://assets/sprites/personajes/sofia_base.png" id="8_sofia"]
+[ext_resource type="Texture2D" uid="uid://bqftvaxa0raat" path="res://assets/sprites/personajes/cometa_base.png" id="9_cometa"]
+[ext_resource type="Shader" uid="uid://dbhnvuqa6y6i2" path="res://assets/shaders/disco_circular.gdshader" id="10_shader"]
 
-[sub_resource type="Gradient" id="Gradient_cielo"]
-offsets = PackedFloat32Array(0, 0.55, 1)
-colors = PackedColorArray(0.04, 0.03, 0.12, 1, 0.1, 0.06, 0.28, 1, 0.2, 0.1, 0.38, 1)
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 0.45, 0.724, 0.904, 1)
+colors = PackedColorArray(0.106, 0.059, 0.259, 1, 0.227, 0.11, 0.455, 1, 0.32314909, 0.14686546, 0.50780725, 1, 0.38631272, 0.17108363, 0.5424982, 1, 0.42, 0.184, 0.561, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cielo"]
-gradient = SubResource("Gradient_cielo")
-width = 32
-height = 720
-fill_from = Vector2(0.5, 0)
-fill_to = Vector2(0.5, 1)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+width = 128
+height = 128
+fill_to = Vector2(1, 0.5)
 
-[node name="titulo" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_disco"]
+shader = ExtResource("10_shader")
+shader_parameter/escala_de_grises = false
+shader_parameter/desenfoque = 0.0
+shader_parameter/opacidad = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boton_secundario"]
+bg_color = Color(1, 1, 1, 0.12)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nave"]
+bg_color = Color(0.31, 0.847, 0.878, 0.27)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.557, 0.914, 1, 0.6)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="titulo" type="Node2D" unique_id=1118318319]
 script = ExtResource("1_titulo")
 
-[node name="fondo" type="TextureRect" parent="."]
+[node name="fondo" type="TextureRect" parent="." unique_id=1516450318]
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = SubResource("GradientTexture2D_cielo")
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+
+[node name="capa_estrellas" type="Node2D" parent="." unique_id=234324699]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas" unique_id=1056145350]
+wait_time = 6.0
+
+[node name="texto_los" type="Label" parent="." unique_id=2098675891]
+offset_left = 88.0
+offset_top = 96.0
+offset_right = 640.0
+offset_bottom = 136.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_f800")
+theme_override_font_sizes/font_size = 34
+text = "LOS"
+
+[node name="texto_hermanos" type="Label" parent="." unique_id=122489388]
+offset_left = 88.0
+offset_top = 132.0
+offset_right = 760.0
+offset_bottom = 232.0
+theme_override_colors/font_color = Color(1, 0.808, 0.239, 1)
+theme_override_colors/font_shadow_color = Color(0.725, 0.463, 0.102, 1)
+theme_override_constants/shadow_offset_y = 7
+theme_override_fonts/font = ExtResource("4_f800")
+theme_override_font_sizes/font_size = 86
+text = "HERMANOS"
+
+[node name="texto_estelares" type="Label" parent="." unique_id=1275070050]
+offset_left = 88.0
+offset_top = 228.0
+offset_right = 700.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 0.62, 0.839, 1)
+theme_override_colors/font_shadow_color = Color(0.639, 0.255, 0.486, 1)
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("4_f800")
+theme_override_font_sizes/font_size = 66
+text = "ESTELARES"
+
+[node name="boton_jugar" type="Node2D" parent="." unique_id=1086441310]
+position = Vector2(163, 408)
+
+[node name="circulo" type="TextureRect" parent="boton_jugar" unique_id=625170101]
+material = SubResource("ShaderMaterial_disco")
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+texture = SubResource("GradientTexture2D_fondo")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="capa_estrellas" type="Node2D" parent="."]
-script = ExtResource("2_estrellas")
+[node name="triangulo" type="Polygon2D" parent="boton_jugar" unique_id=1386486844]
+color = Color(0.353, 0.204, 0, 1)
+polygon = PackedVector2Array(-16.8, -26.4, 24.6, 0, -16.8, 26.4)
 
-[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas"]
-wait_time = 6.0
-
-[node name="titulo_texto" type="Label" parent="."]
-offset_left = 140.0
-offset_top = 70.0
-offset_right = 1140.0
-offset_bottom = 170.0
-theme_override_font_sizes/font_size = 56
+[node name="texto_jugar" type="Label" parent="boton_jugar" unique_id=276944070]
+offset_left = 97.0
+offset_top = -45.0
+offset_right = 308.0
+offset_bottom = 88.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.4)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 3
-text = "Los Hermanos Estelares"
-horizontal_alignment = 1
+theme_override_fonts/font = ExtResource("4_f800")
+theme_override_font_sizes/font_size = 40
+text = "toca para
+empezar"
 vertical_alignment = 1
 
-[node name="invitacion" type="Node2D" parent="."]
-position = Vector2(640, 480)
+[node name="boton_volumen" type="Panel" parent="." unique_id=1108496380]
+offset_left = 88.0
+offset_top = 584.0
+offset_right = 168.0
+offset_bottom = 664.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_secundario")
 
-[node name="estrella_toque" type="Polygon2D" parent="invitacion"]
-color = Color(1, 0.82, 0.25, 1)
-polygon = PackedVector2Array(0, -70, 17.63, -24.27, 66.57, -21.63, 28.53, 9.27, 41.14, 56.63, 0, 30, -41.14, 56.63, -28.53, 9.27, -66.57, -21.63, -17.63, -24.27)
+[node name="texto_volumen" type="Label" parent="boton_volumen" unique_id=1475828105]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("5_f700")
+theme_override_font_sizes/font_size = 15
+text = "volumen"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="texto_ayuda" type="Label" parent="invitacion"]
+[node name="boton_papas" type="Panel" parent="." unique_id=1425406966]
+offset_left = 182.0
+offset_top = 584.0
+offset_right = 262.0
+offset_bottom = 664.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_secundario")
+
+[node name="texto_papas" type="Label" parent="boton_papas" unique_id=525606379]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_fonts/font = ExtResource("5_f700")
+theme_override_font_sizes/font_size = 15
+text = "papás"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ilustracion" type="Node2D" parent="." unique_id=58584577]
+position = Vector2(920, 360)
+
+[node name="resplandor" type="TextureRect" parent="ilustracion" unique_id=367820721]
+modulate = Color(1, 0.808, 0.239, 0.25)
+material = SubResource("ShaderMaterial_disco")
+offset_left = -330.0
+offset_top = -330.0
+offset_right = 330.0
+offset_bottom = 330.0
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="anillos_fondo" type="Node2D" parent="ilustracion" unique_id=207603644]
+script = ExtResource("3_anillos")
+radio = 340.0
+segmentos = 30
+grosor = 18.0
+
+[node name="marco" type="Control" parent="ilustracion" unique_id=1352777443]
+layout_mode = 3
+anchors_preset = 0
 offset_left = -300.0
-offset_top = 90.0
+offset_top = -300.0
 offset_right = 300.0
-offset_bottom = 150.0
-theme_override_font_sizes/font_size = 34
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Toca para comenzar"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_bottom = 300.0
+rotation = -0.0523599
+pivot_offset = Vector2(300, 300)
 
-[node name="temporizador_recordatorio" type="Timer" parent="."]
+[node name="fondo_marco" type="Panel" parent="ilustracion/marco" unique_id=1107102885]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 600.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_boton_secundario")
+
+[node name="retrato_maxi" type="TextureRect" parent="ilustracion/marco" unique_id=1288461694]
+material = SubResource("ShaderMaterial_disco")
+layout_mode = 0
+offset_left = 64.18483
+offset_top = 137.43558
+offset_right = 190.36195
+offset_bottom = 348.7664
+texture = ExtResource("6_maxi")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="retrato_nicole" type="TextureRect" parent="ilustracion/marco" unique_id=300003201]
+material = SubResource("ShaderMaterial_disco")
+layout_mode = 0
+offset_left = 220.48164
+offset_top = 78.53482
+offset_right = 404.4944
+offset_bottom = 319.6137
+texture = ExtResource("7_nicole")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="retrato_sofia" type="TextureRect" parent="ilustracion/marco" unique_id=1551686810]
+material = SubResource("ShaderMaterial_disco")
+layout_mode = 0
+offset_left = 408.8648
+offset_top = 133.46933
+offset_right = 566.8648
+offset_bottom = 373.8562
+texture = ExtResource("8_sofia")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="retrato_cometa" type="TextureRect" parent="ilustracion/marco" unique_id=517714088]
+material = SubResource("ShaderMaterial_disco")
+layout_mode = 0
+offset_left = 96.0
+offset_top = 368.0
+offset_right = 216.0
+offset_bottom = 488.0
+texture = ExtResource("9_cometa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="nave" type="Panel" parent="ilustracion/marco" unique_id=1569658321]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 378.0
+offset_right = 520.0
+offset_bottom = 474.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nave")
+
+[node name="temporizador_recordatorio" type="Timer" parent="." unique_id=56968310]
 wait_time = 12.0

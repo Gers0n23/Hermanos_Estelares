@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: vertical game cover key art, 3:4 portrait
+Primary request: Create a second dynamic cover variation for the family-friendly game "Los Hermanos Estelares", inspired by the attached official poster. Ignore the number 3 from the reference image; do not include any number, text, logo, watermark, signature, UI, or title in the generated image.
+Input images: official poster reference for the three sibling astronauts, visual style, space setting, and character feel; height lineup reference for sibling scale and proportions.
+Scene/backdrop: a cosmic playground of golden star rings, floating stepping-stone asteroids, a friendly tiny comet guide trail, pastel planets, and a swirling nebula path that feels like a race course through space.
+Subject: the three sibling astronauts are leaping across glowing star rings in a coordinated team move. Sofia, the tallest, jumps confidently at the front with a leader pose; Nicole spins joyfully through a ring with pink motion ribbons; Maxi, the smallest, bounces from a small asteroid with an open-mouthed laugh. Their transparent bubble helmets catch bright star reflections.
+Style/medium: high-polish digital painted cartoon, warm family adventure illustration, soft outlines, painterly gradients, rounded shapes, bright readable silhouettes, not photorealistic, not anime, not toy-render.
+Composition/framing: vertical poster composition with sweeping S-curve motion; characters form a triangle in the lower and middle area, with the strongest action crossing the center. Leave the upper quarter cleaner, filled only with stars and soft nebula glow for title overlay.
+Lighting/mood: thrilling but safe, celebratory, colorful, full of motion; golden rim light, glowing ring light, soft pink and cyan highlights.
+Color palette: deep indigo and violet space, golden star rings, turquoise sparks, pink suit accents, soft pastel planets.
+Materials/textures: glossy helmet bubbles, soft fabric suits with badges and belts, sparkling comet dust, painterly asteroids with rounded edges.
+Constraints: keep exactly three sibling astronauts and no other humans. Preserve canon sibling height order and suit colors: Maxi small with blue accents, Nicole with pink accents, Sofia tall with pink suit and turquoise/rose details. Safe excitement, no peril. No text, letters, numerals, or number 3.
+Avoid: duplicate faces, extra characters, frightening expressions, dangerous falling, weapons, sharp objects, dark horror lighting, readable text, fake logo, watermark, signature.
