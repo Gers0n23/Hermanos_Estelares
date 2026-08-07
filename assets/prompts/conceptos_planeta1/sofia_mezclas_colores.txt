@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Sofia route
+Primary request: Create a concept art scene for Sofia's first Planet Rainbow adventure. This is the Estrella version of "Lluvia de colores": Sofia solves a real color-mixing challenge, combining blue and yellow light-paint to create green.
+Input images: official poster for overall family space-adventure style; Sofia reference for identity and suit; Planet Rainbow reference for environment; Coco reference for planet style.
+Scene/backdrop: Planet Rainbow color laboratory garden, clover platform, pastel rainbow sky, soft crystal paint fountains, rounded trees, and floating color wisps.
+Subject: exactly one sibling astronaut: Sofia only. Sofia is the tallest sibling, pink astronaut suit, curly dark hair, pink headphones integrated with her transparent bubble helmet, confident focused smile. She holds two glowing paint orbs, blue and yellow, guiding them together above a clear green puddle forming below.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, soft clean outlines, painterly gradients, rounded forms, not photorealistic, not anime.
+Composition/framing: wide 16:9, Sofia in strong three-quarter pose on the right, blue and yellow streams crossing in the center to form green, environment readable and magical.
+Lighting/mood: clever, empowering, celebratory, safe challenge; warm gold rim light and vivid color glow.
+Color palette: pink suit, turquoise highlights, blue plus yellow equals green, lavender and gold background accents.
+Constraints: exactly one astronaut character, Sofia only. No Maxi, no Nicole, no Coco visible, no adults, no villains. No text, no letters, no numbers, no equations, no UI, no watermark.
+Avoid: written formulas, complex science diagram, extra characters, frustration, scary lighting, logos.

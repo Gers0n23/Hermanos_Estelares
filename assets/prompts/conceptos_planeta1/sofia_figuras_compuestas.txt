@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Sofia route
+Primary request: Create a concept art scene for Sofia's first Planet Rainbow adventure. This is the Estrella version of "Formas traviesas": Sofia builds a composed figure from multiple shapes, like a little house made from a square, triangle, circle window, and star badge.
+Input images: official poster for overall family space-adventure style; Sofia reference for identity and suit; Planet Rainbow reference for environment.
+Scene/backdrop: Planet Rainbow floating shape-island workshop, clover platform, pastel sky, rounded geometric islands, candy trees, and soft glowing silhouettes.
+Subject: exactly one sibling astronaut: Sofia only. Sofia stands confidently beside a large glowing outline of a little house. She is guiding a rounded pink triangle roof into place while a blue square base, yellow circle window, and golden star piece hover nearby. Her expression is proud and focused, never frustrated.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, soft clean outlines, painterly gradients, rounded friendly shapes, not photorealistic, not anime.
+Composition/framing: wide 16:9, Sofia on the left or center-left, composed house puzzle filling the center, pieces large and readable, enough empty space for future UI.
+Lighting/mood: smart, leader-like, satisfying puzzle moment, safe and celebratory.
+Color palette: multicolor pastel, Sofia pink and turquoise accents, golden highlights, violet sky.
+Constraints: exactly one astronaut character, Sofia only. No Maxi, no Nicole, no Coco, no other characters. No text, no letters, no numbers, no UI, no watermark.
+Avoid: tiny puzzle pieces, sharp geometry, clutter, duplicate Sofia, readable labels, logos, dark or stressful mood.

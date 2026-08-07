@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Nicole route
+Primary request: Create a concept art scene for Nicole's first Planet Rainbow adventure. This is "Pinta con Coco": free finger painting on a magical canvas while Camaleona Coco happily imitates the colors Nicole uses.
+Input images: official poster for overall family space-adventure style; Nicole reference for identity and suit; Coco reference for character design; Planet Rainbow reference for environment.
+Scene/backdrop: Planet Rainbow central clover platform transformed into a big soft canvas, pastel rainbow sky, candy-like trees, flower brushes, paint puddles, and floating color droplets.
+Subject: exactly one sibling astronaut: Nicole only, plus Coco. Nicole wears her white-and-pink astronaut suit, ponytail, transparent bubble helmet, sweet excited expression. She is painting broad pink, yellow, and turquoise strokes with both hands. Coco stands nearby, smiling warmly, her rainbow crest glowing in the same colors Nicole just painted.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, soft clean outlines, painterly gradients, rounded forms, not photorealistic, not anime.
+Composition/framing: wide 16:9, Nicole in foreground at the canvas, Coco to one side as a friendly companion, paint strokes sweeping diagonally across the scene, clear room for gameplay UI later.
+Lighting/mood: creative, social, joyful, safe, cozy wonder.
+Color palette: multicolor pastel, Nicole pink accents, Coco lavender and rainbow crest, gold sparkles.
+Constraints: exactly one sibling astronaut, Nicole only. Coco is the only non-human character. No Maxi, no Sofia, no adults, no villains. No text, no letters, no numbers, no UI, no watermark.
+Avoid: duplicate Nicole, duplicate Coco, scary reptiles, muddy colors, realistic paint mess, readable words, logos.

@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Nicole route
+Primary request: Create a concept art scene for Nicole's first Planet Rainbow adventure. This is the Brote version of "Lluvia de colores": Nicole matches color drops to the correct pastel paint puddles, with gentle voice-guided hints and a friendly reward feeling.
+Input images: official poster for overall family space-adventure style; Nicole reference for identity and suit; Planet Rainbow reference for environment; Coco reference for planet style.
+Scene/backdrop: Planet Rainbow meadow with two clear paint puddles, one pink and one sky-blue, pastel clouds raining color drops, rounded plants shaped like brushes.
+Subject: exactly one sibling astronaut: Nicole only. Nicole is smiling, choosing a glowing pink drop and moving it toward the pink puddle. A few other drops float nearby, but the scene remains simple and readable.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, soft clean outlines, painterly gradients, rounded shapes, not photorealistic, not anime.
+Composition/framing: wide 16:9, Nicole centered slightly right, pink and blue puddles clearly separated in the lower foreground, falling drops above, simple visual logic.
+Lighting/mood: encouraging, bright, playful, no pressure, friendly celebration.
+Color palette: pastel pink, sky blue, lavender, mint, warm gold sparkles.
+Constraints: exactly one astronaut character, Nicole only. No Maxi, no Sofia, no Coco visible, no other characters. No text, no letters, no numbers, no UI, no watermark.
+Avoid: too many colors at once, cluttered drops, scary clouds, duplicate characters, readable labels, logos.

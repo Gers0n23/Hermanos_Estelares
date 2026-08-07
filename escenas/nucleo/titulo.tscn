@@ -67,10 +67,10 @@ script = ExtResource("2_estrellas")
 wait_time = 6.0
 
 [node name="texto_los" type="Label" parent="." unique_id=2098675891]
-offset_left = 88.0
-offset_top = 96.0
-offset_right = 640.0
-offset_bottom = 136.0
+offset_left = 251.0
+offset_top = 116.0
+offset_right = 308.0
+offset_bottom = 171.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("4_f800")
 theme_override_font_sizes/font_size = 34
@@ -89,10 +89,10 @@ theme_override_font_sizes/font_size = 86
 text = "HERMANOS"
 
 [node name="texto_estelares" type="Label" parent="." unique_id=1275070050]
-offset_left = 88.0
-offset_top = 228.0
-offset_right = 700.0
-offset_bottom = 300.0
+offset_left = 123.0
+offset_top = 214.0
+offset_right = 456.0
+offset_bottom = 321.0
 theme_override_colors/font_color = Color(1, 0.62, 0.839, 1)
 theme_override_colors/font_shadow_color = Color(0.639, 0.255, 0.486, 1)
 theme_override_constants/shadow_offset_y = 6
@@ -228,10 +228,10 @@ stretch_mode = 6
 [node name="retrato_sofia" type="TextureRect" parent="ilustracion/marco" unique_id=1551686810]
 material = SubResource("ShaderMaterial_disco")
 layout_mode = 0
-offset_left = 408.8648
-offset_top = 133.46933
-offset_right = 566.8648
-offset_bottom = 373.8562
+offset_left = 282.27924
+offset_top = 26.697998
+offset_right = 784.27356
+offset_bottom = 767.69104
 texture = ExtResource("8_sofia")
 expand_mode = 1
 stretch_mode = 6

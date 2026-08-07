@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Maxi route
+Primary request: Create a concept art scene for Maxi's first Planet Rainbow adventure. This is the "Formas traviesas" Semilla version: three huge soft shapes magnetically snap into friendly glowing silhouettes with no failure state.
+Input images: official poster for overall family space-adventure style; Maxi reference for identity and suit; Planet Rainbow reference for environment.
+Scene/backdrop: Planet Rainbow shape garden with a clover platform, pastel hills, rounded lollipop trees, floating shape islands, and soft clouds.
+Subject: exactly one sibling astronaut: Maxi only. Maxi is laughing as he pushes a giant rounded yellow star shape toward a matching glowing outline on the ground. Nearby are only two other huge pieces: a round blue circle and a pink triangle, both oversized and easy to understand.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, soft outlines, rounded child-friendly shapes, painterly gradients, not photorealistic, not anime.
+Composition/framing: wide 16:9, clear gameplay-like composition with Maxi in the lower center, three giant shapes readable at a glance, generous empty space around touch targets.
+Lighting/mood: playful, tactile, low-pressure, celebratory; every object feels soft and safe.
+Color palette: pastel rainbow, warm gold, pink, blue, lavender, mint, soft cream highlights.
+Constraints: exactly one astronaut character, Maxi only. Keep shapes large, rounded, and simple. No Nicole, no Sofia, no Coco, no other characters. No text, no letters, no numbers, no UI, no watermark.
+Avoid: small pieces, complex puzzle, sharp corners, extra characters, scary shadows, readable markings, logos.

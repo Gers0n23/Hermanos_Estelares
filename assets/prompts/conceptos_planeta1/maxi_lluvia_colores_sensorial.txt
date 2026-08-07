@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 concept art for Planet Rainbow, Maxi route
+Primary request: Create a concept art scene for Maxi's first Planet Rainbow adventure. This is a sensory cause-and-effect moment from "Lluvia de colores": touching any falling color drop creates beautiful friendly magic immediately.
+Input images: official poster for overall family space-adventure style; Maxi reference for identity and suit; Planet Rainbow reference for environment; Coco reference only for planet visual language.
+Scene/backdrop: Planet Rainbow central clover-shaped platform, pastel rainbow sky, cotton candy clouds, rounded trees, paint puddles, floating simple shapes in the distance.
+Subject: exactly one sibling astronaut: Maxi only. Maxi is the smallest sibling, white astronaut suit with blue accents, transparent bubble helmet, golden star on chest, big happy open smile. He is tapping a giant glowing raindrop of color with both hands, and a safe burst of stars, bubbles, and rainbow paint sparkles blooms around him.
+Style/medium: high-polish digital painted cartoon, warm family adventure concept art, rounded shapes, soft clean outlines, painterly gradients, not photorealistic, not anime, not 3D plastic.
+Composition/framing: wide 16:9 gameplay concept frame at child-eye height, Maxi large in the left foreground, giant color drops and magical reaction filling the center, open readable play space.
+Lighting/mood: joyful, immediate reward, cozy excitement, safe and inviting; warm golden rim light and pastel rainbow glow.
+Color palette: multicolor pastel with violet sky, gold star sparkles, turquoise and pink accents, bright color drops.
+Constraints: exactly one astronaut character, Maxi only. No Nicole, no Sofia, no adults, no villains, no danger. No text, no letters, no numbers, no UI, no watermark.
+Avoid: duplicate Maxi, extra siblings, scary expressions, messy clutter, sharp objects, readable symbols, logos, dark lighting.

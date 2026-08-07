@@ -292,13 +292,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
 
 [node name="retrato" type="TextureRect" parent="tarjeta_sofia/fondo_retrato" unique_id=2115513215]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 10.0
-offset_right = 246.0
-offset_bottom = 252.0
+offset_left = 40.0
+offset_top = -43.0
+offset_right = 337.0
+offset_bottom = 388.0
 texture = ExtResource("8_sofia")
-expand_mode = 1
-stretch_mode = 5
+expand_mode = 4
+stretch_mode = 6
 
 [node name="nombre" type="Label" parent="tarjeta_sofia" unique_id=112267539]
 layout_mode = 0
@@ -321,14 +321,6 @@ theme_override_colors/font_color = Color(0.31, 0.847, 0.878, 1)
 theme_override_fonts/font = ExtResource("5_f600")
 theme_override_font_sizes/font_size = 22
 text = "estrella"
-
-[node name="insignia" type="Panel" parent="tarjeta_sofia" unique_id=1825175222]
-layout_mode = 0
-offset_left = 214.0
-offset_top = 296.0
-offset_right = 298.0
-offset_bottom = 380.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_retrato_fondo")
 
 [node name="cometa_ayuda" type="TextureRect" parent="." unique_id=1945220670]
 material = SubResource("ShaderMaterial_disco")
