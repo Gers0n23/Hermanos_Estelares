@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 7 (video call window)
+Primary request: Create the keyframe for Dad's first video-call from inside El Coleccionauta's collection -- cozy, funny, and completely reassuring, framed like a glowing call window.
+Input images: official poster reference for overall style; Dad reference sheet; El Coleccionauta reference sheet (for the style of his cluttered, harmless collection in the background).
+Scene/backdrop: a softly glowing round call-window frame (warm golden rim light) floating with no fixed background inside the frame itself; behind Dad, a cozy jumble of El Coleccionauta's collected oddities (a rubber duck, a single garden glove, a snow globe, a wooden spoon, a traffic cone) stacked haphazardly but cheerfully, no danger implied.
+Subject: Dad, relaxed and grinning, sitting in a comically oversized mismatched armchair from the collection, leather jacket, one arm resting easily on the armrest, mid-laugh or mid-wink, completely at ease -- the happiest "kidnapping victim" in the galaxy.
+Style/medium: high-polish digital painted cartoon, warm and funny, soft clean outlines, rounded friendly shapes, painterly light, not photorealistic, not anime.
+Composition/framing: medium 16:9 shot, Dad centered inside the glowing round call-window frame, comfortable headroom, playful clutter visible but not crowding his face.
+Lighting/mood: warm, cozy, funny, reassuring -- a dad enjoying himself, not a distress call.
+Color palette: warm living-room-adjacent ambers for Dad, mustard/amber and violet/olive clutter tones from El Coleccionauta's world, golden call-window rim light.
+Materials/textures: soft plush-painted clutter objects, warm indoor-adjacent light, glowing golden frame edge.
+Constraints: exactly Dad in frame (El Coleccionauta not physically present, only implied by his collection), no text, no distress of any kind.
+Avoid: worried or sad expression on Dad, cage or bars, darkness, readable text, logos, watermark.

@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 5 (magical transformation)
+Primary request: Create the keyframe of the magical moment the three siblings' astronaut power-star suits fly out of Cometa's little ship and settle onto each child in a soft golden flash -- the wardrobe transformation from home clothes into their canon suits.
+Input images: official poster reference for overall style; height lineup reference for the three children's relative scale and identity; Cometa reference sheet; Cometa's little ship reference sheet.
+Scene/backdrop: same living room, warm sunset light, Cometa's little ship glowing softly as three suits made of light stream out of its hatch toward each sibling.
+Subject: Cometa mid-frame with both stubby arms raised, conducting the magic with a big joyful grin. Three ribbons of glowing golden light/fabric arc from the ship toward each sibling: one heading for Maxi (destined blue-white suit), one for Nicole (destined white-pink suit), one for Sofia (destined pink-turquoise suit). Show the transformation mid-motion -- suits partially materialized, sparkling seams of light wrapping around each child's silhouette, delighted expressions on all three (Maxi mid-jump-cheer, Nicole hands clasped in delight, Sofia arms out striking a confident pose).
+Style/medium: high-polish digital painted cartoon, joyful magical transformation, soft clean outlines, rounded friendly shapes, rich painterly light, not photorealistic, not anime, not glossy 3D.
+Composition/framing: wide 16:9 shot, Cometa and the ship on one side, the three siblings arranged so all three transformations are readable at once, camera at a small child's eye level.
+Lighting/mood: wonder, celebration, playful magic -- like fireworks made of light ribbons, never solemn.
+Color palette: gold sparkle trails, Maxi's blue accents, Nicole's pink accents, Sofia's pink/turquoise accents, turquoise/cream of Cometa's ship.
+Materials/textures: glowing light-fabric ribbons, transparent bubble helmet glass forming, warm indoor light blended with golden magic glow.
+Constraints: exactly three siblings and Cometa in frame, correct relative heights and suit colors per canon (Maxi blue, Nicole pink, Sofia pink/turquoise), no other characters, no text.
+Avoid: wrong suit colors, missing siblings, duplicate siblings, scary imagery, readable text, logos, watermark.

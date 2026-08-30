@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 2 (reaction)
+Primary request: Create the keyframe of the three siblings reacting right after Dad and El Coleccionauta vanish in the golden flash -- wide-eyed surprise and wonder, never fear.
+Input images: official poster reference for overall style; height lineup reference for the three children's relative scale and identity (same "no suits yet" outfit rule as the earlier beat -- do not use individual character sheets); living room environment reference for the setting.
+Scene/backdrop: same living room, the spot where Dad stood is now empty except a few last drifting golden sparkles fading into the air.
+Subject: exactly three siblings in their home clothes (same casual outfits as Beat 1), all looking toward the now-empty spot. Maxi delighted, reaching a hand up toward the fading sparkles, big grin. Nicole with both hands on her cheeks, curious wide eyes, small "oh!" mouth. Sofia standing straighter, eyebrows up, already shifting into an alert-but-composed leader posture, not panic.
+Style/medium: high-polish digital painted cartoon, cozy family warmth, soft clean outlines, rounded friendly shapes, painterly gradients, not photorealistic, not anime.
+Composition/framing: medium 16:9 shot, all three siblings grouped together, empty spot with fading sparkles visible in the frame between them and camera.
+Lighting/mood: warm, wondrous, surprised-but-safe -- like watching a magic trick, not an emergency.
+Color palette: same warm living room ambers, fading gold sparkle motes, soft pastel home clothes.
+Materials/textures: soft rug, warm indoor light, a few last sparkling motes with soft glow trails.
+Constraints: exactly three siblings, correct relative heights, no astronaut suits, no fear/crying expressions, no other characters, no text.
+Avoid: crying or terrified expressions, astronaut suits, extra characters, dark shadows, readable text, watermark.

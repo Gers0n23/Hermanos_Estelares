@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beats 3-4 (conversation)
+Primary request: Create the keyframe for Cometa meeting the three siblings and reassuring them about El Coleccionauta -- a warm, seated conversational moment meant to hold on screen through several lines of dialogue.
+Input images: official poster reference for overall style; Cometa reference sheet; height lineup reference for the three children's relative scale and identity (same "no suits yet" home-clothes rule as Beats 1-2 -- do not use individual character sheets); living room environment reference for the setting.
+Scene/backdrop: same living room, Cometa's little ship resting quietly on the rug behind the group, warm sunset light.
+Subject: Cometa in the foreground, one stubby arm resting warmly on the strap of his heart-shaped "hug album," the other gesturing gently as he talks, big warm reassuring smile. The three siblings gathered close around him in their home clothes: Sofia kneeling forward attentively (leader posture, listening hard), Nicole with her hands clasped near her chest (tender concern), Maxi sitting closest to Cometa, delighted just to be near him.
+Style/medium: high-polish digital painted cartoon, cozy warmth, soft clean outlines, rounded friendly shapes, painterly gradients, not photorealistic, not anime.
+Composition/framing: medium 16:9 shot, Cometa slightly left of center, the three siblings grouped around him, close enough to read as an intimate huddle.
+Lighting/mood: warm, reassuring, storytelling-around-a-campfire feeling, safe and cozy.
+Color palette: turquoise/gold of Cometa, warm living room ambers, soft pastel home clothes.
+Materials/textures: soft plush-painted character surfaces, warm indoor light, soft rug texture.
+Constraints: exactly Cometa and the three siblings in frame, no astronaut suits yet, no El Coleccionauta or Dad in this shot, no text.
+Avoid: astronaut suits, extra characters, distressed expressions, readable text, watermark.

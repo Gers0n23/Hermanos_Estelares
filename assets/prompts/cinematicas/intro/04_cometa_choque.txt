@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 3 (comic crash)
+Primary request: Create the keyframe of Cometa's tiny one-seat ship mid-tumble through the living room window, an instant before it bonks softly off the curtain and spins to a stop -- a joyful, plush, never-violent physical comedy crash. He is arriving seconds too late, chasing El Coleccionauta.
+Input images: official poster reference for overall style; Cometa reference sheet; Cometa's little ship reference sheet; living room environment reference for the setting.
+Scene/backdrop: same living room, warm sunset light through the big window, curtain caught mid-flutter from the ship grazing it, a light trail of small gold sparkles behind the ship showing its flight path from the window to the rug.
+Subject: Cometa's small egg-shaped one-seat ship, patched and cheerful, tumbling sideways in mid-air just past the curtain, slightly dented, tiny sparkling motes puffing off its thrusters, motion suggested only through the sparkle trail (not through blur/distortion). Cometa visible through the ship's bubble dome, eyes spinning in dizzy spiral swirls, big open laughing mouth.
+Style/medium: high-polish digital painted cartoon, plush and bouncy physical comedy, soft clean outlines, rounded friendly shapes, painterly light, not photorealistic, not anime.
+Composition/framing: medium-wide 16:9 shot, diagonal composition following the ship's tumbling arc from the window toward the rug, camera at a small child's eye level.
+Lighting/mood: playful, bouncy, comic -- like a plush toy bouncing, never a real crash.
+Color palette: turquoise/cream/gold of Cometa's ship, warm living room ambers, gold sparkle trail.
+Materials/textures: soft plush-painted ship surface, glass bubble dome, fluttering fabric curtain, warm indoor light.
+Constraints: exactly Cometa and his little ship in frame, no siblings, no El Coleccionauta, no text, nothing that reads as a hard/dangerous impact.
+Avoid: broken glass, smoke, sharp debris, distress on Cometa, extra characters, readable text, watermark.

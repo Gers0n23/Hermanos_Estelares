@@ -4,8 +4,9 @@ extends Node2D
 ## Primera pantalla del juego: un anillo de progreso decorativo avanza solo de 0 a
 ## 100% y pasa automaticamente al titulo. No hay nada que el nino deba tocar, por eso
 ## no lleva voz de instruccion (GDD §6 regla 2 aplica a acciones pedidas; aqui no se
-## pide ninguna). El logo, el anillo conic-gradient con Cometa flotando adentro y la
-## navecita orbitando reproducen el diseno del mockup con nodos 2D nativos de Godot.
+## pide ninguna). El logo, el anillo conic-gradient con el slideshow de portadas
+## flotando adentro (`vista_portadas.gd`) y la navecita orbitando reproducen el diseno
+## del mockup con nodos 2D nativos de Godot.
 ##
 ## No conoce ninguna pantalla salvo la siguiente en la cadena fija carga→titulo (igual
 ## de simple que `Navegacion`, que todavia no existe — HE-09).
@@ -16,13 +17,13 @@ const ESPERA_FINAL := 0.7
 
 @onready var _texto_porcentaje: Label = $texto_porcentaje
 @onready var _anillo: Node2D = $anillo_progreso
-@onready var _cometa: TextureRect = $anillo_progreso/cometa_flotante
+@onready var _vista_portadas: Node2D = $anillo_progreso/vista_portadas
 @onready var _navecita_pivote: Node2D = $anillo_progreso/navecita_pivote
 
 
 func _ready() -> void:
 	_iniciar_progreso()
-	_iniciar_flotacion_cometa()
+	_iniciar_flotacion_portadas()
 	_iniciar_orbita_navecita()
 
 
@@ -42,13 +43,15 @@ func _ir_a_titulo() -> void:
 	get_tree().change_scene_to_file(RUTA_SIGUIENTE)
 
 
-## Flotacion suave de Cometa dentro del anillo (equivalente a `he-float` del mockup).
-func _iniciar_flotacion_cometa() -> void:
-	var origen_y: float = _cometa.position.y
+## Flotacion suave del slideshow de portadas dentro del anillo (equivalente a
+## `he-float` del mockup; antes animaba a Cometa, que ahora solo vive en otras
+## pantallas del juego).
+func _iniciar_flotacion_portadas() -> void:
+	var origen_y: float = _vista_portadas.position.y
 	var tween := create_tween().set_loops()
-	tween.tween_property(_cometa, "position:y", origen_y - 14.0, 1.6) \
+	tween.tween_property(_vista_portadas, "position:y", origen_y - 14.0, 1.6) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(_cometa, "position:y", origen_y, 1.6) \
+	tween.tween_property(_vista_portadas, "position:y", origen_y, 1.6) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 

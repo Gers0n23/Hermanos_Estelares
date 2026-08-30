@@ -134,44 +134,51 @@ como `victoria_final` cuando el nivel lo amerite.
 Guion completo con acotaciones: `docs/guiones/escena_intro.md`. Tabla lista para grabar
 (mismo id de línea que el guion, para trazabilidad):
 
+> **Revisión 07-Ago-2026**: renumerada junto con `docs/guiones/escena_intro.md` (el guion
+> reordenó la historia para que el secuestro de papá se vea en pantalla en vez de narrarse).
+> Ninguna fila de esta tabla tenía audio grabado, así que la renumeración no afecta archivos ya
+> entregados.
+
 | id_línea | personaje | contexto (beat del guion) | texto guía (a grabar) | archivo | estado |
 |---|---|---|---|---|---|
 | intro_001 | Sofía | Beat 1 — jugando en la alfombra | «Atención, tripulación... ¡el cojín gigante es un asteroide! Nadie lo toca.» | `historia/intro/intro_001.ogg` | pendiente de grabar |
 | intro_002 | Maxi | Beat 1 | «¡Vrrrum! ¡Dino-auto!» | `historia/intro/intro_002.ogg` | pendiente de grabar |
 | intro_003 | Nicole | Beat 1 | «Miren, le hice una coleta rosada a mi dibujo del caballito.» | `historia/intro/intro_003.ogg` | pendiente de grabar |
-| intro_005 | Cometa | Beat 2 — aterrizaje cómico | «¡Uuuy, tumbo! Jijiji... a ese aterrizaje le doy un 6 de 10.» | `historia/intro/intro_005.ogg` | pendiente de grabar |
-| intro_006 | Maxi | Beat 2 | «¡Nave!!» | `historia/intro/intro_006.ogg` | pendiente de grabar |
-| intro_007 | Nicole | Beat 2 | «¡Hola! ¿Estás bien, amiguito?» | `historia/intro/intro_007.ogg` | pendiente de grabar |
-| intro_008 | Sofía | Beat 2 | «Un momento... ¿tú hablas? ¿Y por qué eres tan redondito?» | `historia/intro/intro_008.ogg` | pendiente de grabar |
-| intro_009 | Cometa | Beat 2 | «¡Redondito y orgulloso! Hola, Hermanos Estelares. Bueno... todavía no lo son. Eso viene ahora.» | `historia/intro/intro_009.ogg` | pendiente de grabar |
-| intro_010 | Cometa | Beat 3 — cuenta lo del Coleccionauta | «Tengo que contarles algo increíble. Mi amigo el Coleccionauta —lo conozco desde chico, armamos naves juntos— anda coleccionando las cosas más increíbles del universo.» | `historia/intro/intro_010.ogg` | pendiente de grabar |
-| intro_011 | Cometa | Beat 3 | «Y hoy... encontró algo TAN increíble, que se lo llevó a su colección.» | `historia/intro/intro_011.ogg` | pendiente de grabar |
-| intro_012 | Sofía | Beat 3 | «¿Qué se llevó?» | `historia/intro/intro_012.ogg` | pendiente de grabar |
-| intro_013 | Cometa | Beat 3 | «A su papá.» | `historia/intro/intro_013.ogg` | pendiente de grabar |
-| intro_014 | Maxi | Beat 3 | «¿Papi?» | `historia/intro/intro_014.ogg` | pendiente de grabar |
-| intro_015 | Nicole | Beat 3 | «¿Y está bien? ¿No tiene frío ni nada?» | `historia/intro/intro_015.ogg` | pendiente de grabar |
-| intro_016 | Cometa | Beat 3 | «¡Súper bien! El Coleccionauta es despistado y solitario, pero jamás malo. Seguro que ya le ofreció galletas.» | `historia/intro/intro_016.ogg` | pendiente de grabar |
-| intro_017 | Sofía | Beat 3 | «Entonces... hay que ir a buscarlo.» | `historia/intro/intro_017.ogg` | pendiente de grabar |
-| intro_018 | Cometa | Beat 3 | «¡Esa actitud! Por eso vine a buscarlos a ustedes tres.» | `historia/intro/intro_018.ogg` | pendiente de grabar |
-| intro_019 | Cometa | Beat 4 — trajes con estrellas de poder | «Para este viaje van a necesitar esto: sus trajes de Hermanos Estelares, con estrella de poder incluida.» | `historia/intro/intro_019.ogg` | pendiente de grabar |
-| intro_020 | Maxi | Beat 4 | «¡¡Wiiii!!» | `historia/intro/intro_020.ogg` | pendiente de grabar |
-| intro_021 | Nicole | Beat 4 | «¡Es rosado! ¡Es perfecto!» | `historia/intro/intro_021.ogg` | pendiente de grabar |
-| intro_022 | Sofía | Beat 4 | «Turquesa y rosado... buen gusto, Cometa.» | `historia/intro/intro_022.ogg` | pendiente de grabar |
-| intro_023 | Cometa | Beat 5 — la nave-estrella | «Y esta es nuestra nave. Le faltan piezas para llegar tan lejos... ¡pero las vamos a conseguir jugando!» | `historia/intro/intro_023.ogg` | pendiente de grabar |
-| intro_024 | Sofía | Beat 5 | «¿Jugando? Me gusta cómo suena esa misión.» | `historia/intro/intro_024.ogg` | pendiente de grabar |
-| intro_025 | Nicole | Beat 5 | «¡Voy a hacer amigos en cada planeta!» | `historia/intro/intro_025.ogg` | pendiente de grabar |
-| intro_026 | Maxi | Beat 5 | «¡Vamo vamo vamo!» | `historia/intro/intro_026.ogg` | pendiente de grabar |
-| intro_027 | Papá | Beat 6 — video-llamada | «¡Hola, mis campeones! Miren dónde estoy... el Coleccionauta tiene una silla tan cómoda que casi ni quiero que me rescaten. Es broma, ¡los espero con muchas ganas!» | `historia/intro/intro_027.ogg` | pendiente de grabar |
-| intro_028 | Papá | Beat 6 | «Eso sí, no se apuren por mí, yo estoy la mar de bien. Ustedes disfruten el viaje, ¿ya?» | `historia/intro/intro_028.ogg` | pendiente de grabar |
-| intro_029 | Maxi | Beat 6 | «¡Papi!» | `historia/intro/intro_029.ogg` | pendiente de grabar |
-| intro_030 | Nicole | Beat 6 | «¡Te extrañamos! ¡Ya vamos!» | `historia/intro/intro_030.ogg` | pendiente de grabar |
-| intro_031 | Sofía | Beat 6 | «Aguanta ahí, papá. Vamos a hacerlo bien hecho.» | `historia/intro/intro_031.ogg` | pendiente de grabar |
-| intro_032 | Papá | Beat 6 | «Sé que sí. Los quiero un montón. ¡Nos vemos, Hermanos Estelares!» | `historia/intro/intro_032.ogg` | pendiente de grabar |
-| intro_033 | Cometa | Beat 7 — partida al mapa | «¿Listos para volar, Hermanos Estelares?» | `historia/intro/intro_033.ogg` | pendiente de grabar |
-| intro_034 | Maxi+Nicole+Sofía | Beat 7 | «¡¡Siiiií!!» (coro) | `historia/intro/intro_034.ogg` | pendiente de grabar |
+| intro_005 | El Coleccionauta | Beat 2 — aparece y se lleva a papá | «¡Ohhh, pero miren nada más... un papá sonriente, con chaqueta de piloto y todo! Increíble. Justo lo que me faltaba en la colección.» | `historia/intro/intro_005.ogg` | pendiente de grabar |
+| intro_006 | Papá | Beat 2 | «¿Eh? Un momentito, ni siquiera alcancé a avisar que iba a...» | `historia/intro/intro_006.ogg` | pendiente de grabar |
+| intro_008 | Sofía | Beat 2 | «¡¿Qué?! ¿Adónde se fue papá?» | `historia/intro/intro_008.ogg` | pendiente de grabar |
+| intro_009 | Nicole | Beat 2 | «¿Se lo comió la lucecita brillante?» | `historia/intro/intro_009.ogg` | pendiente de grabar |
+| intro_010 | Maxi | Beat 2 | «¡Uuuh, luuuces!» | `historia/intro/intro_010.ogg` | pendiente de grabar |
+| intro_012 | Cometa | Beat 3 — llega persiguiendo al Coleccionauta | «¡Uuuy, tumbo! Jijiji... a ese aterrizaje le doy un 6 de 10.» | `historia/intro/intro_012.ogg` | pendiente de grabar |
+| intro_013 | Cometa | Beat 3 | «Buuu, lo perdí por segunditos... ¡otra vez! Ese Coleccionauta corre rapidísimo cuando quiere.» | `historia/intro/intro_013.ogg` | pendiente de grabar |
+| intro_014 | Maxi | Beat 3 | «¡Nave!!» | `historia/intro/intro_014.ogg` | pendiente de grabar |
+| intro_015 | Nicole | Beat 3 | «¡Hola! ¿Estás bien, amiguito?» | `historia/intro/intro_015.ogg` | pendiente de grabar |
+| intro_016 | Sofía | Beat 3 | «Un momento... ¿tú hablas? ¿Y por qué eres tan redondito? Y... ¿tú viste al que se llevó a mi papá?!» | `historia/intro/intro_016.ogg` | pendiente de grabar |
+| intro_017 | Cometa | Beat 3 | «¡Redondito y orgulloso! Hola, Hermanos Estelares. Bueno... todavía no lo son, eso viene ahora. Y sí, lo vi: ese despistado es mi amigo, el Coleccionauta.» | `historia/intro/intro_017.ogg` | pendiente de grabar |
+| intro_018 | Cometa | Beat 4 — cuenta quién es el Coleccionauta | «Lo conozco desde que éramos chicos —armamos naves juntos, en el mismo planeta— y anda coleccionando las cosas más increíbles del universo. Hoy le pareció que su papá era de lo más increíble que ha visto.» | `historia/intro/intro_018.ogg` | pendiente de grabar |
+| intro_019 | Nicole | Beat 4 | «¿Y está bien? ¿No tiene frío ni nada?» | `historia/intro/intro_019.ogg` | pendiente de grabar |
+| intro_020 | Cometa | Beat 4 | «¡Clarísimo que sí! El Coleccionauta es despistado y solitario, pero jamás malo. Seguro ya le ofreció una de sus galletas raras.» | `historia/intro/intro_020.ogg` | pendiente de grabar |
+| intro_021 | Sofía | Beat 4 | «Entonces... hay que ir a buscarlo.» | `historia/intro/intro_021.ogg` | pendiente de grabar |
+| intro_022 | Cometa | Beat 4 | «¡Esa actitud! Por eso vine a buscarlos a ustedes tres.» | `historia/intro/intro_022.ogg` | pendiente de grabar |
+| intro_023 | Cometa | Beat 5 — trajes con estrellas de poder | «Para este viaje van a necesitar esto: sus trajes de Hermanos Estelares, con estrella de poder incluida.» | `historia/intro/intro_023.ogg` | pendiente de grabar |
+| intro_024 | Maxi | Beat 5 | «¡¡Wiiii!!» | `historia/intro/intro_024.ogg` | pendiente de grabar |
+| intro_025 | Nicole | Beat 5 | «¡Es rosado! ¡Es perfecto!» | `historia/intro/intro_025.ogg` | pendiente de grabar |
+| intro_026 | Sofía | Beat 5 | «Turquesa y rosado... buen gusto, Cometa.» | `historia/intro/intro_026.ogg` | pendiente de grabar |
+| intro_027 | Cometa | Beat 6 — la nave-estrella | «Y esta es nuestra nave-estrella. Quedó un poco averiada de tanto perseguir al Coleccionauta por la galaxia... por ahora solo le alcanza la energía para un saltito, el justo para llegar al primer planeta. ¡Las piezas que le faltan las conseguimos jugando!» | `historia/intro/intro_027.ogg` | pendiente de grabar |
+| intro_028 | Sofía | Beat 6 | «¿Jugando? Me gusta cómo suena esa misión.» | `historia/intro/intro_028.ogg` | pendiente de grabar |
+| intro_029 | Nicole | Beat 6 | «¡Voy a hacer amigos en cada planeta!» | `historia/intro/intro_029.ogg` | pendiente de grabar |
+| intro_030 | Maxi | Beat 6 | «¡Vamo vamo vamo!» | `historia/intro/intro_030.ogg` | pendiente de grabar |
+| intro_031 | Papá | Beat 7 — video-llamada | «¡Hola, mis campeones! Qué manera de salir de paseo sin avisar, ¿no? Miren dónde estoy... el Coleccionauta tiene una silla tan cómoda que casi ni quiero que me rescaten. Es broma, ¡los espero con muchas ganas!» | `historia/intro/intro_031.ogg` | pendiente de grabar |
+| intro_032 | Papá | Beat 7 | «Eso sí, no se apuren por mí, yo estoy la mar de bien. Ustedes disfruten el viaje, ¿ya?» | `historia/intro/intro_032.ogg` | pendiente de grabar |
+| intro_033 | Maxi | Beat 7 | «¡Papi!» | `historia/intro/intro_033.ogg` | pendiente de grabar |
+| intro_034 | Nicole | Beat 7 | «¡Te extrañamos! ¡Ya vamos!» | `historia/intro/intro_034.ogg` | pendiente de grabar |
+| intro_035 | Sofía | Beat 7 | «Aguanta ahí, papá. Vamos a hacerlo bien hecho.» | `historia/intro/intro_035.ogg` | pendiente de grabar |
+| intro_036 | Papá | Beat 7 | «Sé que sí. Los quiero un montón. ¡Nos vemos, Hermanos Estelares!» | `historia/intro/intro_036.ogg` | pendiente de grabar |
+| intro_037 | Cometa | Beat 8 — partida al mapa | «¿Listos para volar, Hermanos Estelares?» | `historia/intro/intro_037.ogg` | pendiente de grabar |
+| intro_038 | Maxi+Nicole+Sofía | Beat 8 | «¡¡Siiiií!!» (coro) | `historia/intro/intro_038.ogg` | pendiente de grabar |
 
-*(sfx `intro_004` no lleva voz — es sonido de cortina + trompo, ver ficha de audio/SFX, no
-este documento.)*
+*(sfx `intro_004`, `intro_007` y `intro_011` no llevan voz — son sonidos de destello mágico y de
+cortina + trompo, ver ficha de audio/SFX, no este documento.)*
 
 ## Líneas reales — Escena del Planeta Arcoíris (`historia/arcoiris/`)
 

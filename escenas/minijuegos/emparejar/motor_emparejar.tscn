@@ -1,15 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqf8n7x4t0wjr"]
+[gd_scene format=3 uid="uid://bqf8n7x4t0wjr"]
 
-[ext_resource type="Script" path="res://scripts/motores/emparejar/motor_emparejar.gd" id="1_motor"]
-[ext_resource type="PackedScene" uid="uid://cfg6qgqxvhvxo" path="res://escenas/minijuegos/emparejar/carta_emparejar.tscn" id="2_carta"]
+[ext_resource type="Script" uid="uid://bojs0hyi5u7hb" path="res://scripts/motores/emparejar/motor_emparejar.gd" id="1_motor"]
 
-[node name="motor_emparejar" type="Node2D"]
+[node name="motor_emparejar" type="Node2D" unique_id=187908383]
 script = ExtResource("1_motor")
 ruta_nivel = "res://datos/niveles/piloto_emparejar_estrella_01.json"
 
-[node name="capa_ui" type="CanvasLayer" parent="."]
+[node name="capa_ui" type="CanvasLayer" parent="." unique_id=1126992045]
 
-[node name="ui" type="Control" parent="capa_ui"]
+[node name="ui" type="Control" parent="capa_ui" unique_id=487218476]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="centro" type="CenterContainer" parent="capa_ui/ui"]
+[node name="centro" type="CenterContainer" parent="capa_ui/ui" unique_id=1757920497]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,14 +24,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="tablero" type="GridContainer" parent="capa_ui/ui/centro" node_paths=PackedStringArray()]
+[node name="tablero" type="GridContainer" parent="capa_ui/ui/centro" unique_id=224509482]
 unique_name_in_owner = true
 layout_mode = 2
-columns = 4
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
+columns = 4
 
-[node name="contador_destellos" type="Label" parent="capa_ui/ui"]
+[node name="contador_destellos" type="Label" parent="capa_ui/ui" unique_id=185424038]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -43,7 +42,7 @@ offset_bottom = 80.0
 theme_override_font_sizes/font_size = 40
 text = "* 0"
 
-[node name="etiqueta_gag" type="Label" parent="capa_ui/ui"]
+[node name="etiqueta_gag" type="Label" parent="capa_ui/ui" unique_id=1932461640]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -56,12 +55,14 @@ offset_left = -260.0
 offset_top = -160.0
 offset_right = 260.0
 offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 30
+text = "jaja se marearon dando vueltas! vamos, las ordenamos de nuevo (TODO: voz derrota_gag)"
 horizontal_alignment = 1
 autowrap_mode = 2
-text = "jaja se marearon dando vueltas! vamos, las ordenamos de nuevo (TODO: voz derrota_gag)"
 
-[node name="boton_otra_vez" type="Button" parent="capa_ui/ui"]
+[node name="boton_otra_vez" type="Button" parent="capa_ui/ui" unique_id=688959935]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(240, 100)
@@ -75,10 +76,12 @@ offset_left = -120.0
 offset_top = 20.0
 offset_right = 120.0
 offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "OTRA VEZ"
 
-[node name="boton_cometa" type="Button" parent="capa_ui/ui"]
+[node name="boton_cometa" type="Button" parent="capa_ui/ui" unique_id=983687948]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 1
@@ -91,11 +94,13 @@ offset_left = -136.0
 offset_top = -136.0
 offset_right = -20.0
 offset_bottom = -20.0
-theme_override_font_sizes/font_size = 40
+grow_horizontal = 0
+grow_vertical = 0
 tooltip_text = "Cometa: toca para repetir la instruccion"
+theme_override_font_sizes/font_size = 40
 text = "*"
 
-[node name="boton_salir" type="Button" parent="capa_ui/ui"]
+[node name="boton_salir" type="Button" parent="capa_ui/ui" unique_id=544973277]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 1
@@ -106,17 +111,18 @@ offset_left = 20.0
 offset_top = -136.0
 offset_right = 136.0
 offset_bottom = -20.0
-theme_override_font_sizes/font_size = 32
+grow_vertical = 0
 tooltip_text = "Salir al mapa"
+theme_override_font_sizes/font_size = 32
 text = "<"
 
-[node name="confeti" type="CPUParticles2D" parent="."]
+[node name="confeti" type="CPUParticles2D" parent="." unique_id=1629124995]
 unique_name_in_owner = true
 position = Vector2(640, 360)
 emitting = false
-one_shot = true
 amount = 80
 lifetime = 1.2
+one_shot = true
 speed_scale = 1.5
 explosiveness = 0.9
 direction = Vector2(0, -1)

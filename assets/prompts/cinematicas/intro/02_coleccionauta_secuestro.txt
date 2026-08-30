@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 2 (key story beat)
+Primary request: Create the keyframe for the moment the comic-relief character El Coleccionauta appears in the living room and marvels at Dad, an instant before both vanish in a magical golden flash. Must read as delightful and safe, never threatening -- like a clumsy collector finding the perfect toy, not a kidnapper.
+Input images: official poster reference for overall style; El Coleccionauta reference sheet for his design; Dad reference sheet for his design; living room environment reference for the setting.
+Scene/backdrop: same approved living room, warm sunset light, a burst of warm golden sparkles blooming in one corner of the room where El Coleccionauta has just popped in.
+Subject: El Coleccionauta, mid-frame, giant magnifying goggles pushed up against his enormous amber eyes, teetering backpack-tower on his back, both stubby arms raised in delighted applause, mouth open in an awed grin. Dad stands a couple of steps away, caught mid-motion (maybe holding a mug or tidying a cushion), leather jacket, warm easy smile, reacting with surprised amusement rather than fear, one hand slightly raised as if about to say something. A big soft golden flash of light is just beginning to bloom around both of them, sparkling motes swirling.
+Style/medium: high-polish digital painted cartoon, cozy magical adventure, soft clean outlines, rounded friendly shapes, painterly light, not photorealistic, not anime, not glossy 3D.
+Composition/framing: medium-wide 16:9 shot, El Coleccionauta and Dad both fully visible, comfortable space around them to read as a "before the disappearance" beat, camera at a small child's eye level.
+Lighting/mood: warm, playful, a little magical-comic-book, absolutely no menace -- think "surprise party," not "abduction."
+Color palette: mustard/amber Coleccionauta tones, warm living room ambers, golden sparkle bloom, Dad's dark leather jacket and white shirt.
+Materials/textures: soft plush-painted character surfaces, warm indoor light, sparkling golden dust with no smoke.
+Constraints: exactly El Coleccionauta and Dad in frame, no siblings visible in this exact composition, no text, no scary imagery, El Coleccionauta must read as clumsy and endearing.
+Avoid: menacing expression on El Coleccionauta, distress on Dad, weapons, darkness, readable text, logos, watermark, extra characters.

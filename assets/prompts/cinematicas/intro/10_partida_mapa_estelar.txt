@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 8 (closing transition)
+Primary request: Create the closing keyframe of the intro cinematic: the call just ended in a sparkle, Cometa floats toward the window, and the three suited siblings share a smiling look before the cut to the Star Map.
+Input images: official poster reference for overall style; height lineup reference for the three children's relative scale and identity; Cometa reference sheet; living room environment reference for the setting.
+Scene/backdrop: same living room, now touched with lingering warm gold sparkles from the call ending, the nave-estrella glowing softly near the window in the background.
+Subject: Cometa, mid-frame, floating toward the window with a happy inviting expression, one arm gesturing onward. The three siblings, now fully in their canon astronaut suits with bubble helmets, standing close together, exchanging a warm confident smile with each other -- Sofia slightly ahead as the natural leader, Nicole and Maxi flanking her, all ready and excited, not rushed.
+Style/medium: high-polish digital painted cartoon, warm and hopeful, soft clean outlines, rounded friendly shapes, rich painterly light, not photorealistic, not anime.
+Composition/framing: wide 16:9 shot, Cometa leading toward the window/nave-estrella, the three suited siblings grouped just behind him, camera at a small child's eye level.
+Lighting/mood: warm, hopeful, adventure-about-to-begin -- a gentle golden glow easing toward the cooler starlight of the window beyond.
+Color palette: warm living room ambers blending into the nave-estrella's turquoise/cream/gold, suit accent colors per canon (Maxi blue, Nicole pink, Sofia pink/turquoise).
+Materials/textures: soft rug and furniture, transparent bubble helmets, glowing nave-estrella hull, drifting gold sparkle motes.
+Constraints: exactly Cometa and the three siblings in frame, correct relative heights and suit colors, no other characters, no text.
+Avoid: missing or duplicate siblings, wrong suit colors, rushed/anxious expressions, readable text, logos, watermark.

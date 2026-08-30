@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 1
+Primary request: Create the opening keyframe of the intro cinematic for "Los Hermanos Estelares": a cozy late-afternoon living room where the three siblings are playing on the rug, before any space adventure begins. NOTE: this shot needs the siblings in everyday home clothes, not their canon astronaut suits -- no approved "home clothes" reference exists yet, so keep outfits simple, modest, and consistent with each child's identity (hair, skin tone, build) from the attached sheets; flag this frame for disenador-personajes approval before treating it as canon.
+Input images: official poster reference for overall style; height lineup reference for the three children's relative scale and identity (do not use individual character sheets here, they are wearing suits in those and would bias the outfit); living room environment reference for the setting.
+Scene/backdrop: the approved living room set -- big sofa with turquoise/beige cushions, wooden coffee table, floating shelf with plants, round area rug, large window with warm sunset light, no magic yet.
+Subject: exactly three siblings, no suits, playing separately on the rug. Left: Maxi (2, smallest), sitting on the rug pushing a toy car/dinosaur, huge open grin. Center: Nicole (5, medium height, long wavy dark ponytail), sitting on a cushion drawing on paper with crayons. Right: Sofia (8, tallest, curly dark hair), standing and directing an imaginary mission with the sofa cushions like a playful little captain. Casual home outfits: simple t-shirt and shorts/leggings in soft solid colors, no logos, no text.
+Style/medium: high-polish digital painted cartoon, cozy family warmth, soft clean outlines, rounded friendly shapes, painterly gradients, not photorealistic, not anime.
+Composition/framing: wide establishing 16:9 shot, camera at a small child's eye level, all three siblings visible at once, the window and its warm light in the background.
+Lighting/mood: warm golden late-afternoon light, cozy, safe, ordinary-day feeling -- nothing magical happening yet.
+Color palette: warm ambers and honey wood tones, turquoise/beige cushions, soft pastel clothes for the kids.
+Materials/textures: soft rug, wooden floor, cushions, paper and crayons.
+Constraints: exactly three siblings, correct relative heights (Maxi shortest, Sofia tallest), no astronaut suits, no helmets, no Cometa, no other characters, no text.
+Avoid: astronaut suits or helmets on any sibling, extra children, adults in frame, scary elements, readable text, logos, watermark.
