@@ -29,3 +29,7 @@ Thumbs.db
 # Cache de Python de las herramientas
 __pycache__/
 *.pyc
+
+# Respaldos automaticos de Krita y editores
+*-autosave.kra
+*~

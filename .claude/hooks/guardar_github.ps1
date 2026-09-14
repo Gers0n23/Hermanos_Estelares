@@ -22,9 +22,9 @@ foreach ($s in @('ESTADO ACTUAL', 'MARCO DE TRABAJO', 'REGISTRO DE AVANCES')) {
     if ($contenido -notmatch [regex]::Escape($s)) { exit 0 }
 }
 
-# Mensaje de commit = ultima linea del Registro de Avances (la entrada recien agregada).
+# Mensaje de commit = PRIMERA entrada del Registro de Avances: el tablero agrega las nuevas arriba.
 $lineas = ($contenido -split "`n") | Where-Object { $_ -match '^\s*-\s+\*\*\[' }
-$ultima = if ($lineas) { ($lineas[-1] -replace '\*\*', '' -replace '^\s*-\s*', '').Trim() } else { $null }
+$ultima = if ($lineas) { ($lineas[0] -replace '\*\*', '' -replace '^\s*-\s*', '').Trim() } else { $null }
 $mensaje = if ($ultima) { "Avance: $ultima" } else { 'Avance registrado en el tablero' }
 
 git -C $root add -A 2>$null | Out-Null
