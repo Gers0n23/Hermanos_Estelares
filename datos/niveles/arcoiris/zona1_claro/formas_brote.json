@@ -1,0 +1,115 @@
+{
+  "id_nivel": "arcoiris_z1_formas_brote",
+  "motor": "encajar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 120,
+  "limite_intentos": null,
+  "objetivo_guiado": true,
+  "caras": true,
+  "modo": "simple",
+  "guia_color": true,
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/brote/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/brote/acierto_01.wav",
+      "voces/arcoiris/formas/brote/acierto_02.wav",
+      "voces/arcoiris/formas/brote/acierto_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/formas/brote/no_es_este_01.wav",
+      "voces/arcoiris/formas/brote/no_es_este_02.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/formas/brote/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/brote/victoria_01.wav",
+      "voces/arcoiris/formas/brote/victoria_02.wav"
+    ],
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "intro": "voces/arcoiris/formas/brote/intro_z1.wav"
+  },
+  "figuras": [
+    {
+      "id": "circulo",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 118,
+          "alto": 118,
+          "color": "#F26CA8",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "cuadrado",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 112,
+          "alto": 112,
+          "color": "#6FD6E8",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "triangulo",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 128,
+          "alto": 112,
+          "color": "#FFCB3D",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "estrella",
+      "piezas": [
+        {
+          "forma": "estrella",
+          "ancho": 128,
+          "alto": 128,
+          "color": "#B48CE8",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "ovalo",
+      "piezas": [
+        {
+          "forma": "ovalo",
+          "ancho": 150,
+          "alto": 98,
+          "color": "#7DD87A",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "rectangulo",
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 150,
+          "alto": 88,
+          "color": "#FF9F4A",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+}

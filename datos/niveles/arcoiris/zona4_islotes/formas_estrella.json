@@ -1,0 +1,198 @@
+{
+  "id_nivel": "arcoiris_z4_formas_estrella",
+  "motor": "encajar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 55,
+  "caras": false,
+  "guia_color": false,
+  "modo": "compuesto",
+  "figuras_por_partida": 2,
+  "limite_intentos": 9,
+  "rotacion_por_toque": true,
+  "paso_rotacion": 90,
+  "rotacion_inicial_aleatoria": true,
+  "distractoras_por_partida": 3,
+  "piezas_distractoras": [
+    {
+      "forma": "triangulo",
+      "ancho": 70,
+      "alto": 70,
+      "color": "#B48CE8"
+    },
+    {
+      "forma": "circulo",
+      "ancho": 100,
+      "alto": 100,
+      "color": "#F26CA8"
+    },
+    {
+      "forma": "rectangulo",
+      "ancho": 90,
+      "alto": 120,
+      "color": "#6FD6E8"
+    },
+    {
+      "forma": "trapecio",
+      "ancho": 120,
+      "alto": 50,
+      "color": "#FF9F4A"
+    },
+    {
+      "forma": "estrella",
+      "ancho": 90,
+      "alto": 90,
+      "color": "#FFCB3D"
+    }
+  ],
+  "lineas_voz": {
+    "acierto": [
+      "voces/arcoiris/formas/estrella/acierto_01.wav",
+      "voces/arcoiris/formas/estrella/acierto_02.wav",
+      "voces/arcoiris/formas/estrella/acierto_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/formas/estrella/no_es_este_01.wav",
+      "voces/arcoiris/formas/estrella/no_es_este_02.wav"
+    ],
+    "figura_completa": [
+      "voces/arcoiris/formas/estrella/figura_completa_01.wav",
+      "voces/arcoiris/formas/estrella/figura_completa_02.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/estrella/victoria_01.wav",
+      "voces/arcoiris/formas/estrella/victoria_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/estrella/intro_z4.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_girar_01.wav",
+    "girar": "voces/arcoiris/formas/estrella/girar_01.wav"
+  },
+  "figuras": [
+    {
+      "id": "cohete",
+      "voz_completa": "voces/arcoiris/formas/figuras/cohete.wav",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 90,
+          "alto": 80,
+          "color": "#FF6B6B",
+          "x": 0,
+          "y": -115
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 90,
+          "alto": 150,
+          "color": "#6FD6E8",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "forma": "trapecio",
+          "ancho": 150,
+          "alto": 50,
+          "color": "#FF9F4A",
+          "x": 0,
+          "y": 100
+        }
+      ],
+      "silueta_unida": true
+    },
+    {
+      "id": "gato",
+      "voz_completa": "voces/arcoiris/formas/figuras/gato.wav",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 140,
+          "alto": 140,
+          "color": "#FFB25B",
+          "x": 0,
+          "y": 20,
+          "cara": true
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 56,
+          "alto": 60,
+          "color": "#FF9F4A",
+          "x": -40,
+          "y": -62
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 56,
+          "alto": 60,
+          "color": "#FF9F4A",
+          "x": 40,
+          "y": -62
+        }
+      ],
+      "silueta_unida": true
+    },
+    {
+      "id": "barco",
+      "voz_completa": "voces/arcoiris/formas/figuras/barco.wav",
+      "piezas": [
+        {
+          "forma": "trapecio",
+          "ancho": 200,
+          "alto": 60,
+          "color": "#B07A4F",
+          "x": 0,
+          "y": 40,
+          "rotacion": 180
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 120,
+          "alto": 90,
+          "color": "#FFF8EE",
+          "x": -45,
+          "y": -50,
+          "rotacion": 270
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 60,
+          "alto": 90,
+          "color": "#F26CA8",
+          "x": 30,
+          "y": -35
+        }
+      ],
+      "silueta_unida": true
+    },
+    {
+      "id": "pez",
+      "voz_completa": "voces/arcoiris/formas/figuras/pez.wav",
+      "piezas": [
+        {
+          "forma": "rombo",
+          "ancho": 170,
+          "alto": 110,
+          "color": "#4A8BE0",
+          "x": 20,
+          "y": 0,
+          "cara": true
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 90,
+          "alto": 80,
+          "color": "#FF9F4A",
+          "x": -95,
+          "y": 0,
+          "rotacion": 90
+        }
+      ],
+      "silueta_unida": true
+    }
+  ]
+}

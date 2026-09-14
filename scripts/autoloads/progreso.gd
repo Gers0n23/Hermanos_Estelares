@@ -283,6 +283,13 @@ func esta_nivel_completado(id_perfil: String, planeta_id: String, id_nivel: Stri
 	return niveles.get(id_nivel, {}).get("completado", false)
 
 
+## Mejor puntaje de estrellitas logrado en un nivel (0 si nunca se completo o no puntua). Lo usa el
+## mapa del planeta para mostrarlo en cada estacion.
+func obtener_estrellitas_nivel(id_perfil: String, planeta_id: String, id_nivel: String) -> int:
+	var niveles: Dictionary = _datos_planeta(id_perfil, planeta_id).get("niveles", {})
+	return int(niveles.get(id_nivel, {}).get("estrellitas", 0))
+
+
 ## Marca que el hermano ya recibio la pieza de nave de ese planeta (escena de
 ## historia tras juntar todos los destellos del planeta, GDD §3/§4).
 func desbloquear_pieza_nave(id_perfil: String, planeta_id: String) -> void:

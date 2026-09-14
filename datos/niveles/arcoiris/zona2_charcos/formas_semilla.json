@@ -1,0 +1,79 @@
+{
+  "id_nivel": "arcoiris_z2_formas_semilla",
+  "motor": "encajar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 200,
+  "limite_intentos": null,
+  "sin_error": true,
+  "toque_lleva_a_casa": true,
+  "ayuda_idle_s": 7,
+  "caras": true,
+  "guia_color": true,
+  "modo": "simple",
+  "risa_al_encajar": true,
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/semilla/acierto_01.wav",
+      "voces/arcoiris/formas/semilla/acierto_02.wav",
+      "voces/arcoiris/formas/semilla/acierto_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/formas/semilla/victoria_01.wav",
+      "voces/arcoiris/formas/semilla/victoria_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/semilla/intro_z2.wav",
+    "risa": [
+      "voces/arcoiris/formas/semilla/risa_01.wav",
+      "voces/arcoiris/formas/semilla/risa_02.wav"
+    ]
+  },
+  "figuras": [
+    {
+      "id": "rueda",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 170,
+          "alto": 170,
+          "color": "#FFCB3D",
+          "x": 0,
+          "y": 0,
+          "decoracion": "rueda"
+        }
+      ]
+    },
+    {
+      "id": "aleta",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 180,
+          "alto": 160,
+          "color": "#7DD87A",
+          "x": 0,
+          "y": 0,
+          "decoracion": "aleta"
+        }
+      ]
+    },
+    {
+      "id": "cuadrado",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 160,
+          "alto": 160,
+          "color": "#4A8BE0",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+}

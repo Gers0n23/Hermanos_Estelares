@@ -1,0 +1,254 @@
+{
+  "planeta_id": "arcoiris",
+  "nombre": "Planeta Arcoíris",
+  "fondo": "res://assets/anclas/planeta_arcoiris_referencia.png",
+  "anfitrion": "res://assets/sprites/personajes/coco_base.png",
+  "estaciones_para_abrir_siguiente": 2,
+  "nota": "Mientras falten minijuegos, abrir la zona siguiente pide min(2, estaciones jugables de la zona). La zona secreta se revela al completar todas las estaciones jugables de la zona anterior.",
+  "juegos": {
+    "lluvia": {
+      "nombre": "Lluvia de colores",
+      "icono": "lluvia",
+      "voz": "voces/arcoiris/mapa/juego_lluvia.wav"
+    },
+    "formas": {
+      "nombre": "Formas traviesas",
+      "icono": "formas",
+      "voz": "voces/arcoiris/mapa/juego_formas.wav"
+    },
+    "parejas": {
+      "nombre": "Parejas de Coco",
+      "icono": "parejas",
+      "voz": "voces/arcoiris/mapa/juego_parejas.wav"
+    },
+    "pinta": {
+      "nombre": "Pinta con Coco",
+      "icono": "pinta",
+      "voz": "voces/arcoiris/mapa/juego_pinta.wav"
+    }
+  },
+  "voces": {
+    "bienvenida": "voces/arcoiris/mapa/bienvenida.wav",
+    "zona_dormida": "voces/arcoiris/mapa/zona_dormida.wav",
+    "zona_abierta": "voces/arcoiris/mapa/zona_abierta.wav",
+    "secreta_lejana": "voces/arcoiris/mapa/secreta_lejana.wav",
+    "secreta_revelada": "voces/arcoiris/mapa/secreta_revelada.wav",
+    "estacion_pronto": "voces/arcoiris/mapa/estacion_pronto.wav",
+    "cometa_vamos": "voces/arcoiris/mapa/cometa_vamos.wav",
+    "todo_listo": "voces/arcoiris/mapa/todo_listo.wav"
+  },
+  "zonas": [
+    {
+      "id": "zona1_claro",
+      "numero": 1,
+      "nombre": "El Claro del Trébol",
+      "bandas": [
+        "rojo"
+      ],
+      "posicion": [
+        180,
+        318
+      ],
+      "secreta": false,
+      "voz_llegada": "voces/arcoiris/mapa/zona_1_llegada.wav",
+      "voz_completada": "voces/arcoiris/mapa/zona_1_completada.wav",
+      "estaciones": [
+        {
+          "juego": "lluvia",
+          "escena": "",
+          "niveles": {}
+        },
+        {
+          "juego": "formas",
+          "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona1_claro/formas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona1_claro/formas_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/formas_estrella.json"
+          }
+        },
+        {
+          "juego": "parejas",
+          "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+          "niveles": {}
+        },
+        {
+          "juego": "pinta",
+          "escena": "",
+          "niveles": {}
+        }
+      ]
+    },
+    {
+      "id": "zona2_charcos",
+      "numero": 2,
+      "nombre": "Los Charcos Saltarines",
+      "bandas": [
+        "amarillo"
+      ],
+      "posicion": [
+        398,
+        252
+      ],
+      "secreta": false,
+      "voz_llegada": "voces/arcoiris/mapa/zona_2_llegada.wav",
+      "voz_completada": "voces/arcoiris/mapa/zona_2_completada.wav",
+      "estaciones": [
+        {
+          "juego": "lluvia",
+          "escena": "",
+          "niveles": {}
+        },
+        {
+          "juego": "formas",
+          "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona2_charcos/formas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona2_charcos/formas_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/formas_estrella.json"
+          }
+        },
+        {
+          "juego": "parejas",
+          "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris_emparejar_semilla_01.json",
+            "sofia": "res://datos/niveles/arcoiris_emparejar_estrella_01.json"
+          }
+        },
+        {
+          "juego": "pinta",
+          "escena": "",
+          "niveles": {}
+        }
+      ]
+    },
+    {
+      "id": "zona3_chupetines",
+      "numero": 3,
+      "nombre": "El Bosque de Chupetines",
+      "bandas": [
+        "azul"
+      ],
+      "posicion": [
+        618,
+        330
+      ],
+      "secreta": false,
+      "voz_llegada": "voces/arcoiris/mapa/zona_3_llegada.wav",
+      "voz_completada": "voces/arcoiris/mapa/zona_3_completada.wav",
+      "estaciones": [
+        {
+          "juego": "lluvia",
+          "escena": "",
+          "niveles": {}
+        },
+        {
+          "juego": "formas",
+          "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/formas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/formas_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/formas_estrella.json"
+          }
+        },
+        {
+          "juego": "parejas",
+          "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+          "niveles": {
+            "nicole": "res://datos/niveles/arcoiris_emparejar_brote_01.json"
+          }
+        },
+        {
+          "juego": "pinta",
+          "escena": "",
+          "niveles": {}
+        }
+      ]
+    },
+    {
+      "id": "zona4_islotes",
+      "numero": 4,
+      "nombre": "Los Islotes Flotantes",
+      "bandas": [
+        "verde",
+        "naranja"
+      ],
+      "posicion": [
+        842,
+        255
+      ],
+      "secreta": false,
+      "voz_llegada": "voces/arcoiris/mapa/zona_4_llegada.wav",
+      "voz_completada": "voces/arcoiris/mapa/zona_4_completada.wav",
+      "estaciones": [
+        {
+          "juego": "lluvia",
+          "escena": "",
+          "niveles": {}
+        },
+        {
+          "juego": "formas",
+          "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona4_islotes/formas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona4_islotes/formas_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/formas_estrella.json"
+          }
+        },
+        {
+          "juego": "parejas",
+          "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+          "niveles": {}
+        },
+        {
+          "juego": "pinta",
+          "escena": "",
+          "niveles": {}
+        }
+      ]
+    },
+    {
+      "id": "zona5_cima",
+      "numero": 5,
+      "nombre": "La Cima del Arcoíris",
+      "bandas": [
+        "violeta",
+        "brillo"
+      ],
+      "posicion": [
+        1076,
+        190
+      ],
+      "secreta": true,
+      "voz_llegada": "voces/arcoiris/mapa/zona_5_llegada.wav",
+      "voz_completada": "voces/arcoiris/mapa/zona_5_completada.wav",
+      "estaciones": [
+        {
+          "juego": "lluvia",
+          "escena": "",
+          "niveles": {}
+        },
+        {
+          "juego": "formas",
+          "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona5_cima/formas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona5_cima/formas_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/formas_estrella.json"
+          }
+        },
+        {
+          "juego": "parejas",
+          "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+          "niveles": {}
+        },
+        {
+          "juego": "pinta",
+          "escena": "",
+          "niveles": {}
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id_nivel": "arcoiris_z4_formas_semilla",
+  "motor": "encajar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 200,
+  "limite_intentos": null,
+  "sin_error": true,
+  "toque_lleva_a_casa": true,
+  "ayuda_idle_s": 7,
+  "caras": true,
+  "guia_color": true,
+  "modo": "simple",
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/semilla/acierto_01.wav",
+      "voces/arcoiris/formas/semilla/acierto_02.wav",
+      "voces/arcoiris/formas/semilla/acierto_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/formas/semilla/victoria_01.wav",
+      "voces/arcoiris/formas/semilla/victoria_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/semilla/intro_z4.wav"
+  },
+  "figuras": [
+    {
+      "id": "circulo_grande",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 170,
+          "alto": 170,
+          "color": "#FF6B6B",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "circulo_chico",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 100,
+          "alto": 100,
+          "color": "#FF6B6B",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "cuadrado_grande",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 160,
+          "alto": 160,
+          "color": "#4A8BE0",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "cuadrado_chico",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 100,
+          "alto": 100,
+          "color": "#4A8BE0",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+}

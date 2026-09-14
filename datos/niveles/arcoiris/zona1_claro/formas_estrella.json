@@ -1,0 +1,108 @@
+{
+  "id_nivel": "arcoiris_z1_formas_estrella",
+  "motor": "encajar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 55,
+  "caras": false,
+  "guia_color": false,
+  "modo": "compuesto",
+  "limite_intentos": 6,
+  "lineas_voz": {
+    "acierto": [
+      "voces/arcoiris/formas/estrella/acierto_01.wav",
+      "voces/arcoiris/formas/estrella/acierto_02.wav",
+      "voces/arcoiris/formas/estrella/acierto_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/formas/estrella/no_es_este_01.wav",
+      "voces/arcoiris/formas/estrella/no_es_este_02.wav"
+    ],
+    "figura_completa": [
+      "voces/arcoiris/formas/estrella/figura_completa_01.wav",
+      "voces/arcoiris/formas/estrella/figura_completa_02.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/estrella/victoria_01.wav",
+      "voces/arcoiris/formas/estrella/victoria_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/estrella/intro_z1.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_01.wav"
+  },
+  "figuras": [
+    {
+      "id": "casa",
+      "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 120,
+          "alto": 120,
+          "color": "#4A8BE0",
+          "x": 0,
+          "y": 40
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 150,
+          "alto": 90,
+          "color": "#FF6B6B",
+          "x": 0,
+          "y": -65
+        }
+      ]
+    },
+    {
+      "id": "helado",
+      "voz_completa": "voces/arcoiris/formas/figuras/helado.wav",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 110,
+          "alto": 110,
+          "color": "#F26CA8",
+          "x": 0,
+          "y": -55,
+          "cara": true
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 90,
+          "alto": 130,
+          "color": "#FF9F4A",
+          "x": 0,
+          "y": 60,
+          "rotacion": 180
+        }
+      ]
+    },
+    {
+      "id": "arbol",
+      "voz_completa": "voces/arcoiris/formas/figuras/arbol.wav",
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 130,
+          "alto": 130,
+          "color": "#7DD87A",
+          "x": 0,
+          "y": -45,
+          "cara": true
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 40,
+          "alto": 90,
+          "color": "#B07A4F",
+          "x": 0,
+          "y": 62
+        }
+      ]
+    }
+  ]
+}

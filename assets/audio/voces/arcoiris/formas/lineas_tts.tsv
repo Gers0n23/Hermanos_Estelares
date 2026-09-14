@@ -1,0 +1,81 @@
+# Voces PROVISIONALES por TTS (decision del PO 06-Ago-2026, GDD §9 P2): Formas traviesas. Las graba la familia antes de HE-28.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: powershell -File herramientas/generar_voces_tts.ps1 -Lista <este archivo>
+voces/arcoiris/formas/semilla/pista_01.wav	¡Toca una forma, o arrástrala a su casita!
+voces/arcoiris/formas/semilla/acierto_01.wav	¡Siii!
+voces/arcoiris/formas/semilla/acierto_02.wav	¡Ahí va!
+voces/arcoiris/formas/semilla/acierto_03.wav	¡Muy bien, Maxi!
+voces/arcoiris/formas/semilla/victoria_01.wav	¡Todas las formas en su casita! ¡Eres un campeón, Maxi!
+voces/arcoiris/formas/semilla/victoria_02.wav	¡Lo lograste, Maxi! ¡Bravo!
+voces/arcoiris/formas/semilla/risa_01.wav	¡Jijiji! ¡Cosquillas!
+voces/arcoiris/formas/semilla/risa_02.wav	¡Jajaja! ¡Qué risa!
+voces/arcoiris/formas/brote/pista_01.wav	Mira la sombra que brilla y busca la pieza igual. ¡Tú puedes, Nicole!
+voces/arcoiris/formas/brote/acierto_01.wav	¡Encajó!
+voces/arcoiris/formas/brote/acierto_02.wav	¡Qué bien, Nicole!
+voces/arcoiris/formas/brote/acierto_03.wav	¡Perfecto!
+voces/arcoiris/formas/brote/no_es_este_01.wav	Esa no calza ahí. ¡Prueba otra!
+voces/arcoiris/formas/brote/no_es_este_02.wav	Casi, casi. ¡Mira bien la forma!
+voces/arcoiris/formas/brote/derrota_gag_01.wav	¡Uy! Las formas se amontonaron y se cayeron. ¡Jajaja! Vamos otra vez.
+voces/arcoiris/formas/brote/victoria_01.wav	¡Todas las formas en su lugar! ¡Eres increíble, Nicole!
+voces/arcoiris/formas/brote/victoria_02.wav	¡Lo lograste, Nicole! ¡Qué lindo quedó!
+voces/arcoiris/formas/estrella/acierto_01.wav	¡Calzó perfecto!
+voces/arcoiris/formas/estrella/acierto_02.wav	¡Buena, Sofía!
+voces/arcoiris/formas/estrella/acierto_03.wav	¡Esa era!
+voces/arcoiris/formas/estrella/no_es_este_01.wav	Esa pieza no va ahí. Mira bien la sombra.
+voces/arcoiris/formas/estrella/no_es_este_02.wav	Casi... prueba con otra pieza.
+voces/arcoiris/formas/estrella/figura_completa_01.wav	¡Figura lista!
+voces/arcoiris/formas/estrella/figura_completa_02.wav	¡Armaste otra figura!
+voces/arcoiris/formas/estrella/derrota_gag_01.wav	¡Jaja! ¡Las piezas se pusieron a bailar y se desordenaron! Vamos, tú puedes armarlas.
+voces/arcoiris/formas/estrella/victoria_01.wav	¡Armaste todas las figuras, Sofía! Eres una maestra de las formas.
+voces/arcoiris/formas/estrella/victoria_02.wav	¡Increíble! Con esa cabeza vas a liderar la misión.
+voces/arcoiris/formas/estrella/pista_01.wav	Mira la forma de cada parte de la sombra, y busca la pieza que calza.
+voces/arcoiris/formas/estrella/pista_girar_01.wav	Toca una pieza para girarla. Cuando quede igual que la sombra, arrástrala.
+voces/arcoiris/formas/estrella/girar_01.wav	¡Es la pieza correcta, pero está chueca! Tócala para girarla.
+voces/arcoiris/formas/nombres/circulo.wav	¡Busca el círculo!
+voces/arcoiris/formas/nombres/cuadrado.wav	¡Busca el cuadrado!
+voces/arcoiris/formas/nombres/triangulo.wav	¡Busca el triángulo!
+voces/arcoiris/formas/nombres/estrella.wav	¡Busca la estrella!
+voces/arcoiris/formas/nombres/ovalo.wav	¡Busca el óvalo!
+voces/arcoiris/formas/nombres/rectangulo.wav	¡Busca el rectángulo!
+voces/arcoiris/formas/nombres/corazon.wav	¡Busca el corazón!
+voces/arcoiris/formas/nombres/rombo.wav	¡Busca el rombo!
+voces/arcoiris/formas/nombres/triangulo_grande.wav	¡Busca el triángulo grande!
+voces/arcoiris/formas/nombres/triangulo_chico.wav	¡Busca el triángulo chiquitito!
+voces/arcoiris/formas/nombres/rectangulo_grande.wav	¡Busca el rectángulo grande!
+voces/arcoiris/formas/nombres/rectangulo_chico.wav	¡Busca el rectángulo chiquitito!
+voces/arcoiris/formas/nombres/cuadrado_grande.wav	¡Busca el cuadrado grande!
+voces/arcoiris/formas/nombres/cuadrado_chico.wav	¡Busca el cuadrado chiquitito!
+voces/arcoiris/formas/nombres/casa.wav	¡Busca la pared de la casita!
+voces/arcoiris/formas/nombres/techo.wav	¡Ahora el techo de la casita!
+voces/arcoiris/formas/nombres/sol.wav	¡Pon el sol en el cielo!
+voces/arcoiris/formas/nombres/copa.wav	¡Busca la copa del árbol!
+voces/arcoiris/formas/nombres/tronco.wav	¡Ahora el tronco del árbol!
+voces/arcoiris/formas/nombres/cuerpo_jirafa.wav	¡Busca el cuerpo de la jirafa!
+voces/arcoiris/formas/nombres/cuello_jirafa.wav	¡Ahora el cuello largo de la jirafa!
+voces/arcoiris/formas/nombres/cabeza_jirafa.wav	¡Y la cabeza de la jirafa!
+voces/arcoiris/formas/figuras/dino.wav	¡Roaaar! ¡Armaste un dinosaurio gigante!
+voces/arcoiris/formas/figuras/autito.wav	¡Brum, brum! ¡Armaste tu autito!
+voces/arcoiris/formas/figuras/casa.wav	¡Una casita!
+voces/arcoiris/formas/figuras/helado.wav	¡Un helado de frutilla!
+voces/arcoiris/formas/figuras/arbol.wav	¡Un árbol!
+voces/arcoiris/formas/figuras/cohete.wav	¡Un cohete listo para despegar!
+voces/arcoiris/formas/figuras/gato.wav	¡Miau! ¡Un gatito!
+voces/arcoiris/formas/figuras/barco.wav	¡Un barquito velero!
+voces/arcoiris/formas/figuras/pez.wav	¡Un pez! ¡Blub, blub!
+voces/arcoiris/formas/figuras/abeto.wav	¡Un pino de Navidad!
+voces/arcoiris/formas/figuras/corona.wav	¡Una corona! Sofía, te corono líder de la misión.
+voces/arcoiris/formas/brote/especial_01.wav	¡El corazón dorado! ¡Te mando un corazón gigante, Nicole!
+voces/arcoiris/formas/semilla/intro_z1.wav	¡Hola, Maxi! Mis formas se escaparon. ¡Llévalas a su casita!
+voces/arcoiris/formas/semilla/intro_z2.wav	¡Maxi, estas formas tienen cosquillas! Ponlas en su casita y escucha cómo se ríen.
+voces/arcoiris/formas/semilla/intro_z3.wav	¡Ahora son cuatro formas! ¿Las ayudas a volver a su casita?
+voces/arcoiris/formas/semilla/intro_z4.wav	¡Mira, Maxi! Hay formas grandes y formas chiquititas. ¡Cada una a su casita!
+voces/arcoiris/formas/semilla/intro_z5.wav	¡Maxi, vamos a armar algo gigante! ¡Pon cada pieza donde va!
+voces/arcoiris/formas/brote/intro_z1.wav	¡Hola, Nicole! Mis formas traviesas se salieron de su lugar. Arrastra cada forma a su sombra del mismo color.
+voces/arcoiris/formas/brote/intro_z2.wav	¡Nicole, llegaron más formas! Hay un corazón y un rombo. Llévalas a su lugar.
+voces/arcoiris/formas/brote/intro_z3.wav	Ahora las sombras no tienen color. ¡Mira bien la forma, Nicole!
+voces/arcoiris/formas/brote/intro_z4.wav	¡Cuidado, Nicole! Hay formas grandes y chicas, y las sombras están giradas. Acércalas, y se enderezan solitas.
+voces/arcoiris/formas/brote/intro_z5.wav	¡Nicole, armemos un jardín! Pon cada pieza en su lugar. Y dicen que hay un corazón dorado escondido...
+voces/arcoiris/formas/estrella/intro_z1.wav	Sofía, cada figura de mi planeta está hecha de dos piezas. ¿Puedes armar la casa, el helado y el árbol?
+voces/arcoiris/formas/estrella/intro_z2.wav	Esta vez las sombras no tienen líneas por dentro. Tendrás que descubrir qué pieza va en cada parte.
+voces/arcoiris/formas/estrella/intro_z3.wav	¡Estas piezas llegaron dadas vuelta! Tócalas para girarlas, y después arrástralas a su lugar.
+voces/arcoiris/formas/estrella/intro_z4.wav	Ojo, Sofía: hay piezas que no son de ninguna figura. ¡Usa solo las que calzan!
+voces/arcoiris/formas/estrella/intro_z5.wav	El desafío final: el tangram de Coco. Arma la figura con todas las piezas, girándolas. ¿Lista, líder?

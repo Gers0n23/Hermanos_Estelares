@@ -1,0 +1,207 @@
+{
+  "id_nivel": "arcoiris_z5_formas_brote",
+  "motor": "encajar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 120,
+  "limite_intentos": 16,
+  "objetivo_guiado": true,
+  "caras": false,
+  "modo": "escena",
+  "guia_color": false,
+  "escena": {
+    "tipo": "jardin",
+    "suelo_y": 430,
+    "decorados": [
+      {
+        "forma": "rectangulo",
+        "ancho": 16,
+        "alto": 30,
+        "x": 455,
+        "y": 418,
+        "color": "#E8B53A"
+      },
+      {
+        "forma": "rectangulo",
+        "ancho": 16,
+        "alto": 30,
+        "x": 482,
+        "y": 418,
+        "color": "#E8B53A"
+      },
+      {
+        "forma": "rectangulo",
+        "ancho": 16,
+        "alto": 30,
+        "x": 528,
+        "y": 418,
+        "color": "#E8B53A"
+      },
+      {
+        "forma": "rectangulo",
+        "ancho": 16,
+        "alto": 30,
+        "x": 555,
+        "y": 418,
+        "color": "#E8B53A"
+      }
+    ]
+  },
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/brote/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/brote/acierto_01.wav",
+      "voces/arcoiris/formas/brote/acierto_02.wav",
+      "voces/arcoiris/formas/brote/acierto_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/formas/brote/no_es_este_01.wav",
+      "voces/arcoiris/formas/brote/no_es_este_02.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/formas/brote/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/brote/victoria_01.wav",
+      "voces/arcoiris/formas/brote/victoria_02.wav"
+    ],
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "intro": "voces/arcoiris/formas/brote/intro_z5.wav",
+    "especial": "voces/arcoiris/formas/brote/especial_01.wav"
+  },
+  "figuras": [
+    {
+      "id": "casa",
+      "centro": [
+        0,
+        0
+      ],
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 150,
+          "alto": 150,
+          "color": "#F0A8C8",
+          "x": 130,
+          "y": 355,
+          "nombre_voz": "casa"
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 190,
+          "alto": 110,
+          "color": "#FF6B6B",
+          "x": 130,
+          "y": 225,
+          "nombre_voz": "techo"
+        }
+      ]
+    },
+    {
+      "id": "sol",
+      "centro": [
+        0,
+        0
+      ],
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 100,
+          "alto": 100,
+          "color": "#FFCB3D",
+          "x": 560,
+          "y": 80,
+          "nombre_voz": "sol",
+          "cara": true
+        }
+      ]
+    },
+    {
+      "id": "arbol",
+      "centro": [
+        0,
+        0
+      ],
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 140,
+          "alto": 140,
+          "color": "#7DD87A",
+          "x": 330,
+          "y": 250,
+          "nombre_voz": "copa",
+          "cara": true
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 58,
+          "alto": 110,
+          "color": "#B07A4F",
+          "x": 330,
+          "y": 375,
+          "nombre_voz": "tronco"
+        }
+      ]
+    },
+    {
+      "id": "jirafa",
+      "centro": [
+        0,
+        0
+      ],
+      "piezas": [
+        {
+          "forma": "ovalo",
+          "ancho": 150,
+          "alto": 90,
+          "color": "#FFCB3D",
+          "x": 505,
+          "y": 360,
+          "nombre_voz": "cuerpo_jirafa",
+          "decoracion": "manchas"
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 52,
+          "alto": 130,
+          "color": "#FFCB3D",
+          "x": 556,
+          "y": 265,
+          "nombre_voz": "cuello_jirafa"
+        },
+        {
+          "forma": "circulo",
+          "ancho": 70,
+          "alto": 70,
+          "color": "#FFCB3D",
+          "x": 575,
+          "y": 180,
+          "nombre_voz": "cabeza_jirafa",
+          "cara": true
+        }
+      ]
+    },
+    {
+      "id": "tesoro",
+      "centro": [
+        0,
+        0
+      ],
+      "piezas": [
+        {
+          "forma": "corazon",
+          "ancho": 72,
+          "alto": 66,
+          "color": "#FFCB3D",
+          "x": 440,
+          "y": 522,
+          "opcional": true,
+          "especial": true
+        }
+      ]
+    }
+  ]
+}

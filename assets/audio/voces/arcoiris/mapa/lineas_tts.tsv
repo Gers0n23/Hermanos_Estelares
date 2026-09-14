@@ -1,0 +1,24 @@
+# Voces PROVISIONALES por TTS (decision del PO 06-Ago-2026, GDD §9 P2): mapa del Planeta Arcoiris. Las graba la familia antes de HE-28.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: powershell -File herramientas/generar_voces_tts.ps1 -Lista <este archivo>
+voces/arcoiris/mapa/zona_1_llegada.wav	Este es el Claro del Trébol. ¡Aquí vive el color rojo!
+voces/arcoiris/mapa/zona_1_completada.wav	¡Volvió el rojo! ¡Mira mi cresta!
+voces/arcoiris/mapa/zona_2_llegada.wav	¡Los Charcos Saltarines! Ayúdame a recuperar el amarillo.
+voces/arcoiris/mapa/zona_2_completada.wav	¡Volvió el amarillo! ¡Qué brillante!
+voces/arcoiris/mapa/zona_3_llegada.wav	El Bosque de Chupetines. ¡Aquí se escondió el azul!
+voces/arcoiris/mapa/zona_3_completada.wav	¡Volvió el azul! ¡Mi planeta está más lindo!
+voces/arcoiris/mapa/zona_4_llegada.wav	¡Los Islotes Flotantes! Aquí están el verde y el naranja.
+voces/arcoiris/mapa/zona_4_completada.wav	¡Volvieron el verde y el naranja!
+voces/arcoiris/mapa/zona_5_llegada.wav	¡La Cima del Arcoíris! Aquí está el violeta, y el brillo del planeta.
+voces/arcoiris/mapa/zona_5_completada.wav	¡Volvió el violeta! ¡Mi planeta brilla entero!
+voces/arcoiris/mapa/juego_lluvia.wav	¡Lluvia de colores!
+voces/arcoiris/mapa/juego_formas.wav	¡Formas traviesas!
+voces/arcoiris/mapa/juego_parejas.wav	¡Parejas de Coco!
+voces/arcoiris/mapa/juego_pinta.wav	¡Pinta con Coco!
+voces/arcoiris/mapa/bienvenida.wav	¡Bienvenidos a mi Planeta Arcoíris! Se le perdieron los colores. Toca un rincón, y elige un juego para devolvérselos.
+voces/arcoiris/mapa/zona_dormida.wav	Ese rincón todavía está dormidito. ¡Juega en los otros, y lo despertamos!
+voces/arcoiris/mapa/zona_abierta.wav	¡Se despertó un rincón nuevo del planeta!
+voces/arcoiris/mapa/secreta_lejana.wav	¿Viste ese brillo allá arriba? Es un lugar secreto. Algún día llegaremos.
+voces/arcoiris/mapa/secreta_revelada.wav	¡Apareció la Cima del Arcoíris! ¡Un lugar secreto!
+voces/arcoiris/mapa/estacion_pronto.wav	¡Este juego todavía se está pintando! Prueba otro.
+voces/arcoiris/mapa/cometa_vamos.wav	¡Vamos al siguiente juego!
+voces/arcoiris/mapa/todo_listo.wav	¡Jugaste todo lo que hay! Puedes repetir el que más te guste.

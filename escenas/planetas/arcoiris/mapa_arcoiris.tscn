@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/nucleo/mapa_planeta.tscn" id="1_mapa"]
+
+[node name="mapa_arcoiris" instance=ExtResource("1_mapa")]
+ruta_mapa = "res://datos/planetas/arcoiris/mapa.json"

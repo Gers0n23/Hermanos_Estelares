@@ -1,0 +1,100 @@
+{
+  "id_nivel": "arcoiris_z5_formas_semilla",
+  "motor": "encajar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 5000,
+  "limite_intentos": null,
+  "sin_error": true,
+  "toque_lleva_a_casa": true,
+  "ayuda_idle_s": 7,
+  "caras": false,
+  "guia_color": true,
+  "modo": "compuesto",
+  "figuras_por_partida": 1,
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/semilla/acierto_01.wav",
+      "voces/arcoiris/formas/semilla/acierto_02.wav",
+      "voces/arcoiris/formas/semilla/acierto_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/formas/semilla/victoria_01.wav",
+      "voces/arcoiris/formas/semilla/victoria_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/semilla/intro_z5.wav"
+  },
+  "figuras": [
+    {
+      "id": "autito",
+      "voz_completa": "voces/arcoiris/formas/figuras/autito.wav",
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 320,
+          "alto": 120,
+          "color": "#FF6B6B",
+          "x": 0,
+          "y": 0,
+          "decoracion": "ventanas"
+        },
+        {
+          "forma": "circulo",
+          "ancho": 110,
+          "alto": 110,
+          "color": "#FFCB3D",
+          "x": -95,
+          "y": 115,
+          "decoracion": "rueda"
+        },
+        {
+          "forma": "circulo",
+          "ancho": 110,
+          "alto": 110,
+          "color": "#FFCB3D",
+          "x": 95,
+          "y": 115,
+          "decoracion": "rueda"
+        }
+      ]
+    },
+    {
+      "id": "dino",
+      "voz_completa": "voces/arcoiris/formas/figuras/dino.wav",
+      "piezas": [
+        {
+          "forma": "ovalo",
+          "ancho": 260,
+          "alto": 150,
+          "color": "#7DD87A",
+          "x": 0,
+          "y": 0,
+          "decoracion": "manchas"
+        },
+        {
+          "forma": "circulo",
+          "ancho": 120,
+          "alto": 120,
+          "color": "#7DD87A",
+          "x": 150,
+          "y": -95,
+          "cara": true
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 160,
+          "alto": 104,
+          "color": "#7DD87A",
+          "x": -170,
+          "y": 10,
+          "rotacion": 270
+        }
+      ]
+    }
+  ]
+}

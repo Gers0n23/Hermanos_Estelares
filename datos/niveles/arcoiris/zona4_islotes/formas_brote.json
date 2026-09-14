@@ -1,0 +1,128 @@
+{
+  "id_nivel": "arcoiris_z4_formas_brote",
+  "motor": "encajar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "formas traviesas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "iman_tolerancia_px": 120,
+  "limite_intentos": 12,
+  "objetivo_guiado": true,
+  "caras": true,
+  "modo": "simple",
+  "guia_color": false,
+  "enderezar_al_acercar": true,
+  "lineas_voz": {
+    "pista": "voces/arcoiris/formas/brote/pista_01.wav",
+    "acierto": [
+      "voces/arcoiris/formas/brote/acierto_01.wav",
+      "voces/arcoiris/formas/brote/acierto_02.wav",
+      "voces/arcoiris/formas/brote/acierto_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/formas/brote/no_es_este_01.wav",
+      "voces/arcoiris/formas/brote/no_es_este_02.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/formas/brote/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/brote/victoria_01.wav",
+      "voces/arcoiris/formas/brote/victoria_02.wav"
+    ],
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "intro": "voces/arcoiris/formas/brote/intro_z4.wav"
+  },
+  "figuras": [
+    {
+      "id": "triangulo_grande",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 150,
+          "alto": 130,
+          "color": "#FFCB3D",
+          "x": 0,
+          "y": 0,
+          "rotacion": 90,
+          "nombre_voz": "triangulo_grande"
+        }
+      ]
+    },
+    {
+      "id": "triangulo_chico",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 96,
+          "alto": 84,
+          "color": "#FFCB3D",
+          "x": 0,
+          "y": 0,
+          "rotacion": 180,
+          "nombre_voz": "triangulo_chico"
+        }
+      ]
+    },
+    {
+      "id": "rectangulo_grande",
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 170,
+          "alto": 96,
+          "color": "#FF9F4A",
+          "x": 0,
+          "y": 0,
+          "rotacion": 90,
+          "nombre_voz": "rectangulo_grande"
+        }
+      ]
+    },
+    {
+      "id": "rectangulo_chico",
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 112,
+          "alto": 66,
+          "color": "#FF9F4A",
+          "x": 0,
+          "y": 0,
+          "rotacion": 90,
+          "nombre_voz": "rectangulo_chico"
+        }
+      ]
+    },
+    {
+      "id": "cuadrado_grande",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 122,
+          "alto": 122,
+          "color": "#6FD6E8",
+          "x": 0,
+          "y": 0,
+          "rotacion": 45,
+          "nombre_voz": "cuadrado_grande"
+        }
+      ]
+    },
+    {
+      "id": "cuadrado_chico",
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 80,
+          "alto": 80,
+          "color": "#6FD6E8",
+          "x": 0,
+          "y": 0,
+          "rotacion": 45,
+          "nombre_voz": "cuadrado_chico"
+        }
+      ]
+    }
+  ]
+}

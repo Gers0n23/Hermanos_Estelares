@@ -111,6 +111,12 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 
 ### 3.2 Formas traviesas — motor `encajar`
 
+> **Implementado 14-Sep-2026 (las 15 celdas)**: motor en `scripts/motores/encajar/`, niveles en
+> `datos/niveles/arcoiris/<zona>/formas_<perfil>.json`, contrato en `docs/fichas/motor-encajar.md`.
+> Diferencias con la tabla: Sofía zona 4 mantiene el giro por toque de la zona 3; el tangram de la
+> zona 5 sortea corona o gato (el pony queda para una rejugada futura); Nicole tiene límite holgado
+> solo en las zonas 4 y 5.
+
 | Zona | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
 | 1 · Claro | 3 formas gigantes (círculo, cuadrado, triángulo), imán enorme [`iman_tolerancia_px: 200`] | 6 formas con silueta de color (la silueta ayuda) [`modo: simple`] | Figura compuesta de **2 piezas**: casa (triángulo + cuadrado) con contornos internos marcados [`modo: compuesto`] |
@@ -166,6 +172,21 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 ---
 
 ## 4. Contenido de datos (para `dev-godot` y `disenador-niveles`)
+
+> **Implementado 14-Sep-2026**: `datos/planetas/arcoiris/mapa.json` + `scripts/nucleo/mapa_planeta.gd`
+> (escena `escenas/planetas/arcoiris/mapa_arcoiris.tscn`, se abre al tocar Arcoíris en el Mapa
+> Estelar). Decisiones de implementación, a validar:
+>
+> - El progreso de estaciones y zonas se **deriva** de los niveles que `Progreso` ya registra (id de
+>   nivel completado + mejores estrellitas); no se agregó nada al guardado ni se subió su versión.
+>   "Veces jugada" queda para cuando haga falta.
+> - Mientras falten minijuegos, abrir la zona siguiente pide **min(2, estaciones jugables)** y la
+>   zona secreta se revela al completar las estaciones jugables de la zona 4. Estaciones sin nivel se
+>   ven "pintándose" (sin candado) y Coco lo explica al tocarlas.
+> - Parejas de Coco usa hoy los 3 niveles de la demo, ubicados en su zona (Maxi y Sofía zona 2,
+>   Nicole zona 3).
+> - Tocar a Cometa lleva directo a la siguiente estación pendiente (riesgo 5, §6). F4 (PC) abre
+>   todas las zonas para que el PO revise variantes.
 
 - **Mapa del planeta**: `datos/planetas/arcoiris/mapa.json`. Define las zonas (id, nombre, color
   devuelto, posición en el mapa, recuerdo), sus 4 estaciones (motor, escena y un nivel por

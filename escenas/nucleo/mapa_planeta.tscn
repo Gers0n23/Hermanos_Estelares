@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/nucleo/mapa_planeta.gd" id="1_mapa"]
+
+[node name="mapa_planeta" type="Node2D"]
+script = ExtResource("1_mapa")
