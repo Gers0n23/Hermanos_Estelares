@@ -1,0 +1,102 @@
+{
+  "id_nivel": "arcoiris_emparejar_brote_01",
+  "motor": "emparejar",
+  "perfil": "brote",
+  "tema": "colores y formas",
+  "modo": "identico",
+  "oculto": true,
+  "disposicion": {
+    "filas": 2,
+    "columnas": 5
+  },
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 1400,
+  "ayuda_tras_fallos": 3,
+  "halo_idle": false,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/brote/intro_01.wav",
+    "pista": "voces/arcoiris/emparejar/brote/pista_01.wav",
+    "ayuda": "voces/arcoiris/emparejar/brote/ayuda_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/brote/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/brote/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/brote/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/brote/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/brote/victoria_final_01.wav"
+  },
+  "pares": [
+    {
+      "id_pareja": "corazon_magico",
+      "elemento_a": {
+        "id": "corazon_magico_a",
+        "figura": "corazon",
+        "color": "#F26CA8"
+      },
+      "elemento_b": {
+        "id": "corazon_magico_b",
+        "figura": "corazon",
+        "color": "#F26CA8"
+      },
+      "especial": true
+    },
+    {
+      "id_pareja": "estrella",
+      "elemento_a": {
+        "id": "estrella_a",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      },
+      "elemento_b": {
+        "id": "estrella_b",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      }
+    },
+    {
+      "id_pareja": "flor_lila",
+      "elemento_a": {
+        "id": "flor_lila_a",
+        "figura": "flor",
+        "color": "#B48CE8"
+      },
+      "elemento_b": {
+        "id": "flor_lila_b",
+        "figura": "flor",
+        "color": "#B48CE8"
+      }
+    },
+    {
+      "id_pareja": "gota_turquesa",
+      "elemento_a": {
+        "id": "gota_turquesa_a",
+        "figura": "gota",
+        "color": "#45C6C0"
+      },
+      "elemento_b": {
+        "id": "gota_turquesa_b",
+        "figura": "gota",
+        "color": "#45C6C0"
+      }
+    },
+    {
+      "id_pareja": "luna_celeste",
+      "elemento_a": {
+        "id": "luna_celeste_a",
+        "figura": "luna",
+        "color": "#6FD6E8"
+      },
+      "elemento_b": {
+        "id": "luna_celeste_b",
+        "figura": "luna",
+        "color": "#6FD6E8"
+      }
+    }
+  ]
+}

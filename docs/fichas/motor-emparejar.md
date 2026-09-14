@@ -52,6 +52,17 @@ Todo tocable responde en **<100 ms**, según GDD §6.4.
 | 4 | (Modo memoria) elemento volteado sin completar par a tiempo | — | Se tapa de nuevo con una animación de giro suave (~400 ms), nunca abrupta |
 | 5 | Completar todos los pares del tablero | — | **Celebración final** (§5): confeti de pantalla completa, bailecito del anfitrión, gesto de celebración del personaje jugador (ver `docs/perfil-jugadores.md`), sonido de victoria, conteo animado de destellos ganados, línea de voz de cierre |
 
+> **Nota de implementación (13-Sep-2026, demo jugable del Planeta Arcoíris — pendiente de validar por
+> `disenador-mecanicas`)**: la fila 4 cambió porque en la práctica hacía el nivel casi injugable (la
+> primera carta se tapaba sola a los 850 ms, antes de alcanzar a tocar la segunda). Ahora la primera
+> carta queda a la vista hasta tocar la segunda; `tiempo_volteo_ms` es cuánto quedan visibles las dos
+> cartas de un "no es este" antes de taparse, y tocar cualquier carta en ese lapso las tapa al tiro y
+> cuenta como primer toque de la jugada siguiente. En modo memoria, tocar de nuevo la carta ya
+> volteada no la tapa (evita perder lo visto por un doble toque). Campos nuevos del contrato §4:
+> `figura`/`color` por elemento (figura dibujada por código mientras no hay sprite), `especial` por
+> par (momento memorable con voz `acierto_especial`), `ayuda_tras_fallos` (Brote) y `halo_idle` (Semilla).
+> Niveles por hermano: `datos/niveles/arcoiris_emparejar_{semilla,brote,estrella}_01.json`.
+
 Entrada: solo toque/clic (sin arrastre en este motor — GDD §6.4). Si el input unificado
 detecta un gesto de arrastre iniciado sobre un elemento, se trata como un toque simple sobre
 el punto de origen (no se implementa drag, para no confundir con otros motores).

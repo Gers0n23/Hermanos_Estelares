@@ -1,0 +1,72 @@
+{
+  "id_nivel": "arcoiris_emparejar_semilla_01",
+  "motor": "emparejar",
+  "perfil": "semilla",
+  "tema": "colores y formas",
+  "modo": "identico",
+  "oculto": false,
+  "disposicion": {
+    "filas": 2,
+    "columnas": 3
+  },
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 700,
+  "ayuda_tras_fallos": null,
+  "halo_idle": true,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/semilla/intro_01.wav",
+    "pista": "voces/arcoiris/emparejar/semilla/pista_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/semilla/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/semilla/no_es_este_01.wav"
+    ],
+    "victoria_final": "voces/arcoiris/emparejar/semilla/victoria_final_01.wav"
+  },
+  "pares": [
+    {
+      "id_pareja": "estrella",
+      "elemento_a": {
+        "id": "estrella_a",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      },
+      "elemento_b": {
+        "id": "estrella_b",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      }
+    },
+    {
+      "id_pareja": "circulo_azul",
+      "elemento_a": {
+        "id": "circulo_azul_a",
+        "figura": "circulo",
+        "color": "#4A8BE0"
+      },
+      "elemento_b": {
+        "id": "circulo_azul_b",
+        "figura": "circulo",
+        "color": "#4A8BE0"
+      }
+    },
+    {
+      "id_pareja": "triangulo_verde",
+      "elemento_a": {
+        "id": "triangulo_verde_a",
+        "figura": "triangulo",
+        "color": "#7DD87A"
+      },
+      "elemento_b": {
+        "id": "triangulo_verde_b",
+        "figura": "triangulo",
+        "color": "#7DD87A"
+      }
+    }
+  ]
+}

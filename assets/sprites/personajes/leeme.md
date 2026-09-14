@@ -52,3 +52,8 @@ guiño del pipeline SVG→PNG). El rig cutout hoy solo tiene pose de reposo + un
 saludo de vista previa (`vista_previa_rig_sofia.tscn`), no una pose de celebración diseñada
 para ícono estático — inventar esa pose es una decisión de `disenador-personajes`/PO, pendiente
 si se quiere migrar también el ícono de celebración al rig.
+
+`coco_base.png` (13-Sep-2026) es un recorte PROVISIONAL de la pose frontal de la hoja de referencia
+de **Camaleona Coco** (`assets/anclas/camaleona_coco_referencia.png`, fondo gris quitado por
+script) para que la demo jugable de "emparejar" tenga a su anfitriona en pantalla. No es arte final:
+el sprite vectorial de Coco con el estilo de `docs/guia-estilo-generacion.md` §6 queda para HE-13.

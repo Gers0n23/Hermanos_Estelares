@@ -1,0 +1,141 @@
+{
+  "id_nivel": "arcoiris_emparejar_estrella_01",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "tema": "colores y formas",
+  "modo": "identico",
+  "oculto": true,
+  "disposicion": {
+    "filas": 4,
+    "columnas": 4
+  },
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "limite_intentos": 16,
+  "tiempo_volteo_ms": 1000,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/estrella/intro_01.wav",
+    "pista": "voces/arcoiris/emparejar/estrella/pista_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/estrella/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/estrella/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/estrella/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/estrella/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/estrella/victoria_final_01.wav",
+    "derrota_gag": "voces/arcoiris/emparejar/estrella/derrota_gag_01.wav"
+  },
+  "pares": [
+    {
+      "id_pareja": "estrella",
+      "elemento_a": {
+        "id": "estrella_a",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      },
+      "elemento_b": {
+        "id": "estrella_b",
+        "figura": "estrella",
+        "color": "#FFCB3D"
+      }
+    },
+    {
+      "id_pareja": "corazon",
+      "elemento_a": {
+        "id": "corazon_a",
+        "figura": "corazon",
+        "color": "#F26CA8"
+      },
+      "elemento_b": {
+        "id": "corazon_b",
+        "figura": "corazon",
+        "color": "#F26CA8"
+      }
+    },
+    {
+      "id_pareja": "circulo",
+      "elemento_a": {
+        "id": "circulo_a",
+        "figura": "circulo",
+        "color": "#4A8BE0"
+      },
+      "elemento_b": {
+        "id": "circulo_b",
+        "figura": "circulo",
+        "color": "#4A8BE0"
+      }
+    },
+    {
+      "id_pareja": "triangulo",
+      "elemento_a": {
+        "id": "triangulo_a",
+        "figura": "triangulo",
+        "color": "#7DD87A"
+      },
+      "elemento_b": {
+        "id": "triangulo_b",
+        "figura": "triangulo",
+        "color": "#7DD87A"
+      }
+    },
+    {
+      "id_pareja": "cuadrado",
+      "elemento_a": {
+        "id": "cuadrado_a",
+        "figura": "cuadrado",
+        "color": "#FF9F4A"
+      },
+      "elemento_b": {
+        "id": "cuadrado_b",
+        "figura": "cuadrado",
+        "color": "#FF9F4A"
+      }
+    },
+    {
+      "id_pareja": "luna",
+      "elemento_a": {
+        "id": "luna_a",
+        "figura": "luna",
+        "color": "#B48CE8"
+      },
+      "elemento_b": {
+        "id": "luna_b",
+        "figura": "luna",
+        "color": "#B48CE8"
+      }
+    },
+    {
+      "id_pareja": "gota",
+      "elemento_a": {
+        "id": "gota_a",
+        "figura": "gota",
+        "color": "#45C6C0"
+      },
+      "elemento_b": {
+        "id": "gota_b",
+        "figura": "gota",
+        "color": "#45C6C0"
+      }
+    },
+    {
+      "id_pareja": "arcoiris_secreto",
+      "elemento_a": {
+        "id": "arcoiris_secreto_a",
+        "figura": "arcoiris",
+        "color": "#FFFFFF"
+      },
+      "elemento_b": {
+        "id": "arcoiris_secreto_b",
+        "figura": "arcoiris",
+        "color": "#FFFFFF"
+      },
+      "especial": true
+    }
+  ]
+}

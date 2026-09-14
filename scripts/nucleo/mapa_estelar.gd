@@ -29,7 +29,7 @@ const MARGEN_TOQUE_PLANETA := 28.0
 ## cuando existe (Arcoiris, Animalia) y cae a un degradê generado cuando todavia no hay
 ## arte final (Melodia en adelante — tarea de HE-13+).
 const PLANETAS := [
-	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(300, 545), "radio": 84.0, "dy": 36.0, "escala": 1.0, "color_a": Color("ff9ec7"), "color_b": Color("ffd86b"), "color_c": Color("7fe3d0"), "textura": "res://assets/anclas/planeta_arcoiris_referencia.png", "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn", "nivel": "res://datos/niveles/piloto_emparejar_estrella_01.json"},
+	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(300, 545), "radio": 84.0, "dy": 36.0, "escala": 1.0, "color_a": Color("ff9ec7"), "color_b": Color("ffd86b"), "color_c": Color("7fe3d0"), "textura": "res://assets/anclas/planeta_arcoiris_referencia.png", "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn", "nivel": "res://datos/niveles/arcoiris_emparejar_semilla_01.json", "niveles": {"maxi": "res://datos/niveles/arcoiris_emparejar_semilla_01.json", "nicole": "res://datos/niveles/arcoiris_emparejar_brote_01.json", "sofia": "res://datos/niveles/arcoiris_emparejar_estrella_01.json"}},
 	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(520, 315), "radio": 65.0, "dy": 30.0, "escala": 0.78, "color_a": Color("a7e05a"), "color_b": Color("4fbf7a"), "color_c": Color("2b7f56"), "textura": "res://assets/anclas/planeta_animalia_referencia.png"},
 	{"id": "melodia", "nombre": "Melodía", "pos": Vector2(700, 490), "radio": 54.0, "dy": 26.0, "escala": 0.64, "color_a": Color("ff6bd6"), "color_b": Color("a06bff"), "color_c": Color("5b2f96"), "textura": ""},
 	{"id": "cuenta_cuentas", "nombre": "Cuenta-Cuentas", "pos": Vector2(890, 265), "radio": 45.0, "dy": 22.0, "escala": 0.53, "color_a": Color("5aa8ff"), "color_b": Color("3b5bd6"), "color_c": Color("1f2f8c"), "textura": ""},
@@ -52,8 +52,8 @@ const RETRATOS_HERMANO := {
 ## STUB de entrada a un planeta (hasta HE-09 `Navegacion` + HE-14/15/16): un planeta con
 ## "escena"/"nivel" abre ese motor directamente. El mapa solo conoce el CONTRATO de
 ## `minijuego_base.gd` (ruta_nivel, planeta_id, id_perfil, completado, salir_solicitado),
-## nunca la mecanica concreta (regla de oro 3). Hoy Arcoiris abre el nivel piloto de
-## "emparejar" para que el PO pueda revisar HE-10 jugando desde el flujo normal.
+## nunca la mecanica concreta (regla de oro 3). Hoy Arcoiris abre la demo de "emparejar"
+## con la ruta de cada hermano ("niveles") para que el PO revise HE-10 jugando.
 ##
 ## Solo el Planeta 1 (Arcoiris) es real y jugable en este capitulo (stack-tecnico.md,
 ## decision del 18-Jul-2026 "lanzamiento por capitulos"). HE-08 reemplaza este numero
@@ -312,7 +312,9 @@ func _entrar_planeta(datos: Dictionary) -> void:
 	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
 	_temporizador_recordatorio.stop()
 	var motor: Node = (load(ruta_escena) as PackedScene).instantiate()
-	motor.ruta_nivel = str(datos.get("nivel", ""))
+	# Ruta personalizada (GDD §5): cada hermano abre su propio nivel; "nivel" es el respaldo.
+	var niveles: Dictionary = datos.get("niveles", {})
+	motor.ruta_nivel = str(niveles.get(_id_perfil, datos.get("nivel", "")))
 	motor.planeta_id = str(datos["id"])
 	motor.id_perfil = _id_perfil
 	var arbol := get_tree()

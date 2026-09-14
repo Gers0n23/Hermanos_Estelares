@@ -1,89 +1,115 @@
-[gd_scene format=3 uid="uid://bqf8n7x4t0wjr"]
+[gd_scene load_steps=5 format=3 uid="uid://bqf8n7x4t0wjr"]
 
 [ext_resource type="Script" uid="uid://bojs0hyi5u7hb" path="res://scripts/motores/emparejar/motor_emparejar.gd" id="1_motor"]
+[ext_resource type="Texture2D" path="res://assets/anclas/planeta_arcoiris_referencia.png" id="2_fondo"]
+[ext_resource type="Texture2D" path="res://assets/sprites/personajes/coco_base.png" id="3_coco"]
+[ext_resource type="Texture2D" path="res://assets/sprites/personajes/cometa_base.png" id="4_cometa"]
 
-[node name="motor_emparejar" type="Node2D" unique_id=187908383]
+[node name="motor_emparejar" type="Node2D"]
 script = ExtResource("1_motor")
-ruta_nivel = "res://datos/niveles/piloto_emparejar_estrella_01.json"
+ruta_nivel = "res://datos/niveles/arcoiris_emparejar_estrella_01.json"
 
-[node name="capa_ui" type="CanvasLayer" parent="." unique_id=1126992045]
+[node name="capa_fondo" type="CanvasLayer" parent="."]
+layer = -1
 
-[node name="ui" type="Control" parent="capa_ui" unique_id=487218476]
+[node name="fondo" type="TextureRect" parent="capa_fondo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_fondo")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="velo" type="ColorRect" parent="capa_fondo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.23, 0.16, 0.42, 0.3)
+
+[node name="capa_ui" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="capa_ui"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="centro" type="CenterContainer" parent="capa_ui/ui" unique_id=1757920497]
+[node name="mesa" type="Panel" parent="capa_ui/ui"]
+unique_name_in_owner = true
+layout_mode = 0
+mouse_filter = 2
+
+[node name="centro" type="Control" parent="capa_ui/ui"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="tablero" type="GridContainer" parent="capa_ui/ui/centro" unique_id=224509482]
+[node name="tablero" type="Control" parent="capa_ui/ui/centro"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="anfitriona" type="TextureRect" parent="capa_ui/ui"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 22.0
+offset_top = 388.0
+offset_right = 222.0
+offset_bottom = 702.0
+tooltip_text = "Coco: toca para escuchar de nuevo"
+texture = ExtResource("3_coco")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="barra_progreso" type="PanelContainer" parent="capa_ui/ui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="progreso_pares" type="HBoxContainer" parent="capa_ui/ui/barra_progreso"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 16
-columns = 4
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
 
-[node name="contador_destellos" type="Label" parent="capa_ui/ui" unique_id=185424038]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = 40.0
-offset_top = 24.0
-offset_right = 300.0
-offset_bottom = 80.0
-theme_override_font_sizes/font_size = 40
-text = "* 0"
-
-[node name="etiqueta_gag" type="Label" parent="capa_ui/ui" unique_id=1932461640]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -160.0
-offset_right = 260.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "jaja se marearon dando vueltas! vamos, las ordenamos de nuevo (TODO: voz derrota_gag)"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="boton_otra_vez" type="Button" parent="capa_ui/ui" unique_id=688959935]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(240, 100)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = 20.0
-offset_right = 120.0
-offset_bottom = 120.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "OTRA VEZ"
-
-[node name="boton_cometa" type="Button" parent="capa_ui/ui" unique_id=983687948]
+[node name="boton_salir" type="Button" parent="capa_ui/ui"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 116.0
+offset_bottom = 112.0
+focus_mode = 0
+tooltip_text = "Volver al mapa"
+
+[node name="boton_cometa" type="Button" parent="capa_ui/ui"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(116, 116)
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -96,40 +122,87 @@ offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+focus_mode = 0
 tooltip_text = "Cometa: toca para repetir la instruccion"
-theme_override_font_sizes/font_size = 40
-text = "*"
 
-[node name="boton_salir" type="Button" parent="capa_ui/ui" unique_id=544973277]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(96, 96)
+[node name="retrato_cometa" type="TextureRect" parent="capa_ui/ui/boton_cometa"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -136.0
-offset_right = 136.0
-offset_bottom = -20.0
-grow_vertical = 0
-tooltip_text = "Salir al mapa"
-theme_override_font_sizes/font_size = 32
-text = "<"
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_cometa")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="confeti" type="CPUParticles2D" parent="." unique_id=1629124995]
+[node name="efectos" type="Control" parent="capa_ui/ui"]
 unique_name_in_owner = true
-position = Vector2(640, 360)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="boton_otra_vez" type="Button" parent="capa_ui/ui"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(320, 124)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -62.0
+offset_right = 160.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "¡Otra vez!"
+
+[node name="panel_depuracion" type="Label" parent="capa_ui/ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 124.0
+offset_right = -12.0
+offset_bottom = 330.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 17
+
+[node name="capa_efectos" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="confeti" type="CPUParticles2D" parent="capa_efectos"]
+unique_name_in_owner = true
+position = Vector2(640, 300)
 emitting = false
-amount = 80
-lifetime = 1.2
+amount = 120
+lifetime = 1.6
 one_shot = true
-speed_scale = 1.5
+speed_scale = 1.3
 explosiveness = 0.9
 direction = Vector2(0, -1)
 spread = 180.0
-gravity = Vector2(0, 300)
-initial_velocity_min = 150.0
-initial_velocity_max = 420.0
-scale_amount_min = 3.0
-scale_amount_max = 6.0
-color = Color(1, 0.85, 0.3, 1)
+gravity = Vector2(0, 420)
+initial_velocity_min = 220.0
+initial_velocity_max = 560.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0

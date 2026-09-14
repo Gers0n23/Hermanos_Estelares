@@ -163,6 +163,24 @@
 
 ## REGISTRO DE AVANCES
 
+- **[13-Sep-2026]** HE-10 — Demo jugable de verdad del minijuego "emparejar" en el Planeta Arcoíris, con una ruta por hermano, para que el PO pueda revisar la celebración de HE-10 en una partida real. **No se mueven tarjetas**: HE-02 y HE-10 siguen 🔄 En curso, WIP 2/2, avance 19/63. Es trabajo ad-hoc de Dev que adelanta de forma **PROVISIONAL** parte de HE-13 (arte del planeta 1) y del contenido de emparejar, sin cerrar esas tarjetas (Dev, verificado; archivos comprobados en disco por el Scrum Master).
+  - **Motivo**: el PO dijo que la demo anterior era "insultantemente inútil". Tenía cartas grises con "*" y abreviaturas, en memoria la primera carta se tapaba sola a los 850 ms (casi injugable), el único nivel era el Estrella de ponys (Maxi y Nicole jugaban con la dificultad de Sofía) y no había fondo, anfitriona ni voces.
+  - **Motor rehecho visualmente, con el mismo contrato**: fondo real del Planeta Arcoíris; Coco como anfitriona animada (al tocarla repite la instrucción) y Cometa como botón de pista. Cartas "peluche pintado" dibujadas por código (nuevo `scripts/ui/figura_vectorial.gd`, 10 figuras), con giro animado, halos de estado y estallidos de estrellitas. Barra de pares sin números ni texto, arcoíris en el par especial, derrota-gag con botón "¡Otra vez!" y panel de depuración con F3 (solo PC).
+  - **Cambio de jugabilidad en memoria** (anotado en `docs/fichas/motor-emparejar.md` §3): la primera carta queda a la vista hasta tocar la segunda. `tiempo_volteo_ms` pasa a ser cuánto se ve el par fallido, y tocar otra carta en ese lapso lo tapa al tiro. Un doble toque no re-tapa la carta. Campos nuevos: figura/color, especial, ayuda_tras_fallos y halo_idle.
+  - **3 rutas provisionales** en `datos/niveles/arcoiris_emparejar_{semilla,brote,estrella}_01.json`:
+    - Maxi: 3 pares a la vista.
+    - Nicole: 5 pares de memoria (1,4 s), con ayuda de Coco tras 3 fallos y corazón especial.
+    - Sofía: 8 pares 4×4 (1,0 s), límite 16 y derrota-gag.
+    - El mapa estelar ahora abre el nivel del hermano seleccionado.
+  - **Voces TTS provisionales** (decisión P2 del PO, 06-Ago-2026): 27 WAV es-MX en `assets/audio/voces/arcoiris/emparejar/`, más el script `herramientas/generar_voces_tts.ps1`. Sprite provisional `assets/sprites/personajes/coco_base.png`; el arte final queda para HE-13.
+  - **Verificación (Godot 4.7.1)**:
+    - Nuevo arnés `herramientas/qa_test_emparejar_rutas.gd`: 0 fallos en las 3 rutas.
+    - Los 10 modos de `qa_test_emparejar.gd` pasan (se ajustaron las esperas por R6).
+    - `qa_test_mapa_planeta` (con un check nuevo de la ruta de Sofía), `qa_test_celebracion`, `qa_test_titulo` y `qa_test_progreso`: OK.
+    - Partida con clics reales en ventana (`herramientas/capturar_emparejar.gd`) en las 3 rutas; pantallazos revisados.
+    - `piloto_emparejar_estrella_01.json` queda solo como fixture de `qa_test_celebracion`.
+  - **Pendientes nuevos (ninguno bloquea la revisión del PO)**: `disenador-mecanicas` valida el cambio de memoria; `disenador-niveles` valida o reemplaza los 3 niveles y define los umbrales de estrellitas; `guionista` revisa los textos TTS; `experto-ux-parvulo` audita la demo nueva; el arte final de Coco y las figuras queda para HE-13.
+  - **Próximo paso**: el PO prueba la demo (F5 → título → hermano → Arcoíris) y aprueba HE-10 o da feedback (dev-godot; registro: Scrum Master).
 - **[13-Sep-2026]** HE-10 — Corrección de un bug del núcleo que reportó el PO al intentar revisar HE-10: al tocar un personaje en la pantalla de selección no pasaba nada. **No se mueven tarjetas**: HE-02 y HE-10 siguen 🔄 En curso, WIP 2/2 (Dev, verificado).
   - **Causa**: `seleccion_personaje.gd` y `mapa_estelar.gd` resuelven los toques por regiones en `_unhandled_input`. Pero las tarjetas de los hermanos y los botones casa/papás/hangar/volver son nodos `Panel`, con mouse_filter STOP por defecto, y la GUI se quedaba con el clic, así que las regiones nunca lo recibían. Los arneses QA headless no lo detectaban porque llaman al handler directamente.
   - **Arreglo**: ambos scripts usan ahora `_input`, que resuelve la región antes que la GUI y marca el evento como manejado.

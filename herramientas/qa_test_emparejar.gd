@@ -456,11 +456,14 @@ func _correr_puntaje_no_explotable() -> void:
 		await _esperar(0.05)
 		_tocar(par[1])
 		await _esperar(0.6)
-	await _esperar(1.5)
+	# La celebracion espera a que termine la voz de victoria antes de continuar sola (R6).
+	var t0 := Time.get_ticks_msec()
+	while destellos_finales[0] < 0 and Time.get_ticks_msec() - t0 < 15000:
+		await process_frame
 
 	var destellos_limpios_esperados: int = por_pareja.size() * 10 + 15 * 2  # 1 solo fallo real
 	print("destellos_finales (16 fallos + reintento) = %d" % destellos_finales[0])
 	print("destellos de una partida limpia con 1 fallo (referencia, ver sofia_normal) = %d" % destellos_limpios_esperados)
-	var ok: bool = destellos_finales[0] <= destellos_limpios_esperados
+	var ok: bool = destellos_finales[0] > 0 and destellos_finales[0] <= destellos_limpios_esperados
 	print("=== FIN puntaje_no_explotable (%s: %d <= %d) ===" % ["OK" if ok else "FALLO", destellos_finales[0], destellos_limpios_esperados])
 	quit(0 if ok else 1)

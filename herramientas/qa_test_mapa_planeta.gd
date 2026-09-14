@@ -58,6 +58,7 @@ func _probar_ida_y_vuelta(forma_de_volver: String) -> void:
 	_check(motor.planeta_id == "arcoiris", "motor recibe planeta_id=arcoiris")
 	_check(motor.id_perfil == "sofia", "motor recibe al hermano seleccionado (sofia)")
 	_check(not motor.nivel.is_empty(), "motor cargo su nivel")
+	_check(motor.nivel.get("perfil", "") == "estrella", "Sofia abre su propia ruta (nivel %s)" % motor.nivel.get("id_nivel", "?"))
 	_check(not is_instance_valid(mapa), "el mapa se libero")
 
 	if forma_de_volver == "salir":
