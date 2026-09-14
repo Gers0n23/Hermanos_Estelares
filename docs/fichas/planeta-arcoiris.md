@@ -6,6 +6,12 @@
 > condición de destello. Cierra la tarjeta HE-D4 y es el insumo directo de HE-13
 > (arte del planeta) y HE-14/15/16 (implementación de cada minijuego).
 
+> **Actualización 14-Sep-2026 (decisión del PO)**: el planeta tiene ahora un **mapa interno de 5
+> zonas** y un **cuarto minijuego, Parejas de Coco** (§3b). Lo descrito en §1-§3 es la **variante
+> base (zona 1)** de cada juego. Cómo se vuelve más retador zona a zona para cada hermano, las
+> reglas de apertura, las recompensas y el nuevo disparador de la escena del ala están en
+> `docs/fichas/planeta-arcoiris-zonas.md`.
+
 - **Autor**: `disenador-niveles`
 - **Estado**: diseño — pendiente de implementación (`dev-godot`), arte final (`disenador-personajes`,
   HE-13), líneas de voz finales (`guionista`), auditoría UX y QA
@@ -530,6 +536,24 @@ vive en Lluvia de colores y Formas traviesas.
 
 ---
 
+## 3b. Minijuego 4 — Parejas de Coco *(agregado 14-Sep-2026, decisión del PO)*
+
+- **Motor**: `emparejar` (`docs/fichas/motor-emparejar.md`, con la nota de implementación del
+  13-Sep-2026: la primera carta queda a la vista hasta tocar la segunda).
+- **Tema**: figuras y colores del planeta con carita "peluche pintado" (estrella, corazón, círculo,
+  triángulo, cuadrado, luna, gota, flor), más el **arcoíris secreto** y el **corazón mágico** como
+  pares especiales.
+- **Ruta base (demo jugable del 13-Sep-2026)**: Maxi con 3 pares a la vista
+  (`arcoiris_emparejar_semilla_01`), Nicole con 5 pares tapados y ayuda de Coco
+  (`arcoiris_emparejar_brote_01`) y Sofía con 8 pares tapados, límite 16 y estrellitas
+  (`arcoiris_emparejar_estrella_01`).
+- **Variantes por zona**: `docs/fichas/planeta-arcoiris-zonas.md` §3.3.
+- **Voces**: TTS provisionales en `assets/audio/voces/arcoiris/emparejar/` (pendiente `guionista`).
+- **Destello y celebración**: los mismos de la regla general de esta ficha (§5). Derrota-gag
+  (cartas que dan volteretas y se mezclan) solo en Estrella.
+
+---
+
 ## 4. Verificación contra GDD §6 (UX obligatoria)
 
 | Regla §6 | Cómo se cumple en esta ficha |
@@ -557,6 +581,11 @@ hermanos, sin penalidad):
 | Formas traviesas | 1 | +1 si Sofía logra 3/3 estrellitas |
 | Pinta con Coco | 1 | — (sin puntaje, GDD §4) |
 | **Total mínimo por hermano** | **3** | hasta 5 para Sofía |
+
+> **Actualización 14-Sep-2026**: con el mapa de zonas, la escena y la pieza ya no esperan a "los 3
+> minijuegos": llegan al abrir la zona 4 (ver `planeta-arcoiris-zonas.md` §2.1). La tabla de arriba
+> queda como economía de la zona 1; la economía unificada (estaciones completadas vs. destellos)
+> está pendiente de `disenador-niveles` (GDD §9, P8).
 
 Al reunir los destellos de los 3 minijuegos de su ruta, se dispara la escena de historia del
 planeta (GDD §3): Coco agradece, entrega la pieza de la nave (**ala izquierda**, GDD/guía de

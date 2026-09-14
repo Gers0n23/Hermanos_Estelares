@@ -166,14 +166,40 @@ El juego se construye y se entrega **de a un planeta por vez**, como capítulos 
 Pantalla de título (tocar para empezar)
    └── Selección de personaje (3 retratos grandes — define la ruta personalizada)
          └── Mapa Estelar (hub): la nave navega entre planetas, rumbo al planeta del Coleccionauta
-               ├── Planeta 1..N (misiones/niveles de la ruta de cada hermano + 1 escena de historia)
-               │      └── Nivel → celebración → destellos ganados → vuelta al mapa
-               │      └── Planeta completado → escena de historia → pieza de la nave
+               ├── Planeta 1..N → Mapa del planeta (5 zonas en camino, la 5ª secreta)
+               │      └── Zona → 4 estaciones (una variante de cada minijuego, por hermano)
+               │             └── Estación → celebración → destellos → vuelta al mapa del planeta
+               │      └── Zona 3 → escena de historia → pieza de la nave
+               │      └── Zonas 4-5 (expedición extra) → colores del planeta completos + recuerdos
                ├── El hangar estelar (pantalla de progreso: la nave armándose pieza a pieza)
                └── Planeta final: la prueba cooperativa y el rescate de papá (se abre al reunir las piezas)
 Modo misión familiar (turnos: cada hermano juega un nivel de su ruta desde el mismo dispositivo)
 Zona de padres (acceso con candado: ajustes, progreso por hijo, volumen)
 ```
+
+### Mapa de cada planeta: zonas y estaciones *(decisión del PO, 14-Sep-2026)*
+
+Cada planeta tiene **su propio mapa interno**, una capa entre el Mapa Estelar y los minijuegos, para
+que el juego dure muchas horas y crezca con los niños:
+
+- **Zonas**: cada planeta se divide en **5 zonas** unidas por un camino (la última es secreta).
+  Cada zona es un lugar reconocible del planeta y tiene un pequeño hilo propio. En Arcoíris,
+  cada zona le devuelve colores al planeta.
+- **Estaciones**: en cada zona los minijuegos del planeta vuelven como una **variante nueva y más
+  retadora que la de la zona anterior**, siempre dentro de la ruta del hermano que juega (§5).
+  Con 4 minijuegos por planeta son 20 estaciones por hermano.
+- **Desbloqueo generoso**: la zona siguiente se abre al completar **2 de las 4** estaciones de la
+  zona actual. Las estaciones pendientes quedan siempre disponibles. Las zonas aún no abiertas se
+  ven dormidas o descoloridas, **nunca con candado** (mismo principio que los planetas lejanos).
+- **La historia no se estira**: la escena del planeta y su **pieza de la nave** llegan al abrir la
+  zona 4 (mínimo ~6 estaciones). Las zonas 4 y 5 son **expedición extra**: más reto, recuerdos
+  para el hangar y el planeta completo, sin bloquear el capítulo siguiente.
+- **Rejugable**: toda estación completada se puede repetir con contenido barajado; rejugar nunca
+  quita nada y, para Sofía, permite mejorar estrellitas.
+- **Meta de duración**: ~1-1,5 h por hermano en la primera pasada de un planeta y 2-3 h con
+  rejugadas y estrellitas.
+- Cada planeta define su mapa en su ficha. El del Planeta Arcoíris está en
+  `docs/fichas/planeta-arcoiris-zonas.md`.
 
 - **Sesiones cortas**: un nivel completo dura 2-5 minutos. Siempre se puede salir al mapa sin perder nada.
 - **Progreso por perfil**: cada hermano avanza por su propia ruta (destellos y piezas de la nave). Se guarda automáticamente, sin preguntar.
@@ -288,7 +314,12 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 #### Planeta Arcoíris
 1. **Lluvia de colores** — caen gotas de colores, hay que tocarlas/arrastrarlas al charco del mismo color. S: tocar cualquier gota hace magia de color. B: emparejar color correcto. E: mezclas (azul+amarillo=verde).
 2. **Formas traviesas** — encajar formas en siluetas (tipo tablero de encaje). S: 3 formas grandes con imán generoso. B: 6-8 formas. E: figuras compuestas (una casa hecha de triángulo+cuadrado).
-3. **Pinta con Coco** — lienzo libre para pintar con dedos/mouse; Coco imita los colores usados. Igual para todos (juego de expresión, sin objetivo). Se puede guardar el dibujo.
+3. **Pinta con Coco** — lienzo libre para pintar con dedos/mouse; Coco imita los colores usados. Igual para todos (juego de expresión, sin objetivo). Se puede guardar el dibujo. *(14-Sep-2026: desde la zona 2 del mapa del planeta suma "encargos creativos" de Coco —colorear por zonas, espejo, mezcla en paleta, decorar el ala— siempre sin fallo en ningún perfil.)*
+4. **Parejas de Coco** *(cuarto minijuego, decisión del PO 14-Sep-2026; motor `emparejar`)* — encontrar parejas de figuras y colores. S: pares siempre a la vista, imposible perder. B: memoria con cartas tapadas, tiempos generosos y ayuda de Coco. E: memoria real con límite de intentos, estrellitas, correspondencias (mezcla ↔ receta, figura ↔ sombra) y el arcoíris secreto.
+
+> **Variantes por zona**: cada minijuego del Planeta Arcoíris tiene una variante distinta y más
+> retadora en cada una de las 5 zonas del mapa del planeta, por hermano. Ver
+> `docs/fichas/planeta-arcoiris-zonas.md`. Los planetas 2-6 definen sus variantes en su propia ficha.
 
 #### Planeta Animalia
 1. **¿Quién habla?** — suena un animal, hay que tocar cuál fue. S: 2 opciones, ambas celebran pero se refuerza la correcta. B: 4 opciones. E: 6 opciones + animales menos comunes.
@@ -401,4 +432,5 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |
 | P6 | Diseño detallado de la prueba final cooperativa y del modo misión familiar (flujo de turnos, UI de "le toca a...") | PO + Dev | Abierta |
+| P8 | Mapa de zonas del planeta (14-Sep-2026): ¿el capítulo 1 se entrega con las 5 zonas de Arcoíris o con las zonas 1-3 (que ya incluyen la pieza y la escena) y las zonas 4-5 como actualización "expedición extra" antes del capítulo 2? ¿Aperturas y pieza cuentan estaciones completadas en vez de destellos? | PO + `disenador-niveles` | Abierta — propuesta en `docs/fichas/planeta-arcoiris-zonas.md` §6 |
 | P7 | Nombres "Cometa" y "El Coleccionauta" — aprobados por el PO en HE-A1/HE-A3 (diseño) y confirmados definitivamente por el PO el 06-Ago-2026 (ya no son provisionales). La reacción espontánea de Maxi, Nicole y Sofía al verlos/oírlos en el juego real queda como observación natural del primer playtest, no como aprobación pendiente | PO | Cerrada (nombres definitivos) |

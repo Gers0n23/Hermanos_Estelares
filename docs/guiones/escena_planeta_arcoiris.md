@@ -5,8 +5,12 @@
 > Fuente de verdad: `docs/diseno-juego.md` §1, §4; `docs/guia-estilo-generacion.md` §3 (fichas de
 > Camaleona Coco y Nave-estrella).
 
-- **Disparador**: al recuperar todos los destellos de los 3 minijuegos del Planeta Arcoíris
-  (Lluvia de colores, Formas traviesas, Pinta con Coco), sin importar en qué orden se jugaron.
+- **Disparador** *(actualizado 14-Sep-2026, mapa de zonas del planeta)*: al abrir la **zona 4**
+  del mapa del planeta, es decir, con 2 estaciones completadas en la zona 3 «El Bosque de
+  Chupetines» (`docs/fichas/planeta-arcoiris-zonas.md` §2.1). En ese momento el planeta ya
+  recuperó rojo, amarillo y azul. **Pendiente `guionista`**: ajustar `arcoiris_001` ("terminaron
+  todo mi arcoíris del claro"), porque el arcoíris completo recién vuelve en la zona 5. Antes el
+  disparador era completar los 3 minijuegos originales.
 - **Duración estimada**: 20-30 s de cinemática sin interacción (GDD §4, "Escena de historia por
   planeta"), pensada para reproducirse con los tres hermanos presentes (modo misión familiar).
 - **Personajes**: Maxi, Nicole, Sofía, Cometa, Camaleona Coco, Papá (voz, video-llamada).
