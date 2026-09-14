@@ -7,6 +7,17 @@
 > detalle fino de otros motores se agregan a medida que se aborden sus tarjetas (ver
 > `docs/guiones/plantilla_escena_planeta.md`). `Audio.reproducir_voz()` sigue sin romper el
 > juego si el archivo `.ogg` falta, solo deja un aviso en consola (`push_warning`).
+>
+> **Voz de personaje con IA (14-Sep-2026, decisión del PO)**: Cometa ya no usa el TTS de Windows.
+> Su voz se diseñó con Qwen3-TTS en fal.ai (criatura chillona y traviesa, acento latino neutro de
+> doblaje) y quedó guardada en `herramientas/voces_personajes/cometa/`. Toda línea de Cometa se
+> genera con `herramientas/generar_voces_fal.py` desde los `lineas_tts.tsv`, bajo la directiva
+> `# personaje: cometa`. Ya están generadas las del núcleo (`nucleo/lineas_tts.tsv`: título,
+> selección e invitaciones de los 6 planetas) y las de Cometa del mapa del Arcoíris
+> (`cometa_vamos`, `todo_listo`). Las demás líneas siguen con TTS de Windows hasta elegir la voz de
+> cada personaje (Coco, la siguiente). Sigue siendo provisional: la voz de la familia (HE-28)
+> reemplaza todo cuando se grabe. `herramientas/qa_test_voces.gd` verifica que cada línea de los
+> TSV exista, cargue y dure algo razonable.
 
 ## Decisión P2 (GDD §9) — ¿voces grabadas por la familia o TTS?
 

@@ -1,0 +1,15 @@
+{
+  "personaje": "Cometa",
+  "estado": "Elegida por el PO el 14-Sep-2026 (muestra 'cometa_1_neutro_doblaje_reuso'). Provisional hasta HE-28 (voces de la familia).",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.mp3",
+  "texto_referencia": "¡Hola, Hermanos Estelares! ¡Soy Cometa! Uy... aterricé de cabeza otra vez, ¡jiji! ¿Me ayudan? Toquen las dos figuras iguales. ¡Casi, casi! Probemos otra vez, juntos. ¡Lo lograron! ¡Eso fue increíble!",
+  "diseno": {
+    "modelo": "fal-ai/qwen-3-tts/voice-design/1.7b",
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "prompt": "A small playful space creature from a children's cartoon, gender-neutral squeaky voice with a little raspy sparkle, full of energy and joy, laughs at itself, friendly and silly. Clear diction and gentle pace for young kids. Accent: neutral Latin American Spanish, exactly like Latin American Spanish dubbing of animated movies. Uses seseo: 'c' and 'z' always sound like 's'. Absolutely no Castilian Spain accent, no 'th' sound."
+  }
+}

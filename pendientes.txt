@@ -1,0 +1,8 @@
+- Terminar sprites de personajes con diseño nuevo e insertarlos en el juego
+- Subir la dificultad de los minijuegos para Sofia
+- Terminar de generar cinematicas faltantes
+- Diseñar bien los juegos y las Recompensas
+- Arreglar cosas raras del diseño de los menus
+- Instalar blender
+- Recortar el resto de personajes
+- Cambiar las voces, por una mas amigable, la actual suena horrible como un robot

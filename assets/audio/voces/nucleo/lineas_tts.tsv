@@ -1,0 +1,12 @@
+# Voces del núcleo (título, selección de personaje, invitaciones del Mapa Estelar).
+# Voz de Cometa con Qwen3-TTS en fal.ai (PO 14-Sep-2026), provisional hasta HE-28 (familia).
+# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: python herramientas/generar_voces_fal.py --lista assets/audio/voces/nucleo/lineas_tts.tsv
+# personaje: cometa
+voces/nucleo/titulo_bienvenida_01.ogg	¡Toca la pantalla para comenzar la aventura!
+voces/nucleo/seleccion_invitacion_01.ogg	¿Quién va a jugar? ¡Toca a tu Hermano Estelar!
+voces/planetas/arcoiris_invitacion_01.ogg	¡Vamos al Planeta Arcoíris!
+voces/planetas/animalia_invitacion_01.ogg	¡Vamos al Planeta Animalia!
+voces/planetas/melodia_invitacion_01.ogg	¡Vamos al Planeta Melodía!
+voces/planetas/cuenta_cuentas_invitacion_01.ogg	¡Vamos al Planeta Cuenta-Cuentas!
+voces/planetas/letralandia_invitacion_01.ogg	¡Vamos al Planeta Letralandia!
+voces/planetas/corazon_invitacion_01.ogg	¡Vamos al Planeta Corazón!
