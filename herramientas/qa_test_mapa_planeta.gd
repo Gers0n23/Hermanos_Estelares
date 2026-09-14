@@ -48,7 +48,7 @@ func _probar_ida_y_vuelta(forma_de_volver: String) -> void:
 	toque.position = Vector2(300, 545)  # centro del disco de Arcoiris
 	# Directo al handler (como qa_test_titulo): en headless la ventana mide casi nada y
 	# push_input re-escala las coordenadas del toque fuera de la pantalla de 1280x720.
-	mapa._unhandled_input(toque)
+	mapa._input(toque)
 	await _esperar_frames(3)
 
 	var motor := current_scene

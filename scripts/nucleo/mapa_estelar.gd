@@ -263,7 +263,9 @@ func _registrar_regiones() -> void:
 		_regiones.append({"rect": rect, "accion": _entrar_planeta.bind(datos)})
 
 
-func _unhandled_input(evento: InputEvent) -> void:
+## `_input` y no `_unhandled_input`: las tarjetas/botones son `Panel` (filtro STOP), que se
+## quedan con el clic en la GUI y nunca llegaba a las regiones. Aqui se resuelve antes.
+func _input(evento: InputEvent) -> void:
 	var posicion: Vector2
 	if evento is InputEventScreenTouch and (evento as InputEventScreenTouch).pressed:
 		posicion = (evento as InputEventScreenTouch).position
@@ -274,6 +276,7 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	for region in _regiones:
 		if (region["rect"] as Rect2).has_point(posicion):
+			get_viewport().set_input_as_handled()
 			(region["accion"] as Callable).call()
 			return
 

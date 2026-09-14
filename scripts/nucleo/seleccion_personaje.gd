@@ -9,7 +9,7 @@ extends Node2D
 ##
 ## Entrada unificada tactil+mouse por region (mismo patron que `titulo.gd`, adaptado a
 ## multiples objetivos): en vez de "toda la pantalla es un boton", cada tarjeta/boton
-## define su rectangulo y se resuelve cual se toco en `_unhandled_input`.
+## define su rectangulo y se resuelve cual se toco en `_input`.
 
 const RUTA_SFX_TOQUE := "res://assets/audio/sfx/ui/seleccionar.ogg"
 const RUTA_SFX_VOLVER := "res://assets/audio/sfx/ui/cerrar.ogg"
@@ -51,7 +51,9 @@ func _reproducir_invitacion() -> void:
 	Audio.reproducir_voz(RUTA_VOZ_INVITACION)
 
 
-func _unhandled_input(evento: InputEvent) -> void:
+## `_input` y no `_unhandled_input`: las tarjetas/botones son `Panel` (filtro STOP), que se
+## quedan con el clic en la GUI y nunca llegaba a las regiones. Aqui se resuelve antes.
+func _input(evento: InputEvent) -> void:
 	if _bloqueado:
 		return
 	var posicion: Vector2
@@ -64,6 +66,7 @@ func _unhandled_input(evento: InputEvent) -> void:
 		return
 	for region in _regiones:
 		if (region["rect"] as Rect2).has_point(posicion):
+			get_viewport().set_input_as_handled()
 			(region["accion"] as Callable).call()
 			return
 
