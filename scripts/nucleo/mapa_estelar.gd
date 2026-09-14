@@ -19,6 +19,9 @@ const RUTA_SELECCION := "res://escenas/nucleo/seleccion_personaje.tscn"
 const RUTA_TITULO := "res://escenas/nucleo/titulo.tscn"
 const RUTA_SHADER_DISCO := "res://assets/shaders/disco_circular.gdshader"
 const RUTA_FUENTE_NOMBRES := "res://assets/fuentes/fuente_baloo_800.tres"
+## Margen extra alrededor del disco de un planeta jugable: el area tocable siempre supera
+## los 96 px de GDD §6.1 aunque el disco se dibuje mas chico.
+const MARGEN_TOQUE_PLANETA := 28.0
 
 ## Los 6 planetas del capitulo 1 (GDD §2), en el orden fijo de la ruta. "pos"/"radio"/
 ## "dy"/"escala" reproducen la perspectiva creciente del mockup (mas chicos y mas altos
@@ -26,7 +29,7 @@ const RUTA_FUENTE_NOMBRES := "res://assets/fuentes/fuente_baloo_800.tres"
 ## cuando existe (Arcoiris, Animalia) y cae a un degradê generado cuando todavia no hay
 ## arte final (Melodia en adelante — tarea de HE-13+).
 const PLANETAS := [
-	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(300, 545), "radio": 84.0, "dy": 36.0, "escala": 1.0, "color_a": Color("ff9ec7"), "color_b": Color("ffd86b"), "color_c": Color("7fe3d0"), "textura": "res://assets/anclas/planeta_arcoiris_referencia.png"},
+	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(300, 545), "radio": 84.0, "dy": 36.0, "escala": 1.0, "color_a": Color("ff9ec7"), "color_b": Color("ffd86b"), "color_c": Color("7fe3d0"), "textura": "res://assets/anclas/planeta_arcoiris_referencia.png", "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn", "nivel": "res://datos/niveles/piloto_emparejar_estrella_01.json"},
 	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(520, 315), "radio": 65.0, "dy": 30.0, "escala": 0.78, "color_a": Color("a7e05a"), "color_b": Color("4fbf7a"), "color_c": Color("2b7f56"), "textura": "res://assets/anclas/planeta_animalia_referencia.png"},
 	{"id": "melodia", "nombre": "Melodía", "pos": Vector2(700, 490), "radio": 54.0, "dy": 26.0, "escala": 0.64, "color_a": Color("ff6bd6"), "color_b": Color("a06bff"), "color_c": Color("5b2f96"), "textura": ""},
 	{"id": "cuenta_cuentas", "nombre": "Cuenta-Cuentas", "pos": Vector2(890, 265), "radio": 45.0, "dy": 22.0, "escala": 0.53, "color_a": Color("5aa8ff"), "color_b": Color("3b5bd6"), "color_c": Color("1f2f8c"), "textura": ""},
@@ -46,6 +49,12 @@ const RETRATOS_HERMANO := {
 	"sofia": "res://assets/sprites/personajes/sofia_base.png",
 }
 
+## STUB de entrada a un planeta (hasta HE-09 `Navegacion` + HE-14/15/16): un planeta con
+## "escena"/"nivel" abre ese motor directamente. El mapa solo conoce el CONTRATO de
+## `minijuego_base.gd` (ruta_nivel, planeta_id, id_perfil, completado, salir_solicitado),
+## nunca la mecanica concreta (regla de oro 3). Hoy Arcoiris abre el nivel piloto de
+## "emparejar" para que el PO pueda revisar HE-10 jugando desde el flujo normal.
+##
 ## Solo el Planeta 1 (Arcoiris) es real y jugable en este capitulo (stack-tecnico.md,
 ## decision del 18-Jul-2026 "lanzamiento por capitulos"). HE-08 reemplaza este numero
 ## fijo por el progreso real del hermano activo (piezas de nave conseguidas).
@@ -163,6 +172,8 @@ func _crear_disco(pos: Vector2, radio: float, color_a: Color, color_b: Color, co
 	material.set_shader_parameter("desenfoque", 0.0 if desbloqueado else 0.8)
 	material.set_shader_parameter("opacidad", 1.0 if desbloqueado else 0.55)
 	disco.material = material
+	# Los toques los resuelve `_unhandled_input` por regiones: el disco no debe tragarselos.
+	disco.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_contenedor_planetas.add_child(disco)
 
 	var etiqueta := Label.new()
@@ -174,6 +185,7 @@ func _crear_disco(pos: Vector2, radio: float, color_a: Color, color_b: Color, co
 	var offset_y: float = -(radio + 44.0) if etiqueta_arriba else radio + 10.0
 	etiqueta.position = pos + Vector2(-100, offset_y)
 	etiqueta.size = Vector2(200, 40)
+	etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_contenedor_planetas.add_child(etiqueta)
 
 
@@ -242,6 +254,13 @@ func _registrar_regiones() -> void:
 	_regiones.append({"rect": Rect2(_boton_casa.global_position, _boton_casa.size), "accion": func(): _ir_a_seleccion()})
 	_regiones.append({"rect": Rect2(_boton_papas.global_position, _boton_papas.size), "accion": func(): _ir_a_titulo()})
 	_regiones.append({"rect": Rect2(_boton_hangar.global_position, _boton_hangar.size), "accion": func(): _tocar_hangar()})
+	for i in mini(PLANETAS_DESBLOQUEADOS_STUB, PLANETAS.size()):
+		var datos: Dictionary = PLANETAS[i]
+		if str(datos.get("escena", "")) == "":
+			continue
+		var radio: float = datos["radio"]
+		var rect := Rect2(datos["pos"] - Vector2(radio, radio), Vector2(radio, radio) * 2.0).grow(MARGEN_TOQUE_PLANETA)
+		_regiones.append({"rect": rect, "accion": _entrar_planeta.bind(datos)})
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -277,3 +296,26 @@ func _tocar_hangar() -> void:
 	var tween := create_tween()
 	tween.tween_property(_boton_hangar, "scale", Vector2(1.12, 1.12), 0.08)
 	tween.tween_property(_boton_hangar, "scale", Vector2(1.0, 1.0), 0.16)
+
+
+## Abre el motor del planeta como escena actual. Las senales se conectan al SceneTree (que
+## sobrevive al cambio de escena), no a este mapa, que se libera al salir: al terminar la
+## celebracion o tocar "salir" se vuelve al mapa, con el progreso ya guardado por el contrato.
+func _entrar_planeta(datos: Dictionary) -> void:
+	var ruta_escena := str(datos.get("escena", ""))
+	if not ResourceLoader.exists(ruta_escena):
+		push_warning("mapa_estelar: el planeta %s no tiene escena jugable (%s)" % [datos["id"], ruta_escena])
+		return
+	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
+	_temporizador_recordatorio.stop()
+	var motor: Node = (load(ruta_escena) as PackedScene).instantiate()
+	motor.ruta_nivel = str(datos.get("nivel", ""))
+	motor.planeta_id = str(datos["id"])
+	motor.id_perfil = _id_perfil
+	var arbol := get_tree()
+	var volver_al_mapa := Callable(arbol, "change_scene_to_file").bind(scene_file_path)
+	motor.completado.connect(volver_al_mapa.unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	motor.salir_solicitado.connect(volver_al_mapa, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	arbol.root.add_child(motor)
+	arbol.current_scene = motor
+	queue_free()
