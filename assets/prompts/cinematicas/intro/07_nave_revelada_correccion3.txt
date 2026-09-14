@@ -1,0 +1,5 @@
+Reorient the starship so it is VERTICAL instead of horizontal: rotate the whole ship 90 degrees so the transparent dome faces straight up like a nose cone at the top, the rounded hull body extends downward beneath it, and the three round glowing thruster nozzles are clustered at the very bottom pointing straight down at the patio, firing their exhaust plume straight down toward an open, empty patch of ground (no furniture directly beneath it).
+
+Keep the ship's exact same materials, colors, patch repairs, dome glass, and round thruster nozzle shapes exactly as they appear in this image -- do not redesign the ship, add new details, or change its color/texture in any way. Only change its orientation from lying-on-its-side to standing-up-vertical, like a rocket booster landing.
+
+Keep the same dusk sky, house wall, lit window, and patio setting from this image, redrawing only what's needed so the now-vertical ship sits naturally within that same scene, still centered and still descending toward the patio.

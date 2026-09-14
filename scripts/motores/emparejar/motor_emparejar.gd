@@ -7,17 +7,16 @@ extends "res://scripts/base/minijuego_base.gd"
 ## (cantidad de pares, oculto, tiempo_volteo_ms, limite_intentos). No conoce ponys,
 ## dinosaurios ni ningun tema concreto.
 ##
-## PILOTO DE PROCESO (18-Jul-2026): sin sprites/audio finales. Las voces quedan como
-## TODO impresos en consola con el ID de linea que le corresponderia reproducir via el
-## autoload `Audio` (aun no implementado en el proyecto).
+## PILOTO DE PROCESO (18-Jul-2026): sin sprites/audio finales. Desde HE-10 las voces se
+## reproducen via el contrato base (`reproducir_voz` -> autoload `Audio`; las lineas aun no
+## grabadas solo avisan en consola) y la celebracion final es la escena reutilizable
+## `escenas/ui/celebracion.tscn` montada por `celebrar()`.
 
 signal par_acertado(id_pareja: String)
 signal intento_fallido()
 signal nivel_fallado()
-## B4 (auditoria UX 18-Jul-2026): hook de salida. El nodo padre (futuro contenedor de
-## pantalla, ver GDD §6 regla 8 "salir siempre es seguro") debe conectar esta senal para
-## navegar de vuelta al mapa sin perder progreso. Este motor no navega por si mismo.
-signal salir_solicitado()
+## B4 (auditoria UX 18-Jul-2026): la senal de salida `salir_solicitado()` vive desde HE-10
+## en el contrato base (`minijuego_base.gd`), comun a todos los motores.
 
 const CARTA_ESCENA: PackedScene = preload("res://escenas/minijuegos/emparejar/carta_emparejar.tscn")
 const DESTELLOS_POR_PAR := 10
@@ -205,10 +204,10 @@ func _reproducir_voz_no_es_este() -> void:
 
 
 func _reproducir_voz(clave: String, ruta: String) -> void:
-	# TODO(voz): reemplazar por Audio.reproducir_voz(ruta) cuando exista el autoload Audio
-	# (docs/stack-tecnico.md §2). Por ahora solo deja constancia en consola para el smoke test.
+	# Traza en consola para los arneses QA + reproduccion real via contrato base (HE-10).
 	if ruta != "":
-		print("[voz TODO:%s] %s" % [clave, ruta])
+		print("[voz:%s] %s" % [clave, ruta])
+		reproducir_voz(ruta)
 
 
 ## B3 (auditoria UX 18-Jul-2026): tocar a Cometa repite la instruccion (GDD §6.2,
@@ -248,16 +247,26 @@ func _reintentar() -> void:
 
 
 func _celebrar_victoria() -> void:
-	_reproducir_voz("victoria_final", nivel.get("lineas_voz", {}).get("victoria_final", ""))
+	# Micro-celebracion del ultimo par y, medio segundo despues, la celebracion final
+	# reutilizable (HE-10): confeti de pantalla completa, gesto real del hermano, conteo de
+	# destellos y boton "seguir". `celebrar()` emite `completado` cuando termina.
 	_confeti.emitting = true
-	# TODO(personajes): disparar aqui el gesto real de celebracion del perfil jugador
-	# (docs/perfil-jugadores.md) cuando el nodo padre lo exponga; el motor solo emite
-	# la senal `completado`.
 	var destellos := _calcular_destellos()
-	_contador_destellos.text = "* %d" % destellos
-	_contador_destellos.show()
-	await get_tree().create_timer(1.2).timeout
-	emitir_completado(destellos)
+	await get_tree().create_timer(0.5).timeout
+	celebrar(destellos, _calcular_estrellitas(), nivel.get("lineas_voz", {}).get("victoria_final", ""))
+
+
+## Puntaje 1-3 estrellitas del perfil Estrella (ficha motor-emparejar §7). Regla PROVISIONAL
+## hasta que `disenador-niveles` defina umbrales en el nivel: ganar siempre da al menos 1.
+## Sin limite de intentos -> 3; tras una derrota-gag -> 1; con la mitad o mas de los intentos
+## sobrantes -> 3; si no -> 2. `celebrar()` solo las muestra en niveles Estrella.
+func _calcular_estrellitas() -> int:
+	if _limite_intentos == null:
+		return 3
+	if _derrota_disparada:
+		return 1
+	var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
+	return 3 if sobrantes * 2 >= int(_limite_intentos) else 2
 
 
 func _calcular_destellos() -> int:

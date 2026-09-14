@@ -269,3 +269,62 @@ caigan sobre las hombreras, coderas y rodilleras del personaje.
 Maxi tiene 2 años y su diseño es más compacto: probablemente convenga fusionar antebrazo y
 brazo en una sola pieza por lado (8 piezas en vez de 10). Menos piezas, menos reparación, y a
 esa edad la animación es más de rebote que de articulación.
+
+### Maxi (confirmado 30-Ago-2026): 8 piezas, no 10
+
+Al mirar `assets/generadas/maxi_piezas/00_base_maxi.png` (**306 × 697 px**, fondo transparente
+— la pose frontal simétrica recortada de `assets/anclas/maxi_referencia.png`, con el fondo gris
+quitado por descontaminación de color) se confirmó la sospecha de la nota de arriba, por dos
+razones concretas que se ven en el dibujo real:
+
+- **El traje de Maxi no tiene costura de codo.** Es una manga lisa de un solo tramo, hombro a
+  puño (con una insignia decorativa, no una codera). Cortar un "codo" ahí violaría la regla 1
+  de la sección 2 (cortar por una costura que existe) — se estaría inventando una articulación
+  que el diseño no tiene. Por eso `brazo_sup_*` y `antebrazo_mano_*` se fusionan en una sola
+  pieza por lado: `brazo_mano_izq` / `brazo_mano_der` (hombro a mano completa).
+- **El traje de Maxi no tiene túnica ni faldón.** Es un mono ajustado de una pieza; el cinturón
+  es una banda plana a la altura natural de la cintura, sin la hebilla-estrella pronunciada de
+  Sofía ni tela que vuele sobre la cadera. No hace falta una pieza `cinturon` aparte al frente
+  de todo — el cinturón queda pintado dentro de `torso` sin conflicto de capas con las piernas.
+
+Resultado: **8 piezas** en vez de 10. La regla de solape de 20 px (sección 2, regla 3) sigue
+aplicando igual entre `torso`/piernas y entre `torso`/brazos, solo que ya no hay costura de
+codo que redondear (sección 2, regla 2 — solo hombro y rodilla necesitan círculo).
+
+Coordenadas en píxeles del lienzo de 306 × 697 (imagen real de Maxi, no la de Sofía):
+
+| # | Pieza | Pivote (x, y) | z_index | Va delante de |
+|---|---|---|---|---|
+| 7 | `pierna_inf_pie_izq` | 122, 525 (rodilla) | 8 | muslo izq |
+| 5 | `pierna_sup_izq` | 122, 389 (cadera) | 7 | — |
+| 8 | `pierna_inf_pie_der` | 192, 525 (rodilla) | 6 | muslo der |
+| 6 | `pierna_sup_der` | 192, 389 (cadera) | 5 | — |
+| 2 | `torso` (con cinturón pintado adentro) | 153, 389 (cadera) | 4 | — (detrás de las 4 piezas de pierna) |
+| 4 | `brazo_mano_der` | 230, 283 (hombro) | 3 | — |
+| 3 | `brazo_mano_izq` | 76, 283 (hombro) | 2 | — |
+| 1 | `cabeza_casco` | 154, 233 (cuello) | 1 | — (al fondo de todo; el pelo queda detrás del cuerpo) |
+
+Mismo criterio que en la tabla de Sofía (sección 7): las piernas van delante del torso, el
+torso va delante de los brazos, la cabeza va al fondo de todo. La única pieza que **no** tiene
+equivalente en esta tabla es `cinturon` — en Maxi no existe como pieza separada, ver arriba.
+
+Jerarquía de nodos en Godot, igual de forma a la de Sofía pero con los brazos ya fusionados:
+
+```text
+cadera (raiz, invisible)
+├── torso
+│   ├── cabeza_casco
+│   ├── brazo_mano_izq
+│   └── brazo_mano_der
+├── pierna_sup_izq → pierna_inf_pie_izq
+└── pierna_sup_der → pierna_inf_pie_der
+```
+
+El mapa de cortes calibrado quedó en `assets/generadas/maxi_piezas/00_mapa_cortes.png`,
+generado con `herramientas/mapa_cortes.py` (recalibrado para las coordenadas de Maxi — ese
+script guarda la calibración del último personaje corrido, no la de Sofía y Maxi a la vez;
+si hace falta regenerar el mapa de Sofía después de tocar este archivo, hay que volver a poner
+sus coordenadas primero). Pendiente: el corte manual en Krita de las 8 piezas siguiendo la
+sección 4 de esta guía (con el ajuste de que `brazo_mano_*` se corta y repara como una sola
+pieza, sin paso de "antebrazo" separado), y después armar la escena de rig como se hizo con
+`herramientas/armar_rig_sofia_preview.gd`.

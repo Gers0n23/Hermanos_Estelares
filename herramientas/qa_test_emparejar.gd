@@ -56,6 +56,8 @@ func _initialize() -> void:
 
 func _montar_motor() -> void:
 	_motor = MOTOR_ESCENA.instantiate()
+	# HE-10: la celebracion final continua sola rapido para no alargar el arnes.
+	_motor.segundos_auto_continuar = 1.0
 	get_root().add_child(_motor)
 	_motor.completado.connect(func(destellos: int) -> void:
 		print("SENAL completado(destellos=%d) recibida" % destellos)
@@ -77,8 +79,10 @@ func _montar_motor() -> void:
 
 
 func _cartas() -> Array:
-	# Recorre el GridContainer del tablero (unique name %tablero dentro de ui/centro).
-	var tablero := _motor.get_node("ui/centro/tablero")
+	# Recorre el GridContainer del tablero (unique name %tablero). La UI cuelga de
+	# `capa_ui` desde el fix de CanvasLayer del 18-Jul-2026 (ver minijuego_base.gd); la
+	# ruta vieja "ui/centro/tablero" era el fallo preexistente registrado en HE-07.
+	var tablero := _motor.get_node("capa_ui/ui/centro/tablero")
 	return tablero.get_children()
 
 
@@ -139,7 +143,7 @@ func _correr_sofia_normal() -> void:
 		_tocar(par[1])
 		await _esperar(0.55)  # esperar resolucion (incluye la ventana no_es_este si aplica)
 
-	await _esperar(1.5)
+	await _esperar(3.0)  # HE-10: 0.5 s + celebracion (auto 1 s) + fundido
 	print("=== FIN sofia_normal ===")
 	quit(0)
 
@@ -245,7 +249,7 @@ func _correr_derrota_forzada() -> void:
 
 	await _esperar(0.5)
 	print("-- Verificando boton_otra_vez visible y reintentando con UN toque --")
-	var boton := _motor.get_node("ui/boton_otra_vez")
+	var boton := _motor.get_node("capa_ui/ui/boton_otra_vez")
 	print("boton_otra_vez.visible = %s" % boton.visible)
 	print("Carta ya acertada sigue esta_acertada=true? %s" % primero[0].esta_acertada)
 	boton.pressed.emit()
@@ -360,9 +364,9 @@ func _correr_b2_feedback() -> void:
 ## --- B3: tocar el boton_estelita debe existir y disparar la reproduccion de `pista`
 ## (placeholder de consola "[voz TODO:pista] ..."). ---
 func _correr_b3_estelita() -> void:
-	var boton := _motor.get_node_or_null("ui/boton_estelita")
+	var boton := _motor.get_node_or_null("capa_ui/ui/boton_cometa")
 	if boton == null:
-		print("ERROR QA: no existe ui/boton_estelita")
+		print("ERROR QA: no existe capa_ui/ui/boton_cometa (Estelita paso a llamarse Cometa, GDD §9 P7)")
 		quit(1)
 		return
 	print("boton_estelita encontrado, custom_minimum_size=%s (>=96px esperado)" % boton.custom_minimum_size)
@@ -375,7 +379,7 @@ func _correr_b3_estelita() -> void:
 
 ## --- B4: tocar el boton_salir debe emitir la senal salir_solicitado(). ---
 func _correr_b4_salir() -> void:
-	var boton := _motor.get_node_or_null("ui/boton_salir")
+	var boton := _motor.get_node_or_null("capa_ui/ui/boton_salir")
 	if boton == null:
 		print("ERROR QA: no existe ui/boton_salir")
 		quit(1)
@@ -440,7 +444,7 @@ func _correr_puntaje_no_explotable() -> void:
 		idx += 1
 
 	await _esperar(0.5)
-	var boton := _motor.get_node("ui/boton_otra_vez")
+	var boton := _motor.get_node("capa_ui/ui/boton_otra_vez")
 	boton.pressed.emit()
 	await _esperar(0.3)
 

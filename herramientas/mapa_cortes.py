@@ -24,39 +24,39 @@ ROJO = (220, 30, 60)
 AZUL = (30, 110, 220)
 GRIS = (120, 120, 130)
 
-# --- Calibrado para sofia (332x768) ------------------------------------------
+# --- Calibrado para maxi (306x697) --------------------------------------------
+# Maxi tiene 2 años y su traje no tiene costura de codo ni tunica con vuelo: se
+# simplifica a 8 piezas (brazo+antebrazo fusionados por lado, sin cinturon aparte
+# porque el cinturon queda plano dentro del torso, sin faldon que lo tape).
 # Lineas de corte rectas: (x1, y1, x2, y2, codigo, etiqueta, lado_etiqueta)
 LINEAS = [
-    (132, 258, 202, 258, "A", "cuello: corta aqui la cabeza", "der"),
-    (94, 296, 94, 470, "B", "costura brazo/torso (izq)", "izq"),
-    (228, 296, 228, 470, "C", "costura brazo/torso (der)", "der"),
-    (74, 490, 248, 490, "D", "ruedo de la tunica: fin del torso", "izq"),
-    (84, 452, 152, 452, "E", "cadera izq: el muslo sube HASTA AQUI", "izq"),
-    (170, 452, 242, 452, "F", "cadera der: el muslo sube HASTA AQUI", "der"),
+    (118, 233, 190, 233, "A", "cuello: corta aqui la cabeza", "der"),
+    (90, 255, 90, 400, "B", "costura brazo/torso (izq)", "izq"),
+    (216, 255, 216, 400, "C", "costura brazo/torso (der)", "der"),
+    (55, 400, 250, 400, "D", "cintura: fin del torso (corte recto)", "izq"),
+    (95, 378, 150, 378, "E", "cadera izq: el muslo sube HASTA AQUI", "izq"),
+    (160, 378, 215, 378, "F", "cadera der: el muslo sube HASTA AQUI", "der"),
 ]
 
 # Articulaciones a redondear: (cx, cy, radio, etiqueta)
+# Sin codo: el brazo va fusionado en una sola pieza (brazo_mano_*), no hay corte ahi.
 ARTICULACIONES = [
-    (102, 298, 32, "hombro izq"),
-    (226, 298, 32, "hombro der"),
-    (68, 392, 26, "codo izq"),
-    (254, 392, 26, "codo der"),
-    (118, 550, 30, "rodilla izq"),
-    (202, 550, 30, "rodilla der"),
+    (76, 283, 32, "hombro izq"),
+    (230, 283, 32, "hombro der"),
+    (122, 525, 30, "rodilla izq"),
+    (192, 525, 30, "rodilla der"),
 ]
 
 # Etiquetas de pieza: (x, y, texto, lado)  lado: "izq" | "der"
 PIEZAS = [
-    (166, 150, "1  cabeza_casco (con pelo)", "der", 150),
-    (166, 330, "2  torso", "der", 355),
-    (63, 330, "3  brazo_sup_izq", "izq", 325),
-    (257, 330, "4  brazo_sup_der", "der", 300),
-    (60, 450, "5  antebrazo_mano_izq", "izq", 425),
-    (262, 450, "6  antebrazo_mano_der", "der", 505),
-    (118, 490, "7  pierna_sup_izq", "izq", 535),
-    (202, 490, "8  pierna_sup_der", "der", 555),
-    (110, 640, "9  pierna_inf_pie_izq", "izq", 650),
-    (210, 640, "10 pierna_inf_pie_der", "der", 650),
+    (154, 110, "1  cabeza_casco (con pelo)", "der", 110),
+    (153, 320, "2  torso (con cinturon)", "der", 340),
+    (55, 330, "3  brazo_mano_izq (fusionado)", "izq", 300),
+    (250, 330, "4  brazo_mano_der (fusionado)", "der", 260),
+    (122, 440, "5  pierna_sup_izq", "izq", 430),
+    (192, 440, "6  pierna_sup_der", "der", 450),
+    (110, 600, "7  pierna_inf_pie_izq", "izq", 580),
+    (205, 600, "8  pierna_inf_pie_der", "der", 610),
 ]
 
 
@@ -134,7 +134,7 @@ def main(entrada, salida):
         d.ellipse([cx - 4, cy - 4, cx + 4, cy + 4], fill=GRIS)
         d.text(destino, texto, fill=(20, 20, 30), font=f_pieza, anchor=ancla)
 
-    d.text((lienzo.width / 2, 20), "MAPA DE CORTES - sofia   (10 piezas)",
+    d.text((lienzo.width / 2, 20), "MAPA DE CORTES - maxi   (8 piezas)",
            fill=(20, 20, 30), font=fuente(26), anchor="ma")
     d.text((lienzo.width / 2, 52),
            "rojo = por donde cortar        azul punteado = redondear la pieza aqui",

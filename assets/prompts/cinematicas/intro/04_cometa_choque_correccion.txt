@@ -1,0 +1,3 @@
+Simplify the golden sparkle trail behind the ship so it reads as one single clear arc coming from the window (upper right) down to the rug (lower left), without looping behind the couch or curving underneath the coffee table. The trail should read at a glance as "the ship flew in from the window and is about to land on the rug" -- a simple, mostly direct diagonal path, not a spiral or loop.
+
+Keep absolutely everything else in the image unchanged: same ship in the same tumbling pose and position, same dizzy spiral-eyed Cometa visible through the dome, same living room, same furniture, same lighting and colors, same composition and camera angle.

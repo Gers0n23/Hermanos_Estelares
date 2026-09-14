@@ -1,0 +1,5 @@
+Edit this image with these two precise changes, keep everything else identical (same hull colors and patches, same dome, same three thruster nozzles' round shape and position, same house/window/patio/sky background, same composition, camera angle and lighting):
+
+1. Completely remove the two dashed/dotted golden outline wing shapes that currently flank the top of the hull (the triangular dashed lines reaching out to both sides toward the thrusters). The hull silhouette on both sides must become a plain, smooth, complete rounded shape with absolutely no wing indication of any kind -- no wings, no dashed wing outline, no triangular shape, nothing wing-shaped anywhere. Keep the thin dashed vertical antenna-mast line on top exactly as it is.
+
+2. Add a warm glowing rocket-thruster exhaust plume trailing downward/backward from the three rear thruster nozzles, as if the ship is actively firing its engines to control a powered descent like a rocket -- soft cartoon-style glow trail, gold-orange, no smoke, no photorealistic fire, continuous with the nozzle glow already in the image, clearly visible as propulsion (not just a static idle glow inside the nozzles).

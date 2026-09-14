@@ -1,0 +1,3 @@
+Remove the two flared fin-like panels at the base of the hull, on both left and right sides where the body meets the thrusters -- they read as wings, and this ship must not have any wings or fins of any kind. Replace that area with a smooth, plain continuation of the rounded hull surface, matching the same material/color already there. Also remove any small objects/items visible inside the transparent dome -- the dome interior should just be empty/plain, matching the rest of the reference art.
+
+Keep absolutely everything else in the image unchanged: same ship colors and patches, same dome shape, same three round thruster nozzles and their exhaust plume, same vertical pose, same house/window/patio/sky background, same composition and camera angle.

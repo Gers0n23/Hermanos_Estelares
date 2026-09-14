@@ -25,3 +25,7 @@ Thumbs.db
 
 # Credenciales locales (ver .env.example). NUNCA subir al repo.
 .env
+
+# Cache de Python de las herramientas
+__pycache__/
+*.pyc

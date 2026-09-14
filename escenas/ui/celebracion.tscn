@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/celebracion.gd" id="1_celebracion"]
+
+[node name="celebracion" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_celebracion")
