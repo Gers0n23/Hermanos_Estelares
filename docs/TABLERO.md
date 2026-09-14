@@ -181,7 +181,7 @@
     - M3: sonido en los corazones de Nicole.
     - M4: los hermanos menores no ven huecos de estrella en niveles Estrella.
     - M5: se quitó un print duplicado.
-    
+
     Quedan abiertos, no bloqueantes: R7 (voz de respaldo por hermano, jingle de victoria y "¡siiii!" de Maxi sincronizado al salto, depende de HE-28 / voces TTS) y los umbrales de estrellitas.
   - **Verificación (DoD 1-3)**: arnés nuevo `herramientas/qa_test_celebracion.gd` con 76 verificaciones OK y 0 fallos. Los 10 modos de `qa_test_emparejar.gd` (sofia_normal, maxi_random, derrota_forzada, puntaje_no_explotable, b1_tolerancia, b2_feedback, b3_estelita, b4_salir, machaque, salir_reentrar) salen con exit 0 y sin SCRIPT ERROR. `qa_test_progreso` y `qa_test_titulo` siguen OK. Hay pantallazos reales con GPU (`herramientas/capturar_celebracion.gd`), revisados y enviados al PO.
   - **Mantenimiento**: `.gitignore` ahora ignora `__pycache__/` y `*.pyc`.
