@@ -2,6 +2,8 @@ extends Control
 
 ## Capa de dibujo del motor "encajar": escenario opcional (jardin de Nicole), siluetas de los huecos
 ## y resaltados (objetivo actual de Brote, pista de Maxi, hueco sobre el que se arrastra).
+## Retos de Sofia (v3): modelo a color de la copia de memoria, cortina con que Coco lo tapa y el
+## tablero de cuadraditos del marco de pentominos.
 ## No recibe toques. Lee el estado que le deja el motor en cada `queue_redraw()`.
 
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
@@ -19,6 +21,12 @@ var escena: Dictionary = {}
 var hueco_objetivo = null
 var hueco_pista = null
 var hueco_cercano = null
+## Copia de memoria: mientras es true se ve el modelo armado a color, con sus lineas por dentro.
+var modelo_visible := false
+## 0 = sin cortina, 1 = la cortina tapa toda la figura (animacion de Coco tapando el modelo).
+var cortina := 0.0
+## Marco de pentominos: {"origen": Vector2, "lado": float, "celdas": Array[Vector2i]} o {}.
+var marco: Dictionary = {}
 
 var _tiempo := 0.0
 
@@ -29,7 +37,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_tiempo += delta
-	if hueco_objetivo != null or hueco_pista != null:
+	if hueco_objetivo != null or hueco_pista != null or cortina > 0.0:
 		queue_redraw()
 
 
@@ -44,8 +52,12 @@ func _draw() -> void:
 		var cerrada := mesa.duplicate()
 		cerrada.append(mesa[0])
 		draw_polyline(cerrada, Color(1, 1, 1, 0.55), 4.0, true)
+	if not marco.is_empty():
+		_dibujar_marco()
 	for figura in figuras:
-		if figura.get("silueta_unida", false):
+		if modelo_visible:
+			_dibujar_modelo(figura)
+		elif figura.get("silueta_unida", false):
 			for contorno in figura.get("union", []):
 				draw_colored_polygon(contorno, COLOR_HUECO)
 				Geo.contorno_punteado(self, contorno, COLOR_BORDE, 5.0)
@@ -55,6 +67,8 @@ func _draw() -> void:
 	for hueco in [hueco_cercano, hueco_pista, hueco_objetivo]:
 		if hueco != null and hueco["pieza"] == null:
 			_resaltar(hueco, hueco == hueco_cercano)
+	if cortina > 0.0:
+		_dibujar_cortina()
 
 
 func _dibujar_hueco(hueco: Dictionary) -> void:
@@ -69,11 +83,52 @@ func _dibujar_hueco(hueco: Dictionary) -> void:
 	Geo.contorno_punteado(self, dibujo, COLOR_BORDE, 5.0)
 
 
+## Modelo de la copia de memoria: cada pieza pintada en su color y en su lugar.
+func _dibujar_modelo(figura: Dictionary) -> void:
+	for hueco in figura["huecos"]:
+		if hueco["pieza"] != null:
+			continue
+		Geo.pintar(self, hueco["dibujo"], hueco["color"], 40.0)
+
+
 func _resaltar(hueco: Dictionary, suave: bool) -> void:
 	var intensidad := 0.45 if suave else 0.4 + 0.35 * absf(sin(_tiempo * 4.0))
 	for aura in Geometry2D.offset_polygon(hueco["dibujo"], 10.0, Geometry2D.JOIN_ROUND):
 		Geo.contorno_punteado(self, aura, Color(DORADO, intensidad + 0.2), 7.0, 22.0, 6.0)
 	draw_colored_polygon(hueco["dibujo"], Color(DORADO, intensidad * 0.45))
+
+
+## Tablero del marco: cuadraditos claros con su cuadricula y el borde del marco bien marcado.
+func _dibujar_marco() -> void:
+	var origen: Vector2 = marco["origen"]
+	var lado: float = marco["lado"]
+	var cuadros: Array = []
+	for celda: Vector2i in marco["celdas"]:
+		var rect := Rect2(origen + Vector2(celda) * lado, Vector2.ONE * lado)
+		draw_rect(rect, Color(0.17, 0.2, 0.36, 0.45))
+		draw_rect(rect.grow(-1.5), Color(1, 1, 1, 0.35), false, 2.0)
+		cuadros.append(PackedVector2Array([rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]))
+	for contorno in Geo.unir(cuadros):
+		Geo.contorno_punteado(self, contorno, COLOR_BORDE, 5.0)
+
+
+## Cortina de Coco: franjas arcoiris que bajan sobre la figura (tapa el modelo sin asustar).
+func _dibujar_cortina() -> void:
+	var alto := zona.size.y * cortina
+	var franja := zona.size.y / Figura.COLORES_ARCOIRIS.size()
+	for i in Figura.COLORES_ARCOIRIS.size():
+		var y0 := zona.position.y + i * franja
+		if y0 > zona.position.y + alto:
+			break
+		var y1 := minf(y0 + franja, zona.position.y + alto)
+		var puntos := PackedVector2Array()
+		for k in 25:
+			var x := zona.position.x + zona.size.x * k / 24.0
+			puntos.append(Vector2(x, y0 + sin(k * 0.8 + _tiempo * 3.0) * 4.0))
+		for k in range(24, -1, -1):
+			var x := zona.position.x + zona.size.x * k / 24.0
+			puntos.append(Vector2(x, y1 + sin(k * 0.8 + _tiempo * 3.0) * 4.0))
+		draw_colored_polygon(puntos, Color(Figura.COLORES_ARCOIRIS[i], 0.96))
 
 
 ## Jardin de "Completa una escena" (Nicole, zona 5): cielo, loma, flores y decorados fijos.

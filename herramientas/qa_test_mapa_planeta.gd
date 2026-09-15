@@ -159,13 +159,17 @@ func _probar_apertura_con_dos_estaciones() -> void:
 func _probar_zona_secreta_sofia() -> void:
 	print("-- Sofia: zona secreta y estrellitas --")
 	_progreso.perfil_seleccionado = "sofia"
+	# Dificultad v3 (PO 14-Sep-2026): Sofia tiene Formas y Parejas en cada zona, asi que abrir la
+	# siguiente pide las 2 estaciones jugables.
 	for n in [1, 2, 3]:
 		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_formas_estrella" % n, 50, 3 if n == 1 else 2)
-	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_emparejar_estrella_01", 50, 2)
+		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_parejas_estrella" % n, 50, 2)
 	var mapa := await _abrir_arcoiris()
 	_check(mapa.zonas[3]["abierta"] and not mapa.zonas[4]["abierta"], "zona 4 abierta, la Cima sigue secreta")
 	_check(mapa.zonas[0]["estaciones"][1]["estrellitas"] == 3, "la estacion muestra las mejores estrellitas (3)")
+	_check(mapa.zonas[0]["estaciones"][1]["dorado_ruta"] == "", "sin reto dorado fuera de la Cima")
 	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z4_formas_estrella", 50, 1)
+	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z4_parejas_estrella", 50, 1)
 	mapa = await _abrir_arcoiris()
 	_check(mapa.zonas[4]["abierta"], "completar la zona 4 revela la Cima del Arcoiris")
 	_check(mapa.seleccion == 4, "el mapa lleva a la zona secreta recien revelada")

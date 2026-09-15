@@ -1,0 +1,200 @@
+{
+  "id_nivel": "arcoiris_z1_parejas_estrella",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "memoria",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "identico",
+  "oculto": true,
+  "tiempo_volteo_ms": 900,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "disposicion": {
+    "filas": 4,
+    "columnas": 6
+  },
+  "limite_intentos": 16,
+  "pares": [
+    {
+      "id_pareja": "estrella",
+      "elemento_a": {
+        "figura": "estrella",
+        "color": "#FFCB3D",
+        "id": "estrella_a"
+      },
+      "elemento_b": {
+        "figura": "estrella",
+        "color": "#FFCB3D",
+        "id": "estrella_b"
+      }
+    },
+    {
+      "id_pareja": "estrella_rosa",
+      "elemento_a": {
+        "figura": "estrella",
+        "color": "#F26CA8",
+        "id": "estrella_rosa_a"
+      },
+      "elemento_b": {
+        "figura": "estrella",
+        "color": "#F26CA8",
+        "id": "estrella_rosa_b"
+      }
+    },
+    {
+      "id_pareja": "corazon",
+      "elemento_a": {
+        "figura": "corazon",
+        "color": "#F26CA8",
+        "id": "corazon_a"
+      },
+      "elemento_b": {
+        "figura": "corazon",
+        "color": "#F26CA8",
+        "id": "corazon_b"
+      }
+    },
+    {
+      "id_pareja": "corazon_azul",
+      "elemento_a": {
+        "figura": "corazon",
+        "color": "#4A8BE0",
+        "id": "corazon_azul_a"
+      },
+      "elemento_b": {
+        "figura": "corazon",
+        "color": "#4A8BE0",
+        "id": "corazon_azul_b"
+      }
+    },
+    {
+      "id_pareja": "circulo",
+      "elemento_a": {
+        "figura": "circulo",
+        "color": "#4A8BE0",
+        "id": "circulo_a"
+      },
+      "elemento_b": {
+        "figura": "circulo",
+        "color": "#4A8BE0",
+        "id": "circulo_b"
+      }
+    },
+    {
+      "id_pareja": "triangulo",
+      "elemento_a": {
+        "figura": "triangulo",
+        "color": "#7DD87A",
+        "id": "triangulo_a"
+      },
+      "elemento_b": {
+        "figura": "triangulo",
+        "color": "#7DD87A",
+        "id": "triangulo_b"
+      }
+    },
+    {
+      "id_pareja": "cuadrado",
+      "elemento_a": {
+        "figura": "cuadrado",
+        "color": "#FF9F4A",
+        "id": "cuadrado_a"
+      },
+      "elemento_b": {
+        "figura": "cuadrado",
+        "color": "#FF9F4A",
+        "id": "cuadrado_b"
+      }
+    },
+    {
+      "id_pareja": "luna",
+      "elemento_a": {
+        "figura": "luna",
+        "color": "#B48CE8",
+        "id": "luna_a"
+      },
+      "elemento_b": {
+        "figura": "luna",
+        "color": "#B48CE8",
+        "id": "luna_b"
+      }
+    },
+    {
+      "id_pareja": "gota",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#45C6C0",
+        "id": "gota_a"
+      },
+      "elemento_b": {
+        "figura": "gota",
+        "color": "#45C6C0",
+        "id": "gota_b"
+      }
+    },
+    {
+      "id_pareja": "rombo",
+      "elemento_a": {
+        "figura": "rombo",
+        "color": "#FF6B6B",
+        "id": "rombo_a"
+      },
+      "elemento_b": {
+        "figura": "rombo",
+        "color": "#FF6B6B",
+        "id": "rombo_b"
+      }
+    },
+    {
+      "id_pareja": "flor",
+      "elemento_a": {
+        "figura": "flor",
+        "color": "#FFB25B",
+        "id": "flor_a"
+      },
+      "elemento_b": {
+        "figura": "flor",
+        "color": "#FFB25B",
+        "id": "flor_b"
+      }
+    },
+    {
+      "id_pareja": "arcoiris_secreto",
+      "elemento_a": {
+        "figura": "arcoiris",
+        "color": "#FFFFFF",
+        "id": "arcoiris_secreto_a"
+      },
+      "elemento_b": {
+        "figura": "arcoiris",
+        "color": "#FFFFFF",
+        "id": "arcoiris_secreto_b"
+      },
+      "especial": true
+    }
+  ],
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/estrella/intro_z1.wav",
+    "pista": "voces/arcoiris/emparejar/estrella/pista_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/estrella/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/estrella/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/estrella/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/estrella/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/estrella/victoria_final_01.wav",
+    "derrota_gag": "voces/arcoiris/emparejar/estrella/derrota_gag_01.wav",
+    "pista_usada": "voces/arcoiris/emparejar/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/emparejar/estrella/regalo_01.wav"
+  }
+}

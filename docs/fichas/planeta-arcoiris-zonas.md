@@ -113,31 +113,45 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 
 > **Implementado 14-Sep-2026 (las 15 celdas)**: motor en `scripts/motores/encajar/`, niveles en
 > `datos/niveles/arcoiris/<zona>/formas_<perfil>.json`, contrato en `docs/fichas/motor-encajar.md`.
-> Diferencias con la tabla: Sofía zona 4 mantiene el giro por toque de la zona 3; el tangram de la
-> zona 5 sortea corona o gato (el pony queda para una rejugada futura); Nicole tiene límite holgado
-> solo en las zonas 4 y 5.
+> Diferencias con la tabla: Nicole tiene límite holgado solo en las zonas 4 y 5.
+>
+> **Sofía, dificultad v3 (decisión del PO, 14-Sep-2026)**: el PO pidió "aumentar mucho" la dificultad
+> ("armar 3 figuras lo hace con los ojos cerrados"), aprobó la propuesta v2 y pidió "un poco más". La
+> columna de Sofía de abajo ya es la v3 implementada y reemplaza a la anterior (figuras de 2-3 piezas,
+> giro por toque, distractoras y tangram de 6 piezas). Los niveles los genera
+> `herramientas/generar_niveles_sofia.py`, que resuelve cada tangram y cada marco con
+> `herramientas/disenar_retos_sofia.py`: todo nivel tiene solución verificada y el espejo obligatorio
+> de la zona 2 está comprobado (sin voltear el paralelogramo no hay solución). QA:
+> `herramientas/qa_test_retos_sofia.gd`. **Pendiente de validación** por `disenador-niveles`,
+> `disenador-mecanicas` y `experto-ux-parvulo` (botón espejo y botón de pista) y del playtest con Sofía.
 
 | Zona | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
-| 1 · Claro | 3 formas gigantes (círculo, cuadrado, triángulo), imán enorme [`iman_tolerancia_px: 200`] | 6 formas con silueta de color (la silueta ayuda) [`modo: simple`] | Figura compuesta de **2 piezas**: casa (triángulo + cuadrado) con contornos internos marcados [`modo: compuesto`] |
-| 2 · Charcos | Las formas tienen carita y **se ríen** al encajar; decoraciones de rueda y aleta de dino (GDD §4) | 7 formas: suma corazón y rombo | Figuras de **3 piezas** sin contornos internos: cohete y gato |
-| 3 · Chupetines | 4 formas (suma estrella), cada una en su color de siempre | Siluetas **solo con contorno**, sin color guía | Piezas que **hay que girar**: un toque sobre la pieza la gira 45° (sigue siendo un solo toque, GDD §6.4) |
-| 4 · Islotes | Formas en **dos tamaños** (grande y chico) con imán generoso: la chica va en el hueco chico | Formas en dos tamaños y **siluetas giradas**: la pieza se endereza sola al acercarse (sin exigir rotar) | **Piezas distractoras**: hay más piezas de las que la figura necesita |
-| 5 · Cima | Arma su **dinosaurio o autito** gigante de 3 piezas, con imán total (su gusto más fuerte, ficha de Maxi) | **Completa una escena**: jardín con casa y jirafa con 8 huecos; el corazón dorado escondido | **Tangram de Coco**: silueta completa sin divisiones (pony o corona) con 5-7 piezas y rotación; límite holgado, estrellitas |
+| 1 · Claro | 3 formas gigantes (círculo, cuadrado, triángulo), imán enorme [`iman_tolerancia_px: 200`] | 6 formas con silueta de color (la silueta ayuda) [`modo: simple`] | **Tangram de 7 piezas** solo con contorno (casa, cohete o pez), giro de a 45° por toque; vale cualquier solución que llene la silueta [`mecanica: tangram_libre`, `lado_red: 96`], sin límite de intentos |
+| 2 · Charcos | Las formas tienen carita y **se ríen** al encajar; decoraciones de rueda y aleta de dino (GDD §4) | 7 formas: suma corazón y rombo | **Tangram + espejo obligatorio**: el paralelogramo llega al revés y hay que voltearlo con el botón espejo (velero o una de 4 siluetas asimétricas con una sola quiralidad válida), más **una pieza intrusa** que sobra [`boton_espejo`, `distractoras_por_partida: 1`] |
+| 3 · Chupetines | 4 formas (suma estrella), cada una en su color de siempre | Siluetas **solo con contorno**, sin color guía | **Copia de memoria**: el modelo de 7 piezas a color se ve **5 s**, Coco lo tapa con una cortina arcoíris y hay que armarlo igual, cada pieza con su color; mirar de nuevo (botón ojo) cuesta una estrellita [`mecanica: memoria`, `segundos_modelo: 5`, `limite_intentos: 8`] |
+| 4 · Islotes | Formas en **dos tamaños** (grande y chico) con imán generoso: la chica va en el hueco chico | Formas en dos tamaños y **siluetas giradas**: la pieza se endereza sola al acercarse (sin exigir rotar) | **Marcos de pentominós** (Katamino), 2 pruebas seguidas: 5×5 con 7 piezas (sobran 2) y 6×5 con 9 piezas (sobran 3); giro de a 90° y espejo [`mecanica: marco`, `pruebas`] |
+| 5 · Cima | Arma su **dinosaurio o autito** gigante de 3 piezas, con imán total (su gusto más fuerte, ficha de Maxi) | **Completa una escena**: jardín con casa y jirafa con 8 huecos; el corazón dorado escondido | **Desafío de la Cima**, 3 pruebas seguidas: (1) **tangram doble de 14 piezas** (nave estelar); (2) **marco con forma de nave** de 45 cuadraditos con los 12 pentominós (sobran 3); (3) **copia de memoria** mirando el modelo solo **3 s**. ⭐ **Reto dorado** (aparece con 3 estrellitas): el **rectángulo de 6×10 con los 12 pentominós**, con el avance guardado pieza a pieza |
 
 ### 3.3 Parejas de Coco — motor `emparejar` (cuarto juego)
 
-La demo jugable del 13-Sep-2026 ya cubre tres de estas celdas: Maxi zona 2
-(`arcoiris_emparejar_semilla_01`), Nicole zona 3 (`arcoiris_emparejar_brote_01`) y Sofía zona 2
-(`arcoiris_emparejar_estrella_01`).
+La demo jugable del 13-Sep-2026 ya cubre dos de estas celdas: Maxi zona 2
+(`arcoiris_emparejar_semilla_01`) y Nicole zona 3 (`arcoiris_emparejar_brote_01`).
+
+> **Sofía, dificultad v3 (decisión del PO, 14-Sep-2026)**: implementadas las 5 zonas y el reto dorado en
+> `datos/niveles/arcoiris/<zona>/parejas_estrella.json`. La columna de Sofía es la v3 y reemplaza a la
+> anterior. Los límites cuentan **fallos**. Salen de una jugadora simulada con memoria visual de ~5 cartas
+> (el percentil 80 de 3.000 partidas; ver `docs/fichas/motor-emparejar.md` §5): ganar es posible, pero
+> 3 estrellitas exigen jugar muy bien. La demo `arcoiris_emparejar_estrella_01` (8 pares) queda solo
+> para `qa_test_emparejar_rutas`.
 
 | Zona | Maxi · Semilla (siempre a la vista, `oculto: false`) | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
-| 1 · Claro | 2 pares a la vista, cartas enormes, halo que respira [`halo_idle: true`] | 3 pares **a la vista** (calentamiento sin memoria) | 6 pares tapados, 4×3, tiempo generoso [`tiempo_volteo_ms: 1300`, `limite_intentos: null`] |
-| 2 · Charcos | 3 pares a la vista ✅ **(demo actual)** | 4 pares **tapados** con tiempo generoso y ayuda tras 3 fallos [`tiempo_volteo_ms: 1600`, `ayuda_tras_fallos: 3`] | 8 pares 4×4 con límite ✅ **(demo actual)** [`limite_intentos: 16`] |
-| 3 · Chupetines | 4 pares; suma figuras de sus gustos (dino, autito) | 5 pares tapados, corazón mágico ✅ **(demo actual)** | **Correspondencia**: cada mezcla con su receta (carta verde ↔ carta azul+amarillo) [`modo: correspondencia`], 8 pares |
-| 4 · Islotes | **Mamá y bebé**: figura grande ↔ la misma figura chiquita [`modo: correspondencia`], 4 pares | **Color ↔ cosa de ese color** (mancha amarilla ↔ jirafa, mancha rosa ↔ flor), 5 pares tapados | 10 pares 5×4 con límite 20 y cartas **traviesas**: tras cada par encontrado, dos cartas tapadas intercambian lugar con una animación visible |
-| 5 · Cima | 5 pares a la vista y las cartas **bailan** despacito de lugar entre jugada y jugada (atención, sin memoria) | 6 pares: **dibujo ↔ su letra inicial** con voz ("S de sol"), refuerzo de lectura inicial (decisión del PO del 06-Ago-2026, GDD §5) | **Sombras**: figura ↔ su silueta, 12 pares 6×4 (cartas ≥130 px en 1280×720), límite 26, arcoíris secreto |
+| 1 · Claro | 2 pares a la vista, cartas enormes, halo que respira [`halo_idle: true`] | 3 pares **a la vista** (calentamiento sin memoria) | **12 pares 6×4** tapados, con figuras iguales de distinto color (estrella amarilla y rosada) [`tiempo_volteo_ms: 900`, `limite_intentos: 16`] |
+| 2 · Charcos | 3 pares a la vista ✅ **(demo actual)** | 4 pares **tapados** con tiempo generoso y ayuda tras 3 fallos [`tiempo_volteo_ms: 1600`, `ayuda_tras_fallos: 3`] | **Correspondencia**: cada color con su receta (verde ↔ azul + amarillo; lila ↔ violeta + blanco; café ↔ rojo + amarillo + azul), 10 pares 5×4 [`modo: correspondencia`, `estilo: receta`, `limite_intentos: 15`] |
+| 3 · Chupetines | 4 pares; suma figuras de sus gustos (dino, autito) | 5 pares tapados, corazón mágico ✅ **(demo actual)** | **Tríos**: 7 tríos (21 cartas, 7×3); el turno termina en la primera carta que no coincide [`tamano_grupo: 3`, `limite_intentos: 42`] |
+| 4 · Islotes | **Mamá y bebé**: figura grande ↔ la misma figura chiquita [`modo: correspondencia`], 4 pares | **Color ↔ cosa de ese color** (mancha amarilla ↔ jirafa, mancha rosa ↔ flor), 5 pares tapados | **Cartas traviesas**: 14 pares 7×4; tras cada par, **dos** parejas de cartas tapadas cambian de lugar con un vuelo visible [`intercambios_tras_acierto: 2`, `limite_intentos: 24`] |
+| 5 · Cima | 5 pares a la vista y las cartas **bailan** despacito de lugar entre jugada y jugada (atención, sin memoria) | 6 pares: **dibujo ↔ su letra inicial** con voz ("S de sol"), refuerzo de lectura inicial (decisión del PO del 06-Ago-2026, GDD §5) | **Desafío final**: figura ↔ su sombra, **16 pares 8×4** con trampas en espejo y giro (luna y luna espejada, paralelogramo y su reflejo, gota a la izquierda y a la derecha…), una carta traviesa por acierto, volteo 800 ms, límite 32. ⭐ **Reto dorado**: 18 pares 9×4 con 2 intercambios y límite 42 |
 
 ### 3.4 Pinta con Coco — motor `lienzo_libre`
 
@@ -165,9 +179,12 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 - **Nicole (Brote)**: más elementos, memoria con tiempos generosos, atención (cosas que se mueven)
   y escucha y lectura inicial (colores nombrados, letras iniciales). Siempre **un objetivo a la
   vez**. Derrota-gag suave solo donde hay límite.
-- **Sofía (Estrella)**: reglas nuevas cada zona (receta oculta, girar piezas, distractores,
-  correspondencias, cartas traviesas, tangram, pedidos encadenados). Estrellitas en todas las
-  estaciones con puntaje. Siempre completable a los 8 años.
+- **Sofía (Estrella), dificultad v3**: retos de 8-12 años con una regla nueva por zona (tangram
+  libre, espejo, copia de memoria, pentominós, tríos, recetas, cartas traviesas, sombras en espejo) y un
+  desafío final de varias pruebas. Estrellitas en todas las estaciones con puntaje. Siempre completable:
+  **pistas que cuestan una estrellita** (botón de estrella dorada, arriba a la derecha), **regalo de una
+  pieza o pareja tras 2 derrotas** y **reto dorado opcional** en la Cima (aparece con 3 estrellitas,
+  no bloquea nada).
 
 ---
 
@@ -183,8 +200,13 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 > - Mientras falten minijuegos, abrir la zona siguiente pide **min(2, estaciones jugables)** y la
 >   zona secreta se revela al completar las estaciones jugables de la zona 4. Estaciones sin nivel se
 >   ven "pintándose" (sin candado) y Coco lo explica al tocarlas.
-> - Parejas de Coco usa hoy los 3 niveles de la demo, ubicados en su zona (Maxi y Sofía zona 2,
->   Nicole zona 3).
+> - Parejas de Coco: Maxi (zona 2) y Nicole (zona 3) usan los niveles de la demo; Sofía tiene sus 5
+>   zonas (dificultad v3). Una estación puede traer `niveles_dorados` por hermano: el mapa muestra
+>   un botón dorado de 96 px en la tarjeta cuando esa estación tiene 3 estrellitas, y Coco lo anuncia
+>   (`voces.dorado_disponible`). Completar el reto dorado no cuenta para abrir zonas.
+> - Avance a medio jugar (reto dorado de 6×10): `Progreso.guardar_estado_parcial` bajo
+>   `planetas.<id>.parciales.<id_nivel>`, un campo opcional sin cambio de versión del guardado. Se
+>   borra al ganar el nivel.
 > - Tocar a Cometa lleva directo a la siguiente estación pendiente (riesgo 5, §6). F4 (PC) abre
 >   todas las zonas para que el PO revise variantes.
 

@@ -1,0 +1,184 @@
+{
+  "id_nivel": "arcoiris_z3_parejas_estrella",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona3_chupetines",
+  "tema": "memoria",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "trios",
+  "oculto": true,
+  "tiempo_volteo_ms": 1000,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "tamano_grupo": 3,
+  "disposicion": {
+    "filas": 3,
+    "columnas": 7
+  },
+  "limite_intentos": 42,
+  "grupos": [
+    {
+      "id_grupo": "estrella",
+      "elementos": [
+        {
+          "id": "estrella_0",
+          "figura": "estrella",
+          "color": "#FFCB3D"
+        },
+        {
+          "id": "estrella_1",
+          "figura": "estrella",
+          "color": "#FFCB3D"
+        },
+        {
+          "id": "estrella_2",
+          "figura": "estrella",
+          "color": "#FFCB3D"
+        }
+      ]
+    },
+    {
+      "id_grupo": "corazon",
+      "elementos": [
+        {
+          "id": "corazon_0",
+          "figura": "corazon",
+          "color": "#F26CA8"
+        },
+        {
+          "id": "corazon_1",
+          "figura": "corazon",
+          "color": "#F26CA8"
+        },
+        {
+          "id": "corazon_2",
+          "figura": "corazon",
+          "color": "#F26CA8"
+        }
+      ]
+    },
+    {
+      "id_grupo": "circulo",
+      "elementos": [
+        {
+          "id": "circulo_0",
+          "figura": "circulo",
+          "color": "#4A8BE0"
+        },
+        {
+          "id": "circulo_1",
+          "figura": "circulo",
+          "color": "#4A8BE0"
+        },
+        {
+          "id": "circulo_2",
+          "figura": "circulo",
+          "color": "#4A8BE0"
+        }
+      ]
+    },
+    {
+      "id_grupo": "triangulo",
+      "elementos": [
+        {
+          "id": "triangulo_0",
+          "figura": "triangulo",
+          "color": "#7DD87A"
+        },
+        {
+          "id": "triangulo_1",
+          "figura": "triangulo",
+          "color": "#7DD87A"
+        },
+        {
+          "id": "triangulo_2",
+          "figura": "triangulo",
+          "color": "#7DD87A"
+        }
+      ]
+    },
+    {
+      "id_grupo": "luna",
+      "elementos": [
+        {
+          "id": "luna_0",
+          "figura": "luna",
+          "color": "#B48CE8"
+        },
+        {
+          "id": "luna_1",
+          "figura": "luna",
+          "color": "#B48CE8"
+        },
+        {
+          "id": "luna_2",
+          "figura": "luna",
+          "color": "#B48CE8"
+        }
+      ]
+    },
+    {
+      "id_grupo": "gota",
+      "elementos": [
+        {
+          "id": "gota_0",
+          "figura": "gota",
+          "color": "#45C6C0"
+        },
+        {
+          "id": "gota_1",
+          "figura": "gota",
+          "color": "#45C6C0"
+        },
+        {
+          "id": "gota_2",
+          "figura": "gota",
+          "color": "#45C6C0"
+        }
+      ]
+    },
+    {
+      "id_grupo": "flor",
+      "elementos": [
+        {
+          "id": "flor_0",
+          "figura": "flor",
+          "color": "#FF9F4A"
+        },
+        {
+          "id": "flor_1",
+          "figura": "flor",
+          "color": "#FF9F4A"
+        },
+        {
+          "id": "flor_2",
+          "figura": "flor",
+          "color": "#FF9F4A"
+        }
+      ]
+    }
+  ],
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/estrella/intro_z3.wav",
+    "pista": "voces/arcoiris/emparejar/estrella/pista_z3.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/estrella/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/estrella/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/estrella/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/estrella/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/estrella/victoria_final_01.wav",
+    "derrota_gag": "voces/arcoiris/emparejar/estrella/derrota_gag_01.wav",
+    "pista_usada": "voces/arcoiris/emparejar/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/emparejar/estrella/regalo_01.wav"
+  }
+}

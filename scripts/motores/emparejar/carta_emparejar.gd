@@ -17,7 +17,12 @@ extends Control
 signal tocada(carta: CartaEmparejar)
 
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
+## Formas geometricas asimetricas (paralelogramo, triangulo rectangulo...) para las sombras con trampa.
+const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
 const TOLERANCIA_TOQUE_PX := 56.0  ## radio de tolerancia de arrastre corto (B1)
+const COLOR_SOMBRA := Color(0.17, 0.2, 0.31, 0.92)
+const PROPORCIONES_FORMA := {"triangulo_rect": Vector2(1.0, 1.0), "paralelogramo": Vector2(1.3, 0.72),
+	"semicirculo": Vector2(1.2, 0.6), "trapecio": Vector2(1.25, 0.72)}
 const SEGUNDOS_MEDIO_GIRO := 0.13
 const COLOR_CONTORNO := Color("#2B3350")
 const COLOR_CARA := Color("#FFF8EE")
@@ -39,6 +44,13 @@ var disabled := false
 var mostrando := false
 ## Semilla: halo dorado que respira en las cartas pendientes (ficha de motor §5, ayudas Semilla).
 var halo_idle := false
+## Retos de Sofia (v3): "" normal | "sombra" (silueta oscura) | "receta" (colores que se mezclan).
+var estilo := ""
+var receta: Array = []
+## Forma de geometria_formas.gd en vez de una figura con carita ("" = usar `figura`).
+var forma := ""
+var rotacion_figura := 0.0
+var espejo := false
 
 var _oculto := false
 var _estado := "normal"  ## normal | seleccionada | acertada | no_es_este | ayuda
@@ -89,13 +101,24 @@ func configurar(datos: Dictionary, oculto: bool) -> void:
 	figura = str(datos.get("figura", ""))
 	color_figura = Color.from_string(str(datos.get("color", "")), Color.from_hsv(float(hash(id_pareja) % 360) / 360.0, 0.5, 0.95))
 	especial = bool(datos.get("especial", false))
+	estilo = str(datos.get("estilo", ""))
+	receta = datos.get("receta", [])
+	forma = str(datos.get("forma", ""))
+	rotacion_figura = float(datos.get("rotacion", 0.0))
+	espejo = bool(datos.get("espejo", false))
+	if estilo == "receta" and not receta.is_empty():
+		color_figura = Color.from_string(str(receta[0]), color_figura)
 	var ruta_sprite := str(datos.get("sprite", ""))
 	if ruta_sprite != "" and not ruta_sprite.begins_with("res://"):
 		ruta_sprite = "res://assets/" + ruta_sprite
 	_textura = load(ruta_sprite) if ruta_sprite != "" and ResourceLoader.exists(ruta_sprite) else null
-	if figura == "" and _textura == null:
+	if figura == "" and _textura == null and forma == "" and estilo != "receta":
 		figura = "circulo"
 	reiniciar(oculto)
+
+
+func es_sombra() -> bool:
+	return estilo == "sombra"
 
 
 func _process(delta: float) -> void:
@@ -301,11 +324,69 @@ func _dibujar() -> void:
 
 
 func _dibujar_cara(centro: Vector2, s: Vector2) -> void:
-	_cuerpo.draw_circle(centro, s.x * 0.37, Color(color_figura, 0.2))
-	if _textura != null:
+	if not es_sombra():
+		_cuerpo.draw_circle(centro, s.x * 0.37, Color(color_figura, 0.2))
+	if estilo == "receta":
+		_dibujar_receta(centro, s)
+	elif _textura != null:
 		_cuerpo.draw_texture_rect(_textura, Rect2(centro - s * 0.36, s * 0.72), false)
+	elif forma != "":
+		_dibujar_forma(centro, s)
 	else:
-		Figura.dibujar(_cuerpo, figura, color_figura, centro, s.x * 0.33, true, esta_acertada)
+		_dibujar_figura(centro, s)
+	_dibujar_marcas(centro, s)
+
+
+## Receta de color: gotas de cada color con un "+" entre ellas (verde = azul + amarillo).
+func _dibujar_receta(centro: Vector2, s: Vector2) -> void:
+	var n := receta.size()
+	var radio := s.x * (0.15 if n <= 2 else 0.115)
+	var paso := s.x * (0.42 if n <= 2 else 0.3)
+	var inicio := centro.x - paso * (n - 1) / 2.0
+	for i in n:
+		var punto := Vector2(inicio + paso * i, centro.y)
+		Figura.dibujar(_cuerpo, "gota", Color.from_string(str(receta[i]), Color.WHITE), punto, radio, false)
+		if i < n - 1:
+			var mas := Vector2(punto.x + paso / 2.0, centro.y + radio * 0.2)
+			var brazo := radio * 0.36
+			_cuerpo.draw_line(mas - Vector2(brazo, 0), mas + Vector2(brazo, 0), COLOR_CONTORNO, maxf(3.0, s.x * 0.025), true)
+			_cuerpo.draw_line(mas - Vector2(0, brazo), mas + Vector2(0, brazo), COLOR_CONTORNO, maxf(3.0, s.x * 0.025), true)
+
+
+## Forma geometrica girada o en espejo: a color o como sombra oscura.
+func _dibujar_forma(centro: Vector2, s: Vector2) -> void:
+	var proporcion: Vector2 = PROPORCIONES_FORMA.get(forma, Vector2.ONE)
+	var medida := proporcion / maxf(proporcion.x, proporcion.y) * s.x * 0.6
+	var base := Geo.contorno(forma, medida.x, medida.y)
+	if espejo:
+		base = Geo.espejado(base)
+	var poligono := Geo.transformado(base, rotacion_figura, centro)
+	if es_sombra():
+		_cuerpo.draw_colored_polygon(poligono, COLOR_SOMBRA)
+	else:
+		Geo.pintar(_cuerpo, poligono, color_figura, s.x * 0.3)
+
+
+## Figura con carita (o su sombra), con giro y espejo aplicados como transformacion de dibujo.
+func _dibujar_figura(centro: Vector2, s: Vector2) -> void:
+	var transformar := not is_zero_approx(rotacion_figura) or espejo
+	var c := centro
+	if transformar:
+		_cuerpo.draw_set_transform(centro, deg_to_rad(rotacion_figura), Vector2(-1.0 if espejo else 1.0, 1.0))
+		c = Vector2.ZERO
+	var radio := s.x * 0.33
+	if not es_sombra():
+		Figura.dibujar(_cuerpo, figura, color_figura, c, radio, true, esta_acertada)
+	elif figura == "arcoiris":
+		var base := c + Vector2(0, radio * 0.4)
+		_cuerpo.draw_arc(base, radio * 0.56, PI, TAU, 40, COLOR_SOMBRA, radio * 0.72, true)
+	else:
+		_cuerpo.draw_colored_polygon(Figura.poligono(figura, c, radio), COLOR_SOMBRA)
+	if transformar:
+		_cuerpo.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+func _dibujar_marcas(centro: Vector2, s: Vector2) -> void:
 	if esta_acertada:
 		var punto := Vector2(s.x * 0.83, s.y * 0.17)
 		var estrellita := Figura.poligono("estrella", punto, s.x * 0.1)

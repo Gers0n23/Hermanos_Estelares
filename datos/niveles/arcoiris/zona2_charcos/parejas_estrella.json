@@ -1,0 +1,204 @@
+{
+  "id_nivel": "arcoiris_z2_parejas_estrella",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "memoria",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "correspondencia",
+  "oculto": true,
+  "tiempo_volteo_ms": 900,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "disposicion": {
+    "filas": 4,
+    "columnas": 5
+  },
+  "limite_intentos": 15,
+  "pares": [
+    {
+      "id_pareja": "verde",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#7DD87A",
+        "id": "verde_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#3F7FE0",
+          "#FFD23D"
+        ],
+        "id": "verde_b"
+      }
+    },
+    {
+      "id_pareja": "naranja",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#FF9F4A",
+        "id": "naranja_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#FF4B4B",
+          "#FFD23D"
+        ],
+        "id": "naranja_b"
+      }
+    },
+    {
+      "id_pareja": "violeta",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#9B6BD9",
+        "id": "violeta_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#FF4B4B",
+          "#3F7FE0"
+        ],
+        "id": "violeta_b"
+      }
+    },
+    {
+      "id_pareja": "rosado",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#FFB3C7",
+        "id": "rosado_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#FF4B4B",
+          "#FFFFFF"
+        ],
+        "id": "rosado_b"
+      }
+    },
+    {
+      "id_pareja": "celeste",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#9ED8F5",
+        "id": "celeste_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#3F7FE0",
+          "#FFFFFF"
+        ],
+        "id": "celeste_b"
+      }
+    },
+    {
+      "id_pareja": "cafe",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#9C6B42",
+        "id": "cafe_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#FF4B4B",
+          "#FFD23D",
+          "#3F7FE0"
+        ],
+        "id": "cafe_b"
+      }
+    },
+    {
+      "id_pareja": "gris",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#A7A9B4",
+        "id": "gris_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#2B3350",
+          "#FFFFFF"
+        ],
+        "id": "gris_b"
+      }
+    },
+    {
+      "id_pareja": "lila",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#D2B8F0",
+        "id": "lila_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#9B6BD9",
+          "#FFFFFF"
+        ],
+        "id": "lila_b"
+      }
+    },
+    {
+      "id_pareja": "crema",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#FFF0A8",
+        "id": "crema_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#FFD23D",
+          "#FFFFFF"
+        ],
+        "id": "crema_b"
+      }
+    },
+    {
+      "id_pareja": "verde_claro",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#C4F0B8",
+        "id": "verde_claro_a"
+      },
+      "elemento_b": {
+        "estilo": "receta",
+        "receta": [
+          "#4CC25A",
+          "#FFFFFF"
+        ],
+        "id": "verde_claro_b"
+      }
+    }
+  ],
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/estrella/intro_z2.wav",
+    "pista": "voces/arcoiris/emparejar/estrella/pista_z2.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/estrella/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/estrella/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/estrella/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/estrella/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/estrella/victoria_final_01.wav",
+    "derrota_gag": "voces/arcoiris/emparejar/estrella/derrota_gag_01.wav",
+    "pista_usada": "voces/arcoiris/emparejar/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/emparejar/estrella/regalo_01.wav"
+  }
+}

@@ -7,48 +7,17 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 55,
+  "dificultad": "v3 (PO 14-Sep-2026)",
   "caras": false,
   "guia_color": false,
-  "modo": "compuesto",
-  "figuras_por_partida": 2,
-  "limite_intentos": 9,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "mecanica": "marco",
+  "modo": "marco",
+  "boton_espejo": true,
   "rotacion_por_toque": true,
   "paso_rotacion": 90,
-  "rotacion_inicial_aleatoria": true,
-  "distractoras_por_partida": 3,
-  "piezas_distractoras": [
-    {
-      "forma": "triangulo",
-      "ancho": 70,
-      "alto": 70,
-      "color": "#B48CE8"
-    },
-    {
-      "forma": "circulo",
-      "ancho": 100,
-      "alto": 100,
-      "color": "#F26CA8"
-    },
-    {
-      "forma": "rectangulo",
-      "ancho": 90,
-      "alto": 120,
-      "color": "#6FD6E8"
-    },
-    {
-      "forma": "trapecio",
-      "ancho": 120,
-      "alto": 50,
-      "color": "#FF9F4A"
-    },
-    {
-      "forma": "estrella",
-      "ancho": 90,
-      "alto": 90,
-      "color": "#FFCB3D"
-    }
-  ],
+  "iman_tolerancia_px": 60,
   "lineas_voz": {
     "acierto": [
       "voces/arcoiris/formas/estrella/acierto_01.wav",
@@ -68,131 +37,743 @@
       "voces/arcoiris/formas/estrella/victoria_01.wav",
       "voces/arcoiris/formas/estrella/victoria_02.wav"
     ],
-    "intro": "voces/arcoiris/formas/estrella/intro_z4.wav",
-    "pista": "voces/arcoiris/formas/estrella/pista_girar_01.wav",
-    "girar": "voces/arcoiris/formas/estrella/girar_01.wav"
+    "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
+    "espejo_sin_pieza": "voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav",
+    "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
+    "prueba_superada": [
+      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
+      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/estrella/intro_marco_z4.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_marco_01.wav"
   },
-  "figuras": [
+  "pruebas": [
     {
-      "id": "cohete",
-      "voz_completa": "voces/arcoiris/formas/figuras/cohete.wav",
-      "piezas": [
+      "marco": [
+        "#####",
+        "#####",
+        "#####",
+        "#####",
+        "#####"
+      ],
+      "lado_celda": 76,
+      "limite_intentos": 8,
+      "piezas_necesarias": 5,
+      "piezas_marco": [
         {
-          "forma": "triangulo",
-          "ancho": 90,
-          "alto": 80,
-          "color": "#FF6B6B",
-          "x": 0,
-          "y": -115
+          "id": "F",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF6B6B"
         },
         {
-          "forma": "rectangulo",
-          "ancho": 90,
-          "alto": 150,
-          "color": "#6FD6E8",
-          "x": 0,
-          "y": 0
+          "id": "L",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#7DD87A"
         },
         {
-          "forma": "trapecio",
-          "ancho": 150,
-          "alto": 50,
-          "color": "#FF9F4A",
-          "x": 0,
-          "y": 100
+          "id": "P",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "color": "#B48CE8"
+        },
+        {
+          "id": "T",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF9F4A"
+        },
+        {
+          "id": "W",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#6FD6E8"
+        },
+        {
+          "id": "X",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FFE38A"
+        },
+        {
+          "id": "Y",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#9B6BD9"
         }
       ],
-      "silueta_unida": true
+      "solucion": [
+        {
+          "id": "L",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "id": "P",
+          "celdas": [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "Y",
+          "celdas": [
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        {
+          "id": "T",
+          "celdas": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "W",
+          "celdas": [
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ]
+          ]
+        }
+      ]
     },
     {
-      "id": "gato",
-      "voz_completa": "voces/arcoiris/formas/figuras/gato.wav",
-      "piezas": [
+      "marco": [
+        "######",
+        "######",
+        "######",
+        "######",
+        "######"
+      ],
+      "lado_celda": 72,
+      "limite_intentos": 10,
+      "piezas_necesarias": 6,
+      "piezas_marco": [
         {
-          "forma": "circulo",
-          "ancho": 140,
-          "alto": 140,
-          "color": "#FFB25B",
-          "x": 0,
-          "y": 20,
-          "cara": true
+          "id": "F",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF6B6B"
         },
         {
-          "forma": "triangulo",
-          "ancho": 56,
-          "alto": 60,
-          "color": "#FF9F4A",
-          "x": -40,
-          "y": -62
+          "id": "I",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "color": "#4A8BE0"
         },
         {
-          "forma": "triangulo",
-          "ancho": 56,
-          "alto": 60,
-          "color": "#FF9F4A",
-          "x": 40,
-          "y": -62
+          "id": "L",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#7DD87A"
+        },
+        {
+          "id": "N",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "color": "#FFCB3D"
+        },
+        {
+          "id": "T",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF9F4A"
+        },
+        {
+          "id": "W",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#6FD6E8"
+        },
+        {
+          "id": "X",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FFE38A"
+        },
+        {
+          "id": "Y",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#9B6BD9"
+        },
+        {
+          "id": "Z",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#B07A4F"
         }
       ],
-      "silueta_unida": true
-    },
-    {
-      "id": "barco",
-      "voz_completa": "voces/arcoiris/formas/figuras/barco.wav",
-      "piezas": [
+      "solucion": [
         {
-          "forma": "trapecio",
-          "ancho": 200,
-          "alto": 60,
-          "color": "#B07A4F",
-          "x": 0,
-          "y": 40,
-          "rotacion": 180
+          "id": "I",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ]
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 120,
-          "alto": 90,
-          "color": "#FFF8EE",
-          "x": -45,
-          "y": -50,
-          "rotacion": 270
+          "id": "Y",
+          "celdas": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              2
+            ]
+          ]
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 60,
-          "alto": 90,
-          "color": "#F26CA8",
-          "x": 30,
-          "y": -35
+          "id": "Z",
+          "celdas": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "L",
+          "celdas": [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              4
+            ]
+          ]
+        },
+        {
+          "id": "T",
+          "celdas": [
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              5,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "W",
+          "celdas": [
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              5,
+              4
+            ]
+          ]
         }
       ],
-      "silueta_unida": true
-    },
-    {
-      "id": "pez",
-      "voz_completa": "voces/arcoiris/formas/figuras/pez.wav",
-      "piezas": [
-        {
-          "forma": "rombo",
-          "ancho": 170,
-          "alto": 110,
-          "color": "#4A8BE0",
-          "x": 20,
-          "y": 0,
-          "cara": true
-        },
-        {
-          "forma": "triangulo",
-          "ancho": 90,
-          "alto": 80,
-          "color": "#FF9F4A",
-          "x": -95,
-          "y": 0,
-          "rotacion": 90
-        }
-      ],
-      "silueta_unida": true
+      "lineas_voz": {
+        "intro": "voces/arcoiris/formas/estrella/intro_marco_z4b.wav"
+      }
     }
   ]
 }

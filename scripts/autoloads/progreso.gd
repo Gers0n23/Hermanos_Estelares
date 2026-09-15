@@ -283,6 +283,35 @@ func esta_nivel_completado(id_perfil: String, planeta_id: String, id_nivel: Stri
 	return niveles.get(id_nivel, {}).get("completado", false)
 
 
+## Estado a medio jugar de un nivel largo (p. ej. el reto dorado de Sofia, que se arma en varias
+## tardes). El minijuego decide que guarda; aqui solo se persiste por hermano, planeta y nivel.
+## Es un campo opcional del planeta ("parciales"): guardados viejos no lo traen y no hace falta migrar.
+func guardar_estado_parcial(id_perfil: String, planeta_id: String, id_nivel: String, estado: Dictionary) -> void:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		push_warning("Progreso.guardar_estado_parcial: id_perfil desconocido '%s'" % id_perfil)
+		return
+	var datos_planeta := _datos_planeta(id_perfil, planeta_id)
+	if not datos_planeta.has("parciales"):
+		datos_planeta["parciales"] = {}
+	datos_planeta["parciales"][id_nivel] = estado
+	guardar()
+
+
+func obtener_estado_parcial(id_perfil: String, planeta_id: String, id_nivel: String) -> Dictionary:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		return {}
+	return _datos_planeta(id_perfil, planeta_id).get("parciales", {}).get(id_nivel, {})
+
+
+func borrar_estado_parcial(id_perfil: String, planeta_id: String, id_nivel: String) -> void:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		return
+	var parciales: Dictionary = _datos_planeta(id_perfil, planeta_id).get("parciales", {})
+	if parciales.has(id_nivel):
+		parciales.erase(id_nivel)
+		guardar()
+
+
 ## Mejor puntaje de estrellitas logrado en un nivel (0 si nunca se completo o no puntua). Lo usa el
 ## mapa del planeta para mostrarlo en cada estacion.
 func obtener_estrellitas_nivel(id_perfil: String, planeta_id: String, id_nivel: String) -> int:

@@ -35,7 +35,8 @@
     "secreta_revelada": "voces/arcoiris/mapa/secreta_revelada.wav",
     "estacion_pronto": "voces/arcoiris/mapa/estacion_pronto.wav",
     "cometa_vamos": "voces/arcoiris/mapa/cometa_vamos.wav",
-    "todo_listo": "voces/arcoiris/mapa/todo_listo.wav"
+    "todo_listo": "voces/arcoiris/mapa/todo_listo.wav",
+    "dorado_disponible": "voces/arcoiris/mapa/dorado_disponible.wav"
   },
   "zonas": [
     {
@@ -70,7 +71,9 @@
         {
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
-          "niveles": {}
+          "niveles": {
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/parejas_estrella.json"
+          }
         },
         {
           "juego": "pinta",
@@ -113,7 +116,7 @@
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris_emparejar_semilla_01.json",
-            "sofia": "res://datos/niveles/arcoiris_emparejar_estrella_01.json"
+            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/parejas_estrella.json"
           }
         },
         {
@@ -156,7 +159,8 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
-            "nicole": "res://datos/niveles/arcoiris_emparejar_brote_01.json"
+            "nicole": "res://datos/niveles/arcoiris_emparejar_brote_01.json",
+            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_estrella.json"
           }
         },
         {
@@ -199,7 +203,9 @@
         {
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
-          "niveles": {}
+          "niveles": {
+            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/parejas_estrella.json"
+          }
         },
         {
           "juego": "pinta",
@@ -236,12 +242,20 @@
             "maxi": "res://datos/niveles/arcoiris/zona5_cima/formas_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona5_cima/formas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona5_cima/formas_estrella.json"
+          },
+          "niveles_dorados": {
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/formas_estrella_dorado.json"
           }
         },
         {
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
-          "niveles": {}
+          "niveles": {
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/parejas_estrella.json"
+          },
+          "niveles_dorados": {
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/parejas_estrella_dorado.json"
+          }
         },
         {
           "juego": "pinta",

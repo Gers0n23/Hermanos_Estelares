@@ -213,5 +213,31 @@ func _registrar_progreso(destellos: int, estrellitas: int) -> void:
 	var progreso := get_node_or_null("/root/Progreso")
 	if progreso == null:
 		return
-	var id_nivel: String = nivel.get("id_nivel", ruta_nivel.get_file().get_basename())
-	progreso.marcar_nivel_completado(id_perfil, planeta_id, id_nivel, destellos, estrellitas)
+	progreso.marcar_nivel_completado(id_perfil, planeta_id, _id_nivel_actual(), destellos, estrellitas)
+	# Un nivel ganado ya no tiene avance a medio jugar que retomar.
+	progreso.borrar_estado_parcial(id_perfil, planeta_id, _id_nivel_actual())
+
+
+func _id_nivel_actual() -> String:
+	return str(nivel.get("id_nivel", ruta_nivel.get_file().get_basename()))
+
+
+## Avance a medio jugar de este nivel para este hermano (niveles largos, p. ej. el reto dorado).
+## Sin `planeta_id` (motor en prueba) no se guarda nada: el contrato es el mismo para todos los motores.
+func guardar_estado_parcial(estado: Dictionary) -> void:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and planeta_id != "" and id_perfil != "":
+		progreso.guardar_estado_parcial(id_perfil, planeta_id, _id_nivel_actual(), estado)
+
+
+func obtener_estado_parcial() -> Dictionary:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso == null or planeta_id == "" or id_perfil == "":
+		return {}
+	return progreso.obtener_estado_parcial(id_perfil, planeta_id, _id_nivel_actual())
+
+
+func borrar_estado_parcial() -> void:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and planeta_id != "" and id_perfil != "":
+		progreso.borrar_estado_parcial(id_perfil, planeta_id, _id_nivel_actual())

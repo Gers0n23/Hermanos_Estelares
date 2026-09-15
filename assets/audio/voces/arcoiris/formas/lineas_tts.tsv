@@ -1,6 +1,9 @@
-# Voces PROVISIONALES por TTS (decision del PO 06-Ago-2026, GDD §9 P2): Formas traviesas. Las graba la familia antes de HE-28.
-# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: powershell -File herramientas/generar_voces_tts.ps1 -Lista <este archivo>
+# Voces OFICIALES de personaje (decision del PO 14-Sep-2026): Cometa y Coco con IA, Qwen3-TTS en fal.ai.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# Regenerar: python herramientas/generar_voces_fal.py --lista <este archivo> [--solo-personaje coco] [--estimar]
+# personaje: cometa
 voces/arcoiris/formas/semilla/pista_01.wav	¡Toca una forma, o arrástrala a su casita!
+# personaje: coco
 voces/arcoiris/formas/semilla/acierto_01.wav	¡Siii!
 voces/arcoiris/formas/semilla/acierto_02.wav	¡Ahí va!
 voces/arcoiris/formas/semilla/acierto_03.wav	¡Muy bien, Maxi!
@@ -8,7 +11,9 @@ voces/arcoiris/formas/semilla/victoria_01.wav	¡Todas las formas en su casita! �
 voces/arcoiris/formas/semilla/victoria_02.wav	¡Lo lograste, Maxi! ¡Bravo!
 voces/arcoiris/formas/semilla/risa_01.wav	¡Jijiji! ¡Cosquillas!
 voces/arcoiris/formas/semilla/risa_02.wav	¡Jajaja! ¡Qué risa!
+# personaje: cometa
 voces/arcoiris/formas/brote/pista_01.wav	Mira la sombra que brilla y busca la pieza igual. ¡Tú puedes, Nicole!
+# personaje: coco
 voces/arcoiris/formas/brote/acierto_01.wav	¡Encajó!
 voces/arcoiris/formas/brote/acierto_02.wav	¡Qué bien, Nicole!
 voces/arcoiris/formas/brote/acierto_03.wav	¡Perfecto!
@@ -27,8 +32,7 @@ voces/arcoiris/formas/estrella/figura_completa_02.wav	¡Armaste otra figura!
 voces/arcoiris/formas/estrella/derrota_gag_01.wav	¡Jaja! ¡Las piezas se pusieron a bailar y se desordenaron! Vamos, tú puedes armarlas.
 voces/arcoiris/formas/estrella/victoria_01.wav	¡Armaste todas las figuras, Sofía! Eres una maestra de las formas.
 voces/arcoiris/formas/estrella/victoria_02.wav	¡Increíble! Con esa cabeza vas a liderar la misión.
-voces/arcoiris/formas/estrella/pista_01.wav	Mira la forma de cada parte de la sombra, y busca la pieza que calza.
-voces/arcoiris/formas/estrella/pista_girar_01.wav	Toca una pieza para girarla. Cuando quede igual que la sombra, arrástrala.
+# personaje: coco
 voces/arcoiris/formas/estrella/girar_01.wav	¡Es la pieza correcta, pero está chueca! Tócala para girarla.
 voces/arcoiris/formas/nombres/circulo.wav	¡Busca el círculo!
 voces/arcoiris/formas/nombres/cuadrado.wav	¡Busca el cuadrado!
@@ -74,8 +78,27 @@ voces/arcoiris/formas/brote/intro_z2.wav	¡Nicole, llegaron más formas! Hay un 
 voces/arcoiris/formas/brote/intro_z3.wav	Ahora las sombras no tienen color. ¡Mira bien la forma, Nicole!
 voces/arcoiris/formas/brote/intro_z4.wav	¡Cuidado, Nicole! Hay formas grandes y chicas, y las sombras están giradas. Acércalas, y se enderezan solitas.
 voces/arcoiris/formas/brote/intro_z5.wav	¡Nicole, armemos un jardín! Pon cada pieza en su lugar. Y dicen que hay un corazón dorado escondido...
-voces/arcoiris/formas/estrella/intro_z1.wav	Sofía, cada figura de mi planeta está hecha de dos piezas. ¿Puedes armar la casa, el helado y el árbol?
-voces/arcoiris/formas/estrella/intro_z2.wav	Esta vez las sombras no tienen líneas por dentro. Tendrás que descubrir qué pieza va en cada parte.
-voces/arcoiris/formas/estrella/intro_z3.wav	¡Estas piezas llegaron dadas vuelta! Tócalas para girarlas, y después arrástralas a su lugar.
-voces/arcoiris/formas/estrella/intro_z4.wav	Ojo, Sofía: hay piezas que no son de ninguna figura. ¡Usa solo las que calzan!
-voces/arcoiris/formas/estrella/intro_z5.wav	El desafío final: el tangram de Coco. Arma la figura con todas las piezas, girándolas. ¿Lista, líder?
+# personaje: coco
+voces/arcoiris/formas/estrella/intro_tangram_z1.wav	¡Sofía, un tangram de verdad! Arma la sombra con las siete piezas. Tócalas para girarlas. ¡Hay muchas formas de lograrlo!
+voces/arcoiris/formas/estrella/intro_espejo_z2.wav	Estas sombras son más traviesas. A veces una pieza tiene que mirarse al espejo para calzar. ¡Y ojo, que sobra una pieza!
+voces/arcoiris/formas/estrella/intro_memoria_z3.wav	¡Juego de memoria! Mira bien mi figura y sus colores, porque la voy a tapar. Después la armas igualita.
+voces/arcoiris/formas/estrella/mira_modelo_01.wav	¡Mira bien!
+voces/arcoiris/formas/estrella/tapa_modelo_01.wav	¡La tapo! ¿Te acuerdas de cómo era?
+voces/arcoiris/formas/estrella/intro_marco_z4.wav	Rellena todo el marco con piezas de cinco cuadraditos. Sobran piezas, así que piensa bien cuáles usar.
+voces/arcoiris/formas/estrella/intro_marco_z4b.wav	¡Ahora un marco más grande, y sobran más piezas!
+voces/arcoiris/formas/estrella/intro_cima_1.wav	¡El Desafío de la Cima! Son tres pruebas seguidas. Primero, un tangram gigante de catorce piezas.
+voces/arcoiris/formas/estrella/intro_cima_2.wav	¡Segunda prueba! Rellena la nave con piezas de cinco cuadraditos.
+voces/arcoiris/formas/estrella/intro_cima_3.wav	¡Última prueba! Esta vez te muestro la figura muy rapidito. ¡Concéntrate!
+voces/arcoiris/formas/estrella/intro_dorado.wav	¡El reto dorado! El rectángulo clásico con las doce piezas. A muchos grandes les cuesta. Si te cansas, vuelve otro día y sigues donde quedaste.
+voces/arcoiris/formas/estrella/pista_usada_01.wav	Te ayudo con una pieza. ¡Esa ayudita cuesta una estrellita!
+voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav	Primero toca la pieza que quieres dar vuelta, y después el espejo.
+voces/arcoiris/formas/estrella/regalo_01.wav	Te regalo una pieza para empezar. ¡Tú puedes!
+voces/arcoiris/formas/estrella/prueba_superada_01.wav	¡Prueba superada! Vamos con la siguiente.
+voces/arcoiris/formas/estrella/prueba_superada_02.wav	¡Lo hiciste! Pero todavía queda otra.
+voces/arcoiris/formas/estrella/victoria_cima_01.wav	¡Superaste el Desafío de la Cima, Sofía! Muy pocos llegan hasta aquí.
+voces/arcoiris/formas/estrella/victoria_dorado_01.wav	¡Completaste el reto dorado! Eres una verdadera maestra de las formas, Sofía.
+# personaje: cometa
+voces/arcoiris/formas/estrella/pista_tangram_01.wav	Toca una pieza para girarla y arrástrala a la sombra. Puedes armarla de muchas formas.
+voces/arcoiris/formas/estrella/pista_espejo_01.wav	Si una pieza no calza ni girándola, tócala y después toca el espejo.
+voces/arcoiris/formas/estrella/pista_memoria_01.wav	Cada pieza va en su lugar, con su color. Si no te acuerdas, toca el ojito para mirar otra vez.
+voces/arcoiris/formas/estrella/pista_marco_01.wav	Llena todos los cuadraditos. Tocando una pieza la giras, y con el espejo la das vuelta.

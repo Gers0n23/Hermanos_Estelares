@@ -7,11 +7,253 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 55,
+  "dificultad": "v3 (PO 14-Sep-2026)",
   "caras": false,
   "guia_color": false,
-  "modo": "compuesto",
-  "limite_intentos": 6,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "mecanica": "tangram_libre",
+  "modo": "tangram",
+  "lado_red": 96,
+  "iman_tolerancia_px": 70,
+  "rotacion_por_toque": true,
+  "paso_rotacion": 45,
+  "rotacion_inicial_aleatoria": true,
+  "limite_intentos": null,
+  "figuras_por_partida": 1,
+  "figuras": [
+    {
+      "id": "casa",
+      "silueta_unida": true,
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 270,
+          "espejo": false,
+          "x": 1.0,
+          "y": 1.0,
+          "color": "#FF6B6B"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1.4142,
+          "alto": 1.4142,
+          "rotacion": 315,
+          "espejo": false,
+          "x": 2.0,
+          "y": 2.0,
+          "color": "#4A8BE0"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 1.5,
+          "y": 2.5,
+          "color": "#7DD87A"
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 1.5,
+          "y": 3.5,
+          "color": "#FFCB3D"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 3.0,
+          "y": 1.0,
+          "color": "#B48CE8"
+        },
+        {
+          "forma": "paralelogramo",
+          "ancho": 2,
+          "alto": 1,
+          "rotacion": 90,
+          "espejo": true,
+          "x": 2.5,
+          "y": 3.0,
+          "color": "#FF9F4A"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 270,
+          "espejo": false,
+          "x": 2.5,
+          "y": 3.5,
+          "color": "#45C6C0"
+        }
+      ],
+      "voz_completa": "voces/arcoiris/formas/figuras/casa.wav"
+    },
+    {
+      "id": "cohete",
+      "silueta_unida": true,
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 270,
+          "espejo": false,
+          "x": -0.0,
+          "y": 3.0,
+          "color": "#FF6B6B"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1.4142,
+          "alto": 1.4142,
+          "rotacion": 135,
+          "espejo": false,
+          "x": 1.0,
+          "y": 1.0,
+          "color": "#4A8BE0"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 90,
+          "espejo": false,
+          "x": 1.0,
+          "y": 2.0,
+          "color": "#7DD87A"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 270,
+          "espejo": false,
+          "x": 1.5,
+          "y": 1.5,
+          "color": "#FFCB3D"
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 1.5,
+          "y": 2.5,
+          "color": "#B48CE8"
+        },
+        {
+          "forma": "paralelogramo",
+          "ancho": 2,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": true,
+          "x": 2.0,
+          "y": 3.5,
+          "color": "#FF9F4A"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 1.5,
+          "y": 3.5,
+          "color": "#45C6C0"
+        }
+      ],
+      "voz_completa": "voces/arcoiris/formas/figuras/cohete.wav"
+    },
+    {
+      "id": "pez",
+      "silueta_unida": true,
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 0.0,
+          "y": 1.0,
+          "color": "#FF6B6B"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 2,
+          "alto": 2,
+          "rotacion": 90,
+          "espejo": false,
+          "x": 0.0,
+          "y": 3.0,
+          "color": "#4A8BE0"
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 0,
+          "espejo": false,
+          "x": 0.5,
+          "y": 0.5,
+          "color": "#7DD87A"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 180,
+          "espejo": false,
+          "x": 0.5,
+          "y": 1.5,
+          "color": "#FFCB3D"
+        },
+        {
+          "forma": "paralelogramo",
+          "ancho": 2,
+          "alto": 1,
+          "rotacion": 90,
+          "espejo": true,
+          "x": 0.5,
+          "y": 3.0,
+          "color": "#B48CE8"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1,
+          "alto": 1,
+          "rotacion": 90,
+          "espejo": false,
+          "x": 1.5,
+          "y": 0.5,
+          "color": "#FF9F4A"
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 1.4142,
+          "alto": 1.4142,
+          "rotacion": 225,
+          "espejo": false,
+          "x": 1.0,
+          "y": 2.0,
+          "color": "#45C6C0"
+        }
+      ],
+      "voz_completa": "voces/arcoiris/formas/figuras/pez.wav"
+    }
+  ],
   "lineas_voz": {
     "acierto": [
       "voces/arcoiris/formas/estrella/acierto_01.wav",
@@ -31,78 +273,15 @@
       "voces/arcoiris/formas/estrella/victoria_01.wav",
       "voces/arcoiris/formas/estrella/victoria_02.wav"
     ],
-    "intro": "voces/arcoiris/formas/estrella/intro_z1.wav",
-    "pista": "voces/arcoiris/formas/estrella/pista_01.wav"
-  },
-  "figuras": [
-    {
-      "id": "casa",
-      "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
-      "piezas": [
-        {
-          "forma": "cuadrado",
-          "ancho": 120,
-          "alto": 120,
-          "color": "#4A8BE0",
-          "x": 0,
-          "y": 40
-        },
-        {
-          "forma": "triangulo",
-          "ancho": 150,
-          "alto": 90,
-          "color": "#FF6B6B",
-          "x": 0,
-          "y": -65
-        }
-      ]
-    },
-    {
-      "id": "helado",
-      "voz_completa": "voces/arcoiris/formas/figuras/helado.wav",
-      "piezas": [
-        {
-          "forma": "circulo",
-          "ancho": 110,
-          "alto": 110,
-          "color": "#F26CA8",
-          "x": 0,
-          "y": -55,
-          "cara": true
-        },
-        {
-          "forma": "triangulo",
-          "ancho": 90,
-          "alto": 130,
-          "color": "#FF9F4A",
-          "x": 0,
-          "y": 60,
-          "rotacion": 180
-        }
-      ]
-    },
-    {
-      "id": "arbol",
-      "voz_completa": "voces/arcoiris/formas/figuras/arbol.wav",
-      "piezas": [
-        {
-          "forma": "circulo",
-          "ancho": 130,
-          "alto": 130,
-          "color": "#7DD87A",
-          "x": 0,
-          "y": -45,
-          "cara": true
-        },
-        {
-          "forma": "rectangulo",
-          "ancho": 40,
-          "alto": 90,
-          "color": "#B07A4F",
-          "x": 0,
-          "y": 62
-        }
-      ]
-    }
-  ]
+    "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
+    "espejo_sin_pieza": "voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav",
+    "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
+    "prueba_superada": [
+      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
+      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
+    ],
+    "intro": "voces/arcoiris/formas/estrella/intro_tangram_z1.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_tangram_01.wav"
+  }
 }

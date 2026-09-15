@@ -1,14 +1,20 @@
-# Voces PROVISIONALES por TTS (decision del PO 06-Ago-2026, GDD §9 P2): las graba la familia antes de HE-28.
-# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: powershell -File herramientas/generar_voces_tts.ps1
+# Voces OFICIALES de personaje (decision del PO 14-Sep-2026): Cometa y Coco con IA, Qwen3-TTS en fal.ai.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# Regenerar: python herramientas/generar_voces_fal.py --lista <este archivo> [--solo-personaje coco] [--estimar]
+# personaje: coco
 voces/arcoiris/emparejar/semilla/intro_01.wav	¡Hola, Maxi! Soy Coco. ¡Toca dos figuras iguales!
+# personaje: cometa
 voces/arcoiris/emparejar/semilla/pista_01.wav	Mira las figuras. ¡Toca dos que sean iguales!
+# personaje: coco
 voces/arcoiris/emparejar/semilla/acierto_par_01.wav	¡Siii! ¡Son iguales!
 voces/arcoiris/emparejar/semilla/acierto_par_02.wav	¡Muy bien, Maxi!
 voces/arcoiris/emparejar/semilla/acierto_par_03.wav	¡Bravo!
 voces/arcoiris/emparejar/semilla/no_es_este_01.wav	¡Uy! Esa es otra. ¡Busca su gemela!
 voces/arcoiris/emparejar/semilla/victoria_final_01.wav	¡Lo lograste, Maxi! ¡Eres un campeón!
 voces/arcoiris/emparejar/brote/intro_01.wav	¡Hola, Nicole! Soy Coco. Mis figuras se escondieron detrás de las estrellitas. Da vuelta dos cartas y busca las que son iguales.
+# personaje: cometa
 voces/arcoiris/emparejar/brote/pista_01.wav	Da vuelta una carta, y después busca su pareja. ¡Tú puedes, Nicole!
+# personaje: coco
 voces/arcoiris/emparejar/brote/ayuda_01.wav	Mira, mira... ¡te muestro un secretito!
 voces/arcoiris/emparejar/brote/acierto_par_01.wav	¡Encontraste una pareja!
 voces/arcoiris/emparejar/brote/acierto_par_02.wav	¡Qué lindo, Nicole!
@@ -18,7 +24,9 @@ voces/arcoiris/emparejar/brote/no_es_este_02.wav	Todavía no. ¡Sigue buscando!
 voces/arcoiris/emparejar/brote/acierto_especial_01.wav	¡El corazón mágico! ¡Te mando un abrazo gigante!
 voces/arcoiris/emparejar/brote/victoria_final_01.wav	¡Encontraste todas las parejas, Nicole! ¡Eres increíble!
 voces/arcoiris/emparejar/estrella/intro_01.wav	Sofía, las figuras de mi planeta se escondieron detrás de sus estrellas. ¿Las encuentras todas? A ver esa memoria de líder.
+# personaje: cometa
 voces/arcoiris/emparejar/estrella/pista_01.wav	Da vuelta dos cartas. Si son iguales, se quedan. Si no, recuerda dónde estaban.
+# personaje: coco
 voces/arcoiris/emparejar/estrella/acierto_par_01.wav	¡Ese par! Sabía que lo tenías.
 voces/arcoiris/emparejar/estrella/acierto_par_02.wav	¡Memoria de campeona!
 voces/arcoiris/emparejar/estrella/acierto_par_03.wav	¡Uno menos! Vas muy bien.
@@ -27,3 +35,18 @@ voces/arcoiris/emparejar/estrella/no_es_este_02.wav	Todavía no. ¡Recuérdalas!
 voces/arcoiris/emparejar/estrella/acierto_especial_01.wav	¿El arcoíris secreto? ¡Muy pocos lo encuentran, Sofía!
 voces/arcoiris/emparejar/estrella/victoria_final_01.wav	¡Encontraste todas las figuras! Con esa memoria vas a liderar la misión.
 voces/arcoiris/emparejar/estrella/derrota_gag_01.wav	¡Jaja! ¡Las cartas se marearon y se mezclaron todas! Vamos, las ordenamos de nuevo.
+# personaje: coco
+voces/arcoiris/emparejar/estrella/intro_z1.wav	¡Sofía, doce parejas escondidas! Algunas se parecen mucho. A ver esa memoria de líder.
+voces/arcoiris/emparejar/estrella/intro_z2.wav	Esta vez cada color busca su receta. El verde va con azul y amarillo. ¡Piensa y recuerda!
+voces/arcoiris/emparejar/estrella/intro_z3.wav	¡Tríos! Tienes que dar vuelta tres cartas iguales para ganarlas. ¡Es mucho más difícil!
+voces/arcoiris/emparejar/estrella/intro_z4.wav	¡Mis cartas son traviesas! Cada vez que encuentras una pareja, dos cartas escondidas cambian de lugar. ¡Síguelas con la mirada!
+voces/arcoiris/emparejar/estrella/intro_z5.wav	¡El desafío final! Cada figura busca su sombra, pero cuidado: hay sombras dadas vuelta que parecen iguales. Y las cartas se mueven.
+voces/arcoiris/emparejar/estrella/intro_dorado.wav	¡Reto dorado! Dieciocho sombras traviesas y cartas que se mueven. ¿Te atreves, Sofía?
+voces/arcoiris/emparejar/estrella/pista_usada_01.wav	Te muestro una pareja. ¡Esa ayudita cuesta una estrellita!
+voces/arcoiris/emparejar/estrella/regalo_01.wav	Te regalo una pareja para empezar. ¡Vamos!
+voces/arcoiris/emparejar/estrella/victoria_dorado_01.wav	¡Completaste el reto dorado! Tu memoria es de otro planeta, Sofía.
+# personaje: cometa
+voces/arcoiris/emparejar/estrella/pista_z2.wav	Busca el color que se forma al mezclar los colores de la receta.
+voces/arcoiris/emparejar/estrella/pista_z3.wav	Da vuelta tres cartas. Si las tres son iguales, se quedan.
+voces/arcoiris/emparejar/estrella/pista_z4.wav	Cuando dos cartas cambian de lugar, síguelas con la mirada.
+voces/arcoiris/emparejar/estrella/pista_z5.wav	Mira bien hacia dónde apunta cada sombra.

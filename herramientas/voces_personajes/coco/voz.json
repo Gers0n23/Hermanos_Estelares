@@ -1,0 +1,15 @@
+{
+  "personaje": "Camaleona Coco",
+  "estado": "Voz OFICIAL de Coco (decision del PO del 14-Sep-2026). Elegida por el PO el 14-Sep-2026 (muestra 'coco_b_chileno_suave_reuso': suave y cantarina con acento chileno suave).",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.mp3",
+  "texto_referencia": "¡Hola, Nicole! Soy Coco. ¡Uy, uy, uy, miren nada más! Ahora soy... ¡rosado chicle! Busca el triángulo grande. ¡Eso es! ¡Mis colores volvieron!",
+  "diseno": {
+    "modelo": "fal-ai/qwen-3-tts/voice-design/1.7b",
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "prompt": "A gentle, sing-song cartoon chameleon lady from a children's show, soft rounded mid-high female voice, smiling while she talks, cozy and reassuring, slightly musical intonation. Accent: soft, friendly Chilean Spanish (Santiago de Chile), like a warm Chilean kids' TV host: recognizable Chilean sing-song intonation and aspirated final 's', while keeping careful, clear diction for young children. Never a Spain accent."
+  }
+}

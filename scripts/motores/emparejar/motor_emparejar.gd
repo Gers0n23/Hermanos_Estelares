@@ -22,6 +22,7 @@ extends "res://scripts/base/minijuego_base.gd"
 signal par_acertado(id_pareja: String)
 signal intento_fallido()
 signal nivel_fallado()
+signal carta_intercambiada(a: CartaEmparejar, b: CartaEmparejar)
 ## B4 (auditoria UX 18-Jul-2026): la senal de salida `salir_solicitado()` vive desde HE-10
 ## en el contrato base (`minijuego_base.gd`), comun a todos los motores.
 
@@ -83,6 +84,15 @@ var _derrota_disparada := false
 var _en_gag := false
 var _lado_carta := 140.0
 var _ultima_linea := ""
+## Retos de Sofia (v3, PO 14-Sep-2026): trios (`tamano_grupo: 3`), cartas traviesas que cambian de
+## lugar tras cada acierto (`intercambios_tras_acierto`), pistas que cuestan estrellita y regalo de
+## un grupo tras 2 derrotas (`regalo_tras_derrotas`).
+var _tamano_grupo := 2
+var _intercambios := 0
+var _pistas_usadas := 0
+var _derrotas := 0
+var _regalo_dado := false
+var _boton_pista: Button
 
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
@@ -95,6 +105,7 @@ func _ready() -> void:
 	_boton_otra_vez.hide()
 	_panel_depuracion.hide()
 	_estilizar_interfaz()
+	_crear_boton_pista()
 	_boton_otra_vez.pressed.connect(_reintentar)
 	_boton_cometa.pressed.connect(_al_tocar_cometa)
 	_boton_salir.pressed.connect(func() -> void: salir_solicitado.emit())
@@ -108,6 +119,7 @@ func _ready() -> void:
 	_configurar_desde_nivel()
 	_construir_tablero()
 	_construir_progreso()
+	_boton_pista.visible = bool(nivel.get("pistas_cuestan_estrellita", false))
 	_reproducir_voz("intro", _linea("intro"))
 	_actualizar_depuracion()
 
@@ -133,22 +145,33 @@ func _configurar_desde_nivel() -> void:
 	_limite_intentos = int(limite) if limite != null else null
 	var ayuda = nivel.get("ayuda_tras_fallos", null)
 	_ayuda_tras_fallos = int(ayuda) if ayuda != null else 0
-	_pares_totales = nivel.get("pares", []).size()
+	_tamano_grupo = maxi(2, int(nivel.get("tamano_grupo", 2)))
+	_intercambios = int(nivel.get("intercambios_tras_acierto", 0))
+	_pares_totales = _grupos_del_nivel().size()
+
+
+## Grupos de cartas iguales. `grupos` (trios) o, por compatibilidad, `pares` con elemento_a/elemento_b.
+func _grupos_del_nivel() -> Array:
+	if nivel.has("grupos"):
+		return nivel["grupos"]
+	var grupos: Array = []
+	for par: Dictionary in nivel.get("pares", []):
+		grupos.append({"id_grupo": par.get("id_pareja", ""), "especial": par.get("especial", false),
+			"figura": par.get("figura", ""), "color": par.get("color", ""),
+			"elementos": [par.get("elemento_a", {}), par.get("elemento_b", {})]})
+	return grupos
 
 
 func _construir_tablero() -> void:
 	var elementos: Array = []
-	for par: Dictionary in nivel.get("pares", []):
-		for clave in ["elemento_a", "elemento_b"]:
-			var info: Dictionary = par.get(clave, {})
-			elementos.append({
-				"id_pareja": par.get("id_pareja", ""),
-				"id": info.get("id", ""),
-				"figura": info.get("figura", par.get("figura", "")),
-				"color": info.get("color", par.get("color", "")),
-				"sprite": info.get("sprite", ""),
-				"especial": par.get("especial", false),
-			})
+	for grupo: Dictionary in _grupos_del_nivel():
+		for info: Dictionary in grupo.get("elementos", []):
+			var elemento := info.duplicate()
+			elemento["id_pareja"] = grupo.get("id_grupo", "")
+			elemento["figura"] = info.get("figura", grupo.get("figura", ""))
+			elemento["color"] = info.get("color", grupo.get("color", ""))
+			elemento["especial"] = grupo.get("especial", false)
+			elementos.append(elemento)
 	elementos.shuffle()
 
 	var disposicion: Dictionary = nivel.get("disposicion", {})
@@ -178,7 +201,7 @@ func _construir_tablero() -> void:
 ## Una ranura por par encontrado: se llena con la figura que vuela desde el tablero. Le
 ## muestra al nino cuanto le falta sin numeros ni texto.
 func _construir_progreso() -> void:
-	var lado := 76.0 if _pares_totales <= 5 else 62.0
+	var lado := 76.0 if _pares_totales <= 5 else (62.0 if _pares_totales <= 10 else 44.0)
 	for i in _pares_totales:
 		var ranura := Figura.new()
 		ranura.figura = ""
@@ -214,28 +237,34 @@ func _al_tocar_carta(carta: CartaEmparejar) -> void:
 	carta.seleccionar()
 	reproducir_sfx(SFX_VOLTEAR)
 	_seleccionadas.append(carta)
-	if _seleccionadas.size() == 2:
+	# Trios: el turno termina apenas una carta no coincide con la primera, o al completar el grupo.
+	if carta.id_pareja != _seleccionadas[0].id_pareja or _seleccionadas.size() == _tamano_grupo:
 		_resolver_par()
 	_actualizar_depuracion()
 
 
 func _resolver_par() -> void:
-	var a: CartaEmparejar = _seleccionadas[0]
-	var b: CartaEmparejar = _seleccionadas[1]
+	var grupo: Array[CartaEmparejar] = _seleccionadas.duplicate()
 	_seleccionadas.clear()
+	var a: CartaEmparejar = grupo[0]
 
-	if a.id_pareja == b.id_pareja:
+	var iguales := grupo.size() == _tamano_grupo
+	for carta in grupo:
+		iguales = iguales and carta.id_pareja == a.id_pareja
+	if iguales:
 		_fallos_seguidos = 0
 		_pares_acertados += 1
-		a.marcar_acertada()
-		b.marcar_acertada()
+		for carta in grupo:
+			carta.marcar_acertada()
 		reproducir_sfx(SFX_PAR)
 		par_acertado.emit(a.id_pareja)
-		_celebrar_par(a, b)
+		_celebrar_grupo(grupo)
 		if _pares_acertados >= _pares_totales:
 			_celebrar_victoria()
 		else:
 			_reproducir_voz_acierto(a)
+			if _intercambios > 0:
+				_despues(0.75, _intercambiar_cartas.bind(_intercambios))
 		_actualizar_depuracion()
 		return
 
@@ -245,13 +274,13 @@ func _resolver_par() -> void:
 	intento_fallido.emit()
 	reproducir_sfx(SFX_NO_ES_ESTE)
 	_reproducir_voz("no_es_este", _linea_al_azar("no_es_este"))
-	a.animar_no_es_este()
-	b.animar_no_es_este()
+	for carta in grupo:
+		carta.animar_no_es_este()
 	_reaccion_anfitriona("menea")
 	_actualizar_depuracion()
 
 	_procesando = true
-	_no_es_este = [a, b]
+	_no_es_este = grupo
 	_id_resolucion += 1
 	var id := _id_resolucion
 	var espera := _tiempo_volteo_ms / 1000.0 if _oculto else SEGUNDOS_NO_ES_ESTE_VISIBLE
@@ -280,7 +309,7 @@ func _terminar_no_es_este(excepto: CartaEmparejar = null) -> void:
 
 ## Brote (ficha de motor §5): tras varios fallos seguidos, Coco "muestra un secretito":
 ## un par pendiente se destapa un momento con halo dorado.
-func _dar_ayuda() -> void:
+func _dar_ayuda(con_voz := true) -> void:
 	var pendientes := {}
 	for carta in _cartas:
 		if not carta.esta_acertada:
@@ -293,24 +322,134 @@ func _dar_ayuda() -> void:
 	for carta in pendientes[claves[randi() % claves.size()]]:
 		carta.revelar_momento(SEGUNDOS_AYUDA)
 	_reaccion_anfitriona("salta")
-	_reproducir_voz("ayuda", _linea("ayuda"))
+	if con_voz:
+		_reproducir_voz("ayuda", _linea("ayuda"))
 
 
-func _celebrar_par(a: CartaEmparejar, b: CartaEmparejar) -> void:
-	var centro_a := a.global_position + a.size / 2.0
-	var centro_b := b.global_position + b.size / 2.0
-	var medio := (centro_a + centro_b) / 2.0
-	a.saltar_hacia(centro_b)
-	b.saltar_hacia(centro_a)
-	_estallido(centro_a, 8, [a.color_figura, DORADO])
-	_estallido(centro_b, 8, [b.color_figura, DORADO])
+func _celebrar_grupo(grupo: Array) -> void:
+	var medio := Vector2.ZERO
+	for carta: CartaEmparejar in grupo:
+		medio += carta.global_position + carta.size / 2.0
+	medio /= grupo.size()
+	var voladora: CartaEmparejar = grupo[0]
+	for carta: CartaEmparejar in grupo:
+		var centro := carta.global_position + carta.size / 2.0
+		carta.saltar_hacia(medio)
+		_estallido(centro, 8, [carta.color_figura, DORADO])
+		if carta.figura in Figura.FIGURAS and not carta.es_sombra():
+			voladora = carta
 	var indice := _pares_acertados - 1
 	if indice < _ranuras.size():
-		_volar_a_ranura(a, medio, _ranuras[indice])
+		_volar_a_ranura(voladora, medio, _ranuras[indice])
 	_reaccion_anfitriona("salta")
-	if a.especial:
+	if voladora.especial:
 		_arcoiris_especial()
 		_confeti.restart()
+
+
+## Cartas traviesas: `cantidad` pares de cartas tapadas cambian de lugar con un vuelo visible.
+func _intercambiar_cartas(cantidad: int) -> void:
+	if _en_gag or _pares_acertados >= _pares_totales:
+		return
+	var tapadas: Array = []
+	for carta in _cartas:
+		if not carta.esta_acertada and not carta.mostrando and not _seleccionadas.has(carta) and not _no_es_este.has(carta):
+			tapadas.append(carta)
+	tapadas.shuffle()
+	for i in cantidad:
+		if tapadas.size() < 2:
+			break
+		var a: CartaEmparejar = tapadas.pop_back()
+		var b: CartaEmparejar = tapadas.pop_back()
+		var lugar_a := a.position
+		var lugar_b := b.position
+		for par_movimiento in [[a, lugar_b], [b, lugar_a]]:
+			var carta: CartaEmparejar = par_movimiento[0]
+			_tablero.move_child(carta, -1)
+			var tween := carta.create_tween()
+			tween.tween_property(carta, "scale", Vector2.ONE * 1.12, 0.12)
+			tween.tween_property(carta, "position", par_movimiento[1], 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(carta, "scale", Vector2.ONE, 0.15)
+		carta_intercambiada.emit(a, b)
+	reproducir_sfx(SFX_TAPAR)
+
+
+## Coloca como acertado un grupo pendiente (regalo tras 2 derrotas). No suma estrellitas ni las quita.
+func _regalar_grupo() -> void:
+	for carta in _cartas:
+		if carta.esta_acertada:
+			continue
+		var grupo: Array[CartaEmparejar] = []
+		for otra in _cartas:
+			if otra.id_pareja == carta.id_pareja and not otra.esta_acertada:
+				grupo.append(otra)
+		_pares_acertados += 1
+		for otra in grupo:
+			otra.marcar_acertada()
+		reproducir_sfx(SFX_PAR)
+		_celebrar_grupo(grupo)
+		_reproducir_voz("regalo", _linea("regalo"))
+		if _pares_acertados >= _pares_totales:
+			_celebrar_victoria()
+		_actualizar_depuracion()
+		return
+
+
+func _crear_boton_pista() -> void:
+	_boton_pista = Button.new()
+	_boton_pista.focus_mode = Control.FOCUS_NONE
+	_boton_pista.tooltip_text = "Pista: muestra una pareja (cuesta una estrellita)"
+	_boton_pista.custom_minimum_size = Vector2(96, 96)
+	var padre: Control = _boton_salir.get_parent()
+	padre.add_child(_boton_pista)
+	padre.move_child(_boton_pista, _efectos.get_index())
+	_boton_pista.position = Vector2(1164, 16)
+	_boton_pista.size = Vector2(96, 96)
+	_estilizar_boton(_boton_pista, DORADO)
+	var icono := Control.new()
+	icono.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boton_pista.add_child(icono)
+	icono.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icono.draw.connect(func() -> void:
+		var c := icono.size / 2.0
+		Figura.dibujar(icono, "estrella", Color("#FFF3B0"), c + Vector2(0, 3), 30.0, false)
+		for p in [Vector2(-30, -26), Vector2(30, -22), Vector2(26, 30)]:
+			var chispa := Figura.poligono("estrella", c + p, 8.0)
+			icono.draw_colored_polygon(chispa, Color.WHITE)
+			Figura.contornear(icono, chispa, 2.0))
+	_boton_pista.pressed.connect(_al_tocar_pista)
+	_boton_pista.hide()
+
+
+## Pista de Sofia: Coco destapa un momento una pareja pendiente y se gasta una estrellita.
+func _al_tocar_pista() -> void:
+	if _en_gag or _pares_acertados >= _pares_totales:
+		return
+	reproducir_sfx(SFX_TOQUE)
+	if _procesando:
+		_terminar_no_es_este()
+	_pistas_usadas += 1
+	_dar_ayuda(false)
+	_reproducir_voz("pista_usada", _linea("pista_usada"))
+	var estrella := Figura.new()
+	estrella.figura = "estrella"
+	estrella.con_cara = false
+	estrella.color = DORADO
+	estrella.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	estrella.size = Vector2.ONE * 46.0
+	_efectos.add_child(estrella)
+	estrella.global_position = _boton_pista.global_position + Vector2(25, 25)
+	var tween := estrella.create_tween().set_parallel(true)
+	tween.tween_property(estrella, "position:y", estrella.position.y + 90.0, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(estrella, "modulate:a", 0.0, 0.9).set_delay(0.3)
+	tween.chain().tween_callback(estrella.queue_free)
+	_actualizar_depuracion()
+
+
+func _despues(segundos: float, accion: Callable) -> void:
+	await get_tree().create_timer(segundos).timeout
+	if is_inside_tree():
+		accion.call()
 
 
 func _volar_a_ranura(carta: CartaEmparejar, desde: Vector2, ranura) -> void:
@@ -473,6 +612,7 @@ func _reaccion_anfitriona(tipo: String) -> void:
 ## entre ellas; Coco se rie y aparece de inmediato el boton gigante "¡otra vez!".
 func _disparar_derrota_gag() -> void:
 	_derrota_disparada = true
+	_derrotas += 1
 	_en_gag = true
 	nivel_fallado.emit()
 	reproducir_sfx(SFX_GAG)
@@ -514,6 +654,10 @@ func _reintentar() -> void:
 	for carta in _cartas:
 		if not carta.esta_acertada:
 			carta.reiniciar(_oculto)
+	# Tras 2 derrotas, Coco regala un grupo ya encontrado (no cuesta estrellita): nunca queda trabada.
+	if _derrotas >= 2 and bool(nivel.get("regalo_tras_derrotas", false)) and not _regalo_dado:
+		_regalo_dado = true
+		_despues(0.6, _regalar_grupo)
 	_actualizar_depuracion()
 
 
@@ -532,12 +676,14 @@ func _celebrar_victoria() -> void:
 ## Sin limite de intentos -> 3; tras una derrota-gag -> 1; con la mitad o mas de los intentos
 ## sobrantes -> 3; si no -> 2. `celebrar()` solo las muestra en niveles Estrella.
 func _calcular_estrellitas() -> int:
-	if _limite_intentos == null:
-		return 3
+	var base := 3
 	if _derrota_disparada:
-		return 1
-	var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
-	return 3 if sobrantes * 2 >= int(_limite_intentos) else 2
+		base = 1
+	elif _limite_intentos != null:
+		var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
+		base = 3 if sobrantes * 2 >= int(_limite_intentos) else 2
+	# Cada pista resta una estrellita (retos de Sofia), sin bajar de 1.
+	return maxi(1, base - _pistas_usadas)
 
 
 func _calcular_destellos() -> int:

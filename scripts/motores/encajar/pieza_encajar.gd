@@ -36,6 +36,21 @@ var alegre := false:
 	set(valor):
 		alegre = valor
 		queue_redraw()
+## Poliominó (marco de Sofía): celdas [[c, f], ...] de lado `lado`. Vacío = forma normal.
+var celdas: Array = []
+var lado := 0.0
+## Volteada en espejo (botón espejo de Sofía). Cambia la geometría, no la escala del nodo.
+var volteada := false:
+	set(valor):
+		if volteada == valor:
+			return
+		volteada = valor
+		_reconstruir()
+## La última pieza tocada: a ella se aplica el botón espejo. Se marca con un borde dorado.
+var elegida := false:
+	set(valor):
+		elegida = valor
+		queue_redraw()
 
 ## Estado que maneja el motor.
 var rotacion_grados := 0.0
@@ -62,14 +77,28 @@ func configurar(datos: Dictionary) -> void:
 	color = Color(str(datos.get("color", "#FFCB3D")))
 	decoracion = str(datos.get("decoracion", ""))
 	especial = bool(datos.get("especial", false))
-	_base = Geo.contorno(forma, ancho, alto)
-	_dibujo = Geo.redondeado(forma, _base, ancho, alto)
-	var crecido := Geometry2D.offset_polygon(_base, MARGEN_TOQUE, Geometry2D.JOIN_ROUND)
-	_toque = Geo.mayor(crecido) if not crecido.is_empty() else _base
-	var lado := maxf(ancho, alto) * 1.25 + 30.0
-	size = Vector2(lado, lado)
+	celdas = datos.get("celdas", [])
+	lado = float(datos.get("lado", 0.0))
+	if not celdas.is_empty():
+		forma = "poliomino"
+		var caja := Geo.caja(Geo.contorno_poliomino(celdas, lado))
+		ancho = caja.size.x
+		alto = caja.size.y
+	volteada = bool(datos.get("volteada", false))
+	_reconstruir()
+	var medida := maxf(ancho, alto) * 1.25 + 30.0
+	size = Vector2(medida, medida)
 	pivot_offset = size / 2.0
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	queue_redraw()
+
+
+func _reconstruir() -> void:
+	var original := Geo.contorno_poliomino(celdas, lado) if not celdas.is_empty() else Geo.contorno(forma, ancho, alto)
+	_base = Geo.espejado(original) if volteada else original
+	_dibujo = Geo.redondeado(forma, _base, lado if lado > 0.0 else ancho, lado if lado > 0.0 else alto)
+	var crecido := Geometry2D.offset_polygon(_base, MARGEN_TOQUE, Geometry2D.JOIN_ROUND)
+	_toque = Geo.mayor(crecido) if not crecido.is_empty() else _base
 	queue_redraw()
 
 
@@ -213,12 +242,35 @@ func encajar_en(centro: Vector2, grados: float) -> void:
 	tween.tween_property(self, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
+## Colocación libre (tangram libre y marco de Sofía): queda puesta pero se puede volver a tomar.
+func encajar_libre(centro: Vector2, grados: float) -> void:
+	encajar_en(centro, grados)
+	bloqueada = false
+
+
+## Sale de su lugar en el tablero (el niño la volvió a tomar o una pista la devolvió).
+func liberar() -> void:
+	colocada = false
+	hueco = null
+
+
+## Voltea en espejo con un medio giro visual.
+func voltear() -> void:
+	var tween := nuevo_tween()
+	var base := scale
+	tween.tween_property(self, "scale", Vector2(0.05, base.y), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_callback(func() -> void: volteada = not volteada)
+	tween.tween_property(self, "scale", base, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
 ## Saltito en su lugar. Si la pieza estaba en camino a otro lado, el salto parte desde su destino.
 func saltito(altura := 26.0, retraso := 0.0) -> void:
 	var origen := position
 	if colocada and hueco != null:
 		origen = (hueco["centro"] as Vector2) - size / 2.0
-	elif not colocada:
+	elif colocada:
+		origen = position
+	else:
 		origen = casa - size / 2.0
 	var tween := nuevo_tween()
 	tween.tween_interval(retraso)
@@ -272,6 +324,11 @@ func _draw() -> void:
 			_dibujar_rueda(centro, referencia)
 		_:
 			Geo.pintar(self, forma_dibujo, color, referencia)
+	if not celdas.is_empty():
+		_dibujar_celdas(centro)
+	if elegida and not colocada:
+		for aura in Geometry2D.offset_polygon(forma_dibujo, 9.0, Geometry2D.JOIN_ROUND):
+			Geo.contorno_punteado(self, aura, Color("#FFCB3D"), 5.0, 14.0, 8.0)
 	match decoracion:
 		"aleta":
 			_dibujar_aleta(forma_dibujo, referencia)
@@ -287,6 +344,20 @@ func _draw() -> void:
 		if decoracion == "rueda":
 			return
 		Figura.dibujar_cara(self, c + Vector2(0, escala_cara * 0.05), escala_cara, alegre)
+
+
+## Líneas suaves entre las celdas de un poliominó: ayudan a contar cuadraditos sin regalar nada.
+func _dibujar_celdas(centro: Vector2) -> void:
+	var caja_celdas := Vector2.ZERO
+	for celda in celdas:
+		caja_celdas = Vector2(maxf(caja_celdas.x, float(celda[0]) + 1.0), maxf(caja_celdas.y, float(celda[1]) + 1.0))
+	var tono := Color(color.darkened(0.35), 0.45)
+	for celda in celdas:
+		var esquina := Vector2(float(celda[0]), float(celda[1])) * lado - caja_celdas * lado / 2.0
+		if volteada:
+			esquina.x = -esquina.x - lado
+		var cuadro := Rect2(centro + esquina, Vector2.ONE * lado).grow(-lado * 0.16)
+		draw_rect(cuadro, tono, false, maxf(2.0, lado * 0.04))
 
 
 func _dibujar_rueda(centro: Vector2, radio: float) -> void:

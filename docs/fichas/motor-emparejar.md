@@ -129,7 +129,35 @@ Notas del contrato:
 - El motor expone la señal estándar `completado(destellos)` del contrato de
   `minijuego_base.gd` (stack técnico §2); además emite señales internas útiles para
   animación/celebración de personajes: `par_acertado(id_pareja)`, `intento_fallido()`,
-  `nivel_fallado()` (solo si aplica derrota-gag).
+  `nivel_fallado()` (solo si aplica derrota-gag) y `carta_intercambiada(a, b)`.
+
+### Campos nuevos para Sofía (dificultad v3, decisión del PO del 14-Sep-2026)
+
+#### Grupos y tríos
+
+- `tamano_grupo` (2 por defecto; 3 = tríos) con `grupos: [{id_grupo, especial, elementos: [...]}]`.
+  `pares` con `elemento_a`/`elemento_b` sigue funcionando.
+- El turno termina en la primera carta que no coincide con la primera, o al completar el grupo.
+
+#### Estilo de las cartas
+
+- `estilo` por elemento:
+  - `""`: figura a color.
+  - `"sombra"`: silueta oscura sin carita.
+  - `"receta"`: gotas de los colores de `receta` unidas por "+".
+- `forma` por elemento: una forma de `geometria_formas.gd` (`triangulo_rect`, `paralelogramo`,
+  `semicirculo`, `trapecio`) en lugar de `figura`.
+- `rotacion` y `espejo` por elemento. Con ellos se arman las trampas: dos sombras iguales salvo el espejo
+  son parejas distintas. El QA verifica que ninguna sombra de un nivel sea idéntica a otra.
+
+#### Reglas del nivel
+
+- `intercambios_tras_acierto`: cartas traviesas. Tras cada acierto, N parejas de cartas tapadas cambian
+  de lugar con un vuelo visible de 0,6 s.
+- `pistas_cuestan_estrellita`: botón de estrella dorada de 96 px arriba a la derecha. Destapa un
+  momento una pareja pendiente (voz `pista_usada`) y resta una estrellita, sin bajar de 1.
+- `regalo_tras_derrotas`: tras la 2.ª derrota-gag, al tocar "¡otra vez!" Coco da por encontrado un
+  grupo (voz `regalo`). Una sola vez, sin costo de estrellitas.
 
 ---
 
@@ -137,13 +165,30 @@ Notas del contrato:
 
 | | **Semilla (Maxi, 2 años)** | **Brote (Nicole, 5 años)** | **Estrella (Sofía, 8 años)** |
 |---|---|---|---|
-| Cantidad de pares | 2-3 | 4-6 | 6-10 |
+| Cantidad de pares | 2-3 | 4-6 | 10-18, o 7 tríos (v3, 14-Sep-2026: ver nota bajo la tabla) |
 | `oculto` (memoria) | Siempre `false` — todo visible, sin carga de memoria de trabajo | Opcional; si se usa, `tiempo_volteo_ms` generoso (≥1200 ms) | Sí, modo memoria real; `tiempo_volteo_ms` más ajustado (~800-900 ms) para reto genuino |
 | Ritmo/tiempo | Sin ritmo — cero presión, cualquier orden vale | Ritmo suave opcional vía `limite_intentos` (reto blando, no cronómetro visible) | Puede sumar cronómetro de juego (no narrativo) para el puntaje de estrellas — nunca bloquea, solo puntúa |
 | Ayudas visuales | Halo pulsante constante en los elementos tocables; imán/hitbox extra generoso (≥96 px lógicos, GDD §6.1); un solo objetivo resaltado a la vez si `anfitrion_id` lo narra | Pista por voz tras 2-3 intentos fallidos consecutivos sobre el mismo par (`lineas_voz.pista`); resaltado sutil del segundo elemento si sigue sin encontrarlo tras la pista | Sin ayudas automáticas — puede pedir pista tocando a Cometa (repite instrucción, GDD §6.2), pero no hay resaltado gratuito: el reto es real |
 | `limite_intentos` | Siempre `null` | Opcional (config del nivel); si se define, activa derrota-gag | Recomendado definir uno holgado para dar sentido al puntaje de estrellas |
 | Fallo posible | **No existe** (§6) | Sí, si el nivel lo configura — derrota-gag suave | Sí — derrota-gag + puntaje 1-3 estrellas según intentos/tiempo |
 | Objetivo a la vez | Sí, implícito (cualquier toque produce algo bueno) | Sí, explícito: la instrucción de voz nombra un elemento o pista a la vez (GDD §5) | No aplica — puede manejar el tablero completo a la vez |
+
+**Estrella v3: cómo se fijaron los límites.** Se simuló una jugadora de 8 años con memoria visual de
+~5 cartas (normas de Corsi por edad) que juega bien: usa lo que recuerda y olvida lo más antiguo. Con
+3.000 partidas por nivel, el límite de fallos es aproximadamente el percentil 80. Así 3 estrellitas
+(fallos ≤ la mitad del límite) exigen jugar mejor que la mediana.
+
+| Nivel | Fallos: mediana | Percentil 80 | Límite |
+|---|---|---|---|
+| 12 pares | 13 | 16 | 16 |
+| 10 recetas | 12 | 15 | 15 |
+| 7 tríos | 29 | 43 | 42 |
+| 14 pares traviesas | 19 | 24 | 24 |
+| 16 sombras | 26 | 32 | 32 |
+| 18 sombras (dorado) | 34 | 42 | 42 |
+
+Las sombras con trampa se modelan con 8 % de confusión y las traviesas con 50 % de olvido de cada
+carta movida. La idea es afinar los límites con el playtest.
 
 ---
 

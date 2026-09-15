@@ -1,5 +1,7 @@
-# Voces PROVISIONALES por TTS (decision del PO 06-Ago-2026, GDD §9 P2): mapa del Planeta Arcoiris. Las graba la familia antes de HE-28.
-# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: powershell -File herramientas/generar_voces_tts.ps1 -Lista <este archivo>
+# Voces OFICIALES de personaje (decision del PO 14-Sep-2026): Cometa y Coco con IA, Qwen3-TTS en fal.ai.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# Regenerar: python herramientas/generar_voces_fal.py --lista <este archivo> [--solo-personaje coco] [--estimar]
+# personaje: coco
 voces/arcoiris/mapa/zona_1_llegada.wav	Este es el Claro del Trébol. ¡Aquí vive el color rojo!
 voces/arcoiris/mapa/zona_1_completada.wav	¡Volvió el rojo! ¡Mira mi cresta!
 voces/arcoiris/mapa/zona_2_llegada.wav	¡Los Charcos Saltarines! Ayúdame a recuperar el amarillo.
@@ -16,10 +18,16 @@ voces/arcoiris/mapa/juego_parejas.wav	¡Parejas de Coco!
 voces/arcoiris/mapa/juego_pinta.wav	¡Pinta con Coco!
 voces/arcoiris/mapa/bienvenida.wav	¡Bienvenidos a mi Planeta Arcoíris! Se le perdieron los colores. Toca un rincón, y elige un juego para devolvérselos.
 voces/arcoiris/mapa/zona_dormida.wav	Ese rincón todavía está dormidito. ¡Juega en los otros, y lo despertamos!
+# personaje: cometa
 voces/arcoiris/mapa/zona_abierta.wav	¡Se despertó un rincón nuevo del planeta!
+# personaje: cometa
 voces/arcoiris/mapa/secreta_lejana.wav	¿Viste ese brillo allá arriba? Es un lugar secreto. Algún día llegaremos.
+# personaje: cometa
 voces/arcoiris/mapa/secreta_revelada.wav	¡Apareció la Cima del Arcoíris! ¡Un lugar secreto!
+# personaje: coco
 voces/arcoiris/mapa/estacion_pronto.wav	¡Este juego todavía se está pintando! Prueba otro.
 # personaje: cometa
 voces/arcoiris/mapa/cometa_vamos.wav	¡Vamos al siguiente juego!
 voces/arcoiris/mapa/todo_listo.wav	¡Jugaste todo lo que hay! Puedes repetir el que más te guste.
+# personaje: coco
+voces/arcoiris/mapa/dorado_disponible.wav	¡Sofía! Apareció un reto dorado. Tócalo si te atreves.

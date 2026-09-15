@@ -1,5 +1,5 @@
 # Voces del núcleo (título, selección de personaje, invitaciones del Mapa Estelar).
-# Voz de Cometa con Qwen3-TTS en fal.ai (PO 14-Sep-2026), provisional hasta HE-28 (familia).
+# Voz OFICIAL de Cometa (decision del PO 14-Sep-2026): Qwen3-TTS en fal.ai.
 # Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar: python herramientas/generar_voces_fal.py --lista assets/audio/voces/nucleo/lineas_tts.tsv
 # personaje: cometa
 voces/nucleo/titulo_bienvenida_01.ogg	¡Toca la pantalla para comenzar la aventura!

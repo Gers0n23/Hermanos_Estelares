@@ -1,6 +1,6 @@
 {
   "personaje": "Cometa",
-  "estado": "Elegida por el PO el 14-Sep-2026 (muestra 'cometa_1_neutro_doblaje_reuso'). Provisional hasta HE-28 (voces de la familia).",
+  "estado": "Voz OFICIAL de Cometa (decision del PO del 14-Sep-2026). Elegida por el PO el 14-Sep-2026 (muestra 'cometa_1_neutro_doblaje_reuso').",
   "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
   "idioma": "Spanish",
   "temperatura": 0.8,

@@ -20,12 +20,14 @@ var _fallos := 0
 
 
 func _initialize() -> void:
-	print("=== QA encajar: Formas traviesas, 5 zonas x 3 rutas ===")
+	print("=== QA encajar: Formas traviesas, 5 zonas x rutas de Maxi y Nicole ===")
 	var filtro := ""
 	if OS.get_cmdline_user_args().size() > 0:
 		filtro = OS.get_cmdline_user_args()[0]
 	for zona in ZONAS:
 		for perfil in HERMANOS:
+			if perfil == "estrella":
+				continue  # Sofia (dificultad v3, mecanicas propias): herramientas/qa_test_retos_sofia.gd
 			var ruta := "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
 			if filtro != "" and not ruta.contains(filtro):
 				continue

@@ -41,7 +41,8 @@ Piezas con forma se arrastran desde una **bandeja** hasta su **silueta**; al sol
 `circulo`, `ovalo`, `cuadrado`, `rectangulo`, `triangulo` (isósceles), `triangulo_rect` (◣ con el
 ángulo recto abajo a la izquierda; girado 90° ◤, 180° ◥ y 270° ◢), `rombo`, `trapecio` (lado de
 arriba = 60 % del de abajo), `semicirculo`, `paralelogramo`, `estrella`, `corazon`, `gota`, `luna`
-y `flor`. Todas se definen por `ancho` × `alto` sin girar, centradas.
+y `flor`. Todas se definen por `ancho` × `alto` sin girar, centradas. Toda pieza acepta `espejo`
+(volteada en x antes de girar). Los poliominós del marco se definen por `celdas` y el lado de celda.
 
 Decoraciones (`decoracion`): `rueda`, `aleta` (púas de dino), `manchas`, `ventanas` (autito).
 
@@ -126,6 +127,42 @@ Campos de pieza: `forma`, `ancho`, `alto`, `color`, `x`, `y` (relativos a la fig
 | 3 · Chupetines | 4 formas (suma estrella) | 7 de 8 formas, sombras sin color | 2 de {pez, velero, pino}: las piezas llegan giradas, tocar gira (límite 8) |
 | 4 · Islotes | círculos y cuadrados grandes y chicos | grandes y chicos con sombras giradas que enderezan solas (límite 12) | 2 figuras + 3 piezas distractoras, con giro (límite 9) |
 | 5 · Cima | dinosaurio o autito gigante de 3 piezas con imán total | jardín: casa, sol, árbol y jirafa (8 huecos) + corazón dorado escondido (límite 16) | tangram: corona (especial, "te corono líder") o gato de 6 piezas, con giro (límite 10) |
+
+> **Columna de Sofía reemplazada (dificultad v3, 14-Sep-2026)**: ver §8 y la ficha de zonas §3.2.
+
+## 8. Mecánicas de Sofía (dificultad v3, decisión del PO del 14-Sep-2026)
+
+Campo `mecanica` del nivel (por defecto `huecos`, todo lo de arriba):
+
+| Mecánica | Qué hace | Campos |
+|---|---|---|
+| `tangram_libre` | La silueta unida se llena con **cualquier** solución. Las medidas y posiciones de las piezas vienen en unidades de la red del tangram (`lado_red` px = cateto del triángulo chico). Al soltar, la pieza se ajusta a la red probando cada vértice y vale si queda dentro de la silueta sin pisar otras (tolerancia 5 % de su área). Se gana con el 97 % de la silueta cubierta. Las piezas puestas se pueden volver a tomar, y tocarlas solo da un saltito: para girarlas hay que sacarlas. | `lado_red`, `figuras` (la solución del generador sirve para las pistas), `piezas_distractoras` (intrusas) |
+| `memoria` | Se ve el modelo a color (`segundos_modelo`), baja una cortina arcoíris y queda el contorno. Cada pieza va en su lugar exacto (`exigir_color`). El botón ojo muestra el modelo 2 s y cuesta una estrellita. | `segundos_modelo`, `exigir_color` |
+| `marco` | Tablero de cuadraditos (`marco`: filas con `#`) y piezas poliominó (`piezas_marco`: `id`, `celdas`, `color`). Al soltar, la pieza se ajusta a la cuadrícula y vale si todas sus celdas caen dentro del marco y libres. Sobran piezas. | `marco`, `lado_celda`, `piezas_marco`, `piezas_necesarias`, `solucion` (para pistas) |
+
+Reglas comunes (activadas por campos):
+
+- `pruebas`: lista de partidas seguidas en un nivel. Cada una sobrescribe campos del nivel, y sus
+  `lineas_voz` se mezclan con las del nivel. Entre pruebas: confeti y voz `prueba_superada`; la señal es
+  `prueba_completada(indice)`. Los destellos se suman.
+- `boton_espejo`: botón de 110 px bajo la bandeja (o en `boton_espejo_rect`). Voltea en espejo la
+  última pieza tocada (borde dorado punteado). Las piezas llegan sin voltear, así que si su lugar las
+  pide volteadas hay que usarlo. Sin pieza elegida suena la voz `espejo_sin_pieza`.
+- `pistas_cuestan_estrellita`: botón de estrella dorada de 96 px arriba a la derecha.
+  - Huecos o memoria: pone una pieza correcta.
+  - Tangram libre y marco: pone una pieza de la solución o, si no cabe ninguna, devuelve a la bandeja una
+    pieza mal puesta.
+  - Cada pista (o vistazo al modelo) resta una estrellita, sin bajar de 1. Una estrellita cae del botón
+    como feedback.
+- `regalo_tras_derrotas`: desde la 2.ª derrota-gag, al tocar "¡otra vez!" Coco pone una pieza. No
+  cuesta estrellita y es una vez por prueba.
+- `guardar_avance`: guarda las piezas puestas del marco en `Progreso` a cada movimiento y las repone
+  al volver (reto dorado). Se borra al ganar.
+- `zona_figuras` y `zona_bandeja` (`[x, y, ancho, alto]`): cambian la distribución de la pantalla
+  (reto dorado: tablero arriba y bandeja ancha abajo).
+
+Verificación: `herramientas/qa_test_retos_sofia.gd` y `herramientas/capturar_retos_sofia.gd`
+(pantallazos en ventana real).
 
 ## 7. Pendientes
 

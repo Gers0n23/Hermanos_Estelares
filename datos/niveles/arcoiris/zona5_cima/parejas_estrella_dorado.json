@@ -1,0 +1,297 @@
+{
+  "id_nivel": "arcoiris_z5_parejas_estrella_dorado",
+  "motor": "emparejar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "memoria",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "sombras",
+  "oculto": true,
+  "tiempo_volteo_ms": 800,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": false,
+  "disposicion": {
+    "filas": 4,
+    "columnas": 9
+  },
+  "limite_intentos": 42,
+  "intercambios_tras_acierto": 2,
+  "pares": [
+    {
+      "id_pareja": "luna",
+      "elemento_a": {
+        "figura": "luna",
+        "color": "#B48CE8",
+        "id": "luna_a"
+      },
+      "elemento_b": {
+        "figura": "luna",
+        "estilo": "sombra",
+        "id": "luna_b"
+      }
+    },
+    {
+      "id_pareja": "luna_espejo",
+      "elemento_a": {
+        "figura": "luna",
+        "color": "#FFCB3D",
+        "espejo": true,
+        "id": "luna_espejo_a"
+      },
+      "elemento_b": {
+        "figura": "luna",
+        "espejo": true,
+        "estilo": "sombra",
+        "id": "luna_espejo_b"
+      }
+    },
+    {
+      "id_pareja": "triangulo_rect",
+      "elemento_a": {
+        "forma": "triangulo_rect",
+        "color": "#FF6B6B",
+        "id": "triangulo_rect_a"
+      },
+      "elemento_b": {
+        "forma": "triangulo_rect",
+        "estilo": "sombra",
+        "id": "triangulo_rect_b"
+      }
+    },
+    {
+      "id_pareja": "triangulo_rect_espejo",
+      "elemento_a": {
+        "forma": "triangulo_rect",
+        "color": "#4A8BE0",
+        "espejo": true,
+        "id": "triangulo_rect_espejo_a"
+      },
+      "elemento_b": {
+        "forma": "triangulo_rect",
+        "espejo": true,
+        "estilo": "sombra",
+        "id": "triangulo_rect_espejo_b"
+      }
+    },
+    {
+      "id_pareja": "paralelogramo",
+      "elemento_a": {
+        "forma": "paralelogramo",
+        "color": "#45C6C0",
+        "id": "paralelogramo_a"
+      },
+      "elemento_b": {
+        "forma": "paralelogramo",
+        "estilo": "sombra",
+        "id": "paralelogramo_b"
+      }
+    },
+    {
+      "id_pareja": "paralelogramo_espejo",
+      "elemento_a": {
+        "forma": "paralelogramo",
+        "color": "#F26CA8",
+        "espejo": true,
+        "id": "paralelogramo_espejo_a"
+      },
+      "elemento_b": {
+        "forma": "paralelogramo",
+        "espejo": true,
+        "estilo": "sombra",
+        "id": "paralelogramo_espejo_b"
+      }
+    },
+    {
+      "id_pareja": "gota_derecha",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#6FD6E8",
+        "rotacion": 90,
+        "id": "gota_derecha_a"
+      },
+      "elemento_b": {
+        "figura": "gota",
+        "rotacion": 90,
+        "estilo": "sombra",
+        "id": "gota_derecha_b"
+      }
+    },
+    {
+      "id_pareja": "gota_izquierda",
+      "elemento_a": {
+        "figura": "gota",
+        "color": "#7DD87A",
+        "rotacion": 270,
+        "id": "gota_izquierda_a"
+      },
+      "elemento_b": {
+        "figura": "gota",
+        "rotacion": 270,
+        "estilo": "sombra",
+        "id": "gota_izquierda_b"
+      }
+    },
+    {
+      "id_pareja": "semicirculo",
+      "elemento_a": {
+        "forma": "semicirculo",
+        "color": "#FF9F4A",
+        "id": "semicirculo_a"
+      },
+      "elemento_b": {
+        "forma": "semicirculo",
+        "estilo": "sombra",
+        "id": "semicirculo_b"
+      }
+    },
+    {
+      "id_pareja": "semicirculo_girado",
+      "elemento_a": {
+        "forma": "semicirculo",
+        "color": "#9B6BD9",
+        "rotacion": 90,
+        "id": "semicirculo_girado_a"
+      },
+      "elemento_b": {
+        "forma": "semicirculo",
+        "rotacion": 90,
+        "estilo": "sombra",
+        "id": "semicirculo_girado_b"
+      }
+    },
+    {
+      "id_pareja": "trapecio",
+      "elemento_a": {
+        "forma": "trapecio",
+        "color": "#FFB25B",
+        "id": "trapecio_a"
+      },
+      "elemento_b": {
+        "forma": "trapecio",
+        "estilo": "sombra",
+        "id": "trapecio_b"
+      }
+    },
+    {
+      "id_pareja": "trapecio_girado",
+      "elemento_a": {
+        "forma": "trapecio",
+        "color": "#B07A4F",
+        "rotacion": 180,
+        "id": "trapecio_girado_a"
+      },
+      "elemento_b": {
+        "forma": "trapecio",
+        "rotacion": 180,
+        "estilo": "sombra",
+        "id": "trapecio_girado_b"
+      }
+    },
+    {
+      "id_pareja": "estrella",
+      "elemento_a": {
+        "figura": "estrella",
+        "color": "#FFCB3D",
+        "id": "estrella_a"
+      },
+      "elemento_b": {
+        "figura": "estrella",
+        "estilo": "sombra",
+        "id": "estrella_b"
+      }
+    },
+    {
+      "id_pareja": "corazon",
+      "elemento_a": {
+        "figura": "corazon",
+        "color": "#F26CA8",
+        "id": "corazon_a"
+      },
+      "elemento_b": {
+        "figura": "corazon",
+        "estilo": "sombra",
+        "id": "corazon_b"
+      }
+    },
+    {
+      "id_pareja": "flor",
+      "elemento_a": {
+        "figura": "flor",
+        "color": "#FF6B6B",
+        "id": "flor_a"
+      },
+      "elemento_b": {
+        "figura": "flor",
+        "estilo": "sombra",
+        "id": "flor_b"
+      }
+    },
+    {
+      "id_pareja": "arcoiris_secreto",
+      "elemento_a": {
+        "figura": "arcoiris",
+        "color": "#FFFFFF",
+        "id": "arcoiris_secreto_a"
+      },
+      "elemento_b": {
+        "figura": "arcoiris",
+        "estilo": "sombra",
+        "id": "arcoiris_secreto_b"
+      },
+      "especial": true
+    },
+    {
+      "id_pareja": "triangulo_rect_90",
+      "elemento_a": {
+        "forma": "triangulo_rect",
+        "color": "#7DD87A",
+        "rotacion": 90,
+        "id": "triangulo_rect_90_a"
+      },
+      "elemento_b": {
+        "forma": "triangulo_rect",
+        "rotacion": 90,
+        "estilo": "sombra",
+        "id": "triangulo_rect_90_b"
+      }
+    },
+    {
+      "id_pareja": "triangulo_rect_180",
+      "elemento_a": {
+        "forma": "triangulo_rect",
+        "color": "#FFCB3D",
+        "rotacion": 180,
+        "id": "triangulo_rect_180_a"
+      },
+      "elemento_b": {
+        "forma": "triangulo_rect",
+        "rotacion": 180,
+        "estilo": "sombra",
+        "id": "triangulo_rect_180_b"
+      }
+    }
+  ],
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/estrella/intro_dorado.wav",
+    "pista": "voces/arcoiris/emparejar/estrella/pista_z5.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/estrella/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/estrella/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/estrella/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/estrella/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/estrella/acierto_especial_01.wav",
+    "victoria_final": "voces/arcoiris/emparejar/estrella/victoria_dorado_01.wav",
+    "derrota_gag": "voces/arcoiris/emparejar/estrella/derrota_gag_01.wav",
+    "pista_usada": "voces/arcoiris/emparejar/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/emparejar/estrella/regalo_01.wav"
+  }
+}

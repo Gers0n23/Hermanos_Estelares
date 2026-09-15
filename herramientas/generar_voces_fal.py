@@ -31,6 +31,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -46,6 +47,24 @@ UMBRAL_SILENCIO = 0.02   # amplitud bajo la cual se considera silencio al recort
 MARGEN_S = 0.08          # aire que se deja antes y después de la voz
 PICO = 0.89              # normalización (~ -1 dBFS)
 INTENTOS = 3
+## Precio de Qwen3-TTS text-to-speech en fal.ai (revisado el 14-Sep-2026). Solo para mostrar el costo
+## estimado antes de generar: revisa el precio vigente antes de una tanda grande.
+PRECIO_USD_POR_1000 = 0.09
+
+
+ARCHIVO_PENDIENTES = RAIZ / "assets" / "audio" / "voces" / "pendientes_fal.txt"
+
+
+def leer_pendientes() -> set[str]:
+    """Rutas que todavía tienen voz de relleno (TTS de Windows) y esperan su voz oficial."""
+    if not ARCHIVO_PENDIENTES.exists():
+        return set()
+    return {l.strip() for l in ARCHIVO_PENDIENTES.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")}
+
+
+def escribir_pendientes(pendientes: set[str]) -> None:
+    cabecera = [l for l in ARCHIVO_PENDIENTES.read_text(encoding="utf-8").splitlines() if l.startswith("#")]
+    ARCHIVO_PENDIENTES.write_text("\n".join(cabecera + sorted(pendientes)) + "\n", encoding="utf-8")
 
 
 def cargar_voz(personaje: str) -> dict:
@@ -128,11 +147,32 @@ def main() -> None:
     parser.add_argument("--lista", required=True, help="TSV relativo a la raíz del repo")
     parser.add_argument("--personaje", help="usa este personaje para todas las líneas del TSV")
     parser.add_argument("--solo", help="genera solo las rutas que contienen este texto")
+    parser.add_argument("--solo-personaje", help="genera solo las líneas de este personaje")
+    parser.add_argument("--excluir", action="append", default=[], help="salta las rutas que contienen este texto (repetible)")
+    parser.add_argument("--omitir-desde", help="salta las líneas cuyo archivo ya fue generado desde esta fecha local (AAAA-MM-DDTHH:MM); evita pagar dos veces")
+    parser.add_argument("--estimar", action="store_true", help="solo cuenta líneas y costo estimado, sin llamar a fal")
+    parser.add_argument("--solo-pendientes", action="store_true",
+                        help=f"genera solo las rutas de {ARCHIVO_PENDIENTES.relative_to(RAIZ).as_posix()} y las saca de la lista al generarlas")
     args = parser.parse_args()
 
     lineas = leer_lista(RAIZ / args.lista, args.personaje)
+    pendientes = leer_pendientes()
+    if args.solo_pendientes:
+        lineas = [l for l in lineas if l[0] in pendientes]
     if args.solo:
         lineas = [l for l in lineas if args.solo in l[0]]
+    if args.solo_personaje:
+        lineas = [l for l in lineas if l[2] == args.solo_personaje]
+    for texto in args.excluir:
+        lineas = [l for l in lineas if texto not in l[0]]
+    if args.omitir_desde:
+        limite = datetime.fromisoformat(args.omitir_desde).timestamp()
+        destino = lambda ruta: RAIZ / "assets" / "audio" / ruta
+        lineas = [l for l in lineas if not (destino(l[0]).exists() and destino(l[0]).stat().st_mtime >= limite)]
+    caracteres = sum(len(l[1]) for l in lineas)
+    print(f"{len(lineas)} líneas, {caracteres} caracteres (~USD {caracteres / 1000 * PRECIO_USD_POR_1000:.2f} sin reintentos)")
+    if args.estimar:
+        return
     if not lineas:
         sys.exit("No hay líneas con personaje asignado en esa lista.")
 
@@ -151,8 +191,13 @@ def main() -> None:
                     continue
                 guardar(destino, datos, sr)
                 print(f"voz [{personaje}] {segundos:4.1f} s  {ruta}")
+                if ruta in pendientes:
+                    pendientes.discard(ruta)
+                    escribir_pendientes(pendientes)
                 break
             except (urllib.error.URLError, KeyError, RuntimeError) as e:
+                if isinstance(e, urllib.error.HTTPError) and e.code in (401, 403):
+                    sys.exit(f"fal.ai rechazó el pedido ({e.code}): revisa saldo o key. Detenido en {ruta}.")
                 if intento == INTENTOS:
                     fallas += 1
                     print(f"ERROR {ruta}: {e}")

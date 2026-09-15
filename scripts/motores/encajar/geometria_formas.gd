@@ -56,6 +56,54 @@ static func contorno(forma: String, ancho: float, alto: float) -> PackedVector2A
 	return puntos
 
 
+## Contorno de un poliominó (pentominós de Sofía): `celdas` = [[columna, fila], ...] de lado `lado`.
+## Se recorre el borde de las celdas (sin agujeros), centrado en el centro de su caja y sin rotar.
+static func contorno_poliomino(celdas: Array, lado: float) -> PackedVector2Array:
+	var aristas := {}
+	var max_c := 0
+	var max_f := 0
+	for celda in celdas:
+		var c := int(celda[0])
+		var f := int(celda[1])
+		max_c = maxi(max_c, c + 1)
+		max_f = maxi(max_f, f + 1)
+		for arista in [[Vector2i(c, f), Vector2i(c + 1, f)], [Vector2i(c + 1, f), Vector2i(c + 1, f + 1)],
+				[Vector2i(c + 1, f + 1), Vector2i(c, f + 1)], [Vector2i(c, f + 1), Vector2i(c, f)]]:
+			var inversa := [arista[1], arista[0]]
+			if aristas.has(inversa):
+				aristas.erase(inversa)
+			else:
+				aristas[arista] = true
+	var siguiente := {}
+	for arista in aristas:
+		siguiente[arista[0]] = arista[1]
+	if siguiente.is_empty():
+		return PackedVector2Array()
+	var inicio: Vector2i = siguiente.keys()[0]
+	var recorrido: Array[Vector2i] = [inicio]
+	var actual: Vector2i = siguiente[inicio]
+	while actual != inicio and recorrido.size() <= siguiente.size():
+		recorrido.append(actual)
+		actual = siguiente[actual]
+	var centro := Vector2(max_c, max_f) * lado / 2.0
+	var puntos := PackedVector2Array()
+	for i in recorrido.size():
+		var previo := recorrido[i - 1]
+		var punto := recorrido[i]
+		var proximo := recorrido[(i + 1) % recorrido.size()]
+		if (punto - previo) != (proximo - punto):
+			puntos.append(Vector2(punto) * lado - centro)
+	return puntos
+
+
+## Espejo horizontal (x -> -x) conservando el sentido de giro del contorno.
+static func espejado(base: PackedVector2Array) -> PackedVector2Array:
+	var puntos := PackedVector2Array()
+	for i in range(base.size() - 1, -1, -1):
+		puntos.append(Vector2(-base[i].x, base[i].y))
+	return puntos
+
+
 ## Contorno girado `grados` (sentido horario en pantalla) y trasladado a `centro`.
 static func transformado(base: PackedVector2Array, grados: float, centro := Vector2.ZERO) -> PackedVector2Array:
 	var angulo := deg_to_rad(grados)

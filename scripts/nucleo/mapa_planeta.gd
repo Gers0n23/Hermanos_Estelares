@@ -121,6 +121,9 @@ func _process(delta: float) -> void:
 		nodo.queue_redraw()
 	for tarjeta in _tarjetas:
 		tarjeta.queue_redraw()
+		var dorado: Button = tarjeta.get_meta("dorado", null)
+		if dorado != null and dorado.visible:
+			dorado.rotation = sin(_tiempo * 3.0) * 0.1
 	if not _avance_bandas.is_empty():
 		_arcoiris.queue_redraw()
 
@@ -160,11 +163,20 @@ func calcular_estado() -> void:
 			if jugable and progreso != null:
 				completada = progreso.esta_nivel_completado(id_perfil, planeta_id, id_nivel)
 				estrellitas = progreso.obtener_estrellitas_nivel(id_perfil, planeta_id, id_nivel)
+			# Reto dorado (opcional, Sofia v3): aparece al lograr 3 estrellitas en la estacion. No cuenta
+			# para abrir zonas: el planeta siempre se puede completar sin el.
+			var ruta_dorado := str(datos_estacion.get("niveles_dorados", {}).get(id_perfil, ""))
+			var hay_dorado := jugable and ruta_dorado != "" and FileAccess.file_exists(ruta_dorado)
+			var dorado_completado := false
+			if hay_dorado and progreso != null:
+				dorado_completado = progreso.esta_nivel_completado(id_perfil, planeta_id, _id_nivel(ruta_dorado))
 			jugables += 1 if jugable else 0
 			completadas += 1 if completada else 0
 			estaciones.append({"datos": datos_estacion, "juego": str(datos_estacion.get("juego", "")), "jugable": jugable,
 				"completada": completada, "estrellitas": estrellitas, "ruta_nivel": ruta_nivel, "escena": escena,
-				"perfil_nivel": _perfil_nivel(ruta_nivel) if jugable else ""})
+				"perfil_nivel": _perfil_nivel(ruta_nivel) if jugable else "",
+				"dorado_ruta": ruta_dorado if hay_dorado else "", "dorado_completado": dorado_completado,
+				"dorado_disponible": hay_dorado and (estrellitas >= 3 or dorado_completado or todo_abierto)})
 		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
 			"completa": jugables > 0 and completadas == jugables, "abierta": false,
 			"secreta": bool(datos_zona.get("secreta", false))})
@@ -231,10 +243,19 @@ func siguiente_estacion() -> Array:
 func _marcar_visto() -> void:
 	var abiertas: Array = []
 	var completas: Array = []
+	_visto[_clave()] = {"abiertas": abiertas, "completas": completas, "dorados": _dorados_disponibles()}
 	for zona in zonas:
 		abiertas.append(zona["abierta"])
 		completas.append(zona["completa"])
-	_visto[_clave()] = {"abiertas": abiertas, "completas": completas}
+
+
+func _dorados_disponibles() -> Array:
+	var lista: Array = []
+	for i in zonas.size():
+		for j in zonas[i]["estaciones"].size():
+			if zonas[i]["abierta"] and zonas[i]["estaciones"][j]["dorado_disponible"]:
+				lista.append("%d_%d" % [i, j])
+	return lista
 
 
 ## Compara con lo ultimo que este hermano vio: el color que vuelve y la zona que despierta se
@@ -258,6 +279,11 @@ func _celebrar_cambios() -> void:
 			seleccion = i
 			lista.append(str(voces.get("secreta_revelada" if zonas[i]["secreta"] else "zona_abierta", "")))
 			_despues(0.9, _fiesta_zona.bind(i))
+	for clave in _visto[_clave()].get("dorados", []):
+		if not previo.get("dorados", []).has(clave):
+			seleccion = int(str(clave).get_slice("_", 0))
+			lista.append(str(voces.get("dorado_disponible", "")))
+			break
 	if not lista.is_empty():
 		_reproducir_sfx(SFX_FIESTA)
 		_decir_en_orden(lista, 0.6)
@@ -335,6 +361,40 @@ func _construir_ui() -> void:
 		tarjeta.pivot_offset = tarjeta.size / 2.0
 		tarjeta.gui_input.connect(_al_tocar.bind(_tocar_estacion.bind(j)))
 		_tarjetas.append(tarjeta)
+		# Boton del reto dorado en la esquina de la tarjeta (>= 96 px, GDD §6.1).
+		var dorado := Button.new()
+		dorado.focus_mode = Control.FOCUS_NONE
+		dorado.tooltip_text = "Reto dorado"
+		dorado.custom_minimum_size = Vector2(96, 96)
+		tarjeta.add_child(dorado)
+		dorado.position = Vector2(LADO_TARJETA - 70.0, -34.0)
+		dorado.size = Vector2(96, 96)
+		dorado.pivot_offset = dorado.size / 2.0
+		for estado in ["normal", "hover", "pressed"]:
+			var caja := StyleBoxFlat.new()
+			caja.bg_color = DORADO.darkened(0.1) if estado == "pressed" else DORADO
+			caja.border_color = COLOR_CONTORNO
+			caja.set_border_width_all(5)
+			caja.set_corner_radius_all(48)
+			caja.shadow_color = Color(COLOR_CONTORNO, 0.3)
+			caja.shadow_offset = Vector2(0, 5)
+			caja.shadow_size = 2
+			dorado.add_theme_stylebox_override(estado, caja)
+		dorado.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		var icono := Control.new()
+		icono.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		dorado.add_child(icono)
+		icono.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icono.draw.connect(func() -> void:
+			var c := icono.size / 2.0
+			Figura.dibujar(icono, "estrella", Color("#FFF3B0"), c + Vector2(0, 4), 30.0, true, true)
+			for p in [Vector2(-32, -28), Vector2(32, -24)]:
+				var chispa := Figura.poligono("estrella", c + p, 9.0)
+				icono.draw_colored_polygon(chispa, Color.WHITE)
+				Figura.contornear(icono, chispa, 2.0))
+		dorado.pressed.connect(_tocar_dorado.bind(j))
+		dorado.hide()
+		tarjeta.set_meta("dorado", dorado)
 
 	var ruta_coco := str(mapa.get("anfitrion", ""))
 	_anfitriona = TextureRect.new()
@@ -462,8 +522,11 @@ func _mostrar_estaciones() -> void:
 	_zona_elegida[_clave()] = seleccion
 	_siguiente = siguiente_estacion()
 	for j in _tarjetas.size():
-		_tarjetas[j].visible = j < zonas[seleccion]["estaciones"].size()
+		var estaciones: Array = zonas[seleccion]["estaciones"]
+		_tarjetas[j].visible = j < estaciones.size()
 		_tarjetas[j].queue_redraw()
+		var dorado: Button = _tarjetas[j].get_meta("dorado")
+		dorado.visible = j < estaciones.size() and zonas[seleccion]["abierta"] and estaciones[j]["dorado_disponible"]
 	for i in _nodos_zona.size():
 		var etiqueta: Label = _nodos_zona[i].get_meta("etiqueta")
 		etiqueta.visible = not zonas[i]["secreta"] or zonas[i]["abierta"]
@@ -535,11 +598,17 @@ func _tocar_cometa() -> void:
 	lanzar_estacion(destino[0], destino[1], 1.4)
 
 
+func _tocar_dorado(j: int) -> void:
+	if _lanzando or j >= zonas[seleccion]["estaciones"].size():
+		return
+	lanzar_estacion(seleccion, j, 0.0, true)
+
+
 ## Abre el motor de una estacion con el contrato de minijuego_base. Al terminar o salir se vuelve a
-## este mapa (la escena se recarga y celebra lo que cambio).
-func lanzar_estacion(i: int, j: int, espera := 0.0) -> void:
+## este mapa (la escena se recarga y celebra lo que cambio). `dorado` abre su reto dorado.
+func lanzar_estacion(i: int, j: int, espera := 0.0, dorado := false) -> void:
 	var estacion: Dictionary = zonas[i]["estaciones"][j]
-	if not estacion["jugable"]:
+	if not estacion["jugable"] or (dorado and estacion["dorado_ruta"] == ""):
 		return
 	_lanzando = true
 	_zona_elegida[_clave()] = i
@@ -557,7 +626,7 @@ func lanzar_estacion(i: int, j: int, espera := 0.0) -> void:
 		return
 	var escena: PackedScene = load(estacion["escena"])
 	var motor: Node = escena.instantiate()
-	motor.ruta_nivel = estacion["ruta_nivel"]
+	motor.ruta_nivel = estacion["dorado_ruta"] if dorado else estacion["ruta_nivel"]
 	motor.planeta_id = planeta_id
 	motor.id_perfil = id_perfil
 	var arbol := get_tree()

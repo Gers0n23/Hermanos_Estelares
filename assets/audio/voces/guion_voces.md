@@ -8,16 +8,36 @@
 > `docs/guiones/plantilla_escena_planeta.md`). `Audio.reproducir_voz()` sigue sin romper el
 > juego si el archivo `.ogg` falta, solo deja un aviso en consola (`push_warning`).
 >
-> **Voz de personaje con IA (14-Sep-2026, decisión del PO)**: Cometa ya no usa el TTS de Windows.
-> Su voz se diseñó con Qwen3-TTS en fal.ai (criatura chillona y traviesa, acento latino neutro de
-> doblaje) y quedó guardada en `herramientas/voces_personajes/cometa/`. Toda línea de Cometa se
-> genera con `herramientas/generar_voces_fal.py` desde los `lineas_tts.tsv`, bajo la directiva
-> `# personaje: cometa`. Ya están generadas las del núcleo (`nucleo/lineas_tts.tsv`: título,
-> selección e invitaciones de los 6 planetas) y las de Cometa del mapa del Arcoíris
-> (`cometa_vamos`, `todo_listo`). Las demás líneas siguen con TTS de Windows hasta elegir la voz de
-> cada personaje (Coco, la siguiente). Sigue siendo provisional: la voz de la familia (HE-28)
-> reemplaza todo cuando se grabe. `herramientas/qa_test_voces.gd` verifica que cada línea de los
-> TSV exista, cargue y dure algo razonable.
+> **Voces oficiales de personaje con IA (decisiones del PO del 14-Sep-2026)**: Cometa y Coco
+> tienen voz diseñada con Qwen3-TTS en fal.ai y el PO la declaró **la voz oficial del juego**.
+>
+> - **Cometa** (`herramientas/voces_personajes/cometa/`): criatura chillona y traviesa, con acento latino
+>   neutro de doblaje. Dice:
+>   - las líneas del núcleo (título, selección e invitaciones de los 6 planetas);
+>   - las pistas que suenan al tocarlo;
+>   - los avisos de zona abierta y lugar secreto.
+> - **Coco** (`herramientas/voces_personajes/coco/`): camaleona suave y cantarina, con acento chileno
+>   suave de animadora infantil (muestra "coco_b_chileno_suave_reuso").
+>
+> **Cómo se generan.** Toda línea se genera con `herramientas/generar_voces_fal.py` desde los
+> `lineas_tts.tsv`, según la directiva `# personaje: <id>`. Opciones útiles:
+>
+> - `--estimar`: muestra el costo antes de gastar.
+> - `--omitir-desde`: no vuelve a pagar lo ya generado.
+> - `--solo-pendientes`: genera solo lo que falta.
+>
+> **Líneas pendientes.** Las que todavía suenan con TTS de Windows de relleno están listadas en
+> `voces/pendientes_fal.txt` y se regeneran con `--solo-pendientes` cuando la cuenta de fal.ai tenga
+> saldo.
+>
+> **Retos de Sofía (dificultad v3).** Sumaron 36 líneas nuevas (intros, pistas de Cometa, `pista_usada`,
+> `regalo`, `prueba_superada` y victorias de la Cima y del reto dorado). El mapa sumó `dorado_disponible`.
+>
+> **Verificación.** `herramientas/qa_test_voces.gd` verifica que cada línea exista, cargue y dure algo
+> razonable.
+>
+> **La familia.** Grabar a la familia (HE-28) queda para decidirlo aparte, por ejemplo para las
+> videollamadas de papá.
 
 ## Decisión P2 (GDD §9) — ¿voces grabadas por la familia o TTS?
 

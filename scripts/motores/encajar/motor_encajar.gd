@@ -5,12 +5,21 @@ extends "res://scripts/base/minijuego_base.gd"
 ## (docs/fichas/motor-encajar.md, docs/fichas/planeta-arcoiris.md §2 y planeta-arcoiris-zonas.md §3.2).
 ##
 ## Piezas con forma se arrastran hasta su silueta. Agnostico de tema: todo llega en el nivel JSON.
-## Una FIGURA agrupa uno o mas HUECOS; una pieza calza en un hueco si su forma, tamano y giro
-## coinciden (comparacion de areas, ver geometria_formas.gd). Con eso el mismo codigo cubre:
-## - formas sueltas (Maxi y Nicole): cada figura tiene un solo hueco;
-## - figuras compuestas (Sofia): casa = triangulo + cuadrado, con o sin lineas por dentro;
-## - escena (Nicole, zona 5): huecos en posiciones fijas sobre un jardin;
-## - tangram (Sofia, zona 5): silueta unida y piezas que hay que girar.
+## Cuatro MECANICAS (campo `mecanica`), todas con la misma bandeja, piezas y celebraciones:
+## - `huecos` (por defecto): una FIGURA agrupa HUECOS; una pieza calza si su forma, tamano, giro y
+##   espejo coinciden (comparacion de areas, geometria_formas.gd). Cubre formas sueltas (Maxi y
+##   Nicole), figuras compuestas, la escena de Nicole y siluetas unidas.
+## - `tangram_libre` (Sofia, v3): la silueta se llena con CUALQUIER solucion valida. La pieza soltada
+##   se ajusta a la red del tangram (lado `lado_red`) y vale si queda dentro de la silueta sin pisar
+##   otras. Las piezas puestas se pueden volver a tomar.
+## - `memoria` (Sofia, v3): se ve el modelo a color unos segundos, Coco lo tapa y hay que copiarlo
+##   de memoria: cada pieza a su lugar exacto (`exigir_color`). Mirar de nuevo cuesta una estrellita.
+## - `marco` (Sofia, v3): rellenar un marco de cuadraditos con pentominos (Katamino); sobran piezas.
+##
+## `pruebas` encadena varias partidas en un solo nivel (desafio de la Cima). Cada prueba sobrescribe
+## campos del nivel. Pistas que cuestan estrellita (`pistas_cuestan_estrellita`), boton espejo
+## (`boton_espejo`), regalo de una pieza tras 2 derrotas (`regalo_tras_derrotas`) y avance guardado
+## pieza a pieza (`guardar_avance`, reto dorado).
 ##
 ## Reglas por perfil (GDD §5), activadas por campos del nivel y no por el nombre del perfil:
 ## `sin_error` (Semilla: soltar mal nunca es "no"), `toque_lleva_a_casa`, `ayuda_idle_s`,
@@ -23,11 +32,13 @@ signal pieza_encajada(id_hueco: String)
 signal intento_fallido()
 signal figura_completada(id_figura: String)
 signal nivel_fallado()
+signal prueba_completada(indice: int)
 
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 ## Zonas de la pantalla base 1280x720: a la izquierda Coco, arriba la barra de progreso, a la
-## derecha la bandeja de piezas y abajo a la derecha Cometa.
+## derecha la bandeja de piezas y abajo a la derecha Cometa. Un nivel puede cambiarlas
+## (`zona_figuras`, `zona_bandeja`: [x, y, ancho, alto]).
 const ZONA_FIGURAS := Rect2(236, 118, 640, 590)
 const ZONA_BANDEJA := Rect2(894, 124, 366, 440)
 const SEPARACION_MAXIMA := 90.0
@@ -36,6 +47,11 @@ const ESCALA_ARRASTRE := 1.06
 const DESTELLOS_POR_PIEZA := 10
 const DESTELLOS_POR_INTENTO_SOBRANTE := 2
 const SEGUNDOS_PISTA := 1.8
+## Tangram libre: area que una pieza puede quedar fuera de la silueta o encima de otra (fraccion).
+const TOLERANCIA_LIBRE := 0.05
+## Tangram libre: fraccion de la silueta que debe quedar cubierta para ganar.
+const COBERTURA_MINIMA := 0.97
+const SEGUNDOS_VISTAZO := 2.0
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const SFX_TOMAR := "sfx/ui/seleccionar.ogg"
 const SFX_SOLTAR := "sfx/ui/soltar.ogg"
@@ -67,13 +83,25 @@ var _piezas: Array[PiezaEncajar] = []
 var _ranuras: Array = []
 var _arrastrando := {}
 
+## Configuracion vigente: el nivel con los campos de la prueba actual encima.
+var _cfg: Dictionary = {}
+var _pruebas: Array = []
+var _indice_prueba := 0
+var _mecanica := "huecos"
+var _zona_figuras := ZONA_FIGURAS
+var _zona_bandeja := ZONA_BANDEJA
+
 var _requeridos := 0
 var _encajados := 0
 var _intentos_usados := 0
 var _limite_intentos = null  ## null = sin limite
 var _derrota_disparada := false
+var _derrotas := 0
+var _regalo_dado := false
 var _en_gag := false
 var _terminado := false
+var _pistas_usadas := 0
+var _destellos_pruebas := 0
 
 var _iman := 120.0
 var _sin_error := false
@@ -86,12 +114,30 @@ var _objetivo_guiado := false
 var _risa := false
 var _caras := true
 var _lado_minimo_bandeja := 0.0
+var _exigir_color := false
+var _boton_espejo_activo := false
+
+## Tangram libre: red del tangram y piezas puestas (pieza -> poligono en pantalla).
+var _lado_red := 0.0
+var _origen_red := Vector2.ZERO
+var _libres := {}
+var _area_silueta := 0.0
+## Marco: {"origen", "lado", "celdas": {Vector2i: true}, "lista": Array, "ocupadas": {Vector2i: pieza}}.
+var _marco: Dictionary = {}
+var _celdas_de := {}
+## Memoria: mientras se ve el modelo no se puede arrastrar.
+var _en_modelo := false
 
 var _objetivo = null
 var _inactivo := 0.0
 var _pistas_dadas := 0
 var _ultima_linea := ""
 var _id_voz_diferida := 0
+var _pieza_elegida: PiezaEncajar = null
+
+var _boton_pista: Button
+var _boton_espejo: Button
+var _boton_ojo: Button
 
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
@@ -104,6 +150,7 @@ func _ready() -> void:
 	_boton_otra_vez.hide()
 	_panel_depuracion.hide()
 	_estilizar_interfaz()
+	_crear_botones_sofia()
 	_boton_otra_vez.pressed.connect(_reintentar)
 	_boton_cometa.pressed.connect(_al_tocar_cometa)
 	_boton_salir.pressed.connect(func() -> void: salir_solicitado.emit())
@@ -114,21 +161,8 @@ func _ready() -> void:
 	if nivel.is_empty():
 		push_error("motor_encajar: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
-	_configurar_desde_nivel()
-	_construir_figuras()
-	_construir_piezas()
-	_construir_progreso()
-	_siluetas.figuras = _figuras
-	_siluetas.guia_color = bool(nivel.get("guia_color", false))
-	_siluetas.zona = ZONA_FIGURAS
-	_siluetas.escena = nivel.get("escena", {})
-	_siluetas.queue_redraw()
-	var intro := _linea("intro")
-	_reproducir_voz("intro", intro)
-	if _objetivo_guiado:
-		_elegir_objetivo()
-		_voz_diferida("objetivo", _ruta_voz_objetivo(), _duracion_voz(intro) + 0.4)
-	_actualizar_depuracion()
+	_pruebas = nivel.get("pruebas", [])
+	_iniciar_prueba()
 
 
 func _process(delta: float) -> void:
@@ -151,32 +185,100 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 # ---------------------------------------------------------------------------
-# Construccion del nivel
+# Construccion del nivel (y de cada prueba)
 # ---------------------------------------------------------------------------
+
+func _iniciar_prueba() -> void:
+	_cfg = nivel.duplicate()
+	_cfg.erase("pruebas")
+	if _indice_prueba < _pruebas.size():
+		var prueba: Dictionary = _pruebas[_indice_prueba]
+		for clave in prueba:
+			if clave == "lineas_voz":
+				var voces: Dictionary = nivel.get("lineas_voz", {}).duplicate()
+				voces.merge(prueba["lineas_voz"], true)
+				_cfg["lineas_voz"] = voces
+			else:
+				_cfg[clave] = prueba[clave]
+	_configurar_desde_nivel()
+	if _mecanica == "marco":
+		_construir_marco()
+	else:
+		_construir_figuras()
+		_construir_piezas()
+	_construir_progreso()
+	_siluetas.figuras = _figuras
+	_siluetas.guia_color = bool(_cfg.get("guia_color", false))
+	_siluetas.zona = _zona_figuras
+	_siluetas.escena = _cfg.get("escena", {})
+	_siluetas.queue_redraw()
+	_actualizar_botones()
+	var intro := _linea("intro")
+	_reproducir_voz("intro", intro)
+	if _objetivo_guiado:
+		_elegir_objetivo()
+		_voz_diferida("objetivo", _ruta_voz_objetivo(), _duracion_voz(intro) + 0.4)
+	if _mecanica == "memoria":
+		_mostrar_modelo(float(_cfg.get("segundos_modelo", 6.0)), _duracion_voz(intro) + 0.2)
+	if bool(_cfg.get("guardar_avance", false)):
+		_restaurar_avance()
+	_actualizar_depuracion()
+
 
 func _configurar_desde_nivel() -> void:
 	var perfil := obtener_perfil_dificultad()
-	_iman = float(nivel.get("iman_tolerancia_px", 120.0))
-	_sin_error = bool(nivel.get("sin_error", perfil == "semilla"))
-	var limite = nivel.get("limite_intentos", null)
+	_mecanica = str(_cfg.get("mecanica", "huecos"))
+	_iman = float(_cfg.get("iman_tolerancia_px", 120.0))
+	_sin_error = bool(_cfg.get("sin_error", perfil == "semilla"))
+	var limite = _cfg.get("limite_intentos", null)
 	_limite_intentos = int(limite) if limite != null and not _sin_error else null
-	_rotacion_por_toque = bool(nivel.get("rotacion_por_toque", false))
-	_paso_rotacion = float(nivel.get("paso_rotacion", 90.0))
-	_enderezar = bool(nivel.get("enderezar_al_acercar", false))
-	_toque_lleva_a_casa = bool(nivel.get("toque_lleva_a_casa", false))
-	_ayuda_idle = float(nivel.get("ayuda_idle_s", 0.0))
-	_objetivo_guiado = bool(nivel.get("objetivo_guiado", false))
-	_risa = bool(nivel.get("risa_al_encajar", false))
-	_caras = bool(nivel.get("caras", true))
-	_lado_minimo_bandeja = float(nivel.get("lado_minimo_bandeja", {"semilla": 96.0, "brote": 56.0}.get(perfil, 0.0)))
+	_rotacion_por_toque = bool(_cfg.get("rotacion_por_toque", false))
+	_paso_rotacion = float(_cfg.get("paso_rotacion", 90.0))
+	_enderezar = bool(_cfg.get("enderezar_al_acercar", false))
+	_toque_lleva_a_casa = bool(_cfg.get("toque_lleva_a_casa", false))
+	_ayuda_idle = float(_cfg.get("ayuda_idle_s", 0.0))
+	_objetivo_guiado = bool(_cfg.get("objetivo_guiado", false))
+	_risa = bool(_cfg.get("risa_al_encajar", false))
+	_caras = bool(_cfg.get("caras", true))
+	_lado_minimo_bandeja = float(_cfg.get("lado_minimo_bandeja", {"semilla": 96.0, "brote": 56.0}.get(perfil, 0.0)))
+	_exigir_color = bool(_cfg.get("exigir_color", _mecanica == "memoria"))
+	_boton_espejo_activo = bool(_cfg.get("boton_espejo", false))
+	_lado_red = float(_cfg.get("lado_red", 0.0))
+	_zona_figuras = _rect_de(_cfg.get("zona_figuras", null), ZONA_FIGURAS)
+	_zona_bandeja = _rect_de(_cfg.get("zona_bandeja", null), ZONA_BANDEJA)
+	_bandeja.position = _zona_bandeja.position
+	_bandeja.size = _zona_bandeja.size
+
+
+func _rect_de(valor, por_defecto: Rect2) -> Rect2:
+	if valor is Array and valor.size() == 4:
+		return Rect2(float(valor[0]), float(valor[1]), float(valor[2]), float(valor[3]))
+	return por_defecto
+
+
+## Con `lado_red`, las medidas y posiciones de las piezas vienen en unidades de la red del tangram.
+func _escalar(datos: Dictionary) -> Dictionary:
+	if _lado_red <= 0.0:
+		return datos
+	var copia := datos.duplicate(true)
+	for pieza: Dictionary in copia.get("piezas", []):
+		for campo in ["ancho", "alto", "x", "y"]:
+			if pieza.has(campo):
+				pieza[campo] = float(pieza[campo]) * _lado_red
+	for campo in ["ancho", "alto"]:
+		if copia.has(campo):
+			copia[campo] = float(copia[campo]) * _lado_red
+	return copia
 
 
 func _construir_figuras() -> void:
-	var pool: Array = nivel.get("figuras", []).duplicate()
-	var hay_escena: bool = not nivel.get("escena", {}).is_empty()
+	var pool: Array = []
+	for datos in _cfg.get("figuras", []):
+		pool.append(_escalar(datos))
+	var hay_escena: bool = not _cfg.get("escena", {}).is_empty()
 	if not hay_escena:
 		pool.shuffle()
-	var por_partida = nivel.get("figuras_por_partida", null)
+	var por_partida = _cfg.get("figuras_por_partida", null)
 	if por_partida != null:
 		pool = pool.slice(0, int(por_partida))
 
@@ -195,9 +297,13 @@ func _construir_figuras() -> void:
 	if hay_escena:
 		for datos: Dictionary in pool:
 			var centro: Array = datos.get("centro", [0, 0])
-			origenes.append(ZONA_FIGURAS.position + Vector2(float(centro[0]), float(centro[1])))
+			origenes.append(_zona_figuras.position + Vector2(float(centro[0]), float(centro[1])))
 	else:
 		origenes = _repartir_figuras(medidas)
+	if not origenes.is_empty():
+		# La red del tangram tiene su origen en el origen de la (unica) figura: se redondea al pixel.
+		origenes[0] = (origenes[0] as Vector2).round()
+		_origen_red = origenes[0]
 
 	for i in pool.size():
 		var datos: Dictionary = pool[i]
@@ -219,6 +325,9 @@ func _construir_figuras() -> void:
 			var alto := float(pieza.get("alto", ancho))
 			var grados := float(pieza.get("rotacion", 0.0))
 			var centro: Vector2 = origenes[i] + Vector2(float(pieza.get("x", 0)), float(pieza.get("y", 0)))
+			var redondeado := Geo.redondeado(forma, Geo.contorno(forma, ancho, alto), ancho, alto)
+			if bool(pieza.get("espejo", false)):
+				redondeado = Geo.espejado(redondeado)
 			var hueco := {
 				"id": "%s_%d" % [figura["id"], indice],
 				"figura": _figuras.size(),
@@ -226,6 +335,7 @@ func _construir_figuras() -> void:
 				"ancho": ancho,
 				"alto": alto,
 				"rotacion": grados,
+				"espejo": bool(pieza.get("espejo", false)),
 				"centro": centro,
 				"color": Color(str(pieza.get("color", "#FFCB3D"))),
 				"decoracion": str(pieza.get("decoracion", "")),
@@ -235,7 +345,7 @@ func _construir_figuras() -> void:
 				"nombre_voz": str(pieza.get("nombre_voz", forma)),
 				"forma_centrada": Geo.transformado(base, grados),
 				"poligono": Geo.transformado(base, grados, centro),
-				"dibujo": Geo.transformado(Geo.redondeado(forma, base, ancho, alto), grados, centro),
+				"dibujo": Geo.transformado(redondeado, grados, centro),
 				"pieza": null,
 			}
 			indice += 1
@@ -244,6 +354,7 @@ func _construir_figuras() -> void:
 			if not hueco["opcional"]:
 				_requeridos += 1
 				poligonos.append(hueco["poligono"])
+				_area_silueta += absf(Geo.area(hueco["poligono"]))
 		if figura["silueta_unida"]:
 			figura["union"] = Geo.unir(poligonos)
 		_figuras.append(figura)
@@ -251,7 +362,8 @@ func _construir_figuras() -> void:
 
 func _contorno_de(pieza: Dictionary) -> PackedVector2Array:
 	var ancho := float(pieza.get("ancho", 100.0))
-	return Geo.contorno(str(pieza.get("forma", "circulo")), ancho, float(pieza.get("alto", ancho)))
+	var base := Geo.contorno(str(pieza.get("forma", "circulo")), ancho, float(pieza.get("alto", ancho)))
+	return Geo.espejado(base) if bool(pieza.get("espejo", false)) else base
 
 
 ## Reparte las figuras en filas dentro de la zona (probando 1 fila, 2, 3...) y devuelve el origen
@@ -273,21 +385,21 @@ func _repartir_figuras(cajas: Array) -> Array:
 			for j in grupo:
 				ancho_fila += (cajas[j] as Rect2).size.x
 				alto_fila = maxf(alto_fila, (cajas[j] as Rect2).size.y)
-			cabe = cabe and ancho_fila + 24.0 * (grupo.size() - 1) <= ZONA_FIGURAS.size.x
+			cabe = cabe and ancho_fila + 24.0 * (grupo.size() - 1) <= _zona_figuras.size.x
 			alto_total += alto_fila
-		cabe = cabe and alto_total + 24.0 * (grupos.size() - 1) <= ZONA_FIGURAS.size.y
+		cabe = cabe and alto_total + 24.0 * (grupos.size() - 1) <= _zona_figuras.size.y
 		if not cabe and filas < n:
 			continue
-		var hueco_vertical := minf((ZONA_FIGURAS.size.y - alto_total) / (grupos.size() + 1), SEPARACION_MAXIMA)
-		var y := ZONA_FIGURAS.position.y + (ZONA_FIGURAS.size.y - alto_total - hueco_vertical * (grupos.size() - 1)) / 2.0
+		var hueco_vertical := minf((_zona_figuras.size.y - alto_total) / (grupos.size() + 1), SEPARACION_MAXIMA)
+		var y := _zona_figuras.position.y + (_zona_figuras.size.y - alto_total - hueco_vertical * (grupos.size() - 1)) / 2.0
 		for grupo in grupos:
 			var ancho_fila := 0.0
 			var alto_fila := 0.0
 			for j in grupo:
 				ancho_fila += (cajas[j] as Rect2).size.x
 				alto_fila = maxf(alto_fila, (cajas[j] as Rect2).size.y)
-			var hueco_horizontal := minf((ZONA_FIGURAS.size.x - ancho_fila) / (grupo.size() + 1), SEPARACION_MAXIMA)
-			var x: float = ZONA_FIGURAS.position.x + (ZONA_FIGURAS.size.x - ancho_fila - hueco_horizontal * (grupo.size() - 1)) / 2.0
+			var hueco_horizontal := minf((_zona_figuras.size.x - ancho_fila) / (grupo.size() + 1), SEPARACION_MAXIMA)
+			var x: float = _zona_figuras.position.x + (_zona_figuras.size.x - ancho_fila - hueco_horizontal * (grupo.size() - 1)) / 2.0
 			for j in grupo:
 				var caja: Rect2 = cajas[j]
 				var centro_celda := Vector2(x + caja.size.x / 2.0, y + alto_fila / 2.0)
@@ -301,17 +413,21 @@ func _repartir_figuras(cajas: Array) -> Array:
 func _construir_piezas() -> void:
 	var lista: Array = []
 	for hueco in _huecos:
+		var volteada: bool = hueco["espejo"]
+		if _boton_espejo_activo:
+			# Con boton espejo, la pieza llega sin voltear: si su lugar la pide volteada, hay que darla vuelta.
+			volteada = false
 		lista.append({"datos": {
 			"id": "pieza_" + hueco["id"], "forma": hueco["forma"], "ancho": hueco["ancho"], "alto": hueco["alto"],
 			"color": "#" + (hueco["color"] as Color).to_html(false), "decoracion": hueco["decoracion"],
-			"especial": hueco["especial"]}, "hueco": hueco})
-	var distractoras: Array = nivel.get("piezas_distractoras", []).duplicate()
+			"especial": hueco["especial"], "volteada": volteada}, "hueco": hueco})
+	var distractoras: Array = _cfg.get("piezas_distractoras", []).duplicate()
 	distractoras.shuffle()
-	var cuantas = nivel.get("distractoras_por_partida", null)
+	var cuantas = _cfg.get("distractoras_por_partida", null)
 	if cuantas != null:
 		distractoras = distractoras.slice(0, int(cuantas))
 	for i in distractoras.size():
-		var datos: Dictionary = (distractoras[i] as Dictionary).duplicate()
+		var datos: Dictionary = _escalar(distractoras[i] as Dictionary)
 		datos["id"] = "distractora_%d" % i
 		lista.append({"datos": datos, "hueco": null})
 	lista.shuffle()
@@ -326,15 +442,51 @@ func _construir_piezas() -> void:
 		var grados := float(hueco["rotacion"]) if hueco != null else float(entrada["datos"].get("rotacion", 0.0))
 		if _enderezar:
 			grados = 0.0
-		elif _rotacion_por_toque and bool(nivel.get("rotacion_inicial_aleatoria", true)):
+		elif _rotacion_por_toque and bool(_cfg.get("rotacion_inicial_aleatoria", true)):
 			grados = _rotacion_desordenada(pieza, hueco)
 		pieza.rotacion_grados = wrapf(grados, 0.0, 360.0)
 		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
-		pieza.tomada.connect(_al_tomar)
-		pieza.movida.connect(_al_mover)
-		pieza.soltada.connect(_al_soltar)
-		pieza.tocada.connect(_al_tocar_pieza)
-		_piezas.append(pieza)
+		_conectar_pieza(pieza)
+	_acomodar_bandeja()
+
+
+func _conectar_pieza(pieza: PiezaEncajar) -> void:
+	pieza.tomada.connect(_al_tomar)
+	pieza.movida.connect(_al_mover)
+	pieza.soltada.connect(_al_soltar)
+	pieza.tocada.connect(_al_tocar_pieza)
+	_piezas.append(pieza)
+
+
+## Marco de pentominos: tablero de cuadraditos centrado en la zona y una pieza por pentomino.
+func _construir_marco() -> void:
+	var filas: Array = _cfg.get("marco", [])
+	var lado := float(_cfg.get("lado_celda", 64.0))
+	var celdas := {}
+	var lista: Array = []
+	var columnas := 0
+	for f in filas.size():
+		var fila := str(filas[f])
+		columnas = maxi(columnas, fila.length())
+		for c in fila.length():
+			if fila[c] == "#":
+				celdas[Vector2i(c, f)] = true
+				lista.append(Vector2i(c, f))
+	var medida := Vector2(columnas, filas.size()) * lado
+	var origen := (_zona_figuras.get_center() - medida / 2.0).round()
+	_marco = {"origen": origen, "lado": lado, "celdas": celdas, "lista": lista, "ocupadas": {}, "medida": medida}
+	_siluetas.marco = {"origen": origen, "lado": lado, "celdas": lista}
+	_requeridos = int(_cfg.get("piezas_necesarias", ceili(lista.size() / 5.0)))
+	for datos: Dictionary in _cfg.get("piezas_marco", []):
+		var pieza := PiezaEncajar.new()
+		_tablero.add_child(pieza)
+		pieza.configurar({"id": str(datos.get("id", "")), "celdas": datos.get("celdas", []), "lado": lado,
+			"color": str(datos.get("color", "#FFCB3D")), "volteada": _boton_espejo_activo and randi() % 2 == 0})
+		pieza.cara_siempre = false
+		pieza.rotacion_grados = float(randi() % 4) * 90.0
+		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
+		_conectar_pieza(pieza)
+	_piezas.shuffle()
 	_acomodar_bandeja()
 
 
@@ -393,8 +545,8 @@ func _escala_en_bandeja(pieza: PiezaEncajar, factor: float) -> float:
 
 ## Empaca en filas. Devuelve los centros (mismo orden) o [] si no cabe con ese factor.
 func _empacar(orden: Array, factor: float, forzar := false) -> Array:
-	var ancho_util := ZONA_BANDEJA.size.x - RELLENO_BANDEJA * 2.0
-	var alto_util := ZONA_BANDEJA.size.y - RELLENO_BANDEJA * 2.0
+	var ancho_util := _zona_bandeja.size.x - RELLENO_BANDEJA * 2.0
+	var alto_util := _zona_bandeja.size.y - RELLENO_BANDEJA * 2.0
 	var filas: Array = [[]]
 	var ancho_fila := 0.0
 	for i in orden.size():
@@ -419,12 +571,12 @@ func _empacar(orden: Array, factor: float, forzar := false) -> Array:
 		return []
 	var centros: Array = []
 	centros.resize(orden.size())
-	var y := ZONA_BANDEJA.position.y + (ZONA_BANDEJA.size.y - alto_total) / 2.0
+	var y := _zona_bandeja.position.y + (_zona_bandeja.size.y - alto_total) / 2.0
 	for f in filas.size():
 		var total := -RELLENO_BANDEJA
 		for i in filas[f]:
 			total += _medida_bandeja(orden[i], factor).x + RELLENO_BANDEJA
-		var x := ZONA_BANDEJA.position.x + (ZONA_BANDEJA.size.x - total) / 2.0
+		var x := _zona_bandeja.position.x + (_zona_bandeja.size.x - total) / 2.0
 		for i in filas[f]:
 			var medida := _medida_bandeja(orden[i], factor)
 			centros[i] = Vector2(x + medida.x / 2.0, y + altos[f] / 2.0)
@@ -436,9 +588,7 @@ func _empacar(orden: Array, factor: float, forzar := false) -> Array:
 ## Una ranura por pieza que hace falta: se llena con la forma encajada. Muestra cuanto falta sin numeros.
 func _construir_progreso() -> void:
 	var lado := 64.0 if _requeridos <= 6 else 52.0
-	for hueco in _huecos:
-		if hueco["opcional"]:
-			continue
+	for i in _requeridos:
 		var ranura := Control.new()
 		ranura.custom_minimum_size = Vector2.ONE * lado
 		ranura.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -451,7 +601,7 @@ func _dibujar_ranura(ranura: Control) -> void:
 	var centro := ranura.size / 2.0
 	var radio := ranura.size.x * 0.46
 	var pieza = ranura.get_meta("lleno") if ranura.has_meta("lleno") else null
-	if pieza == null:
+	if pieza == null or not is_instance_valid(pieza):
 		ranura.draw_circle(centro, radio, Color(1, 1, 1, 0.22))
 		ranura.draw_arc(centro, radio, 0.0, TAU, 32, Color(1, 1, 1, 0.75), 3.0, true)
 		return
@@ -472,15 +622,18 @@ func _dibujar_ranura(ranura: Control) -> void:
 
 func _al_tomar(pieza: PiezaEncajar) -> void:
 	_inactivo = 0.0
-	if _terminado or _en_gag:
+	if _terminado or _en_gag or _en_modelo:
 		return
+	_elegir(pieza)
+	if pieza.colocada and _mecanica in ["tangram_libre", "marco"]:
+		_quitar_colocada(pieza)
 	_tablero.move_child(pieza, -1)
 	reproducir_sfx(SFX_TOMAR)
 	pieza.pulso()
 
 
 func _al_mover(pieza: PiezaEncajar, punto: Vector2) -> void:
-	if pieza.bloqueada or _terminado or _en_gag:
+	if pieza.bloqueada or _terminado or _en_gag or _en_modelo:
 		return
 	_inactivo = 0.0
 	if not _arrastrando.has(pieza):
@@ -509,7 +662,7 @@ func _al_soltar(pieza: PiezaEncajar, _punto: Vector2) -> void:
 	_arrastrando.erase(pieza)
 	_siluetas.hueco_cercano = null
 	_siluetas.queue_redraw()
-	if pieza.bloqueada or _terminado or _en_gag:
+	if pieza.bloqueada or _terminado or _en_gag or _en_modelo:
 		return
 	soltar_pieza(pieza, pieza.centro_global())
 
@@ -518,6 +671,13 @@ func _al_soltar(pieza: PiezaEncajar, _punto: Vector2) -> void:
 ## Publica para los arneses QA (misma ruta que un dedo real).
 func soltar_pieza(pieza: PiezaEncajar, punto: Vector2) -> String:
 	_inactivo = 0.0
+	if pieza.colocada and _mecanica in ["tangram_libre", "marco"]:
+		_quitar_colocada(pieza)
+	match _mecanica:
+		"tangram_libre":
+			return _soltar_libre(pieza, punto)
+		"marco":
+			return _soltar_marco(pieza, punto)
 	var candidatos := _candidatos(punto)
 	if candidatos.is_empty():
 		reproducir_sfx(SFX_SOLTAR)
@@ -537,6 +697,11 @@ func soltar_pieza(pieza: PiezaEncajar, punto: Vector2) -> String:
 	if _rotacion_por_toque:
 		for hueco in candidatos:
 			solo_giro = solo_giro or _calza_girando(pieza, hueco)
+	return _fallar(pieza, solo_giro)
+
+
+## "No es este": cuenta intento (si hay limite), voz amistosa, la pieza vuelve y puede venir la derrota-gag.
+func _fallar(pieza: PiezaEncajar, solo_giro := false) -> String:
 	if _limite_intentos != null:
 		_intentos_usados += 1
 	intento_fallido.emit()
@@ -555,8 +720,16 @@ func soltar_pieza(pieza: PiezaEncajar, punto: Vector2) -> String:
 
 func _al_tocar_pieza(pieza: PiezaEncajar) -> void:
 	_inactivo = 0.0
-	if pieza.bloqueada or _terminado or _en_gag:
+	if _terminado or _en_gag or _en_modelo:
 		return
+	if pieza.colocada and _mecanica in ["tangram_libre", "marco"]:
+		# Una pieza puesta en el tablero solo da un saltito: para girarla hay que sacarla primero.
+		reproducir_sfx(SFX_TOQUE)
+		pieza.saltito(12.0)
+		return
+	if pieza.bloqueada:
+		return
+	_elegir(pieza)
 	if _arrastrando.has(pieza):
 		_arrastrando.erase(pieza)
 	if _rotacion_por_toque:
@@ -575,6 +748,15 @@ func _al_tocar_pieza(pieza: PiezaEncajar) -> void:
 	pieza.saltito(16.0)
 
 
+func _elegir(pieza: PiezaEncajar) -> void:
+	if not _boton_espejo_activo:
+		return
+	if _pieza_elegida != null and is_instance_valid(_pieza_elegida) and _pieza_elegida != pieza:
+		_pieza_elegida.elegida = false
+	_pieza_elegida = pieza
+	pieza.elegida = true
+
+
 ## Huecos libres a distancia de iman de `punto`, del mas cercano al mas lejano.
 func _candidatos(punto: Vector2) -> Array:
 	var lista: Array = []
@@ -589,11 +771,15 @@ func _candidatos(punto: Vector2) -> Array:
 
 
 func _calza(pieza: PiezaEncajar, hueco: Dictionary) -> bool:
+	if _exigir_color and not pieza.color.is_equal_approx(hueco["color"]):
+		return false
 	var grados := float(hueco["rotacion"]) if _enderezar else pieza.rotacion_grados
 	return Geo.calzan(pieza.poligono(grados), hueco["forma_centrada"])
 
 
 func _calza_girando(pieza: PiezaEncajar, hueco: Dictionary) -> bool:
+	if _exigir_color and not pieza.color.is_equal_approx(hueco["color"]):
+		return false
 	var pasos := int(round(360.0 / _paso_rotacion))
 	for k in pasos:
 		if Geo.calzan(pieza.poligono(k * _paso_rotacion), hueco["forma_centrada"]):
@@ -619,6 +805,7 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 	_arrastrando.erase(pieza)
 	hueco["pieza"] = pieza
 	pieza.hueco = hueco
+	pieza.elegida = false
 	pieza.encajar_en(hueco["centro"], hueco["rotacion"])
 	reproducir_sfx(SFX_ENCAJE)
 	_estallido(hueco["centro"], 8, [pieza.color, DORADO])
@@ -642,7 +829,7 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 	if completa and not figura["completa"]:
 		voz_figura = _completar_figura(figura)
 	if _encajados >= _requeridos:
-		_celebrar_victoria(voz_figura)
+		_completar_prueba(voz_figura)
 		_actualizar_depuracion()
 		return
 	var ruta_dicha := ""
@@ -666,10 +853,13 @@ func _completar_figura(figura: Dictionary) -> String:
 	figura["completa"] = true
 	figura_completada.emit(figura["id"])
 	var i := 0
+	var piezas_figura: Array = []
 	for hueco in figura["huecos"]:
-		var pieza = hueco["pieza"]
-		if pieza == null:
-			continue
+		if hueco["pieza"] != null:
+			piezas_figura.append(hueco["pieza"])
+	if piezas_figura.is_empty():
+		piezas_figura = _libres.keys()
+	for pieza in piezas_figura:
 		_despues(0.6 + i * 0.07, func() -> void:
 			pieza.alegre = true
 			pieza.saltito(22.0))
@@ -703,6 +893,431 @@ func _llenar_ranura(pieza: PiezaEncajar) -> void:
 		return
 
 
+## Tangram libre y marco: al sacar una pieza, las ranuras se reordenan con las piezas que siguen puestas.
+func _refrescar_ranuras() -> void:
+	var puestas: Array = _libres.keys() if _mecanica == "tangram_libre" else _celdas_de.keys()
+	for i in _ranuras.size():
+		var ranura: Control = _ranuras[i]
+		if i < puestas.size():
+			ranura.set_meta("lleno", puestas[i])
+		elif ranura.has_meta("lleno"):
+			ranura.remove_meta("lleno")
+		ranura.queue_redraw()
+
+
+# ---------------------------------------------------------------------------
+# Tangram libre (Sofia): cualquier solucion que llene la silueta
+# ---------------------------------------------------------------------------
+
+func _soltar_libre(pieza: PiezaEncajar, punto: Vector2) -> String:
+	var distancia := INF
+	for figura in _figuras:
+		for contorno in figura["union"]:
+			distancia = minf(distancia, Geo.distancia(punto, contorno))
+	if distancia > _iman:
+		reproducir_sfx(SFX_SOLTAR)
+		pieza.volver_a_casa()
+		return "nada"
+	var centro = centro_libre(pieza, punto)
+	if centro == null:
+		return _fallar(pieza)
+	_colocar_libre(pieza, centro)
+	return "encajo"
+
+
+## Mejor centro para la pieza cerca de `punto`, ajustado a la red del tangram; null si no cabe.
+## Publica para los arneses QA.
+func centro_libre(pieza: PiezaEncajar, punto: Vector2):
+	var forma := pieza.poligono()
+	var area := absf(Geo.area(forma))
+	# Con red, solo valen posiciones ajustadas a ella: una pieza interior cabe en cualquier punto de la
+	# silueta, y sin ajuste quedaria corrida unos px, estorbando a sus vecinas.
+	var candidatos: Array = [] if _lado_red > 0.0 else [punto]
+	if _lado_red > 0.0:
+		for v in forma:
+			var p := punto + v
+			var red := _origen_red + ((p - _origen_red) / _lado_red).round() * _lado_red
+			candidatos.append(punto + (red - p))
+	var mejor = null
+	var mejor_costo := INF
+	for c: Vector2 in candidatos:
+		if _lado_red > 0.0 and c.distance_to(punto) > _lado_red * 0.95:
+			continue
+		var costo := _costo_libre(pieza, Geo.desplazado(forma, c))
+		if costo < mejor_costo - 0.01:
+			mejor_costo = costo
+			mejor = c
+	return mejor if mejor_costo <= area * TOLERANCIA_LIBRE else null
+
+
+## Area de la pieza que queda fuera de la silueta + area que pisa a otras piezas puestas.
+func _costo_libre(pieza: PiezaEncajar, poligono: PackedVector2Array) -> float:
+	var dentro := 0.0
+	for figura in _figuras:
+		for contorno in figura["union"]:
+			for trozo in Geometry2D.intersect_polygons(poligono, contorno):
+				dentro += absf(Geo.area(trozo))
+	var costo := absf(Geo.area(poligono)) - dentro
+	for otra in _libres:
+		if otra == pieza:
+			continue
+		for trozo in Geometry2D.intersect_polygons(poligono, _libres[otra]):
+			costo += absf(Geo.area(trozo))
+	return costo
+
+
+func _colocar_libre(pieza: PiezaEncajar, centro: Vector2, silencioso := false) -> void:
+	_arrastrando.erase(pieza)
+	pieza.elegida = false
+	pieza.encajar_libre(centro, pieza.rotacion_grados)
+	_libres[pieza] = Geo.desplazado(pieza.poligono(), centro)
+	_encajados = _libres.size()
+	_refrescar_ranuras()
+	pieza_encajada.emit(pieza.id)
+	if silencioso:
+		return
+	reproducir_sfx(SFX_ENCAJE)
+	_estallido(centro, 8, [pieza.color, DORADO])
+	_reaccion_anfitriona("salta")
+	if _cobertura() >= COBERTURA_MINIMA:
+		var voz := _completar_figura(_figuras[0])
+		_completar_prueba(voz)
+	else:
+		_reproducir_voz("acierto", _linea_al_azar("acierto"))
+	_actualizar_depuracion()
+
+
+func _cobertura() -> float:
+	if _area_silueta <= 0.0:
+		return 0.0
+	var cubierta := 0.0
+	for pieza in _libres:
+		cubierta += absf(Geo.area(_libres[pieza]))
+	return cubierta / _area_silueta
+
+
+func _quitar_colocada(pieza: PiezaEncajar) -> void:
+	_libres.erase(pieza)
+	if _celdas_de.has(pieza):
+		for celda in _celdas_de[pieza]:
+			_marco["ocupadas"].erase(celda)
+		_celdas_de.erase(pieza)
+		_guardar_avance()
+	pieza.liberar()
+	pieza.alegre = false
+	_encajados = _libres.size() if _mecanica == "tangram_libre" else _celdas_de.size()
+	_refrescar_ranuras()
+
+
+# ---------------------------------------------------------------------------
+# Marco de pentominos (Sofia)
+# ---------------------------------------------------------------------------
+
+func _soltar_marco(pieza: PiezaEncajar, punto: Vector2) -> String:
+	var tablero := Rect2(_marco["origen"], _marco["medida"]).grow(float(_marco["lado"]) * 0.8)
+	if not tablero.has_point(punto):
+		reproducir_sfx(SFX_SOLTAR)
+		pieza.volver_a_casa()
+		return "nada"
+	var centro := centro_marco(pieza, punto)
+	var celdas := celdas_en(pieza, centro)
+	for celda in celdas:
+		if not _marco["celdas"].has(celda) or _marco["ocupadas"].has(celda):
+			return _fallar(pieza)
+	_colocar_marco(pieza, centro, celdas)
+	return "encajo"
+
+
+## Centro de la pieza ajustado para que sus cuadraditos caigan justo sobre la cuadricula.
+func centro_marco(pieza: PiezaEncajar, punto: Vector2) -> Vector2:
+	var lado: float = _marco["lado"]
+	var origen: Vector2 = _marco["origen"]
+	var primera := punto + _desfase_celda(pieza, pieza.celdas[0])
+	var ajustada := origen + ((primera - origen) / lado).floor() * lado + Vector2.ONE * lado / 2.0
+	return punto + (ajustada - primera)
+
+
+## Celdas del tablero que ocuparia la pieza con su centro en `centro` (con su giro y espejo actuales).
+func celdas_en(pieza: PiezaEncajar, centro: Vector2) -> Array:
+	var lado: float = _marco["lado"]
+	var origen: Vector2 = _marco["origen"]
+	var salida: Array = []
+	for celda in pieza.celdas:
+		var p := centro + _desfase_celda(pieza, celda) - origen
+		salida.append(Vector2i(floori(p.x / lado + 0.001), floori(p.y / lado + 0.001)))
+	return salida
+
+
+func _desfase_celda(pieza: PiezaEncajar, celda) -> Vector2:
+	var caja := Vector2.ZERO
+	for otra in pieza.celdas:
+		caja = Vector2(maxf(caja.x, float(otra[0]) + 1.0), maxf(caja.y, float(otra[1]) + 1.0))
+	var local := (Vector2(float(celda[0]), float(celda[1])) + Vector2(0.5, 0.5) - caja / 2.0) * pieza.lado
+	if pieza.volteada:
+		local.x = -local.x
+	return local.rotated(deg_to_rad(pieza.rotacion_grados))
+
+
+func _colocar_marco(pieza: PiezaEncajar, centro: Vector2, celdas: Array, silencioso := false) -> void:
+	_arrastrando.erase(pieza)
+	pieza.elegida = false
+	pieza.encajar_libre(centro, pieza.rotacion_grados)
+	_celdas_de[pieza] = celdas
+	for celda in celdas:
+		_marco["ocupadas"][celda] = pieza
+	_encajados = _celdas_de.size()
+	_refrescar_ranuras()
+	pieza_encajada.emit(pieza.id)
+	_guardar_avance()
+	if silencioso:
+		return
+	reproducir_sfx(SFX_ENCAJE)
+	_estallido(centro, 8, [pieza.color, DORADO])
+	_reaccion_anfitriona("salta")
+	if _marco["ocupadas"].size() >= _marco["lista"].size():
+		for otra in _celdas_de:
+			_despues(0.5, func() -> void:
+				otra.alegre = true
+				otra.saltito(18.0))
+		_completar_prueba(_linea_al_azar("figura_completa"))
+	else:
+		_reproducir_voz("acierto", _linea_al_azar("acierto"))
+	_actualizar_depuracion()
+
+
+## Pone una pieza del marco exactamente sobre `celdas_objetivo` probando sus giros y espejos.
+func _colocar_marco_en(pieza: PiezaEncajar, celdas_objetivo: Array, silencioso: bool) -> bool:
+	var objetivo := {}
+	var minimo := Vector2(INF, INF)
+	var maximo := Vector2(-INF, -INF)
+	for celda in celdas_objetivo:
+		var v := Vector2i(int(celda[0]), int(celda[1]))
+		objetivo[v] = true
+		minimo = minimo.min(Vector2(v))
+		maximo = maximo.max(Vector2(v))
+	var centro: Vector2 = _marco["origen"] + (minimo + maximo + Vector2.ONE) / 2.0 * float(_marco["lado"])
+	var volteada_original := pieza.volteada
+	var grados_original := pieza.rotacion_grados
+	var espejos := [pieza.volteada, not pieza.volteada]
+	for espejo in espejos:
+		pieza.volteada = espejo
+		for k in 4:
+			pieza.rotacion_grados = float(k) * 90.0
+			var celdas := celdas_en(pieza, centro)
+			var iguales := celdas.size() == objetivo.size()
+			for celda in celdas:
+				iguales = iguales and objetivo.has(celda)
+			if iguales:
+				pieza.rotation = deg_to_rad(pieza.rotacion_grados)
+				_colocar_marco(pieza, centro, celdas, silencioso)
+				return true
+	pieza.volteada = volteada_original
+	pieza.rotacion_grados = grados_original
+	return false
+
+
+# ---------------------------------------------------------------------------
+# Copia de memoria (Sofia)
+# ---------------------------------------------------------------------------
+
+## Muestra el modelo a color `segundos` y lo tapa con la cortina de Coco. Mientras, no se arrastra.
+func _mostrar_modelo(segundos: float, espera := 0.0) -> void:
+	_en_modelo = true
+	_siluetas.modelo_visible = true
+	_siluetas.queue_redraw()
+	_actualizar_botones()
+	if espera > 0.0:
+		_reproducir_voz("mira_modelo", _linea("mira_modelo"))
+	await get_tree().create_timer(segundos + espera).timeout
+	if not is_inside_tree():
+		return
+	_reproducir_voz("tapa_modelo", _linea("tapa_modelo"))
+	var tween := create_tween()
+	tween.tween_property(_siluetas, "cortina", 1.0, 0.45).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_callback(func() -> void:
+		_siluetas.modelo_visible = false
+		_siluetas.queue_redraw())
+	tween.tween_property(_siluetas, "cortina", 0.0, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	if not is_inside_tree():
+		return
+	_en_modelo = false
+	_siluetas.queue_redraw()
+	_actualizar_botones()
+
+
+func _al_tocar_ojo() -> void:
+	if _en_modelo or _terminado or _en_gag:
+		return
+	reproducir_sfx(SFX_TOQUE)
+	_gastar_estrellita(_boton_ojo)
+	_mostrar_modelo(SEGUNDOS_VISTAZO)
+
+
+# ---------------------------------------------------------------------------
+# Pistas que cuestan estrellita, espejo y regalo tras derrotas (Sofia)
+# ---------------------------------------------------------------------------
+
+func _al_tocar_pista() -> void:
+	if _en_modelo or _terminado or _en_gag:
+		return
+	reproducir_sfx(SFX_TOQUE)
+	if colocar_pista():
+		_gastar_estrellita(_boton_pista)
+		_reproducir_voz("pista_usada", _linea("pista_usada"))
+	_actualizar_depuracion()
+
+
+func _gastar_estrellita(boton: Button) -> void:
+	_pistas_usadas += 1
+	var estrella := Figura.new()
+	estrella.figura = "estrella"
+	estrella.con_cara = false
+	estrella.color = DORADO
+	estrella.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	estrella.size = Vector2.ONE * 46.0
+	estrella.pivot_offset = estrella.size / 2.0
+	_efectos.add_child(estrella)
+	estrella.global_position = boton.global_position + boton.size / 2.0 - estrella.size / 2.0
+	var tween := estrella.create_tween().set_parallel(true)
+	tween.tween_property(estrella, "position:y", estrella.position.y + 90.0, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(estrella, "rotation", 1.6, 0.9)
+	tween.tween_property(estrella, "modulate:a", 0.0, 0.9).set_delay(0.3)
+	tween.chain().tween_callback(estrella.queue_free)
+
+
+## Coloca una pieza correcta en su lugar (o devuelve a la bandeja una mal puesta). true si hizo algo.
+## Publica para los arneses QA.
+func colocar_pista() -> bool:
+	match _mecanica:
+		"tangram_libre":
+			return _pista_libre()
+		"marco":
+			return _pista_marco()
+	for hueco in _huecos:
+		if hueco["pieza"] != null or hueco["opcional"]:
+			continue
+		for pieza in _piezas:
+			if pieza.colocada or pieza.forma != hueco["forma"] or not pieza.color.is_equal_approx(hueco["color"]):
+				continue
+			pieza.volteada = hueco["espejo"]
+			pieza.rotacion_grados = wrapf(float(hueco["rotacion"]), 0.0, 360.0)
+			pieza.brillar(SEGUNDOS_PISTA)
+			_encajar(pieza, hueco)
+			return true
+	return false
+
+
+func _pista_libre() -> bool:
+	for hueco in _huecos:
+		if hueco["opcional"]:
+			continue
+		var ocupado := false
+		for otra in _libres:
+			var pisado := 0.0
+			for trozo in Geometry2D.intersect_polygons(hueco["poligono"], _libres[otra]):
+				pisado += absf(Geo.area(trozo))
+			ocupado = ocupado or pisado > absf(Geo.area(hueco["poligono"])) * 0.05
+		if ocupado:
+			continue
+		for pieza in _piezas:
+			if pieza.colocada or pieza.forma != hueco["forma"] or not is_equal_approx(pieza.ancho, hueco["ancho"]) or not is_equal_approx(pieza.alto, hueco["alto"]):
+				continue
+			pieza.volteada = hueco["espejo"]
+			pieza.rotacion_grados = wrapf(float(hueco["rotacion"]), 0.0, 360.0)
+			pieza.brillar(SEGUNDOS_PISTA)
+			_colocar_libre(pieza, hueco["centro"])
+			return true
+	return _devolver_mal_puesta()
+
+
+func _pista_marco() -> bool:
+	for entrada: Dictionary in _cfg.get("solucion", []):
+		var pieza: PiezaEncajar = null
+		for candidata in _piezas:
+			if candidata.id == str(entrada.get("id", "")):
+				pieza = candidata
+		if pieza == null or pieza.colocada:
+			continue
+		var libres := true
+		for celda in entrada.get("celdas", []):
+			libres = libres and not _marco["ocupadas"].has(Vector2i(int(celda[0]), int(celda[1])))
+		if libres:
+			pieza.brillar(SEGUNDOS_PISTA)
+			return _colocar_marco_en(pieza, entrada["celdas"], false)
+	return _devolver_mal_puesta()
+
+
+## Si ninguna pista cabe, es porque hay una pieza mal puesta: vuelve a la bandeja brillando.
+func _devolver_mal_puesta() -> bool:
+	var puestas: Array = _libres.keys() if _mecanica == "tangram_libre" else _celdas_de.keys()
+	for pieza in puestas:
+		if _esta_bien_puesta(pieza):
+			continue
+		_quitar_colocada(pieza)
+		pieza.bloqueada = false
+		pieza.volver_a_casa(true)
+		pieza.brillar(SEGUNDOS_PISTA)
+		return true
+	return false
+
+
+func _esta_bien_puesta(pieza: PiezaEncajar) -> bool:
+	if _mecanica == "marco":
+		for entrada: Dictionary in _cfg.get("solucion", []):
+			if str(entrada.get("id", "")) != pieza.id:
+				continue
+			var celdas: Array = _celdas_de.get(pieza, [])
+			for celda in entrada.get("celdas", []):
+				if not celdas.has(Vector2i(int(celda[0]), int(celda[1]))):
+					return false
+			return true
+		return false
+	for hueco in _huecos:
+		if Geo.diferencia(_libres[pieza], hueco["poligono"]) <= Geo.TOLERANCIA_CALCE:
+			return true
+	return false
+
+
+func _al_tocar_espejo() -> void:
+	if _en_modelo or _terminado or _en_gag:
+		return
+	if _pieza_elegida == null or not is_instance_valid(_pieza_elegida) or _pieza_elegida.colocada:
+		reproducir_sfx(SFX_TOQUE)
+		_reproducir_voz("espejo_sin_pieza", _linea("espejo_sin_pieza"))
+		return
+	reproducir_sfx(SFX_GIRO)
+	_pieza_elegida.voltear()
+	_actualizar_depuracion()
+
+
+# ---------------------------------------------------------------------------
+# Avance guardado pieza a pieza (reto dorado)
+# ---------------------------------------------------------------------------
+
+func _guardar_avance() -> void:
+	if not bool(_cfg.get("guardar_avance", false)) or _terminado:
+		return
+	var piezas: Array = []
+	for pieza in _celdas_de:
+		var celdas: Array = []
+		for celda in _celdas_de[pieza]:
+			celdas.append([celda.x, celda.y])
+		piezas.append({"id": pieza.id, "celdas": celdas})
+	guardar_estado_parcial({"prueba": _indice_prueba, "piezas": piezas})
+
+
+func _restaurar_avance() -> void:
+	var estado := obtener_estado_parcial()
+	if estado.is_empty() or int(estado.get("prueba", -1)) != _indice_prueba:
+		return
+	for guardada: Dictionary in estado.get("piezas", []):
+		for pieza in _piezas:
+			if pieza.id == str(guardada.get("id", "")) and not pieza.colocada:
+				_colocar_marco_en(pieza, guardada.get("celdas", []), true)
+	_actualizar_depuracion()
+
+
 # ---------------------------------------------------------------------------
 # Ayudas: objetivo guiado (Brote) y pista por inactividad (Semilla)
 # ---------------------------------------------------------------------------
@@ -720,7 +1335,7 @@ func _elegir_objetivo() -> void:
 func _ruta_voz_objetivo() -> String:
 	if _objetivo == null:
 		return ""
-	var prefijo := str(nivel.get("lineas_voz", {}).get("objetivo_prefijo", ""))
+	var prefijo := str(_cfg.get("lineas_voz", {}).get("objetivo_prefijo", ""))
 	return "" if prefijo == "" else prefijo + str(_objetivo["nombre_voz"]) + ".wav"
 
 
@@ -756,13 +1371,14 @@ func _mostrar_pista(pieza: PiezaEncajar, hueco) -> void:
 
 
 # ---------------------------------------------------------------------------
-# Derrota-gag, reintento y victoria
+# Derrota-gag, reintento, pruebas y victoria
 # ---------------------------------------------------------------------------
 
 ## Brote: las piezas sueltas se apilan en una torre que se derrumba. Estrella: las piezas se ponen a
 ## bailar por el tablero. En los dos, Coco se rie y aparece el boton gigante "¡otra vez!" (GDD §5).
 func _disparar_derrota_gag() -> void:
 	_derrota_disparada = true
+	_derrotas += 1
 	_en_gag = true
 	nivel_fallado.emit()
 	reproducir_sfx(SFX_GAG)
@@ -814,7 +1430,7 @@ func _gag_baile(pendientes: Array[PiezaEncajar]) -> void:
 		var pieza := pendientes[i]
 		var tween := pieza.nuevo_tween()
 		for paso in 3:
-			var punto := ZONA_FIGURAS.position + Vector2(randf() * ZONA_FIGURAS.size.x, randf() * ZONA_FIGURAS.size.y)
+			var punto := _zona_figuras.position + Vector2(randf() * _zona_figuras.size.x, randf() * _zona_figuras.size.y)
 			tween.tween_property(pieza, "position", punto - pieza.size / 2.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			tween.parallel().tween_property(pieza, "rotation", pieza.rotation + TAU * (paso + 1) * (1 if i % 2 == 0 else -1), 0.38)
 			tween.parallel().tween_property(pieza, "scale", Vector2.ONE * (0.8 if paso % 2 == 0 else 0.6), 0.38)
@@ -833,7 +1449,81 @@ func _reintentar() -> void:
 		pieza.bloqueada = false
 		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
 		pieza.volver_a_casa()
+	# Tras 2 derrotas, Coco regala una pieza puesta (no cuesta estrellita): nunca queda trabada.
+	if _derrotas >= 2 and bool(_cfg.get("regalo_tras_derrotas", false)) and not _regalo_dado:
+		_regalo_dado = true
+		_despues(0.7, func() -> void:
+			if colocar_pista():
+				_reproducir_voz("regalo", _linea("regalo")))
 	_actualizar_depuracion()
+
+
+## Termino una prueba: si quedan, se celebra y se arma la siguiente; si no, la victoria final.
+func _completar_prueba(voz_figura: String) -> void:
+	if _indice_prueba + 1 >= _pruebas.size():
+		_celebrar_victoria(voz_figura)
+		return
+	_terminado = true
+	_destellos_pruebas += _destellos_prueba_actual()
+	_borrar_avance_prueba()
+	prueba_completada.emit(_indice_prueba)
+	for pieza in _piezas:
+		pieza.bloqueada = true
+		pieza.cancelar_arrastre()
+	_confeti.restart()
+	_reaccion_anfitriona("baila")
+	var espera := 1.0
+	if voz_figura != "":
+		_reproducir_voz("figura_completa", voz_figura)
+		espera = clampf(_duracion_voz(voz_figura) + 0.3, 1.0, 3.8)
+	await get_tree().create_timer(espera).timeout
+	if not is_inside_tree():
+		return
+	var voz_prueba := _linea_al_azar("prueba_superada")
+	_reproducir_voz("prueba_superada", voz_prueba)
+	await get_tree().create_timer(_duracion_voz(voz_prueba) + 0.4).timeout
+	if not is_inside_tree():
+		return
+	_limpiar_tablero()
+	_indice_prueba += 1
+	_iniciar_prueba()
+
+
+func _borrar_avance_prueba() -> void:
+	if bool(_cfg.get("guardar_avance", false)):
+		borrar_estado_parcial()
+
+
+func _limpiar_tablero() -> void:
+	for pieza in _piezas:
+		pieza.queue_free()
+	for ranura in _ranuras:
+		ranura.queue_free()
+	_piezas.clear()
+	_ranuras.clear()
+	_figuras.clear()
+	_huecos.clear()
+	_arrastrando.clear()
+	_libres.clear()
+	_celdas_de.clear()
+	_marco = {}
+	_requeridos = 0
+	_encajados = 0
+	_intentos_usados = 0
+	_area_silueta = 0.0
+	_objetivo = null
+	_pieza_elegida = null
+	_regalo_dado = false
+	_siluetas.figuras = []
+	_siluetas.marco = {}
+	_siluetas.modelo_visible = false
+	_siluetas.cortina = 0.0
+	_siluetas.hueco_objetivo = null
+	_siluetas.hueco_pista = null
+	_siluetas.hueco_cercano = null
+	_terminado = false
+	_en_gag = false
+	_en_modelo = false
 
 
 func _celebrar_victoria(voz_figura: String) -> void:
@@ -860,21 +1550,27 @@ func _celebrar_victoria(voz_figura: String) -> void:
 
 ## Estrellitas del perfil Estrella. Regla PROVISIONAL, la misma de emparejar hasta que
 ## `disenador-niveles` fije umbrales: sin limite -> 3; tras derrota-gag -> 1; con la mitad o mas
-## de los intentos sobrantes -> 3; si no -> 2.
+## de los intentos sobrantes -> 3; si no -> 2. Cada pista (o vistazo al modelo) resta una, sin
+## bajar de 1: ganar siempre da al menos una estrellita.
 func _calcular_estrellitas() -> int:
-	if _limite_intentos == null:
-		return 3
+	var base := 3
 	if _derrota_disparada:
-		return 1
-	var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
-	return 3 if sobrantes * 2 >= int(_limite_intentos) else 2
+		base = 1
+	elif _limite_intentos != null:
+		var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
+		base = 3 if sobrantes * 2 >= int(_limite_intentos) else 2
+	return maxi(1, base - _pistas_usadas)
 
 
-func _calcular_destellos() -> int:
+func _destellos_prueba_actual() -> int:
 	var total := _requeridos * DESTELLOS_POR_PIEZA
 	if _limite_intentos != null and not _derrota_disparada:
 		total += max(int(_limite_intentos) - _intentos_usados, 0) * DESTELLOS_POR_INTENTO_SOBRANTE
 	return total
+
+
+func _calcular_destellos() -> int:
+	return _destellos_pruebas + _destellos_prueba_actual()
 
 
 # ---------------------------------------------------------------------------
@@ -882,7 +1578,7 @@ func _calcular_destellos() -> int:
 # ---------------------------------------------------------------------------
 
 func _linea(clave: String) -> String:
-	var valor = nivel.get("lineas_voz", {}).get(clave, "")
+	var valor = _cfg.get("lineas_voz", {}).get(clave, "")
 	if valor is Array:
 		return str(valor[0]) if not valor.is_empty() else ""
 	return str(valor)
@@ -890,7 +1586,7 @@ func _linea(clave: String) -> String:
 
 ## Elige una variante sin repetir la ultima, para que no suene monotono.
 func _linea_al_azar(clave: String) -> String:
-	var opciones = nivel.get("lineas_voz", {}).get(clave, [])
+	var opciones = _cfg.get("lineas_voz", {}).get(clave, [])
 	if not (opciones is Array):
 		return str(opciones)
 	if opciones.is_empty():
@@ -1038,13 +1734,104 @@ func _actualizar_depuracion() -> void:
 		return
 	var limite := "sin limite" if _limite_intentos == null else str(_limite_intentos)
 	var reglas: Array = []
-	for campo in ["sin_error", "toque_lleva_a_casa", "objetivo_guiado", "enderezar_al_acercar", "rotacion_por_toque", "risa_al_encajar", "guia_color"]:
-		if bool(nivel.get(campo, false)):
+	for campo in ["sin_error", "toque_lleva_a_casa", "objetivo_guiado", "enderezar_al_acercar", "rotacion_por_toque", "risa_al_encajar", "guia_color", "boton_espejo", "pistas_cuestan_estrellita", "regalo_tras_derrotas"]:
+		if bool(_cfg.get(campo, false)):
 			reglas.append(campo)
-	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\npiezas: %d de %d\niman: %.0f px\nfallos que cuentan: %d / %s\nderrota-gag ya ocurrio: %s\nreglas: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
-		nivel.get("id_nivel", "?"), obtener_perfil_dificultad(), obtener_id_personaje(),
-		_encajados, _requeridos, _iman, _intentos_usados, limite, "si" if _derrota_disparada else "no",
-		", ".join(reglas), _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas())]
+	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\nmecanica: %s · prueba %d de %d\npiezas: %d de %d\niman: %.0f px\nfallos que cuentan: %d / %s\nderrotas: %d · pistas usadas: %d\nreglas: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
+		nivel.get("id_nivel", "?"), obtener_perfil_dificultad(), obtener_id_personaje(), _mecanica,
+		_indice_prueba + 1, maxi(1, _pruebas.size()), _encajados, _requeridos, _iman, _intentos_usados, limite,
+		_derrotas, _pistas_usadas, ", ".join(reglas), _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas())]
+
+
+# ---------------------------------------------------------------------------
+# Interfaz
+# ---------------------------------------------------------------------------
+
+## Botones de los retos de Sofia, creados por codigo: pista (arriba a la derecha), espejo y mirar el
+## modelo (bajo la bandeja). Todos >= 96 px (GDD §6.1) y visibles solo si el nivel los usa.
+func _crear_botones_sofia() -> void:
+	var ui: Control = _boton_salir.get_parent()
+	_boton_pista = _boton_redondo(ui, Rect2(1164, 16, 96, 96), DORADO, "Pista: pone una pieza (cuesta una estrellita)", _dibujar_icono_pista)
+	_boton_pista.pressed.connect(_al_tocar_pista)
+	_boton_espejo = _boton_redondo(ui, Rect2(900, 590, 110, 110), Color("#CFF5F1"), "Espejo: voltea la pieza elegida", _dibujar_icono_espejo)
+	_boton_espejo.pressed.connect(_al_tocar_espejo)
+	_boton_ojo = _boton_redondo(ui, Rect2(1022, 590, 110, 110), Color("#FFE3F1"), "Mirar el modelo otra vez (cuesta una estrellita)", _dibujar_icono_ojo)
+	_boton_ojo.pressed.connect(_al_tocar_ojo)
+
+
+func _actualizar_botones() -> void:
+	_boton_pista.visible = bool(_cfg.get("pistas_cuestan_estrellita", false))
+	_boton_espejo.visible = _boton_espejo_activo
+	var rect_espejo := _rect_de(_cfg.get("boton_espejo_rect", null), Rect2(900, 590, 110, 110))
+	_boton_espejo.position = rect_espejo.position
+	_boton_espejo.size = rect_espejo.size
+	_boton_ojo.visible = _mecanica == "memoria"
+	_boton_ojo.disabled = _en_modelo
+	_boton_ojo.modulate.a = 0.5 if _en_modelo else 1.0
+
+
+func _boton_redondo(padre: Control, rect: Rect2, fondo: Color, ayuda: String, icono: Callable) -> Button:
+	var boton := Button.new()
+	boton.focus_mode = Control.FOCUS_NONE
+	boton.tooltip_text = ayuda
+	boton.custom_minimum_size = rect.size
+	padre.add_child(boton)
+	padre.move_child(boton, _efectos.get_index())
+	boton.position = rect.position
+	boton.size = rect.size
+	_estilizar_boton(boton, fondo)
+	var dibujo := Control.new()
+	dibujo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	boton.add_child(dibujo)
+	dibujo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dibujo.draw.connect(icono.bind(dibujo))
+	boton.hide()
+	return boton
+
+
+## Pista: una estrellita con chispas (la ayuda se "paga" con una estrellita).
+func _dibujar_icono_pista(icono: Control) -> void:
+	var c := icono.size / 2.0
+	var k := icono.size.x / 96.0
+	Figura.dibujar(icono, "estrella", Color("#FFF3B0"), c + Vector2(0, 3) * k, 30.0 * k, false)
+	for p in [Vector2(-30, -26), Vector2(30, -22), Vector2(26, 30)]:
+		var chispa := Figura.poligono("estrella", c + p * k, 8.0 * k)
+		icono.draw_colored_polygon(chispa, Color.WHITE)
+		Figura.contornear(icono, chispa, 2.0 * k)
+
+
+## Espejo: un triangulo y su reflejo a cada lado de una linea punteada.
+func _dibujar_icono_espejo(icono: Control) -> void:
+	var c := icono.size / 2.0
+	var k := icono.size.x / 110.0
+	var izquierda := PackedVector2Array([c + Vector2(-8, -30) * k, c + Vector2(-8, 28) * k, c + Vector2(-40, 28) * k])
+	var derecha := PackedVector2Array([c + Vector2(8, -30) * k, c + Vector2(40, 28) * k, c + Vector2(8, 28) * k])
+	icono.draw_colored_polygon(izquierda, Color("#FF6B6B"))
+	Figura.contornear(icono, izquierda, 4.0 * k)
+	icono.draw_colored_polygon(derecha, Color("#4A8BE0"))
+	Figura.contornear(icono, derecha, 4.0 * k)
+	var y := -38.0
+	while y < 36.0:
+		icono.draw_line(c + Vector2(0, y) * k, c + Vector2(0, y + 8) * k, COLOR_CONTORNO, 3.0 * k, true)
+		y += 14.0
+
+
+## Ojo: mirar el modelo otra vez.
+func _dibujar_icono_ojo(icono: Control) -> void:
+	var c := icono.size / 2.0
+	var k := icono.size.x / 110.0
+	var contorno := PackedVector2Array()
+	for i in 33:
+		var t := PI * i / 32.0
+		contorno.append(c + Vector2(-cos(t) * 40.0, -sin(t) * 22.0) * k)
+	for i in range(1, 32):
+		var t := PI * i / 32.0
+		contorno.append(c + Vector2(cos(t) * 40.0, sin(t) * 22.0) * k)
+	icono.draw_colored_polygon(contorno, Color.WHITE)
+	Figura.contornear(icono, contorno, 4.0 * k)
+	icono.draw_circle(c, 14.0 * k, TURQUESA)
+	icono.draw_circle(c, 7.0 * k, COLOR_CONTORNO)
+	icono.draw_circle(c + Vector2(-4, -4) * k, 3.0 * k, Color.WHITE)
 
 
 func _estilizar_interfaz() -> void:

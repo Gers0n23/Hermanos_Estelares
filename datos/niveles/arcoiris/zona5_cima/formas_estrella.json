@@ -7,15 +7,13 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 55,
+  "dificultad": "v3 (PO 14-Sep-2026)",
   "caras": false,
   "guia_color": false,
-  "modo": "tangram",
-  "figuras_por_partida": 1,
-  "limite_intentos": 10,
-  "rotacion_por_toque": true,
-  "paso_rotacion": 90,
-  "rotacion_inicial_aleatoria": true,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "modo": "desafio",
+  "boton_espejo": true,
   "lineas_voz": {
     "acierto": [
       "voces/arcoiris/formas/estrella/acierto_01.wav",
@@ -31,130 +29,913 @@
       "voces/arcoiris/formas/estrella/figura_completa_02.wav"
     ],
     "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
-    "victoria_final": [
-      "voces/arcoiris/formas/estrella/victoria_01.wav",
-      "voces/arcoiris/formas/estrella/victoria_02.wav"
+    "victoria_final": "voces/arcoiris/formas/estrella/victoria_cima_01.wav",
+    "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
+    "espejo_sin_pieza": "voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav",
+    "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
+    "prueba_superada": [
+      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
+      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
     ],
-    "intro": "voces/arcoiris/formas/estrella/intro_z5.wav",
-    "pista": "voces/arcoiris/formas/estrella/pista_girar_01.wav",
-    "girar": "voces/arcoiris/formas/estrella/girar_01.wav"
+    "intro": "voces/arcoiris/formas/estrella/intro_cima_1.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_tangram_01.wav",
+    "mira_modelo": "voces/arcoiris/formas/estrella/mira_modelo_01.wav",
+    "tapa_modelo": "voces/arcoiris/formas/estrella/tapa_modelo_01.wav"
   },
-  "figuras": [
+  "pruebas": [
     {
-      "id": "corona",
-      "voz_completa": "voces/arcoiris/formas/figuras/corona.wav",
-      "especial": true,
-      "piezas": [
+      "mecanica": "tangram_libre",
+      "lado_red": 68,
+      "iman_tolerancia_px": 60,
+      "rotacion_por_toque": true,
+      "paso_rotacion": 45,
+      "rotacion_inicial_aleatoria": true,
+      "limite_intentos": null,
+      "figuras_por_partida": 1,
+      "figuras": [
         {
-          "forma": "rectangulo",
-          "ancho": 204,
-          "alto": 70,
-          "color": "#FFCB3D",
-          "x": -102,
-          "y": 35
-        },
-        {
-          "forma": "rectangulo",
-          "ancho": 204,
-          "alto": 70,
-          "color": "#FFCB3D",
-          "x": 102,
-          "y": 35
-        },
-        {
-          "forma": "triangulo",
-          "ancho": 120,
-          "alto": 60,
-          "color": "#F26CA8",
-          "x": -144,
-          "y": -30
-        },
-        {
-          "forma": "triangulo",
-          "ancho": 120,
-          "alto": 60,
-          "color": "#F26CA8",
-          "x": 144,
-          "y": -30
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 84,
-          "alto": 84,
-          "color": "#B48CE8",
-          "x": -42,
-          "y": -42,
-          "rotacion": 270
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 84,
-          "alto": 84,
-          "color": "#45C6C0",
-          "x": 42,
-          "y": -42
+          "id": "nave",
+          "silueta_unida": true,
+          "piezas": [
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 270,
+              "espejo": false,
+              "x": -0.0,
+              "y": 5.0,
+              "color": "#FF6B6B"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1.4142,
+              "alto": 1.4142,
+              "rotacion": 45,
+              "espejo": false,
+              "x": 2.0,
+              "y": 1.0,
+              "color": "#4A8BE0"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.0,
+              "y": 2.0,
+              "color": "#7DD87A"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 1.5,
+              "y": 3.5,
+              "color": "#FFCB3D"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 270,
+              "espejo": false,
+              "x": 1.5,
+              "y": 3.5,
+              "color": "#B48CE8"
+            },
+            {
+              "forma": "cuadrado",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 1.5,
+              "y": 4.5,
+              "color": "#FF9F4A"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 1.5,
+              "y": 5.5,
+              "color": "#45C6C0"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 270,
+              "espejo": false,
+              "x": 2.0,
+              "y": 5.0,
+              "color": "#F26CA8"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1.4142,
+              "alto": 1.4142,
+              "rotacion": 315,
+              "espejo": false,
+              "x": 2.0,
+              "y": 6.0,
+              "color": "#6FD6E8"
+            },
+            {
+              "forma": "paralelogramo",
+              "ancho": 2,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 2.5,
+              "y": 1.0,
+              "color": "#3FB57A"
+            },
+            {
+              "forma": "paralelogramo",
+              "ancho": 2,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 2.5,
+              "y": 2.0,
+              "color": "#FFE38A"
+            },
+            {
+              "forma": "cuadrado",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.5,
+              "y": 3.5,
+              "color": "#9B6BD9"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 2.5,
+              "y": 4.5,
+              "color": "#FFB25B"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 4.0,
+              "y": 5.0,
+              "color": "#2E9E9A"
+            }
+          ]
         }
-      ],
-      "silueta_unida": true
+      ]
     },
     {
-      "id": "gato_tangram",
-      "voz_completa": "voces/arcoiris/formas/figuras/gato.wav",
-      "piezas": [
+      "mecanica": "marco",
+      "marco": [
+        "...#....",
+        "...##...",
+        "..####..",
+        ".######.",
+        ".######.",
+        "########",
+        "########",
+        "###..###",
+        "##....##"
+      ],
+      "lado_celda": 58,
+      "limite_intentos": 12,
+      "piezas_necesarias": 9,
+      "rotacion_por_toque": true,
+      "paso_rotacion": 90,
+      "piezas_marco": [
         {
-          "forma": "cuadrado",
-          "ancho": 120,
-          "alto": 120,
-          "color": "#FFB25B",
-          "x": 0,
-          "y": -180,
-          "cara": true
+          "id": "F",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF6B6B"
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 60,
-          "alto": 60,
-          "color": "#FF9F4A",
-          "x": -30,
-          "y": -270
+          "id": "I",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "color": "#4A8BE0"
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 60,
-          "alto": 60,
-          "color": "#FF9F4A",
-          "x": 30,
-          "y": -270,
-          "rotacion": 270
+          "id": "L",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#7DD87A"
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 180,
-          "alto": 180,
-          "color": "#FFCB3D",
-          "x": 0,
-          "y": -30,
-          "rotacion": 90
+          "id": "P",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "color": "#B48CE8"
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 180,
-          "alto": 180,
-          "color": "#F26CA8",
-          "x": 0,
-          "y": -30,
-          "rotacion": 270
+          "id": "T",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FF9F4A"
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 60,
-          "alto": 60,
-          "color": "#B48CE8",
-          "x": 120,
-          "y": 30
+          "id": "U",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "color": "#45C6C0"
+        },
+        {
+          "id": "V",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#F26CA8"
+        },
+        {
+          "id": "W",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#6FD6E8"
+        },
+        {
+          "id": "X",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "#FFE38A"
+        },
+        {
+          "id": "Y",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "color": "#9B6BD9"
+        },
+        {
+          "id": "Z",
+          "celdas": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "#B07A4F"
+        },
+        {
+          "id": "N",
+          "celdas": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "color": "#FFCB3D"
         }
       ],
-      "silueta_unida": true
+      "solucion": [
+        {
+          "id": "F",
+          "celdas": [
+            [
+              0,
+              5
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        },
+        {
+          "id": "I",
+          "celdas": [
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        },
+        {
+          "id": "P",
+          "celdas": [
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              8
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              1,
+              8
+            ],
+            [
+              2,
+              7
+            ]
+          ]
+        },
+        {
+          "id": "N",
+          "celdas": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "T",
+          "celdas": [
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        },
+        {
+          "id": "Y",
+          "celdas": [
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "Z",
+          "celdas": [
+            [
+              5,
+              3
+            ],
+            [
+              6,
+              3
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              7,
+              5
+            ]
+          ]
+        },
+        {
+          "id": "L",
+          "celdas": [
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              7
+            ]
+          ]
+        },
+        {
+          "id": "U",
+          "celdas": [
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              8
+            ]
+          ]
+        }
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/formas/estrella/intro_cima_2.wav",
+        "pista": "voces/arcoiris/formas/estrella/pista_marco_01.wav"
+      }
+    },
+    {
+      "mecanica": "memoria",
+      "lado_red": 84,
+      "iman_tolerancia_px": 55,
+      "segundos_modelo": 3,
+      "exigir_color": true,
+      "rotacion_por_toque": true,
+      "paso_rotacion": 45,
+      "rotacion_inicial_aleatoria": true,
+      "limite_intentos": 8,
+      "figuras_por_partida": 1,
+      "figuras": [
+        {
+          "id": "velero",
+          "silueta_unida": true,
+          "piezas": [
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1.4142,
+              "alto": 1.4142,
+              "rotacion": 135,
+              "espejo": false,
+              "x": 0.0,
+              "y": 3.0,
+              "color": "#FF6B6B"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 270,
+              "espejo": false,
+              "x": 1.0,
+              "y": 1.0,
+              "color": "#4A8BE0"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 180,
+              "espejo": false,
+              "x": 1.0,
+              "y": 3.0,
+              "color": "#7DD87A"
+            },
+            {
+              "forma": "paralelogramo",
+              "ancho": 2,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": true,
+              "x": 1.0,
+              "y": 3.5,
+              "color": "#FFCB3D"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.5,
+              "y": 0.5,
+              "color": "#B48CE8"
+            },
+            {
+              "forma": "cuadrado",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.5,
+              "y": 3.5,
+              "color": "#FF9F4A"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 3.5,
+              "y": 3.5,
+              "color": "#45C6C0"
+            }
+          ],
+          "voz_completa": "voces/arcoiris/formas/figuras/barco.wav"
+        },
+        {
+          "id": "cuadrado",
+          "silueta_unida": true,
+          "piezas": [
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 270,
+              "espejo": false,
+              "x": 1.0,
+              "y": 1.0,
+              "color": "#FF6B6B"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 2,
+              "alto": 2,
+              "rotacion": 180,
+              "espejo": false,
+              "x": 1.0,
+              "y": 3.0,
+              "color": "#4A8BE0"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.5,
+              "y": 0.5,
+              "color": "#7DD87A"
+            },
+            {
+              "forma": "cuadrado",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 0,
+              "espejo": false,
+              "x": 2.5,
+              "y": 1.5,
+              "color": "#FFCB3D"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": false,
+              "x": 2.5,
+              "y": 2.5,
+              "color": "#B48CE8"
+            },
+            {
+              "forma": "paralelogramo",
+              "ancho": 2,
+              "alto": 1,
+              "rotacion": 90,
+              "espejo": true,
+              "x": 2.5,
+              "y": 3.0,
+              "color": "#FF9F4A"
+            },
+            {
+              "forma": "triangulo_rect",
+              "ancho": 1.4142,
+              "alto": 1.4142,
+              "rotacion": 225,
+              "espejo": false,
+              "x": 3.0,
+              "y": 2.0,
+              "color": "#45C6C0"
+            }
+          ]
+        }
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/formas/estrella/intro_cima_3.wav",
+        "pista": "voces/arcoiris/formas/estrella/pista_memoria_01.wav"
+      }
     }
   ]
 }
