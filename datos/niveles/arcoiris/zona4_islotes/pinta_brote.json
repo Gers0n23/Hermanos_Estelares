@@ -1,0 +1,750 @@
+{
+  "id_nivel": "arcoiris_z4_pinta_brote",
+  "motor": "lienzo_libre",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "espejo",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "naranja",
+    "amarillo",
+    "verde",
+    "azul",
+    "violeta",
+    "rosa",
+    "turquesa",
+    "celeste",
+    "blanco",
+    "cafe",
+    "negro",
+    "gris",
+    "verde_oscuro"
+  ],
+  "color_inicial": "rosa",
+  "herramientas": [
+    "pincel",
+    "pincel_corazon",
+    "pincel_estrella",
+    "sello_corazon",
+    "goma"
+  ],
+  "simetria": "espejo",
+  "laminas": [
+    {
+      "id": "flor",
+      "tipo": "guia",
+      "alfa": 0.4,
+      "regiones": [
+        {
+          "id": "tallo",
+          "forma": "rect",
+          "rect": [
+            404,
+            300,
+            16,
+            210
+          ],
+          "redondeo": 8,
+          "fija": true,
+          "inicial": "#A6E3A1"
+        },
+        {
+          "id": "hoja_1",
+          "forma": "elipse",
+          "centro": [
+            342,
+            420
+          ],
+          "radios": [
+            64,
+            26
+          ],
+          "giro": -25,
+          "fija": true,
+          "inicial": "#A6E3A1"
+        },
+        {
+          "id": "hoja_2",
+          "forma": "elipse",
+          "centro": [
+            482,
+            420
+          ],
+          "radios": [
+            64,
+            26
+          ],
+          "giro": 25,
+          "fija": true,
+          "inicial": "#A6E3A1"
+        },
+        {
+          "id": "petalo_0",
+          "forma": "elipse",
+          "centro": [
+            504.0,
+            200.0
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_1",
+          "forma": "elipse",
+          "centro": [
+            477.0538238691624,
+            265.0538238691624
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 45.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_2",
+          "forma": "elipse",
+          "centro": [
+            412.0,
+            292.0
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 90.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_3",
+          "forma": "elipse",
+          "centro": [
+            346.9461761308376,
+            265.0538238691624
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 135.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_4",
+          "forma": "elipse",
+          "centro": [
+            320.0,
+            200.0
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 180.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_5",
+          "forma": "elipse",
+          "centro": [
+            346.9461761308376,
+            134.9461761308376
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 225.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_6",
+          "forma": "elipse",
+          "centro": [
+            412.0,
+            108.0
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 270.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_7",
+          "forma": "elipse",
+          "centro": [
+            477.05382386916233,
+            134.9461761308376
+          ],
+          "radios": [
+            62,
+            44
+          ],
+          "giro": 315.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "centro",
+          "forma": "circulo",
+          "centro": [
+            412,
+            200
+          ],
+          "radio": 58,
+          "fija": true,
+          "inicial": "#FFEBA0"
+        }
+      ],
+      "detalles": []
+    },
+    {
+      "id": "corona",
+      "tipo": "guia",
+      "alfa": 0.4,
+      "regiones": [
+        {
+          "id": "corona",
+          "forma": "poligono",
+          "puntos": [
+            [
+              172,
+              420
+            ],
+            [
+              192,
+              150
+            ],
+            [
+              292,
+              290
+            ],
+            [
+              412,
+              90
+            ],
+            [
+              532,
+              290
+            ],
+            [
+              632,
+              150
+            ],
+            [
+              652,
+              420
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFEBA0"
+        },
+        {
+          "id": "base",
+          "forma": "rect",
+          "rect": [
+            162,
+            400,
+            500,
+            70
+          ],
+          "redondeo": 20,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "joya_1",
+          "forma": "corazon",
+          "centro": [
+            412,
+            330
+          ],
+          "radio": 44,
+          "fija": true,
+          "inicial": "#FFB3C7"
+        },
+        {
+          "id": "joya_2",
+          "forma": "circulo",
+          "centro": [
+            262,
+            350
+          ],
+          "radio": 26,
+          "fija": true,
+          "inicial": "#C7A6EC"
+        },
+        {
+          "id": "joya_3",
+          "forma": "circulo",
+          "centro": [
+            562,
+            350
+          ],
+          "radio": 26,
+          "fija": true,
+          "inicial": "#C7A6EC"
+        },
+        {
+          "id": "punta_1",
+          "forma": "circulo",
+          "centro": [
+            192,
+            140
+          ],
+          "radio": 20,
+          "fija": true,
+          "inicial": "#FFB3C7"
+        },
+        {
+          "id": "punta_2",
+          "forma": "circulo",
+          "centro": [
+            412,
+            80
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#FFB3C7"
+        },
+        {
+          "id": "punta_3",
+          "forma": "circulo",
+          "centro": [
+            632,
+            140
+          ],
+          "radio": 20,
+          "fija": true,
+          "inicial": "#FFB3C7"
+        }
+      ],
+      "detalles": []
+    },
+    {
+      "id": "gatito_cara",
+      "tipo": "guia",
+      "alfa": 0.4,
+      "regiones": [
+        {
+          "id": "oreja_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              232,
+              210
+            ],
+            [
+              250,
+              50
+            ],
+            [
+              352,
+              150
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFD9B0"
+        },
+        {
+          "id": "oreja_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              592,
+              210
+            ],
+            [
+              574,
+              50
+            ],
+            [
+              472,
+              150
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFD9B0"
+        },
+        {
+          "id": "cara",
+          "forma": "elipse",
+          "centro": [
+            412,
+            290
+          ],
+          "radios": [
+            210,
+            170
+          ],
+          "fija": true,
+          "inicial": "#FFD9B0"
+        },
+        {
+          "id": "hocico",
+          "forma": "elipse",
+          "centro": [
+            412,
+            350
+          ],
+          "radios": [
+            70,
+            46
+          ],
+          "fija": true,
+          "inicial": "#FFFFFF"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            330,
+            270
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "ojo",
+          "centro": [
+            494,
+            270
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            412,
+            330
+          ],
+          "radio": 10,
+          "color": "#FF7EB6"
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            412,
+            342
+          ],
+          "radio": 20
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              350,
+              350
+            ],
+            [
+              220,
+              330
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              474,
+              350
+            ],
+            [
+              604,
+              330
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              350,
+              366
+            ],
+            [
+              224,
+              382
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              474,
+              366
+            ],
+            [
+              600,
+              382
+            ]
+          ],
+          "grosor": 3
+        }
+      ]
+    },
+    {
+      "id": "corazon_alado",
+      "tipo": "guia",
+      "alfa": 0.4,
+      "regiones": [
+        {
+          "id": "ala_1",
+          "forma": "elipse",
+          "centro": [
+            222,
+            230
+          ],
+          "radios": [
+            150,
+            80
+          ],
+          "giro": -20,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "ala_2",
+          "forma": "elipse",
+          "centro": [
+            602,
+            230
+          ],
+          "radios": [
+            150,
+            80
+          ],
+          "giro": 20,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "ala_3",
+          "forma": "elipse",
+          "centro": [
+            242,
+            320
+          ],
+          "radios": [
+            110,
+            56
+          ],
+          "giro": 10,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "ala_4",
+          "forma": "elipse",
+          "centro": [
+            582,
+            320
+          ],
+          "radios": [
+            110,
+            56
+          ],
+          "giro": -10,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "corazon",
+          "forma": "corazon",
+          "centro": [
+            412,
+            270
+          ],
+          "radio": 170,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        }
+      ],
+      "detalles": []
+    },
+    {
+      "id": "mono",
+      "tipo": "guia",
+      "alfa": 0.4,
+      "regiones": [
+        {
+          "id": "cinta_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              392,
+              300
+            ],
+            [
+              292,
+              500
+            ],
+            [
+              352,
+              480
+            ],
+            [
+              382,
+              520
+            ],
+            [
+              412,
+              320
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFB3C7"
+        },
+        {
+          "id": "cinta_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              432,
+              300
+            ],
+            [
+              532,
+              500
+            ],
+            [
+              472,
+              480
+            ],
+            [
+              442,
+              520
+            ],
+            [
+              412,
+              320
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFB3C7"
+        },
+        {
+          "id": "lazo_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              412,
+              250
+            ],
+            [
+              152,
+              110
+            ],
+            [
+              112,
+              250
+            ],
+            [
+              152,
+              390
+            ]
+          ],
+          "suave": 2,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "lazo_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              412,
+              250
+            ],
+            [
+              672,
+              110
+            ],
+            [
+              712,
+              250
+            ],
+            [
+              672,
+              390
+            ]
+          ],
+          "suave": 2,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "nudo",
+          "forma": "elipse",
+          "centro": [
+            412,
+            250
+          ],
+          "radios": [
+            60,
+            70
+          ],
+          "fija": true,
+          "inicial": "#FF9ECF"
+        }
+      ],
+      "detalles": []
+    }
+  ],
+  "laminas_por_partida": 2,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/brote/mostrar_01.wav",
+      "voces/arcoiris/pinta/brote/mostrar_02.wav",
+      "voces/arcoiris/pinta/brote/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/brote/victoria_01.wav",
+      "voces/arcoiris/pinta/brote/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "uso_pincel_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "uso_sello_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "igualita": [
+      "voces/arcoiris/pinta/brote/igualita_01.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/brote/intro_espejo.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/brote/siguiente_espejo.wav"
+    ]
+  }
+}

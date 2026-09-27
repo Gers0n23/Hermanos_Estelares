@@ -119,7 +119,7 @@ func configurar(datos: Dictionary, oculto: bool) -> void:
 	escala = float(datos.get("escala", 1.0))
 	letra = str(datos.get("letra", ""))
 	voz_toque = str(datos.get("voz_toque", ""))
-	if estilo == "letra" and not datos.has("color"):
+	if estilo == "letra" and str(datos.get("color", "")) == "":
 		color_figura = COLOR_LETRA
 	if estilo == "receta" and not receta.is_empty():
 		color_figura = Color.from_string(str(receta[0]), color_figura)

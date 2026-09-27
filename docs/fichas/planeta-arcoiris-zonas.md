@@ -120,6 +120,22 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 
 ### 3.1 Lluvia de colores — motor `clasificar`
 
+> **Implementado 27-Sep-2026** (Dev, a pedido del PO): las 15 celdas de esta tabla existen en
+> `datos/niveles/arcoiris/<zona>/lluvia_<perfil>.json`. La escena es
+> `escenas/minijuegos/clasificar/motor_clasificar.tscn` y el motor está en `docs/fichas/motor-clasificar.md`.
+> Para durar ~3 min (Maxi y Nicole) y ~4 min (Sofía), cada estación se juega en **tandas** con una
+> mini-fiesta entre ellas, y todo se baraja al rejugar:
+>
+> - **Maxi**: 5 tandas de 10 gotas; en z4, 5 tandas de 4 gigantes; en z5, 7 arcoíris.
+> - **Nicole**: 5 tandas de 7 gotas; en z5, 6 tandas de 4 colores nombrados.
+> - **Sofía**: 8 tandas de 2 mezclas en z1, 6 tandas de 3 en z2 a z4, y 3 tandas de 5 pedidos
+>   encadenados en z5.
+>
+> `limite_intentos` cuenta **fallos por tanda**: Nicole 12 (z3 a z5); Sofía 10 (z1 a z3) y 12 (z4 y z5).
+> Las estrellitas usan `umbrales_estrellitas` provisionales. Nicole z5 usa 4 charcos de contorno y elige
+> entre 3 gotas por pedido. El reloj amable de Sofía z5 se pausa mientras Coco habla.
+> **Pendiente**: validación de `disenador-niveles`, `experto-ux-parvulo` y `guionista`, y playtest.
+
 | Zona | Maxi · Semilla (nunca pierde) | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
 | 1 · Claro | 1 gota quieta junto a 3 charcos grandes (rojo, azul, amarillo); tocar hace magia de color en cualquier charco [`modo: libre`, `velocidad_caida: 0`] | Llevar 1 gota a su charco entre 3 primarios, sin caída [`modo: directo`, 3 colores] | Mezclas guiadas: el charco muestra los dos colores de la receta; 2 mezclas (verde, naranja) [`modo: mezcla`, `guia_receta: true`] |
@@ -166,11 +182,62 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 | 4 · Islotes | **Monito de nieve**: círculo grande y chico, cuadrado grande y chico | **Tren** de 8 piezas con ruedas grandes y chicas; las piezas se enderezan solas [`limite_intentos: 12`] | **Moáis de Rapa Nui** sobre su ahu, 28 piezas [`limite_intentos: 14`] |
 | 5 · Cima | Su **dinosaurio o autito** gigante de 3 piezas (sin cambios, ahora con bandeja real y tarjeta) | **Completa una escena**: jardín con casa y jirafa y el corazón dorado escondido (sin cambios) | **Castillo Hidalgo del cerro Santa Lucía**, 30 piezas [`limite_intentos: 16`]. ⭐ **Reto dorado** (sin cambios): el rectángulo de 6×10 con los 12 pentominós |
 
+> **Rondas (PO, 27-Sep-2026)**: una sola figura por estación duraba unos 30 segundos para Maxi, y la
+> meta es al menos una hora por hermano en el planeta. Desde ahora cada estación es una **serie de
+> rondas, una figura a la vez**, sorteadas de un pool por zona. Las figuras de la tabla de arriba
+> siguen en el pool, y cada una va **primera** (`fija`) para que la intro de zona siga calzando.
+>
+> - Entre rondas hay una mini-fiesta: la figura baila, Coco dice su nombre y la medalla de la ronda se
+>   llena.
+> - La celebración grande llega solo al final.
+> - Si el niño sale a mitad de la serie, al volver sigue en la misma ronda.
+> - Sumamos **banderas** con colores y proporciones oficiales. Los emblemas (la estrella de Chile, el
+>   disco de Japón, el sol de Argentina) van **encima** del fondo, y cada franja va en su color.
+> - Sumamos **lugares de Chile**.
+> - Detalle técnico: `docs/fichas/motor-encajar.md` §10.
+>
+> | Zona | Maxi: 4 rondas de su pool | Nicole: 3 rondas de su pool | Sofía: monumento y bandera |
+> |---|---|---|---|
+> | 1 · Claro | casita con sol (fija), Japón, Francia, Italia, helado, pez | casita (fija), Francia, Italia, gatito con moño, corazón | iglesia de Castro o **La Moneda**; Chile, Argentina, Perú o Bolivia (límite 8, sin giro) |
+> | 2 · Charcos | barquito (fija), Perú, tortuga, bus, patito, ballena | micro (fija), Perú, Colombia, torta, pony | palafitos o **Valparaíso** (casas de colores, cada una en su color); Brasil, Uruguay, Paraguay, Colombia, Venezuela o Ecuador (límite 9, con giro) |
+> | 3 · Chupetines | pino (fija), Chile, volcán Osorno, camión de bomberos, árbol, avión | faro (fija), Chile, Japón, mariposa, jirafa | Santiago o **Torres del Paine**; Japón, Francia o Alemania (límite 9) |
+> | 4 · Islotes | monito de nieve (fija), Torres del Paine, robot, pollito, casita del perro | tren (fija), Argentina, Alemania, Brasil, corona | moáis o **Morro de Arica**; Rusia, China o India (límite 10) |
+> | 5 · Cima | autito, dino, platillo volador, braquiosaurio, auto de carreras, cohete | jardín con corazón dorado (fija), Bolivia, Torres del Paine, Morro de Arica, castillo | castillo del Santa Lucía o **cerro San Cristóbal**; EE.UU. (32 piezas, límite 14) o México (límite 10). El reto dorado no cambia |
+>
+> - Banderas que quedaron fuera:
+>   - **Reino Unido**: sus diagonales no se pueden cortar sin salirse del borde.
+>   - **Canadá**: la hoja de arce no se puede hacer con las formas del motor.
+>   - Para Maxi, **Alemania y Colombia**: sus franjas horizontales no caben en la bandeja con 96 px de
+>     alto.
+>   - Para Nicole, **Uruguay y China**: las franjas y las estrellas quedan bajo 52 px.
+> - Simplificaciones, hechas con respeto:
+>   - El sol de Argentina y de Uruguay es un círculo dorado.
+>   - Los escudos de Paraguay, Ecuador y México son formas simples.
+>   - EE.UU. lleva 5 estrellas: la voz explica que la bandera de verdad tiene 50.
+>   - Las estrellas chicas de China van sin girar.
+>   - Brasil va sin la franja del lema.
+> - Pendiente: validación de `disenador-niveles` (pools y límites), `guionista` (voces TTS
+>   provisionales) y `experto-ux-parvulo`, y playtest con los tres.
+
 ### 3.3 Parejas de Coco — motor `emparejar` (cuarto juego)
 
-La demo jugable del 13-Sep-2026 ya cubre dos de estas celdas: Maxi zona 2
-(`arcoiris_emparejar_semilla_01`) y Nicole zona 3 (`arcoiris_emparejar_brote_01`).
-
+> **Maxi y Nicole con rondas (decisión del PO, 27-Sep-2026)**: para que el planeta dure ~1 hora por hermano,
+> cada estación de Maxi y Nicole es una **serie de 3 rondas**. Entre rondas hay una mini-fiesta (confeti,
+> Coco baila, voz `ronda_superada`) y arriba se enciende una estrella por ronda; `completado` sale una sola
+> vez al final, con 10 destellos por pareja de todas las rondas. Cada ronda **sortea su contenido de un pool
+> mayor** (campo `pool` + `cantidad`; las parejas `fijo: true` siempre entran), así que al rejugar cambia.
+> Temas de sus gustos (`docs/perfil-jugadores.md`): dinos (T-rex, spinosaurio, carnotauro, huevo) y
+> vehículos (auto, bus, carro de bomberos, cohete) para Maxi; jirafas, ponis, gatitos, corazones y ropa
+> (vestido, zapato, corona, moño) para Nicole; más las figuras del planeta. **Banderas** (pedido del PO,
+> para aprender países): dibujadas en código con proporciones y colores oficiales y emblemas simplificados.
+> Al formar el par, Coco dice el país ("¡Chile! ¡Nuestro país!"). Chile siempre sale.
+>
+> Niveles: `datos/niveles/arcoiris/<zona>/parejas_semilla.json` y `parejas_brote.json`. Los de la demo se
+> movieron a Maxi zona 2 y Nicole zona 3, y conservan su `id_nivel` para no perder el progreso ya guardado.
+> Los archivos viejos siguen solo para `qa_test_emparejar_rutas`. Nunca hay límite de intentos (Maxi y
+> Nicole no pierden). QA: `herramientas/qa_test_parejas_zonas.gd`. Duración estimada por estación: **Maxi
+> ~2,5-3,5 min** (7 a 12 parejas), **Nicole ~3,5-5 min** (11 a 16 parejas, casi todas tapadas).
+>
 > **Sofía, dificultad v3 (decisión del PO, 14-Sep-2026)**: implementadas las 5 zonas y el reto dorado en
 > `datos/niveles/arcoiris/<zona>/parejas_estrella.json`. La columna de Sofía es la v3 y reemplaza a la
 > anterior. Los límites cuentan **fallos**. Salen de una jugadora simulada con memoria visual de ~5 cartas
@@ -178,13 +245,21 @@ La demo jugable del 13-Sep-2026 ya cubre dos de estas celdas: Maxi zona 2
 > 3 estrellitas exigen jugar muy bien. La demo `arcoiris_emparejar_estrella_01` (8 pares) queda solo
 > para `qa_test_emparejar_rutas`.
 
-| Zona | Maxi · Semilla (siempre a la vista, `oculto: false`) | Nicole · Brote | Sofía · Estrella |
+Formato de cada celda de Maxi y Nicole: ronda 1 → ronda 2 → ronda 3, con "N de M" = parejas por partida de un
+pool de M.
+
+| Zona | Maxi · Semilla (siempre a la vista, halo que respira, nunca pierde) | Nicole · Brote (sin límite; ayuda de Coco tras fallos) | Sofía · Estrella |
 |---|---|---|---|
-| 1 · Claro | 2 pares a la vista, cartas enormes, halo que respira [`halo_idle: true`] | 3 pares **a la vista** (calentamiento sin memoria) | **12 pares 6×4** tapados, con figuras iguales de distinto color (estrella amarilla y rosada) [`tiempo_volteo_ms: 900`, `limite_intentos: 16`] |
-| 2 · Charcos | 3 pares a la vista ✅ **(demo actual)** | 4 pares **tapados** con tiempo generoso y ayuda tras 3 fallos [`tiempo_volteo_ms: 1600`, `ayuda_tras_fallos: 3`] | **Correspondencia**: cada color con su receta (verde ↔ azul + amarillo; lila ↔ violeta + blanco; café ↔ rojo + amarillo + azul), 10 pares 5×4 [`modo: correspondencia`, `estilo: receta`, `limite_intentos: 15`] |
-| 3 · Chupetines | 4 pares; suma figuras de sus gustos (dino, autito) | 5 pares tapados, corazón mágico ✅ **(demo actual)** | **Tríos**: 7 tríos (21 cartas, 7×3); el turno termina en la primera carta que no coincide [`tamano_grupo: 3`, `limite_intentos: 42`] |
-| 4 · Islotes | **Mamá y bebé**: figura grande ↔ la misma figura chiquita [`modo: correspondencia`], 4 pares | **Color ↔ cosa de ese color** (mancha amarilla ↔ jirafa, mancha rosa ↔ flor), 5 pares tapados | **Cartas traviesas**: 14 pares 7×4; tras cada par, **dos** parejas de cartas tapadas cambian de lugar con un vuelo visible [`intercambios_tras_acierto: 2`, `limite_intentos: 24`] |
-| 5 · Cima | 5 pares a la vista y las cartas **bailan** despacito de lugar entre jugada y jugada (atención, sin memoria) | 6 pares: **dibujo ↔ su letra inicial** con voz ("S de sol"), refuerzo de lectura inicial (decisión del PO del 06-Ago-2026, GDD §5) | **Desafío final**: figura ↔ su sombra, **16 pares 8×4** con trampas en espejo y giro (luna y luna espejada, paralelogramo y su reflejo, gota a la izquierda y a la derecha…), una carta traviesa por acierto, volteo 800 ms, límite 32. ⭐ **Reto dorado**: 18 pares 9×4 con 2 intercambios y límite 42 |
+| 1 · Claro | Figuras del planeta 2 de 10 → dinos 2 de 3 → vehículos 3 de 4 | A la vista: animales 3 de 5 → ropa 4 de 6 → **sorpresa: tapadas** (mezcla 4 de 13, volteo 1800 ms, ayuda tras 2 fallos) | **12 pares 6×4** tapados, con figuras iguales de distinto color (estrella amarilla y rosada) [`tiempo_volteo_ms: 900`, `limite_intentos: 16`] |
+| 2 · Charcos | Figuras 3 de 10 (incluye las de la demo) → dinos 3 de 4 → vehículos 3 de 4 | Tapadas (volteo 1600 ms, ayuda tras 3): animales 3 → ropa 4 → mezcla 4 | **Correspondencia**: cada color con su receta (verde ↔ azul + amarillo; lila ↔ violeta + blanco; café ↔ rojo + amarillo + azul), 10 pares 5×4 [`modo: correspondencia`, `estilo: receta`, `limite_intentos: 15`] |
+| 3 · Chupetines | Figuras con dino y auto 3 de 8 → dinos 4 → dinos y vehículos 4 de 8 | Tapadas (1400 ms, ayuda tras 3): animales y corazones 4 de 7 → figuras con el **corazón mágico** (5 de 8, el de la demo) → **banderas** 4 de 14 | **Tríos**: 7 tríos (21 cartas, 7×3); el turno termina en la primera carta que no coincide [`tamano_grupo: 3`, `limite_intentos: 42`] |
+| 4 · Islotes | **Mamá y bebé** (grande ↔ chiquita, `escala`): dinos 3 de 4 → vehículos, figuras y dinos 4 de 7 → **banderas** 3: Chile, Japón y Francia o Italia | **Color ↔ cosa de ese color** (mancha ↔ jirafa, pony, gatito, corazón, flor, gota, hoja; Coco dice "¡Amarillo, como la jirafa!"): a la vista 4 de 7 → tapadas 5 de 7 → **banderas** tapadas 5 de 14 | **Cartas traviesas**: 14 pares 7×4; tras cada par, **dos** parejas de cartas tapadas cambian de lugar con un vuelo visible [`intercambios_tras_acierto: 2`, `limite_intentos: 24`] |
+| 5 · Cima | Cartas que **bailan** (`cartas_bailan: 1`: tras cada acierto dos cartas a la vista pasean 1,4 s a su nuevo lugar): dinos y vehículos 4 de 8 → todo 5 de 14 → banderas que bailan 3 | **Dibujo ↔ su letra inicial** (12 letras: S sol, L luna, G gato, J jirafa, P pony, E estrella, C corazón, F flor, A arcoíris, V vestido, D dinosaurio, Z zapato). La letra dice su nombre al tocarla y el par dice "¡Ese de sol!": a la vista 4 → tapadas 6 → **banderas** tapadas 6 de 14 | **Desafío final**: figura ↔ su sombra, **16 pares 8×4** con trampas en espejo y giro (luna y luna espejada, paralelogramo y su reflejo, gota a la izquierda y a la derecha…), una carta traviesa por acierto, volteo 800 ms, límite 32. ⭐ **Reto dorado**: 18 pares 9×4 con 2 intercambios y límite 42 |
+
+**Banderas del mazo** (14): Chile, Argentina (Sol de Mayo simplificado), Perú, Brasil (rombo, esfera y banda
+según la ley 8.421, sin lema), Colombia, Japón, China, Corea del Sur (taegeuk y trigramas), EE.UU. (50
+estrellas), Alemania, Francia, Italia, España y Suecia. Perú y España van en su versión civil, sin escudo.
+Las banderas no llevan carita.
 
 ### 3.4 Pinta con Coco — motor `lienzo_libre`
 
@@ -200,8 +275,41 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 | 1 · Claro | Lienzo libre con 6 blobs gigantes y sellos de dino y auto (ficha base §3.3) | Lienzo libre, 12 colores, pinceles corazón y estrella (§3.4) | Lienzo libre con purpurina (§3.5) |
 | 2 · Charcos | **Sellos sobre una escena**: estampar dinos, autos y estrellas en la pradera | **Colorear por zonas**: tocar partes de un pony o una jirafa las rellena del color elegido | **Colorear por código**: cada número del dibujo tiene su color (arma un mosaico secreto) |
 | 3 · Chupetines | **Pinta a Coco**: cada toque rellena una parte grande de Coco, que cambia de color en vivo | **Coco pide**: pinta con los colores que Coco nombra por voz (escucha); cualquier resultado se celebra | **Mezcla en la paleta**: solo hay primarios y blanco; los demás colores se consiguen mezclando en la paleta |
-| 4 · Islotes | **Dedo mágico**: cada trazo deja un arcoíris que suena | **Espejo mágico**: lo que pinta en un lado aparece al otro (mariposa, flor) | **Mandala arcoíris**: simetría de 6 ejes con patrones |
+| 4 · Islotes | **Dedo mágico**: cada trazo deja un arcoíris que suena | **Espejo mágico**: lo que pinta en un lado aparece al otro (flor, corona, cara de gatito, corazón con alas, moño) | **Mandala arcoíris**: simetría de 6 ejes con patrones |
 | 5 · Cima | **Decora el ala** (común a los tres, UI por perfil): pinta el ala de la nave recién ganada; el dibujo queda en el hangar | **Decora el ala** y además **viste a Coco** (juego de "vestir", gusto de Nicole): Coco usa ese traje en el mapa del planeta | **Decora el ala** con plantillas de brillos y su propia insignia de pony |
+
+> **Implementado 27-Sep-2026 (Dev, a pedido del PO: ~1 h de planeta por hermano; tema Chile y
+> banderas)**. Motor `lienzo_libre` (`escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn`,
+> ficha `docs/fichas/motor-lienzo-libre.md`) y 15 niveles
+> `datos/niveles/arcoiris/<zona>/pinta_<semilla|brote|estrella>.json`. Lo que se concretó:
+>
+> - **Varias hojas por estación** para que cada una dure ~4-5 min: cada lámina se muestra a Coco, se
+>   guarda como PNG en `user://dibujos/<hermano>/` y pasa a la siguiente. El pool se baraja al rejugar.
+> - **Z1**: libre (1 hoja). Maxi: 6 manchas gigantes + sellos dino y auto (los dinos "caminan" si
+>   estampa 3 seguidos). Nicole: 14 colores, pincel corazón (Coco le devuelve un corazón) y estrella,
+>   goma. Sofía: pincel fino y grueso, estrellas, purpurina (quieta 1 s = lluvia de destellos dorados).
+> - **Z2**: Maxi, 2 escenas para sellos (pradera con camino y valle de los dinos). Nicole, 3 láminas de
+>   un pool de 6 con **tarjeta modelo** (pony, jirafa, gatito, **bandera de Chile**, **Torres del
+>   Paine**, **Valparaíso**; siempre al menos una de Chile). Sofía, 3 mosaicos 18×12 de un pool de 16:
+>   banderas de Chile, Japón, Italia, Francia, Perú, Alemania, Colombia, Suecia, Argentina y Brasil, y
+>   **Morro de Arica, Torres del Paine, volcán Osorno, moái de Rapa Nui, La Moneda y Valparaíso**
+>   (siempre al menos uno de Chile). Al completar, Coco dice qué es y cuenta un dato curioso.
+> - **Z3**: Maxi pinta a Coco (su sprite se tiñe del color del cuerpo) y después a un amigo (dino o
+>   auto). Nicole: Coco pide 5 colores por voz en 2 láminas (jardín de Coco y castillo); tras 2 usos de
+>   otro color, la pista es una burbuja con la gota del color y su mancha salta, nunca un "no". Sofía:
+>   rojo, amarillo, azul y blanco + platito de mezcla (modelo RYB); Coco pide 5 mezclas (verde, naranja,
+>   morado, rosado, celeste, café, lila) mientras colorea el volcán Osorno, las Torres del Paine o
+>   Valparaíso.
+> - **Z4**: Maxi, 2 hojas de dedo mágico (noche y rosada) con campanitas pentatónicas según la altura.
+>   Nicole, 2 espejos con guía tenue. **Se cambió la mariposa por flor, corona, cara de gatito, corazón
+>   con alas y moño**: la mariposa es un insecto y la ficha de Nicole prohíbe bichos. Sofía, 2 mandalas
+>   (flor, estrella, copo) con 12 copias por trazo.
+> - **Z5**: el ala (con la nave en la tarjeta modelo) queda también en `user://dibujos/<hermano>/ala_nave.png`
+>   para el hangar. Nicole además viste a Coco (princesa, estrella del pop, superheroína) y queda
+>   `traje_coco.png` + `traje_coco.json`. **Pendiente**: que el hangar y el mapa del planeta lean esos
+>   archivos (núcleo, fuera de este motor).
+> - **Paleta Brote/Estrella**: 14 colores (los 12 de la ficha base + gris y verde oscuro, para rocas,
+>   volcanes y bosques de Chile).
 
 ### 3.5 Resumen de la escalera por hermano
 
@@ -233,7 +341,7 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 > - Abrir la zona siguiente (y revelar la secreta) pide **todas las estaciones jugables** de la
 >   zona anterior (PO 27-Sep-2026; antes pedía min(2, estaciones jugables)). Estaciones sin nivel se
 >   ven "pintándose" (sin candado) y Coco lo explica al tocarlas.
-> - Parejas de Coco: Maxi (zona 2) y Nicole (zona 3) usan los niveles de la demo; Sofía tiene sus 5
+> - Parejas de Coco: Maxi y Nicole tienen sus 5 zonas con rondas (PO 27-Sep-2026, ver §3.3); Sofía tiene sus 5
 >   zonas (dificultad v3). Una estación puede traer `niveles_dorados` por hermano: el mapa muestra
 >   un botón dorado de 96 px en la tarjeta cuando esa estación tiene 3 estrellitas, y Coco lo anuncia
 >   (`voces.dorado_disponible`). Completar el reto dorado no cuenta para abrir zonas.
@@ -253,7 +361,7 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 - **Campos nuevos que piden estas variantes** (a formalizar en las fichas de motor):
   - `clasificar`: `guia_receta`, `gota_distractora`, `charcos_moviles`, `nombrar_color_por_voz`, `reloj_estrellitas`.
   - `encajar`: `rotacion_por_toque`, `enderezar_al_acercar`, `piezas_distractoras`, `tamanos`, `modo: escena|tangram`.
-  - `emparejar`: `modo: correspondencia` (ya previsto), `cartas_bailan`, `intercambio_tras_par`.
+  - `emparejar` (implementados): `rondas` con `pool`/`cantidad`/`fijo`, `modo: correspondencia`, `cartas_bailan`, `intercambios_tras_acierto`, `voz` por pareja, `escala`, `estilo: letra` y `voz_toque` por elemento.
   - `lienzo_libre`: `encargo` (`sellos_escena`, `colorear_zonas`, `colorear_codigo`, `coco_pide`, `mezcla_paleta`, `espejo`, `mandala`, `decora_ala`, `viste_a_coco`).
 - **Progreso**: se guarda por hermano → planeta → estación: completada, mejores estrellitas y veces
   jugada. El estado de las zonas se deriva del mapa del planeta; no se guarda aparte.

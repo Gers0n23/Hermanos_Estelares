@@ -9,7 +9,14 @@ extends SceneTree
 ## "no", toque que lleva a casa; Brote con objetivo guiado y enderezado; Estrella con giro por toque
 ## y distractoras), la derrota-gag con reintento y que al completar llegue `completado(destellos)`.
 ##
-## Uso: godot --headless --path . --script herramientas/qa_test_encajar.gd [-- <filtro>]
+## Rondas (PO 27-Sep-2026): cada nivel es una serie de rondas sorteadas de un pool. Por nivel se juega
+## (1) la PARTIDA COMPLETA, ronda a ronda: cuantas rondas, figura fija primero, grupos de Sofia, curva
+## de dificultad, medallas, mini-fiesta entre rondas, avance guardado y RETOMADO a mitad de la serie, y
+## `completado` solo al final; y (2) CADA FIGURA DEL POOL por separado (nivel temporal de una ronda) con
+## todas las verificaciones de arriba. Las banderas piden cada franja en su color (`exigir_color`).
+## Respalda y restaura `user://progreso.json`.
+##
+## Uso: godot --headless --path . --script herramientas/qa_test_encajar.gd [-- <filtro> [<filtro figura>]]
 
 const MOTOR := "res://escenas/minijuegos/encajar/motor_encajar.tscn"
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
@@ -21,22 +28,173 @@ const HERMANOS := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
 ## almenas); herramientas/figuras_formas.py usa estos mismos minimos al disenarlas.
 const LADO_MINIMO := {"semilla": 96.0, "brote": 52.0, "estrella": 22.0}
 
+const PLANETA_QA := "qa_encajar"
+const CARPETA_TEMPORAL := "user://qa_encajar"
+const GUARDADO := "user://progreso.json"
+const RONDAS_ESPERADAS := {"semilla": 4, "brote": 3, "estrella": 2}
+
 var _fallos := 0
+var _figuras_probadas := 0
 
 
 func _initialize() -> void:
-	print("=== QA encajar: Formas traviesas, 5 zonas x rutas de Maxi, Nicole y Sofia ===")
-	var filtro := ""
-	if OS.get_cmdline_user_args().size() > 0:
-		filtro = OS.get_cmdline_user_args()[0]
+	print("=== QA encajar: Formas traviesas, 5 zonas x rutas de Maxi, Nicole y Sofia, con rondas ===")
+	var args := OS.get_cmdline_user_args()
+	var filtro: String = args[0] if args.size() > 0 else ""
+	var filtro_figura: String = args[1] if args.size() > 1 else ""
+	var respaldo = FileAccess.get_file_as_string(GUARDADO) if FileAccess.file_exists(GUARDADO) else null
+	DirAccess.make_dir_recursive_absolute(CARPETA_TEMPORAL)
 	for zona in ZONAS:
 		for perfil in HERMANOS:
 			var ruta := "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
 			if filtro != "" and not ruta.contains(filtro):
 				continue
-			await _probar_nivel(ruta, HERMANOS[perfil])
+			var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ruta))
+			if filtro_figura == "":
+				await _probar_rondas(ruta, nivel, HERMANOS[perfil])
+			for figura: Dictionary in nivel.get("figuras", []):
+				if filtro_figura != "" and not str(figura["id"]).contains(filtro_figura):
+					continue
+				var solo := nivel.duplicate(true)
+				solo["figuras"] = [figura]
+				solo["rondas"] = 1
+				var temporal := CARPETA_TEMPORAL.path_join("%s_%s_%s.json" % [zona, perfil, figura["id"]])
+				var archivo := FileAccess.open(temporal, FileAccess.WRITE)
+				archivo.store_string(JSON.stringify(solo))
+				archivo.close()
+				await _probar_nivel(temporal, HERMANOS[perfil], "%s/%s -> %s" % [zona, perfil, figura["id"]])
+				_figuras_probadas += 1
+	if respaldo != null:
+		var archivo := FileAccess.open(GUARDADO, FileAccess.WRITE)
+		archivo.store_string(respaldo)
+		archivo.close()
+	print("=== %d figuras del pool probadas una por una ===" % _figuras_probadas)
 	print("=== RESULTADO: %s (%d fallos) ===" % ["OK" if _fallos == 0 else "FALLA", _fallos])
 	quit(0 if _fallos == 0 else 1)
+
+
+func _nuevo_motor(ruta: String, hermano: String, con_progreso: bool) -> Node:
+	var motor: Node = load(MOTOR).instantiate()
+	motor.ruta_nivel = ruta
+	motor.id_perfil = hermano
+	motor.segundos_auto_continuar = 0.4
+	if con_progreso:
+		motor.planeta_id = PLANETA_QA
+	get_root().add_child(motor)
+	return motor
+
+
+## Encaja todas las piezas de la ronda en curso, como lo haria un nino (con giros si el nivel deja).
+func _completar_ronda(motor: Node) -> bool:
+	var avanzo := true
+	var todo_encajo := true
+	while avanzo and motor._encajados < motor._requeridos and not motor._terminado:
+		avanzo = false
+		for pieza: PiezaEncajar in motor._piezas.duplicate():
+			if not is_instance_valid(pieza) or pieza.colocada or motor._encajados >= motor._requeridos:
+				continue
+			var hueco = _hueco_libre_para(motor, pieza)
+			if hueco == null:
+				continue
+			if motor._rotacion_por_toque:
+				for k in 8:
+					if Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
+						break
+					pieza.tocada.emit(pieza)
+			var r: String = motor.soltar_pieza(pieza, hueco["centro"])
+			if r != "encajo":
+				todo_encajo = false
+				print("        %s en %s -> %s" % [pieza.id, hueco["id"], r])
+				continue
+			avanzo = true
+			await _esperar(0.02)
+	return todo_encajo and motor._encajados >= motor._requeridos
+
+
+func _esperar_ronda(motor: Node, indice: int, resultado: Dictionary) -> bool:
+	var t0 := Time.get_ticks_msec()
+	while motor._indice_prueba < indice and resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 20000:
+		await process_frame
+	await _esperar(0.3)
+	return motor._indice_prueba >= indice
+
+
+## Partida completa del nivel real: todas sus rondas, la mini-fiesta entre ellas, el avance guardado y
+## retomado a mitad de la serie, y `completado` solo al final.
+func _probar_rondas(ruta: String, nivel: Dictionary, hermano: String) -> void:
+	print("-- %s (%s) PARTIDA CON RONDAS --" % [ruta.trim_prefix("res://datos/niveles/arcoiris/"), hermano])
+	var perfil: String = nivel.get("perfil", "")
+	var progreso := get_root().get_node("Progreso")
+	var id_nivel := str(nivel.get("id_nivel", ""))
+	progreso.borrar_estado_parcial(hermano, PLANETA_QA, id_nivel)
+	var pedido = nivel.get("rondas", null)
+	_check(pedido != null, "el nivel declara rondas (%s)" % str(pedido))
+	if pedido == null:
+		return
+	var esperadas: int = pedido.size() if pedido is Array else int(pedido)
+	_check(esperadas == RONDAS_ESPERADAS[perfil], "%d rondas por estacion para %s" % [esperadas, hermano])
+	var pool: Array = nivel["figuras"]
+	_check(pool.size() > esperadas, "pool de %d figuras (mas que las rondas: rejugar cambia)" % pool.size())
+	var motor := _nuevo_motor(ruta, hermano, true)
+	var resultado := {"destellos": -1}
+	motor.completado.connect(func(d: int) -> void: resultado["destellos"] = d)
+	await _esperar(0.9)
+	var ids: Array = motor._rondas.map(func(r: Dictionary) -> String: return r["id"])
+	_check(motor._modo_rondas and ids.size() == esperadas, "partida de %d rondas: %s" % [ids.size(), ", ".join(ids)])
+	var unicos := {}
+	for id in ids:
+		unicos[id] = true
+	_check(unicos.size() == ids.size(), "sin figuras repetidas en la partida")
+	var por_id := {}
+	for figura: Dictionary in pool:
+		por_id[figura["id"]] = figura
+	var fija := pool.filter(func(f: Dictionary) -> bool: return bool(f.get("fija", false)))
+	if not fija.is_empty() and not (pedido is Array):
+		_check(ids[0] == fija[0]["id"], "la figura fija (%s) va primera" % fija[0]["id"])
+	if pedido is Array:
+		var grupos_ok := true
+		for i in ids.size():
+			grupos_ok = grupos_ok and str(por_id[ids[i]].get("grupo", "")) == str(pedido[i])
+		_check(grupos_ok, "una ronda por grupo, en orden: %s" % str(pedido))
+	else:
+		var curva_ok := true
+		var desde: int = 1 if not fija.is_empty() else 0
+		for i in range(desde + 1, ids.size()):
+			curva_ok = curva_ok and int(por_id[ids[i]]["dificultad"]) >= int(por_id[ids[i - 1]]["dificultad"])
+		_check(curva_ok, "las rondas suben suave (dificultad no baja)")
+	_check(motor._medallas != null and motor._medallas.visible, "medallas de rondas visibles (sin numeros)")
+
+	# Ronda 1 y el avance guardado.
+	var ok: bool = await _completar_ronda(motor)
+	_check(ok, "ronda 1 (%s) completa" % ids[0])
+	_check(await _esperar_ronda(motor, 1, resultado), "tras la mini-fiesta entra la ronda 2 (%s)" % ids[1])
+	_check(resultado["destellos"] < 0, "completado NO llega entre rondas")
+	var estado: Dictionary = progreso.obtener_estado_parcial(hermano, PLANETA_QA, id_nivel)
+	_check(int(estado.get("indice", -1)) == 1 and estado.get("rondas", []) == ids, "avance guardado en la ronda 2 con las mismas figuras")
+	var destellos_ronda_1: int = motor._destellos_pruebas
+	motor.queue_free()
+	await _esperar(0.3)
+
+	# El nino vuelve: retoma en la ronda 2, con las mismas figuras y los destellos ganados.
+	motor = _nuevo_motor(ruta, hermano, true)
+	motor.completado.connect(func(d: int) -> void: resultado["destellos"] = d)
+	await _esperar(0.9)
+	var ids2: Array = motor._rondas.map(func(r: Dictionary) -> String: return r["id"])
+	_check(motor._indice_prueba == 1 and ids2 == ids and motor._destellos_pruebas == destellos_ronda_1,
+		"al volver retoma la ronda 2 con las mismas figuras y %d destellos" % destellos_ronda_1)
+	_check(motor._rondas[0]["hecha"] and not motor._rondas[1]["hecha"], "la medalla de la ronda 1 sigue llena")
+	for i in range(1, ids.size()):
+		ok = await _completar_ronda(motor)
+		_check(ok, "ronda %d (%s) completa" % [i + 1, ids[i]])
+		if i + 1 < ids.size():
+			_check(await _esperar_ronda(motor, i + 1, resultado), "entra la ronda %d" % [i + 2])
+	var t0 := Time.get_ticks_msec()
+	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 20000:
+		await process_frame
+	_check(resultado["destellos"] > destellos_ronda_1, "completado(destellos=%d) solo al final de las %d rondas" % [resultado["destellos"], ids.size()])
+	_check(progreso.obtener_estado_parcial(hermano, PLANETA_QA, id_nivel).is_empty(), "al ganar se borra el avance a medio jugar")
+	motor.queue_free()
+	await _esperar(0.2)
 
 
 func _check(condicion: bool, mensaje: String) -> void:
@@ -53,8 +211,8 @@ func _esperar(segundos: float) -> void:
 		await process_frame
 
 
-func _probar_nivel(ruta: String, hermano: String) -> void:
-	print("-- %s (%s) --" % [ruta.trim_prefix("res://datos/niveles/arcoiris/"), hermano])
+func _probar_nivel(ruta: String, hermano: String, etiqueta := "") -> void:
+	print("-- %s (%s) --" % [etiqueta if etiqueta != "" else ruta.trim_prefix("res://datos/niveles/arcoiris/"), hermano])
 	_check(FileAccess.file_exists(ruta), "existe el nivel")
 	var motor: Node = load(MOTOR).instantiate()
 	if not motor is MinijuegoBase:
@@ -85,7 +243,9 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 	_probar_distribucion(motor, piezas, huecos, perfil)
 	_probar_voces(nivel, huecos)
 	_check(_toda_pieza_tiene_lugar(motor, piezas, huecos), "cada pieza de la bandeja tiene un hueco libre donde calza")
-	if bool(nivel.get("bandeja_escala_real", false)):
+	if motor._exigir_color:
+		await _probar_color(motor, piezas, huecos)
+	if motor._escala_real:
 		_probar_escala_real(motor, piezas, huecos)
 
 	match perfil:
@@ -297,7 +457,33 @@ func _probar_escala_real(motor: Node, piezas: Array, huecos: Array) -> void:
 	_check(ok, "bandeja a escala real: cada pieza mide lo mismo que su silueta")
 
 
+## Banderas: una franja del mismo tamano pero de otro color no entra (Maxi: rebota y su casita brilla).
+func _probar_color(motor: Node, piezas: Array, huecos: Array) -> void:
+	for pieza: PiezaEncajar in piezas:
+		if pieza.colocada:
+			continue
+		for hueco in huecos:
+			if hueco["pieza"] != null or pieza.color.is_equal_approx(hueco["color"]):
+				continue
+			if not Geo.calzan(pieza.poligono(hueco["rotacion"]), hueco["forma_centrada"]):
+				continue
+			var otro_color := true
+			for c in motor._candidatos(hueco["centro"]):
+				otro_color = otro_color and not (pieza.color.is_equal_approx(c["color"]) and Geo.calzan(pieza.poligono(c["rotacion"]), c["forma_centrada"]))
+			if not otro_color:
+				continue
+			var antes: int = motor._intentos_usados
+			pieza.girar_a(hueco["rotacion"], 0.0)
+			var r: String = motor.soltar_pieza(pieza, hueco["centro"])
+			_check(r in ["rebote", "no_es_este"] and not pieza.colocada, "bandera: franja de otro color no entra (%s)" % r)
+			motor._intentos_usados = antes
+			await _esperar(0.5)
+			return
+
+
 func _calza_con_giros(motor: Node, pieza: PiezaEncajar, hueco: Dictionary) -> bool:
+	if motor._exigir_color and not pieza.color.is_equal_approx(hueco["color"]):
+		return false
 	if motor._enderezar:
 		return Geo.calzan(pieza.poligono(hueco["rotacion"]), hueco["forma_centrada"])
 	if motor._rotacion_por_toque:
@@ -397,6 +583,13 @@ func _probar_voces(nivel: Dictionary, huecos: Array) -> void:
 	for figura in nivel.get("figuras", []):
 		if figura.has("voz_completa"):
 			rutas.append(figura["voz_completa"])
+		var config: Dictionary = figura.get("config", {})
+		for clave in config.get("lineas_voz", {}):
+			var valor = config["lineas_voz"][clave]
+			rutas.append_array(valor if valor is Array else [valor])
+		for sub in config.get("figuras", []):
+			if sub.has("voz_completa"):
+				rutas.append(sub["voz_completa"])
 	var prefijo := str(nivel.get("lineas_voz", {}).get("objetivo_prefijo", ""))
 	if prefijo != "":
 		for hueco in huecos:

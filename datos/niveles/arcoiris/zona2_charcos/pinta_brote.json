@@ -1,0 +1,3053 @@
+{
+  "id_nivel": "arcoiris_z2_pinta_brote",
+  "motor": "lienzo_libre",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "colorear_zonas",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "naranja",
+    "amarillo",
+    "verde",
+    "azul",
+    "violeta",
+    "rosa",
+    "turquesa",
+    "celeste",
+    "blanco",
+    "cafe",
+    "negro",
+    "gris",
+    "verde_oscuro"
+  ],
+  "herramientas": [
+    "balde",
+    "pincel",
+    "pincel_corazon",
+    "pincel_estrella"
+  ],
+  "herramienta_inicial": "balde",
+  "modelo": true,
+  "laminas": [
+    {
+      "id": "pony",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            730,
+            85
+          ],
+          "radio": 46,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "nube",
+          "forma": "poligono",
+          "puntos": [
+            [
+              258.0,
+              95.0
+            ],
+            [
+              257.0,
+              99.7
+            ],
+            [
+              254.2,
+              104.3
+            ],
+            [
+              249.5,
+              108.6
+            ],
+            [
+              243.1,
+              112.6
+            ],
+            [
+              235.2,
+              116.2
+            ],
+            [
+              225.8,
+              119.3
+            ],
+            [
+              215.4,
+              121.7
+            ],
+            [
+              204.1,
+              123.5
+            ],
+            [
+              192.2,
+              124.6
+            ],
+            [
+              180.0,
+              125.0
+            ],
+            [
+              167.8,
+              124.6
+            ],
+            [
+              155.9,
+              123.5
+            ],
+            [
+              144.6,
+              121.7
+            ],
+            [
+              134.2,
+              119.3
+            ],
+            [
+              124.8,
+              116.2
+            ],
+            [
+              116.9,
+              112.6
+            ],
+            [
+              110.5,
+              108.6
+            ],
+            [
+              105.8,
+              104.3
+            ],
+            [
+              103.0,
+              99.7
+            ],
+            [
+              102.0,
+              95.0
+            ],
+            [
+              93.7,
+              87.1
+            ],
+            [
+              102.4,
+              80.5
+            ],
+            [
+              110.5,
+              74.6
+            ],
+            [
+              116.9,
+              68.5
+            ],
+            [
+              124.8,
+              63.2
+            ],
+            [
+              134.2,
+              58.6
+            ],
+            [
+              144.6,
+              54.9
+            ],
+            [
+              155.9,
+              52.2
+            ],
+            [
+              167.8,
+              50.6
+            ],
+            [
+              180.0,
+              47.1
+            ],
+            [
+              193.8,
+              44.6
+            ],
+            [
+              208.3,
+              44.8
+            ],
+            [
+              221.6,
+              47.9
+            ],
+            [
+              232.2,
+              53.5
+            ],
+            [
+              239.2,
+              60.9
+            ],
+            [
+              243.1,
+              68.5
+            ],
+            [
+              249.5,
+              74.6
+            ],
+            [
+              254.2,
+              81.1
+            ],
+            [
+              257.0,
+              88.0
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "pasto",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              410
+            ],
+            [
+              160,
+              392
+            ],
+            [
+              330,
+              405
+            ],
+            [
+              520,
+              388
+            ],
+            [
+              700,
+              400
+            ],
+            [
+              824,
+              392
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "sugerido": "#4CBF56",
+          "suave": 2
+        },
+        {
+          "id": "cola",
+          "forma": "poligono",
+          "puntos": [
+            [
+              262,
+              238
+            ],
+            [
+              222,
+              226
+            ],
+            [
+              180,
+              250
+            ],
+            [
+              160,
+              300
+            ],
+            [
+              172,
+              352
+            ],
+            [
+              205,
+              378
+            ],
+            [
+              214,
+              330
+            ],
+            [
+              236,
+              290
+            ],
+            [
+              262,
+              272
+            ]
+          ],
+          "sugerido": "#FF7EB6",
+          "suave": 2
+        },
+        {
+          "id": "pata_1",
+          "forma": "rect",
+          "rect": [
+            270,
+            320,
+            40,
+            120
+          ],
+          "redondeo": 18,
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "pata_2",
+          "forma": "rect",
+          "rect": [
+            318,
+            325,
+            40,
+            116
+          ],
+          "redondeo": 18,
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "pata_3",
+          "forma": "rect",
+          "rect": [
+            452,
+            325,
+            40,
+            116
+          ],
+          "redondeo": 18,
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "pata_4",
+          "forma": "rect",
+          "rect": [
+            500,
+            320,
+            40,
+            120
+          ],
+          "redondeo": 18,
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "cuerpo",
+          "forma": "elipse",
+          "centro": [
+            392,
+            300
+          ],
+          "radios": [
+            150,
+            72
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "cuello",
+          "forma": "poligono",
+          "puntos": [
+            [
+              470,
+              262
+            ],
+            [
+              515,
+              165
+            ],
+            [
+              575,
+              150
+            ],
+            [
+              592,
+              210
+            ],
+            [
+              548,
+              318
+            ]
+          ],
+          "sugerido": "#C7A6EC",
+          "suave": 1
+        },
+        {
+          "id": "cabeza",
+          "forma": "elipse",
+          "centro": [
+            615,
+            170
+          ],
+          "radios": [
+            72,
+            50
+          ],
+          "sugerido": "#C7A6EC",
+          "giro": 28
+        },
+        {
+          "id": "crin",
+          "forma": "poligono",
+          "puntos": [
+            [
+              592,
+              118
+            ],
+            [
+              548,
+              106
+            ],
+            [
+              505,
+              136
+            ],
+            [
+              473,
+              188
+            ],
+            [
+              452,
+              250
+            ],
+            [
+              490,
+              262
+            ],
+            [
+              512,
+              214
+            ],
+            [
+              542,
+              176
+            ],
+            [
+              585,
+              156
+            ]
+          ],
+          "sugerido": "#FF7EB6",
+          "suave": 2
+        },
+        {
+          "id": "oreja",
+          "forma": "poligono",
+          "puntos": [
+            [
+              582,
+              128
+            ],
+            [
+              596,
+              70
+            ],
+            [
+              624,
+              122
+            ]
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "hocico",
+          "forma": "elipse",
+          "centro": [
+            668,
+            204
+          ],
+          "radios": [
+            34,
+            27
+          ],
+          "sugerido": "#FFB3C7",
+          "giro": 28
+        },
+        {
+          "id": "estrella",
+          "forma": "estrella",
+          "centro": [
+            382,
+            296
+          ],
+          "radio": 34,
+          "sugerido": "#FFD23F"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            628,
+            160
+          ],
+          "radio": 12
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            646,
+            188
+          ],
+          "radio": 12
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            690,
+            206
+          ],
+          "radio": 4,
+          "color": "#2B3350"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              662,
+              224
+            ],
+            [
+              675,
+              230
+            ],
+            [
+              690,
+              226
+            ]
+          ],
+          "grosor": 3
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/pony.wav",
+      "etiquetas": [
+        "animales"
+      ]
+    },
+    {
+      "id": "jirafa",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            92,
+            80
+          ],
+          "radio": 42,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "nube",
+          "forma": "poligono",
+          "puntos": [
+            [
+              768.0,
+              90.0
+            ],
+            [
+              767.0,
+              94.7
+            ],
+            [
+              764.2,
+              99.3
+            ],
+            [
+              759.5,
+              103.6
+            ],
+            [
+              753.1,
+              107.6
+            ],
+            [
+              745.2,
+              111.2
+            ],
+            [
+              735.8,
+              114.3
+            ],
+            [
+              725.4,
+              116.7
+            ],
+            [
+              714.1,
+              118.5
+            ],
+            [
+              702.2,
+              119.6
+            ],
+            [
+              690.0,
+              120.0
+            ],
+            [
+              677.8,
+              119.6
+            ],
+            [
+              665.9,
+              118.5
+            ],
+            [
+              654.6,
+              116.7
+            ],
+            [
+              644.2,
+              114.3
+            ],
+            [
+              634.8,
+              111.2
+            ],
+            [
+              626.9,
+              107.6
+            ],
+            [
+              620.5,
+              103.6
+            ],
+            [
+              615.8,
+              99.3
+            ],
+            [
+              613.0,
+              94.7
+            ],
+            [
+              612.0,
+              90.0
+            ],
+            [
+              603.7,
+              82.1
+            ],
+            [
+              612.4,
+              75.5
+            ],
+            [
+              620.5,
+              69.6
+            ],
+            [
+              626.9,
+              63.5
+            ],
+            [
+              634.8,
+              58.2
+            ],
+            [
+              644.2,
+              53.6
+            ],
+            [
+              654.6,
+              49.9
+            ],
+            [
+              665.9,
+              47.2
+            ],
+            [
+              677.8,
+              45.6
+            ],
+            [
+              690.0,
+              42.1
+            ],
+            [
+              703.8,
+              39.6
+            ],
+            [
+              718.3,
+              39.8
+            ],
+            [
+              731.6,
+              42.9
+            ],
+            [
+              742.2,
+              48.5
+            ],
+            [
+              749.2,
+              55.9
+            ],
+            [
+              753.1,
+              63.5
+            ],
+            [
+              759.5,
+              69.6
+            ],
+            [
+              764.2,
+              76.1
+            ],
+            [
+              767.0,
+              83.0
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "pasto",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              430
+            ],
+            [
+              200,
+              415
+            ],
+            [
+              420,
+              428
+            ],
+            [
+              640,
+              412
+            ],
+            [
+              824,
+              425
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "sugerido": "#4CBF56",
+          "suave": 2
+        },
+        {
+          "id": "tronco",
+          "forma": "rect",
+          "rect": [
+            102,
+            250,
+            28,
+            190
+          ],
+          "redondeo": 10,
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "copa",
+          "forma": "elipse",
+          "centro": [
+            116,
+            232
+          ],
+          "radios": [
+            98,
+            42
+          ],
+          "sugerido": "#2E8B57"
+        },
+        {
+          "id": "cuernito_1",
+          "forma": "rect",
+          "rect": [
+            540,
+            44,
+            12,
+            40
+          ],
+          "redondeo": 6,
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "cuernito_2",
+          "forma": "rect",
+          "rect": [
+            564,
+            38,
+            12,
+            42
+          ],
+          "redondeo": 6,
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "pata_1",
+          "forma": "rect",
+          "rect": [
+            262,
+            350,
+            34,
+            110
+          ],
+          "redondeo": 14,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "pata_2",
+          "forma": "rect",
+          "rect": [
+            306,
+            356,
+            34,
+            104
+          ],
+          "redondeo": 14,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "pata_3",
+          "forma": "rect",
+          "rect": [
+            398,
+            356,
+            34,
+            104
+          ],
+          "redondeo": 14,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "pata_4",
+          "forma": "rect",
+          "rect": [
+            442,
+            350,
+            34,
+            110
+          ],
+          "redondeo": 14,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "cuerpo",
+          "forma": "elipse",
+          "centro": [
+            352,
+            318
+          ],
+          "radios": [
+            132,
+            62
+          ],
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "cuello",
+          "forma": "poligono",
+          "puntos": [
+            [
+              418,
+              300
+            ],
+            [
+              505,
+              118
+            ],
+            [
+              556,
+              124
+            ],
+            [
+              480,
+              330
+            ]
+          ],
+          "sugerido": "#FFD23F",
+          "suave": 1
+        },
+        {
+          "id": "mancha_1",
+          "forma": "elipse",
+          "centro": [
+            300,
+            305
+          ],
+          "radios": [
+            26,
+            18
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "mancha_2",
+          "forma": "elipse",
+          "centro": [
+            362,
+            342
+          ],
+          "radios": [
+            24,
+            16
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "mancha_3",
+          "forma": "elipse",
+          "centro": [
+            405,
+            298
+          ],
+          "radios": [
+            20,
+            15
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "mancha_4",
+          "forma": "elipse",
+          "centro": [
+            256,
+            330
+          ],
+          "radios": [
+            16,
+            13
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "mancha_5",
+          "forma": "elipse",
+          "centro": [
+            470,
+            238
+          ],
+          "radios": [
+            14,
+            18
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "mancha_6",
+          "forma": "elipse",
+          "centro": [
+            496,
+            176
+          ],
+          "radios": [
+            12,
+            15
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "cabeza",
+          "forma": "elipse",
+          "centro": [
+            566,
+            108
+          ],
+          "radios": [
+            56,
+            36
+          ],
+          "sugerido": "#FFD23F",
+          "giro": 18
+        },
+        {
+          "id": "oreja",
+          "forma": "poligono",
+          "puntos": [
+            [
+              522,
+              92
+            ],
+            [
+              494,
+              76
+            ],
+            [
+              524,
+              106
+            ]
+          ],
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "hocico",
+          "forma": "elipse",
+          "centro": [
+            613,
+            126
+          ],
+          "radios": [
+            30,
+            23
+          ],
+          "sugerido": "#FF9A2E",
+          "giro": 18
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            575,
+            98
+          ],
+          "radio": 10
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            592,
+            118
+          ],
+          "radio": 10
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            630,
+            120
+          ],
+          "radio": 3.5,
+          "color": "#2B3350"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              222,
+              300
+            ],
+            [
+              205,
+              360
+            ]
+          ],
+          "grosor": 4
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            204,
+            366
+          ],
+          "radio": 9,
+          "color": "#9A6238"
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/jirafa.wav",
+      "etiquetas": [
+        "animales"
+      ]
+    },
+    {
+      "id": "gatito",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "pared",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            400
+          ],
+          "redondeo": 0,
+          "sugerido": "#FF7EB6"
+        },
+        {
+          "id": "piso",
+          "forma": "rect",
+          "rect": [
+            0,
+            400,
+            824,
+            130
+          ],
+          "redondeo": 0,
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "ventana",
+          "forma": "rect",
+          "rect": [
+            580,
+            50,
+            170,
+            140
+          ],
+          "redondeo": 14,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "cojin",
+          "forma": "elipse",
+          "centro": [
+            412,
+            448
+          ],
+          "radios": [
+            196,
+            46
+          ],
+          "sugerido": "#9357D6"
+        },
+        {
+          "id": "cola",
+          "forma": "poligono",
+          "puntos": [
+            [
+              500,
+              420
+            ],
+            [
+              585,
+              410
+            ],
+            [
+              628,
+              360
+            ],
+            [
+              612,
+              298
+            ],
+            [
+              586,
+              308
+            ],
+            [
+              597,
+              355
+            ],
+            [
+              562,
+              385
+            ],
+            [
+              505,
+              390
+            ]
+          ],
+          "sugerido": "#FF9A2E",
+          "suave": 2
+        },
+        {
+          "id": "cuerpo",
+          "forma": "elipse",
+          "centro": [
+            412,
+            360
+          ],
+          "radios": [
+            105,
+            95
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "panza",
+          "forma": "elipse",
+          "centro": [
+            412,
+            388
+          ],
+          "radios": [
+            58,
+            60
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "patita_1",
+          "forma": "elipse",
+          "centro": [
+            372,
+            445
+          ],
+          "radios": [
+            34,
+            22
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "patita_2",
+          "forma": "elipse",
+          "centro": [
+            452,
+            445
+          ],
+          "radios": [
+            34,
+            22
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "oreja_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              326,
+              158
+            ],
+            [
+              334,
+              66
+            ],
+            [
+              398,
+              120
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "oreja_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              498,
+              158
+            ],
+            [
+              490,
+              66
+            ],
+            [
+              426,
+              120
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "cabeza",
+          "forma": "elipse",
+          "centro": [
+            412,
+            192
+          ],
+          "radios": [
+            110,
+            88
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "hocico",
+          "forma": "elipse",
+          "centro": [
+            412,
+            226
+          ],
+          "radios": [
+            40,
+            26
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "lazo_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              412,
+              280
+            ],
+            [
+              370,
+              258
+            ],
+            [
+              370,
+              302
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "lazo_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              412,
+              280
+            ],
+            [
+              454,
+              258
+            ],
+            [
+              454,
+              302
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "ovillo",
+          "forma": "circulo",
+          "centro": [
+            660,
+            440
+          ],
+          "radio": 46,
+          "sugerido": "#2EC4B6"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            372,
+            182
+          ],
+          "radio": 16
+        },
+        {
+          "tipo": "ojo",
+          "centro": [
+            452,
+            182
+          ],
+          "radio": 16
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            350,
+            214
+          ],
+          "radio": 14
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            474,
+            214
+          ],
+          "radio": 14
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            412,
+            212
+          ],
+          "radio": 7,
+          "color": "#FF7EB6"
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            412,
+            222
+          ],
+          "radio": 12
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              380,
+              222
+            ],
+            [
+              318,
+              212
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              380,
+              232
+            ],
+            [
+              320,
+              240
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              444,
+              222
+            ],
+            [
+              506,
+              212
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              444,
+              232
+            ],
+            [
+              504,
+              240
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            412,
+            280
+          ],
+          "radio": 9,
+          "color": "#EE4035"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              665,
+              50
+            ],
+            [
+              665,
+              190
+            ]
+          ],
+          "grosor": 4
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              580,
+              120
+            ],
+            [
+              750,
+              120
+            ]
+          ],
+          "grosor": 4
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              622,
+              420
+            ],
+            [
+              690,
+              470
+            ]
+          ],
+          "grosor": 3
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              630,
+              460
+            ],
+            [
+              700,
+              425
+            ]
+          ],
+          "grosor": 3
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/gatito.wav",
+      "etiquetas": [
+        "animales"
+      ]
+    },
+    {
+      "id": "bandera_chile",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "nube",
+          "forma": "poligono",
+          "puntos": [
+            [
+              752.4,
+              80.0
+            ],
+            [
+              751.6,
+              83.8
+            ],
+            [
+              749.3,
+              87.4
+            ],
+            [
+              745.6,
+              90.9
+            ],
+            [
+              740.5,
+              94.1
+            ],
+            [
+              734.1,
+              97.0
+            ],
+            [
+              726.7,
+              99.4
+            ],
+            [
+              718.3,
+              101.4
+            ],
+            [
+              709.3,
+              102.8
+            ],
+            [
+              699.8,
+              103.7
+            ],
+            [
+              690.0,
+              104.0
+            ],
+            [
+              680.2,
+              103.7
+            ],
+            [
+              670.7,
+              102.8
+            ],
+            [
+              661.7,
+              101.4
+            ],
+            [
+              653.3,
+              99.4
+            ],
+            [
+              645.9,
+              97.0
+            ],
+            [
+              639.5,
+              94.1
+            ],
+            [
+              634.4,
+              90.9
+            ],
+            [
+              630.7,
+              87.4
+            ],
+            [
+              628.4,
+              83.8
+            ],
+            [
+              627.6,
+              80.0
+            ],
+            [
+              621.0,
+              73.7
+            ],
+            [
+              627.9,
+              68.4
+            ],
+            [
+              634.4,
+              63.7
+            ],
+            [
+              639.5,
+              58.8
+            ],
+            [
+              645.9,
+              54.5
+            ],
+            [
+              653.3,
+              50.9
+            ],
+            [
+              661.7,
+              47.9
+            ],
+            [
+              670.7,
+              45.8
+            ],
+            [
+              680.2,
+              44.4
+            ],
+            [
+              690.0,
+              41.7
+            ],
+            [
+              701.1,
+              39.7
+            ],
+            [
+              712.6,
+              39.8
+            ],
+            [
+              723.3,
+              42.3
+            ],
+            [
+              731.8,
+              46.8
+            ],
+            [
+              737.3,
+              52.7
+            ],
+            [
+              740.5,
+              58.8
+            ],
+            [
+              745.6,
+              63.7
+            ],
+            [
+              749.3,
+              68.9
+            ],
+            [
+              751.6,
+              74.4
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "cordillera",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              480
+            ],
+            [
+              120,
+              430
+            ],
+            [
+              230,
+              470
+            ],
+            [
+              360,
+              418
+            ],
+            [
+              480,
+              468
+            ],
+            [
+              620,
+              424
+            ],
+            [
+              740,
+              466
+            ],
+            [
+              824,
+              440
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "asta",
+          "forma": "rect",
+          "rect": [
+            94,
+            40,
+            16,
+            480
+          ],
+          "redondeo": 6,
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "perilla",
+          "forma": "circulo",
+          "centro": [
+            102,
+            36
+          ],
+          "radio": 14,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "azul",
+          "forma": "rect",
+          "rect": [
+            112,
+            60,
+            200,
+            200
+          ],
+          "redondeo": 0,
+          "sugerido": "#0039A6"
+        },
+        {
+          "id": "blanco",
+          "forma": "rect",
+          "rect": [
+            312,
+            60,
+            400,
+            200
+          ],
+          "redondeo": 0,
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "rojo",
+          "forma": "rect",
+          "rect": [
+            112,
+            260,
+            600,
+            200
+          ],
+          "redondeo": 0,
+          "sugerido": "#D52B1E"
+        },
+        {
+          "id": "estrella",
+          "forma": "estrella",
+          "centro": [
+            212,
+            164
+          ],
+          "radio": 70,
+          "sugerido": "#FFFFFF"
+        }
+      ],
+      "detalles": [],
+      "voz": "voces/arcoiris/pinta/laminas/bandera_chile.wav",
+      "etiquetas": [
+        "chile",
+        "bandera"
+      ]
+    },
+    {
+      "id": "torres_paine",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            96,
+            78
+          ],
+          "radio": 40,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "nube",
+          "forma": "poligono",
+          "puntos": [
+            [
+              746.0,
+              82.0
+            ],
+            [
+              745.0,
+              86.7
+            ],
+            [
+              742.2,
+              91.3
+            ],
+            [
+              737.5,
+              95.6
+            ],
+            [
+              731.1,
+              99.6
+            ],
+            [
+              723.2,
+              103.2
+            ],
+            [
+              713.8,
+              106.3
+            ],
+            [
+              703.4,
+              108.7
+            ],
+            [
+              692.1,
+              110.5
+            ],
+            [
+              680.2,
+              111.6
+            ],
+            [
+              668.0,
+              112.0
+            ],
+            [
+              655.8,
+              111.6
+            ],
+            [
+              643.9,
+              110.5
+            ],
+            [
+              632.6,
+              108.7
+            ],
+            [
+              622.2,
+              106.3
+            ],
+            [
+              612.8,
+              103.2
+            ],
+            [
+              604.9,
+              99.6
+            ],
+            [
+              598.5,
+              95.6
+            ],
+            [
+              593.8,
+              91.3
+            ],
+            [
+              591.0,
+              86.7
+            ],
+            [
+              590.0,
+              82.0
+            ],
+            [
+              581.7,
+              74.1
+            ],
+            [
+              590.4,
+              67.5
+            ],
+            [
+              598.5,
+              61.6
+            ],
+            [
+              604.9,
+              55.5
+            ],
+            [
+              612.8,
+              50.2
+            ],
+            [
+              622.2,
+              45.6
+            ],
+            [
+              632.6,
+              41.9
+            ],
+            [
+              643.9,
+              39.2
+            ],
+            [
+              655.8,
+              37.6
+            ],
+            [
+              668.0,
+              34.1
+            ],
+            [
+              681.8,
+              31.6
+            ],
+            [
+              696.3,
+              31.8
+            ],
+            [
+              709.6,
+              34.9
+            ],
+            [
+              720.2,
+              40.5
+            ],
+            [
+              727.2,
+              47.9
+            ],
+            [
+              731.1,
+              55.5
+            ],
+            [
+              737.5,
+              61.6
+            ],
+            [
+              742.2,
+              68.1
+            ],
+            [
+              745.0,
+              75.0
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "macizo",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              430
+            ],
+            [
+              90,
+              330
+            ],
+            [
+              170,
+              372
+            ],
+            [
+              250,
+              262
+            ],
+            [
+              560,
+              250
+            ],
+            [
+              650,
+              332
+            ],
+            [
+              740,
+              300
+            ],
+            [
+              824,
+              360
+            ],
+            [
+              824,
+              440
+            ],
+            [
+              0,
+              440
+            ]
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "torre_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              262,
+              430
+            ],
+            [
+              280,
+              190
+            ],
+            [
+              300,
+              150
+            ],
+            [
+              322,
+              186
+            ],
+            [
+              338,
+              430
+            ]
+          ],
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "torre_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              340,
+              430
+            ],
+            [
+              362,
+              140
+            ],
+            [
+              392,
+              100
+            ],
+            [
+              420,
+              138
+            ],
+            [
+              440,
+              430
+            ]
+          ],
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "torre_3",
+          "forma": "poligono",
+          "puntos": [
+            [
+              442,
+              430
+            ],
+            [
+              460,
+              176
+            ],
+            [
+              484,
+              146
+            ],
+            [
+              508,
+              182
+            ],
+            [
+              522,
+              430
+            ]
+          ],
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "nieve_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              284,
+              196
+            ],
+            [
+              300,
+              152
+            ],
+            [
+              320,
+              190
+            ],
+            [
+              302,
+              204
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "nieve_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              366,
+              146
+            ],
+            [
+              392,
+              102
+            ],
+            [
+              416,
+              142
+            ],
+            [
+              392,
+              158
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "nieve_3",
+          "forma": "poligono",
+          "puntos": [
+            [
+              464,
+              182
+            ],
+            [
+              484,
+              148
+            ],
+            [
+              504,
+              186
+            ],
+            [
+              484,
+              196
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "roca",
+          "forma": "poligono",
+          "puntos": [
+            [
+              130,
+              440
+            ],
+            [
+              230,
+              360
+            ],
+            [
+              300,
+              398
+            ],
+            [
+              400,
+              368
+            ],
+            [
+              500,
+              396
+            ],
+            [
+              590,
+              350
+            ],
+            [
+              700,
+              440
+            ]
+          ],
+          "sugerido": "#9A6238",
+          "suave": 1
+        },
+        {
+          "id": "lago",
+          "forma": "rect",
+          "rect": [
+            0,
+            432,
+            824,
+            56
+          ],
+          "redondeo": 0,
+          "sugerido": "#2EC4B6"
+        },
+        {
+          "id": "pampa",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              482
+            ],
+            [
+              200,
+              472
+            ],
+            [
+              420,
+              486
+            ],
+            [
+              620,
+              470
+            ],
+            [
+              824,
+              482
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "sugerido": "#FFD23F",
+          "suave": 2
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              60,
+              450
+            ],
+            [
+              140,
+              450
+            ]
+          ],
+          "grosor": 3,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              520,
+              462
+            ],
+            [
+              620,
+              462
+            ]
+          ],
+          "grosor": 3,
+          "color": "#FFFFFF"
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/torres_paine.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "valparaiso",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            90,
+            76
+          ],
+          "radio": 40,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "cerro",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              455
+            ],
+            [
+              0,
+              340
+            ],
+            [
+              160,
+              272
+            ],
+            [
+              360,
+              214
+            ],
+            [
+              560,
+              164
+            ],
+            [
+              720,
+              128
+            ],
+            [
+              824,
+              116
+            ],
+            [
+              824,
+              455
+            ]
+          ],
+          "sugerido": "#4CBF56",
+          "suave": 1
+        },
+        {
+          "id": "casa_1",
+          "forma": "rect",
+          "rect": [
+            250,
+            382,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "techo_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              242,
+              384
+            ],
+            [
+              296,
+              344
+            ],
+            [
+              350,
+              384
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "casa_2",
+          "forma": "rect",
+          "rect": [
+            360,
+            380,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#FF7EB6"
+        },
+        {
+          "id": "techo_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              352,
+              382
+            ],
+            [
+              406,
+              342
+            ],
+            [
+              460,
+              382
+            ]
+          ],
+          "sugerido": "#3470D8"
+        },
+        {
+          "id": "casa_3",
+          "forma": "rect",
+          "rect": [
+            470,
+            378,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "techo_3",
+          "forma": "poligono",
+          "puntos": [
+            [
+              462,
+              380
+            ],
+            [
+              516,
+              340
+            ],
+            [
+              570,
+              380
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "casa_4",
+          "forma": "rect",
+          "rect": [
+            580,
+            376,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#4CBF56"
+        },
+        {
+          "id": "techo_4",
+          "forma": "poligono",
+          "puntos": [
+            [
+              572,
+              378
+            ],
+            [
+              626,
+              338
+            ],
+            [
+              680,
+              378
+            ]
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "casa_5",
+          "forma": "rect",
+          "rect": [
+            690,
+            374,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "techo_5",
+          "forma": "poligono",
+          "puntos": [
+            [
+              682,
+              376
+            ],
+            [
+              736,
+              336
+            ],
+            [
+              790,
+              376
+            ]
+          ],
+          "sugerido": "#9357D6"
+        },
+        {
+          "id": "casa_6",
+          "forma": "rect",
+          "rect": [
+            410,
+            296,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#2EC4B6"
+        },
+        {
+          "id": "techo_6",
+          "forma": "poligono",
+          "puntos": [
+            [
+              402,
+              298
+            ],
+            [
+              456,
+              258
+            ],
+            [
+              510,
+              298
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "casa_7",
+          "forma": "rect",
+          "rect": [
+            520,
+            290,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#9357D6"
+        },
+        {
+          "id": "techo_7",
+          "forma": "poligono",
+          "puntos": [
+            [
+              512,
+              292
+            ],
+            [
+              566,
+              252
+            ],
+            [
+              620,
+              292
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "casa_8",
+          "forma": "rect",
+          "rect": [
+            630,
+            282,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "techo_8",
+          "forma": "poligono",
+          "puntos": [
+            [
+              622,
+              284
+            ],
+            [
+              676,
+              244
+            ],
+            [
+              730,
+              284
+            ]
+          ],
+          "sugerido": "#3470D8"
+        },
+        {
+          "id": "casa_9",
+          "forma": "rect",
+          "rect": [
+            560,
+            206,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "techo_9",
+          "forma": "poligono",
+          "puntos": [
+            [
+              552,
+              208
+            ],
+            [
+              606,
+              168
+            ],
+            [
+              660,
+              208
+            ]
+          ],
+          "sugerido": "#9A6238"
+        },
+        {
+          "id": "casa_10",
+          "forma": "rect",
+          "rect": [
+            670,
+            196,
+            92,
+            70
+          ],
+          "redondeo": 6,
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "techo_10",
+          "forma": "poligono",
+          "puntos": [
+            [
+              662,
+              198
+            ],
+            [
+              716,
+              158
+            ],
+            [
+              770,
+              198
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "carro",
+          "forma": "poligono",
+          "puntos": [
+            [
+              96,
+              372
+            ],
+            [
+              150,
+              372
+            ],
+            [
+              172,
+              330
+            ],
+            [
+              118,
+              330
+            ]
+          ],
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "mar",
+          "forma": "rect",
+          "rect": [
+            0,
+            455,
+            824,
+            75
+          ],
+          "redondeo": 0,
+          "sugerido": "#3470D8"
+        },
+        {
+          "id": "barco",
+          "forma": "poligono",
+          "puntos": [
+            [
+              560,
+              478
+            ],
+            [
+              720,
+              478
+            ],
+            [
+              700,
+              510
+            ],
+            [
+              580,
+              510
+            ]
+          ],
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "cabina_barco",
+          "forma": "rect",
+          "rect": [
+            610,
+            452,
+            60,
+            26
+          ],
+          "redondeo": 6,
+          "sugerido": "#FFFFFF"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              40,
+              455
+            ],
+            [
+              200,
+              250
+            ]
+          ],
+          "grosor": 5
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              70,
+              455
+            ],
+            [
+              230,
+              250
+            ]
+          ],
+          "grosor": 5
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            280,
+            412
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            314,
+            412
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            390,
+            410
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            424,
+            410
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            500,
+            408
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            534,
+            408
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            610,
+            406
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            644,
+            406
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            720,
+            404
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            754,
+            404
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            440,
+            326
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            474,
+            326
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            550,
+            320
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            584,
+            320
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            660,
+            312
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            694,
+            312
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            590,
+            236
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            624,
+            236
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            700,
+            226
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            734,
+            226
+          ],
+          "radio": 11,
+          "color": "#FFFFFF"
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/valparaiso.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    }
+  ],
+  "laminas_por_partida": 3,
+  "al_menos_una": "chile",
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/brote/mostrar_01.wav",
+      "voces/arcoiris/pinta/brote/mostrar_02.wav",
+      "voces/arcoiris/pinta/brote/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/brote/victoria_01.wav",
+      "voces/arcoiris/pinta/brote/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "uso_pincel_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "uso_sello_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "igualita": [
+      "voces/arcoiris/pinta/brote/igualita_01.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/brote/intro_zonas.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/brote/siguiente_01.wav",
+      "voces/arcoiris/pinta/brote/siguiente_02.wav"
+    ]
+  }
+}

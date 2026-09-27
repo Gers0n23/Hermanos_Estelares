@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
@@ -29,12 +29,20 @@
     "victoria_final": [
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
-    ]
+    ],
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/semilla/ronda_01.wav",
+      "voces/arcoiris/formas/semilla/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/semilla/intro_ronda.wav"
   },
+  "rondas": 4,
   "figuras": [
     {
       "id": "casita_sol",
       "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
+      "dificultad": 3,
+      "fija": true,
       "piezas": [
         {
           "forma": "triangulo",
@@ -60,6 +68,175 @@
           "cara": true,
           "x": 150.0,
           "y": -100.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_japon",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_japon.wav",
+      "dificultad": 3,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 292.5,
+          "alto": 390.0,
+          "color": "#FFFFFF",
+          "x": -146.25,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 292.5,
+          "alto": 390.0,
+          "color": "#FFFFFF",
+          "x": 146.25,
+          "y": 0.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 234.0,
+          "alto": 234.0,
+          "color": "#BC002D",
+          "capa": 1,
+          "x": 0.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_francia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_francia.wav",
+      "dificultad": 3,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#0055A4",
+          "x": -195.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#FFFFFF",
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#EF4135",
+          "x": 195.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "helado",
+      "voz_completa": "voces/arcoiris/formas/figuras/helado.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 181.8,
+          "alto": 232.3,
+          "color": "#E8A15A",
+          "rotacion": 180,
+          "x": 0.0,
+          "y": 166.65
+        },
+        {
+          "forma": "circulo",
+          "ancho": 191.9,
+          "alto": 191.9,
+          "color": "#F26CA8",
+          "cara": true,
+          "x": 0.0,
+          "y": -45.45
+        },
+        {
+          "forma": "circulo",
+          "ancho": 141.4,
+          "alto": 141.4,
+          "color": "#FFC2DC",
+          "x": 0.0,
+          "y": -212.1
+        }
+      ]
+    },
+    {
+      "id": "pez",
+      "voz_completa": "voces/arcoiris/formas/figuras/pez.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "ovalo",
+          "ancho": 319.8,
+          "alto": 196.8,
+          "color": "#FF9F4A",
+          "cara": true,
+          "x": 67.65,
+          "y": 59.04
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 172.2,
+          "alto": 135.3,
+          "color": "#FFCB3D",
+          "rotacion": 90,
+          "x": -159.9,
+          "y": 59.04
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 135.3,
+          "alto": 118.08,
+          "color": "#FFCB3D",
+          "x": 67.65,
+          "y": -98.4
+        }
+      ]
+    },
+    {
+      "id": "bandera_italia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_italia.wav",
+      "dificultad": 3,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#009246",
+          "x": -195.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#FFFFFF",
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#CE2B37",
+          "x": 195.0,
+          "y": 0.0
         }
       ]
     }

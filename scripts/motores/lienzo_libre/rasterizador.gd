@@ -96,7 +96,7 @@ static func trazar(imagen: Image, puntos: PackedVector2Array, grosor: float, col
 ## supermuestreo x3 para que salga suavizada. Cada parte: {"poligono": PackedVector2Array en
 ## coordenadas -1..1, "color": Color, "contorno": bool}. `tamano` en pixeles del lienzo.
 static func calcomania(partes: Array, tamano: int, grosor_contorno := 4.0) -> Image:
-	var escala := 3
+	var escala := 3 if tamano <= 90 else 2
 	var lado := tamano * escala
 	var imagen := Image.create(lado, lado, false, Image.FORMAT_RGBA8)
 	var radio := lado / 2.0 * 0.92

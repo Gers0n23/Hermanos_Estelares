@@ -1,0 +1,548 @@
+{
+  "id_nivel": "arcoiris_z2_pinta_estrella",
+  "motor": "lienzo_libre",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "colorear_codigo",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "herramientas": [],
+  "laminas": [
+    {
+      "id": "m_chile",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#0039A6",
+        "2": "#FFFFFF",
+        "3": "#D52B1E"
+      },
+      "celdas": [
+        "111111222222222222",
+        "112211222222222222",
+        "122221222222222222",
+        "112211222222222222",
+        "121121222222222222",
+        "111111222222222222",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_chile.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_chile.wav",
+      "etiquetas": [
+        "chile",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_japon",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#FFFFFF",
+        "2": "#BC002D"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111122221111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111122221111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_japon.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_japon.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_italia",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#009246",
+        "2": "#FFFFFF",
+        "3": "#CE2B37"
+      },
+      "celdas": [
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_italia.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_italia.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_francia",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#002395",
+        "2": "#FFFFFF",
+        "3": "#ED2939"
+      },
+      "celdas": [
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333",
+        "111111222222333333"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_francia.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_francia.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_peru",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#D91023",
+        "2": "#FFFFFF"
+      },
+      "celdas": [
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111",
+        "111111222222111111"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_peru.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_peru.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_alemania",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#1C1C1C",
+        "2": "#DD0000",
+        "3": "#FFCE00"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "222222222222222222",
+        "222222222222222222",
+        "222222222222222222",
+        "222222222222222222",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_alemania.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_alemania.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_colombia",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#FCD116",
+        "2": "#003893",
+        "3": "#CE1126"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "222222222222222222",
+        "222222222222222222",
+        "222222222222222222",
+        "333333333333333333",
+        "333333333333333333",
+        "333333333333333333"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_colombia.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_colombia.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_suecia",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#006AA7",
+        "2": "#FECC00"
+      },
+      "celdas": [
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111",
+        "222222222222222222",
+        "222222222222222222",
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111",
+        "111112211111111111"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_suecia.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_suecia.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_argentina",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#74ACDF",
+        "2": "#FFFFFF",
+        "3": "#F6B40E"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "222222222222222222",
+        "222222223322222222",
+        "222222223322222222",
+        "222222222222222222",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111",
+        "111111111111111111"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_argentina.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_argentina.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_brasil",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#009C3B",
+        "2": "#FFDF00",
+        "3": "#002776"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111112211111111",
+        "111111222222111111",
+        "111112222222211111",
+        "111222233332222111",
+        "112222233332222211",
+        "112222233332222211",
+        "111222233332222111",
+        "111112222222211111",
+        "111111222222111111",
+        "111111112211111111",
+        "111111111111111111"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_brasil.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_brasil.wav",
+      "etiquetas": [
+        "mundo",
+        "bandera"
+      ]
+    },
+    {
+      "id": "m_morro_arica",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#3470D8",
+        "3": "#A0663A",
+        "4": "#F2C57C",
+        "5": "#D52B1E",
+        "6": "#FFFFFF",
+        "7": "#0039A6"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111376611111",
+        "111111111355511111",
+        "111111111311111111",
+        "111111111311111111",
+        "111113333333333111",
+        "111133333333333311",
+        "111333333333333331",
+        "113333333333333333",
+        "223333333333333444",
+        "262333333333334444",
+        "222233333333344444"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_morro_arica.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_morro_arica.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "m_torres_paine",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#9AA0B0",
+        "3": "#FFFFFF",
+        "4": "#5B4F63",
+        "5": "#2EC4B6",
+        "6": "#E3C565"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111331111111",
+        "111111331221331111",
+        "111111221221221111",
+        "111111221221221111",
+        "111111221221221111",
+        "111134444444444311",
+        "113444444444444441",
+        "344444444444444444",
+        "555555555555555555",
+        "555555555555555555",
+        "666666666666666666"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_torres_paine.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_torres_paine.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "m_volcan_osorno",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#FFFFFF",
+        "3": "#5B6B8C",
+        "4": "#2E8B57",
+        "5": "#3470D8"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111112211111111",
+        "111111122221111111",
+        "111111222222111111",
+        "111112222222211111",
+        "111123232323321111",
+        "111333333333333111",
+        "113333333333333311",
+        "443333333333333344",
+        "444444444444444444",
+        "555555555555555555",
+        "555555555555555555"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_volcan_osorno.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_volcan_osorno.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "m_moai",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#8C7B6B",
+        "3": "#4E4038",
+        "4": "#4CBF56",
+        "5": "#3470D8",
+        "6": "#B5553A"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111166661111111",
+        "111111222222111111",
+        "111111333333111111",
+        "111112232232211111",
+        "111112222222211111",
+        "111112223322211111",
+        "111111223322111111",
+        "555555222222555555",
+        "555555233332555555",
+        "444442222222244444",
+        "444422222222224444"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_moai.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_moai.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "m_la_moneda",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#F1E4C8",
+        "3": "#3A4A6B",
+        "4": "#D52B1E",
+        "5": "#0039A6",
+        "6": "#FFFFFF",
+        "7": "#B8BCC8"
+      },
+      "celdas": [
+        "111111113561111111",
+        "111111113441111111",
+        "111111113111111111",
+        "111111222222211111",
+        "122222222222222221",
+        "123232322222323221",
+        "122222222222222221",
+        "123232323323232321",
+        "123232323323232321",
+        "122222222222222221",
+        "777777777777777777",
+        "777777777777777777"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_la_moneda.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_la_moneda.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    },
+    {
+      "id": "m_valparaiso",
+      "tipo": "mosaico",
+      "colores": {
+        "1": "#8ED3FF",
+        "2": "#3470D8",
+        "3": "#4CBF56",
+        "4": "#FFD23F",
+        "5": "#FF7EB6",
+        "6": "#2EC4B6",
+        "7": "#EE4035"
+      },
+      "celdas": [
+        "111111111111111111",
+        "111111111111111777",
+        "111111111111111444",
+        "111111111111777444",
+        "111111111111555333",
+        "111111111777555333",
+        "111111777666333333",
+        "111111444666333333",
+        "111777444333333333",
+        "333555333333333333",
+        "222222222222222222",
+        "222222222222222222"
+      ],
+      "lado_maximo": 44,
+      "voz": "voces/arcoiris/pinta/laminas/m_valparaiso.wav",
+      "voz_dato": "voces/arcoiris/pinta/datos/m_valparaiso.wav",
+      "etiquetas": [
+        "chile",
+        "lugar"
+      ]
+    }
+  ],
+  "laminas_por_partida": 3,
+  "al_menos_una": "chile",
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/estrella/mostrar_01.wav",
+      "voces/arcoiris/pinta/estrella/mostrar_02.wav",
+      "voces/arcoiris/pinta/estrella/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/estrella/victoria_01.wav",
+      "voces/arcoiris/pinta/estrella/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "uso_purpurina": "voces/arcoiris/pinta/estrella/uso_purpurina.wav",
+    "uso_purpurina_lluvia": "voces/arcoiris/pinta/estrella/uso_purpurina_lluvia.wav",
+    "uso_sello_pony": "voces/arcoiris/pinta/estrella/uso_pony.wav",
+    "uso_sello_luna": "voces/arcoiris/pinta/estrella/uso_luna.wav",
+    "uso_sello_destello": "voces/arcoiris/pinta/estrella/uso_destello.wav",
+    "intro": "voces/arcoiris/pinta/estrella/intro_codigo.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/estrella/siguiente_codigo_01.wav",
+      "voces/arcoiris/pinta/estrella/siguiente_codigo_02.wav"
+    ]
+  }
+}

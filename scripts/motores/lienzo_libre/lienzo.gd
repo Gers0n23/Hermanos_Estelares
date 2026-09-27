@@ -51,6 +51,7 @@ var rellenar_con_toque := false
 var colores_ciclo: Array = []
 
 var lamina: Dictionary = {}
+var _tocadas := {}
 var mosaico: Dictionary = {}
 var guia: Dictionary = {}
 
@@ -132,6 +133,7 @@ func limpiar() -> void:
 
 func poner_lamina(datos: Dictionary) -> void:
 	lamina = Laminas.preparar(datos)
+	_tocadas.clear()
 	_completa_avisada = false
 	queue_redraw()
 
@@ -435,6 +437,12 @@ func _rellenar(punto: Vector2) -> void:
 	var nuevo := color_actual
 	if (region["color"] as Color).is_equal_approx(nuevo):
 		if colores_ciclo.is_empty():
+			# Mismo color (p. ej. la estrella blanca de la bandera): cuenta como pintada igual.
+			if not _tocadas.has(indice):
+				_tocadas[indice] = true
+				region_rellenada.emit(indice, nuevo)
+				color_usado.emit(nuevo)
+				_revisar_completa()
 			return
 		# Semilla: tocar de nuevo con el mismo color nunca "no hace nada"; pasa al color siguiente.
 		var indice_color := 0
@@ -445,6 +453,7 @@ func _rellenar(punto: Vector2) -> void:
 		color_actual = nuevo
 		color_ciclado.emit(nuevo)
 	region["color"] = nuevo
+	_tocadas[indice] = true
 	queue_redraw()
 	region_rellenada.emit(indice, nuevo)
 	color_usado.emit(nuevo)
@@ -464,12 +473,11 @@ func regiones_rellenables() -> Array:
 	return lista
 
 
-## Cuantas regiones rellenables ya cambiaron de su color inicial.
+## Cuantas regiones rellenables ya se pintaron (aunque sea con su mismo color inicial).
 func regiones_pintadas() -> int:
 	var cuenta := 0
 	for i in regiones_rellenables():
-		var region: Dictionary = lamina["regiones"][i]
-		if not (region["color"] as Color).is_equal_approx(Color(str(region.get("inicial", "#FFFFFF")))):
+		if _tocadas.has(i):
 			cuenta += 1
 	return cuenta
 

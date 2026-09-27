@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
@@ -29,12 +29,20 @@
     "victoria_final": [
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
-    ]
+    ],
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/semilla/ronda_01.wav",
+      "voces/arcoiris/formas/semilla/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/semilla/intro_ronda.wav"
   },
+  "rondas": 4,
   "figuras": [
     {
       "id": "monito_nieve",
       "voz_completa": "voces/arcoiris/formas/figuras/monito_nieve.wav",
+      "dificultad": 4,
+      "fija": true,
       "piezas": [
         {
           "forma": "circulo",
@@ -68,6 +76,150 @@
           "color": "#5B3F8C",
           "x": -75.0,
           "y": -165.0
+        }
+      ]
+    },
+    {
+      "id": "torres_paine",
+      "voz_completa": "voces/arcoiris/formas/figuras/torres_paine.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 240.0,
+          "color": "#8E9BB5",
+          "x": -107.0,
+          "y": -18.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 300.0,
+          "color": "#8E9BB5",
+          "x": 0.0,
+          "y": -48.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 260.0,
+          "color": "#8E9BB5",
+          "x": 107.0,
+          "y": -28.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 96.0,
+          "color": "#45C6C0",
+          "x": 0.0,
+          "y": 150.0
+        }
+      ]
+    },
+    {
+      "id": "robot",
+      "voz_completa": "voces/arcoiris/formas/figuras/robot.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 182.0,
+          "alto": 143.0,
+          "color": "#B9B4C8",
+          "cara": true,
+          "x": 0.0,
+          "y": -182.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 312.0,
+          "alto": 221.0,
+          "color": "#4A8BE0",
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 124.8,
+          "alto": 143.0,
+          "color": "#B9B4C8",
+          "x": -67.6,
+          "y": 182.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 124.8,
+          "alto": 143.0,
+          "color": "#B9B4C8",
+          "x": 67.6,
+          "y": 182.0
+        }
+      ]
+    },
+    {
+      "id": "pollito",
+      "voz_completa": "voces/arcoiris/formas/figuras/pollito.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 286.0,
+          "alto": 286.0,
+          "color": "#FFCB3D",
+          "x": -91.65,
+          "y": 68.9
+        },
+        {
+          "forma": "circulo",
+          "ancho": 169.0,
+          "alto": 169.0,
+          "color": "#FFCB3D",
+          "cara": true,
+          "x": 23.53,
+          "y": -127.4
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 124.8,
+          "alto": 124.8,
+          "color": "#FF9F4A",
+          "rotacion": 90,
+          "x": 172.25,
+          "y": -127.4
+        }
+      ]
+    },
+    {
+      "id": "casita_perro",
+      "voz_completa": "voces/arcoiris/formas/figuras/casita_perro.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 319.8,
+          "alto": 135.3,
+          "color": "#FF6B6B",
+          "x": 0.0,
+          "y": -92.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 246.0,
+          "alto": 184.5,
+          "color": "#A8744F",
+          "x": 0.0,
+          "y": 67.65
+        },
+        {
+          "forma": "semicirculo",
+          "ancho": 135.3,
+          "alto": 123.0,
+          "color": "#5B3F8C",
+          "capa": 1,
+          "x": 0.0,
+          "y": 98.4
         }
       ]
     }

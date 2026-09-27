@@ -743,7 +743,7 @@ def micro_maxi():
 
 
 def pato():
-    return [O(0, 60, 260, 150, AMARILLO), C(160, -56, 120, AMARILLO, cara=True), P("triangulo", 328, 4, 96, 96, NARANJO, 90)]
+    return [O(0, 60, 260, 150, AMARILLO), C(160, -46.3, 120, AMARILLO, cara=True), P("triangulo", 328, 13.7, 96, 96, NARANJO, 90)]
 
 
 def ballena():
@@ -784,7 +784,7 @@ def robot():
 
 
 def pollito():
-    return [C(0, 100, 220, AMARILLO), C(133.6, -6, 130, AMARILLO, cara=True), P("triangulo", 317, 59, 96, 96, NARANJO, 90)]
+    return [C(0, 100, 220, AMARILLO), C(133.6, -6, 130, AMARILLO, cara=True), P("triangulo", 313, 59, 96, 96, NARANJO, 90)]
 
 
 def casita_perro():
@@ -962,10 +962,10 @@ def torres_paine_sofia():
     """Torres del Paine (zona 3, con giro): tres torres de granito con nieve, el macizo y la laguna."""
     granito, granito2, nieve, roca, laguna, pasto = "#8E9BB5", "#737F99", BLANCO, "#9A938C", TURQUESA, VERDE
     p = []
-    for x, cima, tono in ((40, 70, "#7F8BA6"), (130, 0, granito), (220, 40, "#6A7690")):
+    for x, cima, tono in ((40, 70, granito), (130, 0, granito), (220, 40, granito)):
         resto = 270 - (cima + 120)
-        p += [T(x, cima, 60, 60, nieve), R(x, cima + 60, 60, 60, granito2),
-              R(x, cima + 120, 60, resto / 2, tono), R(x, cima + 120 + resto / 2, 60, resto / 2, granito2)]
+        p += [T(x, cima, 60, 60, nieve), R(x, cima + 60, 60, 60, tono),
+              R(x, cima + 120, 60, resto * 0.45, tono), R(x, cima + 120 + resto * 0.45, 60, resto * 0.55, tono)]
     p += [TP(0, 270, 320, 60, roca)]                                   # macizo bajo las torres
     p += [TR(-60, 270, 60, 60, roca, "◢"), TR(320, 270, 60, 60, roca, "◣")]
     p += [R(-60, 330, 110, 50, laguna), R(50, 330, 110, 50, laguna), R(160, 330, 110, 50, laguna), R(270, 330, 110, 50, laguna)]
@@ -1000,11 +1000,12 @@ def san_cristobal():
          R(140, 30, 30, 22, blanco), R(210, 30, 30, 22, blanco)]          # la Virgen: cabeza, hombros, manto y brazos
     p += [R(172, 142, 36, 40, piedra), R(160, 182, 60, 30, piedra)]     # pedestal
     p += [T(140, 212, 100, 60, verde)]                                  # cumbre
-    p += [TP(80, 272, 220, 70, verde), TP(10, 342, 360, 70, verde2)]    # laderas
+    p += [TP(80, 272, 220, 70, verde), TR(10, 342, 72, 70, verde2, "◢"), R(82, 342, 216, 70, verde2),
+          TR(298, 342, 72, 70, verde2, "◣")]                            # laderas
     p += [T(60, 356, 28, 40, "#2E8B57", capa=1), T(290, 356, 28, 40, "#2E8B57", capa=1)]   # árboles
-    p += [R(230, 246, 36, 26, ROJO)]                                    # carro del funicular
-    p += [R(118, 242, 44, 30, "#FFF1C2"), T(113, 212, 54, 30, ROJO)]    # santuario
-    p += [R(10 + 72 * i, 412, 72, 26, GRIS if i % 2 == 0 else "#A9A3BA") for i in range(5)]   # la ciudad
+    p += [R(244, 246, 36, 26, ROJO)]                                    # carro del funicular
+    p += [R(90, 242, 44, 30, "#FFF1C2"), T(85, 212, 54, 30, ROJO)]      # santuario
+    p += [R(10 + 72 * i, 412, 72, 26, GRIS) for i in range(5)]   # la ciudad
     return p
 
 

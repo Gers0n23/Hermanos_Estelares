@@ -1,0 +1,819 @@
+{
+  "id_nivel": "arcoiris_z3_pinta_semilla",
+  "motor": "lienzo_libre",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona3_chupetines",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "pinta_coco",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "verde",
+    "rosa",
+    "violeta"
+  ],
+  "herramientas": [],
+  "rellenar_con_toque": true,
+  "tinte_coco": true,
+  "segundos_mostrar": 40,
+  "laminas": [
+    {
+      "id": "coco",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "fondo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#FFF3D6"
+        },
+        {
+          "id": "cola",
+          "forma": "poligono",
+          "puntos": [
+            [
+              540,
+              420
+            ],
+            [
+              622,
+              410
+            ],
+            [
+              672,
+              360
+            ],
+            [
+              662,
+              298
+            ],
+            [
+              626,
+              300
+            ],
+            [
+              632,
+              350
+            ],
+            [
+              600,
+              380
+            ],
+            [
+              545,
+              385
+            ]
+          ],
+          "sugerido": "#C7A6EC",
+          "suave": 2
+        },
+        {
+          "id": "pie_1",
+          "forma": "elipse",
+          "centro": [
+            345,
+            478
+          ],
+          "radios": [
+            64,
+            32
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "pie_2",
+          "forma": "elipse",
+          "centro": [
+            479,
+            478
+          ],
+          "radios": [
+            64,
+            32
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "cuerpo",
+          "forma": "elipse",
+          "centro": [
+            412,
+            375
+          ],
+          "radios": [
+            150,
+            118
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "panza",
+          "forma": "elipse",
+          "centro": [
+            412,
+            395
+          ],
+          "radios": [
+            92,
+            82
+          ],
+          "sugerido": "#FFE9C2"
+        },
+        {
+          "id": "brazo_1",
+          "forma": "elipse",
+          "centro": [
+            268,
+            352
+          ],
+          "radios": [
+            42,
+            64
+          ],
+          "sugerido": "#C7A6EC",
+          "giro": 28
+        },
+        {
+          "id": "brazo_2",
+          "forma": "elipse",
+          "centro": [
+            556,
+            352
+          ],
+          "radios": [
+            42,
+            64
+          ],
+          "sugerido": "#C7A6EC",
+          "giro": -28
+        },
+        {
+          "id": "cresta",
+          "forma": "poligono",
+          "puntos": [
+            [
+              350,
+              112
+            ],
+            [
+              362,
+              42
+            ],
+            [
+              412,
+              8
+            ],
+            [
+              466,
+              30
+            ],
+            [
+              482,
+              104
+            ]
+          ],
+          "sugerido": "#FF7EB6",
+          "suave": 2
+        },
+        {
+          "id": "cabeza",
+          "forma": "elipse",
+          "centro": [
+            412,
+            190
+          ],
+          "radios": [
+            152,
+            106
+          ],
+          "sugerido": "#C7A6EC"
+        },
+        {
+          "id": "flor",
+          "forma": "flor",
+          "centro": [
+            540,
+            102
+          ],
+          "radio": 42,
+          "sugerido": "#FFB3C7"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            352,
+            186
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "ojo",
+          "centro": [
+            472,
+            186
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            318,
+            228
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            506,
+            228
+          ],
+          "radio": 26
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            412,
+            226
+          ],
+          "radio": 34
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            398,
+            206
+          ],
+          "radio": 4,
+          "color": "#2B3350"
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            426,
+            206
+          ],
+          "radio": 4,
+          "color": "#2B3350"
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/coco.wav",
+      "etiquetas": [
+        "coco"
+      ]
+    },
+    {
+      "id": "dino",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "fondo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#E9F7FF"
+        },
+        {
+          "id": "suelo",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              450
+            ],
+            [
+              824,
+              440
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "fija": true,
+          "inicial": "#CDEFC4"
+        },
+        {
+          "id": "cola",
+          "forma": "poligono",
+          "puntos": [
+            [
+              252,
+              328
+            ],
+            [
+              160,
+              318
+            ],
+            [
+              60,
+              380
+            ],
+            [
+              72,
+              408
+            ],
+            [
+              170,
+              396
+            ],
+            [
+              262,
+              392
+            ]
+          ],
+          "sugerido": "#4CBF56",
+          "suave": 2
+        },
+        {
+          "id": "pua_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              262,
+              250
+            ],
+            [
+              292,
+              172
+            ],
+            [
+              334,
+              236
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "pua_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              334,
+              226
+            ],
+            [
+              370,
+              148
+            ],
+            [
+              410,
+              222
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "pua_3",
+          "forma": "poligono",
+          "puntos": [
+            [
+              410,
+              222
+            ],
+            [
+              446,
+              152
+            ],
+            [
+              478,
+              232
+            ]
+          ],
+          "sugerido": "#FF9A2E"
+        },
+        {
+          "id": "pata_1",
+          "forma": "rect",
+          "rect": [
+            300,
+            378,
+            72,
+            92
+          ],
+          "redondeo": 26,
+          "sugerido": "#2E8B57"
+        },
+        {
+          "id": "pata_2",
+          "forma": "rect",
+          "rect": [
+            440,
+            378,
+            72,
+            92
+          ],
+          "redondeo": 26,
+          "sugerido": "#2E8B57"
+        },
+        {
+          "id": "cuerpo",
+          "forma": "elipse",
+          "centro": [
+            390,
+            320
+          ],
+          "radios": [
+            152,
+            100
+          ],
+          "sugerido": "#4CBF56"
+        },
+        {
+          "id": "panza",
+          "forma": "elipse",
+          "centro": [
+            404,
+            352
+          ],
+          "radios": [
+            96,
+            58
+          ],
+          "sugerido": "#FFD23F"
+        },
+        {
+          "id": "cuello",
+          "forma": "poligono",
+          "puntos": [
+            [
+              466,
+              300
+            ],
+            [
+              498,
+              202
+            ],
+            [
+              560,
+              190
+            ],
+            [
+              566,
+              300
+            ]
+          ],
+          "sugerido": "#4CBF56",
+          "suave": 1
+        },
+        {
+          "id": "cabeza",
+          "forma": "elipse",
+          "centro": [
+            586,
+            214
+          ],
+          "radios": [
+            118,
+            78
+          ],
+          "sugerido": "#4CBF56",
+          "giro": -8
+        },
+        {
+          "id": "brazito",
+          "forma": "elipse",
+          "centro": [
+            522,
+            332
+          ],
+          "radios": [
+            22,
+            38
+          ],
+          "sugerido": "#4CBF56",
+          "giro": -30
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            616,
+            184
+          ],
+          "radio": 20
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            640,
+            232
+          ],
+          "radio": 28
+        },
+        {
+          "tipo": "rubor",
+          "centro": [
+            598,
+            242
+          ],
+          "radio": 16
+        },
+        {
+          "tipo": "punto",
+          "centro": [
+            684,
+            198
+          ],
+          "radio": 5,
+          "color": "#2B3350"
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/dino.wav",
+      "etiquetas": [
+        "dino"
+      ]
+    },
+    {
+      "id": "auto",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "fondo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#E9F7FF"
+        },
+        {
+          "id": "camino",
+          "forma": "rect",
+          "rect": [
+            0,
+            452,
+            824,
+            78
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#8A8FA3"
+        },
+        {
+          "id": "cabina",
+          "forma": "poligono",
+          "puntos": [
+            [
+              250,
+              252
+            ],
+            [
+              330,
+              142
+            ],
+            [
+              520,
+              142
+            ],
+            [
+              600,
+              252
+            ]
+          ],
+          "sugerido": "#EE4035",
+          "suave": 1
+        },
+        {
+          "id": "carroceria",
+          "forma": "rect",
+          "rect": [
+            120,
+            240,
+            600,
+            160
+          ],
+          "redondeo": 50,
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "ventana_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              290,
+              240
+            ],
+            [
+              345,
+              162
+            ],
+            [
+              415,
+              162
+            ],
+            [
+              415,
+              240
+            ]
+          ],
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "ventana_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              435,
+              240
+            ],
+            [
+              435,
+              162
+            ],
+            [
+              505,
+              162
+            ],
+            [
+              560,
+              240
+            ]
+          ],
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "rueda_1",
+          "forma": "circulo",
+          "centro": [
+            262,
+            408
+          ],
+          "radio": 64,
+          "sugerido": "#2B2E3F"
+        },
+        {
+          "id": "tapa_1",
+          "forma": "circulo",
+          "centro": [
+            262,
+            408
+          ],
+          "radio": 28,
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "rueda_2",
+          "forma": "circulo",
+          "centro": [
+            580,
+            408
+          ],
+          "radio": 64,
+          "sugerido": "#2B2E3F"
+        },
+        {
+          "id": "tapa_2",
+          "forma": "circulo",
+          "centro": [
+            580,
+            408
+          ],
+          "radio": 28,
+          "sugerido": "#9AA0B0"
+        },
+        {
+          "id": "luz",
+          "forma": "elipse",
+          "centro": [
+            702,
+            292
+          ],
+          "radios": [
+            22,
+            28
+          ],
+          "sugerido": "#FFD23F"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              40,
+              492
+            ],
+            [
+              140,
+              492
+            ]
+          ],
+          "grosor": 6,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              360,
+              492
+            ],
+            [
+              460,
+              492
+            ]
+          ],
+          "grosor": 6,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              680,
+              492
+            ],
+            [
+              780,
+              492
+            ]
+          ],
+          "grosor": 6,
+          "color": "#FFFFFF"
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            680,
+            340
+          ],
+          "radio": 22
+        }
+      ],
+      "voz": "voces/arcoiris/pinta/laminas/auto.wav",
+      "etiquetas": [
+        "auto"
+      ]
+    }
+  ],
+  "primera_fija": true,
+  "laminas_por_partida": 2,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/semilla/mostrar_01.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_02.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/semilla/victoria_01.wav",
+      "voces/arcoiris/pinta/semilla/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "muestramelo": [
+      "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
+      "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
+    "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",
+    "dino_camina": [
+      "voces/arcoiris/pinta/comun/dino_camina_01.wav",
+      "voces/arcoiris/pinta/comun/dino_camina_02.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/semilla/intro_pinta_coco.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/semilla/siguiente_amigo.wav"
+    ]
+  }
+}

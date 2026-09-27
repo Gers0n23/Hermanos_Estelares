@@ -1,0 +1,62 @@
+{
+  "id_nivel": "arcoiris_z1_pinta_semilla",
+  "motor": "lienzo_libre",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "libre",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "verde",
+    "rosa",
+    "violeta"
+  ],
+  "herramientas": [
+    "pincel",
+    "sello_dino",
+    "sello_auto"
+  ],
+  "segundos_mostrar": 25,
+  "sellos_vivos": true,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/semilla/mostrar_01.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_02.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/semilla/victoria_01.wav",
+      "voces/arcoiris/pinta/semilla/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "muestramelo": [
+      "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
+      "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
+    "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",
+    "dino_camina": [
+      "voces/arcoiris/pinta/comun/dino_camina_01.wav",
+      "voces/arcoiris/pinta/comun/dino_camina_02.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/semilla/intro_libre.wav"
+  }
+}

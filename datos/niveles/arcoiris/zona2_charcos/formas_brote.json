@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
   "caras": false,
   "modelo_mini": true,
@@ -33,12 +33,20 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/brote/ronda_01.wav",
+      "voces/arcoiris/formas/brote/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/brote/intro_ronda.wav"
   },
+  "rondas": 3,
   "figuras": [
     {
       "id": "micro",
       "voz_completa": "voces/arcoiris/formas/figuras/micro.wav",
+      "dificultad": 7,
+      "fija": true,
       "piezas": [
         {
           "forma": "rectangulo",
@@ -104,6 +112,277 @@
           "decoracion": "rueda",
           "x": 82.0,
           "y": 70.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_peru",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_peru.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#D91023",
+          "nombre_voz": "color_rojo",
+          "x": -182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#D91023",
+          "nombre_voz": "color_rojo",
+          "x": -182.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#D91023",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#D91023",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": 91.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_colombia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_colombia.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 196.0,
+          "color": "#FCD116",
+          "nombre_voz": "color_amarillo",
+          "x": -147.0,
+          "y": -98.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 196.0,
+          "color": "#FCD116",
+          "nombre_voz": "color_amarillo",
+          "x": 147.0,
+          "y": -98.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 98.0,
+          "color": "#003893",
+          "nombre_voz": "color_azul",
+          "x": -147.0,
+          "y": 49.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 98.0,
+          "color": "#003893",
+          "nombre_voz": "color_azul",
+          "x": 147.0,
+          "y": 49.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 98.0,
+          "color": "#CE1126",
+          "nombre_voz": "color_rojo",
+          "x": -147.0,
+          "y": 147.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 98.0,
+          "color": "#CE1126",
+          "nombre_voz": "color_rojo",
+          "x": 147.0,
+          "y": 147.0
+        }
+      ]
+    },
+    {
+      "id": "torta",
+      "voz_completa": "voces/arcoiris/formas/figuras/torta.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 52.0,
+          "alto": 52.0,
+          "color": "#FF6B6B",
+          "nombre_voz": "circulo_chico",
+          "x": 62.0,
+          "y": -102.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 52.0,
+          "alto": 60.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "triangulo",
+          "x": 0.0,
+          "y": -186.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 52.0,
+          "alto": 80.0,
+          "color": "#6FD6E8",
+          "nombre_voz": "rectangulo_chico",
+          "x": 0.0,
+          "y": -116.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 200.0,
+          "alto": 70.0,
+          "color": "#F7A8C8",
+          "nombre_voz": "rectangulo",
+          "x": 0.0,
+          "y": -41.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 260.0,
+          "alto": 80.0,
+          "color": "#FFF1C2",
+          "nombre_voz": "rectangulo",
+          "x": 0.0,
+          "y": 34.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 90.0,
+          "color": "#F7A8C8",
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": 119.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 52.0,
+          "color": "#B9B4C8",
+          "nombre_voz": "rectangulo",
+          "x": 0.0,
+          "y": 190.0
+        }
+      ]
+    },
+    {
+      "id": "pony",
+      "voz_completa": "voces/arcoiris/formas/figuras/pony.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_grande",
+          "x": -7.0,
+          "y": 28.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 78.4,
+          "alto": 112.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo",
+          "x": 107.8,
+          "y": -98.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 140.0,
+          "alto": 84.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo",
+          "cara": true,
+          "x": 175.0,
+          "y": -196.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 112.0,
+          "alto": 75.6,
+          "color": "#F26CA8",
+          "rotacion": 270,
+          "nombre_voz": "triangulo",
+          "x": 30.8,
+          "y": -98.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 84.0,
+          "alto": 126.0,
+          "color": "#F26CA8",
+          "rotacion": 180,
+          "nombre_voz": "triangulo",
+          "x": -203.0,
+          "y": 21.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 72.8,
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_chico",
+          "x": -110.6,
+          "y": 168.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 72.8,
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_chico",
+          "x": 96.6,
+          "y": 168.0
         }
       ]
     }

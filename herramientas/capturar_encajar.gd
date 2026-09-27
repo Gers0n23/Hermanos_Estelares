@@ -5,7 +5,10 @@ extends SceneTree
 ## (presionar, mover, soltar), igual que un dedo o el mouse.
 ## Respalda y restaura `user://progreso.json`.
 ##
-## Uso: godot --path . --script herramientas/capturar_encajar.gd -- <carpeta_salida>
+## Rondas (PO 27-Sep-2026): ademas captura la mini-fiesta entre rondas con sus medallas y, figura por
+## figura, banderas y monumentos del pool (nivel temporal de una ronda), para revisar que se reconozcan.
+##
+## Uso: godot --path . --script herramientas/capturar_encajar.gd -- <carpeta_salida> [solo_figuras]
 
 const MOTOR := "res://escenas/minijuegos/encajar/motor_encajar.tscn"
 const ARCOIRIS := "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"
@@ -13,6 +16,19 @@ const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
 const ZONAS := ["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islotes", "zona5_cima"]
 const HERMANOS := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
 const GUARDADO := "user://progreso.json"
+## Figuras del pool que se capturan una por una: [zona, perfil, id].
+const FIGURAS := [
+	["zona3_chupetines", "semilla", "bandera_chile"], ["zona1_claro", "semilla", "bandera_japon"],
+	["zona3_chupetines", "semilla", "volcan_osorno"], ["zona4_islotes", "semilla", "torres_paine"],
+	["zona4_islotes", "brote", "bandera_brasil"], ["zona4_islotes", "brote", "bandera_argentina"],
+	["zona1_claro", "brote", "corazon"], ["zona2_charcos", "brote", "pony"],
+	["zona1_claro", "estrella", "la_moneda"], ["zona1_claro", "estrella", "bandera_chile"],
+	["zona2_charcos", "estrella", "valparaiso"], ["zona2_charcos", "estrella", "bandera_uruguay"],
+	["zona2_charcos", "estrella", "bandera_venezuela"], ["zona3_chupetines", "estrella", "torres_paine"],
+	["zona4_islotes", "estrella", "morro_arica"], ["zona4_islotes", "estrella", "bandera_china"],
+	["zona5_cima", "estrella", "san_cristobal"], ["zona5_cima", "estrella", "bandera_eeuu"],
+	["zona5_cima", "estrella", "bandera_mexico"],
+]
 
 var _carpeta := ""
 
@@ -24,12 +40,19 @@ func _initialize() -> void:
 	var progreso := get_root().get_node("Progreso")
 	var respaldo = FileAccess.get_file_as_string(GUARDADO) if FileAccess.file_exists(GUARDADO) else null
 
-	await _arrastre_real()
-	for zona in ZONAS:
-		for perfil in HERMANOS:
-			await _nivel(zona, perfil)
-	await _derrota("zona4_islotes", "brote")
-	await _mapas(progreso)
+	var solo_figuras := args.size() > 1 and args[1] == "solo_figuras"
+	if not solo_figuras:
+		await _arrastre_real()
+		for zona in ZONAS:
+			for perfil in HERMANOS:
+				await _nivel(zona, perfil)
+		await _entre_rondas("zona1_claro", "semilla")
+		await _entre_rondas("zona2_charcos", "estrella")
+		await _derrota("zona4_islotes", "brote")
+	for entrada in FIGURAS:
+		await _figura(entrada[0], entrada[1], entrada[2])
+	if not solo_figuras:
+		await _mapas(progreso)
 
 	if respaldo != null:
 		var archivo := FileAccess.open(GUARDADO, FileAccess.WRITE)
@@ -51,9 +74,9 @@ func _capturar(nombre: String) -> void:
 	print("captura: %s" % ruta)
 
 
-func _abrir(zona: String, perfil: String) -> Node:
+func _abrir(zona: String, perfil: String, ruta := "") -> Node:
 	var motor: Node = load(MOTOR).instantiate()
-	motor.ruta_nivel = "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
+	motor.ruta_nivel = ruta if ruta != "" else "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
 	motor.id_perfil = HERMANOS[perfil]
 	motor.segundos_auto_continuar = 0.0
 	get_root().add_child(motor)
@@ -96,9 +119,49 @@ func _arrastre_real() -> void:
 	await _esperar(0.2)
 
 
-func _nivel(zona: String, perfil: String) -> void:
+## Una figura del pool sola (nivel temporal de una ronda): inicio y casi armada.
+func _figura(zona: String, perfil: String, id: String) -> void:
+	var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]))
+	for figura in nivel["figuras"]:
+		if figura["id"] == id:
+			nivel["figuras"] = [figura]
+	nivel["rondas"] = 1
+	var ruta := "user://captura_figura.json"
+	var archivo := FileAccess.open(ruta, FileAccess.WRITE)
+	archivo.store_string(JSON.stringify(nivel))
+	archivo.close()
+	await _nivel(zona, perfil, ruta, "fig_%s_%s_%s" % [zona.substr(0, 5), perfil, id])
+
+
+## Termina la primera ronda de un nivel real y captura la mini-fiesta (figura bailando, medalla llena)
+## y la ronda siguiente.
+func _entre_rondas(zona: String, perfil: String) -> void:
 	var motor := await _abrir(zona, perfil)
-	var nombre := "%s_%s" % [zona.substr(0, 5), perfil]
+	var avanzo := true
+	while avanzo and motor._encajados < motor._requeridos:
+		avanzo = false
+		for pieza: PiezaEncajar in motor._piezas.duplicate():
+			if pieza.colocada or motor._encajados >= motor._requeridos:
+				continue
+			var hueco = _hueco_libre_para(motor, pieza)
+			if hueco != null:
+				motor.soltar_pieza(pieza, hueco["centro"])
+				avanzo = true
+				await _esperar(0.05)
+	await _esperar(1.6)
+	await _capturar("rondas_%s_%s_1_fiesta" % [zona.substr(0, 5), perfil])
+	var t0 := Time.get_ticks_msec()
+	while motor._indice_prueba < 1 and Time.get_ticks_msec() - t0 < 15000:
+		await process_frame
+	await _esperar(1.0)
+	await _capturar("rondas_%s_%s_2_siguiente" % [zona.substr(0, 5), perfil])
+	motor.queue_free()
+	await _esperar(0.2)
+
+
+func _nivel(zona: String, perfil: String, ruta := "", nombre_captura := "") -> void:
+	var motor := await _abrir(zona, perfil, ruta)
+	var nombre := nombre_captura if nombre_captura != "" else "%s_%s" % [zona.substr(0, 5), perfil]
 	await _capturar(nombre + "_1_inicio")
 	# Deja todo resuelto menos una pieza para ver las figuras armadas. Juega con las reglas del nivel:
 	# solo gira si el nivel deja girar, y solo usa las piezas que ya estan en la bandeja (la cola
@@ -133,6 +196,8 @@ func _hueco_libre_para(motor: Node, pieza: PiezaEncajar):
 	var pasos: int = int(round(360.0 / motor._paso_rotacion)) if motor._rotacion_por_toque else 1
 	for hueco in motor._huecos:
 		if hueco["pieza"] != null or hueco["opcional"]:
+			continue
+		if motor._exigir_color and not pieza.color.is_equal_approx(hueco["color"]):
 			continue
 		if motor._enderezar:
 			# La pieza se endereza sola al acercarse: calza con el giro del hueco.

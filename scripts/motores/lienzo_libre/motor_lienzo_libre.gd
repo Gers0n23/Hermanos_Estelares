@@ -59,7 +59,8 @@ const COLOR_CONTORNO := Color("#2B3350")
 const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
 const PALETA_SEMILLA := ["rojo", "azul", "amarillo", "verde", "rosa", "violeta"]
-const PALETA_COMPLETA := ["rojo", "naranja", "amarillo", "verde", "azul", "violeta", "rosa", "turquesa", "blanco", "negro", "cafe", "celeste"]
+## 12 colores de la ficha + gris y verde oscuro (rocas, volcanes y bosques de las laminas de Chile).
+const PALETA_COMPLETA := ["rojo", "naranja", "amarillo", "verde", "azul", "violeta", "rosa", "turquesa", "celeste", "blanco", "cafe", "negro", "gris", "verde_oscuro"]
 const PRIMARIOS := ["rojo", "amarillo", "azul", "blanco"]
 ## Escala pentatonica (Do mayor) del dedo magico: cualquier trazo suena bonito.
 const NOTAS_HZ := [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0]
@@ -73,6 +74,8 @@ const NOTAS_HZ := [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25,
 @onready var _panel_depuracion: Label = %panel_depuracion
 
 var lienzo: Lienzo
+## Carpeta de los dibujos (los arneses QA la cambian para no pisar los dibujos reales de los ninos).
+var carpeta_dibujos := CARPETA_DIBUJOS
 var boton_mostrar: Button
 ## Rutas de los PNG guardados en esta partida (para QA y para el hangar).
 var pngs_guardados: Array[String] = []
@@ -248,7 +251,11 @@ func _empezar_hoja(indice: int) -> void:
 	lienzo.sellos_vivos = bool(_cfg.get("sellos_vivos", _perfil == "semilla"))
 	lienzo.rellenar_con_toque = bool(_cfg.get("rellenar_con_toque", false))
 	var lamina: Dictionary = hoja["lamina"]
+	if lamina.has("papel"):
+		lienzo.papel = Color(str(lamina["papel"]))
 	match str(lamina.get("tipo", "zonas")):
+		"papel":
+			pass
 		"mosaico":
 			if not lamina.is_empty():
 				lienzo.poner_mosaico(lamina)
@@ -304,11 +311,12 @@ func _construir_interfaz() -> void:
 	estilo.shadow_size = 8
 	estilo.shadow_offset = Vector2(0, 6)
 	marco.add_theme_stylebox_override("panel", estilo)
-	_ui.add_child(lienzo)
-	_ui.move_child(lienzo, 0)
-	lienzo.position = RECT_LIENZO.position
+	# El marco va DETRAS del lienzo: su borde asoma 6 px alrededor y su sombra no tapa el dibujo.
 	_ui.add_child(marco)
-	_ui.move_child(marco, 1)
+	_ui.move_child(marco, 0)
+	_ui.add_child(lienzo)
+	_ui.move_child(lienzo, 1)
+	lienzo.position = RECT_LIENZO.position
 	marco.position = RECT_LIENZO.position - Vector2(6, 6)
 	marco.size = RECT_LIENZO.size + Vector2(12, 12)
 	lienzo.pivot_offset = RECT_LIENZO.size / 2.0
@@ -535,7 +543,7 @@ func _construir_herramientas() -> void:
 		trajes = lamina.get("orden_trajes", lamina["trajes"].keys())
 	var total := lista.size() + trajes.size()
 	if total == 0:
-		lienzo.herramienta = "pincel"
+		lienzo.herramienta = str(_cfg.get("herramienta_inicial", "pincel"))
 		return
 	var lado := 96.0 if _perfil == "semilla" else 90.0
 	var separacion := 14.0
@@ -607,7 +615,7 @@ func _elegir_traje(id: String, inicial: bool) -> void:
 	var combinada := lamina.duplicate(true)
 	combinada.erase("trajes")
 	var traje: Dictionary = trajes[id]
-	combinada["regiones"] = (lamina.get("regiones", []) as Array) + (traje.get("regiones", []) as Array)
+	combinada["regiones"] = _regiones_con_traje(lamina, traje)
 	combinada["detalles"] = (traje.get("detalles_atras", []) as Array) + (lamina.get("detalles", []) as Array) + (traje.get("detalles", []) as Array)
 	lienzo.poner_lamina(combinada)
 	var regiones: Array = lienzo.lamina["regiones"]
@@ -623,9 +631,34 @@ func _elegir_traje(id: String, inicial: bool) -> void:
 		_elegir_herramienta(lienzo.herramienta, false)
 
 
+## Regiones de Coco con el traje: `regiones_atras` (la capa) va detras del cuerpo, justo despues del
+## fondo y el piso; el resto del traje va encima.
+func _regiones_con_traje(lamina: Dictionary, traje: Dictionary) -> Array:
+	var base: Array = lamina.get("regiones", [])
+	var atras: Array = traje.get("regiones_atras", [])
+	var corte := 0
+	while corte < base.size() and str(base[corte].get("id", "")) in ["fondo", "piso"]:
+		corte += 1
+	return base.slice(0, corte) + atras + base.slice(corte) + (traje.get("regiones", []) as Array)
+
+
 func _construir_modelo(lamina: Dictionary) -> void:
 	_vaciar(_modelo)
 	var hay_modelo: bool = bool(_cfg.get("modelo", false)) and not lamina.is_empty() and str(lamina.get("tipo", "zonas")) == "zonas"
+	var imagen_modelo := str(_cfg.get("imagen_modelo", ""))
+	if imagen_modelo != "" and bool(_cfg.get("modelo", false)) and ResourceLoader.exists(imagen_modelo):
+		# Decora el ala: la tarjeta muestra la nave, para que se entienda de donde es el ala.
+		_modelo.visible = true
+		var foto := TextureRect.new()
+		foto.texture = load(imagen_modelo)
+		foto.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		foto.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		foto.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_modelo.add_child(foto)
+		foto.size = RECT_MODELO.size
+		foto.pivot_offset = RECT_MODELO.size / 2.0
+		foto.rotation = deg_to_rad(-4.0)
+		return
 	_modelo.visible = hay_modelo
 	if not hay_modelo:
 		return
@@ -1031,11 +1064,11 @@ func _guardar_mi_color(color: Color) -> void:
 		boton.position = Vector2((i % 3) * 69.0, 336.0 + (i / 3) * 72.0)
 		boton.size = Vector2(66, 66)
 		_icono(boton, _dibujar_mancha)
-		var color: Color = _mis_colores[i]
+		var guardado: Color = _mis_colores[i]
 		boton.pressed.connect(func() -> void:
 			_sfx_suave(SFX_ELEGIR)
 			_rebote(boton)
-			lienzo.color_actual = color
+			lienzo.color_actual = guardado
 			_refrescar_iconos())
 
 
@@ -1157,7 +1190,7 @@ func _es_igualita() -> bool:
 func _guardar_dibujo() -> String:
 	var hermano := obtener_id_personaje()
 	var sello := Time.get_datetime_string_from_system().replace(":", "-").replace("T", "_")
-	var ruta := "%s/%s/%s_%d_%s.png" % [CARPETA_DIBUJOS, hermano, str(nivel.get("id_nivel", "dibujo")), _indice_hoja + 1, sello]
+	var ruta := "%s/%s/%s_%d_%s.png" % [carpeta_dibujos, hermano, str(nivel.get("id_nivel", "dibujo")), _indice_hoja + 1, sello]
 	var imagen := lienzo.componer()
 	DirAccess.make_dir_recursive_absolute(ruta.get_base_dir())
 	var error := imagen.save_png(ruta)
@@ -1169,13 +1202,13 @@ func _guardar_dibujo() -> String:
 	# El ala decorada y el traje de Coco tienen nombre fijo para que el hangar y el mapa los encuentren.
 	var fijo := str(_cfg.get("guardar_como", ""))
 	if fijo != "":
-		imagen.save_png("%s/%s/%s.png" % [CARPETA_DIBUJOS, hermano, fijo])
+		imagen.save_png("%s/%s/%s.png" % [carpeta_dibujos, hermano, fijo])
 	if _traje != "":
 		var colores := {}
 		for region: Dictionary in lienzo.lamina.get("regiones", []):
 			if not bool(region.get("fija", false)):
 				colores[str(region.get("id", ""))] = "#" + (region["color"] as Color).to_html(false)
-		var archivo := FileAccess.open("%s/%s/traje_coco.json" % [CARPETA_DIBUJOS, hermano], FileAccess.WRITE)
+		var archivo := FileAccess.open("%s/%s/traje_coco.json" % [carpeta_dibujos, hermano], FileAccess.WRITE)
 		if archivo != null:
 			archivo.store_string(JSON.stringify({"traje": _traje, "colores": colores}, "  "))
 			archivo.close()
@@ -1566,7 +1599,7 @@ func _dibujar_traje_mini(icono: Control, id: String) -> void:
 	var mini := lamina.duplicate(true)
 	mini.erase("trajes")
 	var traje: Dictionary = trajes[id]
-	mini["regiones"] = (lamina.get("regiones", []) as Array) + (traje.get("regiones", []) as Array)
+	mini["regiones"] = _regiones_con_traje(lamina, traje)
 	mini["detalles"] = []
 	var preparada := Laminas.preparar(mini)
 	for region: Dictionary in preparada["regiones"]:

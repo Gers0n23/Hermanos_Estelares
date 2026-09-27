@@ -132,3 +132,86 @@ voces/arcoiris/formas/nombres/circulo_chico.wav	¡Busca el círculo chiquitito!
 voces/arcoiris/formas/nombres/trapecio.wav	¡Busca el trapecio!
 # personaje: cometa
 voces/arcoiris/formas/estrella/pista_arma_01.wav	Mira la tarjeta con la figura terminada. ¿Qué pieza tiene la misma forma y el mismo tamaño?
+
+# Rondas, banderas y Chile (PO 27-Sep-2026): relleno de Windows (generar_voces_tts.ps1) hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/formas/semilla/ronda_01.wav	¡Siii! ¡Vamos con otra figura, Maxi!
+voces/arcoiris/formas/semilla/ronda_02.wav	¡Bravo! ¿Qué armamos ahora?
+voces/arcoiris/formas/semilla/intro_ronda.wav	¡Mira la tarjeta, Maxi! Pon cada pieza en su lugar.
+voces/arcoiris/formas/brote/ronda_01.wav	¡Qué lindo te quedó! Ahora armemos otra figura.
+voces/arcoiris/formas/brote/ronda_02.wav	¡Muy bien, Nicole! Vamos con la siguiente.
+voces/arcoiris/formas/brote/intro_ronda.wav	Mira la tarjeta, Nicole, y pon cada forma en su sombra.
+voces/arcoiris/formas/estrella/intro_bandera.wav	¡Ahora, una bandera! Cada pieza va en su color. Mira bien la tarjeta.
+voces/arcoiris/formas/estrella/intro_moneda.wav	¡Sofía, mira la tarjeta! Es el Palacio de La Moneda, con su bandera en el techo. Busca la pieza que calza en cada lugar.
+voces/arcoiris/formas/estrella/intro_valparaiso.wav	¡Valparaíso! Casas de colores en los cerros y su ascensor. Ojo: cada casa va con su color. Tócalas para girarlas.
+voces/arcoiris/formas/estrella/intro_torres_paine.wav	¡Nos vamos a la Patagonia! Arma las Torres del Paine, con su nieve y su laguna.
+voces/arcoiris/formas/estrella/intro_morro.wav	¡El Morro de Arica, en el norte! Arma el cerro capa por capa, con su gran bandera en la cima.
+voces/arcoiris/formas/estrella/intro_san_cristobal.wav	¡El gran desafío! El cerro San Cristóbal, con la Virgen en la cima. ¡Tú puedes, Sofía!
+voces/arcoiris/formas/figuras/bandera_chile.wav	¡La bandera de Chile!
+voces/arcoiris/formas/figuras/bandera_japon.wav	¡La bandera de Japón!
+voces/arcoiris/formas/figuras/bandera_francia.wav	¡La bandera de Francia!
+voces/arcoiris/formas/figuras/bandera_italia.wav	¡La bandera de Italia!
+voces/arcoiris/formas/figuras/bandera_peru.wav	¡La bandera de Perú!
+voces/arcoiris/formas/figuras/bandera_colombia.wav	¡La bandera de Colombia!
+voces/arcoiris/formas/figuras/bandera_argentina.wav	¡La bandera de Argentina!
+voces/arcoiris/formas/figuras/bandera_alemania.wav	¡La bandera de Alemania!
+voces/arcoiris/formas/figuras/bandera_brasil.wav	¡La bandera de Brasil!
+voces/arcoiris/formas/figuras/bandera_bolivia.wav	¡La bandera de Bolivia!
+voces/arcoiris/formas/figuras/bandera_chile_dato.wav	¡La bandera de Chile! Nuestra capital es Santiago.
+voces/arcoiris/formas/figuras/bandera_argentina_dato.wav	¡La bandera de Argentina! Su capital es Buenos Aires, y el sol se llama Sol de Mayo.
+voces/arcoiris/formas/figuras/bandera_peru_dato.wav	¡La bandera de Perú! Su capital es Lima.
+voces/arcoiris/formas/figuras/bandera_bolivia_dato.wav	¡La bandera de Bolivia! Su capital es Sucre, y el gobierno está en La Paz.
+voces/arcoiris/formas/figuras/bandera_brasil_dato.wav	¡La bandera de Brasil! Su capital es Brasilia. ¡Es el país más grande de Sudamérica!
+voces/arcoiris/formas/figuras/bandera_uruguay_dato.wav	¡La bandera de Uruguay! Su capital es Montevideo.
+voces/arcoiris/formas/figuras/bandera_paraguay_dato.wav	¡La bandera de Paraguay! Su capital es Asunción. ¡Su bandera tiene un escudo distinto en cada lado!
+voces/arcoiris/formas/figuras/bandera_colombia_dato.wav	¡La bandera de Colombia! Su capital es Bogotá.
+voces/arcoiris/formas/figuras/bandera_venezuela_dato.wav	¡La bandera de Venezuela! Su capital es Caracas, y tiene ocho estrellas.
+voces/arcoiris/formas/figuras/bandera_ecuador_dato.wav	¡La bandera de Ecuador! Su capital es Quito, ¡y por ahí pasa la línea del Ecuador!
+voces/arcoiris/formas/figuras/bandera_japon_dato.wav	¡La bandera de Japón! Está en Asia y su capital es Tokio. El círculo rojo es el sol.
+voces/arcoiris/formas/figuras/bandera_francia_dato.wav	¡La bandera de Francia! Está en Europa y su capital es París, donde está la Torre Eiffel.
+voces/arcoiris/formas/figuras/bandera_alemania_dato.wav	¡La bandera de Alemania! Está en Europa y su capital es Berlín.
+voces/arcoiris/formas/figuras/bandera_rusia_dato.wav	¡La bandera de Rusia! Su capital es Moscú. ¡Es el país más grande del mundo!
+voces/arcoiris/formas/figuras/bandera_china_dato.wav	¡La bandera de China! Está en Asia y su capital es Pekín. ¡Ahí está la Gran Muralla!
+voces/arcoiris/formas/figuras/bandera_india_dato.wav	¡La bandera de India! Está en Asia y su capital es Nueva Delhi. La rueda azul se llama chakra.
+voces/arcoiris/formas/figuras/bandera_mexico_dato.wav	¡La bandera de México! Su capital es Ciudad de México, y en su escudo hay un águila.
+voces/arcoiris/formas/figuras/bandera_eeuu_dato.wav	¡La bandera de Estados Unidos! Su capital es Washington. La de verdad tiene cincuenta estrellas, ¡una por cada estado!
+voces/arcoiris/formas/figuras/la_moneda.wav	¡La Moneda, en Santiago! Ahí trabaja el presidente de Chile.
+voces/arcoiris/formas/figuras/valparaiso.wav	¡Valparaíso, con sus casas de colores! Sus ascensores suben los cerros hace más de cien años.
+voces/arcoiris/formas/figuras/torres_paine_dato.wav	¡Las Torres del Paine, en la Patagonia! Son montañas de granito de más de dos mil metros.
+voces/arcoiris/formas/figuras/morro_arica_dato.wav	¡El Morro de Arica, en el norte de Chile! Desde arriba se ve todo el mar.
+voces/arcoiris/formas/figuras/san_cristobal.wav	¡El cerro San Cristóbal, en Santiago! La Virgen de la cima mide catorce metros.
+voces/arcoiris/formas/figuras/torres_paine.wav	¡Las Torres del Paine!
+voces/arcoiris/formas/figuras/morro_arica.wav	¡El Morro de Arica, junto al mar!
+voces/arcoiris/formas/figuras/volcan_osorno.wav	¡El volcán Osorno, con su nieve!
+voces/arcoiris/formas/figuras/auto_carrera.wav	¡Brum, brum! ¡Un auto de carreras!
+voces/arcoiris/formas/figuras/avion.wav	¡Un avión! ¡A volar!
+voces/arcoiris/formas/figuras/ballena.wav	¡Una ballena! ¡Splash!
+voces/arcoiris/formas/figuras/braquiosaurio.wav	¡Un dinosaurio de cuello largo!
+voces/arcoiris/formas/figuras/bus.wav	¡Un bus! ¡Todos arriba!
+voces/arcoiris/formas/figuras/camion_bomberos.wav	¡Uiuu, uiuu! ¡Un camión de bomberos!
+voces/arcoiris/formas/figuras/casita_perro.wav	¡La casita del perrito! ¡Guau!
+voces/arcoiris/formas/figuras/pato.wav	¡Cuac, cuac! ¡Un patito!
+voces/arcoiris/formas/figuras/platillo.wav	¡Un platillo volador!
+voces/arcoiris/formas/figuras/pollito.wav	¡Pío, pío! ¡Un pollito!
+voces/arcoiris/formas/figuras/robot.wav	¡Un robot! ¡Bip, bup!
+voces/arcoiris/formas/figuras/tortuga.wav	¡Una tortuga!
+voces/arcoiris/formas/figuras/castillo_princesa.wav	¡Un castillo de princesas!
+voces/arcoiris/formas/figuras/corazon.wav	¡Un corazón gigante para ti, Nicole!
+voces/arcoiris/formas/figuras/gatito.wav	¡Miau! ¡Un gatito con su moño!
+voces/arcoiris/formas/figuras/jirafa.wav	¡Una jirafa!
+voces/arcoiris/formas/figuras/mariposa.wav	¡Una mariposa!
+voces/arcoiris/formas/figuras/pony.wav	¡Un pony!
+voces/arcoiris/formas/figuras/torta.wav	¡Una torta de cumpleaños!
+voces/arcoiris/formas/figuras/sol.wav	¡Un sol brillante!
+voces/arcoiris/formas/figuras/jardin.wav	¡Qué lindo jardín!
+voces/arcoiris/formas/nombres/circulo_azul.wav	¡Busca el círculo azul!
+voces/arcoiris/formas/nombres/circulo_rojo.wav	¡Busca el círculo rojo!
+voces/arcoiris/formas/nombres/sol_dorado.wav	¡Busca el sol dorado!
+voces/arcoiris/formas/nombres/semicirculo.wav	¡Busca el semicírculo!
+voces/arcoiris/formas/nombres/color_amarillo.wav	¡Busca el color amarillo!
+voces/arcoiris/formas/nombres/color_azul.wav	¡Busca el color azul!
+voces/arcoiris/formas/nombres/color_blanco.wav	¡Busca el color blanco!
+voces/arcoiris/formas/nombres/color_celeste.wav	¡Busca el color celeste!
+voces/arcoiris/formas/nombres/color_negro.wav	¡Busca el color negro!
+voces/arcoiris/formas/nombres/color_rojo.wav	¡Busca el color rojo!
+voces/arcoiris/formas/nombres/color_verde.wav	¡Busca el color verde!

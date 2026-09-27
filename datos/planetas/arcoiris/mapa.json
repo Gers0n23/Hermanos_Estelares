@@ -56,8 +56,12 @@
       "estaciones": [
         {
           "juego": "lluvia",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona1_claro/lluvia_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona1_claro/lluvia_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/lluvia_estrella.json"
+          }
         },
         {
           "juego": "formas",
@@ -72,13 +76,19 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona1_claro/parejas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona1_claro/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona1_claro/parejas_estrella.json"
           }
         },
         {
           "juego": "pinta",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona1_claro/pinta_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona1_claro/pinta_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/pinta_estrella.json"
+          }
         }
       ]
     },
@@ -99,8 +109,12 @@
       "estaciones": [
         {
           "juego": "lluvia",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_estrella.json"
+          }
         },
         {
           "juego": "formas",
@@ -115,14 +129,19 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
-            "maxi": "res://datos/niveles/arcoiris_emparejar_semilla_01.json",
+            "maxi": "res://datos/niveles/arcoiris/zona2_charcos/parejas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona2_charcos/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona2_charcos/parejas_estrella.json"
           }
         },
         {
           "juego": "pinta",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona2_charcos/pinta_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona2_charcos/pinta_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/pinta_estrella.json"
+          }
         }
       ]
     },
@@ -143,8 +162,12 @@
       "estaciones": [
         {
           "juego": "lluvia",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_estrella.json"
+          }
         },
         {
           "juego": "formas",
@@ -159,14 +182,19 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
-            "nicole": "res://datos/niveles/arcoiris_emparejar_brote_01.json",
+            "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_estrella.json"
           }
         },
         {
           "juego": "pinta",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/pinta_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/pinta_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/pinta_estrella.json"
+          }
         }
       ]
     },
@@ -188,8 +216,12 @@
       "estaciones": [
         {
           "juego": "lluvia",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_estrella.json"
+          }
         },
         {
           "juego": "formas",
@@ -204,13 +236,19 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona4_islotes/parejas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona4_islotes/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona4_islotes/parejas_estrella.json"
           }
         },
         {
           "juego": "pinta",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona4_islotes/pinta_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona4_islotes/pinta_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/pinta_estrella.json"
+          }
         }
       ]
     },
@@ -232,8 +270,12 @@
       "estaciones": [
         {
           "juego": "lluvia",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona5_cima/lluvia_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona5_cima/lluvia_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/lluvia_estrella.json"
+          }
         },
         {
           "juego": "formas",
@@ -251,6 +293,8 @@
           "juego": "parejas",
           "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
           "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona5_cima/parejas_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona5_cima/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona5_cima/parejas_estrella.json"
           },
           "niveles_dorados": {
@@ -259,8 +303,12 @@
         },
         {
           "juego": "pinta",
-          "escena": "",
-          "niveles": {}
+          "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/arcoiris/zona5_cima/pinta_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona5_cima/pinta_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/pinta_estrella.json"
+          }
         }
       ]
     }

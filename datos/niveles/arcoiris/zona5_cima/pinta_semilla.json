@@ -1,0 +1,353 @@
+{
+  "id_nivel": "arcoiris_z5_pinta_semilla",
+  "motor": "lienzo_libre",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "decora_ala",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "verde",
+    "rosa",
+    "violeta"
+  ],
+  "herramientas": [
+    "balde",
+    "sello_dino",
+    "sello_auto",
+    "sello_estrella"
+  ],
+  "herramienta_inicial": "balde",
+  "laminas": [
+    {
+      "id": "ala",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "espacio",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#1F2350"
+        },
+        {
+          "id": "estrellita_0",
+          "forma": "estrella",
+          "centro": [
+            60,
+            60
+          ],
+          "radio": 12,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_1",
+          "forma": "estrella",
+          "centro": [
+            300,
+            50
+          ],
+          "radio": 9,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_2",
+          "forma": "estrella",
+          "centro": [
+            520,
+            40
+          ],
+          "radio": 14,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_3",
+          "forma": "estrella",
+          "centro": [
+            780,
+            330
+          ],
+          "radio": 10,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_4",
+          "forma": "estrella",
+          "centro": [
+            160,
+            470
+          ],
+          "radio": 12,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_5",
+          "forma": "estrella",
+          "centro": [
+            420,
+            470
+          ],
+          "radio": 9,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_6",
+          "forma": "estrella",
+          "centro": [
+            700,
+            460
+          ],
+          "radio": 13,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "estrellita_7",
+          "forma": "estrella",
+          "centro": [
+            40,
+            250
+          ],
+          "radio": 8,
+          "fija": true,
+          "inicial": "#FFF3B0"
+        },
+        {
+          "id": "nave",
+          "forma": "elipse",
+          "centro": [
+            -30,
+            520
+          ],
+          "radios": [
+            230,
+            160
+          ],
+          "fija": true,
+          "inicial": "#BFE8D8"
+        },
+        {
+          "id": "ventanilla",
+          "forma": "circulo",
+          "centro": [
+            100,
+            430
+          ],
+          "radio": 42,
+          "fija": true,
+          "inicial": "#8ED3FF"
+        },
+        {
+          "id": "borde",
+          "forma": "poligono",
+          "puntos": [
+            [
+              75.4,
+              391.6
+            ],
+            [
+              214.0,
+              157.3
+            ],
+            [
+              803.6,
+              108.6
+            ],
+            [
+              731.0,
+              340.6
+            ]
+          ],
+          "sugerido": "#FFD23F",
+          "suave": 1
+        },
+        {
+          "id": "franja_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              110.0,
+              372.0
+            ],
+            [
+              141.5,
+              321.5
+            ],
+            [
+              722.5,
+              278.0
+            ],
+            [
+              706.0,
+              328.0
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "franja_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              141.5,
+              321.5
+            ],
+            [
+              173.0,
+              271.0
+            ],
+            [
+              739.0,
+              228.0
+            ],
+            [
+              722.5,
+              278.0
+            ]
+          ],
+          "sugerido": "#FF7EB6"
+        },
+        {
+          "id": "franja_3",
+          "forma": "poligono",
+          "puntos": [
+            [
+              173.0,
+              271.0
+            ],
+            [
+              204.5,
+              220.5
+            ],
+            [
+              755.5,
+              178.0
+            ],
+            [
+              739.0,
+              228.0
+            ]
+          ],
+          "sugerido": "#8ED3FF"
+        },
+        {
+          "id": "franja_4",
+          "forma": "poligono",
+          "puntos": [
+            [
+              204.5,
+              220.5
+            ],
+            [
+              236.0,
+              170.0
+            ],
+            [
+              772.0,
+              128.0
+            ],
+            [
+              755.5,
+              178.0
+            ]
+          ],
+          "sugerido": "#FFFFFF"
+        },
+        {
+          "id": "estrella",
+          "forma": "estrella",
+          "centro": [
+            470,
+            246
+          ],
+          "radio": 58,
+          "sugerido": "#3470D8",
+          "giro": -8
+        },
+        {
+          "id": "luz_1",
+          "forma": "circulo",
+          "centro": [
+            150,
+            372
+          ],
+          "radio": 16,
+          "sugerido": "#EE4035"
+        },
+        {
+          "id": "luz_2",
+          "forma": "circulo",
+          "centro": [
+            752,
+            132
+          ],
+          "radio": 16,
+          "sugerido": "#4CBF56"
+        }
+      ],
+      "detalles": [],
+      "voz": "voces/arcoiris/pinta/laminas/ala.wav",
+      "etiquetas": [
+        "nave"
+      ]
+    }
+  ],
+  "guardar_como": "ala_nave",
+  "imagen_modelo": "res://assets/sprites/nave/nave_estrella.png",
+  "modelo": true,
+  "segundos_mostrar": 35,
+  "sellos_vivos": true,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/semilla/mostrar_01.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_02.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/semilla/victoria_01.wav",
+      "voces/arcoiris/pinta/semilla/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "muestramelo": [
+      "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
+      "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
+    "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",
+    "dino_camina": [
+      "voces/arcoiris/pinta/comun/dino_camina_01.wav",
+      "voces/arcoiris/pinta/comun/dino_camina_02.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/semilla/intro_ala.wav"
+  }
+}

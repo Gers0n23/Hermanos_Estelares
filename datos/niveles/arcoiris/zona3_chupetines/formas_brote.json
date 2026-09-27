@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
   "caras": false,
   "modelo_mini": true,
@@ -33,12 +33,20 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/brote/ronda_01.wav",
+      "voces/arcoiris/formas/brote/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/brote/intro_ronda.wav"
   },
+  "rondas": 3,
   "figuras": [
     {
       "id": "faro",
       "voz_completa": "voces/arcoiris/formas/figuras/faro.wav",
+      "dificultad": 7,
+      "fija": true,
       "piezas": [
         {
           "forma": "triangulo",
@@ -102,6 +110,295 @@
           "nombre_voz": "trapecio",
           "x": 0.0,
           "y": 231.25
+        }
+      ]
+    },
+    {
+      "id": "bandera_chile",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_chile.wav",
+      "dificultad": 6,
+      "config": {
+        "guia_color": true,
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#0039A6",
+          "nombre_voz": "color_azul",
+          "x": -182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 273.0,
+          "alto": 182.0,
+          "color": "#D52B1E",
+          "nombre_voz": "color_rojo",
+          "x": -136.5,
+          "y": 91.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 273.0,
+          "alto": 182.0,
+          "color": "#D52B1E",
+          "nombre_voz": "color_rojo",
+          "x": 136.5,
+          "y": 91.0
+        },
+        {
+          "forma": "estrella",
+          "ancho": 91.0,
+          "alto": 91.0,
+          "color": "#FFFFFF",
+          "capa": 1,
+          "nombre_voz": "estrella",
+          "x": -182.0,
+          "y": -91.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_japon",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_japon.wav",
+      "dificultad": 7,
+      "config": {
+        "guia_color": true,
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": -182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": -182.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 182.0,
+          "y": 91.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 218.4,
+          "alto": 218.4,
+          "color": "#BC002D",
+          "capa": 1,
+          "nombre_voz": "circulo_rojo",
+          "x": 0.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "mariposa",
+      "voz_completa": "voces/arcoiris/formas/figuras/mariposa.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 72.8,
+          "alto": 350.0,
+          "color": "#7A4FB5",
+          "nombre_voz": "rectangulo",
+          "x": 0.0,
+          "y": 21.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 210.0,
+          "alto": 210.0,
+          "color": "#F26CA8",
+          "rotacion": 180,
+          "nombre_voz": "triangulo_grande",
+          "x": -141.4,
+          "y": -91.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 210.0,
+          "alto": 210.0,
+          "color": "#F26CA8",
+          "rotacion": 90,
+          "nombre_voz": "triangulo_grande",
+          "x": 141.4,
+          "y": -91.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#B48CE8",
+          "rotacion": 270,
+          "nombre_voz": "triangulo_chico",
+          "x": -113.4,
+          "y": 91.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#B48CE8",
+          "nombre_voz": "triangulo_chico",
+          "x": 113.4,
+          "y": 91.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 72.8,
+          "alto": 72.8,
+          "color": "#6FD6E8",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": -99.4,
+          "y": -133.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 72.8,
+          "alto": 72.8,
+          "color": "#6FD6E8",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": 99.4,
+          "y": -133.0
+        }
+      ]
+    },
+    {
+      "id": "jirafa",
+      "voz_completa": "voces/arcoiris/formas/figuras/jirafa.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 140.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo_grande",
+          "x": -63.0,
+          "y": 28.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 78.4,
+          "alto": 210.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo",
+          "x": 37.8,
+          "y": -147.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 126.0,
+          "alto": 84.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo_chico",
+          "cara": true,
+          "x": 140.0,
+          "y": -224.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 72.8,
+          "alto": 168.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo",
+          "x": -166.6,
+          "y": 182.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 72.8,
+          "alto": 168.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo",
+          "x": 40.6,
+          "y": 182.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 78.4,
+          "alto": 78.4,
+          "color": "#C98A3C",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": -121.8,
+          "y": 25.2
+        },
+        {
+          "forma": "circulo",
+          "ancho": 78.4,
+          "alto": 78.4,
+          "color": "#C98A3C",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": -37.8,
+          "y": 44.8
         }
       ]
     }

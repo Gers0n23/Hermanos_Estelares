@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "caras": false,
   "guia_color": false,
   "modelo_mini": true,
@@ -40,12 +40,27 @@
       "voces/arcoiris/formas/estrella/victoria_02.wav"
     ],
     "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
-    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav"
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
+    "prueba_superada": [
+      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
+      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
+    ]
   },
+  "rondas": [
+    "monumento",
+    "bandera"
+  ],
   "figuras": [
     {
       "id": "moais",
       "voz_completa": "voces/arcoiris/formas/figuras/moais.wav",
+      "dificultad": 28,
+      "grupo": "monumento",
+      "config": {
+        "lineas_voz": {
+          "intro": "voces/arcoiris/formas/estrella/intro_arma_z4.wav"
+        }
+      },
       "piezas": [
         {
           "forma": "rectangulo",
@@ -270,6 +285,597 @@
           "color": "#7A6E63",
           "x": 120.0,
           "y": 202.5
+        }
+      ]
+    },
+    {
+      "id": "morro_arica",
+      "voz_completa": "voces/arcoiris/formas/figuras/morro_arica_dato.wav",
+      "dificultad": 25,
+      "grupo": "monumento",
+      "config": {
+        "lineas_voz": {
+          "intro": "voces/arcoiris/formas/estrella/intro_morro.wav"
+        },
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 68.0,
+          "alto": 40.8,
+          "color": "#E3C08A",
+          "rotacion": 270,
+          "x": -88.4,
+          "y": -84.32
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 142.8,
+          "alto": 68.0,
+          "color": "#E3C08A",
+          "x": 3.4,
+          "y": -84.32
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 197.2,
+          "alto": 68.0,
+          "color": "#E3C08A",
+          "x": 173.4,
+          "y": -84.32
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 68.0,
+          "alto": 40.8,
+          "color": "#D6A86E",
+          "rotacion": 270,
+          "x": -129.2,
+          "y": -16.32
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 175.44,
+          "alto": 68.0,
+          "color": "#D6A86E",
+          "x": -21.08,
+          "y": -16.32
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 205.36,
+          "alto": 68.0,
+          "color": "#D6A86E",
+          "x": 169.32,
+          "y": -16.32
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 68.0,
+          "alto": 40.8,
+          "color": "#C8955C",
+          "rotacion": 270,
+          "x": -170.0,
+          "y": 51.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 210.8,
+          "alto": 68.0,
+          "color": "#C8955C",
+          "x": -44.2,
+          "y": 51.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 210.8,
+          "alto": 68.0,
+          "color": "#C8955C",
+          "x": 166.6,
+          "y": 51.68
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 68.0,
+          "alto": 40.8,
+          "color": "#B7824E",
+          "rotacion": 270,
+          "x": -210.8,
+          "y": 119.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 250.24,
+          "alto": 68.0,
+          "color": "#B7824E",
+          "x": -65.28,
+          "y": 119.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 212.16,
+          "alto": 68.0,
+          "color": "#B7824E",
+          "x": 165.92,
+          "y": 119.68
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 68.0,
+          "alto": 40.8,
+          "color": "#A06F42",
+          "rotacion": 270,
+          "x": -251.6,
+          "y": 187.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 292.4,
+          "alto": 68.0,
+          "color": "#A06F42",
+          "x": -85.0,
+          "y": 187.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 210.8,
+          "alto": 68.0,
+          "color": "#A06F42",
+          "x": 166.6,
+          "y": 187.68
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 29.92,
+          "alto": 163.2,
+          "color": "#B9B4C8",
+          "x": 191.76,
+          "y": -199.92
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 40.8,
+          "alto": 40.8,
+          "color": "#0039A6",
+          "x": 74.8,
+          "y": -261.12
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 81.6,
+          "alto": 40.8,
+          "color": "#FFFFFF",
+          "x": 136.0,
+          "y": -261.12
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 122.4,
+          "alto": 40.8,
+          "color": "#D52B1E",
+          "x": 115.6,
+          "y": -220.32
+        },
+        {
+          "forma": "estrella",
+          "ancho": 29.92,
+          "alto": 29.92,
+          "color": "#FFFFFF",
+          "capa": 1,
+          "x": 74.8,
+          "y": -261.12
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 190.4,
+          "alto": 59.84,
+          "color": "#4A8BE0",
+          "x": -176.8,
+          "y": 251.6
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 176.8,
+          "alto": 59.84,
+          "color": "#4A8BE0",
+          "x": 6.8,
+          "y": 251.6
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 176.8,
+          "alto": 59.84,
+          "color": "#4A8BE0",
+          "x": 183.6,
+          "y": 251.6
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 59.84,
+          "alto": 32.64,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "x": -201.28,
+          "y": 257.04
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 59.84,
+          "alto": 32.64,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "x": 165.92,
+          "y": 257.04
+        }
+      ]
+    },
+    {
+      "id": "bandera_rusia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_rusia_dato.wav",
+      "dificultad": 12,
+      "grupo": "bandera",
+      "config": {
+        "limite_intentos": 10,
+        "rotacion_por_toque": true,
+        "rotacion_inicial_aleatoria": true,
+        "lineas_voz": {
+          "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
+        },
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 136.27,
+          "alto": 136.27,
+          "color": "#FFFFFF",
+          "x": -238.47,
+          "y": -136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#FFFFFF",
+          "x": -88.57,
+          "y": -136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 149.89,
+          "alto": 136.27,
+          "color": "#FFFFFF",
+          "x": 68.13,
+          "y": -136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#FFFFFF",
+          "x": 224.84,
+          "y": -136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#0039A6",
+          "x": -224.84,
+          "y": 0.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 136.27,
+          "alto": 136.27,
+          "color": "#0039A6",
+          "x": -74.95,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#0039A6",
+          "x": 74.95,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 149.89,
+          "alto": 136.27,
+          "color": "#0039A6",
+          "x": 231.65,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 149.89,
+          "alto": 136.27,
+          "color": "#D52B1E",
+          "x": -231.65,
+          "y": 136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#D52B1E",
+          "x": -74.95,
+          "y": 136.27
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 136.27,
+          "alto": 136.27,
+          "color": "#D52B1E",
+          "x": 74.95,
+          "y": 136.27
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 163.52,
+          "alto": 136.27,
+          "color": "#D52B1E",
+          "x": 224.84,
+          "y": 136.27
+        }
+      ]
+    },
+    {
+      "id": "bandera_china",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_china_dato.wav",
+      "dificultad": 14,
+      "grupo": "bandera",
+      "config": {
+        "limite_intentos": 10,
+        "rotacion_por_toque": true,
+        "rotacion_inicial_aleatoria": true,
+        "lineas_voz": {
+          "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
+        },
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 176.8,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": -217.6,
+          "y": -139.4
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": -20.4,
+          "y": -139.4
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": 197.2,
+          "y": -139.4
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 176.8,
+          "alto": 149.6,
+          "color": "#DE2910",
+          "x": -217.6,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 149.6,
+          "color": "#DE2910",
+          "x": -20.4,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 149.6,
+          "color": "#DE2910",
+          "x": 197.2,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 176.8,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": -217.6,
+          "y": 139.4
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": -20.4,
+          "y": 139.4
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 217.6,
+          "alto": 129.2,
+          "color": "#DE2910",
+          "x": 197.2,
+          "y": 139.4
+        },
+        {
+          "forma": "estrella",
+          "ancho": 122.4,
+          "alto": 122.4,
+          "color": "#FFDE00",
+          "capa": 1,
+          "x": -204.0,
+          "y": -102.0
+        },
+        {
+          "forma": "estrella",
+          "ancho": 40.8,
+          "alto": 40.8,
+          "color": "#FFDE00",
+          "capa": 1,
+          "x": -102.0,
+          "y": -163.2
+        },
+        {
+          "forma": "estrella",
+          "ancho": 40.8,
+          "alto": 40.8,
+          "color": "#FFDE00",
+          "capa": 1,
+          "x": -61.2,
+          "y": -122.4
+        },
+        {
+          "forma": "estrella",
+          "ancho": 40.8,
+          "alto": 40.8,
+          "color": "#FFDE00",
+          "capa": 1,
+          "x": -61.2,
+          "y": -61.2
+        },
+        {
+          "forma": "estrella",
+          "ancho": 40.8,
+          "alto": 40.8,
+          "color": "#FFDE00",
+          "capa": 1,
+          "x": -102.0,
+          "y": -20.4
+        }
+      ]
+    },
+    {
+      "id": "bandera_india",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_india_dato.wav",
+      "dificultad": 13,
+      "grupo": "bandera",
+      "config": {
+        "limite_intentos": 10,
+        "rotacion_por_toque": true,
+        "rotacion_inicial_aleatoria": true,
+        "lineas_voz": {
+          "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
+        },
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#FF9933",
+          "x": -218.57,
+          "y": -136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#FF9933",
+          "x": -65.57,
+          "y": -136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#FF9933",
+          "x": 87.43,
+          "y": -136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#FF9933",
+          "x": 240.43,
+          "y": -136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#FFFFFF",
+          "x": -240.43,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#FFFFFF",
+          "x": -87.43,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#FFFFFF",
+          "x": 65.57,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#FFFFFF",
+          "x": 218.57,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#138808",
+          "x": -218.57,
+          "y": 136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#138808",
+          "x": -65.57,
+          "y": 136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 174.86,
+          "alto": 136.0,
+          "color": "#138808",
+          "x": 87.43,
+          "y": 136.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 131.14,
+          "alto": 136.0,
+          "color": "#138808",
+          "x": 240.43,
+          "y": 136.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 103.36,
+          "alto": 103.36,
+          "color": "#000080",
+          "capa": 1,
+          "x": 0.0,
+          "y": 0.0
         }
       ]
     }

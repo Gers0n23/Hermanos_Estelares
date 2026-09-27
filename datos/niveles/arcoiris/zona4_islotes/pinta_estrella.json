@@ -1,0 +1,979 @@
+{
+  "id_nivel": "arcoiris_z4_pinta_estrella",
+  "motor": "lienzo_libre",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "mandala",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "naranja",
+    "amarillo",
+    "verde",
+    "azul",
+    "violeta",
+    "rosa",
+    "turquesa",
+    "celeste",
+    "blanco",
+    "cafe",
+    "negro",
+    "gris",
+    "verde_oscuro"
+  ],
+  "color_inicial": "turquesa",
+  "herramientas": [
+    "pincel",
+    "pincel_grueso",
+    "pincel_estrella",
+    "purpurina",
+    "goma"
+  ],
+  "simetria": "mandala",
+  "papel": "#FFFFFF",
+  "laminas": [
+    {
+      "id": "mandala_flor",
+      "tipo": "guia",
+      "alfa": 0.45,
+      "regiones": [
+        {
+          "id": "petalo_ext_0",
+          "forma": "elipse",
+          "centro": [
+            612.0,
+            265.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_1",
+          "forma": "elipse",
+          "centro": [
+            585.2050807568878,
+            365.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 29.999999999999996,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_2",
+          "forma": "elipse",
+          "centro": [
+            512.0,
+            438.2050807568877
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 59.99999999999999,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_3",
+          "forma": "elipse",
+          "centro": [
+            412.0,
+            465.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 90.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_4",
+          "forma": "elipse",
+          "centro": [
+            312.00000000000006,
+            438.20508075688775
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 119.99999999999999,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_5",
+          "forma": "elipse",
+          "centro": [
+            238.79491924311225,
+            365.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 150.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_6",
+          "forma": "elipse",
+          "centro": [
+            212.0,
+            265.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 180.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_7",
+          "forma": "elipse",
+          "centro": [
+            238.79491924311225,
+            165.00000000000006
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 210.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_8",
+          "forma": "elipse",
+          "centro": [
+            311.9999999999999,
+            91.7949192431123
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 239.99999999999997,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_9",
+          "forma": "elipse",
+          "centro": [
+            411.99999999999994,
+            65.0
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 270.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_10",
+          "forma": "elipse",
+          "centro": [
+            512.0,
+            91.79491924311228
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 300.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_ext_11",
+          "forma": "elipse",
+          "centro": [
+            585.2050807568877,
+            164.99999999999991
+          ],
+          "radios": [
+            52,
+            26
+          ],
+          "giro": 330.0,
+          "fija": true,
+          "inicial": "#FFD1E8"
+        },
+        {
+          "id": "petalo_0",
+          "forma": "elipse",
+          "centro": [
+            507.2627944162883,
+            320.0
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 29.999999999999996,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "petalo_1",
+          "forma": "elipse",
+          "centro": [
+            412.0,
+            375.0
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 90.0,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "petalo_2",
+          "forma": "elipse",
+          "centro": [
+            316.7372055837118,
+            320.00000000000006
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 149.99999999999997,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "petalo_3",
+          "forma": "elipse",
+          "centro": [
+            316.7372055837117,
+            210.00000000000003
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 210.0,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "petalo_4",
+          "forma": "elipse",
+          "centro": [
+            412.0,
+            155.0
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 270.0,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "petalo_5",
+          "forma": "elipse",
+          "centro": [
+            507.2627944162883,
+            210.00000000000003
+          ],
+          "radios": [
+            72,
+            38
+          ],
+          "giro": 330.00000000000006,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "centro",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            265.0
+          ],
+          "radio": 60,
+          "fija": true,
+          "inicial": "#FFEBA0"
+        }
+      ],
+      "detalles": []
+    },
+    {
+      "id": "mandala_estrella",
+      "tipo": "guia",
+      "alfa": 0.45,
+      "regiones": [
+        {
+          "id": "aro",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            265.0
+          ],
+          "radio": 250,
+          "fija": true,
+          "inicial": "#F1E6FF"
+        },
+        {
+          "id": "triangulo_0",
+          "forma": "poligono",
+          "puntos": [
+            [
+              412.0,
+              35.0
+            ],
+            [
+              611.2,
+              380.0
+            ],
+            [
+              212.8,
+              380.0
+            ]
+          ],
+          "fija": true,
+          "inicial": "#D6F1FF"
+        },
+        {
+          "id": "triangulo_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              611.2,
+              150.0
+            ],
+            [
+              412.0,
+              495.0
+            ],
+            [
+              212.8,
+              150.0
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFE3F1"
+        },
+        {
+          "id": "centro",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            265.0
+          ],
+          "radio": 86,
+          "fija": true,
+          "inicial": "#FFEBA0"
+        },
+        {
+          "id": "gema_0",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            105.0
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        },
+        {
+          "id": "gema_1",
+          "forma": "circulo",
+          "centro": [
+            550.5640646055101,
+            185.0
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        },
+        {
+          "id": "gema_2",
+          "forma": "circulo",
+          "centro": [
+            550.5640646055102,
+            345.0
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        },
+        {
+          "id": "gema_3",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            425.0
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        },
+        {
+          "id": "gema_4",
+          "forma": "circulo",
+          "centro": [
+            273.43593539448983,
+            345.00000000000006
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        },
+        {
+          "id": "gema_5",
+          "forma": "circulo",
+          "centro": [
+            273.43593539448983,
+            185.0
+          ],
+          "radio": 22,
+          "fija": true,
+          "inicial": "#C7F2EE"
+        }
+      ],
+      "detalles": []
+    },
+    {
+      "id": "mandala_copo",
+      "tipo": "guia",
+      "alfa": 0.5,
+      "regiones": [
+        {
+          "id": "aro",
+          "forma": "circulo",
+          "centro": [
+            412.0,
+            265.0
+          ],
+          "radio": 250,
+          "fija": true,
+          "inicial": "#EEF7FF"
+        },
+        {
+          "id": "centro",
+          "forma": "estrella",
+          "centro": [
+            412.0,
+            265.0
+          ],
+          "radio": 60,
+          "fija": true,
+          "inicial": "#D6F1FF"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              662.0,
+              265.0
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              532.0,
+              265.0
+            ],
+            [
+              567.3553390593274,
+              229.64466094067262
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              532.0,
+              265.0
+            ],
+            [
+              567.3553390593274,
+              300.3553390593274
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              602.0,
+              265.0
+            ],
+            [
+              630.2842712474619,
+              236.7157287525381
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              602.0,
+              265.0
+            ],
+            [
+              630.2842712474619,
+              293.2842712474619
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              537.0,
+              481.50635094610965
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              472.0,
+              368.92304845413264
+            ],
+            [
+              520.2962913144534,
+              381.8640007092587
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              472.0,
+              368.92304845413264
+            ],
+            [
+              459.05904774487396,
+              417.21933976858605
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              507.0,
+              429.54482671904333
+            ],
+            [
+              545.6370330515628,
+              439.8975885231442
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              507.0,
+              429.54482671904333
+            ],
+            [
+              496.64723819589915,
+              468.1818597706061
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              287.00000000000006,
+              481.5063509461097
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              352.0,
+              368.92304845413264
+            ],
+            [
+              364.94095225512604,
+              417.21933976858605
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              352.0,
+              368.92304845413264
+            ],
+            [
+              303.7037086855466,
+              381.8640007092587
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              317.00000000000006,
+              429.5448267190434
+            ],
+            [
+              327.3527618041009,
+              468.18185977060614
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              317.00000000000006,
+              429.5448267190434
+            ],
+            [
+              278.36296694843736,
+              439.89758852314424
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              162.0,
+              265.00000000000006
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              292.0,
+              265.0
+            ],
+            [
+              256.6446609406726,
+              300.3553390593274
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              292.0,
+              265.0
+            ],
+            [
+              256.6446609406726,
+              229.64466094067262
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              222.0,
+              265.0
+            ],
+            [
+              193.7157287525381,
+              293.2842712474619
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              222.0,
+              265.0
+            ],
+            [
+              193.7157287525381,
+              236.7157287525381
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              286.9999999999999,
+              48.49364905389038
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              351.99999999999994,
+              161.0769515458674
+            ],
+            [
+              303.70370868554653,
+              148.13599929074138
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              351.99999999999994,
+              161.0769515458674
+            ],
+            [
+              364.940952255126,
+              112.78066023141398
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              316.9999999999999,
+              100.4551732809567
+            ],
+            [
+              278.36296694843713,
+              90.10241147685589
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              316.9999999999999,
+              100.4551732809567
+            ],
+            [
+              327.3527618041007,
+              61.81814022939396
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              412.0,
+              265.0
+            ],
+            [
+              537.0,
+              48.49364905389035
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              472.0,
+              161.07695154586736
+            ],
+            [
+              459.05904774487396,
+              112.78066023141395
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              472.0,
+              161.07695154586736
+            ],
+            [
+              520.2962913144534,
+              148.13599929074132
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              507.0,
+              100.45517328095667
+            ],
+            [
+              496.64723819589915,
+              61.81814022939394
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        },
+        {
+          "tipo": "linea",
+          "puntos": [
+            [
+              507.0,
+              100.45517328095667
+            ],
+            [
+              545.6370330515628,
+              90.10241147685585
+            ]
+          ],
+          "grosor": 5,
+          "color": "#9AC8E8"
+        }
+      ]
+    }
+  ],
+  "laminas_por_partida": 2,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/estrella/mostrar_01.wav",
+      "voces/arcoiris/pinta/estrella/mostrar_02.wav",
+      "voces/arcoiris/pinta/estrella/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/estrella/victoria_01.wav",
+      "voces/arcoiris/pinta/estrella/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "uso_purpurina": "voces/arcoiris/pinta/estrella/uso_purpurina.wav",
+    "uso_purpurina_lluvia": "voces/arcoiris/pinta/estrella/uso_purpurina_lluvia.wav",
+    "uso_sello_pony": "voces/arcoiris/pinta/estrella/uso_pony.wav",
+    "uso_sello_luna": "voces/arcoiris/pinta/estrella/uso_luna.wav",
+    "uso_sello_destello": "voces/arcoiris/pinta/estrella/uso_destello.wav",
+    "intro": "voces/arcoiris/pinta/estrella/intro_mandala.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/estrella/siguiente_mandala.wav"
+    ]
+  }
+}

@@ -357,6 +357,21 @@ Al recuperar todos los destellos de un planeta, se reproduce una **escena animad
 de su mundo y, de regalo, llega una video-llamada cómica de papá desde la colección.
 Son la recompensa narrativa y el "pegamento" del guion.
 
+### Las migas de papá: álbum de recuerdos *(decisión del PO, 27-Sep-2026)*
+
+Cuando el Coleccionauta se llevó a papá, a él se le cayeron las **fotos de la billetera**, y
+quedaron flotando por la galaxia como estrellas-recuerdo. Los hermanos las encuentran en
+momentos fijos de la aventura: viaje estelar, zonas completas, piezas de la nave, primera
+apertura y rescate final. Nunca hay azar y nunca se pierde una foto. Las fotos se guardan en
+**un álbum por hermano** (de bebé a hoy, en orden de edad, ~12-15 fotos cada uno) **más un
+álbum familiar** compartido (~8-10 fotos). Se abren desde la pantalla principal cuando quieran,
+y cada foto suena con un audio grabado por la familia. Las fotos y voces reales **no se suben al
+repo** (`.gitignore`). Mientras no estén, el juego usa placeholders. En el final, papá ve el
+álbum completo y el Coleccionauta aprende que los recuerdos se comparten, no se guardan en cajas.
+El PO aprobó además 8 ideas de personalización familiar (cumpleaños, "Mis obras", dibujos reales,
+papá real en las video-llamadas, la casa real, cápsula del tiempo, estampitas y frases de la
+familia). Todo el detalle está en `docs/fichas/album-recuerdos.md`.
+
 ---
 
 ## 5. Rutas personalizadas y niveles por edad
@@ -431,7 +446,7 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | # | Pregunta | Responsable | Estado |
 |---|---|---|---|
 | P1 | Colores/diseño definitivo de cada hermano (¿los eligen los propios niños?) | Product Owner (papá + hijos) | Abierta |
-| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | **Resuelta (06-Ago-2026)** — se usa voz sintética (TTS) como placeholder durante el desarrollo; la grabación con la familia real queda para más adelante, antes de la pasada final de voces (HE-28), decisión del PO. **Actualización (14-Sep-2026, decisión del PO)**: las voces de personaje con IA (Qwen3-TTS en fal.ai) de **Cometa** y **Coco** pasan a ser las **oficiales** del juego, ya no placeholder (`assets/audio/voces/guion_voces.md`). **Abierto**: si HE-28 mantiene alguna grabación de la familia (por ejemplo, la voz de papá en las video-llamadas) |
+| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | **Resuelta (06-Ago-2026)** — se usa voz sintética (TTS) como placeholder durante el desarrollo; la grabación con la familia real queda para más adelante, antes de la pasada final de voces (HE-28), decisión del PO. **Actualización (14-Sep-2026, decisión del PO)**: las voces de personaje con IA (Qwen3-TTS en fal.ai) de **Cometa** y **Coco** pasan a ser las **oficiales** del juego, ya no placeholder (`assets/audio/voces/guion_voces.md`). **Abierto**: si HE-28 mantiene alguna grabación de la familia (por ejemplo, la voz de papá en las video-llamadas). **Actualización (27-Sep-2026, decisión del PO)**: la familia (los 3 niños, papá y mamá) está grabando audios reales para el álbum de recuerdos, y papá real en las video-llamadas pasa al backlog (`docs/fichas/album-recuerdos.md` §9) |
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |

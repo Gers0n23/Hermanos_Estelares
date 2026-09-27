@@ -1,0 +1,841 @@
+{
+  "id_nivel": "arcoiris_z2_pinta_semilla",
+  "motor": "lienzo_libre",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "sellos_escena",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "verde",
+    "rosa",
+    "violeta"
+  ],
+  "herramientas": [
+    "sello_dino",
+    "sello_auto",
+    "sello_estrella",
+    "pincel"
+  ],
+  "herramienta_inicial": "sello_dino",
+  "laminas": [
+    {
+      "id": "pradera",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#BFE8FF"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            724,
+            82
+          ],
+          "radio": 52,
+          "fija": true,
+          "inicial": "#FFD23F"
+        },
+        {
+          "id": "nube_1",
+          "forma": "poligono",
+          "puntos": [
+            [
+              248.0,
+              92.0
+            ],
+            [
+              247.0,
+              96.7
+            ],
+            [
+              244.2,
+              101.3
+            ],
+            [
+              239.5,
+              105.6
+            ],
+            [
+              233.1,
+              109.6
+            ],
+            [
+              225.2,
+              113.2
+            ],
+            [
+              215.8,
+              116.3
+            ],
+            [
+              205.4,
+              118.7
+            ],
+            [
+              194.1,
+              120.5
+            ],
+            [
+              182.2,
+              121.6
+            ],
+            [
+              170.0,
+              122.0
+            ],
+            [
+              157.8,
+              121.6
+            ],
+            [
+              145.9,
+              120.5
+            ],
+            [
+              134.6,
+              118.7
+            ],
+            [
+              124.2,
+              116.3
+            ],
+            [
+              114.8,
+              113.2
+            ],
+            [
+              106.9,
+              109.6
+            ],
+            [
+              100.5,
+              105.6
+            ],
+            [
+              95.8,
+              101.3
+            ],
+            [
+              93.0,
+              96.7
+            ],
+            [
+              92.0,
+              92.0
+            ],
+            [
+              83.7,
+              84.1
+            ],
+            [
+              92.4,
+              77.5
+            ],
+            [
+              100.5,
+              71.6
+            ],
+            [
+              106.9,
+              65.5
+            ],
+            [
+              114.8,
+              60.2
+            ],
+            [
+              124.2,
+              55.6
+            ],
+            [
+              134.6,
+              51.9
+            ],
+            [
+              145.9,
+              49.2
+            ],
+            [
+              157.8,
+              47.6
+            ],
+            [
+              170.0,
+              44.1
+            ],
+            [
+              183.8,
+              41.6
+            ],
+            [
+              198.3,
+              41.8
+            ],
+            [
+              211.6,
+              44.9
+            ],
+            [
+              222.2,
+              50.5
+            ],
+            [
+              229.2,
+              57.9
+            ],
+            [
+              233.1,
+              65.5
+            ],
+            [
+              239.5,
+              71.6
+            ],
+            [
+              244.2,
+              78.1
+            ],
+            [
+              247.0,
+              85.0
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFFFFF"
+        },
+        {
+          "id": "nube_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              524.6,
+              72.0
+            ],
+            [
+              523.9,
+              75.3
+            ],
+            [
+              521.9,
+              78.5
+            ],
+            [
+              518.6,
+              81.5
+            ],
+            [
+              514.2,
+              84.3
+            ],
+            [
+              508.6,
+              86.8
+            ],
+            [
+              502.1,
+              89.0
+            ],
+            [
+              494.8,
+              90.7
+            ],
+            [
+              486.9,
+              92.0
+            ],
+            [
+              478.5,
+              92.7
+            ],
+            [
+              470.0,
+              93.0
+            ],
+            [
+              461.5,
+              92.7
+            ],
+            [
+              453.1,
+              92.0
+            ],
+            [
+              445.2,
+              90.7
+            ],
+            [
+              437.9,
+              89.0
+            ],
+            [
+              431.4,
+              86.8
+            ],
+            [
+              425.8,
+              84.3
+            ],
+            [
+              421.4,
+              81.5
+            ],
+            [
+              418.1,
+              78.5
+            ],
+            [
+              416.1,
+              75.3
+            ],
+            [
+              415.4,
+              72.0
+            ],
+            [
+              409.6,
+              66.5
+            ],
+            [
+              415.7,
+              61.8
+            ],
+            [
+              421.4,
+              57.7
+            ],
+            [
+              425.8,
+              53.5
+            ],
+            [
+              431.4,
+              49.7
+            ],
+            [
+              437.9,
+              46.5
+            ],
+            [
+              445.2,
+              43.9
+            ],
+            [
+              453.1,
+              42.0
+            ],
+            [
+              461.5,
+              40.9
+            ],
+            [
+              470.0,
+              38.4
+            ],
+            [
+              479.7,
+              36.7
+            ],
+            [
+              489.8,
+              36.8
+            ],
+            [
+              499.1,
+              39.0
+            ],
+            [
+              506.6,
+              43.0
+            ],
+            [
+              511.4,
+              48.1
+            ],
+            [
+              514.2,
+              53.5
+            ],
+            [
+              518.6,
+              57.7
+            ],
+            [
+              521.9,
+              62.3
+            ],
+            [
+              523.9,
+              67.1
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FFFFFF"
+        },
+        {
+          "id": "colinas",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              330
+            ],
+            [
+              200,
+              270
+            ],
+            [
+              420,
+              310
+            ],
+            [
+              640,
+              258
+            ],
+            [
+              824,
+              300
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "suave": 2,
+          "fija": true,
+          "inicial": "#8FD98A"
+        },
+        {
+          "id": "pasto",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              400
+            ],
+            [
+              260,
+              380
+            ],
+            [
+              520,
+              402
+            ],
+            [
+              824,
+              386
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "suave": 2,
+          "fija": true,
+          "inicial": "#5CC95F"
+        },
+        {
+          "id": "camino",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              470
+            ],
+            [
+              824,
+              440
+            ],
+            [
+              824,
+              500
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "fija": true,
+          "inicial": "#E8D3A6"
+        },
+        {
+          "id": "flor_1",
+          "forma": "flor",
+          "centro": [
+            90,
+            420
+          ],
+          "radio": 20,
+          "fija": true,
+          "inicial": "#FF7EB6"
+        },
+        {
+          "id": "flor_2",
+          "forma": "flor",
+          "centro": [
+            700,
+            416
+          ],
+          "radio": 18,
+          "fija": true,
+          "inicial": "#FFD23F"
+        },
+        {
+          "id": "flor_3",
+          "forma": "flor",
+          "centro": [
+            380,
+            418
+          ],
+          "radio": 16,
+          "fija": true,
+          "inicial": "#B48CE8"
+        }
+      ],
+      "detalles": [
+        {
+          "tipo": "ojo",
+          "centro": [
+            708,
+            76
+          ],
+          "radio": 8
+        },
+        {
+          "tipo": "ojo",
+          "centro": [
+            740,
+            76
+          ],
+          "radio": 8
+        },
+        {
+          "tipo": "sonrisa",
+          "centro": [
+            724,
+            92
+          ],
+          "radio": 14
+        }
+      ]
+    },
+    {
+      "id": "valle_dinos",
+      "tipo": "zonas",
+      "regiones": [
+        {
+          "id": "cielo",
+          "forma": "rect",
+          "rect": [
+            0,
+            0,
+            824,
+            530
+          ],
+          "redondeo": 0,
+          "fija": true,
+          "inicial": "#FFE3C4"
+        },
+        {
+          "id": "sol",
+          "forma": "circulo",
+          "centro": [
+            120,
+            90
+          ],
+          "radio": 50,
+          "fija": true,
+          "inicial": "#FF9A2E"
+        },
+        {
+          "id": "volcan",
+          "forma": "poligono",
+          "puntos": [
+            [
+              510,
+              340
+            ],
+            [
+              618,
+              150
+            ],
+            [
+              682,
+              150
+            ],
+            [
+              790,
+              340
+            ]
+          ],
+          "fija": true,
+          "inicial": "#B07A55"
+        },
+        {
+          "id": "lava",
+          "forma": "poligono",
+          "puntos": [
+            [
+              618,
+              152
+            ],
+            [
+              682,
+              152
+            ],
+            [
+              672,
+              200
+            ],
+            [
+              656,
+              176
+            ],
+            [
+              640,
+              206
+            ],
+            [
+              628,
+              180
+            ]
+          ],
+          "fija": true,
+          "inicial": "#FF6B3D"
+        },
+        {
+          "id": "humo",
+          "forma": "elipse",
+          "centro": [
+            650,
+            110
+          ],
+          "radios": [
+            46,
+            30
+          ],
+          "fija": true,
+          "inicial": "#F4F0FF"
+        },
+        {
+          "id": "suelo",
+          "forma": "poligono",
+          "puntos": [
+            [
+              0,
+              350
+            ],
+            [
+              200,
+              330
+            ],
+            [
+              420,
+              352
+            ],
+            [
+              640,
+              332
+            ],
+            [
+              824,
+              346
+            ],
+            [
+              824,
+              530
+            ],
+            [
+              0,
+              530
+            ]
+          ],
+          "suave": 2,
+          "fija": true,
+          "inicial": "#C9E59A"
+        },
+        {
+          "id": "lago",
+          "forma": "elipse",
+          "centro": [
+            210,
+            452
+          ],
+          "radios": [
+            150,
+            40
+          ],
+          "fija": true,
+          "inicial": "#8ED3FF"
+        },
+        {
+          "id": "tronco",
+          "forma": "rect",
+          "rect": [
+            60,
+            220,
+            22,
+            150
+          ],
+          "redondeo": 10,
+          "fija": true,
+          "inicial": "#9A6238"
+        },
+        {
+          "id": "hojas",
+          "forma": "poligono",
+          "puntos": [
+            [
+              71,
+              222
+            ],
+            [
+              0,
+              250
+            ],
+            [
+              30,
+              210
+            ],
+            [
+              71,
+              200
+            ],
+            [
+              120,
+              190
+            ],
+            [
+              150,
+              230
+            ],
+            [
+              100,
+              215
+            ]
+          ],
+          "suave": 1,
+          "fija": true,
+          "inicial": "#4CBF56"
+        },
+        {
+          "id": "tronco_2",
+          "forma": "rect",
+          "rect": [
+            440,
+            250,
+            18,
+            110
+          ],
+          "redondeo": 9,
+          "fija": true,
+          "inicial": "#9A6238"
+        },
+        {
+          "id": "hojas_2",
+          "forma": "poligono",
+          "puntos": [
+            [
+              449,
+              252
+            ],
+            [
+              390,
+              270
+            ],
+            [
+              412,
+              236
+            ],
+            [
+              449,
+              228
+            ],
+            [
+              492,
+              222
+            ],
+            [
+              512,
+              258
+            ],
+            [
+              470,
+              244
+            ]
+          ],
+          "suave": 1,
+          "fija": true,
+          "inicial": "#4CBF56"
+        }
+      ],
+      "detalles": []
+    }
+  ],
+  "laminas_por_partida": 2,
+  "segundos_mostrar": 30,
+  "sellos_vivos": true,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/semilla/mostrar_01.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_02.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/semilla/victoria_01.wav",
+      "voces/arcoiris/pinta/semilla/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "muestramelo": [
+      "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
+      "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
+    "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",
+    "dino_camina": [
+      "voces/arcoiris/pinta/comun/dino_camina_01.wav",
+      "voces/arcoiris/pinta/comun/dino_camina_02.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/semilla/intro_sellos.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/semilla/siguiente_sellos.wav"
+    ]
+  }
+}

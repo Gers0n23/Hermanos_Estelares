@@ -197,6 +197,45 @@ Otros cambios del motor:
 - La pista que coloca una pieza (`colocar_pista`) elige por geometría (forma, tamaño y espejo), no por
   nombre y color. Antes podía poner un rectángulo del mismo color pero de otro tamaño.
 
+## 10. Rondas, banderas y emblemas encima (PO, 27-Sep-2026)
+
+El PO pidió que el Planeta Arcoíris dure al menos una hora por hermano. Con una sola figura por estación,
+Maxi terminaba en unos 30 segundos. Ahora **cada estación es una serie de rondas: una figura a la vez**.
+
+| Campo | Qué hace |
+|---|---|
+| `rondas` (nivel) | Un número, N figuras sorteadas del pool `figuras`, o una lista de grupos (`["monumento", "bandera"]`): una ronda por grupo, sorteada entre las figuras con ese `grupo`. |
+| `fija` (figura) | Va siempre primera (así la intro de zona, que la nombra, sigue calzando). |
+| `dificultad` (figura) | Las rondas sorteadas se ordenan de menor a mayor: la estación sube suave. El generador pone el número de piezas. |
+| `grupo` (figura) | Para `rondas` en lista (Sofía). |
+| `config` (figura) | Sobrescribe campos del nivel en su ronda (límite, giro, `exigir_color`, `lineas_voz`). Si trae `figuras`, la ronda es una escena de varias figuras (el jardín de Nicole). |
+| `exigir_color` | Una pieza solo calza donde además coincide el color. Las franjas iguales de las banderas se distinguen así. Semilla: la pieza rebota y su casita brilla. |
+| `capa` (pieza) | Emblema **encima** de otras piezas: la estrella de Chile, el disco de Japón, el sol de Argentina, el rombo y el globo de Brasil. Su silueta se dibuja sobre las piezas ya puestas de las capas de abajo. Las piezas puestas de la capa k van en z 2k, y la pieza tomada en z 20. |
+| `lineas_voz.ronda_siguiente` | Voz entre rondas ("¡Vamos con otra figura!"). Si falta, se usa `prueba_superada`. |
+| `lineas_voz.intro_ronda` | Intro propia de una ronda que no es la primera (Sofía: "¡Ahora, una bandera!"). |
+| `lineas_voz.intro_generica` | La dice Coco al tocarlo desde la 2.ª ronda, o al retomar una partida a medias. |
+
+Flujo:
+
+1. Se encaja la última pieza de la ronda y empieza la **mini-fiesta**. La figura baila en ola (`PiezaEncajar.bailar`), Coco baila, cae confeti y la medalla de la ronda se llena con la figura en chiquito. Coco dice `voz_completa`: el nombre de la figura y, para Sofía, un dato breve.
+2. Suena `ronda_siguiente` y entra la figura siguiente.
+3. `completado`, con los destellos de todas las rondas sumados, llega **solo al final**, con la celebración grande.
+4. Estrellitas de Sofía: cuenta la peor ronda, y cada pista resta una.
+
+- **Medallas**: arriba a la derecha, una por ronda y sin números. La ronda en juego late, las terminadas muestran su figura y las que faltan esperan con una estrellita.
+- **Avance a medio jugar**: al terminar cada ronda se guarda con `guardar_estado_parcial` qué figuras tocaron, en qué ronda va la serie, los destellos, las estrellitas, las pistas y si hubo derrota. Al volver se retoma en la misma ronda, con las mismas figuras y las medallas llenas. Se borra al ganar (contrato base).
+- **Compatibilidad**: los niveles sin `rondas` y el reto dorado (`pruebas`, marco) funcionan igual que antes.
+
+**Generador** (`herramientas/figuras_formas.py`, tabla `ESTACIONES`):
+
+- Primitivas nuevas: `O` (óvalo), `RB` (rombo), `SC` (semicírculo) y `P` (pieza por su centro, con cualquier giro).
+- Validación por capas: solo se prohíben los solapes dentro de una misma capa, y todo emblema debe quedar entero sobre piezas de capas más bajas.
+- `exigir_color` permite piezas iguales de distinto color.
+- Los emblemas de Maxi pueden bajar a 52 px de lado; su zona tocable sigue siendo de 96 px.
+- Escala automática: la figura se agranda todo lo que dejan el tablero y la bandeja a tamaño real.
+- Nicole: `nombre_voz` automático según la forma, o según el color en las banderas ("¡Busca el color rojo!").
+- El jardín de Nicole (zona 5) se conserva tal cual, como una ronda-escena.
+
 ## 7. Pendientes
 
 - Arte final (HE-13): hoy las formas son vectoriales por código con el estilo "peluche pintado".

@@ -1,0 +1,65 @@
+{
+  "id_nivel": "arcoiris_z1_pinta_brote",
+  "motor": "lienzo_libre",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "libre",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [
+    "rojo",
+    "naranja",
+    "amarillo",
+    "verde",
+    "azul",
+    "violeta",
+    "rosa",
+    "turquesa",
+    "celeste",
+    "blanco",
+    "cafe",
+    "negro",
+    "gris",
+    "verde_oscuro"
+  ],
+  "color_inicial": "rosa",
+  "herramientas": [
+    "pincel",
+    "pincel_corazon",
+    "pincel_estrella",
+    "goma"
+  ],
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/brote/mostrar_01.wav",
+      "voces/arcoiris/pinta/brote/mostrar_02.wav",
+      "voces/arcoiris/pinta/brote/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/brote/victoria_01.wav",
+      "voces/arcoiris/pinta/brote/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "uso_pincel_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "uso_sello_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
+    "igualita": [
+      "voces/arcoiris/pinta/brote/igualita_01.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/brote/intro_libre.wav"
+  }
+}

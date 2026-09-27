@@ -204,6 +204,12 @@ func _probar_semilla(motor, nivel: Dictionary) -> void:
 func _probar_reglas(motor, nivel: Dictionary) -> void:
 	await _esperar_gotas(motor)
 	var gota = _gota_util(motor)
+	var espera := 0.0
+	while gota == null and espera < 12.0:
+		# La mezcla de Sofia puede empezar con gotas que no sirven: se espera a que caiga una util.
+		await _esperar(0.2)
+		espera += 0.2
+		gota = _gota_util(motor)
 	if gota == null:
 		_chequear(false, "hay una gota util en pantalla")
 		return

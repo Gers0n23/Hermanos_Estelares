@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
   "caras": false,
   "modelo_mini": true,
@@ -33,12 +33,20 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/brote/ronda_01.wav",
+      "voces/arcoiris/formas/brote/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/brote/intro_ronda.wav"
   },
+  "rondas": 3,
   "figuras": [
     {
       "id": "casita",
       "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
+      "dificultad": 6,
+      "fija": true,
       "piezas": [
         {
           "forma": "triangulo",
@@ -93,6 +101,275 @@
           "nombre_voz": "rectangulo",
           "x": 102.0,
           "y": 108.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_francia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_francia.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#0055A4",
+          "nombre_voz": "color_azul",
+          "x": -182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#0055A4",
+          "nombre_voz": "color_azul",
+          "x": -182.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#EF4135",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#EF4135",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": 91.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_italia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_italia.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#009246",
+          "nombre_voz": "color_verde",
+          "x": -182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#009246",
+          "nombre_voz": "color_verde",
+          "x": -182.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 0.0,
+          "y": 91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#CE2B37",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": -91.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 182.0,
+          "alto": 182.0,
+          "color": "#CE2B37",
+          "nombre_voz": "color_rojo",
+          "x": 182.0,
+          "y": 91.0
+        }
+      ]
+    },
+    {
+      "id": "gatito",
+      "voz_completa": "voces/arcoiris/formas/figuras/gatito.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 98.0,
+          "alto": 84.0,
+          "color": "#F9B8D4",
+          "nombre_voz": "triangulo",
+          "x": -152.6,
+          "y": -210.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 98.0,
+          "alto": 84.0,
+          "color": "#F9B8D4",
+          "nombre_voz": "triangulo",
+          "x": 1.4,
+          "y": -210.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 252.0,
+          "alto": 196.0,
+          "color": "#F9B8D4",
+          "nombre_voz": "rectangulo",
+          "cara": true,
+          "x": -75.6,
+          "y": -70.0
+        },
+        {
+          "forma": "trapecio",
+          "ancho": 308.0,
+          "alto": 224.0,
+          "color": "#F9B8D4",
+          "nombre_voz": "trapecio",
+          "x": -75.6,
+          "y": 140.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 154.0,
+          "alto": 72.8,
+          "color": "#F9B8D4",
+          "nombre_voz": "rectangulo_chico",
+          "x": 152.6,
+          "y": 204.4
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 72.8,
+          "alto": 72.8,
+          "color": "#FF6B6B",
+          "rotacion": 270,
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": -75.6,
+          "y": -131.6
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 72.8,
+          "alto": 72.8,
+          "color": "#FF6B6B",
+          "rotacion": 90,
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": -2.8,
+          "y": -131.6
+        }
+      ]
+    },
+    {
+      "id": "corazon",
+      "voz_completa": "voces/arcoiris/formas/figuras/corazon.wav",
+      "dificultad": 6,
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#FF6FA8",
+          "rotacion": 270,
+          "nombre_voz": "triangulo",
+          "x": -77.0,
+          "y": -61.05
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#FF6FA8",
+          "nombre_voz": "triangulo",
+          "x": 77.0,
+          "y": -61.05
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#FF6FA8",
+          "rotacion": 180,
+          "nombre_voz": "triangulo",
+          "x": -77.0,
+          "y": 92.95
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 154.0,
+          "alto": 154.0,
+          "color": "#FF6FA8",
+          "rotacion": 90,
+          "nombre_voz": "triangulo",
+          "x": 77.0,
+          "y": 92.95
+        },
+        {
+          "forma": "semicirculo",
+          "ancho": 217.79,
+          "alto": 108.89,
+          "color": "#FF6FA8",
+          "rotacion": -45,
+          "nombre_voz": "semicirculo",
+          "x": -115.5,
+          "y": -99.55
+        },
+        {
+          "forma": "semicirculo",
+          "ancho": 217.79,
+          "alto": 108.89,
+          "color": "#FF6FA8",
+          "rotacion": 45,
+          "nombre_voz": "semicirculo",
+          "x": 115.5,
+          "y": -99.55
         }
       ]
     }

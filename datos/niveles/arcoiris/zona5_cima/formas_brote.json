@@ -7,51 +7,17 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 120,
-  "limite_intentos": 16,
+  "modo": "arma_figura",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
   "caras": false,
-  "modo": "escena",
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 110,
   "guia_color": false,
-  "escena": {
-    "tipo": "jardin",
-    "suelo_y": 430,
-    "decorados": [
-      {
-        "forma": "rectangulo",
-        "ancho": 16,
-        "alto": 30,
-        "x": 455,
-        "y": 418,
-        "color": "#E8B53A"
-      },
-      {
-        "forma": "rectangulo",
-        "ancho": 16,
-        "alto": 30,
-        "x": 482,
-        "y": 418,
-        "color": "#E8B53A"
-      },
-      {
-        "forma": "rectangulo",
-        "ancho": 16,
-        "alto": 30,
-        "x": 528,
-        "y": 418,
-        "color": "#E8B53A"
-      },
-      {
-        "forma": "rectangulo",
-        "ancho": 16,
-        "alto": 30,
-        "x": 555,
-        "y": 418,
-        "color": "#E8B53A"
-      }
-    ]
-  },
+  "limite_intentos": 12,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/brote/intro_z5.wav",
     "pista": "voces/arcoiris/formas/brote/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/brote/acierto_01.wav",
@@ -68,138 +34,485 @@
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
     "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
-    "intro": "voces/arcoiris/formas/brote/intro_z5.wav",
-    "especial": "voces/arcoiris/formas/brote/especial_01.wav"
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/brote/ronda_01.wav",
+      "voces/arcoiris/formas/brote/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/brote/intro_ronda.wav"
   },
+  "rondas": 3,
   "figuras": [
     {
-      "id": "casa",
-      "centro": [
-        0,
-        0
-      ],
+      "id": "jardin",
+      "fija": true,
+      "dificultad": 8,
+      "config": {
+        "escena": {
+          "tipo": "jardin",
+          "suelo_y": 430,
+          "decorados": [
+            {
+              "forma": "rectangulo",
+              "ancho": 16,
+              "alto": 30,
+              "x": 455,
+              "y": 418,
+              "color": "#E8B53A"
+            },
+            {
+              "forma": "rectangulo",
+              "ancho": 16,
+              "alto": 30,
+              "x": 482,
+              "y": 418,
+              "color": "#E8B53A"
+            },
+            {
+              "forma": "rectangulo",
+              "ancho": 16,
+              "alto": 30,
+              "x": 528,
+              "y": 418,
+              "color": "#E8B53A"
+            },
+            {
+              "forma": "rectangulo",
+              "ancho": 16,
+              "alto": 30,
+              "x": 555,
+              "y": 418,
+              "color": "#E8B53A"
+            }
+          ]
+        },
+        "iman_tolerancia_px": 120,
+        "limite_intentos": 16,
+        "modo": "escena",
+        "guia_color": false,
+        "bandeja_escala_real": false,
+        "modelo_mini": false,
+        "lineas_voz": {
+          "especial": "voces/arcoiris/formas/brote/especial_01.wav"
+        },
+        "figuras": [
+          {
+            "id": "casa",
+            "centro": [
+              0,
+              0
+            ],
+            "piezas": [
+              {
+                "forma": "cuadrado",
+                "ancho": 150,
+                "alto": 150,
+                "color": "#F0A8C8",
+                "x": 130,
+                "y": 355,
+                "nombre_voz": "casa"
+              },
+              {
+                "forma": "triangulo",
+                "ancho": 190,
+                "alto": 110,
+                "color": "#FF6B6B",
+                "x": 130,
+                "y": 225,
+                "nombre_voz": "techo"
+              }
+            ],
+            "voz_completa": "voces/arcoiris/formas/figuras/casa.wav"
+          },
+          {
+            "id": "sol",
+            "centro": [
+              0,
+              0
+            ],
+            "piezas": [
+              {
+                "forma": "circulo",
+                "ancho": 100,
+                "alto": 100,
+                "color": "#FFCB3D",
+                "x": 560,
+                "y": 80,
+                "nombre_voz": "sol",
+                "cara": true
+              }
+            ],
+            "voz_completa": "voces/arcoiris/formas/figuras/sol.wav"
+          },
+          {
+            "id": "arbol",
+            "centro": [
+              0,
+              0
+            ],
+            "piezas": [
+              {
+                "forma": "circulo",
+                "ancho": 140,
+                "alto": 140,
+                "color": "#7DD87A",
+                "x": 330,
+                "y": 250,
+                "nombre_voz": "copa",
+                "cara": true
+              },
+              {
+                "forma": "rectangulo",
+                "ancho": 58,
+                "alto": 110,
+                "color": "#B07A4F",
+                "x": 330,
+                "y": 375,
+                "nombre_voz": "tronco"
+              }
+            ],
+            "voz_completa": "voces/arcoiris/formas/figuras/arbol.wav"
+          },
+          {
+            "id": "jirafa",
+            "centro": [
+              0,
+              0
+            ],
+            "piezas": [
+              {
+                "forma": "ovalo",
+                "ancho": 150,
+                "alto": 90,
+                "color": "#FFCB3D",
+                "x": 505,
+                "y": 360,
+                "nombre_voz": "cuerpo_jirafa",
+                "decoracion": "manchas"
+              },
+              {
+                "forma": "rectangulo",
+                "ancho": 52,
+                "alto": 130,
+                "color": "#FFCB3D",
+                "x": 556,
+                "y": 265,
+                "nombre_voz": "cuello_jirafa"
+              },
+              {
+                "forma": "circulo",
+                "ancho": 70,
+                "alto": 70,
+                "color": "#FFCB3D",
+                "x": 575,
+                "y": 180,
+                "nombre_voz": "cabeza_jirafa",
+                "cara": true
+              }
+            ],
+            "voz_completa": "voces/arcoiris/formas/figuras/jirafa.wav"
+          },
+          {
+            "id": "tesoro",
+            "centro": [
+              0,
+              0
+            ],
+            "piezas": [
+              {
+                "forma": "corazon",
+                "ancho": 72,
+                "alto": 66,
+                "color": "#FFCB3D",
+                "x": 440,
+                "y": 522,
+                "opcional": true,
+                "especial": true
+              }
+            ]
+          }
+        ]
+      },
+      "voz_completa": "voces/arcoiris/formas/figuras/jardin.wav",
+      "piezas": []
+    },
+    {
+      "id": "bandera_bolivia",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_bolivia.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
       "piezas": [
         {
-          "forma": "cuadrado",
-          "ancho": 150,
-          "alto": 150,
-          "color": "#F0A8C8",
-          "x": 130,
-          "y": 355,
-          "nombre_voz": "casa"
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#D52B1E",
+          "nombre_voz": "color_rojo",
+          "x": -154.0,
+          "y": -140.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#D52B1E",
+          "nombre_voz": "color_rojo",
+          "x": 154.0,
+          "y": -140.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#F9E300",
+          "nombre_voz": "color_amarillo",
+          "x": -154.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#F9E300",
+          "nombre_voz": "color_amarillo",
+          "x": 154.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#007934",
+          "nombre_voz": "color_verde",
+          "x": -154.0,
+          "y": 140.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#007934",
+          "nombre_voz": "color_verde",
+          "x": 154.0,
+          "y": 140.0
+        }
+      ]
+    },
+    {
+      "id": "torres_paine",
+      "voz_completa": "voces/arcoiris/formas/figuras/torres_paine.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 240.0,
+          "color": "#8E9BB5",
+          "nombre_voz": "triangulo_grande",
+          "x": -107.0,
+          "y": -10.0
         },
         {
           "forma": "triangulo",
-          "ancho": 190,
-          "alto": 110,
-          "color": "#FF6B6B",
-          "x": 130,
-          "y": 225,
-          "nombre_voz": "techo"
-        }
-      ]
-    },
-    {
-      "id": "sol",
-      "centro": [
-        0,
-        0
-      ],
-      "piezas": [
+          "ancho": 55.21,
+          "alto": 125.0,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": -107.0,
+          "y": -67.5
+        },
         {
-          "forma": "circulo",
-          "ancho": 100,
-          "alto": 100,
-          "color": "#FFCB3D",
-          "x": 560,
-          "y": 80,
-          "nombre_voz": "sol",
-          "cara": true
-        }
-      ]
-    },
-    {
-      "id": "arbol",
-      "centro": [
-        0,
-        0
-      ],
-      "piezas": [
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 300.0,
+          "color": "#8E9BB5",
+          "nombre_voz": "triangulo_grande",
+          "x": 0.0,
+          "y": -40.0
+        },
         {
-          "forma": "circulo",
-          "ancho": 140,
-          "alto": 140,
-          "color": "#7DD87A",
-          "x": 330,
-          "y": 250,
-          "nombre_voz": "copa",
-          "cara": true
+          "forma": "triangulo",
+          "ancho": 53.0,
+          "alto": 150.0,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": 0.0,
+          "y": -115.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 106.0,
+          "alto": 260.0,
+          "color": "#8E9BB5",
+          "nombre_voz": "triangulo_grande",
+          "x": 107.0,
+          "y": -20.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 53.0,
+          "alto": 130.0,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": 107.0,
+          "y": -85.0
         },
         {
           "forma": "rectangulo",
-          "ancho": 58,
-          "alto": 110,
-          "color": "#B07A4F",
-          "x": 330,
-          "y": 375,
-          "nombre_voz": "tronco"
+          "ancho": 320.0,
+          "alto": 80.0,
+          "color": "#45C6C0",
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": 150.0
         }
       ]
     },
     {
-      "id": "jirafa",
-      "centro": [
-        0,
-        0
-      ],
+      "id": "morro_arica",
+      "voz_completa": "voces/arcoiris/formas/figuras/morro_arica.wav",
+      "dificultad": 7,
       "piezas": [
         {
-          "forma": "ovalo",
-          "ancho": 150,
-          "alto": 90,
-          "color": "#FFCB3D",
-          "x": 505,
-          "y": 360,
-          "nombre_voz": "cuerpo_jirafa",
-          "decoracion": "manchas"
+          "forma": "triangulo_rect",
+          "ancho": 210.0,
+          "alto": 168.0,
+          "color": "#D8B07A",
+          "rotacion": 270,
+          "nombre_voz": "triangulo",
+          "x": -140.0,
+          "y": 7.0
         },
         {
           "forma": "rectangulo",
-          "ancho": 52,
-          "alto": 130,
-          "color": "#FFCB3D",
-          "x": 556,
-          "y": 265,
-          "nombre_voz": "cuello_jirafa"
+          "ancho": 252.0,
+          "alto": 210.0,
+          "color": "#B98A5A",
+          "nombre_voz": "rectangulo_grande",
+          "x": 70.0,
+          "y": 7.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 168.0,
+          "alto": 56.0,
+          "color": "#D8B07A",
+          "nombre_voz": "rectangulo_chico",
+          "x": 28.0,
+          "y": -126.0
         },
         {
           "forma": "circulo",
-          "ancho": 70,
-          "alto": 70,
+          "ancho": 98.0,
+          "alto": 98.0,
           "color": "#FFCB3D",
-          "x": 575,
-          "y": 180,
-          "nombre_voz": "cabeza_jirafa",
-          "cara": true
+          "nombre_voz": "circulo",
+          "x": 161.0,
+          "y": -147.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 224.0,
+          "alto": 84.0,
+          "color": "#4A8BE0",
+          "nombre_voz": "rectangulo",
+          "x": -112.0,
+          "y": 154.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 224.0,
+          "alto": 84.0,
+          "color": "#4A8BE0",
+          "nombre_voz": "rectangulo",
+          "x": 112.0,
+          "y": 154.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 98.0,
+          "alto": 72.8,
+          "color": "#FFF8EE",
+          "capa": 1,
+          "nombre_voz": "triangulo_chico",
+          "x": -119.0,
+          "y": 148.4
         }
       ]
     },
     {
-      "id": "tesoro",
-      "centro": [
-        0,
-        0
-      ],
+      "id": "castillo_princesa",
+      "voz_completa": "voces/arcoiris/formas/figuras/castillo_princesa.wav",
+      "dificultad": 7,
       "piezas": [
         {
-          "forma": "corazon",
-          "ancho": 72,
-          "alto": 66,
-          "color": "#FFCB3D",
-          "x": 440,
-          "y": 522,
-          "opcional": true,
-          "especial": true
+          "forma": "triangulo",
+          "ancho": 126.0,
+          "alto": 112.0,
+          "color": "#B48CE8",
+          "nombre_voz": "triangulo",
+          "x": -182.0,
+          "y": -154.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 126.0,
+          "alto": 112.0,
+          "color": "#B48CE8",
+          "nombre_voz": "triangulo",
+          "x": 182.0,
+          "y": -154.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 98.0,
+          "alto": 308.0,
+          "color": "#F7A8C8",
+          "nombre_voz": "rectangulo",
+          "x": -182.0,
+          "y": 56.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 98.0,
+          "alto": 308.0,
+          "color": "#F7A8C8",
+          "nombre_voz": "rectangulo",
+          "x": 182.0,
+          "y": 56.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 266.0,
+          "alto": 224.0,
+          "color": "#FFD6E8",
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": 98.0
+        },
+        {
+          "forma": "semicirculo",
+          "ancho": 112.0,
+          "alto": 98.0,
+          "color": "#B48CE8",
+          "capa": 1,
+          "nombre_voz": "semicirculo",
+          "x": 0.0,
+          "y": 161.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 72.8,
+          "alto": 72.8,
+          "color": "#6FD6E8",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": 0.0,
+          "y": 50.4
         }
       ]
     }

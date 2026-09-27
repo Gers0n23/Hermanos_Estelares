@@ -159,6 +159,39 @@ Notas del contrato:
 - `regalo_tras_derrotas`: tras la 2.ª derrota-gag, al tocar "¡otra vez!" Coco da por encontrado un
   grupo (voz `regalo`). Una sola vez, sin costo de estrellitas.
 
+### Campos nuevos para Maxi y Nicole (rondas y temas, decisión del PO del 27-Sep-2026)
+
+#### Rondas
+
+- `rondas: [ {...} ]`: cada ronda pisa los campos del nivel que traiga (`pares`, `disposicion`, `oculto`,
+  `tiempo_volteo_ms`, `ayuda_tras_fallos`, `cartas_bailan`, `modo`...). Sus `lineas_voz` se mezclan con las
+  del nivel. `intro_ronda` es la consigna que se dice al empezar la ronda; tocar a Coco la repite.
+- `pool` + `cantidad`: la ronda sortea `cantidad` parejas del pool en cada partida. Las marcadas con
+  `fijo: true` siempre entran (p. ej., la bandera de Chile).
+- Entre rondas hay mini-fiesta: confeti, Coco baila, voz `ronda_superada` (varias variantes), las cartas se
+  despiden y llega el tablero nuevo. Arriba se ve una estrella por ronda (apagada, la actual encendida y las
+  ganadas doradas). Durante la mini-fiesta los toques no hacen nada.
+- `completado(destellos)` se emite una sola vez al final: 10 destellos por pareja de todas las rondas.
+- Un nivel sin `rondas` se juega igual que antes (Sofía y retos dorados no cambian).
+
+#### Parejas y cartas
+
+- `cartas_bailan: N`: tras cada acierto, N pares de cartas **a la vista** cambian de lugar despacito
+  (1,4 s, meciéndose). Es atención, no memoria (Maxi, zona 5).
+- `voz` por pareja: al formarla se dice esa línea en vez del acierto genérico ("¡Chile!", "¡Ese de sol!",
+  "¡Amarillo, como la jirafa!").
+- Por elemento:
+  - `escala`: tamaño del dibujo. En "mamá y bebé" se usan 1 y 0,55.
+  - `estilo: "letra"` + `letra`: la carta muestra la letra mayúscula.
+  - `voz_toque`: se dice al tocar la carta (el nombre de la letra).
+- Dibujos nuevos por código (`scripts/motores/emparejar/dibujos_emparejar.gd`, estilo "peluche pintado"):
+  - Maxi: `trex`, `spinosaurio`, `carnotauro`, `huevo`, `auto`, `bus`, `bomberos` y `cohete`.
+  - Nicole: `jirafa`, `pony`, `gatito`, `vestido`, `zapato`, `corona` y `mono`.
+  - Otros: `sol`, `hoja` y `mancha` (una mancha de pintura).
+  - Banderas: `bandera_<pais>`, con 14 países (ver ficha de zonas §3.3).
+- La figura que vuela a la barra es el dibujo: no la mancha, la letra ni la sombra. En "mamá y bebé" vuela
+  la mamá.
+
 ---
 
 ## 5. Reglas de escalado por perfil

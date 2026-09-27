@@ -7,16 +7,19 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 5000,
-  "limite_intentos": null,
+  "modo": "arma_figura",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
   "caras": false,
   "guia_color": true,
-  "modo": "compuesto",
-  "figuras_por_partida": 1,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 5000,
+  "limite_intentos": null,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/semilla/intro_z5.wav",
     "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/semilla/acierto_01.wav",
@@ -27,76 +30,228 @@
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
     ],
-    "intro": "voces/arcoiris/formas/semilla/intro_z5.wav"
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/semilla/ronda_01.wav",
+      "voces/arcoiris/formas/semilla/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/semilla/intro_ronda.wav"
   },
+  "rondas": 4,
   "figuras": [
     {
       "id": "autito",
       "voz_completa": "voces/arcoiris/formas/figuras/autito.wav",
+      "dificultad": 3,
       "piezas": [
         {
           "forma": "rectangulo",
-          "ancho": 320,
-          "alto": 120,
+          "ancho": 320.0,
+          "alto": 120.0,
           "color": "#FF6B6B",
-          "x": 0,
-          "y": 0,
-          "decoracion": "ventanas"
+          "decoracion": "ventanas",
+          "x": 0.0,
+          "y": -55.0
         },
         {
           "forma": "circulo",
-          "ancho": 110,
-          "alto": 110,
+          "ancho": 110.0,
+          "alto": 110.0,
           "color": "#FFCB3D",
-          "x": -95,
-          "y": 115,
-          "decoracion": "rueda"
+          "decoracion": "rueda",
+          "x": -95.0,
+          "y": 60.0
         },
         {
           "forma": "circulo",
-          "ancho": 110,
-          "alto": 110,
+          "ancho": 110.0,
+          "alto": 110.0,
           "color": "#FFCB3D",
-          "x": 95,
-          "y": 115,
-          "decoracion": "rueda"
+          "decoracion": "rueda",
+          "x": 95.0,
+          "y": 60.0
         }
       ]
     },
     {
       "id": "dino",
       "voz_completa": "voces/arcoiris/formas/figuras/dino.wav",
+      "dificultad": 3,
       "piezas": [
         {
           "forma": "ovalo",
-          "ancho": 260,
-          "alto": 150,
+          "ancho": 260.0,
+          "alto": 150.0,
           "color": "#7DD87A",
-          "x": 0,
-          "y": 0,
-          "decoracion": "manchas"
+          "decoracion": "manchas",
+          "x": 12.0,
+          "y": 32.5
         },
         {
           "forma": "circulo",
-          "ancho": 120,
-          "alto": 120,
+          "ancho": 120.0,
+          "alto": 120.0,
           "color": "#7DD87A",
-          "x": 150,
-          "y": -95,
-          "cara": true
+          "cara": true,
+          "x": 162.0,
+          "y": -62.5
         },
         {
           "forma": "triangulo",
-          "ancho": 160,
-          "alto": 104,
+          "ancho": 160.0,
+          "alto": 104.0,
           "color": "#7DD87A",
-          "x": -170,
-          "y": 10,
-          "rotacion": 270
+          "rotacion": 270,
+          "x": -170.0,
+          "y": 42.5
+        }
+      ]
+    },
+    {
+      "id": "platillo",
+      "voz_completa": "voces/arcoiris/formas/figuras/platillo.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "semicirculo",
+          "ancho": 200.0,
+          "alto": 100.0,
+          "color": "#6FD6E8",
+          "cara": true,
+          "x": 0.0,
+          "y": -111.0
+        },
+        {
+          "forma": "ovalo",
+          "ancho": 320.0,
+          "alto": 110.0,
+          "color": "#B48CE8",
+          "x": 0.0,
+          "y": -6.0
+        },
+        {
+          "forma": "trapecio",
+          "ancho": 180.0,
+          "alto": 110.0,
+          "color": "#FFCB3D",
+          "x": 0.0,
+          "y": 106.0
+        }
+      ]
+    },
+    {
+      "id": "braquiosaurio",
+      "voz_completa": "voces/arcoiris/formas/figuras/braquiosaurio.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 319.8,
+          "alto": 147.6,
+          "color": "#7DD87A",
+          "x": -79.95,
+          "y": 92.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 118.08,
+          "alto": 184.5,
+          "color": "#7DD87A",
+          "x": 20.91,
+          "y": -73.8
+        },
+        {
+          "forma": "ovalo",
+          "ancho": 159.9,
+          "alto": 118.08,
+          "color": "#7DD87A",
+          "cara": true,
+          "x": 159.9,
+          "y": -107.01
+        }
+      ]
+    },
+    {
+      "id": "auto_carrera",
+      "voz_completa": "voces/arcoiris/formas/figuras/auto_carrera.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "semicirculo",
+          "ancho": 200.0,
+          "alto": 100.0,
+          "color": "#4A8BE0",
+          "x": 0.0,
+          "y": -100.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 100.0,
+          "color": "#FF6B6B",
+          "cara": true,
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 100.0,
+          "alto": 100.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": -100.0,
+          "y": 100.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 100.0,
+          "alto": 100.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": 100.0,
+          "y": 100.0
+        }
+      ]
+    },
+    {
+      "id": "cohete",
+      "voz_completa": "voces/arcoiris/formas/figuras/cohete.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 156.0,
+          "alto": 143.0,
+          "color": "#FF6B6B",
+          "x": 0.0,
+          "y": -130.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 156.0,
+          "alto": 260.0,
+          "color": "#6FD6E8",
+          "cara": true,
+          "x": 0.0,
+          "y": 71.5
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 130.0,
+          "alto": 124.8,
+          "color": "#FF6B6B",
+          "rotacion": 270,
+          "x": -140.4,
+          "y": 136.5
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 124.8,
+          "alto": 130.0,
+          "color": "#FF6B6B",
+          "x": 140.4,
+          "y": 136.5
         }
       ]
     }
-  ],
-  "bandeja_escala_real": true,
-  "modelo_mini": true
+  ]
 }

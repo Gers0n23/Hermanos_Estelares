@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
@@ -31,15 +31,23 @@
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
     ],
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/semilla/ronda_01.wav",
+      "voces/arcoiris/formas/semilla/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/semilla/intro_ronda.wav",
     "risa": [
       "voces/arcoiris/formas/semilla/risa_01.wav",
       "voces/arcoiris/formas/semilla/risa_02.wav"
     ]
   },
+  "rondas": 4,
   "figuras": [
     {
       "id": "barquito",
       "voz_completa": "voces/arcoiris/formas/figuras/barco.wav",
+      "dificultad": 3,
+      "fija": true,
       "piezas": [
         {
           "forma": "triangulo_rect",
@@ -66,6 +74,181 @@
           "rotacion": 180,
           "x": 0.0,
           "y": 90.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_peru",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_peru.wav",
+      "dificultad": 3,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#D91023",
+          "x": -195.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#FFFFFF",
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 195.0,
+          "alto": 390.0,
+          "color": "#D91023",
+          "x": 195.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "tortuga",
+      "voz_completa": "voces/arcoiris/formas/figuras/tortuga.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "semicirculo",
+          "ancho": 321.0,
+          "alto": 160.5,
+          "color": "#7DD87A",
+          "x": -37.45,
+          "y": -53.5
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 102.72,
+          "alto": 102.72,
+          "color": "#B8E07A",
+          "x": -114.49,
+          "y": 78.11
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 102.72,
+          "alto": 102.72,
+          "color": "#B8E07A",
+          "x": 39.59,
+          "y": 78.11
+        },
+        {
+          "forma": "circulo",
+          "ancho": 107.0,
+          "alto": 107.0,
+          "color": "#B8E07A",
+          "cara": true,
+          "x": 144.45,
+          "y": 80.25
+        }
+      ]
+    },
+    {
+      "id": "micro_maxi",
+      "voz_completa": "voces/arcoiris/formas/figuras/bus.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 150.0,
+          "color": "#4A8BE0",
+          "decoracion": "ventanas",
+          "cara": true,
+          "x": 0.0,
+          "y": -50.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 100.0,
+          "alto": 100.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": -70.0,
+          "y": 75.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 100.0,
+          "alto": 100.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": 70.0,
+          "y": 75.0
+        }
+      ]
+    },
+    {
+      "id": "pato",
+      "voz_completa": "voces/arcoiris/formas/figuras/pato.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "ovalo",
+          "ancho": 319.8,
+          "alto": 184.5,
+          "color": "#FFCB3D",
+          "x": -71.34,
+          "y": 65.38
+        },
+        {
+          "forma": "circulo",
+          "ancho": 147.6,
+          "alto": 147.6,
+          "color": "#FFCB3D",
+          "cara": true,
+          "x": 39.36,
+          "y": -83.83
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 118.08,
+          "alto": 118.08,
+          "color": "#FF9F4A",
+          "rotacion": 90,
+          "x": 172.2,
+          "y": -83.83
+        }
+      ]
+    },
+    {
+      "id": "ballena",
+      "voz_completa": "voces/arcoiris/formas/figuras/ballena.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "semicirculo",
+          "ancho": 321.0,
+          "alto": 160.5,
+          "color": "#4A8BE0",
+          "cara": true,
+          "x": -51.36,
+          "y": 51.36
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 102.72,
+          "alto": 107.0,
+          "color": "#4A8BE0",
+          "x": 160.5,
+          "y": 78.11
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 102.72,
+          "alto": 102.72,
+          "color": "#6FD6E8",
+          "rotacion": 180,
+          "x": -51.36,
+          "y": -80.25
         }
       ]
     }

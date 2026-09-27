@@ -1,0 +1,70 @@
+{
+  "id_nivel": "arcoiris_z4_pinta_semilla",
+  "motor": "lienzo_libre",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "pinta con coco",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "encargo": "dedo_magico",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": true,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": [],
+  "herramientas": [],
+  "herramienta_inicial": "arcoiris",
+  "notas": true,
+  "radio_pincel": 30,
+  "segundos_mostrar": 25,
+  "laminas": [
+    {
+      "id": "noche",
+      "tipo": "papel",
+      "papel": "#232851"
+    },
+    {
+      "id": "rosa",
+      "tipo": "papel",
+      "papel": "#FFE3F1"
+    }
+  ],
+  "laminas_por_partida": 2,
+  "lineas_voz": {
+    "mostrar": [
+      "voces/arcoiris/pinta/semilla/mostrar_01.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_02.wav",
+      "voces/arcoiris/pinta/semilla/mostrar_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/pinta/semilla/victoria_01.wav",
+      "voces/arcoiris/pinta/semilla/victoria_02.wav"
+    ],
+    "arcoiris": [
+      "voces/arcoiris/pinta/comun/arcoiris_01.wav",
+      "voces/arcoiris/pinta/comun/arcoiris_02.wav"
+    ],
+    "lamina_completa": [
+      "voces/arcoiris/pinta/comun/lamina_completa_01.wav",
+      "voces/arcoiris/pinta/comun/lamina_completa_02.wav"
+    ],
+    "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
+    "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "muestramelo": [
+      "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
+      "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
+    "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",
+    "dino_camina": [
+      "voces/arcoiris/pinta/comun/dino_camina_01.wav",
+      "voces/arcoiris/pinta/comun/dino_camina_02.wav"
+    ],
+    "intro": "voces/arcoiris/pinta/semilla/intro_dedo_magico.wav",
+    "siguiente": [
+      "voces/arcoiris/pinta/semilla/siguiente_dedo.wav"
+    ],
+    "uso_arcoiris": "voces/arcoiris/pinta/semilla/uso_arcoiris.wav"
+  }
+}

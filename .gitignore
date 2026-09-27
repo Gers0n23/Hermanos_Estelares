@@ -36,3 +36,8 @@ __pycache__/
 
 # Hojas de contacto de herramientas/ojos.gd (revisión visual del agente, efímeras)
 .ojos/
+
+# Recuerdos familiares (fotos y voces reales de la familia): NUNCA subir al repo.
+# Solo viajan dentro del APK. Catalogo y placeholders si se versionan (docs/fichas/album-recuerdos.md).
+assets/recuerdos/fotos/
+assets/recuerdos/voces/

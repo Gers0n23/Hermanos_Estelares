@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
   "caras": false,
   "modelo_mini": true,
@@ -33,12 +33,20 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/brote/ronda_01.wav",
+      "voces/arcoiris/formas/brote/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/brote/intro_ronda.wav"
   },
+  "rondas": 3,
   "figuras": [
     {
       "id": "tren",
       "voz_completa": "voces/arcoiris/formas/figuras/tren.wav",
+      "dificultad": 8,
+      "fija": true,
       "piezas": [
         {
           "forma": "trapecio",
@@ -115,6 +123,298 @@
           "decoracion": "rueda",
           "x": 143.75,
           "y": 131.25
+        }
+      ]
+    },
+    {
+      "id": "bandera_argentina",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_argentina.wav",
+      "dificultad": 7,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#74ACDF",
+          "nombre_voz": "color_celeste",
+          "x": -147.0,
+          "y": -126.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#74ACDF",
+          "nombre_voz": "color_celeste",
+          "x": 147.0,
+          "y": -126.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": -147.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#FFFFFF",
+          "nombre_voz": "color_blanco",
+          "x": 147.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#74ACDF",
+          "nombre_voz": "color_celeste",
+          "x": -147.0,
+          "y": 126.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 294.0,
+          "alto": 126.0,
+          "color": "#74ACDF",
+          "nombre_voz": "color_celeste",
+          "x": 147.0,
+          "y": 126.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 98.28,
+          "alto": 98.28,
+          "color": "#F6B40E",
+          "capa": 1,
+          "nombre_voz": "sol_dorado",
+          "x": 0.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_alemania",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_alemania.wav",
+      "dificultad": 6,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#222222",
+          "nombre_voz": "color_negro",
+          "x": -140.0,
+          "y": -112.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#222222",
+          "nombre_voz": "color_negro",
+          "x": 140.0,
+          "y": -112.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#DD0000",
+          "nombre_voz": "color_rojo",
+          "x": -140.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#DD0000",
+          "nombre_voz": "color_rojo",
+          "x": 140.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#FFCE00",
+          "nombre_voz": "color_amarillo",
+          "x": -140.0,
+          "y": 112.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 112.0,
+          "color": "#FFCE00",
+          "nombre_voz": "color_amarillo",
+          "x": 140.0,
+          "y": 112.0
+        }
+      ]
+    },
+    {
+      "id": "bandera_brasil",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_brasil.wav",
+      "dificultad": 7,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 392.0,
+          "color": "#009C3B",
+          "nombre_voz": "color_verde",
+          "x": -140.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 392.0,
+          "color": "#009C3B",
+          "nombre_voz": "color_verde",
+          "x": 140.0,
+          "y": 0.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 148.4,
+          "alto": 232.4,
+          "color": "#FFDF00",
+          "rotacion": 270,
+          "capa": 1,
+          "nombre_voz": "color_amarillo",
+          "x": -116.2,
+          "y": -74.2
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 232.4,
+          "alto": 148.4,
+          "color": "#FFDF00",
+          "capa": 1,
+          "nombre_voz": "color_amarillo",
+          "x": 116.2,
+          "y": -74.2
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 232.4,
+          "alto": 148.4,
+          "color": "#FFDF00",
+          "rotacion": 180,
+          "capa": 1,
+          "nombre_voz": "color_amarillo",
+          "x": -116.2,
+          "y": 74.2
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 148.4,
+          "alto": 232.4,
+          "color": "#FFDF00",
+          "rotacion": 90,
+          "capa": 1,
+          "nombre_voz": "color_amarillo",
+          "x": 116.2,
+          "y": 74.2
+        },
+        {
+          "forma": "circulo",
+          "ancho": 196.0,
+          "alto": 196.0,
+          "color": "#002776",
+          "capa": 2,
+          "nombre_voz": "circulo_azul",
+          "x": 0.0,
+          "y": 0.0
+        }
+      ]
+    },
+    {
+      "id": "corona",
+      "voz_completa": "voces/arcoiris/formas/figuras/corona.wav",
+      "dificultad": 7,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 107.0,
+          "alto": 128.4,
+          "color": "#FFCB3D",
+          "nombre_voz": "triangulo",
+          "x": -107.0,
+          "y": -42.8
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 107.0,
+          "alto": 128.4,
+          "color": "#FFCB3D",
+          "nombre_voz": "triangulo",
+          "x": 0.0,
+          "y": -42.8
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 107.0,
+          "alto": 128.4,
+          "color": "#FFCB3D",
+          "nombre_voz": "triangulo",
+          "x": 107.0,
+          "y": -42.8
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 321.0,
+          "alto": 85.6,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": 64.2
+        },
+        {
+          "forma": "circulo",
+          "ancho": 55.64,
+          "alto": 55.64,
+          "color": "#F26CA8",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": -96.3,
+          "y": 64.2
+        },
+        {
+          "forma": "estrella",
+          "ancho": 68.48,
+          "alto": 68.48,
+          "color": "#6FD6E8",
+          "capa": 1,
+          "nombre_voz": "estrella",
+          "x": 0.0,
+          "y": 64.2
+        },
+        {
+          "forma": "circulo",
+          "ancho": 55.64,
+          "alto": 55.64,
+          "color": "#F26CA8",
+          "capa": 1,
+          "nombre_voz": "circulo",
+          "x": 96.3,
+          "y": 64.2
         }
       ]
     }

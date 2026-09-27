@@ -8,7 +8,7 @@
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "arma_figura",
-  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
+  "diseno": "figura primero y rondas (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
@@ -29,12 +29,20 @@
     "victoria_final": [
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
-    ]
+    ],
+    "ronda_siguiente": [
+      "voces/arcoiris/formas/semilla/ronda_01.wav",
+      "voces/arcoiris/formas/semilla/ronda_02.wav"
+    ],
+    "intro_generica": "voces/arcoiris/formas/semilla/intro_ronda.wav"
   },
+  "rondas": 4,
   "figuras": [
     {
       "id": "pino",
       "voz_completa": "voces/arcoiris/formas/figuras/abeto.wav",
+      "dificultad": 4,
+      "fija": true,
       "piezas": [
         {
           "forma": "estrella",
@@ -68,6 +76,195 @@
           "color": "#A8744F",
           "x": 0.0,
           "y": 186.3
+        }
+      ]
+    },
+    {
+      "id": "bandera_chile",
+      "voz_completa": "voces/arcoiris/formas/figuras/bandera_chile.wav",
+      "dificultad": 5,
+      "config": {
+        "exigir_color": true
+      },
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 160.5,
+          "alto": 160.5,
+          "color": "#0039A6",
+          "x": -160.5,
+          "y": -80.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 321.0,
+          "alto": 160.5,
+          "color": "#FFFFFF",
+          "x": 80.25,
+          "y": -80.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 240.75,
+          "alto": 160.5,
+          "color": "#D52B1E",
+          "x": -120.37,
+          "y": 80.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 240.75,
+          "alto": 160.5,
+          "color": "#D52B1E",
+          "x": 120.37,
+          "y": 80.25
+        },
+        {
+          "forma": "estrella",
+          "ancho": 80.25,
+          "alto": 80.25,
+          "color": "#FFFFFF",
+          "capa": 1,
+          "x": -160.5,
+          "y": -80.25
+        }
+      ]
+    },
+    {
+      "id": "volcan_osorno",
+      "voz_completa": "voces/arcoiris/formas/figuras/volcan_osorno.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 180.0,
+          "alto": 160.0,
+          "color": "#FFF8EE",
+          "x": 0.0,
+          "y": -101.5
+        },
+        {
+          "forma": "trapecio",
+          "ancho": 300.0,
+          "alto": 107.0,
+          "color": "#8C7BB8",
+          "x": 0.0,
+          "y": 32.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 96.0,
+          "color": "#4A8BE0",
+          "x": 0.0,
+          "y": 133.5
+        }
+      ]
+    },
+    {
+      "id": "camion_bomberos",
+      "voz_completa": "voces/arcoiris/formas/figuras/camion_bomberos.wav",
+      "dificultad": 4,
+      "piezas": [
+        {
+          "forma": "cuadrado",
+          "ancho": 107.0,
+          "alto": 107.0,
+          "color": "#FF6B6B",
+          "cara": true,
+          "x": 107.0,
+          "y": -112.35
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 321.0,
+          "alto": 117.7,
+          "color": "#FF6B6B",
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 107.0,
+          "alto": 107.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": -85.6,
+          "y": 112.35
+        },
+        {
+          "forma": "circulo",
+          "ancho": 107.0,
+          "alto": 107.0,
+          "color": "#5B3F8C",
+          "decoracion": "rueda",
+          "x": 85.6,
+          "y": 112.35
+        }
+      ]
+    },
+    {
+      "id": "arbol",
+      "voz_completa": "voces/arcoiris/formas/figuras/arbol.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "circulo",
+          "ancho": 278.2,
+          "alto": 278.2,
+          "color": "#7DD87A",
+          "cara": true,
+          "x": -0.0,
+          "y": -131.61
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 102.72,
+          "alto": 160.5,
+          "color": "#A8744F",
+          "x": -0.0,
+          "y": 87.74
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 321.0,
+          "alto": 102.72,
+          "color": "#8FD989",
+          "x": -0.0,
+          "y": 219.35
+        }
+      ]
+    },
+    {
+      "id": "avion",
+      "voz_completa": "voces/arcoiris/formas/figuras/avion.wav",
+      "dificultad": 3,
+      "piezas": [
+        {
+          "forma": "triangulo_rect",
+          "ancho": 110.0,
+          "alto": 100.0,
+          "color": "#FF6B6B",
+          "x": -105.0,
+          "y": -98.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 320.0,
+          "alto": 100.0,
+          "color": "#6FD6E8",
+          "cara": true,
+          "x": 0.0,
+          "y": 2.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 96.0,
+          "alto": 130.0,
+          "color": "#FF6B6B",
+          "rotacion": 90,
+          "x": 25.0,
+          "y": 100.0
         }
       ]
     }

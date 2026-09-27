@@ -115,7 +115,11 @@ func _probar_estado_inicial() -> void:
 	var estaciones: Array = mapa.zonas[0]["estaciones"]
 	_check(estaciones.size() == 4, "4 estaciones por zona")
 	_check(estaciones[1]["juego"] == "formas" and estaciones[1]["jugable"], "Formas traviesas jugable en la zona 1")
-	_check(not estaciones[0]["jugable"] and not estaciones[3]["jugable"], "Lluvia y Pinta aun sin nivel (se ven 'pintandose')")
+	var coherentes := true
+	for estacion: Dictionary in estaciones:
+		var tiene_nivel: bool = estacion["datos"].get("niveles", {}).has("maxi") and str(estacion["escena"]) != ""
+		coherentes = coherentes and estacion["jugable"] == tiene_nivel
+	_check(coherentes, "cada estacion es jugable solo si el mapa trae escena y nivel de Maxi (las demas se ven 'pintandose')")
 	_check(mapa.zonas[1]["estaciones"][2]["jugable"], "Parejas de Coco de Maxi vive en la zona 2")
 	_check(mapa.seleccion == 0, "zona elegida: la 1")
 	var tamanos := true
@@ -136,13 +140,25 @@ func _probar_estado_inicial() -> void:
 	_check(not choque, "estaciones no chocan con Coco ni Cometa")
 	mapa._tocar_zona(1)
 	_check(mapa.seleccion == 0, "tocar una zona dormida no la abre (solo menea y Coco explica)")
-	mapa._tocar_estacion(0)
-	_check(not mapa._lanzando, "tocar una estacion sin nivel no lanza nada")
+	var sin_nivel := -1
+	for j in estaciones.size():
+		if not estaciones[j]["jugable"]:
+			sin_nivel = j
+			break
+	if sin_nivel >= 0:
+		mapa._tocar_estacion(sin_nivel)
+		_check(not mapa._lanzando, "tocar una estacion sin nivel no lanza nada")
+	else:
+		print("  --    (las 4 estaciones de la zona 1 ya tienen nivel: no hay estacion 'pintandose' que tocar)")
 
 
 func _probar_lanzar_y_volver(forma: String) -> void:
 	print("-- lanzar Formas traviesas (zona 1) y volver por '%s' --" % forma)
 	var mapa := await _abrir_arcoiris()
+	if forma == "completado":
+		# Formas es la ultima estacion pendiente de la zona 1: las demas jugables ya estan hechas.
+		_completar_estaciones(mapa, "maxi", 0, 0, 1)
+		mapa = await _abrir_arcoiris()
 	mapa._tocar_estacion(1)
 	await _esperar(1.3)
 	var motor := current_scene
@@ -162,41 +178,54 @@ func _probar_lanzar_y_volver(forma: String) -> void:
 		_check(vuelta.zonas[0]["estaciones"][1]["completada"], "la estacion quedo completada")
 		_check(vuelta.zonas[0]["completa"], "zona 1 completa (todas sus estaciones jugables): vuelve el rojo")
 		_check(vuelta._avance_bandas.has("rojo"), "la banda roja del arcoiris se pinta con animacion")
-		_check(vuelta.zonas[1]["abierta"], "se despierta la zona 2 (su unica estacion jugable esta hecha)")
+		_check(vuelta.zonas[1]["abierta"], "se despierta la zona 2 (todas las estaciones jugables de la zona 1 estan hechas)")
 		_check(vuelta.seleccion == 1, "el mapa lleva la seleccion a la zona recien abierta")
 
 
+func _completar_estaciones(mapa: Node, hermano: String, zona: int, estrellitas: int, excepto: int = -1) -> int:
+	## Marca completadas las estaciones jugables de una zona (salvo `excepto`) usando el mismo id de
+	## nivel que calcula el mapa. Devuelve cuantas marco. Asi el arnes no depende de que juegos existen.
+	var marcadas := 0
+	var estaciones: Array = mapa.zonas[zona]["estaciones"]
+	for j in estaciones.size():
+		if j == excepto or not estaciones[j]["jugable"]:
+			continue
+		_progreso.marcar_nivel_completado(hermano, "arcoiris", mapa._id_nivel(estaciones[j]["ruta_nivel"]), 50, estrellitas)
+		marcadas += 1
+	return marcadas
+
+
 func _probar_apertura_con_dos_estaciones() -> void:
-	print("-- zona 2 de Maxi tiene 2 estaciones jugables: pide las 2 --")
-	_progreso.marcar_nivel_completado("maxi", "arcoiris", "arcoiris_z2_formas_semilla", 30, 0)
+	print("-- zona 2 de Maxi: pide TODAS sus estaciones jugables --")
 	var mapa := await _abrir_arcoiris()
-	_check(mapa.zonas[1]["jugables"] == 2 and mapa.zonas[1]["completadas"] == 1, "zona 2: 1 de 2 estaciones")
-	_check(not mapa.zonas[2]["abierta"], "con 1 de 2, la zona 3 sigue dormida")
-	_progreso.marcar_nivel_completado("maxi", "arcoiris", "arcoiris_emparejar_semilla_01", 40, 0)
+	var jugables: int = mapa.zonas[1]["jugables"]
+	_check(jugables >= 2, "zona 2 de Maxi tiene varias estaciones jugables (%d)" % jugables)
+	# todas menos Parejas (estacion 2)
+	_completar_estaciones(mapa, "maxi", 1, 0, 2)
 	mapa = await _abrir_arcoiris()
-	_check(mapa.zonas[2]["abierta"], "con 2 de 2, se despierta la zona 3")
+	_check(mapa.zonas[1]["completadas"] == jugables - 1, "zona 2: %d de %d estaciones" % [mapa.zonas[1]["completadas"], jugables])
+	_check(not mapa.zonas[2]["abierta"], "con una estacion pendiente, la zona 3 sigue dormida")
+	_progreso.marcar_nivel_completado("maxi", "arcoiris", mapa._id_nivel(mapa.zonas[1]["estaciones"][2]["ruta_nivel"]), 40, 0)
+	mapa = await _abrir_arcoiris()
+	_check(mapa.zonas[2]["abierta"], "con todas hechas, se despierta la zona 3")
 
 
 func _probar_zona_secreta_sofia() -> void:
 	print("-- Sofia: zona secreta y estrellitas --")
 	_progreso.perfil_seleccionado = "sofia"
-	# Regla del PO 27-Sep-2026: con solo UNA de las dos estaciones de la zona 1, la zona 2 sigue dormida.
+	# Regla del PO 27-Sep-2026: con solo UNA estacion de la zona 1, la zona 2 sigue dormida.
 	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z1_formas_estrella", 50, 3)
 	var parcial := await _abrir_arcoiris()
-	_check(parcial.zonas[0]["completadas"] == 1 and parcial.zonas[0]["jugables"] == 2, "Sofia: zona 1 con 1 de 2 estaciones")
-	_check(not parcial.zonas[1]["abierta"], "con 1 de 2 estaciones NO se salta a la zona 2 (hay que completarlas todas)")
-	# Dificultad v3 (PO 14-Sep-2026): Sofia tiene Formas y Parejas en cada zona, asi que abrir la
-	# siguiente pide las 2 estaciones jugables.
-	for n in [1, 2, 3]:
-		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_formas_estrella" % n, 50, 3 if n == 1 else 2)
-		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_parejas_estrella" % n, 50, 2)
+	_check(parcial.zonas[0]["completadas"] == 1 and parcial.zonas[0]["jugables"] >= 2, "Sofia: zona 1 con 1 de %d estaciones" % parcial.zonas[0]["jugables"])
+	_check(not parcial.zonas[1]["abierta"], "con 1 estacion NO se salta a la zona 2 (hay que completarlas todas)")
+	for n in [0, 1, 2]:
+		_completar_estaciones(parcial, "sofia", n, 2, 1 if n == 0 else -1)
 	var mapa := await _abrir_arcoiris()
 	_check(mapa.zonas[1]["abierta"] and mapa.zonas[2]["abierta"], "con todas las estaciones hechas, las zonas 2 y 3 despiertan")
 	_check(mapa.zonas[3]["abierta"] and not mapa.zonas[4]["abierta"], "zona 4 abierta, la Cima sigue secreta")
 	_check(mapa.zonas[0]["estaciones"][1]["estrellitas"] == 3, "la estacion muestra las mejores estrellitas (3)")
 	_check(mapa.zonas[0]["estaciones"][1]["dorado_ruta"] == "", "sin reto dorado fuera de la Cima")
-	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z4_formas_estrella", 50, 1)
-	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z4_parejas_estrella", 50, 1)
+	_completar_estaciones(mapa, "sofia", 3, 1)
 	mapa = await _abrir_arcoiris()
 	_check(mapa.zonas[4]["abierta"], "completar la zona 4 revela la Cima del Arcoiris")
 	_check(mapa.seleccion == 4, "el mapa lleva a la zona secreta recien revelada")
@@ -205,12 +234,19 @@ func _probar_zona_secreta_sofia() -> void:
 func _probar_cometa() -> void:
 	print("-- Cometa lleva a la siguiente estacion pendiente --")
 	var mapa := await _abrir_arcoiris()
+	var esperada := -1
+	var estaciones: Array = mapa.zonas[4]["estaciones"]
+	for j in estaciones.size():
+		if estaciones[j]["jugable"]:
+			esperada = j
+			break
 	var destino: Array = mapa.siguiente_estacion()
-	_check(destino[0] == 4 and destino[1] == 1, "siguiente pendiente de Sofia: Formas en la Cima (%s)" % str(destino))
+	_check(destino[0] == 4 and destino[1] == esperada, "siguiente pendiente de Sofia: la primera estacion jugable de la Cima (%s)" % str(destino))
+	var ruta: String = estaciones[esperada]["ruta_nivel"] if esperada >= 0 else "?"
 	mapa._tocar_cometa()
 	await _esperar(1.9)
 	var motor := current_scene
-	_check(motor is MinijuegoBase and motor.ruta_nivel.ends_with("zona5_cima/formas_estrella.json"), "Cometa abre esa estacion")
+	_check(motor is MinijuegoBase and motor.ruta_nivel == ruta, "Cometa abre esa estacion (%s)" % ruta.get_file())
 	if motor is MinijuegoBase:
 		motor.salir_solicitado.emit()
 		await _esperar(0.4)
