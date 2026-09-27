@@ -30,6 +30,7 @@ func _ready() -> void:
 	_reproducir_invitacion()
 	_iniciar_pulso()
 	_iniciar_giro_anillos()
+	_iniciar_flote_cometa()
 	_temporizador_recordatorio.wait_time = SEGUNDOS_ENTRE_RECORDATORIOS
 	_temporizador_recordatorio.timeout.connect(_reproducir_invitacion)
 	_temporizador_recordatorio.start()
@@ -54,6 +55,17 @@ func _iniciar_giro_anillos() -> void:
 	var tween := create_tween().set_loops()
 	tween.tween_property(_anillos_fondo, "rotation", TAU, 60.0) \
 		.set_trans(Tween.TRANS_LINEAR)
+
+
+## Cometa flota sobre los hermanos, como en la pantalla de carga flotan las portadas.
+func _iniciar_flote_cometa() -> void:
+	var cometa: Node2D = $ilustracion/cometa
+	var origen_y := cometa.position.y
+	var tween := create_tween().set_loops()
+	tween.tween_property(cometa, "position:y", origen_y - 16.0, 1.6) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(cometa, "position:y", origen_y, 1.6) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 func _unhandled_input(evento: InputEvent) -> void:

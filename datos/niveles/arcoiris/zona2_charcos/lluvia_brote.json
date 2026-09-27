@@ -1,0 +1,61 @@
+{
+  "id_nivel": "arcoiris_z2_lluvia_brote",
+  "motor": "clasificar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "lluvia de colores",
+  "variante": "caida lenta y pareja, 5 colores con rosado; charcos decorados (florcita y orejitas de jirafa)",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "modo": "directo",
+  "iman_tolerancia_px": 130,
+  "tamano_gota": 112,
+  "ayuda_tras_fallos": 2,
+  "ayuda_idle_s": 12,
+  "regalo_tras_derrotas": true,
+  "velocidad_caida": 28,
+  "elementos_simultaneos": 1,
+  "colores": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "rosado",
+    "verde"
+  ],
+  "decoraciones": {
+    "rosado": "flor",
+    "amarillo": "jirafa"
+  },
+  "limite_intentos": null,
+  "rondas": 5,
+  "por_ronda": 7,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/lluvia/brote/intro_z2.wav",
+    "pista": "voces/arcoiris/lluvia/brote/pista_z2.wav",
+    "acierto": [
+      "voces/arcoiris/lluvia/brote/acierto_01.wav",
+      "voces/arcoiris/lluvia/brote/acierto_02.wav",
+      "voces/arcoiris/lluvia/brote/acierto_03.wav",
+      "voces/arcoiris/lluvia/brote/acierto_04.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/lluvia/brote/no_es_este_01.wav",
+      "voces/arcoiris/lluvia/brote/no_es_este_02.wav",
+      "voces/arcoiris/lluvia/brote/no_es_este_03.wav"
+    ],
+    "ayuda": "voces/arcoiris/lluvia/brote/ayuda_01.wav",
+    "nueva_ronda": [
+      "voces/arcoiris/lluvia/brote/ronda_01.wav",
+      "voces/arcoiris/lluvia/brote/ronda_02.wav",
+      "voces/arcoiris/lluvia/brote/ronda_03.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/lluvia/brote/derrota_gag_01.wav",
+    "regalo": "voces/arcoiris/lluvia/brote/regalo_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/lluvia/brote/victoria_01.wav",
+      "voces/arcoiris/lluvia/brote/victoria_02.wav"
+    ],
+    "prefijo_colores": "voces/arcoiris/lluvia/colores/"
+  }
+}

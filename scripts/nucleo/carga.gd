@@ -14,11 +14,14 @@ extends Node2D
 const RUTA_SIGUIENTE := "res://escenas/nucleo/titulo.tscn"
 const DURACION_CARGA := 2.7
 const ESPERA_FINAL := 0.7
+const NAVE_DERECHA := preload("res://assets/sprites/nave/nave_estrella.png")
+const NAVE_IZQUIERDA := preload("res://assets/sprites/nave/nave_estrella_izquierda.png")
 
 @onready var _texto_porcentaje: Label = $texto_porcentaje
 @onready var _anillo: Node2D = $anillo_progreso
 @onready var _vista_portadas: Node2D = $anillo_progreso/vista_portadas
 @onready var _navecita_pivote: Node2D = $anillo_progreso/navecita_pivote
+@onready var _navecita: Sprite2D = $anillo_progreso/navecita_pivote/navecita
 
 
 func _ready() -> void:
@@ -62,3 +65,14 @@ func _iniciar_orbita_navecita() -> void:
 	var tween := create_tween().set_loops()
 	tween.tween_property(_navecita_pivote, "rotation", TAU, 9.0) \
 		.set_trans(Tween.TRANS_LINEAR)
+
+
+## La nave-estrella (diseño final) no da vueltas de cabeza: se mantiene derecha, se
+## inclina hacia donde avanza y, en la mitad de abajo del anillo, usa la version que mira
+## a la izquierda (la placa "Hermanos Estelares" siempre se lee al derecho).
+func _process(_delta: float) -> void:
+	var rumbo := wrapf(_navecita_pivote.rotation, -PI, PI)
+	var hacia_derecha := cos(rumbo) >= 0.0
+	_navecita.texture = NAVE_DERECHA if hacia_derecha else NAVE_IZQUIERDA
+	var inclinacion := rumbo if hacia_derecha else wrapf(rumbo - PI, -PI, PI)
+	_navecita.global_rotation = clampf(inclinacion, -0.6, 0.6) * 0.6

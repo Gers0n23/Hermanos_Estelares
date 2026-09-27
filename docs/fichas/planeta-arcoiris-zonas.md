@@ -53,16 +53,35 @@ Mapa Estelar ──► Planeta Arcoíris (mapa del planeta)
   el brillo final (zonas 4-5). Coincide con la escalera de Sofía en Lluvia de colores (primero
   mezclas guiadas, después mezclas libres).
 
+### 2.0 El mapa ilustrado: la Isla de los Dulces (PO 27-Sep-2026)
+
+El mapa del planeta es una **isla-galleta con glaseado de menta** en un mar de leche de frutilla,
+dibujada en código (`scripts/planetas/arcoiris/paisaje_arcoiris.gd`). Cada zona es un **hito dulce**
+con carita, reconocible de lejos:
+
+| Zona | Hito | Detalles |
+|---|---|---|
+| 1 · Claro del Trébol | Frutilla gigante sobre un trébol de gomita | Gomitas rojas; la nave de los hermanos estacionada al lado |
+| 2 · Charcos Saltarines | Gelatina de limón que tiembla | Charcos de miel |
+| 3 · Bosque de Chupetines | Tres chupetines de espiral | Chupetincitos alrededor |
+| 4 · Islotes Flotantes | Malvaviscos con gomita de menta y rodaja de naranja que flotan | Laguna de soda con burbujas |
+| 5 · Cima del Arcoíris | Torta de tres pisos con cereza y arcoíris | Montaña con nieve de crema |
+
+Además: río de chocolate con puente de bastón de caramelo, camino de chispitas de colores, la
+casita-cupcake de Coco, bastones y gomitas, nubes de algodón de azúcar, un gusanito de gomita y una
+dona salvavidas en el mar. **Los colores cuentan la historia**: zonas dormidas en gris, abiertas a
+medio color, completadas con todo su color, y la isla entera gana color con cada banda recuperada.
+
 ### 2.1 Reglas de apertura (desbloqueo generoso, GDD §3)
 
 | Regla | Valor propuesto | Por qué |
 |---|---|---|
 | Zona 1 | Abierta al llegar al planeta | Primer contacto sin requisito |
-| Abrir la zona siguiente | Completar **2 de las 4** estaciones de la zona actual (cualquiera) | Nunca se traba: si un juego no le gusta o se le hace difícil, sigue avanzando con otros |
+| Abrir la zona siguiente | Completar **todas las estaciones jugables** de la zona actual (decisión del PO 27-Sep-2026; antes "2 de las 4") | Que nadie se salte pruebas: cada zona se juega entera. Las estaciones sin minijuego aún no cuentan, así nadie se traba |
 | Estaciones pendientes | Siguen disponibles siempre, en cualquier orden | Se puede volver a completar la zona cuando quiera |
-| Pieza de la nave (ala) | Al abrir la zona 4, es decir, con 2 estaciones completadas en la zona 3 | Mínimo para un hermano: **6 estaciones** (~20-30 min); la historia avanza sin exigir horas |
+| Pieza de la nave (ala) | Al abrir la zona 4, es decir, al completar la zona 3 | La historia llega tras jugar las zonas 1 a 3 completas |
 | Zonas 4-5 | Expedición extra: no bloquean el capítulo 2 | Suman horas y reto sin frenar la historia |
-| Zona 5 (secreta) | Se revela al completar **las 4 estaciones de la zona 4** | Premio para quien exploró todo; antes se ve como un resplandor lejano en la cima, nunca con candado |
+| Zona 5 (secreta) | Se revela al completar **todas las estaciones de la zona 4** (misma regla) | Premio para quien exploró todo; antes se ve como un resplandor lejano en la cima, nunca con candado |
 | Zonas no abiertas | Se ven **descoloridas y dormidas**, con el camino en gris | Tease en vez de muro (GDD §3): Coco explica que "a ese rincón todavía le falta color" |
 
 ### 2.2 Recompensas por zona
@@ -111,27 +130,41 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 
 ### 3.2 Formas traviesas — motor `encajar`
 
-> **Implementado 14-Sep-2026 (las 15 celdas)**: motor en `scripts/motores/encajar/`, niveles en
-> `datos/niveles/arcoiris/<zona>/formas_<perfil>.json`, contrato en `docs/fichas/motor-encajar.md`.
-> Diferencias con la tabla: Nicole tiene límite holgado solo en las zonas 4 y 5.
+> **"Arma la figura" (decisión del PO, 27-Sep-2026) — reemplaza la tabla anterior.** El PO encontró
+> errado el concepto: "con las formas separadas de la derecha no se puede armar la forma final de la
+> izquierda". Había dos causas. La bandeja **achicaba las piezas** con un factor común, así que no se
+> veía que calzaran. Y los tangrams eran **siluetas abstractas** (flecha, "cohete") sin líneas por
+> dentro, cuyas piezas se inventaban aparte. La regla nueva es **primero la figura final y después las
+> piezas**:
 >
-> **Sofía, dificultad v3 (decisión del PO, 14-Sep-2026)**: el PO pidió "aumentar mucho" la dificultad
-> ("armar 3 figuras lo hace con los ojos cerrados"), aprobó la propuesta v2 y pidió "un poco más". La
-> columna de Sofía de abajo ya es la v3 implementada y reemplaza a la anterior (figuras de 2-3 piezas,
-> giro por toque, distractoras y tangram de 6 piezas). Los niveles los genera
-> `herramientas/generar_niveles_sofia.py`, que resuelve cada tangram y cada marco con
-> `herramientas/disenar_retos_sofia.py`: todo nivel tiene solución verificada y el espejo obligatorio
-> de la zona 2 está comprobado (sin voltear el paralelogramo no hay solución). QA:
-> `herramientas/qa_test_retos_sofia.gd`. **Pendiente de validación** por `disenador-niveles`,
-> `disenador-mecanicas` y `experto-ux-parvulo` (botón espejo y botón de pista) y del playtest con Sofía.
+> - Cada figura se dibuja primero: algo **reconocible en Chile** y acorde a la edad. Las piezas salen de
+>   **cortarla** con las formas del motor (`herramientas/figuras_formas.py`).
+> - El script valida cada figura: sin solapes ni piezas sueltas, que quepa en el tablero y cada pieza en
+>   la bandeja, el lado mínimo por perfil, y que dos piezas intercambiables tengan el mismo color. Con
+>   `--escribir` genera los niveles.
+> - La bandeja muestra las piezas a su **tamaño real**, igual que la silueta [`bandeja_escala_real`], y
+>   las entrega **de a pocas** (Sofía: 6 a la vez) reponiendo al encajar [`piezas_en_bandeja`].
+> - Una tarjeta arriba a la izquierda muestra la figura terminada a color, como la foto de la caja de
+>   un rompecabezas [`modelo_mini`].
+> - Sofía ve las **líneas de cada pieza** en la silueta: el reto está en la cantidad (25 a 30 piezas),
+>   en distinguir tamaños parecidos y en el giro por toque (desde la zona 2).
+> - Con más de 14 piezas, la barra de progreso es una sola barra arcoíris.
+>
+> QA: `herramientas/qa_test_encajar.gd` (las 15 variantes, incluida Sofía) y
+> `herramientas/capturar_encajar.gd` (pantallazos). El reto dorado (marco de pentominós de 6×10) no
+> cambia y sigue en `herramientas/qa_test_retos_sofia.gd`. El motor conserva `tangram_libre` y
+> `memoria`, pero hoy ningún nivel los usa. **Pendiente**: validación de `disenador-niveles`,
+> `disenador-personajes` (reconocibilidad de las figuras, en especial los moáis), `experto-ux-parvulo`
+> (piezas delgadas de Sofía: columnas, pilotes y almenas de 22-28 px, siempre con zona tocable de
+> 96 px) y playtest con los tres.
 
-| Zona | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
+| Zona | Maxi · Semilla (3-4 piezas gigantes, color guía, tocar lleva a casa) | Nicole · Brote (6-8 piezas, Coco nombra la forma) | Sofía · Estrella (25-30 piezas, líneas de cada pieza, pista con estrellita) |
 |---|---|---|---|
-| 1 · Claro | 3 formas gigantes (círculo, cuadrado, triángulo), imán enorme [`iman_tolerancia_px: 200`] | 6 formas con silueta de color (la silueta ayuda) [`modo: simple`] | **Tangram de 7 piezas** solo con contorno (casa, cohete o pez), giro de a 45° por toque; vale cualquier solución que llene la silueta [`mecanica: tangram_libre`, `lado_red: 96`], sin límite de intentos |
-| 2 · Charcos | Las formas tienen carita y **se ríen** al encajar; decoraciones de rueda y aleta de dino (GDD §4) | 7 formas: suma corazón y rombo | **Tangram + espejo obligatorio**: el paralelogramo llega al revés y hay que voltearlo con el botón espejo (velero o una de 4 siluetas asimétricas con una sola quiralidad válida), más **una pieza intrusa** que sobra [`boton_espejo`, `distractoras_por_partida: 1`] |
-| 3 · Chupetines | 4 formas (suma estrella), cada una en su color de siempre | Siluetas **solo con contorno**, sin color guía | **Copia de memoria**: el modelo de 7 piezas a color se ve **5 s**, Coco lo tapa con una cortina arcoíris y hay que armarlo igual, cada pieza con su color; mirar de nuevo (botón ojo) cuesta una estrellita [`mecanica: memoria`, `segundos_modelo: 5`, `limite_intentos: 8`] |
-| 4 · Islotes | Formas en **dos tamaños** (grande y chico) con imán generoso: la chica va en el hueco chico | Formas en dos tamaños y **siluetas giradas**: la pieza se endereza sola al acercarse (sin exigir rotar) | **Marcos de pentominós** (Katamino), 2 pruebas seguidas: 5×5 con 7 piezas (sobran 2) y 6×5 con 9 piezas (sobran 3); giro de a 90° y espejo [`mecanica: marco`, `pruebas`] |
-| 5 · Cima | Arma su **dinosaurio o autito** gigante de 3 piezas, con imán total (su gusto más fuerte, ficha de Maxi) | **Completa una escena**: jardín con casa y jirafa con 8 huecos; el corazón dorado escondido | **Desafío de la Cima**, 3 pruebas seguidas: (1) **tangram doble de 14 piezas** (nave estelar); (2) **marco con forma de nave** de 45 cuadraditos con los 12 pentominós (sobran 3); (3) **copia de memoria** mirando el modelo solo **3 s**. ⭐ **Reto dorado** (aparece con 3 estrellitas): el **rectángulo de 6×10 con los 12 pentominós**, con el avance guardado pieza a pieza |
+| 1 · Claro | **Casita con su sol**: triángulo, cuadrado y círculo | **Casita** de 6 piezas (techo, paredes, ventanas, puerta), sombras de color | **Iglesia de Castro (Chiloé)**, 25 piezas: torre, techo, pórtico de columnas; sin giro [`limite_intentos: 12`] |
+| 2 · Charcos | **Barquito** de 3 piezas (dos velas y casco) que **se ríen** al encajar | **Micro** de 7 piezas (ventanas, carrocería, ruedas), sombras de color | **Palafitos de Castro**, 27 piezas: tres casas sobre pilotes; desde aquí las piezas llegan giradas y tocarlas las gira [`limite_intentos: 12`] |
+| 3 · Chupetines | **Arbolito de Navidad** con estrella (4 piezas) | **Faro** de 7 piezas, sombras sin color | **Santiago**: Torre Entel, Costanera Center y la cordillera nevada, 24 piezas (varias muy parecidas) [`limite_intentos: 12`] |
+| 4 · Islotes | **Monito de nieve**: círculo grande y chico, cuadrado grande y chico | **Tren** de 8 piezas con ruedas grandes y chicas; las piezas se enderezan solas [`limite_intentos: 12`] | **Moáis de Rapa Nui** sobre su ahu, 28 piezas [`limite_intentos: 14`] |
+| 5 · Cima | Su **dinosaurio o autito** gigante de 3 piezas (sin cambios, ahora con bandeja real y tarjeta) | **Completa una escena**: jardín con casa y jirafa y el corazón dorado escondido (sin cambios) | **Castillo Hidalgo del cerro Santa Lucía**, 30 piezas [`limite_intentos: 16`]. ⭐ **Reto dorado** (sin cambios): el rectángulo de 6×10 con los 12 pentominós |
 
 ### 3.3 Parejas de Coco — motor `emparejar` (cuarto juego)
 
@@ -197,8 +230,8 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 > - El progreso de estaciones y zonas se **deriva** de los niveles que `Progreso` ya registra (id de
 >   nivel completado + mejores estrellitas); no se agregó nada al guardado ni se subió su versión.
 >   "Veces jugada" queda para cuando haga falta.
-> - Mientras falten minijuegos, abrir la zona siguiente pide **min(2, estaciones jugables)** y la
->   zona secreta se revela al completar las estaciones jugables de la zona 4. Estaciones sin nivel se
+> - Abrir la zona siguiente (y revelar la secreta) pide **todas las estaciones jugables** de la
+>   zona anterior (PO 27-Sep-2026; antes pedía min(2, estaciones jugables)). Estaciones sin nivel se
 >   ven "pintándose" (sin candado) y Coco lo explica al tocarlas.
 > - Parejas de Coco: Maxi (zona 2) y Nicole (zona 3) usan los niveles de la demo; Sofía tiene sus 5
 >   zonas (dificultad v3). Una estación puede traer `niveles_dorados` por hermano: el mapa muestra
@@ -212,8 +245,8 @@ se mantiene libre**. Desde la zona 2 cada estación agrega un **encargo creativo
 
 - **Mapa del planeta**: `datos/planetas/arcoiris/mapa.json`. Define las zonas (id, nombre, color
   devuelto, posición en el mapa, recuerdo), sus 4 estaciones (motor, escena y un nivel por
-  hermano), la regla de apertura (`estaciones_para_abrir_siguiente: 2`), la zona tras la cual se
-  entrega la pieza y la condición de la zona secreta.
+  hermano), el `paisaje` que dibuja el mapa ilustrado, la zona tras la cual se entrega la pieza y la
+  condición de la zona secreta. La regla de apertura (zona completa) vive en `mapa_planeta.gd`.
 - **Niveles**: `datos/niveles/arcoiris/<zona>/<juego>_<perfil>.json` (ejemplo:
   `datos/niveles/arcoiris/zona2_charcos/parejas_estrella.json`). Los tres niveles de la demo se
   mueven a sus zonas cuando exista el mapa del planeta.

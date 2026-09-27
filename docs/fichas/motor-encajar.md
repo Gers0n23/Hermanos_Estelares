@@ -129,6 +129,9 @@ Campos de pieza: `forma`, `ancho`, `alto`, `color`, `x`, `y` (relativos a la fig
 | 5 · Cima | dinosaurio o autito gigante de 3 piezas con imán total | jardín: casa, sol, árbol y jirafa (8 huecos) + corazón dorado escondido (límite 16) | tangram: corona (especial, "te corono líder") o gato de 6 piezas, con giro (límite 10) |
 
 > **Columna de Sofía reemplazada (dificultad v3, 14-Sep-2026)**: ver §8 y la ficha de zonas §3.2.
+>
+> **Tabla entera reemplazada por "Arma la figura" (PO, 27-Sep-2026)**: ver §9. Las zonas 1 a 4 de Maxi
+> y Nicole y las 5 de Sofía son ahora figuras reconocibles en Chile, cortadas en piezas.
 
 ## 8. Mecánicas de Sofía (dificultad v3, decisión del PO del 14-Sep-2026)
 
@@ -163,6 +166,36 @@ Reglas comunes (activadas por campos):
 
 Verificación: `herramientas/qa_test_retos_sofia.gd` y `herramientas/capturar_retos_sofia.gd`
 (pantallazos en ventana real).
+
+## 9. "Arma la figura": primero la figura, después las piezas (PO, 27-Sep-2026)
+
+El PO encontró errado el concepto de las figuras complejas: "con las formas separadas de la derecha no
+se puede armar la forma final de la izquierda". Desde ahora, **toda figura se diseña primero** y sus
+piezas salen de cortarla. Así, por construcción, la bandeja siempre arma la silueta.
+
+- **Diseño**: `herramientas/figuras_formas.py`. Cada figura se escribe en px con las formas del motor
+  (`R`, `T`, `TR`, `TP`, `C`, `E`) y un factor `escala`.
+- **Validación**: sin solapes, sin piezas sueltas (salvo `permitir_sueltas`), cabe en el tablero,
+  cada pieza cabe en la bandeja a tamaño real, lado mínimo por perfil (Semilla 96, Brote 52,
+  Estrella 22 px), y dos piezas con la misma geometría deben tener el mismo color. El motor calza por
+  geometría, así que serían intercambiables. También avisa de piezas "casi iguales".
+- **Generación**: `--previas <carpeta>` dibuja cada figura armada y desarmada. `--escribir` genera los
+  niveles (`modo: arma_figura`).
+
+Campos nuevos del nivel:
+
+| Campo | Qué hace |
+|---|---|
+| `bandeja_escala_real` | Las piezas de la bandeja no se achican: miden lo mismo que su silueta. |
+| `piezas_en_bandeja` | Tope de piezas a la vista; las demás esperan en una cola y entran al encajar. Con escala real, además, solo entran las que caben. Siempre hay al menos una. Toda pieza ofrecida tiene un lugar libre donde calza. |
+| `modelo_mini` | Tarjeta arriba a la izquierda con la figura terminada a color (la foto de la caja del rompecabezas). |
+
+Otros cambios del motor:
+
+- Con más de 14 piezas requeridas (`MAX_RANURAS`), el progreso es una barra arcoíris continua.
+- Las siluetas de piezas chicas (lado < 90 px) llevan línea fina continua en vez del punteado grueso.
+- La pista que coloca una pieza (`colocar_pista`) elige por geometría (forma, tamaño y espejo), no por
+  nombre y color. Antes podía poner un rectángulo del mismo color pero de otro tamaño.
 
 ## 7. Pendientes
 

@@ -33,3 +33,6 @@ __pycache__/
 # Respaldos automaticos de Krita y editores
 *-autosave.kra
 *~
+
+# Hojas de contacto de herramientas/ojos.gd (revisión visual del agente, efímeras)
+.ojos/

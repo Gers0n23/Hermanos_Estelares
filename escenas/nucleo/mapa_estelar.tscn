@@ -3,323 +3,321 @@
 [ext_resource type="Script" uid="uid://dulf5wevq4vx6" path="res://scripts/nucleo/mapa_estelar.gd" id="1_mapa"]
 [ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
 [ext_resource type="Script" uid="uid://by7yo2oyywc05" path="res://scripts/nucleo/camino_estelar.gd" id="3_camino"]
-[ext_resource type="Texture2D" uid="uid://bqftvaxa0raat" path="res://assets/sprites/personajes/cometa_base.png" id="4_cometa"]
+[ext_resource type="Texture2D" path="res://assets/sprites/personajes/cometa_saludo.png" id="4_cometa"]
 [ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_800.tres" id="5_f800"]
 [ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_700.tres" id="6_f700"]
-[ext_resource type="FontVariation" path="res://assets/fuentes/fuente_baloo_600.tres" id="7_f600"]
-[ext_resource type="Shader" uid="uid://dbhnvuqa6y6i2" path="res://assets/shaders/disco_circular.gdshader" id="8_shader"]
+[ext_resource type="Texture2D" path="res://assets/sprites/nave/nave_estrella.png" id="7_nave"]
 
 [sub_resource type="Gradient" id="Gradient_fondo"]
-offsets = PackedFloat32Array(0, 0.34, 0.62, 1)
-colors = PackedColorArray(0.043, 0.02, 0.141, 1, 0.09, 0.051, 0.235, 1, 0.173, 0.09, 0.376, 1, 0.29, 0.141, 0.514, 1)
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.29, 0.15, 0.49, 1, 0.14, 0.07, 0.33, 1, 0.06, 0.03, 0.16, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
 gradient = SubResource("Gradient_fondo")
 width = 128
 height = 128
-fill_to = Vector2(0.65, 1)
+fill = 1
+fill_from = Vector2(0.45, 0.55)
+fill_to = Vector2(1.2, 0.55)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_disco"]
-shader = ExtResource("8_shader")
-shader_parameter/escala_de_grises = false
-shader_parameter/desenfoque = 0.0
-shader_parameter/opacidad = 1.0
+[sub_resource type="Gradient" id="Gradient_brillo"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_forma_nave"]
-bg_color = Color(1, 1, 1, 0.13)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_brillo"]
+gradient = SubResource("Gradient_brillo")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0.075, 0.039, 0.188, 0.62)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(1, 1, 1, 0.67)
-corner_radius_top_left = 60
-corner_radius_top_right = 60
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
-bg_color = Color(0, 0, 0, 0.4)
+border_color = Color(1, 1, 1, 0.16)
 corner_radius_top_left = 48
 corner_radius_top_right = 48
 corner_radius_bottom_right = 48
 corner_radius_bottom_left = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anillo_retrato"]
-bg_color = Color(1, 1, 1, 0.12)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(1, 1, 1, 0.9)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 border_color = Color(0.29, 0.659, 1, 1)
-corner_radius_top_left = 38
-corner_radius_top_right = 38
-corner_radius_bottom_right = 38
-corner_radius_bottom_left = 38
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boton_hud"]
-bg_color = Color(0, 0, 0, 0.4)
+bg_color = Color(0.075, 0.039, 0.188, 0.62)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(1, 1, 1, 0.13)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icono_hangar"]
-bg_color = Color(0.557, 0.914, 1, 0.27)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icono_papas"]
-bg_color = Color(1, 1, 1, 0.27)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+border_color = Color(1, 1, 1, 0.22)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_burbuja"]
-bg_color = Color(1, 1, 1, 0.93)
-corner_radius_top_left = 26
-corner_radius_top_right = 26
-corner_radius_bottom_right = 26
-corner_radius_bottom_left = 6
+bg_color = Color(1, 1, 1, 0.95)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 8
 
-[node name="mapa_estelar" type="Node2D" unique_id=1428822526]
+[node name="mapa_estelar" type="Node2D"]
 script = ExtResource("1_mapa")
 
-[node name="fondo" type="TextureRect" parent="." unique_id=1126376672]
+[node name="fondo" type="TextureRect" parent="."]
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = SubResource("GradientTexture2D_fondo")
 expand_mode = 1
 
-[node name="resplandor_1" type="TextureRect" parent="." unique_id=449325677]
-modulate = Color(0.416, 0.229, 0.82, 0.3)
-material = SubResource("ShaderMaterial_disco")
-offset_left = 620.0
-offset_top = -180.0
-offset_right = 1440.0
+[node name="nebulosa_rosa" type="TextureRect" parent="."]
+modulate = Color(1, 0.45, 0.8, 0.16)
+offset_left = 640.0
+offset_top = -200.0
+offset_right = 1400.0
 offset_bottom = 520.0
-texture = SubResource("GradientTexture2D_fondo")
+texture = SubResource("GradientTexture2D_brillo")
 expand_mode = 1
-stretch_mode = 1
 
-[node name="resplandor_2" type="TextureRect" parent="." unique_id=1401675927]
-modulate = Color(0.639, 0.255, 0.486, 0.2)
-material = SubResource("ShaderMaterial_disco")
-offset_left = -140.0
-offset_top = 180.0
-offset_right = 760.0
-offset_bottom = 940.0
-texture = SubResource("GradientTexture2D_fondo")
+[node name="nebulosa_turquesa" type="TextureRect" parent="."]
+modulate = Color(0.35, 0.85, 0.9, 0.13)
+offset_left = -200.0
+offset_top = 260.0
+offset_right = 620.0
+offset_bottom = 1000.0
+texture = SubResource("GradientTexture2D_brillo")
 expand_mode = 1
-stretch_mode = 1
 
-[node name="capa_estrellas_lejos" type="Node2D" parent="." unique_id=1314452589]
+[node name="capa_estrellas_lejos" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0.55)
 script = ExtResource("2_estrellas")
 
-[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_lejos" unique_id=284325206]
-wait_time = 9.0
-
-[node name="capa_estrellas_cerca" type="Node2D" parent="." unique_id=1635654068]
-script = ExtResource("2_estrellas")
-
-[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_cerca" unique_id=818275373]
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_lejos"]
 wait_time = 6.0
 
-[node name="camino" type="Node2D" parent="." unique_id=33277288]
+[node name="capa_estrellas_cerca" type="Node2D" parent="."]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas_cerca"]
+wait_time = 6.0
+
+[node name="camino" type="Node2D" parent="."]
 script = ExtResource("3_camino")
 
-[node name="contenedor_planetas" type="Node2D" parent="." unique_id=1442425678]
+[node name="contenedor_planetas" type="Node2D" parent="."]
 
-[node name="nave" type="Node2D" parent="." unique_id=423809457]
+[node name="nave" type="Node2D" parent="."]
 
-[node name="forma_nave" type="Node2D" parent="nave" unique_id=728522328]
+[node name="forma_nave" type="Node2D" parent="nave"]
 
-[node name="cuerpo_nave" type="Panel" parent="nave/forma_nave" unique_id=519376284]
-offset_left = -82.0
-offset_top = 190.0
-offset_right = 38.0
-offset_bottom = 260.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_forma_nave")
+[node name="estela" type="TextureRect" parent="nave/forma_nave"]
+modulate = Color(1, 0.85, 0.4, 0.35)
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 0.0
+offset_bottom = 60.0
+texture = SubResource("GradientTexture2D_brillo")
+expand_mode = 1
 
-[node name="hud" type="Node2D" parent="." unique_id=1306345128]
+[node name="sprite" type="Sprite2D" parent="nave/forma_nave"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_nave")
 
-[node name="fondo_hud" type="Panel" parent="hud" unique_id=1553740913]
-offset_left = 26.0
-offset_top = 22.0
-offset_right = 470.0
-offset_bottom = 118.0
+[node name="hud" type="Node2D" parent="."]
+
+[node name="fondo_hud" type="Panel" parent="hud"]
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 402.0
+offset_bottom = 116.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
 
-[node name="anillo_retrato" type="Panel" parent="hud" unique_id=325859713]
-offset_left = 38.0
-offset_top = 32.0
-offset_right = 114.0
+[node name="anillo_retrato" type="Panel" parent="hud"]
+offset_left = 30.0
+offset_top = 28.0
+offset_right = 110.0
 offset_bottom = 108.0
+clip_children = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_anillo_retrato")
 
-[node name="retrato" type="TextureRect" parent="hud/anillo_retrato" unique_id=20735203]
-material = SubResource("ShaderMaterial_disco")
+[node name="retrato" type="TextureRect" parent="hud/anillo_retrato"]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 70.0
-offset_bottom = 70.0
-texture = ExtResource("4_cometa")
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 76.0
+offset_bottom = 76.0
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
-[node name="texto_nombre" type="Label" parent="hud" unique_id=426136593]
-offset_left = 126.0
-offset_top = 28.0
-offset_right = 326.0
-offset_bottom = 66.0
+[node name="texto_nombre" type="Label" parent="hud"]
+offset_left = 124.0
+offset_top = 24.0
+offset_right = 284.0
+offset_bottom = 72.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_f800")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 34
 text = "Maxi"
 
-[node name="texto_nivel" type="Label" parent="hud" unique_id=967856365]
+[node name="texto_nivel" type="Label" parent="hud"]
 offset_left = 126.0
 offset_top = 70.0
-offset_right = 326.0
+offset_right = 284.0
 offset_bottom = 100.0
-theme_override_colors/font_color = Color(0.29, 0.659, 1, 1)
-theme_override_fonts/font = ExtResource("7_f600")
+theme_override_fonts/font = ExtResource("6_f700")
 theme_override_font_sizes/font_size = 18
 text = "semilla"
 
-[node name="grupo_destellos" type="Node2D" parent="hud" unique_id=1003502242]
-position = Vector2(346, 70)
+[node name="grupo_destellos" type="Node2D" parent="hud"]
+position = Vector2(312, 68)
 
-[node name="icono_estrella" type="Polygon2D" parent="hud/grupo_destellos" unique_id=125914028]
-color = Color(1, 0.808, 0.239, 1)
-polygon = PackedVector2Array(0, -20, 4.7, -6.47, 19.02, -6.18, 7.61, 2.47, 11.76, 16.18, 0, 8, -11.76, 16.18, -7.61, 2.47, -19.02, -6.18, -4.7, -6.47)
+[node name="icono_estrella" type="Polygon2D" parent="hud/grupo_destellos"]
+color = Color(1, 0.823, 0.247, 1)
+polygon = PackedVector2Array(0, -20, 5.9, -8.1, 19, -6.2, 9.5, 3.1, 11.8, 16.2, 0, 10, -11.8, 16.2, -9.5, 3.1, -19, -6.2, -5.9, -8.1)
 
-[node name="texto_destellos" type="Label" parent="hud/grupo_destellos" unique_id=1194982853]
-offset_left = 26.0
-offset_top = -22.0
-offset_right = 110.0
+[node name="texto_destellos" type="Label" parent="hud/grupo_destellos"]
+offset_left = 24.0
+offset_top = -26.0
+offset_right = 84.0
 offset_bottom = 22.0
-theme_override_colors/font_color = Color(1, 0.808, 0.239, 1)
+theme_override_colors/font_color = Color(1, 0.823, 0.247, 1)
 theme_override_fonts/font = ExtResource("5_f800")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 32
 text = "0"
-vertical_alignment = 1
 
-[node name="boton_hangar" type="Panel" parent="." unique_id=1973852939]
-offset_left = 966.0
-offset_top = 22.0
-offset_right = 1054.0
-offset_bottom = 110.0
-pivot_offset = Vector2(44, 44)
+[node name="boton_hangar" type="Panel" parent="."]
+offset_left = 936.0
+offset_top = 20.0
+offset_right = 1032.0
+offset_bottom = 116.0
+pivot_offset = Vector2(48, 48)
 theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
 
-[node name="icono" type="Panel" parent="boton_hangar" unique_id=857915323]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 20.0
-offset_right = 64.0
-offset_bottom = 50.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_icono_hangar")
+[node name="icono" type="Sprite2D" parent="boton_hangar"]
+position = Vector2(48, 40)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("7_nave")
 
-[node name="texto" type="Label" parent="boton_hangar" unique_id=850594459]
+[node name="texto" type="Label" parent="boton_hangar"]
 layout_mode = 0
-offset_top = 56.0
-offset_right = 88.0
-offset_bottom = 84.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+offset_top = 64.0
+offset_right = 96.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
 theme_override_fonts/font = ExtResource("6_f700")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 14
 text = "hangar"
 horizontal_alignment = 1
 
-[node name="boton_casa" type="Panel" parent="." unique_id=1705260260]
-offset_left = 1066.0
-offset_top = 22.0
-offset_right = 1154.0
-offset_bottom = 110.0
-pivot_offset = Vector2(44, 44)
+[node name="boton_casa" type="Panel" parent="."]
+offset_left = 1046.0
+offset_top = 20.0
+offset_right = 1142.0
+offset_bottom = 116.0
+pivot_offset = Vector2(48, 48)
 theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
 
-[node name="icono" type="Polygon2D" parent="boton_casa" unique_id=1000817276]
-position = Vector2(44, 34)
-color = Color(1, 1, 1, 0.75)
-polygon = PackedVector2Array(0, -15, 17, -1.5, 12.24, -1.5, 12.24, 15, -12.24, 15, -12.24, -1.5, -17, -1.5)
+[node name="techo" type="Polygon2D" parent="boton_casa"]
+position = Vector2(48, 40)
+color = Color(1, 0.42, 0.55, 1)
+polygon = PackedVector2Array(0, -24, 24, -3, -24, -3)
 
-[node name="texto" type="Label" parent="boton_casa" unique_id=1638879648]
+[node name="paredes" type="Polygon2D" parent="boton_casa"]
+position = Vector2(48, 40)
+color = Color(1, 0.95, 0.85, 1)
+polygon = PackedVector2Array(-17, -4, 17, -4, 17, 18, -17, 18)
+
+[node name="puerta" type="Polygon2D" parent="boton_casa"]
+position = Vector2(48, 40)
+color = Color(0.29, 0.66, 1, 1)
+polygon = PackedVector2Array(-5, 4, 5, 4, 5, 18, -5, 18)
+
+[node name="texto" type="Label" parent="boton_casa"]
 layout_mode = 0
-offset_top = 56.0
-offset_right = 88.0
-offset_bottom = 84.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+offset_top = 64.0
+offset_right = 96.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
 theme_override_fonts/font = ExtResource("6_f700")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 14
 text = "casa"
 horizontal_alignment = 1
 
-[node name="boton_papas" type="Panel" parent="." unique_id=1420097827]
-offset_left = 1166.0
-offset_top = 22.0
-offset_right = 1254.0
-offset_bottom = 110.0
-pivot_offset = Vector2(44, 44)
+[node name="boton_papas" type="Panel" parent="."]
+offset_left = 1156.0
+offset_top = 20.0
+offset_right = 1252.0
+offset_bottom = 116.0
+pivot_offset = Vector2(48, 48)
 theme_override_styles/panel = SubResource("StyleBoxFlat_boton_hud")
 
-[node name="icono" type="Panel" parent="boton_papas" unique_id=1927934565]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 20.0
-offset_right = 57.0
-offset_bottom = 46.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_icono_papas")
+[node name="cabeza_grande" type="Polygon2D" parent="boton_papas"]
+position = Vector2(40, 30)
+color = Color(1, 1, 1, 0.8)
+polygon = PackedVector2Array(0, -9, 6.4, -6.4, 9, 0, 6.4, 6.4, 0, 9, -6.4, 6.4, -9, 0, -6.4, -6.4)
 
-[node name="texto" type="Label" parent="boton_papas" unique_id=295164925]
+[node name="cuerpo_grande" type="Polygon2D" parent="boton_papas"]
+position = Vector2(40, 30)
+color = Color(1, 1, 1, 0.8)
+polygon = PackedVector2Array(-13, 26, -13, 20, -8, 13, 8, 13, 13, 20, 13, 26)
+
+[node name="cabeza_chica" type="Polygon2D" parent="boton_papas"]
+position = Vector2(60, 38)
+color = Color(1, 1, 1, 0.6)
+polygon = PackedVector2Array(0, -7, 5, -5, 7, 0, 5, 5, 0, 7, -5, 5, -7, 0, -5, -5)
+
+[node name="cuerpo_chico" type="Polygon2D" parent="boton_papas"]
+position = Vector2(60, 38)
+color = Color(1, 1, 1, 0.6)
+polygon = PackedVector2Array(-10, 18, -10, 14, -6, 9, 6, 9, 10, 14, 10, 18)
+
+[node name="texto" type="Label" parent="boton_papas"]
 layout_mode = 0
-offset_top = 56.0
-offset_right = 88.0
-offset_bottom = 84.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+offset_top = 64.0
+offset_right = 96.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
 theme_override_fonts/font = ExtResource("6_f700")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 14
 text = "papás"
 horizontal_alignment = 1
 
-[node name="cometa_mapa" type="TextureRect" parent="." unique_id=2075611822]
-material = SubResource("ShaderMaterial_disco")
-offset_left = 852.0
-offset_top = 608.0
-offset_right = 956.0
-offset_bottom = 712.0
+[node name="cometa_mapa" type="Sprite2D" parent="."]
+position = Vector2(880, 640)
+scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_cometa")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="burbuja_cometa" type="Panel" parent="." unique_id=660151095]
-offset_left = 942.0
-offset_top = 564.0
-offset_right = 1259.0
-offset_bottom = 634.0
+[node name="burbuja_cometa" type="Panel" parent="."]
+offset_left = 950.0
+offset_top = 604.0
+offset_right = 1256.0
+offset_bottom = 672.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_burbuja")
 
-[node name="texto" type="Label" parent="burbuja_cometa" unique_id=1551773100]
+[node name="texto" type="Label" parent="burbuja_cometa"]
 layout_mode = 0
-offset_left = 22.0
-offset_right = 358.0
-offset_bottom = 70.0
+offset_right = 306.0
+offset_bottom = 68.0
 theme_override_colors/font_color = Color(0.227, 0.11, 0.455, 1)
 theme_override_fonts/font = ExtResource("6_f700")
 theme_override_font_sizes/font_size = 24
 text = "¡Vamos al Planeta Arcoíris!"
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="temporizador_recordatorio" type="Timer" parent="." unique_id=1113315631]
+[node name="temporizador_recordatorio" type="Timer" parent="."]
 wait_time = 14.0

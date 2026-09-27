@@ -2,7 +2,9 @@ extends SceneTree
 
 ## Arnes QA de los retos de Sofia, dificultad v3 (decision del PO 14-Sep-2026).
 ##
-## Formas traviesas (motor encajar), las 5 zonas y el reto dorado:
+## Formas traviesas (motor encajar): el reto dorado. Las 5 zonas pasaron a "arma la figura" (PO
+## 27-Sep-2026) y se prueban en qa_test_encajar.gd; el motor conserva tangram libre y memoria, y sus
+## pruebas quedan aqui por si un nivel vuelve a usarlas:
 ## - tangram libre: la silueta se llena con la solucion del nivel soltando cada pieza como un dedo
 ##   (el iman la ajusta a la red), una pieza fuera de lugar no calza, el espejo es obligatorio en la
 ##   zona 2 y hay pieza intrusa;
@@ -37,8 +39,9 @@ func _initialize() -> void:
 	print("=== QA retos de Sofia (dificultad v3) ===")
 	var formas: Array = []
 	var parejas: Array = []
+	# Las 5 zonas de Formas de Sofia son "arma la figura" desde el 27-Sep-2026 (PO): se prueban en
+	# qa_test_encajar.gd. Aqui queda el reto dorado (marco de pentominos).
 	for zona in ZONAS:
-		formas.append(NIVELES + zona + "/formas_estrella.json")
 		parejas.append(NIVELES + zona + "/parejas_estrella.json")
 	formas.append(NIVELES + "zona5_cima/formas_estrella_dorado.json")
 	parejas.append(NIVELES + "zona5_cima/parejas_estrella_dorado.json")

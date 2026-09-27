@@ -1,5 +1,28 @@
 # Qué es este arte y para qué sirve
 
+## Vigente desde 27-Sep-2026 — personajes oficiales = arte recortado en Krita
+
+Decisión del PO: los personajes oficiales son los **recortados** (rigs cutout), no los SVG
+dibujados. Todos estos PNG se generan con
+
+    python herramientas/renderizar_retratos.py
+
+- `maxi_*`, `nicole_*`, `sofia_*`: compuestos desde `assets/sprites/preview_<p>_rig/` con los
+  pivotes y z_index del rig. `_base` = reposo; `_celebracion` = brazos arriba (piezas giradas
+  en sus articulaciones). Lienzo 512×768, pies en y=720, 649 px de alto (la estatura por edad
+  la pone cada escena con su escala).
+- `cometa_base.png` (frente) y `cometa_saludo.png` (saludando, con bolsito): recortes de
+  `assets/anclas/cometa_referencia.png` (`herramientas/extraer_base.py`), en
+  `assets/generadas/cometa_recortes/`. Lienzo 480×560.
+- Si cambian las piezas de un rig, volver a correr el script.
+- `herramientas/exportar_sprites.gd` ya **no** toca esta carpeta (los SVG de
+  `assets/fuentes_svg/personajes/` quedan como historia).
+
+Lo que sigue es la historia anterior de esta carpeta.
+
+---
+
+
 `maxi_base.png`, `maxi_celebracion.png`, `nicole_base.png`, `nicole_celebracion.png`,
 `sofia_base.png`, `sofia_celebracion.png` son el arte **plano** (pipeline SVG→PNG de
 `herramientas/exportar_sprites.gd`, tarjeta HE-D2, previo a 23-Jul-2026).

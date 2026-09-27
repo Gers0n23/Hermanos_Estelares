@@ -26,6 +26,12 @@ extends "res://scripts/base/minijuego_base.gd"
 ## `objetivo_guiado` (Brote: un objetivo a la vez), `enderezar_al_acercar`, `rotacion_por_toque`,
 ## `limite_intentos` (derrota-gag + estrellitas), `piezas_distractoras`, `guia_color`, `caras`.
 ##
+## "Arma la figura" (PO 27-Sep-2026): la figura final se disena primero y las piezas salen de
+## cortarla (herramientas/figuras_formas.py). `bandeja_escala_real` muestra las piezas en la bandeja
+## a su tamano real, igual que la silueta, para que se vea que calzan; `piezas_en_bandeja` las entrega
+## de a pocas (las que caben) y repone al encajar; `modelo_mini` muestra la figura terminada en una
+## tarjeta, como la foto de la caja de un rompecabezas.
+##
 ## F3 (solo PC) muestra un panel de depuracion para el PO.
 
 signal pieza_encajada(id_hueco: String)
@@ -36,6 +42,7 @@ signal prueba_completada(indice: int)
 
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
+const Siluetas := preload("res://scripts/motores/encajar/siluetas_encajar.gd")
 ## Zonas de la pantalla base 1280x720: a la izquierda Coco, arriba la barra de progreso, a la
 ## derecha la bandeja de piezas y abajo a la derecha Cometa. Un nivel puede cambiarlas
 ## (`zona_figuras`, `zona_bandeja`: [x, y, ancho, alto]).
@@ -52,6 +59,8 @@ const TOLERANCIA_LIBRE := 0.05
 ## Tangram libre: fraccion de la silueta que debe quedar cubierta para ganar.
 const COBERTURA_MINIMA := 0.97
 const SEGUNDOS_VISTAZO := 2.0
+## Hasta cuantas piezas la barra de progreso muestra una ranura por pieza; con mas, una barra continua.
+const MAX_RANURAS := 14
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const SFX_TOMAR := "sfx/ui/seleccionar.ogg"
 const SFX_SOLTAR := "sfx/ui/soltar.ogg"
@@ -114,6 +123,10 @@ var _objetivo_guiado := false
 var _risa := false
 var _caras := true
 var _lado_minimo_bandeja := 0.0
+var _escala_real := false
+var _max_bandeja := 0  ## 0 = todas las piezas en la bandeja desde el inicio
+## Piezas que esperan su turno para entrar a la bandeja: [{"datos": Dictionary, "hueco": Dictionary}].
+var _cola: Array = []
 var _exigir_color := false
 var _boton_espejo_activo := false
 
@@ -139,6 +152,18 @@ var _boton_pista: Button
 var _boton_espejo: Button
 var _boton_ojo: Button
 
+## Rondas (PO 27-Sep-2026): una figura a la vez, sorteadas del pool `figuras`. `_rondas` guarda, por
+## ronda, el id de su figura y, al completarla, su dibujo para la medalla de progreso.
+var _modo_rondas := false
+var _rondas: Array = []
+var _medallas: Control
+var _estrellitas_rondas: Array = []
+var _rondas_jugadas_sesion := 0
+## Emblemas "encima" (campo `capa` de la pieza: la estrella de Chile sobre el cuadrado azul, el disco
+## de Japon sobre el fondo blanco): cada capa > 0 dibuja sus siluetas por encima de las piezas ya
+## puestas de las capas de abajo.
+var _capas_siluetas: Array = []
+
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
 var _salto_anfitriona := 0.0
@@ -162,6 +187,9 @@ func _ready() -> void:
 		push_error("motor_encajar: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
 	_pruebas = nivel.get("pruebas", [])
+	if nivel.has("rondas"):
+		_pruebas = _armar_rondas()
+	_crear_capas_siluetas()
 	_iniciar_prueba()
 
 
@@ -171,6 +199,8 @@ func _process(delta: float) -> void:
 	var hablando: bool = audio != null and audio.esta_hablando()
 	var bamboleo := absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0
 	_anfitriona.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
+	if _medallas != null:
+		_medallas.queue_redraw()
 	if _ayuda_idle > 0.0 and not _terminado and not _en_gag and _arrastrando.is_empty():
 		_inactivo += delta
 		if _inactivo >= _ayuda_idle:
@@ -208,13 +238,25 @@ func _iniciar_prueba() -> void:
 		_construir_piezas()
 	_construir_progreso()
 	_siluetas.figuras = _figuras
+	for capa in _capas_siluetas:
+		capa.figuras = _figuras
+		capa.guia_color = bool(_cfg.get("guia_color", false))
 	_siluetas.guia_color = bool(_cfg.get("guia_color", false))
 	_siluetas.zona = _zona_figuras
 	_siluetas.escena = _cfg.get("escena", {})
+	_siluetas.modelo_mini = bool(_cfg.get("modelo_mini", false))
 	_siluetas.queue_redraw()
 	_actualizar_botones()
-	var intro := _linea("intro")
-	_reproducir_voz("intro", intro)
+	_actualizar_medallas()
+	var clave_intro := "intro"
+	if _modo_rondas and _indice_prueba > 0:
+		# Entre rondas ya sono "¡vamos con otra!": solo habla si la ronda trae su propia intro (la
+		# bandera de Sofia) o si se retoma una partida guardada a medio camino.
+		clave_intro = "intro_ronda"
+		if _linea("intro_ronda") == "" and _es_primera_de_la_sesion():
+			clave_intro = "intro_generica" if _linea("intro_generica") != "" else "intro"
+	var intro := _linea(clave_intro)
+	_reproducir_voz(clave_intro, intro)
 	if _objetivo_guiado:
 		_elegir_objetivo()
 		_voz_diferida("objetivo", _ruta_voz_objetivo(), _duracion_voz(intro) + 0.4)
@@ -223,6 +265,171 @@ func _iniciar_prueba() -> void:
 	if bool(_cfg.get("guardar_avance", false)):
 		_restaurar_avance()
 	_actualizar_depuracion()
+
+
+# ---------------------------------------------------------------------------
+# Rondas: una figura a la vez (PO 27-Sep-2026)
+# ---------------------------------------------------------------------------
+
+## Arma las pruebas de la partida, una figura por ronda, sorteadas del pool `figuras`.
+## `rondas` es un numero (N figuras del pool entero) o una lista de grupos (["monumento", "bandera"]:
+## una ronda por grupo, sorteada entre las figuras con ese `grupo`). Una figura `fija` va siempre
+## primera; el resto se ordena por `dificultad` para que la estacion suba suave. El `config` de una
+## figura sobrescribe campos del nivel en su ronda (limite, giro, exigir color, intro). Si hay avance
+## guardado (el nino salio a mitad de la serie), se retoma en la misma ronda con las mismas figuras.
+func _armar_rondas() -> Array:
+	_modo_rondas = true
+	var pool: Array = nivel.get("figuras", [])
+	var por_id := {}
+	for figura: Dictionary in pool:
+		por_id[str(figura.get("id", ""))] = figura
+	var elegidas: Array = []
+	var estado := obtener_estado_parcial()
+	var guardadas: Array = estado.get("rondas", [])
+	var valido := not guardadas.is_empty()
+	for id in guardadas:
+		valido = valido and por_id.has(str(id))
+	if valido:
+		for id in guardadas:
+			elegidas.append(por_id[str(id)])
+		_indice_prueba = clampi(int(estado.get("indice", 0)), 0, elegidas.size() - 1)
+		_destellos_pruebas = int(estado.get("destellos", 0))
+		_estrellitas_rondas = (estado.get("estrellitas", []) as Array).duplicate()
+		_pistas_usadas = int(estado.get("pistas", 0))
+		_derrota_disparada = bool(estado.get("derrota", false))
+	else:
+		var pedido = nivel["rondas"]
+		if pedido is Array:
+			for grupo in pedido:
+				var candidatas := pool.filter(func(f: Dictionary) -> bool: return str(f.get("grupo", "")) == str(grupo))
+				candidatas.shuffle()
+				candidatas.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return bool(a.get("fija", false)) and not bool(b.get("fija", false)))
+				if not candidatas.is_empty():
+					elegidas.append(candidatas[0])
+		else:
+			var fijas := pool.filter(func(f: Dictionary) -> bool: return bool(f.get("fija", false)))
+			var resto := pool.filter(func(f: Dictionary) -> bool: return not bool(f.get("fija", false)))
+			resto.shuffle()
+			var cuantas := clampi(int(pedido), 1, pool.size())
+			fijas = fijas.slice(0, cuantas)
+			resto = resto.slice(0, cuantas - fijas.size())
+			resto.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a.get("dificultad", 0)) < float(b.get("dificultad", 0)))
+			elegidas = fijas + resto
+	var pruebas: Array = []
+	for i in elegidas.size():
+		var figura: Dictionary = elegidas[i]
+		var prueba: Dictionary = (figura.get("config", {}) as Dictionary).duplicate(true)
+		if not prueba.has("figuras"):
+			prueba["figuras"] = [figura]
+		prueba["figuras_por_partida"] = null
+		pruebas.append(prueba)
+		_rondas.append({"id": str(figura.get("id", "")), "hecha": i < _indice_prueba, "mini": _miniatura_de(prueba["figuras"])})
+	return pruebas
+
+
+## Poligonos de una ronda para su medalla (mismo formato que los huecos: dibujo, color, capa).
+func _miniatura_de(lista: Array) -> Array:
+	var figuras: Array = []
+	for datos: Dictionary in lista:
+		var centro: Array = datos.get("centro", [0, 0])
+		var huecos: Array = []
+		for pieza: Dictionary in datos.get("piezas", []):
+			var forma := str(pieza.get("forma", "circulo"))
+			var ancho := float(pieza.get("ancho", 100.0))
+			var alto := float(pieza.get("alto", ancho))
+			var base := Geo.redondeado(forma, _contorno_de(pieza), ancho, alto)
+			var posicion := Vector2(float(centro[0]) + float(pieza.get("x", 0)), float(centro[1]) + float(pieza.get("y", 0)))
+			huecos.append({"dibujo": Geo.transformado(base, float(pieza.get("rotacion", 0.0)), posicion),
+				"color": Color(str(pieza.get("color", "#FFCB3D"))), "capa": int(pieza.get("capa", 0)),
+				"opcional": bool(pieza.get("opcional", false))})
+		figuras.append({"huecos": huecos})
+	return figuras
+
+
+func _es_primera_de_la_sesion() -> bool:
+	return _rondas_jugadas_sesion == 0
+
+
+## Guarda en que ronda va la serie, para retomarla si el nino sale (GDD §6 regla 8). Se borra al ganar.
+func _guardar_rondas() -> void:
+	var ids: Array = []
+	for ronda in _rondas:
+		ids.append(ronda["id"])
+	guardar_estado_parcial({"rondas": ids, "indice": _indice_prueba + 1, "destellos": _destellos_pruebas,
+		"estrellitas": _estrellitas_rondas, "pistas": _pistas_usadas, "derrota": _derrota_disparada})
+
+
+## Medallas de las rondas, arriba a la derecha y sin numeros: la ronda en juego late, las terminadas
+## muestran su figura en chiquito con borde dorado y las que faltan esperan con una estrellita.
+func _actualizar_medallas(recien := false) -> void:
+	if not _modo_rondas or _rondas.size() < 2:
+		return
+	if _medallas == null:
+		_medallas = Control.new()
+		_medallas.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_medallas.z_index = 30
+		_tablero.get_parent().add_child(_medallas)
+		_medallas.position = Vector2(976, 18)
+		_medallas.size = Vector2(290, 92)
+		_medallas.draw.connect(_dibujar_medallas)
+	_medallas.queue_redraw()
+	if recien:
+		_medallas.pivot_offset = _centro_medalla(_indice_prueba)
+		_medallas.scale = Vector2.ONE * 1.12
+		_medallas.create_tween().tween_property(_medallas, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_estallido(_medallas.position + _centro_medalla(_indice_prueba), 10, [DORADO, TURQUESA, Color("#F26CA8")])
+
+
+func _radio_medalla() -> float:
+	return 30.0 if _rondas.size() <= 3 else 28.0
+
+
+func _centro_medalla(indice: int) -> Vector2:
+	var r := _radio_medalla()
+	return Vector2(r + 6.0 + indice * (r * 2.0 + 10.0), 46.0)
+
+
+func _dibujar_medallas() -> void:
+	var r := _radio_medalla()
+	var t := Time.get_ticks_msec() / 1000.0
+	for i in _rondas.size():
+		var c := _centro_medalla(i)
+		var ronda: Dictionary = _rondas[i]
+		if ronda["hecha"]:
+			_medallas.draw_circle(c + Vector2(0, 4), r, Color(COLOR_CONTORNO, 0.3))
+			_medallas.draw_circle(c, r, Color("#FFF8EE"))
+			var caja: Rect2 = Siluetas.caja_de(ronda["mini"])
+			var escala := (r * 1.35) / maxf(1.0, maxf(caja.size.x, caja.size.y))
+			Siluetas.dibujar_miniatura(_medallas, ronda["mini"], c, escala, caja.get_center(), 1.0)
+			_medallas.draw_arc(c, r, 0.0, TAU, 40, DORADO, 6.0, true)
+			_medallas.draw_arc(c, r + 3.0, 0.0, TAU, 40, COLOR_CONTORNO, 2.5, true)
+		elif i == _indice_prueba:
+			var pulso := 1.0 + 0.08 * sin(t * 5.0)
+			_medallas.draw_circle(c, r * pulso, Color(1, 1, 1, 0.55))
+			_medallas.draw_arc(c, r * pulso, 0.0, TAU, 40, DORADO, 5.0, true)
+			Figura.dibujar(_medallas, "estrella", DORADO, c, r * 0.5, false)
+		else:
+			_medallas.draw_circle(c, r * 0.86, Color(1, 1, 1, 0.2))
+			_medallas.draw_arc(c, r * 0.86, 0.0, TAU, 40, Color(1, 1, 1, 0.75), 3.0, true)
+			var estrella := Figura.poligono("estrella", c, r * 0.36)
+			estrella.append(estrella[0])
+			_medallas.draw_polyline(estrella, Color(1, 1, 1, 0.8), 2.5, true)
+
+
+## La figura terminada baila entera (en ola) mientras Coco festeja. Devuelve cuanto dura el baile.
+func _bailar_figura() -> float:
+	var puestas: Array = []
+	for pieza in _piezas:
+		if pieza.colocada:
+			puestas.append(pieza)
+	var inicio := 0.6 + puestas.size() * 0.07 + 0.35
+	var paso := minf(0.06, 1.2 / maxf(1.0, puestas.size()))
+	for i in puestas.size():
+		var pieza: PiezaEncajar = puestas[i]
+		_despues(inicio, func() -> void:
+			if is_instance_valid(pieza):
+				pieza.bailar(i * paso))
+	return inicio + puestas.size() * paso + 0.9
 
 
 func _configurar_desde_nivel() -> void:
@@ -241,6 +448,8 @@ func _configurar_desde_nivel() -> void:
 	_risa = bool(_cfg.get("risa_al_encajar", false))
 	_caras = bool(_cfg.get("caras", true))
 	_lado_minimo_bandeja = float(_cfg.get("lado_minimo_bandeja", {"semilla": 96.0, "brote": 56.0}.get(perfil, 0.0)))
+	_escala_real = bool(_cfg.get("bandeja_escala_real", false))
+	_max_bandeja = int(_cfg.get("piezas_en_bandeja", 0))
 	_exigir_color = bool(_cfg.get("exigir_color", _mecanica == "memoria"))
 	_boton_espejo_activo = bool(_cfg.get("boton_espejo", false))
 	_lado_red = float(_cfg.get("lado_red", 0.0))
@@ -343,6 +552,7 @@ func _construir_figuras() -> void:
 				"opcional": bool(pieza.get("opcional", false)),
 				"especial": bool(pieza.get("especial", false)),
 				"nombre_voz": str(pieza.get("nombre_voz", forma)),
+				"capa": int(pieza.get("capa", 0)),
 				"forma_centrada": Geo.transformado(base, grados),
 				"poligono": Geo.transformado(base, grados, centro),
 				"dibujo": Geo.transformado(redondeado, grados, centro),
@@ -431,23 +641,61 @@ func _construir_piezas() -> void:
 		datos["id"] = "distractora_%d" % i
 		lista.append({"datos": datos, "hueco": null})
 	lista.shuffle()
+	_cola = lista
+	_acomodar_bandeja(_sacar_de_cola())
 
-	for entrada in lista:
-		var pieza := PiezaEncajar.new()
-		_tablero.add_child(pieza)
-		pieza.configurar(entrada["datos"])
-		var hueco = entrada["hueco"]
-		pieza.cara_siempre = _caras
-		pieza.cara_al_completar = hueco != null and hueco["cara"]
-		var grados := float(hueco["rotacion"]) if hueco != null else float(entrada["datos"].get("rotacion", 0.0))
-		if _enderezar:
-			grados = 0.0
-		elif _rotacion_por_toque and bool(_cfg.get("rotacion_inicial_aleatoria", true)):
-			grados = _rotacion_desordenada(pieza, hueco)
-		pieza.rotacion_grados = wrapf(grados, 0.0, 360.0)
-		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
-		_conectar_pieza(pieza)
-	_acomodar_bandeja()
+
+func _crear_pieza(entrada: Dictionary) -> PiezaEncajar:
+	var pieza := PiezaEncajar.new()
+	_tablero.add_child(pieza)
+	pieza.configurar(entrada["datos"])
+	var hueco = entrada["hueco"]
+	pieza.cara_siempre = _caras
+	pieza.cara_al_completar = hueco != null and hueco["cara"]
+	var grados := float(hueco["rotacion"]) if hueco != null else float(entrada["datos"].get("rotacion", 0.0))
+	if _enderezar:
+		grados = 0.0
+	elif _rotacion_por_toque and bool(_cfg.get("rotacion_inicial_aleatoria", true)):
+		grados = _rotacion_desordenada(pieza, hueco)
+	pieza.rotacion_grados = wrapf(grados, 0.0, 360.0)
+	pieza.rotation = deg_to_rad(pieza.rotacion_grados)
+	_conectar_pieza(pieza)
+	return pieza
+
+
+## Pasa piezas de la cola a la bandeja: todas si no hay tope, o hasta `piezas_en_bandeja`. Con escala
+## real, solo las que caben sin achicarse. Siempre entra al menos una. Devuelve las nuevas.
+func _sacar_de_cola() -> Array:
+	var nuevas: Array = []
+	var en_bandeja := _en_bandeja()
+	var i := 0
+	while i < _cola.size():
+		if _max_bandeja > 0 and en_bandeja.size() >= _max_bandeja:
+			break
+		var pieza := _crear_pieza(_cola[i])
+		if _escala_real and not en_bandeja.is_empty() and _empacar(en_bandeja + [pieza], 1.0).is_empty():
+			# No cabe a tamano real: espera su turno (se prueba la siguiente de la cola).
+			_piezas.erase(pieza)
+			pieza.queue_free()
+			i += 1
+			continue
+		_cola.remove_at(i)
+		en_bandeja.append(pieza)
+		nuevas.append(pieza)
+	return nuevas
+
+
+func _en_bandeja() -> Array:
+	return _piezas.filter(func(pieza: PiezaEncajar) -> bool: return not pieza.colocada)
+
+
+## Tras encajar una pieza: si quedan en la cola, entran las que caben y la bandeja se reacomoda.
+func _reponer_bandeja() -> void:
+	if _cola.is_empty():
+		return
+	var nuevas := _sacar_de_cola()
+	if not nuevas.is_empty():
+		_acomodar_bandeja(nuevas)
 
 
 func _conectar_pieza(pieza: PiezaEncajar) -> void:
@@ -487,7 +735,7 @@ func _construir_marco() -> void:
 		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
 		_conectar_pieza(pieza)
 	_piezas.shuffle()
-	_acomodar_bandeja()
+	_acomodar_bandeja(_piezas)
 
 
 ## Un giro al azar (multiplo del paso) con el que la pieza todavia NO calza en su hueco.
@@ -505,9 +753,14 @@ func _rotacion_desordenada(pieza: PiezaEncajar, hueco) -> float:
 
 ## Acomoda las piezas en la bandeja en filas, achicandolas lo minimo necesario para que quepan
 ## todas (mismo factor para todas: se conservan los tamanos relativos, clave en "grande y chico").
-func _acomodar_bandeja() -> void:
-	var ordenes: Array = [_piezas.duplicate()]
-	var por_alto := _piezas.duplicate()
+## Con `bandeja_escala_real` no se achican nunca. `nuevas` aparecen con un saltito; las que ya
+## estaban vuelven a su nuevo lugar (o, si se estan arrastrando, solo cambian de casa).
+func _acomodar_bandeja(nuevas: Array) -> void:
+	var piezas := _en_bandeja()
+	if piezas.is_empty():
+		return
+	var ordenes: Array = [piezas.duplicate()]
+	var por_alto := piezas.duplicate()
 	por_alto.sort_custom(func(a: PiezaEncajar, b: PiezaEncajar) -> bool: return _medida_bandeja(a).y > _medida_bandeja(b).y)
 	ordenes.append(por_alto)
 	var mejor: Dictionary = {}
@@ -523,12 +776,17 @@ func _acomodar_bandeja() -> void:
 	if mejor.is_empty():
 		mejor = {"factor": 0.3, "centros": _empacar(ordenes[1], 0.3, true), "orden": ordenes[1]}
 	var orden: Array = mejor["orden"]
+	var aparecidas := 0
 	for i in orden.size():
 		var pieza: PiezaEncajar = orden[i]
 		pieza.escala_bandeja = _escala_en_bandeja(pieza, mejor["factor"])
 		pieza.casa = mejor["centros"][i]
-		pieza.fijar_centro(pieza.casa)
-		pieza.aparecer(0.2 + i * 0.05)
+		if nuevas.has(pieza):
+			pieza.fijar_centro(pieza.casa)
+			pieza.aparecer(0.2 + aparecidas * 0.05)
+			aparecidas += 1
+		elif not _arrastrando.has(pieza) and not pieza.bloqueada:
+			pieza.volver_a_casa()
 
 
 func _medida_bandeja(pieza: PiezaEncajar, factor := 1.0) -> Vector2:
@@ -538,6 +796,8 @@ func _medida_bandeja(pieza: PiezaEncajar, factor := 1.0) -> Vector2:
 ## Escala de una pieza en la bandeja: el factor comun, pero sin que su lado mas corto quede bajo
 ## `lado_minimo_bandeja` (Maxi 96 px, Nicole 56 px) y nunca mas grande que su tamano real.
 func _escala_en_bandeja(pieza: PiezaEncajar, factor: float) -> float:
+	if _escala_real:
+		return 1.0
 	var caja := Geo.caja(pieza.poligono()).size
 	var lado := maxf(1.0, minf(caja.x, caja.y))
 	return minf(1.0, maxf(factor, _lado_minimo_bandeja / lado))
@@ -587,6 +847,16 @@ func _empacar(orden: Array, factor: float, forzar := false) -> Array:
 
 ## Una ranura por pieza que hace falta: se llena con la forma encajada. Muestra cuanto falta sin numeros.
 func _construir_progreso() -> void:
+	if _requeridos > MAX_RANURAS:
+		# Figuras grandes de Sofia (20+ piezas): una barra arcoiris que se va llenando.
+		var barra := Control.new()
+		barra.custom_minimum_size = Vector2(620, 46)
+		barra.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		barra.set_meta("barra", true)
+		barra.draw.connect(_dibujar_barra.bind(barra))
+		_progreso_piezas.add_child(barra)
+		_ranuras.append(barra)
+		return
 	var lado := 64.0 if _requeridos <= 6 else 52.0
 	for i in _requeridos:
 		var ranura := Control.new()
@@ -595,6 +865,34 @@ func _construir_progreso() -> void:
 		ranura.draw.connect(_dibujar_ranura.bind(ranura))
 		_progreso_piezas.add_child(ranura)
 		_ranuras.append(ranura)
+
+
+func _dibujar_barra(barra: Control) -> void:
+	var rect := Rect2(Vector2.ZERO, barra.size).grow(-4.0)
+	var radio := rect.size.y / 2.0
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = Color(1, 1, 1, 0.22)
+	fondo.border_color = Color(1, 1, 1, 0.75)
+	fondo.set_border_width_all(3)
+	fondo.set_corner_radius_all(int(radio))
+	barra.draw_style_box(fondo, rect)
+	var fraccion := clampf(_encajados / maxf(1.0, _requeridos), 0.0, 1.0)
+	if fraccion <= 0.0:
+		return
+	# Relleno con los colores del arcoiris, de izquierda a derecha segun lo armado.
+	var lleno := Rect2(rect.position, Vector2(maxf(rect.size.y, rect.size.x * fraccion), rect.size.y)).grow(-4.0)
+	var franja := lleno.size.x / Figura.COLORES_ARCOIRIS.size()
+	for i in Figura.COLORES_ARCOIRIS.size():
+		var trozo := StyleBoxFlat.new()
+		trozo.bg_color = Figura.COLORES_ARCOIRIS[i]
+		var r := int(lleno.size.y / 2.0)
+		trozo.corner_radius_top_left = r if i == 0 else 0
+		trozo.corner_radius_bottom_left = r if i == 0 else 0
+		trozo.corner_radius_top_right = r if i == Figura.COLORES_ARCOIRIS.size() - 1 else 0
+		trozo.corner_radius_bottom_right = r if i == Figura.COLORES_ARCOIRIS.size() - 1 else 0
+		barra.draw_style_box(trozo, Rect2(lleno.position + Vector2(franja * i, 0), Vector2(franja + 0.5, lleno.size.y)))
+	barra.draw_circle(Vector2(lleno.end.x - 2.0, lleno.get_center().y), lleno.size.y * 0.42, Color(1, 1, 1, 0.9))
+	Figura.dibujar(barra, "estrella", DORADO, Vector2(lleno.end.x - 2.0, lleno.get_center().y), lleno.size.y * 0.36, false)
 
 
 func _dibujar_ranura(ranura: Control) -> void:
@@ -805,6 +1103,7 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 	_arrastrando.erase(pieza)
 	hueco["pieza"] = pieza
 	pieza.hueco = hueco
+	pieza.capa = int(hueco.get("capa", 0))
 	pieza.elegida = false
 	pieza.encajar_en(hueco["centro"], hueco["rotacion"])
 	reproducir_sfx(SFX_ENCAJE)
@@ -813,6 +1112,7 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 	if _siluetas.hueco_pista == hueco:
 		_siluetas.hueco_pista = null
 	_siluetas.queue_redraw()
+	_reponer_bandeja()
 	if hueco["opcional"]:
 		_celebrar_tesoro(pieza)
 		return
@@ -882,6 +1182,13 @@ func _celebrar_tesoro(pieza: PiezaEncajar) -> void:
 
 
 func _llenar_ranura(pieza: PiezaEncajar) -> void:
+	if not _ranuras.is_empty() and _ranuras[0].has_meta("barra"):
+		var barra: Control = _ranuras[0]
+		barra.pivot_offset = barra.size / 2.0
+		barra.scale = Vector2(1.0, 1.25)
+		barra.create_tween().tween_property(barra, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		barra.queue_redraw()
+		return
 	for ranura in _ranuras:
 		if ranura.has_meta("lleno"):
 			continue
@@ -898,6 +1205,9 @@ func _refrescar_ranuras() -> void:
 	var puestas: Array = _libres.keys() if _mecanica == "tangram_libre" else _celdas_de.keys()
 	for i in _ranuras.size():
 		var ranura: Control = _ranuras[i]
+		if ranura.has_meta("barra"):
+			ranura.queue_redraw()
+			continue
 		if i < puestas.size():
 			ranura.set_meta("lleno", puestas[i])
 		elif ranura.has_meta("lleno"):
@@ -1198,7 +1508,16 @@ func colocar_pista() -> bool:
 		if hueco["pieza"] != null or hueco["opcional"]:
 			continue
 		for pieza in _piezas:
-			if pieza.colocada or pieza.forma != hueco["forma"] or not pieza.color.is_equal_approx(hueco["color"]):
+			# Por geometria (forma, tamano y espejo), no por nombre: dos rectangulos del mismo color y
+			# distinto tamano no son la misma pieza. Con `exigir_color`, ademas el color.
+			if pieza.colocada or pieza.forma != hueco["forma"]:
+				continue
+			if _exigir_color and not pieza.color.is_equal_approx(hueco["color"]):
+				continue
+			var base := Geo.contorno(pieza.forma, pieza.ancho, pieza.alto)
+			if hueco["espejo"]:
+				base = Geo.espejado(base)
+			if not Geo.calzan(Geo.transformado(base, float(hueco["rotacion"])), hueco["forma_centrada"]):
 				continue
 			pieza.volteada = hueco["espejo"]
 			pieza.rotacion_grados = wrapf(float(hueco["rotacion"]), 0.0, 360.0)
@@ -1460,27 +1779,44 @@ func _reintentar() -> void:
 
 ## Termino una prueba: si quedan, se celebra y se arma la siguiente; si no, la victoria final.
 func _completar_prueba(voz_figura: String) -> void:
+	var baile := 0.0
+	if _modo_rondas:
+		# Mini-fiesta de ronda: la figura baila, su medalla se llena y Coco dice su nombre.
+		_rondas[_indice_prueba]["hecha"] = true
+		_rondas_jugadas_sesion += 1
+		_estrellitas_rondas.append(_estrellitas_base())
+		baile = _bailar_figura()
+		_actualizar_medallas(true)
 	if _indice_prueba + 1 >= _pruebas.size():
 		_celebrar_victoria(voz_figura)
 		return
 	_terminado = true
+	_id_voz_diferida += 1
 	_destellos_pruebas += _destellos_prueba_actual()
 	_borrar_avance_prueba()
+	if _modo_rondas:
+		_guardar_rondas()
 	prueba_completada.emit(_indice_prueba)
 	for pieza in _piezas:
 		pieza.bloqueada = true
 		pieza.cancelar_arrastre()
+	_siluetas.hueco_objetivo = null
+	_siluetas.hueco_pista = null
+	_siluetas.queue_redraw()
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
 	var espera := 1.0
 	if voz_figura != "":
 		_reproducir_voz("figura_completa", voz_figura)
-		espera = clampf(_duracion_voz(voz_figura) + 0.3, 1.0, 3.8)
+		# Con rondas, la voz puede traer un dato (la capital de la bandera): se espera entera.
+		espera = clampf(_duracion_voz(voz_figura) + 0.3, 1.0, 7.5 if _modo_rondas else 3.8)
+	espera = maxf(espera, baile)
 	await get_tree().create_timer(espera).timeout
 	if not is_inside_tree():
 		return
-	var voz_prueba := _linea_al_azar("prueba_superada")
-	_reproducir_voz("prueba_superada", voz_prueba)
+	var clave := "ronda_siguiente" if _modo_rondas and _linea("ronda_siguiente") != "" else "prueba_superada"
+	var voz_prueba := _linea_al_azar(clave)
+	_reproducir_voz(clave, voz_prueba)
 	await get_tree().create_timer(_duracion_voz(voz_prueba) + 0.4).timeout
 	if not is_inside_tree():
 		return
@@ -1500,6 +1836,7 @@ func _limpiar_tablero() -> void:
 	for ranura in _ranuras:
 		ranura.queue_free()
 	_piezas.clear()
+	_cola.clear()
 	_ranuras.clear()
 	_figuras.clear()
 	_huecos.clear()
@@ -1538,7 +1875,7 @@ func _celebrar_victoria(voz_figura: String) -> void:
 	var espera := 0.9
 	if voz_figura != "":
 		_reproducir_voz("figura_completa", voz_figura)
-		espera = clampf(_duracion_voz(voz_figura) + 0.3, 0.9, 3.8)
+		espera = clampf(_duracion_voz(voz_figura) + 0.3, 0.9, 7.5 if _modo_rondas else 3.8)
 	_despues(0.5, func() -> void:
 		_confeti.restart()
 		_reaccion_anfitriona("baila"))
@@ -1552,14 +1889,22 @@ func _celebrar_victoria(voz_figura: String) -> void:
 ## `disenador-niveles` fije umbrales: sin limite -> 3; tras derrota-gag -> 1; con la mitad o mas
 ## de los intentos sobrantes -> 3; si no -> 2. Cada pista (o vistazo al modelo) resta una, sin
 ## bajar de 1: ganar siempre da al menos una estrellita.
+## Con rondas vale la peor ronda (cada una tiene su propio limite).
 func _calcular_estrellitas() -> int:
+	var base := _estrellitas_base()
+	for ronda in _estrellitas_rondas:
+		base = mini(base, int(ronda))
+	return maxi(1, base - _pistas_usadas)
+
+
+func _estrellitas_base() -> int:
 	var base := 3
 	if _derrota_disparada:
 		base = 1
 	elif _limite_intentos != null:
 		var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
 		base = 3 if sobrantes * 2 >= int(_limite_intentos) else 2
-	return maxi(1, base - _pistas_usadas)
+	return base
 
 
 func _destellos_prueba_actual() -> int:
@@ -1652,6 +1997,11 @@ func _al_tocar_anfitriona(event: InputEvent) -> void:
 		return
 	reproducir_sfx(SFX_TOQUE)
 	_reaccion_anfitriona("salta")
+	if _modo_rondas and _indice_prueba > 0:
+		for clave in ["intro_ronda", "intro_generica", "intro"]:
+			if _linea(clave) != "":
+				_reproducir_voz(clave, _linea(clave))
+				return
 	_reproducir_voz("intro", _linea("intro"))
 
 
@@ -1737,9 +2087,9 @@ func _actualizar_depuracion() -> void:
 	for campo in ["sin_error", "toque_lleva_a_casa", "objetivo_guiado", "enderezar_al_acercar", "rotacion_por_toque", "risa_al_encajar", "guia_color", "boton_espejo", "pistas_cuestan_estrellita", "regalo_tras_derrotas"]:
 		if bool(_cfg.get(campo, false)):
 			reglas.append(campo)
-	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\nmecanica: %s · prueba %d de %d\npiezas: %d de %d\niman: %.0f px\nfallos que cuentan: %d / %s\nderrotas: %d · pistas usadas: %d\nreglas: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
+	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\nmecanica: %s · %s %d de %d\npiezas: %d de %d\niman: %.0f px\nfallos que cuentan: %d / %s\nderrotas: %d · pistas usadas: %d\nreglas: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
 		nivel.get("id_nivel", "?"), obtener_perfil_dificultad(), obtener_id_personaje(), _mecanica,
-		_indice_prueba + 1, maxi(1, _pruebas.size()), _encajados, _requeridos, _iman, _intentos_usados, limite,
+		("ronda (%s)" % _rondas[_indice_prueba]["id"]) if _modo_rondas and _indice_prueba < _rondas.size() else "prueba", _indice_prueba + 1, maxi(1, _pruebas.size()), _encajados, _requeridos, _iman, _intentos_usados, limite,
 		_derrotas, _pistas_usadas, ", ".join(reglas), _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas())]
 
 
@@ -1749,6 +2099,35 @@ func _actualizar_depuracion() -> void:
 
 ## Botones de los retos de Sofia, creados por codigo: pista (arriba a la derecha), espejo y mirar el
 ## modelo (bajo la bandeja). Todos >= 96 px (GDD §6.1) y visibles solo si el nivel los usa.
+## Una copia de la capa de siluetas por cada capa de emblemas que usa el nivel, dentro del tablero y
+## entre las piezas por z_index: pieza puesta de capa k -> z 2k; siluetas de capa k -> z 2k-1; pieza
+## tomada -> z 20. Lo que va sobre el tablero (botones, chispas, "¡otra vez!") sube a z 30.
+func _crear_capas_siluetas() -> void:
+	var maxima := 0
+	var fuentes: Array = [nivel.get("figuras", [])]
+	for prueba in _pruebas:
+		fuentes.append((prueba as Dictionary).get("figuras", []))
+	for lista in fuentes:
+		for figura in lista:
+			for pieza in (figura as Dictionary).get("piezas", []):
+				maxima = maxi(maxima, int((pieza as Dictionary).get("capa", 0)))
+	var script: Script = _siluetas.get_script()
+	for k in range(1, maxima + 1):
+		var capa: Control = script.new()
+		capa.capa = k
+		capa.principal = _siluetas
+		capa.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		capa.z_index = 2 * k - 1
+		_tablero.add_child(capa)
+		capa.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_capas_siluetas.append(capa)
+	_siluetas.capas_extra = _capas_siluetas
+	var ui: Control = _tablero.get_parent()
+	for hijo in ui.get_children():
+		if hijo.get_index() > _tablero.get_index() and hijo is CanvasItem:
+			(hijo as CanvasItem).z_index = 30
+
+
 func _crear_botones_sofia() -> void:
 	var ui: Control = _boton_salir.get_parent()
 	_boton_pista = _boton_redondo(ui, Rect2(1164, 16, 96, 96), DORADO, "Pista: pone una pieza (cuesta una estrellita)", _dibujar_icono_pista)

@@ -45,7 +45,12 @@ func _procesar_carpeta(origen: String, destino: String, escala: float, resultado
 	while nombre != "":
 		var ruta_origen := origen.path_join(nombre)
 		if carpeta.current_is_dir():
-			if not nombre.begins_with("."):
+			# Los retratos oficiales de personajes salen del arte recortado en Krita
+			# (herramientas/renderizar_retratos.py, decision del PO 27-Sep-2026): los SVG
+			# de personajes/ quedan como historia y no deben pisar esos PNG.
+			if ruta_origen == DIR_FUENTES.path_join("personajes"):
+				print("  (omitida) %s: la generan herramientas/renderizar_retratos.py" % ruta_origen)
+			elif not nombre.begins_with("."):
 				_procesar_carpeta(ruta_origen, destino.path_join(nombre), escala, resultado)
 		elif nombre.get_extension().to_lower() == "svg":
 			if _exportar_svg(ruta_origen, destino.path_join(nombre.get_basename() + ".png"), escala):

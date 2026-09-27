@@ -1,0 +1,65 @@
+{
+  "id_nivel": "arcoiris_z5_lluvia_brote",
+  "motor": "clasificar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "lluvia de colores",
+  "variante": "Coco nombra el color por voz y los charcos tienen solo contorno: elegir la gota del color oido",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "modo": "directo",
+  "iman_tolerancia_px": 130,
+  "tamano_gota": 112,
+  "ayuda_tras_fallos": 2,
+  "ayuda_idle_s": 12,
+  "regalo_tras_derrotas": true,
+  "velocidad_caida": 0,
+  "elementos_simultaneos": 3,
+  "nombrar_color_por_voz": true,
+  "charcos_contorno": 4,
+  "opciones_por_pedido": 3,
+  "pool_gotas": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "rosado",
+    "verde",
+    "naranja",
+    "violeta",
+    "celeste"
+  ],
+  "colores": [],
+  "limite_intentos": 12,
+  "rondas": 6,
+  "por_ronda": 4,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/lluvia/brote/intro_z5.wav",
+    "pista": "voces/arcoiris/lluvia/brote/pista_z5.wav",
+    "acierto": [
+      "voces/arcoiris/lluvia/brote/acierto_01.wav",
+      "voces/arcoiris/lluvia/brote/acierto_02.wav",
+      "voces/arcoiris/lluvia/brote/acierto_03.wav",
+      "voces/arcoiris/lluvia/brote/acierto_04.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/lluvia/brote/no_es_este_01.wav",
+      "voces/arcoiris/lluvia/brote/no_es_este_02.wav",
+      "voces/arcoiris/lluvia/brote/no_es_este_03.wav"
+    ],
+    "ayuda": "voces/arcoiris/lluvia/brote/ayuda_01.wav",
+    "nueva_ronda": [
+      "voces/arcoiris/lluvia/brote/ronda_01.wav",
+      "voces/arcoiris/lluvia/brote/ronda_02.wav",
+      "voces/arcoiris/lluvia/brote/ronda_03.wav"
+    ],
+    "derrota_gag": "voces/arcoiris/lluvia/brote/derrota_gag_01.wav",
+    "regalo": "voces/arcoiris/lluvia/brote/regalo_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/lluvia/brote/victoria_01.wav",
+      "voces/arcoiris/lluvia/brote/victoria_02.wav"
+    ],
+    "prefijo_colores": "voces/arcoiris/lluvia/colores/",
+    "prefijo_pedidos": "voces/arcoiris/lluvia/pedidos/"
+  }
+}

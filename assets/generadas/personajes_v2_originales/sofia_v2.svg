@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 640" width="400" height="640">
+  <!-- Sofia v2 — derivada de la plantilla corporal de maxi_v2.svg
+       (misma construcción para que los tres hermanos sean coherentes).
+       Referencias: assets/anclas/sofia_referencia.png y hermanos_alturas.png. -->
+  <defs>
+    <linearGradient id="tela" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffe9f3"/>
+      <stop offset="0.6" stop-color="#fbcfe3"/>
+      <stop offset="1" stop-color="#eaa2c4"/>
+    </linearGradient>
+    <linearGradient id="azul" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a8fd0"/>
+      <stop offset="1" stop-color="#e0438f"/>
+    </linearGradient>
+    <radialGradient id="piel" cx="0.45" cy="0.4" r="0.65">
+      <stop offset="0" stop-color="#d9a27c"/>
+      <stop offset="1" stop-color="#b97c55"/>
+    </radialGradient>
+    <radialGradient id="iris" cx="0.5" cy="0.6" r="0.55">
+      <stop offset="0" stop-color="#a8652c"/>
+      <stop offset="0.75" stop-color="#6b3a18"/>
+      <stop offset="1" stop-color="#3a1f0e"/>
+    </radialGradient>
+    <radialGradient id="casco" cx="0.35" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="0.8" stop-color="#e8f3ff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.55"/>
+    </radialGradient>
+    <radialGradient id="brillo_estrella" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff3a8" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#ffcd3c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="200" cy="622" rx="120" ry="13" fill="#8f8a9c" opacity="0.4"/>
+  <g><circle cx="95.2" cy="226.0" r="33.5" fill="#5a3a26"/><circle cx="93.9" cy="192.6" r="41.5" fill="#5a3a26"/><circle cx="94.7" cy="172.8" r="49.5" fill="#5a3a26"/><circle cx="97.4" cy="155.4" r="33.5" fill="#5a3a26"/><circle cx="102.1" cy="138.6" r="41.5" fill="#5a3a26"/><circle cx="108.7" cy="122.8" r="49.5" fill="#5a3a26"/><circle cx="117.0" cy="108.3" r="33.5" fill="#5a3a26"/><circle cx="126.9" cy="95.2" r="41.5" fill="#5a3a26"/><circle cx="138.2" cy="84.0" r="49.5" fill="#5a3a26"/><circle cx="150.7" cy="74.7" r="33.5" fill="#5a3a26"/><circle cx="164.1" cy="67.6" r="41.5" fill="#5a3a26"/><circle cx="178.2" cy="62.7" r="49.5" fill="#5a3a26"/><circle cx="192.7" cy="60.3" r="33.5" fill="#5a3a26"/><circle cx="207.3" cy="60.3" r="41.5" fill="#5a3a26"/><circle cx="221.8" cy="62.7" r="49.5" fill="#5a3a26"/><circle cx="235.9" cy="67.6" r="33.5" fill="#5a3a26"/><circle cx="249.3" cy="74.7" r="41.5" fill="#5a3a26"/><circle cx="261.8" cy="84.0" r="49.5" fill="#5a3a26"/><circle cx="273.1" cy="95.2" r="33.5" fill="#5a3a26"/><circle cx="283.0" cy="108.3" r="41.5" fill="#5a3a26"/><circle cx="291.3" cy="122.8" r="49.5" fill="#5a3a26"/><circle cx="297.9" cy="138.6" r="33.5" fill="#5a3a26"/><circle cx="302.6" cy="155.4" r="41.5" fill="#5a3a26"/><circle cx="305.3" cy="172.8" r="49.5" fill="#5a3a26"/><circle cx="306.1" cy="192.6" r="33.5" fill="#5a3a26"/><circle cx="304.8" cy="226.0" r="41.5" fill="#5a3a26"/><circle cx="200" cy="150" r="93.5" fill="#5a3a26"/><circle cx="130" cy="250" r="39.5" fill="#5a3a26"/><circle cx="270" cy="250" r="39.5" fill="#5a3a26"/><circle cx="120" cy="300" r="33.5" fill="#5a3a26"/><circle cx="280" cy="300" r="33.5" fill="#5a3a26"/><circle cx="95.2" cy="226.0" r="30" fill="#3b2418"/><circle cx="93.9" cy="192.6" r="38" fill="#3b2418"/><circle cx="94.7" cy="172.8" r="46" fill="#3b2418"/><circle cx="97.4" cy="155.4" r="30" fill="#3b2418"/><circle cx="102.1" cy="138.6" r="38" fill="#3b2418"/><circle cx="108.7" cy="122.8" r="46" fill="#3b2418"/><circle cx="117.0" cy="108.3" r="30" fill="#3b2418"/><circle cx="126.9" cy="95.2" r="38" fill="#3b2418"/><circle cx="138.2" cy="84.0" r="46" fill="#3b2418"/><circle cx="150.7" cy="74.7" r="30" fill="#3b2418"/><circle cx="164.1" cy="67.6" r="38" fill="#3b2418"/><circle cx="178.2" cy="62.7" r="46" fill="#3b2418"/><circle cx="192.7" cy="60.3" r="30" fill="#3b2418"/><circle cx="207.3" cy="60.3" r="38" fill="#3b2418"/><circle cx="221.8" cy="62.7" r="46" fill="#3b2418"/><circle cx="235.9" cy="67.6" r="30" fill="#3b2418"/><circle cx="249.3" cy="74.7" r="38" fill="#3b2418"/><circle cx="261.8" cy="84.0" r="46" fill="#3b2418"/><circle cx="273.1" cy="95.2" r="30" fill="#3b2418"/><circle cx="283.0" cy="108.3" r="38" fill="#3b2418"/><circle cx="291.3" cy="122.8" r="46" fill="#3b2418"/><circle cx="297.9" cy="138.6" r="30" fill="#3b2418"/><circle cx="302.6" cy="155.4" r="38" fill="#3b2418"/><circle cx="305.3" cy="172.8" r="46" fill="#3b2418"/><circle cx="306.1" cy="192.6" r="30" fill="#3b2418"/><circle cx="304.8" cy="226.0" r="38" fill="#3b2418"/><circle cx="200" cy="150" r="90" fill="#3b2418"/><circle cx="130" cy="250" r="36" fill="#3b2418"/><circle cx="270" cy="250" r="36" fill="#3b2418"/><circle cx="120" cy="300" r="30" fill="#3b2418"/><circle cx="280" cy="300" r="30" fill="#3b2418"/></g>
+
+  <g stroke="#5a3a26" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- ===== piernas ===== -->
+    <path d="M 152 430 L 148 548 L 196 548 L 198 440 Z" fill="url(#tela)"/>
+    <path d="M 202 440 L 204 548 L 252 548 L 248 430 Z" fill="url(#tela)"/>
+    <!-- franjas azules laterales -->
+    <path d="M 152 440 L 149 520 L 160 520 L 162 450 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <path d="M 248 440 L 251 520 L 240 520 L 238 450 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <!-- rodilleras -->
+    <ellipse cx="174" cy="492" rx="24" ry="22" fill="#c23579"/>
+    <ellipse cx="174" cy="492" rx="14" ry="12" fill="#ec5aa0" stroke-width="2.5"/>
+    <ellipse cx="226" cy="492" rx="24" ry="22" fill="#c23579"/>
+    <ellipse cx="226" cy="492" rx="14" ry="12" fill="#ec5aa0" stroke-width="2.5"/>
+    <!-- botas -->
+    <path d="M 142 540 L 200 540 L 202 596 C 202 606 196 610 186 610 L 132 610 C 120 610 118 596 128 588 L 140 580 Z" fill="#ffe1ee"/>
+    <path d="M 126 596 C 124 606 128 612 136 612 L 190 612 C 198 612 202 606 202 598 Z" fill="#e0438f"/>
+    <path d="M 144 552 L 198 552 L 198 566 L 143 566 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <circle cx="186" cy="582" r="7" fill="#ff5fae" stroke-width="2.5"/>
+    <path d="M 200 540 L 258 540 L 260 580 L 272 588 C 282 596 280 610 268 610 L 214 610 C 204 610 198 606 198 596 Z" fill="#ffe1ee"/>
+    <path d="M 198 598 C 198 606 202 612 210 612 L 264 612 C 272 612 276 606 274 596 Z" fill="#e0438f"/>
+    <path d="M 202 552 L 256 552 L 257 566 L 202 566 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <circle cx="214" cy="582" r="7" fill="#ff5fae" stroke-width="2.5"/>
+
+    <!-- ===== brazos ===== -->
+    <path d="M 146 288 C 118 296 100 336 98 392 L 126 396 C 128 356 136 330 150 318 Z" fill="url(#tela)"/>
+    <path d="M 254 288 C 282 296 300 336 302 392 L 274 396 C 272 356 264 330 250 318 Z" fill="url(#tela)"/>
+    <path d="M 104 318 L 124 322 L 120 352 L 101 348 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <path d="M 296 318 L 276 322 L 280 352 L 299 348 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <rect x="272" y="306" width="18" height="13" rx="3" fill="#ffb3d6" stroke-width="2"/>
+    <!-- puños azules -->
+    <rect x="92" y="388" width="38" height="20" rx="6" fill="#e0438f"/>
+    <rect x="270" y="388" width="38" height="20" rx="6" fill="#e0438f"/>
+    <!-- guantes -->
+    <path d="M 94 406 C 86 420 88 442 102 448 C 114 452 128 444 128 428 L 128 406 Z" fill="#f9c9de"/>
+    <path d="M 96 426 C 88 428 84 436 90 442" fill="none" stroke-width="3"/>
+    <path d="M 306 406 C 314 420 312 442 298 448 C 286 452 272 444 272 428 L 272 406 Z" fill="#f9c9de"/>
+    <path d="M 304 426 C 312 428 316 436 310 442" fill="none" stroke-width="3"/>
+
+    <!-- ===== torso ===== -->
+    <path d="M 142 282 C 136 330 140 390 150 438 L 250 438 C 260 390 264 330 258 282 C 230 268 170 268 142 282 Z" fill="url(#tela)"/>
+    <!-- paneles azules del pecho -->
+    <path d="M 146 292 C 150 320 156 350 164 380 L 176 380 C 170 346 166 316 166 290 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <path d="M 254 292 C 250 320 244 350 236 380 L 224 380 C 230 346 234 316 234 290 Z" fill="#ff5fae" stroke-width="2.5"/>
+    <!-- cinturón -->
+    <path d="M 146 400 L 254 400 L 254 424 L 146 424 Z" fill="#e0438f"/>
+    <rect x="150" y="398" width="24" height="30" rx="5" fill="#c23579"/>
+    <rect x="226" y="398" width="24" height="30" rx="5" fill="#c23579"/>
+    <rect x="182" y="396" width="36" height="32" rx="6" fill="#ffb3d6"/>
+    <path d="M 200 403 L 210 407 L 208 417 C 206 421 202 423 200 424 C 198 423 194 421 192 417 L 190 407 Z" fill="#ffe1ee" stroke-width="2.5"/>
+    <!-- cuello del traje -->
+    <path d="M 150 272 C 170 292 230 292 250 272 L 246 262 C 226 278 174 278 154 262 Z" fill="#e0438f"/>
+  </g>
+
+  <!-- estrella del pecho -->
+  <circle cx="200" cy="340" r="36" fill="url(#brillo_estrella)"/>
+  <path d="M200,308 L209,327 L230,329 L214,343 L219,364 L200,353 L181,364 L186,343 L170,329 L191,327 Z"
+        fill="#ffcd3c" stroke="#c98a12" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M195,330 L200,316 L203,329 Z" fill="#fff4bf" opacity="0.9"/>
+
+  <!-- ===== cabeza ===== -->
+  <g stroke="#5a3a26" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- orejas -->
+    <ellipse cx="124" cy="178" rx="17" ry="22" fill="url(#piel)"/>
+    <path d="M 122 170 C 116 176 118 188 126 190" fill="none" stroke="#a5694a" stroke-width="3"/>
+    <ellipse cx="276" cy="178" rx="17" ry="22" fill="url(#piel)"/>
+    <path d="M 278 170 C 284 176 282 188 274 190" fill="none" stroke="#a5694a" stroke-width="3"/>
+    <!-- cara -->
+    <path d="M 132 150 C 130 110 160 88 200 88 C 240 88 270 110 268 150 C 268 206 244 244 200 246 C 156 244 132 206 132 150 Z" fill="url(#piel)"/>
+    <!-- pelo: casquete + mechones puntiagudos -->
+  </g>
+  <!-- cejas -->
+  <g stroke="#3b2418" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M 152 148 Q 166 140 180 146"/>
+    <path d="M 220 146 Q 234 140 248 148"/>
+  </g>
+  <!-- ojos -->
+  <g>
+    <ellipse cx="168" cy="178" rx="17" ry="19" fill="#ffffff"/>
+    <ellipse cx="168" cy="179" rx="15" ry="17" fill="url(#iris)"/>
+    <circle cx="168" cy="180" r="7" fill="#1e0f06"/>
+    <circle cx="173" cy="172" r="5" fill="#ffffff"/>
+    <circle cx="163" cy="184" r="2.2" fill="#ffffff"/>
+    <path d="M 149 172 Q 168 154 187 170" fill="none" stroke="#2a170e" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="232" cy="178" rx="17" ry="19" fill="#ffffff"/>
+    <ellipse cx="232" cy="179" rx="15" ry="17" fill="url(#iris)"/>
+    <circle cx="232" cy="180" r="7" fill="#1e0f06"/>
+    <circle cx="237" cy="172" r="5" fill="#ffffff"/>
+    <circle cx="227" cy="184" r="2.2" fill="#ffffff"/>
+    <path d="M 213 170 Q 232 154 251 172" fill="none" stroke="#2a170e" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <!-- mejillas, nariz, sonrisa -->
+  <ellipse cx="150" cy="208" rx="17" ry="10" fill="#e0766e" opacity="0.55"/>
+  <ellipse cx="250" cy="208" rx="17" ry="10" fill="#e0766e" opacity="0.55"/>
+  <path d="M 194 204 Q 200 210 206 204" fill="none" stroke="#c98463" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 182 222 Q 200 236 218 222" fill="none" stroke="#7a3f2a" stroke-width="4" stroke-linecap="round"/>
+
+  <g><circle cx="150" cy="112" r="23.5" fill="#5a3a26"/><circle cx="176" cy="100" r="25.5" fill="#5a3a26"/><circle cx="204" cy="96" r="25.5" fill="#5a3a26"/><circle cx="230" cy="102" r="24.5" fill="#5a3a26"/><circle cx="252" cy="116" r="22.5" fill="#5a3a26"/><circle cx="140" cy="134" r="19.5" fill="#5a3a26"/><circle cx="262" cy="138" r="19.5" fill="#5a3a26"/><circle cx="150" cy="112" r="20" fill="#3b2418"/><circle cx="176" cy="100" r="22" fill="#3b2418"/><circle cx="204" cy="96" r="22" fill="#3b2418"/><circle cx="230" cy="102" r="21" fill="#3b2418"/><circle cx="252" cy="116" r="19" fill="#3b2418"/><circle cx="140" cy="134" r="16" fill="#3b2418"/><circle cx="262" cy="138" r="16" fill="#3b2418"/></g><g fill="none" stroke="#6e4b36" stroke-width="3.5" stroke-linecap="round" opacity="0.85"><path d="M 168 96 C 172 90 180 88 186 90"/><path d="M 212 92 C 218 88 226 90 230 94"/><path d="M 102 230 C 98 240 100 250 106 256"/><path d="M 298 230 C 302 240 300 250 294 256"/></g>
+  <g stroke="#2a170e" stroke-width="3.5" stroke-linecap="round" fill="none"><path d="M 149 170 L 142 164"/><path d="M 153 164 L 148 157"/><path d="M 251 170 L 258 164"/><path d="M 247 164 L 252 157"/></g>
+  <path d="M 124 176 C 118 96 170 64 200 64 C 230 64 282 96 276 176" fill="none" stroke="#5a3a26" stroke-width="16" stroke-linecap="round"/><path d="M 124 176 C 118 96 170 64 200 64 C 230 64 282 96 276 176" fill="none" stroke="#ff7fbf" stroke-width="10" stroke-linecap="round"/><rect x="104" y="150" width="36" height="58" rx="16" fill="#ff7fbf" stroke="#5a3a26" stroke-width="3.5"/><rect x="112" y="160" width="14" height="38" rx="7" fill="#ffc4e0"/><rect x="260" y="150" width="36" height="58" rx="16" fill="#ff7fbf" stroke="#5a3a26" stroke-width="3.5"/><rect x="274" y="160" width="14" height="38" rx="7" fill="#ffc4e0"/>
+  <!-- ===== casco burbuja (encima de todo) ===== -->
+  <circle cx="200" cy="164" r="124" fill="url(#casco)" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+  <circle cx="200" cy="164" r="124" fill="none" stroke="#9cb7d6" stroke-width="1.5" stroke-opacity="0.8"/>
+  <path d="M 108 110 C 124 74 156 52 196 46" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.75"/>
+  <ellipse cx="268" cy="78" rx="14" ry="8" transform="rotate(35 268 78)" fill="#ffffff" opacity="0.7"/>
+  <!-- anillo del cuello del casco -->
+  <path d="M 118 262 C 150 290 250 290 282 262 L 276 250 C 244 274 156 274 124 250 Z" fill="#ff5fae" stroke="#5a3a26" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M 130 258 C 160 278 240 278 270 258" fill="none" stroke="#ffb3d6" stroke-width="3" stroke-linecap="round"/>
+</svg>

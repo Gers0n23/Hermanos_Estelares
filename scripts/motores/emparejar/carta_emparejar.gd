@@ -19,6 +19,10 @@ signal tocada(carta: CartaEmparejar)
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 ## Formas geometricas asimetricas (paralelogramo, triangulo rectangulo...) para las sombras con trampa.
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
+## Temas de los hermanos (dinos, autos, jirafas, ponies, ropa) y banderas (PO 27-Sep-2026).
+const Dibujos := preload("res://scripts/motores/emparejar/dibujos_emparejar.gd")
+const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
+const COLOR_LETRA := Color("#6A4CC7")
 const TOLERANCIA_TOQUE_PX := 56.0  ## radio de tolerancia de arrastre corto (B1)
 const COLOR_SOMBRA := Color(0.17, 0.2, 0.31, 0.92)
 const PROPORCIONES_FORMA := {"triangulo_rect": Vector2(1.0, 1.0), "paralelogramo": Vector2(1.3, 0.72),
@@ -51,6 +55,11 @@ var receta: Array = []
 var forma := ""
 var rotacion_figura := 0.0
 var espejo := false
+## Parejas de Maxi y Nicole (PO 27-Sep-2026): tamano relativo del dibujo ("mama y bebe": 1 y ~0,55),
+## letra mayuscula (estilo "letra", Nicole zona 5) y voz al tocar la carta (el nombre de la letra).
+var escala := 1.0
+var letra := ""
+var voz_toque := ""
 
 var _oculto := false
 var _estado := "normal"  ## normal | seleccionada | acertada | no_es_este | ayuda
@@ -99,20 +108,26 @@ func configurar(datos: Dictionary, oculto: bool) -> void:
 	id_pareja = str(datos.get("id_pareja", ""))
 	id_elemento = str(datos.get("id", ""))
 	figura = str(datos.get("figura", ""))
-	color_figura = Color.from_string(str(datos.get("color", "")), Color.from_hsv(float(hash(id_pareja) % 360) / 360.0, 0.5, 0.95))
+	var color_base := Dibujos.color_por_defecto(figura) if Dibujos.tiene(figura) 		else Color.from_hsv(float(hash(id_pareja) % 360) / 360.0, 0.5, 0.95)
+	color_figura = Color.from_string(str(datos.get("color", "")), color_base)
 	especial = bool(datos.get("especial", false))
 	estilo = str(datos.get("estilo", ""))
 	receta = datos.get("receta", [])
 	forma = str(datos.get("forma", ""))
 	rotacion_figura = float(datos.get("rotacion", 0.0))
 	espejo = bool(datos.get("espejo", false))
+	escala = float(datos.get("escala", 1.0))
+	letra = str(datos.get("letra", ""))
+	voz_toque = str(datos.get("voz_toque", ""))
+	if estilo == "letra" and not datos.has("color"):
+		color_figura = COLOR_LETRA
 	if estilo == "receta" and not receta.is_empty():
 		color_figura = Color.from_string(str(receta[0]), color_figura)
 	var ruta_sprite := str(datos.get("sprite", ""))
 	if ruta_sprite != "" and not ruta_sprite.begins_with("res://"):
 		ruta_sprite = "res://assets/" + ruta_sprite
 	_textura = load(ruta_sprite) if ruta_sprite != "" and ResourceLoader.exists(ruta_sprite) else null
-	if figura == "" and _textura == null and forma == "" and estilo != "receta":
+	if figura == "" and _textura == null and forma == "" and estilo != "receta" and estilo != "letra":
 		figura = "circulo"
 	reiniciar(oculto)
 
@@ -324,10 +339,12 @@ func _dibujar() -> void:
 
 
 func _dibujar_cara(centro: Vector2, s: Vector2) -> void:
-	if not es_sombra():
+	if not es_sombra() and not Dibujos.es_bandera(figura):
 		_cuerpo.draw_circle(centro, s.x * 0.37, Color(color_figura, 0.2))
 	if estilo == "receta":
 		_dibujar_receta(centro, s)
+	elif estilo == "letra":
+		_dibujar_letra(centro, s)
 	elif _textura != null:
 		_cuerpo.draw_texture_rect(_textura, Rect2(centro - s * 0.36, s * 0.72), false)
 	elif forma != "":
@@ -353,6 +370,19 @@ func _dibujar_receta(centro: Vector2, s: Vector2) -> void:
 			_cuerpo.draw_line(mas - Vector2(0, brazo), mas + Vector2(0, brazo), COLOR_CONTORNO, maxf(3.0, s.x * 0.025), true)
 
 
+## Letra mayuscula grande con contorno (Nicole, zona 5: dibujo <-> su letra inicial).
+func _dibujar_letra(centro: Vector2, s: Vector2) -> void:
+	if not ResourceLoader.exists(RUTA_FUENTE):
+		return
+	var fuente: Font = load(RUTA_FUENTE)
+	var tamano := int(s.x * 0.56)
+	var medida := fuente.get_string_size(letra, HORIZONTAL_ALIGNMENT_LEFT, -1, tamano)
+	var base := centro + Vector2(-medida.x / 2.0, fuente.get_ascent(tamano) * 0.5 - fuente.get_descent(tamano) * 0.5)
+	_cuerpo.draw_string_outline(fuente, base + Vector2(0, s.x * 0.025), letra, HORIZONTAL_ALIGNMENT_LEFT, -1, tamano, int(s.x * 0.05), Color(COLOR_CONTORNO, 0.3))
+	_cuerpo.draw_string_outline(fuente, base, letra, HORIZONTAL_ALIGNMENT_LEFT, -1, tamano, int(s.x * 0.05), COLOR_CONTORNO)
+	_cuerpo.draw_string(fuente, base, letra, HORIZONTAL_ALIGNMENT_LEFT, -1, tamano, color_figura)
+
+
 ## Forma geometrica girada o en espejo: a color o como sombra oscura.
 func _dibujar_forma(centro: Vector2, s: Vector2) -> void:
 	var proporcion: Vector2 = PROPORCIONES_FORMA.get(forma, Vector2.ONE)
@@ -374,8 +404,10 @@ func _dibujar_figura(centro: Vector2, s: Vector2) -> void:
 	if transformar:
 		_cuerpo.draw_set_transform(centro, deg_to_rad(rotacion_figura), Vector2(-1.0 if espejo else 1.0, 1.0))
 		c = Vector2.ZERO
-	var radio := s.x * 0.33
-	if not es_sombra():
+	var radio := s.x * 0.33 * escala
+	if Dibujos.tiene(figura) and not es_sombra():
+		Dibujos.dibujar(_cuerpo, figura, color_figura, c, radio, true, esta_acertada)
+	elif not es_sombra():
 		Figura.dibujar(_cuerpo, figura, color_figura, c, radio, true, esta_acertada)
 	elif figura == "arcoiris":
 		var base := c + Vector2(0, radio * 0.4)

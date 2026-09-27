@@ -96,5 +96,7 @@
         }
       ]
     }
-  ]
+  ],
+  "bandeja_escala_real": true,
+  "modelo_mini": true
 }

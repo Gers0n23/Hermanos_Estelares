@@ -1,0 +1,72 @@
+{
+  "id_nivel": "arcoiris_z4_lluvia_estrella",
+  "motor": "clasificar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "lluvia de colores",
+  "variante": "colores con blanco: rosado, celeste y cafe (3 componentes); dato curioso por mezcla",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "modo": "mezcla",
+  "iman_tolerancia_px": 90,
+  "tamano_gota": 96,
+  "pistas_cuestan_estrellita": true,
+  "regalo_tras_derrotas": true,
+  "paleta_gotas": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "blanco"
+  ],
+  "guia_receta": false,
+  "velocidad_caida": 50,
+  "variacion_velocidad": 0.25,
+  "elementos_simultaneos": 3,
+  "pedidos": [
+    "rosado",
+    "celeste",
+    "cafe"
+  ],
+  "rondas": 6,
+  "por_ronda": 3,
+  "limite_intentos": 12,
+  "umbrales_estrellitas": {
+    "tres": 4,
+    "dos": 10
+  },
+  "lineas_voz": {
+    "intro": "voces/arcoiris/lluvia/estrella/intro_z4.wav",
+    "pista": "voces/arcoiris/lluvia/estrella/pista_z4.wav",
+    "componente": [
+      "voces/arcoiris/lluvia/estrella/componente_01.wav",
+      "voces/arcoiris/lluvia/estrella/componente_02.wav",
+      "voces/arcoiris/lluvia/estrella/componente_03.wav"
+    ],
+    "mezcla_lograda": [
+      "voces/arcoiris/lluvia/estrella/mezcla_01.wav",
+      "voces/arcoiris/lluvia/estrella/mezcla_02.wav",
+      "voces/arcoiris/lluvia/estrella/mezcla_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/lluvia/estrella/no_es_este_01.wav",
+      "voces/arcoiris/lluvia/estrella/no_es_este_02.wav",
+      "voces/arcoiris/lluvia/estrella/no_es_este_03.wav"
+    ],
+    "pista_usada": "voces/arcoiris/lluvia/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/lluvia/estrella/regalo_01.wav",
+    "derrota_gag": "voces/arcoiris/lluvia/estrella/derrota_gag_01.wav",
+    "nueva_ronda": [
+      "voces/arcoiris/lluvia/estrella/ronda_01.wav",
+      "voces/arcoiris/lluvia/estrella/ronda_02.wav",
+      "voces/arcoiris/lluvia/estrella/ronda_03.wav"
+    ],
+    "dato_final": "voces/arcoiris/lluvia/estrella/dato_final.wav",
+    "victoria_final": [
+      "voces/arcoiris/lluvia/estrella/victoria_01.wav",
+      "voces/arcoiris/lluvia/estrella/victoria_02.wav"
+    ],
+    "prefijo_colores": "voces/arcoiris/lluvia/colores/",
+    "prefijo_datos": "voces/arcoiris/lluvia/datos/"
+  }
+}

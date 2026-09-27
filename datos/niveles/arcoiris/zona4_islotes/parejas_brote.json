@@ -1,0 +1,452 @@
+{
+  "id_nivel": "arcoiris_z4_parejas_brote",
+  "motor": "emparejar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "color y cosa de ese color, banderas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "rondas (PO 27-Sep-2026)",
+  "modo": "identico",
+  "oculto": false,
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 1600,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/brote/intro_z4.wav",
+    "pista": "voces/arcoiris/emparejar/brote/pista_01.wav",
+    "ayuda": "voces/arcoiris/emparejar/brote/ayuda_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/brote/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/brote/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/brote/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/brote/acierto_especial_01.wav",
+    "ronda_superada": [
+      "voces/arcoiris/emparejar/brote/ronda_superada_01.wav",
+      "voces/arcoiris/emparejar/brote/ronda_superada_02.wav",
+      "voces/arcoiris/emparejar/brote/ronda_superada_03.wav"
+    ],
+    "victoria_final": "voces/arcoiris/emparejar/brote/victoria_rondas_01.wav"
+  },
+  "rondas": [
+    {
+      "tema": "color y cosa",
+      "cantidad": 4,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 4
+      },
+      "lineas_voz": {
+        "pista": "voces/arcoiris/emparejar/brote/pista_colores.wav"
+      },
+      "oculto": false,
+      "ayuda_tras_fallos": null,
+      "modo": "correspondencia",
+      "pool": [
+        {
+          "id_pareja": "color_amarillo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#FFCB3D",
+            "id": "color_amarillo_a"
+          },
+          "elemento_b": {
+            "figura": "jirafa",
+            "id": "color_amarillo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/amarillo.wav"
+        },
+        {
+          "id_pareja": "color_rosado",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#F7A8D0",
+            "id": "color_rosado_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "color_rosado_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/rosado.wav"
+        },
+        {
+          "id_pareja": "color_naranjo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#FF9F4A",
+            "id": "color_naranjo_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "color_naranjo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/naranjo.wav"
+        },
+        {
+          "id_pareja": "color_rojo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#E8423F",
+            "id": "color_rojo_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#E8423F",
+            "id": "color_rojo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/rojo.wav"
+        },
+        {
+          "id_pareja": "color_lila",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#B48CE8",
+            "id": "color_lila_a"
+          },
+          "elemento_b": {
+            "figura": "flor",
+            "color": "#B48CE8",
+            "id": "color_lila_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/lila.wav"
+        },
+        {
+          "id_pareja": "color_azul",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#4A8BE0",
+            "id": "color_azul_a"
+          },
+          "elemento_b": {
+            "figura": "gota",
+            "color": "#4A8BE0",
+            "id": "color_azul_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/azul.wav"
+        },
+        {
+          "id_pareja": "color_verde",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#7DD87A",
+            "id": "color_verde_a"
+          },
+          "elemento_b": {
+            "figura": "hoja",
+            "id": "color_verde_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/verde.wav"
+        }
+      ]
+    },
+    {
+      "tema": "color y cosa, tapadas",
+      "cantidad": 5,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 5
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/brote/ronda_colores_tapadas.wav",
+        "pista": "voces/arcoiris/emparejar/brote/pista_colores.wav"
+      },
+      "oculto": true,
+      "tiempo_volteo_ms": 1600,
+      "ayuda_tras_fallos": 3,
+      "modo": "correspondencia",
+      "pool": [
+        {
+          "id_pareja": "color_amarillo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#FFCB3D",
+            "id": "color_amarillo_a"
+          },
+          "elemento_b": {
+            "figura": "jirafa",
+            "id": "color_amarillo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/amarillo.wav"
+        },
+        {
+          "id_pareja": "color_rosado",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#F7A8D0",
+            "id": "color_rosado_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "color_rosado_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/rosado.wav"
+        },
+        {
+          "id_pareja": "color_naranjo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#FF9F4A",
+            "id": "color_naranjo_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "color_naranjo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/naranjo.wav"
+        },
+        {
+          "id_pareja": "color_rojo",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#E8423F",
+            "id": "color_rojo_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#E8423F",
+            "id": "color_rojo_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/rojo.wav"
+        },
+        {
+          "id_pareja": "color_lila",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#B48CE8",
+            "id": "color_lila_a"
+          },
+          "elemento_b": {
+            "figura": "flor",
+            "color": "#B48CE8",
+            "id": "color_lila_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/lila.wav"
+        },
+        {
+          "id_pareja": "color_azul",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#4A8BE0",
+            "id": "color_azul_a"
+          },
+          "elemento_b": {
+            "figura": "gota",
+            "color": "#4A8BE0",
+            "id": "color_azul_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/azul.wav"
+        },
+        {
+          "id_pareja": "color_verde",
+          "elemento_a": {
+            "figura": "mancha",
+            "color": "#7DD87A",
+            "id": "color_verde_a"
+          },
+          "elemento_b": {
+            "figura": "hoja",
+            "id": "color_verde_b"
+          },
+          "voz": "voces/arcoiris/emparejar/colores/verde.wav"
+        }
+      ]
+    },
+    {
+      "tema": "banderas",
+      "cantidad": 5,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 5
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/brote/ronda_banderas.wav",
+        "pista": "voces/arcoiris/emparejar/brote/pista_banderas.wav"
+      },
+      "oculto": true,
+      "tiempo_volteo_ms": 1500,
+      "ayuda_tras_fallos": 3,
+      "pool": [
+        {
+          "id_pareja": "bandera_chile",
+          "elemento_a": {
+            "figura": "bandera_chile",
+            "id": "bandera_chile_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_chile",
+            "id": "bandera_chile_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/chile.wav",
+          "fijo": true
+        },
+        {
+          "id_pareja": "bandera_argentina",
+          "elemento_a": {
+            "figura": "bandera_argentina",
+            "id": "bandera_argentina_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_argentina",
+            "id": "bandera_argentina_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/argentina.wav"
+        },
+        {
+          "id_pareja": "bandera_peru",
+          "elemento_a": {
+            "figura": "bandera_peru",
+            "id": "bandera_peru_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_peru",
+            "id": "bandera_peru_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/peru.wav"
+        },
+        {
+          "id_pareja": "bandera_brasil",
+          "elemento_a": {
+            "figura": "bandera_brasil",
+            "id": "bandera_brasil_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_brasil",
+            "id": "bandera_brasil_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/brasil.wav"
+        },
+        {
+          "id_pareja": "bandera_colombia",
+          "elemento_a": {
+            "figura": "bandera_colombia",
+            "id": "bandera_colombia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_colombia",
+            "id": "bandera_colombia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/colombia.wav"
+        },
+        {
+          "id_pareja": "bandera_japon",
+          "elemento_a": {
+            "figura": "bandera_japon",
+            "id": "bandera_japon_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_japon",
+            "id": "bandera_japon_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/japon.wav"
+        },
+        {
+          "id_pareja": "bandera_china",
+          "elemento_a": {
+            "figura": "bandera_china",
+            "id": "bandera_china_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_china",
+            "id": "bandera_china_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/china.wav"
+        },
+        {
+          "id_pareja": "bandera_corea_sur",
+          "elemento_a": {
+            "figura": "bandera_corea_sur",
+            "id": "bandera_corea_sur_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_corea_sur",
+            "id": "bandera_corea_sur_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/corea_sur.wav"
+        },
+        {
+          "id_pareja": "bandera_eeuu",
+          "elemento_a": {
+            "figura": "bandera_eeuu",
+            "id": "bandera_eeuu_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_eeuu",
+            "id": "bandera_eeuu_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/eeuu.wav"
+        },
+        {
+          "id_pareja": "bandera_alemania",
+          "elemento_a": {
+            "figura": "bandera_alemania",
+            "id": "bandera_alemania_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_alemania",
+            "id": "bandera_alemania_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/alemania.wav"
+        },
+        {
+          "id_pareja": "bandera_francia",
+          "elemento_a": {
+            "figura": "bandera_francia",
+            "id": "bandera_francia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_francia",
+            "id": "bandera_francia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/francia.wav"
+        },
+        {
+          "id_pareja": "bandera_italia",
+          "elemento_a": {
+            "figura": "bandera_italia",
+            "id": "bandera_italia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_italia",
+            "id": "bandera_italia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/italia.wav"
+        },
+        {
+          "id_pareja": "bandera_espana",
+          "elemento_a": {
+            "figura": "bandera_espana",
+            "id": "bandera_espana_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_espana",
+            "id": "bandera_espana_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/espana.wav"
+        },
+        {
+          "id_pareja": "bandera_suecia",
+          "elemento_a": {
+            "figura": "bandera_suecia",
+            "id": "bandera_suecia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_suecia",
+            "id": "bandera_suecia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/suecia.wav"
+        }
+      ]
+    }
+  ]
+}

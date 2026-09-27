@@ -7,13 +7,17 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 120,
-  "limite_intentos": null,
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
-  "caras": true,
-  "modo": "simple",
+  "caras": false,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 110,
   "guia_color": true,
+  "limite_intentos": null,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/brote/intro_arma_z1.wav",
     "pista": "voces/arcoiris/formas/brote/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/brote/acierto_01.wav",
@@ -29,85 +33,66 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
-    "intro": "voces/arcoiris/formas/brote/intro_z1.wav"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
   },
   "figuras": [
     {
-      "id": "circulo",
-      "piezas": [
-        {
-          "forma": "circulo",
-          "ancho": 118,
-          "alto": 118,
-          "color": "#F26CA8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "cuadrado",
-      "piezas": [
-        {
-          "forma": "cuadrado",
-          "ancho": 112,
-          "alto": 112,
-          "color": "#6FD6E8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "triangulo",
+      "id": "casita",
+      "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
       "piezas": [
         {
           "forma": "triangulo",
-          "ancho": 128,
-          "alto": 112,
-          "color": "#FFCB3D",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "estrella",
-      "piezas": [
-        {
-          "forma": "estrella",
-          "ancho": 128,
-          "alto": 128,
-          "color": "#B48CE8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "ovalo",
-      "piezas": [
-        {
-          "forma": "ovalo",
-          "ancho": 150,
-          "alto": 98,
-          "color": "#7DD87A",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "rectangulo",
-      "piezas": [
+          "ancho": 312.0,
+          "alto": 132.0,
+          "color": "#FF6B6B",
+          "nombre_voz": "triangulo",
+          "x": 0.0,
+          "y": -108.0
+        },
         {
           "forma": "rectangulo",
-          "ancho": 150,
-          "alto": 88,
-          "color": "#FF9F4A",
-          "x": 0,
-          "y": 0
+          "ancho": 84.0,
+          "alto": 216.0,
+          "color": "#F26CA8",
+          "nombre_voz": "rectangulo",
+          "x": -102.0,
+          "y": 66.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 120.0,
+          "alto": 72.0,
+          "color": "#FFCB3D",
+          "nombre_voz": "rectangulo_chico",
+          "x": 0.0,
+          "y": -6.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 120.0,
+          "alto": 144.0,
+          "color": "#A8744F",
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": 102.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 84.0,
+          "alto": 84.0,
+          "color": "#6FD6E8",
+          "nombre_voz": "cuadrado",
+          "x": 102.0,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 84.0,
+          "alto": 132.0,
+          "color": "#F26CA8",
+          "nombre_voz": "rectangulo",
+          "x": 102.0,
+          "y": 108.0
         }
       ]
     }

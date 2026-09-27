@@ -7,426 +7,23 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "caras": false,
   "guia_color": false,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "piezas_en_bandeja": 6,
   "pistas_cuestan_estrellita": true,
   "regalo_tras_derrotas": true,
-  "mecanica": "tangram_libre",
-  "modo": "tangram",
-  "lado_red": 90,
   "iman_tolerancia_px": 70,
+  "paso_rotacion": 90,
   "rotacion_por_toque": true,
-  "paso_rotacion": 45,
   "rotacion_inicial_aleatoria": true,
-  "boton_espejo": true,
-  "limite_intentos": null,
-  "figuras_por_partida": 1,
-  "figuras": [
-    {
-      "id": "velero",
-      "silueta_unida": true,
-      "piezas": [
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1.4142,
-          "alto": 1.4142,
-          "rotacion": 135,
-          "espejo": false,
-          "x": 0.0,
-          "y": 3.0,
-          "color": "#FF6B6B"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 270,
-          "espejo": false,
-          "x": 1.0,
-          "y": 1.0,
-          "color": "#4A8BE0"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 180,
-          "espejo": false,
-          "x": 1.0,
-          "y": 3.0,
-          "color": "#7DD87A"
-        },
-        {
-          "forma": "paralelogramo",
-          "ancho": 2,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": true,
-          "x": 1.0,
-          "y": 3.5,
-          "color": "#FFCB3D"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 2.5,
-          "y": 0.5,
-          "color": "#B48CE8"
-        },
-        {
-          "forma": "cuadrado",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 2.5,
-          "y": 3.5,
-          "color": "#FF9F4A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": false,
-          "x": 3.5,
-          "y": 3.5,
-          "color": "#45C6C0"
-        }
-      ],
-      "voz_completa": "voces/arcoiris/formas/figuras/barco.wav"
-    },
-    {
-      "id": "pajarito",
-      "silueta_unida": true,
-      "piezas": [
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 270,
-          "espejo": false,
-          "x": -0.5,
-          "y": -0.5,
-          "color": "#FF6B6B"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 90,
-          "espejo": false,
-          "x": -1.0,
-          "y": 1.0,
-          "color": "#4A8BE0"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1.4142,
-          "alto": 1.4142,
-          "rotacion": 135,
-          "espejo": false,
-          "x": -2.0,
-          "y": 0.0,
-          "color": "#7DD87A"
-        },
-        {
-          "forma": "cuadrado",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": -1.5,
-          "y": 2.5,
-          "color": "#FFCB3D"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 270,
-          "espejo": false,
-          "x": -2.5,
-          "y": 0.5,
-          "color": "#B48CE8"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 180,
-          "espejo": false,
-          "x": -3.0,
-          "y": 2.0,
-          "color": "#FF9F4A"
-        },
-        {
-          "forma": "paralelogramo",
-          "ancho": 2,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": true,
-          "x": -4.0,
-          "y": 0.5,
-          "color": "#45C6C0"
-        }
-      ]
-    },
-    {
-      "id": "flecha",
-      "silueta_unida": true,
-      "piezas": [
-        {
-          "forma": "paralelogramo",
-          "ancho": 2,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": true,
-          "x": 1.5,
-          "y": 0.0,
-          "color": "#FF6B6B"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 270,
-          "espejo": false,
-          "x": 1.5,
-          "y": 0.5,
-          "color": "#4A8BE0"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1.4142,
-          "alto": 1.4142,
-          "rotacion": 315,
-          "espejo": false,
-          "x": 1.0,
-          "y": 1.0,
-          "color": "#7DD87A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": false,
-          "x": 0.5,
-          "y": -0.5,
-          "color": "#FFCB3D"
-        },
-        {
-          "forma": "cuadrado",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 0.5,
-          "y": 0.5,
-          "color": "#B48CE8"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 270,
-          "espejo": false,
-          "x": -1.0,
-          "y": -1.0,
-          "color": "#FF9F4A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 180,
-          "espejo": false,
-          "x": -1.0,
-          "y": 1.0,
-          "color": "#45C6C0"
-        }
-      ]
-    },
-    {
-      "id": "tortuga",
-      "silueta_unida": true,
-      "piezas": [
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 270,
-          "espejo": false,
-          "x": 1.0,
-          "y": -1.0,
-          "color": "#FF6B6B"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1.4142,
-          "alto": 1.4142,
-          "rotacion": 315,
-          "espejo": false,
-          "x": 1.0,
-          "y": 0.0,
-          "color": "#4A8BE0"
-        },
-        {
-          "forma": "paralelogramo",
-          "ancho": 2,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": true,
-          "x": 1.5,
-          "y": 1.0,
-          "color": "#7DD87A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 3.0,
-          "y": -1.0,
-          "color": "#FFCB3D"
-        },
-        {
-          "forma": "cuadrado",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 2.5,
-          "y": 0.5,
-          "color": "#B48CE8"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 3.5,
-          "y": 0.5,
-          "color": "#FF9F4A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": false,
-          "x": 3.5,
-          "y": 1.5,
-          "color": "#45C6C0"
-        }
-      ]
-    },
-    {
-      "id": "bumeran",
-      "silueta_unida": true,
-      "piezas": [
-        {
-          "forma": "cuadrado",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 0,
-          "espejo": false,
-          "x": -0.5,
-          "y": 0.5,
-          "color": "#FF6B6B"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": false,
-          "x": -0.5,
-          "y": 1.5,
-          "color": "#4A8BE0"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1.4142,
-          "alto": 1.4142,
-          "rotacion": 45,
-          "espejo": false,
-          "x": 0.0,
-          "y": 5.0,
-          "color": "#7DD87A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 0,
-          "espejo": false,
-          "x": 1.0,
-          "y": 1.0,
-          "color": "#FFCB3D"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 1,
-          "alto": 1,
-          "rotacion": 180,
-          "espejo": false,
-          "x": 0.5,
-          "y": 2.5,
-          "color": "#B48CE8"
-        },
-        {
-          "forma": "paralelogramo",
-          "ancho": 2,
-          "alto": 1,
-          "rotacion": 90,
-          "espejo": true,
-          "x": 0.5,
-          "y": 4.0,
-          "color": "#FF9F4A"
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 2,
-          "alto": 2,
-          "rotacion": 90,
-          "espejo": false,
-          "x": 2.0,
-          "y": 3.0,
-          "color": "#45C6C0"
-        }
-      ]
-    }
-  ],
-  "distractoras_por_partida": 1,
-  "piezas_distractoras": [
-    {
-      "forma": "triangulo_rect",
-      "ancho": 1,
-      "alto": 1,
-      "color": "#F26CA8"
-    },
-    {
-      "forma": "cuadrado",
-      "ancho": 1,
-      "alto": 1,
-      "color": "#F26CA8"
-    },
-    {
-      "forma": "triangulo_rect",
-      "ancho": 1.4142,
-      "alto": 1.4142,
-      "color": "#F26CA8"
-    }
-  ],
+  "limite_intentos": 12,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/estrella/intro_arma_z2.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_arma_01.wav",
     "acierto": [
       "voces/arcoiris/formas/estrella/acierto_01.wav",
       "voces/arcoiris/formas/estrella/acierto_02.wav",
@@ -436,24 +33,238 @@
       "voces/arcoiris/formas/estrella/no_es_este_01.wav",
       "voces/arcoiris/formas/estrella/no_es_este_02.wav"
     ],
-    "figura_completa": [
-      "voces/arcoiris/formas/estrella/figura_completa_01.wav",
-      "voces/arcoiris/formas/estrella/figura_completa_02.wav"
-    ],
+    "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
     "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
     "victoria_final": [
       "voces/arcoiris/formas/estrella/victoria_01.wav",
       "voces/arcoiris/formas/estrella/victoria_02.wav"
     ],
     "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
-    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
-    "espejo_sin_pieza": "voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav",
-    "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
-    "prueba_superada": [
-      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
-      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
-    ],
-    "intro": "voces/arcoiris/formas/estrella/intro_espejo_z2.wav",
-    "pista": "voces/arcoiris/formas/estrella/pista_espejo_01.wav"
-  }
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav"
+  },
+  "figuras": [
+    {
+      "id": "palafitos",
+      "voz_completa": "voces/arcoiris/formas/figuras/palafitos.wav",
+      "piezas": [
+        {
+          "forma": "triangulo",
+          "ancho": 182.0,
+          "alto": 98.0,
+          "color": "#FF6B6B",
+          "x": -189.0,
+          "y": -133.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 224.0,
+          "color": "#F26CA8",
+          "x": -252.0,
+          "y": 28.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 70.0,
+          "alto": 98.0,
+          "color": "#FFF8EE",
+          "x": -189.0,
+          "y": -35.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 70.0,
+          "alto": 126.0,
+          "color": "#F26CA8",
+          "x": -189.0,
+          "y": 77.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 224.0,
+          "color": "#F26CA8",
+          "x": -126.0,
+          "y": 28.0
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 210.0,
+          "alto": 112.0,
+          "color": "#4A8BE0",
+          "x": 7.0,
+          "y": -196.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 63.0,
+          "alto": 280.0,
+          "color": "#45C6C0",
+          "x": -66.5,
+          "y": 0.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 84.0,
+          "alto": 77.0,
+          "color": "#FFF8EE",
+          "x": 7.0,
+          "y": -101.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 84.0,
+          "alto": 63.0,
+          "color": "#45C6C0",
+          "x": 7.0,
+          "y": -31.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 84.0,
+          "alto": 140.0,
+          "color": "#5B3F8C",
+          "x": 7.0,
+          "y": 70.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 63.0,
+          "alto": 280.0,
+          "color": "#45C6C0",
+          "x": 80.5,
+          "y": 0.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 98.0,
+          "alto": 168.0,
+          "color": "#B48CE8",
+          "rotacion": 270,
+          "x": 196.0,
+          "y": -77.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 168.0,
+          "color": "#FFCB3D",
+          "x": 140.0,
+          "y": 56.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 70.0,
+          "color": "#FFF8EE",
+          "x": 196.0,
+          "y": 7.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 98.0,
+          "color": "#FFCB3D",
+          "x": 196.0,
+          "y": 91.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.0,
+          "alto": 168.0,
+          "color": "#FFCB3D",
+          "x": 252.0,
+          "y": 56.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 22.4,
+          "color": "#A8744F",
+          "x": -140.0,
+          "y": 151.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 280.0,
+          "alto": 22.4,
+          "color": "#A8744F",
+          "x": 140.0,
+          "y": 151.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": -257.6,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": -187.6,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": -117.6,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": -64.4,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": 8.4,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": 81.2,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": 137.2,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": 198.8,
+          "y": 207.2
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.4,
+          "alto": 89.6,
+          "color": "#A8744F",
+          "x": 260.4,
+          "y": 207.2
+        }
+      ]
+    }
+  ]
 }

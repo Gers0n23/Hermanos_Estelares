@@ -59,6 +59,10 @@ var escala_bandeja := 1.0
 var colocada := false
 var bloqueada := false
 var hueco = null
+## Capa del hueco donde quedo puesta (emblemas encima: estrella de Chile, disco de Japon). Puesta, su
+## z_index es 2 * capa; mientras se arrastra, Z_TOMADA (encima de todo el tablero).
+var capa := 0
+const Z_TOMADA := 20
 
 var _base := PackedVector2Array()
 var _dibujo := PackedVector2Array()
@@ -136,6 +140,8 @@ func _gui_input(evento: InputEvent) -> void:
 				return
 			_presionada = true
 			_se_movio = false
+			if not colocada:
+				z_index = Z_TOMADA
 			_inicio = evento.global_position
 			accept_event()
 			tomada.emit(self)
@@ -223,12 +229,16 @@ func volver_a_casa(sacudir := false) -> void:
 			tween.tween_property(self, "position", origen + Vector2(desfase, 0), 0.06)
 	tween.tween_property(self, "position", casa - size / 2.0, 0.38).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(self, "scale", Vector2.ONE * escala_bandeja, 0.3)
+	tween.tween_callback(func() -> void:
+		if not colocada:
+			z_index = 0)
 
 
 func encajar_en(centro: Vector2, grados: float) -> void:
 	colocada = true
 	bloqueada = true
 	cancelar_arrastre()
+	z_index = 2 * capa
 	rotacion_grados = wrapf(grados, 0.0, 360.0)
 	var destino := deg_to_rad(rotacion_grados)
 	destino = rotation + wrapf(destino - rotation, -PI, PI)
@@ -252,6 +262,7 @@ func encajar_libre(centro: Vector2, grados: float) -> void:
 func liberar() -> void:
 	colocada = false
 	hueco = null
+	capa = 0
 
 
 ## Voltea en espejo con un medio giro visual.
@@ -278,6 +289,26 @@ func saltito(altura := 26.0, retraso := 0.0) -> void:
 	tween.tween_property(self, "position", origen, 0.28).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	if colocada:
 		tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.2)
+
+
+## Mini-fiesta entre rondas: la figura terminada "baila" (saltito con estiron y meneo), en ola.
+func bailar(retraso := 0.0) -> void:
+	var origen := position
+	if colocada and hueco != null:
+		origen = (hueco["centro"] as Vector2) - size / 2.0
+	var tween := nuevo_tween()
+	tween.tween_interval(retraso)
+	for i in 2:
+		tween.tween_property(self, "position", origen - Vector2(0, 30), 0.17).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(self, "scale", Vector2(0.92, 1.1), 0.17)
+		tween.tween_property(self, "position", origen, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(self, "scale", Vector2(1.08, 0.94), 0.12)
+		tween.tween_property(self, "scale", Vector2.ONE, 0.1)
+	var giro := nuevo_tween_giro()
+	giro.tween_interval(retraso)
+	for i in 4:
+		giro.tween_property(self, "rotation", deg_to_rad(rotacion_grados + (7.0 if i % 2 == 0 else -7.0)), 0.18)
+	giro.tween_property(self, "rotation", deg_to_rad(rotacion_grados), 0.12)
 
 
 ## Risa de Maxi (zona 2): la pieza se sacude de cosquillas.

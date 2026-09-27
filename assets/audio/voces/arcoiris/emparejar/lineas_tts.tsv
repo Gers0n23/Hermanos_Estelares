@@ -50,3 +50,94 @@ voces/arcoiris/emparejar/estrella/pista_z2.wav	Busca el color que se forma al me
 voces/arcoiris/emparejar/estrella/pista_z3.wav	Da vuelta tres cartas. Si las tres son iguales, se quedan.
 voces/arcoiris/emparejar/estrella/pista_z4.wav	Cuando dos cartas cambian de lugar, síguelas con la mirada.
 voces/arcoiris/emparejar/estrella/pista_z5.wav	Mira bien hacia dónde apunta cada sombra.
+
+# Parejas de Maxi y Nicole en las 5 zonas, con rondas, temas y banderas (PO 27-Sep-2026). Relleno de Windows hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/emparejar/semilla/intro_z1.wav	¡Hola, Maxi! ¡Busca dos iguales y tócalas!
+voces/arcoiris/emparejar/semilla/intro_z3.wav	¡Maxi! ¡Hay dinosaurios y autos! ¡Toca dos iguales!
+voces/arcoiris/emparejar/semilla/intro_z4.wav	¡Maxi, mira! Una mamá grande y su bebé chiquitito. ¡Júntalos!
+voces/arcoiris/emparejar/semilla/intro_z5.wav	¡Las cartas bailan, Maxi! ¡Toca dos iguales!
+voces/arcoiris/emparejar/semilla/ronda_dinos.wav	¡Ahora, dinosaurios! ¡Grrr!
+voces/arcoiris/emparejar/semilla/ronda_autos.wav	¡Ahora, autos! ¡Brum, brum!
+voces/arcoiris/emparejar/semilla/ronda_todos.wav	¡Dinosaurios y autos, todos juntos!
+voces/arcoiris/emparejar/semilla/ronda_mama_bebe.wav	¡Más mamás con sus bebés!
+voces/arcoiris/emparejar/semilla/ronda_banderas.wav	¡Ahora, banderas de países! ¡Toca dos iguales!
+voces/arcoiris/emparejar/semilla/ronda_bailan.wav	¡Más cartas bailarinas!
+voces/arcoiris/emparejar/semilla/ronda_superada_01.wav	¡Siii! ¡Otra ronda!
+voces/arcoiris/emparejar/semilla/ronda_superada_02.wav	¡Bravo, Maxi! ¡Vienen más!
+voces/arcoiris/emparejar/semilla/ronda_superada_03.wav	¡Muy bien! ¡Vamos a otra!
+voces/arcoiris/emparejar/semilla/victoria_rondas_01.wav	¡Terminaste todas las rondas, Maxi! ¡Eres un campeón!
+voces/arcoiris/emparejar/semilla/acierto_mama_01.wav	¡La mamá y su bebé!
+voces/arcoiris/emparejar/semilla/acierto_mama_02.wav	¡Juntitos!
+voces/arcoiris/emparejar/semilla/acierto_mama_03.wav	¡Siii! ¡Encontraste al bebé!
+# personaje: cometa
+voces/arcoiris/emparejar/semilla/pista_mama.wav	Busca una grande y una chiquitita que sean iguales.
+voces/arcoiris/emparejar/semilla/pista_bailan.wav	Las cartas bailan. ¡Toca dos iguales, Maxi!
+voces/arcoiris/emparejar/semilla/pista_banderas.wav	Mira los colores de las banderas. ¡Toca dos iguales!
+# personaje: coco
+voces/arcoiris/emparejar/brote/intro_z1.wav	¡Hola, Nicole! Hoy jugamos a las parejas. Primero, con las cartas a la vista. ¡Toca dos iguales!
+voces/arcoiris/emparejar/brote/intro_z2.wav	¡Nicole! Ahora mis cartas se esconden. Da vuelta dos, y busca las que son iguales.
+voces/arcoiris/emparejar/brote/intro_z4.wav	¡Nicole! Cada color busca una cosa de su mismo color. La mancha amarilla va con la jirafa amarilla.
+voces/arcoiris/emparejar/brote/intro_z5.wav	¡Nicole, juguemos con letras! Cada dibujo busca la letra con que empieza. Sol empieza con la ese.
+voces/arcoiris/emparejar/brote/ronda_ropa.wav	¡Ahora, ropa linda para vestirse!
+voces/arcoiris/emparejar/brote/ronda_tapadas.wav	¡Sorpresa! Ahora las cartas se esconden. ¡Recuerda dónde están!
+voces/arcoiris/emparejar/brote/ronda_mezcla.wav	¡Ahora, un poco de todo!
+voces/arcoiris/emparejar/brote/ronda_figuras.wav	¡Mis figuras de colores! Y hay un corazón mágico escondido.
+voces/arcoiris/emparejar/brote/ronda_colores_tapadas.wav	Ahora los colores se esconden. ¡Búscalos!
+voces/arcoiris/emparejar/brote/ronda_letras_tapadas.wav	Ahora las letras se esconden. ¡Tú puedes, Nicole!
+voces/arcoiris/emparejar/brote/ronda_banderas.wav	¡Banderas de países! Busca las dos iguales, y te digo de qué país son.
+voces/arcoiris/emparejar/brote/ronda_superada_01.wav	¡Ronda lista! ¡Vamos por otra!
+voces/arcoiris/emparejar/brote/ronda_superada_02.wav	¡Qué bien lo hiciste, Nicole!
+voces/arcoiris/emparejar/brote/ronda_superada_03.wav	¡Increíble! ¡Viene la siguiente!
+voces/arcoiris/emparejar/brote/victoria_rondas_01.wav	¡Terminaste todas las rondas, Nicole! ¡Eres una campeona!
+# personaje: cometa
+voces/arcoiris/emparejar/brote/pista_vista.wav	Toca dos cartas que sean iguales. ¡Tú puedes, Nicole!
+voces/arcoiris/emparejar/brote/pista_colores.wav	Busca la cosa que tiene el mismo color de la mancha.
+voces/arcoiris/emparejar/brote/pista_letras.wav	Toca una letra y escucha cómo se llama. Después busca el dibujo que empieza así.
+voces/arcoiris/emparejar/brote/pista_banderas.wav	Mira bien los colores de cada bandera, y busca su pareja.
+# personaje: coco
+voces/arcoiris/emparejar/paises/chile.wav	¡Chile! ¡Nuestro país!
+voces/arcoiris/emparejar/paises/argentina.wav	¡Argentina!
+voces/arcoiris/emparejar/paises/peru.wav	¡Perú!
+voces/arcoiris/emparejar/paises/brasil.wav	¡Brasil!
+voces/arcoiris/emparejar/paises/colombia.wav	¡Colombia!
+voces/arcoiris/emparejar/paises/japon.wav	¡Japón!
+voces/arcoiris/emparejar/paises/china.wav	¡China!
+voces/arcoiris/emparejar/paises/corea_sur.wav	¡Corea del Sur!
+voces/arcoiris/emparejar/paises/eeuu.wav	¡Estados Unidos!
+voces/arcoiris/emparejar/paises/alemania.wav	¡Alemania!
+voces/arcoiris/emparejar/paises/francia.wav	¡Francia!
+voces/arcoiris/emparejar/paises/italia.wav	¡Italia!
+voces/arcoiris/emparejar/paises/espana.wav	¡España!
+voces/arcoiris/emparejar/paises/suecia.wav	¡Suecia!
+voces/arcoiris/emparejar/colores/amarillo.wav	¡Amarillo, como la jirafa!
+voces/arcoiris/emparejar/colores/rosado.wav	¡Rosado, como el pony!
+voces/arcoiris/emparejar/colores/naranjo.wav	¡Naranjo, como el gatito!
+voces/arcoiris/emparejar/colores/rojo.wav	¡Rojo, como el corazón!
+voces/arcoiris/emparejar/colores/lila.wav	¡Lila, como la flor!
+voces/arcoiris/emparejar/colores/azul.wav	¡Azul, como la gota de agua!
+voces/arcoiris/emparejar/colores/verde.wav	¡Verde, como la hoja!
+voces/arcoiris/emparejar/letras/s_sol.wav	¡Ese de sol!
+voces/arcoiris/emparejar/letras/letra_s.wav	La letra ese.
+voces/arcoiris/emparejar/letras/l_luna.wav	¡Ele de luna!
+voces/arcoiris/emparejar/letras/letra_l.wav	La letra ele.
+voces/arcoiris/emparejar/letras/g_gato.wav	¡Ge de gato!
+voces/arcoiris/emparejar/letras/letra_g.wav	La letra ge.
+voces/arcoiris/emparejar/letras/j_jirafa.wav	¡Jota de jirafa!
+voces/arcoiris/emparejar/letras/letra_j.wav	La letra jota.
+voces/arcoiris/emparejar/letras/p_pony.wav	¡Pe de pony!
+voces/arcoiris/emparejar/letras/letra_p.wav	La letra pe.
+voces/arcoiris/emparejar/letras/e_estrella.wav	¡E de estrella!
+voces/arcoiris/emparejar/letras/letra_e.wav	La letra e.
+voces/arcoiris/emparejar/letras/c_corazon.wav	¡Ce de corazón!
+voces/arcoiris/emparejar/letras/letra_c.wav	La letra ce.
+voces/arcoiris/emparejar/letras/f_flor.wav	¡Efe de flor!
+voces/arcoiris/emparejar/letras/letra_f.wav	La letra efe.
+voces/arcoiris/emparejar/letras/a_arcoiris.wav	¡A de arcoíris!
+voces/arcoiris/emparejar/letras/letra_a.wav	La letra a.
+voces/arcoiris/emparejar/letras/v_vestido.wav	¡Ve de vestido!
+voces/arcoiris/emparejar/letras/letra_v.wav	La letra ve.
+voces/arcoiris/emparejar/letras/d_dinosaurio.wav	¡De de dinosaurio!
+voces/arcoiris/emparejar/letras/letra_d.wav	La letra de.
+voces/arcoiris/emparejar/letras/z_zapato.wav	¡Zeta de zapato!
+voces/arcoiris/emparejar/letras/letra_z.wav	La letra zeta.

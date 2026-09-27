@@ -184,15 +184,19 @@ que el juego dure muchas horas y crezca con los niños:
 
 - **Zonas**: cada planeta se divide en **5 zonas** unidas por un camino (la última es secreta).
   Cada zona es un lugar reconocible del planeta y tiene un pequeño hilo propio. En Arcoíris,
-  cada zona le devuelve colores al planeta.
+  cada zona le devuelve colores al planeta. El mapa del planeta se dibuja como un **mapa
+  ilustrado** con un hito memorable por zona (en Arcoíris, una isla de dulces: ver la ficha de
+  zonas §2).
 - **Estaciones**: en cada zona los minijuegos del planeta vuelven como una **variante nueva y más
   retadora que la de la zona anterior**, siempre dentro de la ruta del hermano que juega (§5).
   Con 4 minijuegos por planeta son 20 estaciones por hermano.
-- **Desbloqueo generoso**: la zona siguiente se abre al completar **2 de las 4** estaciones de la
-  zona actual. Las estaciones pendientes quedan siempre disponibles. Las zonas aún no abiertas se
+- **Desbloqueo por zona completa** (decisión del PO 27-Sep-2026, reemplaza "2 de las 4"): la zona
+  siguiente se abre al completar **todas las estaciones jugables** de la zona actual; así nadie se
+  salta pruebas. Los retos dorados son opcionales y no cuentan. Las estaciones ya jugadas quedan
+  siempre disponibles. Las zonas aún no abiertas se
   ven dormidas o descoloridas, **nunca con candado** (mismo principio que los planetas lejanos).
 - **La historia no se estira**: la escena del planeta y su **pieza de la nave** llegan al abrir la
-  zona 4 (mínimo ~6 estaciones). Las zonas 4 y 5 son **expedición extra**: más reto, recuerdos
+  zona 4 (al completar las zonas 1 a 3). Las zonas 4 y 5 son **expedición extra**: más reto, recuerdos
   para el hangar y el planeta completo, sin bloquear el capítulo siguiente.
 - **Rejugable**: toda estación completada se puede repetir con contenido barajado; rejugar nunca
   quita nada y, para Sofía, permite mejorar estrellitas.
@@ -427,7 +431,7 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | # | Pregunta | Responsable | Estado |
 |---|---|---|---|
 | P1 | Colores/diseño definitivo de cada hermano (¿los eligen los propios niños?) | Product Owner (papá + hijos) | Abierta |
-| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | **Resuelta (06-Ago-2026)** — se usa voz sintética (TTS) como placeholder durante el desarrollo; la grabación con la familia real queda para más adelante, antes de la pasada final de voces (HE-28), decisión del PO |
+| P2 | ¿Grabar voces reales de la familia para Cometa y celebraciones? | Product Owner | **Resuelta (06-Ago-2026)** — se usa voz sintética (TTS) como placeholder durante el desarrollo; la grabación con la familia real queda para más adelante, antes de la pasada final de voces (HE-28), decisión del PO. **Actualización (14-Sep-2026, decisión del PO)**: las voces de personaje con IA (Qwen3-TTS en fal.ai) de **Cometa** y **Coco** pasan a ser las **oficiales** del juego, ya no placeholder (`assets/audio/voces/guion_voces.md`). **Abierto**: si HE-28 mantiene alguna grabación de la familia (por ejemplo, la voz de papá en las video-llamadas) |
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |

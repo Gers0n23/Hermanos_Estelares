@@ -1,0 +1,12 @@
+{
+  "antebrazo_mano_der": [248, 342],
+  "antebrazo_mano_izq": [58, 342],
+  "brazo_sup_der": [232, 272],
+  "brazo_sup_izq": [74, 272],
+  "cabeza_casco": [153, 240],
+  "pierna_inf_pie_der": [200, 500],
+  "pierna_inf_pie_izq": [107, 500],
+  "pierna_sup_der": [194, 410],
+  "pierna_sup_izq": [112, 410],
+  "torso": [153, 410]
+}

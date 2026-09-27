@@ -100,23 +100,23 @@ func _nivel(zona: String, perfil: String) -> void:
 	var motor := await _abrir(zona, perfil)
 	var nombre := "%s_%s" % [zona.substr(0, 5), perfil]
 	await _capturar(nombre + "_1_inicio")
-	# Deja todo resuelto menos una pieza para ver las figuras armadas.
-	var pendientes: Array = []
-	for hueco in motor._huecos:
-		if not hueco["opcional"]:
-			pendientes.append(hueco)
-	for i in pendientes.size() - 1:
-		var hueco: Dictionary = pendientes[i]
-		var pieza := _pieza_para(motor, hueco)
-		if pieza == null:
-			continue
-		pieza.girar_a(hueco["rotacion"], 0.0)
-		for k in 8:
-			if motor._calza(pieza, hueco):
-				break
-			pieza.girar_a(pieza.rotacion_grados + motor._paso_rotacion, 0.0)
-		motor.soltar_pieza(pieza, hueco["centro"])
-		await _esperar(0.08)
+	# Deja todo resuelto menos una pieza para ver las figuras armadas. Juega con las reglas del nivel:
+	# solo gira si el nivel deja girar, y solo usa las piezas que ya estan en la bandeja (la cola
+	# repone al encajar).
+	var faltan: int = motor._requeridos - 1
+	var avanzo := true
+	while faltan > 0 and avanzo:
+		avanzo = false
+		for pieza: PiezaEncajar in motor._piezas.duplicate():
+			if faltan <= 0 or pieza.colocada:
+				continue
+			var hueco = _hueco_libre_para(motor, pieza)
+			if hueco == null:
+				continue
+			motor.soltar_pieza(pieza, hueco["centro"])
+			await _esperar(0.08)
+			faltan -= 1
+			avanzo = true
 	for hueco in motor._huecos:
 		if hueco["opcional"]:
 			var tesoro := _pieza_para(motor, hueco)
@@ -126,6 +126,25 @@ func _nivel(zona: String, perfil: String) -> void:
 	await _capturar(nombre + "_2_casi")
 	motor.queue_free()
 	await _esperar(0.2)
+
+
+## Hueco libre y requerido donde la pieza calza; si el nivel deja girar, la deja girada para calzar.
+func _hueco_libre_para(motor: Node, pieza: PiezaEncajar):
+	var pasos: int = int(round(360.0 / motor._paso_rotacion)) if motor._rotacion_por_toque else 1
+	for hueco in motor._huecos:
+		if hueco["pieza"] != null or hueco["opcional"]:
+			continue
+		if motor._enderezar:
+			# La pieza se endereza sola al acercarse: calza con el giro del hueco.
+			if Geo.calzan(pieza.poligono(hueco["rotacion"]), hueco["forma_centrada"]):
+				return hueco
+			continue
+		for k in pasos:
+			var grados: float = pieza.rotacion_grados + k * motor._paso_rotacion
+			if Geo.calzan(pieza.poligono(grados), hueco["forma_centrada"]):
+				pieza.girar_a(grados, 0.0)
+				return hueco
+	return null
 
 
 func _pieza_para(motor: Node, hueco: Dictionary) -> PiezaEncajar:

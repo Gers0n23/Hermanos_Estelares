@@ -1,6 +1,9 @@
 extends SceneTree
 
 ## Arnes QA de "Formas traviesas" (motor encajar): juega las 15 variantes (5 zonas x 3 rutas).
+## "Arma la figura" (PO 27-Sep-2026): verifica ademas que la bandeja muestre las piezas a su tamano
+## real (`bandeja_escala_real`), que la cola las reponga al encajar y que toda pieza ofrecida tenga
+## un lugar libre donde calza. El reto dorado de Sofia (marco) sigue en qa_test_retos_sofia.gd.
 ## Por nivel verifica armado (piezas, huecos dentro de su zona, bandeja sin choques, tamanos
 ## tactiles), voces existentes, que todo hueco tenga su pieza, las reglas del perfil (Semilla sin
 ## "no", toque que lleva a casa; Brote con objetivo guiado y enderezado; Estrella con giro por toque
@@ -14,20 +17,20 @@ const ZONAS := ["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islot
 const HERMANOS := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
 ## Lado visual mas corto de una pieza en la bandeja. La zona tocable siempre es >= 96 px de
 ## diametro (PiezaEncajar.RADIO_TOQUE_MINIMO), aunque la forma sea delgada (tronco, cuello).
-const LADO_MINIMO := {"semilla": 96.0, "brote": 52.0, "estrella": 40.0}
+## Estrella: las figuras de 20+ piezas de Sofia tienen piezas delgadas a proposito (columnas, pilotes,
+## almenas); herramientas/figuras_formas.py usa estos mismos minimos al disenarlas.
+const LADO_MINIMO := {"semilla": 96.0, "brote": 52.0, "estrella": 22.0}
 
 var _fallos := 0
 
 
 func _initialize() -> void:
-	print("=== QA encajar: Formas traviesas, 5 zonas x rutas de Maxi y Nicole ===")
+	print("=== QA encajar: Formas traviesas, 5 zonas x rutas de Maxi, Nicole y Sofia ===")
 	var filtro := ""
 	if OS.get_cmdline_user_args().size() > 0:
 		filtro = OS.get_cmdline_user_args()[0]
 	for zona in ZONAS:
 		for perfil in HERMANOS:
-			if perfil == "estrella":
-				continue  # Sofia (dificultad v3, mecanicas propias): herramientas/qa_test_retos_sofia.gd
 			var ruta := "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
 			if filtro != "" and not ruta.contains(filtro):
 				continue
@@ -73,11 +76,17 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 	if nivel.has("piezas_distractoras"):
 		distractoras = int(nivel.get("distractoras_por_partida", nivel["piezas_distractoras"].size()))
 	_check(motor._requeridos > 0, "%d huecos requeridos" % motor._requeridos)
-	_check(piezas.size() == huecos.size() + distractoras, "%d piezas = %d huecos + %d distractoras" % [piezas.size(), huecos.size(), distractoras])
-	_check(motor._ranuras.size() == motor._requeridos, "una ranura de progreso por hueco requerido")
+	var total: int = piezas.size() + motor._cola.size()
+	_check(total == huecos.size() + distractoras, "%d piezas (%d en la bandeja + %d en la cola) = %d huecos + %d distractoras" % [total, piezas.size(), motor._cola.size(), huecos.size(), distractoras])
+	if motor._requeridos > motor.MAX_RANURAS:
+		_check(motor._ranuras.size() == 1 and motor._ranuras[0].has_meta("barra"), "figura grande: barra de progreso continua")
+	else:
+		_check(motor._ranuras.size() == motor._requeridos, "una ranura de progreso por hueco requerido")
 	_probar_distribucion(motor, piezas, huecos, perfil)
 	_probar_voces(nivel, huecos)
-	_check(_asignacion(motor, piezas, huecos).size() == huecos.size(), "cada hueco tiene su propia pieza que calza")
+	_check(_toda_pieza_tiene_lugar(motor, piezas, huecos), "cada pieza de la bandeja tiene un hueco libre donde calza")
+	if bool(nivel.get("bandeja_escala_real", false)):
+		_probar_escala_real(motor, piezas, huecos)
 
 	match perfil:
 		"semilla":
@@ -90,30 +99,37 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 	if motor._limite_intentos != null:
 		await _probar_derrota(motor, piezas, huecos)
 
-	# Completar todo como lo haria un nino: girar (tocando) y soltar sobre su hueco.
-	var asignacion := _asignacion(motor, piezas, huecos)
+	# Completar todo como lo haria un nino: tomar una pieza de la bandeja, girarla (tocando) y soltarla
+	# sobre un hueco libre donde calce. La cola repone la bandeja a medida que se encaja.
 	var todo_encajo := true
-	for hueco in huecos:
-		if hueco["pieza"] != null:
-			continue
-		var pieza: PiezaEncajar = asignacion.get(hueco["id"])
-		if pieza == null or pieza.colocada:
-			pieza = _pieza_libre_para(motor, piezas, hueco)
-		if pieza == null:
-			todo_encajo = false
-			print("        sin pieza para %s" % hueco["id"])
-			continue
-		if motor._rotacion_por_toque:
-			for k in 8:
-				if Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
-					break
-				pieza.tocada.emit(pieza)
-		var r: String = motor.soltar_pieza(pieza, hueco["centro"])
-		if r != "encajo":
-			todo_encajo = false
-			print("        %s en %s -> %s" % [pieza.id, hueco["id"], r])
-		await _esperar(0.05)
-	_check(todo_encajo, "todas las piezas encajan en su hueco")
+	var repuestas := 0
+	var cola_inicial: int = motor._cola.size()
+	var avanzo := true
+	while avanzo and motor._encajados < motor._requeridos:
+		avanzo = false
+		for pieza: PiezaEncajar in motor._piezas.duplicate():
+			if pieza.colocada or motor._encajados >= motor._requeridos:
+				continue
+			var hueco = _hueco_libre_para(motor, pieza)
+			if hueco == null:
+				continue
+			if motor._rotacion_por_toque:
+				for k in 8:
+					if Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
+						break
+					pieza.tocada.emit(pieza)
+			var cola_antes: int = motor._cola.size()
+			var r: String = motor.soltar_pieza(pieza, hueco["centro"])
+			if r != "encajo":
+				todo_encajo = false
+				print("        %s en %s -> %s" % [pieza.id, hueco["id"], r])
+				continue
+			repuestas += cola_antes - motor._cola.size()
+			avanzo = true
+			await _esperar(0.03)
+	_check(todo_encajo and motor._encajados >= motor._requeridos, "todas las piezas encajan en su hueco (%d/%d)" % [motor._encajados, motor._requeridos])
+	if cola_inicial > 0:
+		_check(motor._cola.is_empty() and repuestas == cola_inicial, "la cola repuso la bandeja al encajar (%d piezas)" % repuestas)
 	var t0 := Time.get_ticks_msec()
 	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 15000:
 		await process_frame
@@ -237,6 +253,48 @@ func _par_equivocado(motor: Node, piezas: Array, huecos: Array) -> Array:
 			if not alguno:
 				return [pieza, hueco]
 	return []
+
+
+## Hueco libre y requerido donde la pieza calza con los giros que permite el nivel (el de su origen primero).
+func _hueco_libre_para(motor: Node, pieza: PiezaEncajar):
+	var origen = _hueco_origen(motor._huecos, pieza)
+	if origen != null and origen["pieza"] == null and _calza_con_giros(motor, pieza, origen):
+		return origen
+	for hueco in motor._huecos:
+		if hueco["pieza"] == null and not hueco["opcional"] and _calza_con_giros(motor, pieza, hueco):
+			return hueco
+	for hueco in motor._huecos:
+		if hueco["pieza"] == null and _calza_con_giros(motor, pieza, hueco):
+			return hueco
+	return null
+
+
+## La bandeja nunca ofrece una pieza (que no sea distractora) sin un lugar libre donde calce.
+func _toda_pieza_tiene_lugar(motor: Node, piezas: Array, _huecos: Array) -> bool:
+	var ok := true
+	for pieza: PiezaEncajar in piezas:
+		if pieza.colocada or not pieza.id.begins_with("pieza_"):
+			continue
+		if _hueco_libre_para(motor, pieza) == null:
+			ok = false
+			print("        %s no tiene lugar libre" % pieza.id)
+	return ok
+
+
+## La queja del PO (27-Sep-2026): las piezas de la derecha no se veian capaces de armar la figura de la
+## izquierda. Con escala real, cada pieza de la bandeja mide lo mismo que su silueta.
+func _probar_escala_real(motor: Node, piezas: Array, huecos: Array) -> void:
+	var ok := true
+	for pieza: PiezaEncajar in piezas:
+		if pieza.colocada:
+			continue
+		ok = ok and is_equal_approx(pieza.escala_bandeja, 1.0)
+		var hueco = _hueco_origen(huecos, pieza)
+		if hueco != null:
+			var a := absf(Geo.area(pieza.poligono()))
+			var b := absf(Geo.area(hueco["poligono"]))
+			ok = ok and absf(a - b) <= b * 0.02
+	_check(ok, "bandeja a escala real: cada pieza mide lo mismo que su silueta")
 
 
 func _calza_con_giros(motor: Node, pieza: PiezaEncajar, hueco: Dictionary) -> bool:

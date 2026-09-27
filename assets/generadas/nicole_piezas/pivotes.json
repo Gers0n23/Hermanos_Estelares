@@ -1,0 +1,13 @@
+{
+  "antebrazo_mano_der": [232, 326],
+  "antebrazo_mano_izq": [70, 326],
+  "brazo_sup_der": [226, 258],
+  "brazo_sup_izq": [76, 258],
+  "cabeza_casco": [151, 215],
+  "cinturon": [151, 420],
+  "pierna_inf_pie_der": [194, 508],
+  "pierna_inf_pie_izq": [108, 508],
+  "pierna_sup_der": [180, 420],
+  "pierna_sup_izq": [122, 420],
+  "torso": [151, 420]
+}

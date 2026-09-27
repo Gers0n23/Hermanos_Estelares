@@ -102,3 +102,33 @@ voces/arcoiris/formas/estrella/pista_tangram_01.wav	Toca una pieza para girarla 
 voces/arcoiris/formas/estrella/pista_espejo_01.wav	Si una pieza no calza ni girándola, tócala y después toca el espejo.
 voces/arcoiris/formas/estrella/pista_memoria_01.wav	Cada pieza va en su lugar, con su color. Si no te acuerdas, toca el ojito para mirar otra vez.
 voces/arcoiris/formas/estrella/pista_marco_01.wav	Llena todos los cuadraditos. Tocando una pieza la giras, y con el espejo la das vuelta.
+
+# "Arma la figura" (PO 27-Sep-2026): figura primero, piezas cortadas de ella. Relleno de Windows hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/formas/estrella/intro_arma_z1.wav	¡Sofía, mira la tarjeta! Es la iglesia de Castro, en Chiloé, y tiene veinticinco piezas. Busca en la bandeja la pieza que calza en cada lugar.
+voces/arcoiris/formas/estrella/intro_arma_z2.wav	¡Los palafitos de Chiloé, las casitas sobre el agua! Ahora algunas piezas llegan giradas: tócalas para darlas vuelta.
+voces/arcoiris/formas/estrella/intro_arma_z3.wav	¡Santiago con la cordillera! Arma la Torre Entel y el Costanera Center. Ojo, que hay piezas muy parecidas.
+voces/arcoiris/formas/estrella/intro_arma_z4.wav	¡Viajamos a Rapa Nui! Arma los moáis con sus sombreros rojos. Fíjate bien en el tamaño de cada pieza.
+voces/arcoiris/formas/estrella/intro_arma_z5.wav	¡El gran desafío de la cima! El castillo del cerro Santa Lucía, ¡con treinta piezas! ¡Tú puedes, Sofía!
+voces/arcoiris/formas/brote/intro_arma_z1.wav	¡Hola, Nicole! Vamos a armar una casita. Pon cada forma en su sombra del mismo color.
+voces/arcoiris/formas/brote/intro_arma_z2.wav	¡Nicole, armemos una micro, con sus ventanas y sus ruedas! ¡Brum, brum!
+voces/arcoiris/formas/brote/intro_arma_z3.wav	Ahora un faro, al lado del mar. Las sombras no tienen color. ¡Mira bien la forma, Nicole!
+voces/arcoiris/formas/brote/intro_arma_z4.wav	¡Un tren! Tiene ruedas grandes y ruedas chiquititas. Acerca cada pieza y se endereza solita.
+voces/arcoiris/formas/semilla/intro_arma_z1.wav	¡Hola, Maxi! Vamos a armar una casita con su sol. ¡Pon cada pieza donde va!
+voces/arcoiris/formas/semilla/intro_arma_z2.wav	¡Maxi, armemos un barquito! Y escucha cómo se ríen las piezas.
+voces/arcoiris/formas/semilla/intro_arma_z3.wav	¡Un arbolito de Navidad con su estrella! ¿Me ayudas a armarlo?
+voces/arcoiris/formas/semilla/intro_arma_z4.wav	¡Mira, Maxi! Un monito de nieve, grande y chiquitito. ¡Armémoslo!
+voces/arcoiris/formas/figuras/iglesia_chiloe.wav	¡Armaste la iglesia de Chiloé! ¡Qué linda te quedó!
+voces/arcoiris/formas/figuras/palafitos.wav	¡Los palafitos! Casitas que viven sobre el agua.
+voces/arcoiris/formas/figuras/santiago.wav	¡Santiago con su cordillera nevada! ¡Increíble!
+voces/arcoiris/formas/figuras/moais.wav	¡Los moáis de Rapa Nui! Llevan cientos de años mirando el cielo.
+voces/arcoiris/formas/figuras/castillo_santa_lucia.wav	¡El castillo del cerro Santa Lucía! Sofía, eres la reina de las formas.
+voces/arcoiris/formas/figuras/micro.wav	¡Una micro! ¡Todos arriba!
+voces/arcoiris/formas/figuras/faro.wav	¡Un faro! Su luz guía a los barcos de noche.
+voces/arcoiris/formas/figuras/tren.wav	¡Chu, chu! ¡Armaste un tren!
+voces/arcoiris/formas/figuras/monito_nieve.wav	¡Un monito de nieve! ¡Brrr, qué frío!
+voces/arcoiris/formas/nombres/circulo_grande.wav	¡Busca el círculo grande!
+voces/arcoiris/formas/nombres/circulo_chico.wav	¡Busca el círculo chiquitito!
+voces/arcoiris/formas/nombres/trapecio.wav	¡Busca el trapecio!
+# personaje: cometa
+voces/arcoiris/formas/estrella/pista_arma_01.wav	Mira la tarjeta con la figura terminada. ¿Qué pieza tiene la misma forma y el mismo tamaño?

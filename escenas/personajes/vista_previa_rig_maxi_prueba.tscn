@@ -1,0 +1,232 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/torso.png" id="1_wddbx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/cabeza_casco.png" id="2_2rs72"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/brazo_sup_izq.png" id="3_vesf6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/antebrazo_mano_izq.png" id="4_h6p3g"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/brazo_sup_der.png" id="5_gn5wi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/antebrazo_mano_der.png" id="6_7ac7e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/pierna_sup_izq.png" id="7_xvfvk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/pierna_inf_pie_izq.png" id="8_8mqu2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/pierna_sup_der.png" id="9_ui401"]
+[ext_resource type="Texture2D" path="res://assets/sprites/preview_maxi_rig/pierna_inf_pie_der.png" id="10_ys7bf"]
+
+[sub_resource type="Gradient" id="Gradient_fsbgm"]
+colors = PackedColorArray(0.55, 0.8, 0.95, 1, 0.85, 0.95, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y1dw4"]
+gradient = SubResource("Gradient_fsbgm")
+width = 1280
+height = 720
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Animation" id="Animation_hwmjc"]
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("torso/brazo_sup_der:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, -1.6, -1.6, -0.9, -0.9, 0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("torso/brazo_sup_der/antebrazo_mano_der:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, -1.2, -1.2, 1.3, 1.3, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("torso/brazo_sup_izq:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 1.6, 1.6, 0.9, 0.9, 0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("torso/brazo_sup_izq/antebrazo_mano_izq:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 1.2, 1.2, -1.3, -1.3, 0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pierna_sup_izq:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pierna_sup_izq/pierna_inf_pie_izq:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, -0.9, -0.9, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("pierna_sup_der:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, -0.35, -0.35, 0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("pierna_sup_der/pierna_inf_pie_der:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, 0.6, 0.6, 0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("torso/cabeza_casco:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.4, 2, 2.4, 3, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fx5i8"]
+_data = {
+&"prueba": SubResource("Animation_hwmjc")
+}
+
+[node name="vista_previa_rig_maxi" type="Node2D" unique_id=92183503]
+
+[node name="fondo" type="Sprite2D" parent="." unique_id=230956339]
+z_index = -10
+z_as_relative = false
+position = Vector2(640, 360)
+texture = SubResource("GradientTexture2D_y1dw4")
+
+[node name="cadera" type="Node2D" parent="." unique_id=1689811374]
+position = Vector2(640, 418)
+
+[node name="torso" type="Sprite2D" parent="cadera" unique_id=115462570]
+z_index = 9
+z_as_relative = false
+texture = ExtResource("1_wddbx")
+centered = false
+offset = Vector2(-153, -410)
+
+[node name="cabeza_casco" type="Sprite2D" parent="cadera/torso" unique_id=476694015]
+z_index = 10
+z_as_relative = false
+position = Vector2(0, -170)
+texture = ExtResource("2_2rs72")
+centered = false
+offset = Vector2(-153, -240)
+
+[node name="brazo_sup_izq" type="Sprite2D" parent="cadera/torso" unique_id=1603332541]
+z_index = 8
+z_as_relative = false
+position = Vector2(-79, -138)
+texture = ExtResource("3_vesf6")
+centered = false
+offset = Vector2(-74, -272)
+
+[node name="antebrazo_mano_izq" type="Sprite2D" parent="cadera/torso/brazo_sup_izq" unique_id=100909921]
+z_index = 6
+z_as_relative = false
+position = Vector2(-16, 70)
+texture = ExtResource("4_h6p3g")
+centered = false
+offset = Vector2(-58, -342)
+
+[node name="brazo_sup_der" type="Sprite2D" parent="cadera/torso" unique_id=1278371818]
+z_index = 7
+z_as_relative = false
+position = Vector2(79, -138)
+texture = ExtResource("5_gn5wi")
+centered = false
+offset = Vector2(-232, -272)
+
+[node name="antebrazo_mano_der" type="Sprite2D" parent="cadera/torso/brazo_sup_der" unique_id=597313938]
+z_index = 5
+z_as_relative = false
+position = Vector2(16, 70)
+texture = ExtResource("6_7ac7e")
+centered = false
+offset = Vector2(-248, -342)
+
+[node name="pierna_sup_izq" type="Sprite2D" parent="cadera" unique_id=53264329]
+z_index = 2
+z_as_relative = false
+position = Vector2(-41, 0)
+texture = ExtResource("7_xvfvk")
+centered = false
+offset = Vector2(-112, -410)
+
+[node name="pierna_inf_pie_izq" type="Sprite2D" parent="cadera/pierna_sup_izq" unique_id=694245340]
+z_index = 4
+z_as_relative = false
+position = Vector2(-5, 90)
+texture = ExtResource("8_8mqu2")
+centered = false
+offset = Vector2(-107, -500)
+
+[node name="pierna_sup_der" type="Sprite2D" parent="cadera" unique_id=519341220]
+z_index = 1
+z_as_relative = false
+position = Vector2(41, 0)
+texture = ExtResource("9_ui401")
+centered = false
+offset = Vector2(-194, -410)
+
+[node name="pierna_inf_pie_der" type="Sprite2D" parent="cadera/pierna_sup_der" unique_id=578384651]
+z_index = 3
+z_as_relative = false
+position = Vector2(6, 90)
+texture = ExtResource("10_ys7bf")
+centered = false
+offset = Vector2(-200, -500)
+
+[node name="animador" type="AnimationPlayer" parent="cadera" unique_id=160828701]
+libraries/ = SubResource("AnimationLibrary_fx5i8")
+autoplay = &"prueba"

@@ -23,19 +23,25 @@ const RUTA_FUENTE_NOMBRES := "res://assets/fuentes/fuente_baloo_800.tres"
 ## los 96 px de GDD §6.1 aunque el disco se dibuje mas chico.
 const MARGEN_TOQUE_PLANETA := 28.0
 
-## Los 6 planetas del capitulo 1 (GDD §2), en el orden fijo de la ruta. "pos"/"radio"/
-## "dy"/"escala" reproducen la perspectiva creciente del mockup (mas chicos y mas altos
-## a medida que se alejan); "textura" usa arte real ya aprobado en `assets/anclas/`
-## cuando existe (Arcoiris, Animalia) y cae a un degradê generado cuando todavia no hay
-## arte final (Melodia en adelante — tarea de HE-13+).
+## Los 6 planetas del capitulo 1 (GDD §2), en el orden fijo de la ruta, mas chicos a
+## medida que se alejan. Cada uno se dibuja redondo con sus propios atributos
+## (`planeta_dibujado.gd` + `planeta.gdshader`, 27-Sep-2026): ya no se recorta arte
+## rectangular dentro de un disco.
+const TIERRA := {"id": "tierra", "nombre": "La Tierra", "pos": Vector2(92, 620), "radio": 70.0}
 const PLANETAS := [
-	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(300, 545), "radio": 84.0, "dy": 36.0, "escala": 1.0, "color_a": Color("ff9ec7"), "color_b": Color("ffd86b"), "color_c": Color("7fe3d0"), "textura": "res://assets/anclas/planeta_arcoiris_referencia.png", "mapa": "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"},
-	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(520, 315), "radio": 65.0, "dy": 30.0, "escala": 0.78, "color_a": Color("a7e05a"), "color_b": Color("4fbf7a"), "color_c": Color("2b7f56"), "textura": "res://assets/anclas/planeta_animalia_referencia.png"},
-	{"id": "melodia", "nombre": "Melodía", "pos": Vector2(700, 490), "radio": 54.0, "dy": 26.0, "escala": 0.64, "color_a": Color("ff6bd6"), "color_b": Color("a06bff"), "color_c": Color("5b2f96"), "textura": ""},
-	{"id": "cuenta_cuentas", "nombre": "Cuenta-Cuentas", "pos": Vector2(890, 265), "radio": 45.0, "dy": 22.0, "escala": 0.53, "color_a": Color("5aa8ff"), "color_b": Color("3b5bd6"), "color_c": Color("1f2f8c"), "textura": ""},
-	{"id": "letralandia", "nombre": "Letralandia", "pos": Vector2(1060, 430), "radio": 38.0, "dy": 20.0, "escala": 0.45, "color_a": Color("ffc76b"), "color_b": Color("ff8a3d"), "color_c": Color("c25219"), "textura": ""},
-	{"id": "corazon", "nombre": "Corazón", "pos": Vector2(1195, 215), "radio": 31.0, "dy": 17.0, "escala": 0.37, "color_a": Color("8ad8ff"), "color_b": Color("ff7eb6"), "color_c": Color("c2477f"), "textura": ""},
+	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(318, 478), "radio": 86.0, "mapa": "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"},
+	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(530, 290), "radio": 70.0},
+	{"id": "melodia", "nombre": "Melodía", "pos": Vector2(705, 480), "radio": 60.0},
+	{"id": "cuenta_cuentas", "nombre": "Cuenta-Cuentas", "pos": Vector2(880, 290), "radio": 54.0},
+	{"id": "letralandia", "nombre": "Letralandia", "pos": Vector2(1045, 450), "radio": 48.0},
+	{"id": "corazon", "nombre": "Corazón", "pos": Vector2(1185, 265), "radio": 44.0},
 ]
+## Recorte de la cara en los retratos oficiales (512x768, pies en y=720) para el HUD.
+const REGION_CARA := Rect2(146, 62, 220, 220)
+## Centro de la nave sobre la superficie del planeta donde está posada (media altura del
+## sprite a escala 0.2, menos un poquito para que se vea apoyada y no flotando).
+const ALTO_NAVE_SOBRE_PLANETA := 22.0
+const RUTA_VIAJE := "res://escenas/nucleo/viaje_estelar.tscn"
 
 const COLORES_HERMANO := {
 	"maxi": Color("4aa8ff"),
@@ -64,6 +70,7 @@ const PLANETAS_DESBLOQUEADOS_STUB := 1
 @onready var _contenedor_planetas: Node2D = $contenedor_planetas
 @onready var _nave: Node2D = $nave
 @onready var _forma_nave: Node2D = $nave/forma_nave
+@onready var _estela_nave: CanvasItem = $nave/forma_nave/estela
 @onready var _hud_retrato: TextureRect = $hud/anillo_retrato/retrato
 @onready var _hud_anillo: Panel = $hud/anillo_retrato
 @onready var _hud_nombre: Label = $hud/texto_nombre
@@ -78,6 +85,7 @@ const PLANETAS_DESBLOQUEADOS_STUB := 1
 var _id_perfil := "maxi"
 var _regiones: Array[Dictionary] = []
 var _ruta_voz_actual := ""
+var _despegando := false
 
 
 func _ready() -> void:
@@ -105,7 +113,10 @@ func _pintar_hud() -> void:
 	_hud_destellos.text = str(Progreso.obtener_destellos_totales(_id_perfil))
 	var ruta_retrato: String = RETRATOS_HERMANO.get(_id_perfil, "")
 	if ruta_retrato != "" and ResourceLoader.exists(ruta_retrato):
-		_hud_retrato.texture = load(ruta_retrato)
+		var cara := AtlasTexture.new()
+		cara.atlas = load(ruta_retrato)
+		cara.region = REGION_CARA
+		_hud_retrato.texture = cara
 	var estilo_base: StyleBox = _hud_anillo.get_theme_stylebox("panel")
 	if estilo_base is StyleBoxFlat:
 		var estilo: StyleBoxFlat = (estilo_base as StyleBoxFlat).duplicate()
@@ -122,115 +133,123 @@ func _pintar_camino() -> void:
 	_camino.proporcion = 0.0 if largo_total <= 0.0 else offset_meta / largo_total
 
 
-## Reconstruye a mano, en puntos de control de Bezier cubica, el mismo `<path>` SVG del
-## mockup (`M152 572 Q226 548 300 545 C400 542 430 330 520 315 S620 505 700 490 S810 275
-## 890 265 S990 440 1060 430 S1160 225 1195 215`) — los 6 nodos coinciden exactamente con
-## los extremos de cada segmento, asi que la curva pasa justo por cada planeta.
+## Curva suave que sale de la Tierra y pasa exactamente por el centro de cada planeta
+## (tangentes tipo Catmull-Rom).
 func _construir_curva_camino() -> Curve2D:
+	var puntos: Array[Vector2] = [TIERRA["pos"] + Vector2(40, -30)]
+	for datos in PLANETAS:
+		puntos.append(datos["pos"])
 	var curva := Curve2D.new()
 	curva.bake_interval = 6.0
-	curva.add_point(Vector2(152, 572), Vector2.ZERO, Vector2(49.33, -16))
-	curva.add_point(Vector2(300, 545), Vector2(-49.33, 2), Vector2(100, -3))
-	curva.add_point(Vector2(520, 315), Vector2(-90, 15), Vector2(90, -15))
-	curva.add_point(Vector2(700, 490), Vector2(-80, 15), Vector2(80, -15))
-	curva.add_point(Vector2(890, 265), Vector2(-80, 10), Vector2(80, -10))
-	curva.add_point(Vector2(1060, 430), Vector2(-70, 10), Vector2(70, -10))
-	curva.add_point(Vector2(1195, 215), Vector2(-35, 10), Vector2.ZERO)
+	for i in puntos.size():
+		var previo: Vector2 = puntos[maxi(i - 1, 0)]
+		var siguiente: Vector2 = puntos[mini(i + 1, puntos.size() - 1)]
+		var tangente := (siguiente - previo) * 0.28
+		curva.add_point(puntos[i], -tangente, tangente)
 	return curva
 
 
 func _pintar_tierra() -> void:
-	_crear_disco(Vector2(96, 622), 84.0, Color("8ed6ff"), Color("3f8fe0"), Color("1c4f96"), "", true, "La Tierra", 22, true)
+	_crear_planeta(TIERRA, true, false)
 
 
 func _pintar_planetas() -> void:
+	var indice_actual: int = clampi(PLANETAS_DESBLOQUEADOS_STUB, 1, PLANETAS.size()) - 1
 	for i in PLANETAS.size():
-		var datos: Dictionary = PLANETAS[i]
 		var desbloqueado: bool = (i + 1) <= PLANETAS_DESBLOQUEADOS_STUB
-		var tamano_fuente: int = maxi(15, int(30 * float(datos["escala"])))
-		_crear_disco(datos["pos"], datos["radio"], datos["color_a"], datos["color_b"], datos["color_c"], datos["textura"], desbloqueado, datos["nombre"], tamano_fuente, false)
+		var planeta := _crear_planeta(PLANETAS[i], desbloqueado, i == indice_actual)
+		if i == indice_actual:
+			_latir(planeta)
 
 
-## `etiqueta_arriba` deja el nombre encima del disco en vez de debajo — lo usa la Tierra,
-## que esta pegada al borde inferior de la pantalla y no tiene lugar debajo.
-func _crear_disco(pos: Vector2, radio: float, color_a: Color, color_b: Color, color_c: Color, ruta_textura: String, desbloqueado: bool, nombre: String, tamano_fuente: int, etiqueta_arriba: bool) -> void:
-	var textura: Texture2D
-	if ruta_textura != "" and ResourceLoader.exists(ruta_textura):
-		textura = load(ruta_textura)
-	else:
-		textura = _generar_textura_gradiente(color_a, color_b, color_c)
+func _crear_planeta(datos: Dictionary, desbloqueado: bool, actual: bool) -> Node2D:
+	var radio: float = datos["radio"]
+	var pos: Vector2 = datos["pos"]
+	if actual:
+		# aura dorada del planeta al que vamos (se lee sin saber leer: "ahi toca ir")
+		var aura := TextureRect.new()
+		var degradado := Gradient.new()
+		degradado.colors = PackedColorArray([Color(1, 0.85, 0.3, 0.55), Color(1, 0.85, 0.3, 0.0)])
+		var textura := GradientTexture2D.new()
+		textura.gradient = degradado
+		textura.fill = GradientTexture2D.FILL_RADIAL
+		textura.fill_from = Vector2(0.5, 0.5)
+		textura.fill_to = Vector2(1.0, 0.5)
+		aura.texture = textura
+		aura.size = Vector2.ONE * radio * 3.6
+		aura.position = pos - aura.size / 2.0
+		aura.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_contenedor_planetas.add_child(aura)
+	var planeta := PlanetaDibujado.new()
+	planeta.id_planeta = datos["id"]
+	planeta.radio = radio
+	planeta.apagado = not desbloqueado
+	planeta.position = pos
+	_contenedor_planetas.add_child(planeta)
+	# la Tierra esta pegada al borde inferior: su nombre va arriba
+	var abajo: bool = pos.y + radio + 50.0 < 720.0
+	var arriba := -radio - 48.0
+	if Progreso.obtener_ubicacion_nave(_id_perfil) == datos["id"]:
+		arriba -= ALTO_NAVE_SOBRE_PLANETA * 2.0 + 8.0  # por encima de la nave posada
+	_crear_etiqueta(str(datos["nombre"]), pos + Vector2(0, radio + 14.0 if abajo else arriba), radio, desbloqueado, actual)
+	return planeta
 
-	var disco := TextureRect.new()
-	disco.texture = textura
-	disco.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	disco.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	disco.position = pos - Vector2(radio, radio)
-	disco.size = Vector2(radio * 2.0, radio * 2.0)
-	var material := ShaderMaterial.new()
-	material.shader = load(RUTA_SHADER_DISCO)
-	material.set_shader_parameter("escala_de_grises", not desbloqueado)
-	material.set_shader_parameter("desenfoque", 0.0 if desbloqueado else 0.8)
-	material.set_shader_parameter("opacidad", 1.0 if desbloqueado else 0.55)
-	disco.material = material
-	# Los toques los resuelve `_unhandled_input` por regiones: el disco no debe tragarselos.
-	disco.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_contenedor_planetas.add_child(disco)
 
+## Nombre en una pildora bajo el planeta (Sofia lee; los chicos se guian por la voz).
+func _crear_etiqueta(nombre: String, centro_arriba: Vector2, radio: float, desbloqueado: bool, actual: bool) -> void:
 	var etiqueta := Label.new()
 	etiqueta.text = nombre
-	etiqueta.add_theme_font_size_override("font_size", tamano_fuente)
-	etiqueta.add_theme_color_override("font_color", Color(1, 1, 1, 0.55 if not desbloqueado else 0.92))
 	etiqueta.add_theme_font_override("font", load(RUTA_FUENTE_NOMBRES))
+	etiqueta.add_theme_font_size_override("font_size", clampi(int(radio * 0.34), 17, 28))
+	etiqueta.add_theme_color_override("font_color", Color(0.23, 0.11, 0.45) if actual else Color(1, 1, 1, 0.92 if desbloqueado else 0.6))
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = Color(1, 0.84, 0.3) if actual else Color(0.075, 0.04, 0.19, 0.55)
+	fondo.set_corner_radius_all(20)
+	fondo.content_margin_left = 14
+	fondo.content_margin_right = 14
+	fondo.content_margin_top = 0
+	fondo.content_margin_bottom = 2
+	etiqueta.add_theme_stylebox_override("normal", fondo)
 	etiqueta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var offset_y: float = -(radio + 44.0) if etiqueta_arriba else radio + 10.0
-	etiqueta.position = pos + Vector2(-100, offset_y)
-	etiqueta.size = Vector2(200, 40)
 	etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_contenedor_planetas.add_child(etiqueta)
+	etiqueta.reset_size()
+	etiqueta.position = centro_arriba - Vector2(etiqueta.size.x / 2.0, 0)
 
 
-func _generar_textura_gradiente(color_a: Color, color_b: Color, color_c: Color) -> GradientTexture2D:
-	var degradado := Gradient.new()
-	degradado.offsets = PackedFloat32Array([0.0, 0.6, 1.0])
-	degradado.colors = PackedColorArray([color_a, color_b, color_c])
-	var textura := GradientTexture2D.new()
-	textura.gradient = degradado
-	textura.width = 64
-	textura.height = 64
-	textura.fill = GradientTexture2D.FILL_RADIAL
-	textura.fill_from = Vector2(0.34, 0.28)
-	textura.fill_to = Vector2(0.95, 0.28)
-	return textura
+func _latir(planeta: Node2D) -> void:
+	var tween := create_tween().set_loops()
+	tween.tween_property(planeta, "scale", Vector2.ONE * 1.05, 1.1) 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(planeta, "scale", Vector2.ONE, 1.1) 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
-## Puerto directo de la funcion `nave(d)` del mockup: estaciona la navecita a la
-## izquierda del disco del planeta actual (el ultimo desbloqueado), mas cerca cuanto
-## mas grande es el disco.
+## La nave-estrella (diseño final) está posada ENCIMA del planeta donde quedó estacionada
+## (`Progreso.obtener_ubicacion_nave`): toda aventura empieza sobre la Tierra y, después de
+## cada viaje, la nave queda sobre el planeta al que se llegó.
 func _posicionar_nave() -> void:
-	var indice: int = clampi(PLANETAS_DESBLOQUEADOS_STUB, 1, PLANETAS.size()) - 1
-	var datos: Dictionary = PLANETAS[indice]
-	var radio: float = datos["radio"]
-	var escala: float = datos["escala"]
-	var cx: float = (datos["pos"] as Vector2).x
-	var cy: float = (datos["pos"] as Vector2).y - float(datos["dy"])
-	var dx: float = radio + 75.0 * escala + 30.0 * escala
-	if indice == 0:
-		_nave.position = Vector2(cx - dx, cy - (radio + 55.0 + 22.0))
-	else:
-		_nave.position = Vector2(cx - dx, cy)
-	_nave.scale = Vector2.ONE * clampf(escala, 0.55, 1.0)
+	var datos := _datos_planeta(Progreso.obtener_ubicacion_nave(_id_perfil))
+	_nave.position = (datos["pos"] as Vector2) + Vector2(0, -float(datos["radio"]) - ALTO_NAVE_SOBRE_PLANETA)
+	_nave.scale = Vector2.ONE
+	_estela_nave.visible = false  # estacionada: sin estela de vuelo
+
+
+func _datos_planeta(id: String) -> Dictionary:
+	for datos in PLANETAS:
+		if datos["id"] == id:
+			return datos
+	return TIERRA
 
 
 ## Balanceo continuo de la navecita (equivalente a `he-bob 1.8s` del mockup).
 func _iniciar_bob_nave() -> void:
 	var tween := create_tween().set_loops()
-	tween.tween_property(_forma_nave, "position:y", -8.0, 0.9) \
+	tween.tween_property(_forma_nave, "position:y", -3.0, 0.9) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.parallel().tween_property(_forma_nave, "rotation", deg_to_rad(3.0), 0.9) \
+	tween.parallel().tween_property(_forma_nave, "rotation", deg_to_rad(2.0), 0.9) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(_forma_nave, "position:y", 0.0, 0.9) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.parallel().tween_property(_forma_nave, "rotation", deg_to_rad(-3.0), 0.9) \
+	tween.parallel().tween_property(_forma_nave, "rotation", deg_to_rad(-2.0), 0.9) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
@@ -305,6 +324,12 @@ func _tocar_hangar() -> void:
 ## sobrevive al cambio de escena), no a este mapa, que se libera al salir: al terminar la
 ## celebracion o tocar "salir" se vuelve al mapa, con el progreso ya guardado por el contrato.
 func _entrar_planeta(datos: Dictionary) -> void:
+	if _despegando:
+		return
+	# si la nave está en otro planeta, primero se viaja (minijuego pixel del viaje estelar)
+	if Progreso.obtener_ubicacion_nave(_id_perfil) != str(datos["id"]) and ResourceLoader.exists(RUTA_VIAJE):
+		_viajar_a(datos)
+		return
 	var ruta_mapa := str(datos.get("mapa", ""))
 	if ruta_mapa != "" and ResourceLoader.exists(ruta_mapa):
 		Audio.reproducir_sfx(RUTA_SFX_TOQUE)
@@ -329,4 +354,32 @@ func _entrar_planeta(datos: Dictionary) -> void:
 	motor.salir_solicitado.connect(volver_al_mapa, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	arbol.root.add_child(motor)
 	arbol.current_scene = motor
+	queue_free()
+
+
+## La nave despega del planeta donde está (un saltito en el mapa) y se abre el viaje estelar
+## de ese origen a ese destino. Al terminar, los destellos del camino y la nueva ubicación
+## quedan guardados y se entra al planeta. Las señales van a `Progreso`/`SceneTree`, que
+## sobreviven al cambio de escena (este mapa se libera).
+func _viajar_a(datos: Dictionary) -> void:
+	_despegando = true
+	_temporizador_recordatorio.stop()
+	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
+	var origen := Progreso.obtener_ubicacion_nave(_id_perfil)
+	var destino := str(datos["id"])
+	var tween := create_tween()
+	tween.tween_property(_nave, "position:y", _nave.position.y - 50.0, 0.55) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(_nave, "modulate:a", 0.0, 0.35).set_delay(0.2)
+	await tween.finished
+	var viaje: Node = (load(RUTA_VIAJE) as PackedScene).instantiate()
+	viaje.planeta_origen = origen
+	viaje.planeta_destino = destino
+	var ruta_mapa := str(datos.get("mapa", ""))
+	var siguiente := ruta_mapa if ruta_mapa != "" and ResourceLoader.exists(ruta_mapa) else scene_file_path
+	var arbol := get_tree()
+	viaje.completado.connect(Progreso.registrar_viaje.bind(_id_perfil, destino), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	viaje.completado.connect(Callable(arbol, "change_scene_to_file").bind(siguiente).unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	arbol.root.add_child(viaje)
+	arbol.current_scene = viaje
 	queue_free()

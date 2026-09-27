@@ -7,14 +7,23 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "dificultad": "v3 (PO 14-Sep-2026)",
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "caras": false,
   "guia_color": false,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "piezas_en_bandeja": 6,
   "pistas_cuestan_estrellita": true,
   "regalo_tras_derrotas": true,
-  "modo": "desafio",
-  "boton_espejo": true,
+  "iman_tolerancia_px": 70,
+  "paso_rotacion": 90,
+  "rotacion_por_toque": true,
+  "rotacion_inicial_aleatoria": true,
+  "limite_intentos": 16,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/estrella/intro_arma_z5.wav",
+    "pista": "voces/arcoiris/formas/estrella/pista_arma_01.wav",
     "acierto": [
       "voces/arcoiris/formas/estrella/acierto_01.wav",
       "voces/arcoiris/formas/estrella/acierto_02.wav",
@@ -24,918 +33,262 @@
       "voces/arcoiris/formas/estrella/no_es_este_01.wav",
       "voces/arcoiris/formas/estrella/no_es_este_02.wav"
     ],
-    "figura_completa": [
-      "voces/arcoiris/formas/estrella/figura_completa_01.wav",
-      "voces/arcoiris/formas/estrella/figura_completa_02.wav"
-    ],
-    "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
-    "victoria_final": "voces/arcoiris/formas/estrella/victoria_cima_01.wav",
-    "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
-    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav",
-    "espejo_sin_pieza": "voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav",
     "girar": "voces/arcoiris/formas/estrella/girar_01.wav",
-    "prueba_superada": [
-      "voces/arcoiris/formas/estrella/prueba_superada_01.wav",
-      "voces/arcoiris/formas/estrella/prueba_superada_02.wav"
+    "derrota_gag": "voces/arcoiris/formas/estrella/derrota_gag_01.wav",
+    "victoria_final": [
+      "voces/arcoiris/formas/estrella/victoria_01.wav",
+      "voces/arcoiris/formas/estrella/victoria_02.wav"
     ],
-    "intro": "voces/arcoiris/formas/estrella/intro_cima_1.wav",
-    "pista": "voces/arcoiris/formas/estrella/pista_tangram_01.wav",
-    "mira_modelo": "voces/arcoiris/formas/estrella/mira_modelo_01.wav",
-    "tapa_modelo": "voces/arcoiris/formas/estrella/tapa_modelo_01.wav"
+    "pista_usada": "voces/arcoiris/formas/estrella/pista_usada_01.wav",
+    "regalo": "voces/arcoiris/formas/estrella/regalo_01.wav"
   },
-  "pruebas": [
+  "figuras": [
     {
-      "mecanica": "tangram_libre",
-      "lado_red": 68,
-      "iman_tolerancia_px": 60,
-      "rotacion_por_toque": true,
-      "paso_rotacion": 45,
-      "rotacion_inicial_aleatoria": true,
-      "limite_intentos": null,
-      "figuras_por_partida": 1,
-      "figuras": [
+      "id": "castillo_santa_lucia",
+      "voz_completa": "voces/arcoiris/formas/figuras/castillo_santa_lucia.wav",
+      "piezas": [
         {
-          "id": "nave",
-          "silueta_unida": true,
-          "piezas": [
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 270,
-              "espejo": false,
-              "x": -0.0,
-              "y": 5.0,
-              "color": "#FF6B6B"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1.4142,
-              "alto": 1.4142,
-              "rotacion": 45,
-              "espejo": false,
-              "x": 2.0,
-              "y": 1.0,
-              "color": "#4A8BE0"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.0,
-              "y": 2.0,
-              "color": "#7DD87A"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 1.5,
-              "y": 3.5,
-              "color": "#FFCB3D"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 270,
-              "espejo": false,
-              "x": 1.5,
-              "y": 3.5,
-              "color": "#B48CE8"
-            },
-            {
-              "forma": "cuadrado",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 1.5,
-              "y": 4.5,
-              "color": "#FF9F4A"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 1.5,
-              "y": 5.5,
-              "color": "#45C6C0"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 270,
-              "espejo": false,
-              "x": 2.0,
-              "y": 5.0,
-              "color": "#F26CA8"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1.4142,
-              "alto": 1.4142,
-              "rotacion": 315,
-              "espejo": false,
-              "x": 2.0,
-              "y": 6.0,
-              "color": "#6FD6E8"
-            },
-            {
-              "forma": "paralelogramo",
-              "ancho": 2,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 2.5,
-              "y": 1.0,
-              "color": "#3FB57A"
-            },
-            {
-              "forma": "paralelogramo",
-              "ancho": 2,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 2.5,
-              "y": 2.0,
-              "color": "#FFE38A"
-            },
-            {
-              "forma": "cuadrado",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.5,
-              "y": 3.5,
-              "color": "#9B6BD9"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 2.5,
-              "y": 4.5,
-              "color": "#FFB25B"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 4.0,
-              "y": 5.0,
-              "color": "#2E9E9A"
-            }
-          ]
+          "forma": "triangulo",
+          "ancho": 102.6,
+          "alto": 94.5,
+          "color": "#4A8BE0",
+          "x": -137.7,
+          "y": -202.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": -164.7,
+          "y": -81.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 60.75,
+          "color": "#5B3F8C",
+          "x": -137.7,
+          "y": -124.87
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 87.75,
+          "color": "#E8D7B8",
+          "x": -137.7,
+          "y": -50.63
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": -110.7,
+          "y": -81.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 81.0,
+          "alto": 148.5,
+          "color": "#D9C39C",
+          "x": -137.7,
+          "y": 67.5
+        },
+        {
+          "forma": "triangulo",
+          "ancho": 102.6,
+          "alto": 94.5,
+          "color": "#4A8BE0",
+          "x": 137.7,
+          "y": -202.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": 110.7,
+          "y": -81.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 60.75,
+          "color": "#5B3F8C",
+          "x": 137.7,
+          "y": -124.87
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 87.75,
+          "color": "#E8D7B8",
+          "x": 137.7,
+          "y": -50.63
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": 164.7,
+          "y": -81.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 81.0,
+          "alto": 148.5,
+          "color": "#D9C39C",
+          "x": 137.7,
+          "y": 67.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": -27.0,
+          "y": -94.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 54.0,
+          "color": "#5B3F8C",
+          "x": 0.0,
+          "y": -141.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 94.5,
+          "color": "#E8D7B8",
+          "x": 0.0,
+          "y": -67.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 27.0,
+          "alto": 148.5,
+          "color": "#E8D7B8",
+          "x": 27.0,
+          "y": -94.5
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": -29.02,
+          "y": -182.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": 29.03,
+          "y": -182.25
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": -85.72,
+          "y": -33.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": -51.97,
+          "y": -33.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": 51.98,
+          "y": -33.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 22.95,
+          "alto": 27.0,
+          "color": "#E8D7B8",
+          "x": 85.73,
+          "y": -33.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.7,
+          "alto": 162.0,
+          "color": "#D9C39C",
+          "x": -68.85,
+          "y": 60.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 81.0,
+          "alto": 54.0,
+          "color": "#D9C39C",
+          "x": 0.0,
+          "y": 6.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 81.0,
+          "alto": 108.0,
+          "color": "#A8744F",
+          "x": 0.0,
+          "y": 87.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 56.7,
+          "alto": 162.0,
+          "color": "#D9C39C",
+          "x": 68.85,
+          "y": 60.75
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 108.0,
+          "alto": 108.0,
+          "color": "#7DD87A",
+          "rotacion": 270,
+          "x": -232.2,
+          "y": 195.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 178.2,
+          "alto": 108.0,
+          "color": "#7DD87A",
+          "x": -89.1,
+          "y": 195.75
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 178.2,
+          "alto": 108.0,
+          "color": "#7DD87A",
+          "x": 89.1,
+          "y": 195.75
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 108.0,
+          "alto": 108.0,
+          "color": "#7DD87A",
+          "x": 232.2,
+          "y": 195.75
         }
       ]
-    },
-    {
-      "mecanica": "marco",
-      "marco": [
-        "...#....",
-        "...##...",
-        "..####..",
-        ".######.",
-        ".######.",
-        "########",
-        "########",
-        "###..###",
-        "##....##"
-      ],
-      "lado_celda": 58,
-      "limite_intentos": 12,
-      "piezas_necesarias": 9,
-      "rotacion_por_toque": true,
-      "paso_rotacion": 90,
-      "piezas_marco": [
-        {
-          "id": "F",
-          "celdas": [
-            [
-              1,
-              0
-            ],
-            [
-              2,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              1,
-              2
-            ]
-          ],
-          "color": "#FF6B6B"
-        },
-        {
-          "id": "I",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              0,
-              2
-            ],
-            [
-              0,
-              3
-            ],
-            [
-              0,
-              4
-            ]
-          ],
-          "color": "#4A8BE0"
-        },
-        {
-          "id": "L",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              0,
-              2
-            ],
-            [
-              0,
-              3
-            ],
-            [
-              1,
-              3
-            ]
-          ],
-          "color": "#7DD87A"
-        },
-        {
-          "id": "P",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              1,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              0,
-              2
-            ]
-          ],
-          "color": "#B48CE8"
-        },
-        {
-          "id": "T",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              1,
-              0
-            ],
-            [
-              2,
-              0
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              1,
-              2
-            ]
-          ],
-          "color": "#FF9F4A"
-        },
-        {
-          "id": "U",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              2,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              2,
-              1
-            ]
-          ],
-          "color": "#45C6C0"
-        },
-        {
-          "id": "V",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              0,
-              2
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              2,
-              2
-            ]
-          ],
-          "color": "#F26CA8"
-        },
-        {
-          "id": "W",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              2,
-              2
-            ]
-          ],
-          "color": "#6FD6E8"
-        },
-        {
-          "id": "X",
-          "celdas": [
-            [
-              1,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              2,
-              1
-            ],
-            [
-              1,
-              2
-            ]
-          ],
-          "color": "#FFE38A"
-        },
-        {
-          "id": "Y",
-          "celdas": [
-            [
-              1,
-              0
-            ],
-            [
-              0,
-              1
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              1,
-              3
-            ]
-          ],
-          "color": "#9B6BD9"
-        },
-        {
-          "id": "Z",
-          "celdas": [
-            [
-              0,
-              0
-            ],
-            [
-              1,
-              0
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              2,
-              2
-            ]
-          ],
-          "color": "#B07A4F"
-        },
-        {
-          "id": "N",
-          "celdas": [
-            [
-              1,
-              0
-            ],
-            [
-              1,
-              1
-            ],
-            [
-              0,
-              2
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              0,
-              3
-            ]
-          ],
-          "color": "#FFCB3D"
-        }
-      ],
-      "solucion": [
-        {
-          "id": "F",
-          "celdas": [
-            [
-              0,
-              5
-            ],
-            [
-              1,
-              3
-            ],
-            [
-              1,
-              4
-            ],
-            [
-              1,
-              5
-            ],
-            [
-              2,
-              4
-            ]
-          ]
-        },
-        {
-          "id": "I",
-          "celdas": [
-            [
-              0,
-              6
-            ],
-            [
-              1,
-              6
-            ],
-            [
-              2,
-              6
-            ],
-            [
-              3,
-              6
-            ],
-            [
-              4,
-              6
-            ]
-          ]
-        },
-        {
-          "id": "P",
-          "celdas": [
-            [
-              0,
-              7
-            ],
-            [
-              0,
-              8
-            ],
-            [
-              1,
-              7
-            ],
-            [
-              1,
-              8
-            ],
-            [
-              2,
-              7
-            ]
-          ]
-        },
-        {
-          "id": "N",
-          "celdas": [
-            [
-              2,
-              2
-            ],
-            [
-              2,
-              3
-            ],
-            [
-              3,
-              0
-            ],
-            [
-              3,
-              1
-            ],
-            [
-              3,
-              2
-            ]
-          ]
-        },
-        {
-          "id": "T",
-          "celdas": [
-            [
-              2,
-              5
-            ],
-            [
-              3,
-              3
-            ],
-            [
-              3,
-              4
-            ],
-            [
-              3,
-              5
-            ],
-            [
-              4,
-              5
-            ]
-          ]
-        },
-        {
-          "id": "Y",
-          "celdas": [
-            [
-              4,
-              1
-            ],
-            [
-              4,
-              2
-            ],
-            [
-              4,
-              3
-            ],
-            [
-              4,
-              4
-            ],
-            [
-              5,
-              2
-            ]
-          ]
-        },
-        {
-          "id": "Z",
-          "celdas": [
-            [
-              5,
-              3
-            ],
-            [
-              6,
-              3
-            ],
-            [
-              6,
-              4
-            ],
-            [
-              6,
-              5
-            ],
-            [
-              7,
-              5
-            ]
-          ]
-        },
-        {
-          "id": "L",
-          "celdas": [
-            [
-              5,
-              4
-            ],
-            [
-              5,
-              5
-            ],
-            [
-              5,
-              6
-            ],
-            [
-              5,
-              7
-            ],
-            [
-              6,
-              7
-            ]
-          ]
-        },
-        {
-          "id": "U",
-          "celdas": [
-            [
-              6,
-              6
-            ],
-            [
-              6,
-              8
-            ],
-            [
-              7,
-              6
-            ],
-            [
-              7,
-              7
-            ],
-            [
-              7,
-              8
-            ]
-          ]
-        }
-      ],
-      "lineas_voz": {
-        "intro": "voces/arcoiris/formas/estrella/intro_cima_2.wav",
-        "pista": "voces/arcoiris/formas/estrella/pista_marco_01.wav"
-      }
-    },
-    {
-      "mecanica": "memoria",
-      "lado_red": 84,
-      "iman_tolerancia_px": 55,
-      "segundos_modelo": 3,
-      "exigir_color": true,
-      "rotacion_por_toque": true,
-      "paso_rotacion": 45,
-      "rotacion_inicial_aleatoria": true,
-      "limite_intentos": 8,
-      "figuras_por_partida": 1,
-      "figuras": [
-        {
-          "id": "velero",
-          "silueta_unida": true,
-          "piezas": [
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1.4142,
-              "alto": 1.4142,
-              "rotacion": 135,
-              "espejo": false,
-              "x": 0.0,
-              "y": 3.0,
-              "color": "#FF6B6B"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 270,
-              "espejo": false,
-              "x": 1.0,
-              "y": 1.0,
-              "color": "#4A8BE0"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 180,
-              "espejo": false,
-              "x": 1.0,
-              "y": 3.0,
-              "color": "#7DD87A"
-            },
-            {
-              "forma": "paralelogramo",
-              "ancho": 2,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": true,
-              "x": 1.0,
-              "y": 3.5,
-              "color": "#FFCB3D"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.5,
-              "y": 0.5,
-              "color": "#B48CE8"
-            },
-            {
-              "forma": "cuadrado",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.5,
-              "y": 3.5,
-              "color": "#FF9F4A"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 3.5,
-              "y": 3.5,
-              "color": "#45C6C0"
-            }
-          ],
-          "voz_completa": "voces/arcoiris/formas/figuras/barco.wav"
-        },
-        {
-          "id": "cuadrado",
-          "silueta_unida": true,
-          "piezas": [
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 270,
-              "espejo": false,
-              "x": 1.0,
-              "y": 1.0,
-              "color": "#FF6B6B"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 2,
-              "alto": 2,
-              "rotacion": 180,
-              "espejo": false,
-              "x": 1.0,
-              "y": 3.0,
-              "color": "#4A8BE0"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.5,
-              "y": 0.5,
-              "color": "#7DD87A"
-            },
-            {
-              "forma": "cuadrado",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 0,
-              "espejo": false,
-              "x": 2.5,
-              "y": 1.5,
-              "color": "#FFCB3D"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": false,
-              "x": 2.5,
-              "y": 2.5,
-              "color": "#B48CE8"
-            },
-            {
-              "forma": "paralelogramo",
-              "ancho": 2,
-              "alto": 1,
-              "rotacion": 90,
-              "espejo": true,
-              "x": 2.5,
-              "y": 3.0,
-              "color": "#FF9F4A"
-            },
-            {
-              "forma": "triangulo_rect",
-              "ancho": 1.4142,
-              "alto": 1.4142,
-              "rotacion": 225,
-              "espejo": false,
-              "x": 3.0,
-              "y": 2.0,
-              "color": "#45C6C0"
-            }
-          ]
-        }
-      ],
-      "lineas_voz": {
-        "intro": "voces/arcoiris/formas/estrella/intro_cima_3.wav",
-        "pista": "voces/arcoiris/formas/estrella/pista_memoria_01.wav"
-      }
     }
   ]
 }

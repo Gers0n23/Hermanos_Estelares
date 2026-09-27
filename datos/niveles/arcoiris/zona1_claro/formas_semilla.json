@@ -7,15 +7,19 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 200,
-  "limite_intentos": null,
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
-  "caras": true,
+  "caras": false,
   "guia_color": true,
-  "modo": "simple",
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 5000,
+  "limite_intentos": null,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/semilla/intro_arma_z1.wav",
     "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/semilla/acierto_01.wav",
@@ -25,46 +29,37 @@
     "victoria_final": [
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
-    ],
-    "intro": "voces/arcoiris/formas/semilla/intro_z1.wav"
+    ]
   },
   "figuras": [
     {
-      "id": "circulo",
-      "piezas": [
-        {
-          "forma": "circulo",
-          "ancho": 170,
-          "alto": 170,
-          "color": "#FF6B6B",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "cuadrado",
-      "piezas": [
-        {
-          "forma": "cuadrado",
-          "ancho": 160,
-          "alto": 160,
-          "color": "#4A8BE0",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "triangulo",
+      "id": "casita_sol",
+      "voz_completa": "voces/arcoiris/formas/figuras/casa.wav",
       "piezas": [
         {
           "forma": "triangulo",
-          "ancho": 180,
-          "alto": 160,
-          "color": "#7DD87A",
-          "x": 0,
-          "y": 0
+          "ancho": 280.0,
+          "alto": 130.0,
+          "color": "#FF6B6B",
+          "x": -75.0,
+          "y": -100.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 200.0,
+          "alto": 200.0,
+          "color": "#4A8BE0",
+          "x": -75.0,
+          "y": 65.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 130.0,
+          "alto": 130.0,
+          "color": "#FFCB3D",
+          "cara": true,
+          "x": 150.0,
+          "y": -100.0
         }
       ]
     }

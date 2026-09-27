@@ -18,6 +18,17 @@ extends "res://scripts/base/minijuego_base.gd"
 ## re-tapaba sola a los 850 ms, lo que hacia el nivel casi injugable.
 ##
 ## F3 (solo PC) muestra un panel de depuracion con intentos, fallos y puntaje para el PO.
+##
+## RONDAS (PO 27-Sep-2026, Maxi y Nicole): un nivel puede traer `rondas: [ {...} ]`. Cada ronda
+## pisa los campos del nivel que traiga (`pares`, `disposicion`, `oculto`, `tiempo_volteo_ms`,
+## `cartas_bailan`...; `lineas_voz` se mezcla) y puede sortear su contenido de un `pool` mayor
+## (`cantidad` parejas; las de `fijo: true` siempre entran), asi que al rejugar cambia. Entre
+## rondas hay mini-fiesta (confeti, baile de Coco, voz `ronda_superada`) y la estrella de la
+## ronda se enciende arriba; `completado` sale una sola vez al final, con los destellos de todas.
+## Un nivel sin `rondas` se juega exactamente como antes (Sofia y retos dorados intactos).
+## Otros campos nuevos: `cartas_bailan` (N cartas a la vista cambian de lugar despacito tras cada
+## acierto), `voz` por pareja (p. ej. "¡Chile!" o "¡S de sol!", en vez del acierto generico),
+## `escala` y `voz_toque` por elemento, y los dibujos/banderas de `dibujos_emparejar.gd`.
 
 signal par_acertado(id_pareja: String)
 signal intento_fallido()
@@ -28,6 +39,8 @@ signal carta_intercambiada(a: CartaEmparejar, b: CartaEmparejar)
 
 const CARTA_ESCENA: PackedScene = preload("res://escenas/minijuegos/emparejar/carta_emparejar.tscn")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
+const Icono := preload("res://scripts/motores/emparejar/icono_emparejar.gd")
+const Dibujos := preload("res://scripts/motores/emparejar/dibujos_emparejar.gd")
 const DESTELLOS_POR_PAR := 10
 const DESTELLOS_POR_INTENTO_SOBRANTE := 2
 ## Zona del tablero en 1280x720: a la izquierda la anfitriona, arriba la barra de pares y
@@ -38,6 +51,10 @@ const LADO_MAXIMO_CARTA := 210.0
 ## Modo visible (Semilla): cuanto dura el meneo del "no es este" antes de soltar las cartas.
 const SEGUNDOS_NO_ES_ESTE_VISIBLE := 0.7
 const SEGUNDOS_AYUDA := 1.3
+## Rondas: cuanto dura la mini-fiesta antes de que las cartas se vayan, y el paseo de las
+## cartas que bailan (lento a proposito: Maxi las sigue con la vista, no es un reto de memoria).
+const SEGUNDOS_MINI_FIESTA := 2.6
+const SEGUNDOS_BAILE := 1.4
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const SFX_VOLTEAR := "sfx/ui/seleccionar.ogg"
 const SFX_TAPAR := "sfx/ui/soltar.ogg"
@@ -93,6 +110,16 @@ var _pistas_usadas := 0
 var _derrotas := 0
 var _regalo_dado := false
 var _boton_pista: Button
+## Rondas (Maxi y Nicole). `_conf` es el nivel con la ronda actual aplicada; sin rondas es el nivel.
+var _conf: Dictionary = {}
+var _rondas: Array = []
+var _ronda := 0
+var _pares_previos := 0  ## pares ganados en rondas anteriores (suman destellos)
+var _en_transicion := false
+var _bailes := 0
+var _en_movimiento := {}
+var _voces_par := {}
+var _marcadores: Array = []
 
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
@@ -116,7 +143,10 @@ func _ready() -> void:
 	if nivel.is_empty():
 		push_error("motor_emparejar: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
+	_preparar_rondas()
+	_conf = _config_de_ronda(0)
 	_configurar_desde_nivel()
+	_construir_marcadores_ronda()
 	_construir_tablero()
 	_construir_progreso()
 	_boton_pista.visible = bool(nivel.get("pistas_cuestan_estrellita", false))
@@ -139,32 +169,83 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func _configurar_desde_nivel() -> void:
-	_oculto = bool(nivel.get("oculto", false))
-	_tiempo_volteo_ms = int(nivel.get("tiempo_volteo_ms", 1200))
-	var limite = nivel.get("limite_intentos", null)
+	if _conf.is_empty():
+		_conf = nivel
+	_oculto = bool(_conf.get("oculto", false))
+	_tiempo_volteo_ms = int(_conf.get("tiempo_volteo_ms", 1200))
+	var limite = _conf.get("limite_intentos", null)
 	_limite_intentos = int(limite) if limite != null else null
-	var ayuda = nivel.get("ayuda_tras_fallos", null)
+	var ayuda = _conf.get("ayuda_tras_fallos", null)
 	_ayuda_tras_fallos = int(ayuda) if ayuda != null else 0
-	_tamano_grupo = maxi(2, int(nivel.get("tamano_grupo", 2)))
-	_intercambios = int(nivel.get("intercambios_tras_acierto", 0))
+	_tamano_grupo = maxi(2, int(_conf.get("tamano_grupo", 2)))
+	_intercambios = int(_conf.get("intercambios_tras_acierto", 0))
+	_bailes = int(_conf.get("cartas_bailan", 0))
 	_pares_totales = _grupos_del_nivel().size()
+
+
+## Sortea el contenido de cada ronda desde su `pool` (una vez por partida: al rejugar cambia).
+func _preparar_rondas() -> void:
+	_rondas.clear()
+	for ronda: Dictionary in nivel.get("rondas", []):
+		var preparada: Dictionary = ronda.duplicate(true)
+		if ronda.has("pool"):
+			var fijos: Array = []
+			var resto: Array = []
+			for par: Dictionary in ronda["pool"]:
+				if bool(par.get("fijo", false)):
+					fijos.append(par)
+				else:
+					resto.append(par)
+			resto.shuffle()
+			var cantidad := int(ronda.get("cantidad", ronda["pool"].size()))
+			var elegidos: Array = fijos.slice(0, cantidad)
+			elegidos.append_array(resto.slice(0, maxi(0, cantidad - elegidos.size())))
+			preparada["pares"] = elegidos
+			preparada.erase("pool")
+		_rondas.append(preparada)
+
+
+## El nivel con la ronda `indice` aplicada encima (sin rondas: el nivel tal cual).
+func _config_de_ronda(indice: int) -> Dictionary:
+	if _rondas.is_empty():
+		return nivel
+	var conf: Dictionary = nivel.duplicate(true)
+	conf.erase("rondas")
+	var ronda: Dictionary = _rondas[mini(indice, _rondas.size() - 1)]
+	for clave in ronda:
+		if clave != "lineas_voz":
+			conf[clave] = ronda[clave]
+	if ronda.has("pares"):
+		conf.erase("grupos")
+	var voces: Dictionary = conf.get("lineas_voz", {}).duplicate()
+	voces.merge(ronda.get("lineas_voz", {}), true)
+	conf["lineas_voz"] = voces
+	return conf
+
+
+func _hay_rondas() -> bool:
+	return _rondas.size() > 1
 
 
 ## Grupos de cartas iguales. `grupos` (trios) o, por compatibilidad, `pares` con elemento_a/elemento_b.
 func _grupos_del_nivel() -> Array:
-	if nivel.has("grupos"):
-		return nivel["grupos"]
+	var datos: Dictionary = nivel if _conf.is_empty() else _conf
+	if datos.has("grupos"):
+		return datos["grupos"]
 	var grupos: Array = []
-	for par: Dictionary in nivel.get("pares", []):
+	for par: Dictionary in datos.get("pares", []):
 		grupos.append({"id_grupo": par.get("id_pareja", ""), "especial": par.get("especial", false),
-			"figura": par.get("figura", ""), "color": par.get("color", ""),
+			"figura": par.get("figura", ""), "color": par.get("color", ""), "voz": par.get("voz", ""),
 			"elementos": [par.get("elemento_a", {}), par.get("elemento_b", {})]})
 	return grupos
 
 
 func _construir_tablero() -> void:
 	var elementos: Array = []
+	_voces_par.clear()
 	for grupo: Dictionary in _grupos_del_nivel():
+		if str(grupo.get("voz", "")) != "":
+			_voces_par[str(grupo.get("id_grupo", ""))] = str(grupo["voz"])
 		for info: Dictionary in grupo.get("elementos", []):
 			var elemento := info.duplicate()
 			elemento["id_pareja"] = grupo.get("id_grupo", "")
@@ -174,7 +255,7 @@ func _construir_tablero() -> void:
 			elementos.append(elemento)
 	elementos.shuffle()
 
-	var disposicion: Dictionary = nivel.get("disposicion", {})
+	var disposicion: Dictionary = _conf.get("disposicion", {})
 	var columnas := maxi(1, int(disposicion.get("columnas", 4)))
 	var filas := ceili(elementos.size() / float(columnas))
 	_lado_carta = minf(LADO_MAXIMO_CARTA, minf(
@@ -185,7 +266,7 @@ func _construir_tablero() -> void:
 	_mesa.position = origen - Vector2(22, 22)
 	_mesa.size = medida + Vector2(44, 44)
 
-	var halo_idle := bool(nivel.get("halo_idle", false))
+	var halo_idle := bool(_conf.get("halo_idle", false))
 	for i in elementos.size():
 		var carta: CartaEmparejar = CARTA_ESCENA.instantiate()
 		_tablero.add_child(carta)
@@ -203,7 +284,7 @@ func _construir_tablero() -> void:
 func _construir_progreso() -> void:
 	var lado := 76.0 if _pares_totales <= 5 else (62.0 if _pares_totales <= 10 else 44.0)
 	for i in _pares_totales:
-		var ranura := Figura.new()
+		var ranura := Icono.new()
 		ranura.figura = ""
 		ranura.con_disco = true
 		ranura.custom_minimum_size = Vector2.ONE * lado
@@ -213,7 +294,7 @@ func _construir_progreso() -> void:
 
 
 func _al_tocar_carta(carta: CartaEmparejar) -> void:
-	if carta.esta_acertada or _en_gag:
+	if carta.esta_acertada or _en_gag or _en_transicion:
 		return
 
 	if _procesando:
@@ -236,6 +317,8 @@ func _al_tocar_carta(carta: CartaEmparejar) -> void:
 
 	carta.seleccionar()
 	reproducir_sfx(SFX_VOLTEAR)
+	if carta.voz_toque != "":
+		_reproducir_voz("toque", carta.voz_toque)
 	_seleccionadas.append(carta)
 	# Trios: el turno termina apenas una carta no coincide con la primera, o al completar el grupo.
 	if carta.id_pareja != _seleccionadas[0].id_pareja or _seleccionadas.size() == _tamano_grupo:
@@ -260,11 +343,13 @@ func _resolver_par() -> void:
 		par_acertado.emit(a.id_pareja)
 		_celebrar_grupo(grupo)
 		if _pares_acertados >= _pares_totales:
-			_celebrar_victoria()
+			_terminar_tablero(a)
 		else:
 			_reproducir_voz_acierto(a)
 			if _intercambios > 0:
 				_despues(0.75, _intercambiar_cartas.bind(_intercambios))
+			elif _bailes > 0:
+				_despues(0.9, _intercambiar_cartas.bind(_bailes, true))
 		_actualizar_depuracion()
 		return
 
@@ -336,7 +421,9 @@ func _celebrar_grupo(grupo: Array) -> void:
 		var centro := carta.global_position + carta.size / 2.0
 		carta.saltar_hacia(medio)
 		_estallido(centro, 8, [carta.color_figura, DORADO])
-		if carta.figura in Figura.FIGURAS and not carta.es_sombra():
+		# Vuela a la barra el dibujo (no la sombra, la mancha de color ni la letra); en "mama y
+		# bebe", la mama.
+		if _puntaje_voladora(carta) > _puntaje_voladora(voladora):
 			voladora = carta
 	var indice := _pares_acertados - 1
 	if indice < _ranuras.size():
@@ -347,29 +434,47 @@ func _celebrar_grupo(grupo: Array) -> void:
 		_confeti.restart()
 
 
+func _puntaje_voladora(carta: CartaEmparejar) -> float:
+	if carta.es_sombra() or carta.figura == "mancha":
+		return 0.0
+	if carta.figura in Figura.FIGURAS or Dibujos.tiene(carta.figura):
+		return 2.0 + carta.escala
+	return 1.0
+
+
 ## Cartas traviesas: `cantidad` pares de cartas tapadas cambian de lugar con un vuelo visible.
-func _intercambiar_cartas(cantidad: int) -> void:
-	if _en_gag or _pares_acertados >= _pares_totales:
+## Con `visibles` (cartas que bailan, Maxi): cartas a la vista pasean despacito a su nuevo lugar.
+func _intercambiar_cartas(cantidad: int, visibles := false) -> void:
+	if _en_gag or _en_transicion or _pares_acertados >= _pares_totales:
 		return
-	var tapadas: Array = []
+	var libres: Array = []
 	for carta in _cartas:
-		if not carta.esta_acertada and not carta.mostrando and not _seleccionadas.has(carta) and not _no_es_este.has(carta):
-			tapadas.append(carta)
-	tapadas.shuffle()
+		if not carta.esta_acertada and (visibles or not carta.mostrando) and not _seleccionadas.has(carta) \
+				and not _no_es_este.has(carta) and not _en_movimiento.has(carta):
+			libres.append(carta)
+	libres.shuffle()
+	var duracion := SEGUNDOS_BAILE if visibles else 0.6
 	for i in cantidad:
-		if tapadas.size() < 2:
+		if libres.size() < 2:
 			break
-		var a: CartaEmparejar = tapadas.pop_back()
-		var b: CartaEmparejar = tapadas.pop_back()
+		var a: CartaEmparejar = libres.pop_back()
+		var b: CartaEmparejar = libres.pop_back()
 		var lugar_a := a.position
 		var lugar_b := b.position
 		for par_movimiento in [[a, lugar_b], [b, lugar_a]]:
 			var carta: CartaEmparejar = par_movimiento[0]
+			_en_movimiento[carta] = true
 			_tablero.move_child(carta, -1)
 			var tween := carta.create_tween()
 			tween.tween_property(carta, "scale", Vector2.ONE * 1.12, 0.12)
-			tween.tween_property(carta, "position", par_movimiento[1], 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(carta, "position", par_movimiento[1], duracion).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			if visibles:
+				# Bailecito: se mece mientras camina.
+				tween.parallel().tween_property(carta, "rotation", deg_to_rad(8.0), duracion / 4.0)
+				tween.parallel().tween_property(carta, "rotation", deg_to_rad(-8.0), duracion / 2.0).set_delay(duracion / 4.0)
+				tween.parallel().tween_property(carta, "rotation", 0.0, duracion / 4.0).set_delay(duracion * 0.75)
 			tween.tween_property(carta, "scale", Vector2.ONE, 0.15)
+			tween.tween_callback(func() -> void: _en_movimiento.erase(carta))
 		carta_intercambiada.emit(a, b)
 	reproducir_sfx(SFX_TAPAR)
 
@@ -390,7 +495,7 @@ func _regalar_grupo() -> void:
 		_celebrar_grupo(grupo)
 		_reproducir_voz("regalo", _linea("regalo"))
 		if _pares_acertados >= _pares_totales:
-			_celebrar_victoria()
+			_terminar_tablero(carta)
 		_actualizar_depuracion()
 		return
 
@@ -453,7 +558,7 @@ func _despues(segundos: float, accion: Callable) -> void:
 
 
 func _volar_a_ranura(carta: CartaEmparejar, desde: Vector2, ranura) -> void:
-	var volador := Figura.new()
+	var volador := Icono.new()
 	volador.figura = carta.figura
 	volador.color = carta.color_figura
 	volador.alegre = true
@@ -470,6 +575,9 @@ func _volar_a_ranura(carta: CartaEmparejar, desde: Vector2, ranura) -> void:
 	tween.tween_property(volador, "global_position", destino - volador.size / 2.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	tween.parallel().tween_property(volador, "scale", Vector2.ONE * escala_final, 0.5)
 	tween.tween_callback(func() -> void:
+		if not is_instance_valid(ranura):
+			volador.queue_free()
+			return
 		ranura.figura = carta.figura
 		ranura.color = carta.color_figura
 		ranura.alegre = true
@@ -524,6 +632,10 @@ func _arcoiris_especial() -> void:
 
 
 func _reproducir_voz_acierto(carta: CartaEmparejar) -> void:
+	# Pareja con nombre propio ("¡Chile!", "¡S de sol!"): se dice su nombre.
+	if _voces_par.has(carta.id_pareja):
+		_reproducir_voz("par", _voces_par[carta.id_pareja])
+		return
 	# Enganche del hallazgo especial (ficha de nivel §8): linea unica fuera del pool aleatorio.
 	if carta.especial and _linea("acierto_especial") != "":
 		_reproducir_voz("acierto_especial", _linea("acierto_especial"))
@@ -532,7 +644,7 @@ func _reproducir_voz_acierto(carta: CartaEmparejar) -> void:
 
 
 func _linea(clave: String) -> String:
-	var valor = nivel.get("lineas_voz", {}).get(clave, "")
+	var valor = (nivel if _conf.is_empty() else _conf).get("lineas_voz", {}).get(clave, "")
 	if valor is Array:
 		return str(valor[0]) if not valor.is_empty() else ""
 	return str(valor)
@@ -540,7 +652,7 @@ func _linea(clave: String) -> String:
 
 ## Elige una variante sin repetir la ultima, para que no suene monotono.
 func _linea_al_azar(clave: String) -> String:
-	var opciones = nivel.get("lineas_voz", {}).get(clave, [])
+	var opciones = (nivel if _conf.is_empty() else _conf).get("lineas_voz", {}).get(clave, [])
 	if not (opciones is Array):
 		return str(opciones)
 	if opciones.is_empty():
@@ -573,7 +685,11 @@ func _al_tocar_anfitriona(event: InputEvent) -> void:
 		return
 	reproducir_sfx(SFX_TOQUE)
 	_reaccion_anfitriona("salta")
-	_reproducir_voz("intro", _linea("intro"))
+	# En rondas, Coco repite la consigna de la ronda en curso.
+	if _ronda > 0 and _linea("intro_ronda") != "":
+		_reproducir_voz("intro_ronda", _linea("intro_ronda"))
+	else:
+		_reproducir_voz("intro", _linea("intro"))
 
 
 func _reaccion_anfitriona(tipo: String) -> void:
@@ -661,14 +777,144 @@ func _reintentar() -> void:
 	_actualizar_depuracion()
 
 
-func _celebrar_victoria() -> void:
+## Tablero completo: si quedan rondas, mini-fiesta y siguiente ronda; si no, celebracion final.
+func _terminar_tablero(ultima: CartaEmparejar) -> void:
+	if _hay_rondas() and _ronda < _rondas.size() - 1:
+		_fin_de_ronda(ultima)
+	else:
+		_celebrar_victoria(ultima)
+
+
+func _celebrar_victoria(ultima: CartaEmparejar = null) -> void:
 	# Confeti y bailecito de Coco mientras la ultima figura vuela a su ranura; despues, la
 	# celebracion final reutilizable (HE-10). `celebrar()` emite `completado` al terminar.
+	_en_transicion = _hay_rondas()
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
+	_encender_marcador(_ronda)
 	var destellos := _calcular_destellos()
-	await get_tree().create_timer(0.9).timeout
+	var espera := 0.9
+	if ultima != null and _voces_par.has(ultima.id_pareja):
+		# La ultima pareja tambien dice su nombre ("¡Japon!") antes de la fiesta final.
+		_reproducir_voz("par", _voces_par[ultima.id_pareja])
+		espera = 1.6
+	await get_tree().create_timer(espera).timeout
 	celebrar(destellos, _calcular_estrellitas(), _linea("victoria_final"))
+
+
+## Mini-fiesta entre rondas: confeti, Coco baila, se enciende la estrella de la ronda, las cartas
+## se despiden y llega el tablero nuevo con su consigna.
+func _fin_de_ronda(ultima: CartaEmparejar) -> void:
+	_en_transicion = true
+	_pares_previos += _pares_totales
+	_confeti.restart()
+	_reaccion_anfitriona("baila")
+	_encender_marcador(_ronda)
+	if _voces_par.has(ultima.id_pareja):
+		_reproducir_voz("par", _voces_par[ultima.id_pareja])
+		await _esperar_voz(2.2)
+	else:
+		await get_tree().create_timer(0.3).timeout
+	if not is_inside_tree():
+		return
+	_reproducir_voz("ronda_superada", _linea_al_azar("ronda_superada"))
+	await get_tree().create_timer(SEGUNDOS_MINI_FIESTA).timeout
+	if not is_inside_tree():
+		return
+	for carta in _cartas:
+		var tween := carta.create_tween().set_parallel(true)
+		tween.tween_property(carta, "scale", Vector2.ZERO, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		tween.tween_property(carta, "modulate:a", 0.0, 0.35)
+	for ranura in _ranuras:
+		ranura.create_tween().tween_property(ranura, "modulate:a", 0.0, 0.3)
+	await get_tree().create_timer(0.45).timeout
+	if not is_inside_tree():
+		return
+	for carta in _cartas:
+		carta.queue_free()
+	_cartas.clear()
+	for ranura in _ranuras:
+		ranura.queue_free()
+	_ranuras.clear()
+	_en_movimiento.clear()
+	_ronda += 1
+	_iniciar_ronda()
+
+
+func _iniciar_ronda() -> void:
+	_conf = _config_de_ronda(_ronda)
+	_configurar_desde_nivel()
+	_seleccionadas.clear()
+	_no_es_este.clear()
+	_procesando = false
+	_id_resolucion += 1
+	_pares_acertados = 0
+	_fallos_seguidos = 0
+	_intentos_usados = 0
+	_construir_tablero()
+	_construir_progreso()
+	_actualizar_marcadores()
+	_reproducir_voz("intro_ronda", _linea("intro_ronda"))
+	_en_transicion = false
+	_actualizar_depuracion()
+
+
+func _esperar_voz(maximo: float) -> void:
+	var audio := get_node_or_null("/root/Audio")
+	var inicio := Time.get_ticks_msec()
+	await get_tree().process_frame
+	while audio != null and audio.esta_hablando() and Time.get_ticks_msec() - inicio < maximo * 1000.0:
+		await get_tree().process_frame
+
+
+## Una estrella por ronda al comienzo de la barra: apagada, la actual brillando, las ganadas doradas.
+func _construir_marcadores_ronda() -> void:
+	if not _hay_rondas():
+		return
+	for i in _rondas.size():
+		var marcador := Icono.new()
+		marcador.figura = ""
+		marcador.con_disco = true
+		marcador.con_cara = false
+		marcador.custom_minimum_size = Vector2.ONE * 46.0
+		marcador.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_progreso_pares.add_child(marcador)
+		_marcadores.append(marcador)
+	var separador := Control.new()
+	separador.custom_minimum_size = Vector2(12, 0)
+	separador.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_progreso_pares.add_child(separador)
+	_actualizar_marcadores()
+
+
+func _actualizar_marcadores() -> void:
+	for i in _marcadores.size():
+		var marcador = _marcadores[i]
+		if i < _ronda:
+			marcador.con_disco = false
+			marcador.figura = "estrella"
+			marcador.color = DORADO
+		elif i == _ronda:
+			marcador.con_disco = true
+			marcador.figura = "estrella"
+			marcador.color = Color("#FFF3B0")
+		else:
+			marcador.con_disco = true
+			marcador.figura = ""
+		marcador.queue_redraw()
+
+
+func _encender_marcador(indice: int) -> void:
+	if indice >= _marcadores.size():
+		return
+	var marcador = _marcadores[indice]
+	marcador.con_disco = false
+	marcador.figura = "estrella"
+	marcador.color = DORADO
+	marcador.pivot_offset = marcador.size / 2.0
+	marcador.scale = Vector2.ONE * 1.6
+	marcador.create_tween().tween_property(marcador, "scale", Vector2.ONE, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_estallido(marcador.global_position + marcador.size / 2.0, 8, [DORADO, TURQUESA], 0.7)
 
 
 ## Puntaje 1-3 estrellitas del perfil Estrella (ficha motor-emparejar §7). Regla PROVISIONAL
@@ -687,7 +933,7 @@ func _calcular_estrellitas() -> int:
 
 
 func _calcular_destellos() -> int:
-	var total := _pares_totales * DESTELLOS_POR_PAR
+	var total := (_pares_previos + _pares_totales) * DESTELLOS_POR_PAR
 	# M-QA1 (QA 18-Jul-2026): el bono de "intentos sobrantes" solo tiene sentido si nunca
 	# se agoto el limite. Si ya se disparo la derrota-gag (aunque se haya reintentado y
 	# _intentos_usados se haya reseteado), el bono queda en 0 para toda la partida: asi
@@ -703,8 +949,9 @@ func _actualizar_depuracion() -> void:
 		return
 	var limite := "sin limite" if _limite_intentos == null else str(_limite_intentos)
 	var ayuda := "no" if _ayuda_tras_fallos == 0 else "tras %d fallos seguidos" % _ayuda_tras_fallos
-	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\npares: %d de %d\nfallos que cuentan: %d / %s\nfallos seguidos: %d · ayuda: %s\nderrota-gag ya ocurrio: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
-		nivel.get("id_nivel", "?"), obtener_perfil_dificultad(), obtener_id_personaje(),
+	var ronda := "" if not _hay_rondas() else " · ronda %d de %d" % [_ronda + 1, _rondas.size()]
+	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s%s\nperfil: %s · juega: %s\npares: %d de %d\nfallos que cuentan: %d / %s\nfallos seguidos: %d · ayuda: %s\nderrota-gag ya ocurrio: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
+		nivel.get("id_nivel", "?"), ronda, obtener_perfil_dificultad(), obtener_id_personaje(),
 		_pares_acertados, _pares_totales, _intentos_usados, limite, _fallos_seguidos, ayuda,
 		"si" if _derrota_disparada else "no", _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas())]
 

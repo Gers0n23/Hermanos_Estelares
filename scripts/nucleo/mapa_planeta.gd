@@ -13,10 +13,14 @@ extends Node2D
 ## `Progreso` ya registra por hermano (id_nivel completado + mejores estrellitas), asi que no hizo
 ## falta migrar la version del guardado (HE-41 la preveia; queda para cuando se guarden datos nuevos).
 ##
-## Reglas (ficha de zonas §2.1): zona 1 abierta; la siguiente se abre al completar 2 estaciones de
-## la actual. Mientras falten minijuegos por implementar, se piden min(2, estaciones jugables), para
-## que nadie quede trabado. La zona secreta se revela al completar todas las estaciones jugables de
-## la anterior. Zonas no abiertas: dormidas y descoloridas, nunca con candado (GDD §3).
+## Reglas (ficha de zonas §2.1, decision del PO 27-Sep-2026): zona 1 abierta; la siguiente se abre
+## al completar TODAS las estaciones jugables de la actual (las que aun no tienen minijuego no
+## cuentan, para que nadie quede trabado). La zona secreta sigue la misma regla. Los retos dorados
+## son opcionales y no cuentan. Zonas no abiertas: dormidas y descoloridas, nunca con candado (GDD §3).
+##
+## Paisaje: si el JSON trae `paisaje` (script de un Control), el planeta se dibuja como un mapa
+## ilustrado y cada zona como su hito (ver `scripts/planetas/arcoiris/paisaje_arcoiris.gd`); si no,
+## se usa la imagen `fondo` con zonas redondas.
 ##
 ## UX (GDD §6): todo narrado por voz, objetivos >=96 px, sin texto obligatorio (los nombres son un
 ## extra para Sofia). Tocar a Cometa lleva directo a la siguiente estacion pendiente (riesgo 5 de la
@@ -84,6 +88,7 @@ var _avance_bandas := {}
 var _salto_coco := 0.0
 var _base_coco := Vector2.ZERO
 var _id_voces := 0
+var _paisaje: Control
 
 
 func _ready() -> void:
@@ -180,17 +185,15 @@ func calcular_estado() -> void:
 		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
 			"completa": jugables > 0 and completadas == jugables, "abierta": false,
 			"secreta": bool(datos_zona.get("secreta", false))})
-	var regla := int(mapa.get("estaciones_para_abrir_siguiente", 2))
 	for i in zonas.size():
 		var zona: Dictionary = zonas[i]
 		if i == 0 or todo_abierto:
 			zona["abierta"] = true
 			continue
 		var anterior: Dictionary = zonas[i - 1]
-		if zona["secreta"]:
-			zona["abierta"] = anterior["abierta"] and anterior["completa"]
-		else:
-			zona["abierta"] = anterior["abierta"] and anterior["completadas"] >= mini(regla, anterior["jugables"])
+		zona["abierta"] = anterior["abierta"] and anterior["completadas"] >= anterior["jugables"]
+	if _paisaje != null:
+		_paisaje.actualizar(zonas)
 
 
 func _id_nivel(ruta: String) -> String:
@@ -294,30 +297,21 @@ func _celebrar_cambios() -> void:
 # ---------------------------------------------------------------------------
 
 func _construir_ui() -> void:
-	var capa_fondo := CanvasLayer.new()
-	capa_fondo.layer = -1
-	add_child(capa_fondo)
-	var fondo := TextureRect.new()
-	var ruta_fondo := str(mapa.get("fondo", ""))
-	if ResourceLoader.exists(ruta_fondo):
-		fondo.texture = load(ruta_fondo)
-	fondo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	fondo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	fondo.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	capa_fondo.add_child(fondo)
-	fondo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var velo := ColorRect.new()
-	velo.color = Color(0.23, 0.16, 0.42, 0.38)
-	velo.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	capa_fondo.add_child(velo)
-	velo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-
 	var capa := CanvasLayer.new()
 	add_child(capa)
 	_ui = Control.new()
 	_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	capa.add_child(_ui)
 	_ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var ruta_paisaje := str(mapa.get("paisaje", ""))
+	if ruta_paisaje != "" and ResourceLoader.exists(ruta_paisaje):
+		_paisaje = (load(ruta_paisaje) as Script).new()
+		_paisaje.name = "paisaje"
+		_ui.add_child(_paisaje)
+		_paisaje.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_paisaje.actualizar(zonas)
+	else:
+		_construir_fondo()
 
 	_camino = _control_dibujo(Rect2(0, 0, 1280, 720), _dibujar_camino)
 	_arcoiris = _control_dibujo(Rect2(440, 6, 400, 160), _dibujar_arcoiris)
@@ -440,6 +434,26 @@ func _construir_ui() -> void:
 	_efectos.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 
+func _construir_fondo() -> void:
+	var capa_fondo := CanvasLayer.new()
+	capa_fondo.layer = -1
+	add_child(capa_fondo)
+	var fondo := TextureRect.new()
+	var ruta_fondo := str(mapa.get("fondo", ""))
+	if ResourceLoader.exists(ruta_fondo):
+		fondo.texture = load(ruta_fondo)
+	fondo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	fondo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	fondo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	capa_fondo.add_child(fondo)
+	fondo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var velo := ColorRect.new()
+	velo.color = Color(0.23, 0.16, 0.42, 0.38)
+	velo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	capa_fondo.add_child(velo)
+	velo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+
 func _control_dibujo(rect: Rect2, dibujo: Callable) -> Control:
 	var control := Control.new()
 	control.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -500,12 +514,18 @@ func _construir_retrato_hermano() -> void:
 	var retrato := TextureRect.new()
 	var ruta: String = RETRATOS_HERMANO.get(id_perfil, "")
 	if ruta != "" and ResourceLoader.exists(ruta):
-		retrato.texture = load(ruta)
+		# solo la cara del retrato oficial (512x768, mismo recorte que el mapa estelar)
+		# (imagen recortada, no AtlasTexture: la mascara circular usa las UV de la textura)
+		var imagen: Image = (load(ruta) as Texture2D).get_image()
+		retrato.texture = ImageTexture.create_from_image(imagen.get_region(Rect2i(146, 62, 220, 220)))
 	retrato.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	retrato.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	retrato.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	retrato.position = Vector2(12, 8)
-	retrato.size = Vector2(68, 68)
+	retrato.position = Vector2(10, 10)
+	retrato.size = Vector2(72, 72)
+	var mascara := ShaderMaterial.new()
+	mascara.shader = load("res://assets/shaders/disco_circular.gdshader")
+	retrato.material = mascara
 	retrato.clip_contents = true
 	disco.add_child(retrato)
 
@@ -740,6 +760,12 @@ func _centro_zona(i: int) -> Vector2:
 
 
 func _dibujar_camino(control: Control) -> void:
+	if _paisaje != null:
+		var centros: Array = []
+		for i in zonas.size():
+			centros.append(_centro_zona(i))
+		_paisaje.dibujar_camino(control, zonas, centros)
+		return
 	for i in range(1, zonas.size()):
 		if zonas[i]["secreta"] and not zonas[i]["abierta"]:
 			continue
@@ -809,6 +835,15 @@ func _dibujar_zona(control: Control, i: int) -> void:
 		var color_hermano: Color = COLORES_HERMANO.get(id_perfil, Color.WHITE)
 		control.draw_circle(centro, RADIO_ZONA + 13.0, Color(color_hermano, 0.28 + 0.14 * sin(_tiempo * 3.0)))
 		control.draw_arc(centro, RADIO_ZONA + 10.0, 0.0, TAU, 48, color_hermano, 6.0, true)
+	if _paisaje != null:
+		var cara: Dictionary = _paisaje.dibujar_hito(control, i, zona, centro, _tiempo)
+		if cara.has("cara"):
+			if zona["abierta"]:
+				Figura.dibujar_cara(control, cara["cara"], cara["escala"], zona["completa"])
+			else:
+				_dibujar_cara_dormida(control, cara["cara"], cara["escala"])
+		_dibujar_marcas_zona(control, zona, centro)
+		return
 	var color := COLOR_DORMIDA
 	if zona["completa"]:
 		color = _color_zona(i)
@@ -823,6 +858,11 @@ func _dibujar_zona(control: Control, i: int) -> void:
 		Figura.dibujar_cara(control, centro + Vector2(0, 6), RADIO_ZONA * 0.95, zona["completa"])
 	else:
 		_dibujar_cara_dormida(control, centro + Vector2(0, 6), RADIO_ZONA * 0.95)
+	_dibujar_marcas_zona(control, zona, centro)
+
+
+## Estrellitas de zona completa y un puntito por estacion (estrella si ya se jugo).
+func _dibujar_marcas_zona(control: Control, zona: Dictionary, centro: Vector2) -> void:
 	if zona["completa"]:
 		for k in 3:
 			var punto := centro + Vector2.from_angle(-PI * 0.8 + k * PI * 0.3) * (RADIO_ZONA + 4.0)

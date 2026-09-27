@@ -27,6 +27,15 @@ var modelo_visible := false
 var cortina := 0.0
 ## Marco de pentominos: {"origen": Vector2, "lado": float, "celdas": Array[Vector2i]} o {}.
 var marco: Dictionary = {}
+## "Arma la figura": tarjeta con la figura terminada a color (la foto de la caja del rompecabezas).
+var modelo_mini := false
+const RECT_MODELO_MINI := Rect2(16, 126, 204, 250)
+## Emblemas "encima" (campo `capa`, PO 27-Sep-2026): esta instancia dibuja solo los huecos de su capa.
+## La capa 0 es la principal (mesa, escena, tarjeta); las capas 1+ son copias que el motor pone sobre
+## las piezas ya encajadas de las capas de abajo y leen los resaltados de `principal`.
+var capa := 0
+var principal: Control = null
+var capas_extra: Array = []
 
 var _tiempo := 0.0
 
@@ -37,11 +46,17 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_tiempo += delta
-	if hueco_objetivo != null or hueco_pista != null or cortina > 0.0:
+	var fuente: Control = principal if principal != null else self
+	if fuente.hueco_objetivo != null or fuente.hueco_pista != null or fuente.cortina > 0.0:
 		queue_redraw()
 
 
 func _draw() -> void:
+	for extra in capas_extra:
+		extra.queue_redraw()
+	if capa > 0:
+		_dibujar_capa_encima()
+		return
 	if not escena.is_empty():
 		_dibujar_escena()
 	elif zona.size != Vector2.ZERO:
@@ -63,12 +78,27 @@ func _draw() -> void:
 				Geo.contorno_punteado(self, contorno, COLOR_BORDE, 5.0)
 		else:
 			for hueco in figura["huecos"]:
-				_dibujar_hueco(hueco)
+				if int(hueco.get("capa", 0)) == 0:
+					_dibujar_hueco(hueco)
 	for hueco in [hueco_cercano, hueco_pista, hueco_objetivo]:
-		if hueco != null and hueco["pieza"] == null:
+		if hueco != null and hueco["pieza"] == null and int(hueco.get("capa", 0)) == 0:
 			_resaltar(hueco, hueco == hueco_cercano)
 	if cortina > 0.0:
 		_dibujar_cortina()
+	if modelo_mini and not figuras.is_empty():
+		_dibujar_modelo_mini()
+
+
+## Capa de emblemas: sus siluetas libres (y sus resaltados) por encima de las piezas de abajo.
+func _dibujar_capa_encima() -> void:
+	var fuente: Control = principal if principal != null else self
+	for figura in figuras:
+		for hueco in figura["huecos"]:
+			if int(hueco.get("capa", 0)) == capa and hueco["pieza"] == null:
+				_dibujar_hueco(hueco)
+	for hueco in [fuente.hueco_cercano, fuente.hueco_pista, fuente.hueco_objetivo]:
+		if hueco != null and hueco["pieza"] == null and int(hueco.get("capa", 0)) == capa:
+			_resaltar(hueco, hueco == fuente.hueco_cercano)
 
 
 func _dibujar_hueco(hueco: Dictionary) -> void:
@@ -80,7 +110,64 @@ func _dibujar_hueco(hueco: Dictionary) -> void:
 		return
 	var relleno := Color(hueco["color"], 0.42) if guia_color else COLOR_HUECO
 	draw_colored_polygon(dibujo, relleno)
-	Geo.contorno_punteado(self, dibujo, COLOR_BORDE, 5.0)
+	var caja := Geo.caja(dibujo).size
+	if minf(caja.x, caja.y) < 90.0:
+		# Piezas chicas de las figuras grandes: linea continua fina (el punteado grueso las tapa).
+		var cerrado := dibujo.duplicate()
+		cerrado.append(dibujo[0])
+		draw_polyline(cerrado, COLOR_BORDE, 3.0, true)
+	else:
+		Geo.contorno_punteado(self, dibujo, COLOR_BORDE, 5.0)
+
+
+## Tarjeta arriba a la izquierda con la figura terminada a color, achicada para caber.
+func _dibujar_modelo_mini() -> void:
+	var caja := Rect2()
+	var primero := true
+	for figura in figuras:
+		for hueco in figura["huecos"]:
+			var c := Geo.caja(hueco["dibujo"])
+			caja = c if primero else caja.merge(c)
+			primero = false
+	var tarjeta := Geo.redondeado("rectangulo", Geo.contorno("rectangulo", RECT_MODELO_MINI.size.x, RECT_MODELO_MINI.size.y), 60.0, 60.0)
+	tarjeta = Geo.desplazado(tarjeta, RECT_MODELO_MINI.get_center())
+	draw_colored_polygon(Geo.desplazado(tarjeta, Vector2(0, 6)), Color(0.17, 0.2, 0.36, 0.25))
+	draw_colored_polygon(tarjeta, Color("#FFF8EE"))
+	Figura.contornear(self, tarjeta, 4.0)
+	var util := RECT_MODELO_MINI.grow(-18.0)
+	var escala := minf(util.size.x / maxf(1.0, caja.size.x), util.size.y / maxf(1.0, caja.size.y))
+	dibujar_miniatura(self, figuras, util.get_center(), escala, caja.get_center())
+
+
+## Figura terminada en chiquito (tarjeta del modelo y medallas de las rondas), de la capa de abajo a
+## la de arriba para que los emblemas queden encima.
+static func dibujar_miniatura(lienzo: CanvasItem, lista_figuras: Array, centro: Vector2, escala: float, origen: Vector2, grosor := 1.5) -> void:
+	var huecos: Array = []
+	for figura in lista_figuras:
+		for hueco in figura["huecos"]:
+			if not hueco.get("opcional", false):
+				huecos.append(hueco)
+	huecos.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.get("capa", 0)) < int(b.get("capa", 0)))
+	for hueco in huecos:
+		var mini := PackedVector2Array()
+		for p in hueco["dibujo"]:
+			mini.append(centro + (p - origen) * escala)
+		lienzo.draw_colored_polygon(mini, hueco["color"])
+		var cerrado := mini.duplicate()
+		cerrado.append(mini[0])
+		lienzo.draw_polyline(cerrado, Color(0.17, 0.2, 0.36, 0.85), grosor, true)
+
+
+## Caja de todas las figuras (sin el tesoro opcional).
+static func caja_de(lista_figuras: Array) -> Rect2:
+	var caja := Rect2()
+	var primero := true
+	for figura in lista_figuras:
+		for hueco in figura["huecos"]:
+			var c := Geo.caja(hueco["dibujo"])
+			caja = c if primero else caja.merge(c)
+			primero = false
+	return caja
 
 
 ## Modelo de la copia de memoria: cada pieza pintada en su color y en su lugar.

@@ -1,0 +1,48 @@
+{
+  "id_nivel": "arcoiris_z2_lluvia_semilla",
+  "motor": "clasificar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "lluvia de colores",
+  "variante": "gotas que caen muy lento, de a una; al tocarla salta sola al charco mas cercano; suma rosado y verde",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "modo": "libre",
+  "limite_intentos": null,
+  "iman_tolerancia_px": 200,
+  "tamano_gota": 130,
+  "ayuda_idle_s": 6,
+  "velocidad_caida": 32,
+  "elementos_simultaneos": 1,
+  "colores": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "rosado",
+    "verde"
+  ],
+  "rondas": 5,
+  "por_ronda": 10,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/lluvia/semilla/intro_z2.wav",
+    "pista": "voces/arcoiris/lluvia/semilla/pista_z2.wav",
+    "acierto": [
+      "voces/arcoiris/lluvia/semilla/acierto_01.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_02.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_03.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_04.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_05.wav"
+    ],
+    "nueva_ronda": [
+      "voces/arcoiris/lluvia/semilla/ronda_01.wav",
+      "voces/arcoiris/lluvia/semilla/ronda_02.wav",
+      "voces/arcoiris/lluvia/semilla/ronda_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/lluvia/semilla/victoria_01.wav",
+      "voces/arcoiris/lluvia/semilla/victoria_02.wav"
+    ],
+    "prefijo_colores": "voces/arcoiris/lluvia/colores/"
+  }
+}

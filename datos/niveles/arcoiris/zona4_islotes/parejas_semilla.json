@@ -1,0 +1,287 @@
+{
+  "id_nivel": "arcoiris_z4_parejas_semilla",
+  "motor": "emparejar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "mama y bebe, banderas",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "rondas (PO 27-Sep-2026)",
+  "modo": "identico",
+  "oculto": false,
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 700,
+  "ayuda_tras_fallos": null,
+  "halo_idle": true,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/semilla/intro_z4.wav",
+    "pista": "voces/arcoiris/emparejar/semilla/pista_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/semilla/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/semilla/no_es_este_01.wav"
+    ],
+    "ronda_superada": [
+      "voces/arcoiris/emparejar/semilla/ronda_superada_01.wav",
+      "voces/arcoiris/emparejar/semilla/ronda_superada_02.wav",
+      "voces/arcoiris/emparejar/semilla/ronda_superada_03.wav"
+    ],
+    "victoria_final": "voces/arcoiris/emparejar/semilla/victoria_rondas_01.wav"
+  },
+  "rondas": [
+    {
+      "tema": "mama y bebe: dinos",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "lineas_voz": {
+        "acierto_par": [
+          "voces/arcoiris/emparejar/semilla/acierto_mama_01.wav",
+          "voces/arcoiris/emparejar/semilla/acierto_mama_02.wav",
+          "voces/arcoiris/emparejar/semilla/acierto_mama_03.wav"
+        ],
+        "pista": "voces/arcoiris/emparejar/semilla/pista_mama.wav"
+      },
+      "modo": "correspondencia",
+      "pool": [
+        {
+          "id_pareja": "trex",
+          "elemento_a": {
+            "figura": "trex",
+            "escala": 1.0,
+            "id": "trex_a"
+          },
+          "elemento_b": {
+            "figura": "trex",
+            "escala": 0.55,
+            "id": "trex_b"
+          }
+        },
+        {
+          "id_pareja": "spinosaurio",
+          "elemento_a": {
+            "figura": "spinosaurio",
+            "escala": 1.0,
+            "id": "spinosaurio_a"
+          },
+          "elemento_b": {
+            "figura": "spinosaurio",
+            "escala": 0.55,
+            "id": "spinosaurio_b"
+          }
+        },
+        {
+          "id_pareja": "carnotauro",
+          "elemento_a": {
+            "figura": "carnotauro",
+            "escala": 1.0,
+            "id": "carnotauro_a"
+          },
+          "elemento_b": {
+            "figura": "carnotauro",
+            "escala": 0.55,
+            "id": "carnotauro_b"
+          }
+        },
+        {
+          "id_pareja": "huevo",
+          "elemento_a": {
+            "figura": "huevo",
+            "escala": 1.0,
+            "id": "huevo_a"
+          },
+          "elemento_b": {
+            "figura": "huevo",
+            "escala": 0.55,
+            "id": "huevo_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "mama y bebe",
+      "cantidad": 4,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 4
+      },
+      "lineas_voz": {
+        "acierto_par": [
+          "voces/arcoiris/emparejar/semilla/acierto_mama_01.wav",
+          "voces/arcoiris/emparejar/semilla/acierto_mama_02.wav",
+          "voces/arcoiris/emparejar/semilla/acierto_mama_03.wav"
+        ],
+        "intro_ronda": "voces/arcoiris/emparejar/semilla/ronda_mama_bebe.wav",
+        "pista": "voces/arcoiris/emparejar/semilla/pista_mama.wav"
+      },
+      "modo": "correspondencia",
+      "pool": [
+        {
+          "id_pareja": "auto",
+          "elemento_a": {
+            "figura": "auto",
+            "escala": 1.0,
+            "id": "auto_a"
+          },
+          "elemento_b": {
+            "figura": "auto",
+            "escala": 0.55,
+            "id": "auto_b"
+          }
+        },
+        {
+          "id_pareja": "bus",
+          "elemento_a": {
+            "figura": "bus",
+            "escala": 1.0,
+            "id": "bus_a"
+          },
+          "elemento_b": {
+            "figura": "bus",
+            "escala": 0.55,
+            "id": "bus_b"
+          }
+        },
+        {
+          "id_pareja": "bomberos",
+          "elemento_a": {
+            "figura": "bomberos",
+            "escala": 1.0,
+            "id": "bomberos_a"
+          },
+          "elemento_b": {
+            "figura": "bomberos",
+            "escala": 0.55,
+            "id": "bomberos_b"
+          }
+        },
+        {
+          "id_pareja": "cohete",
+          "elemento_a": {
+            "figura": "cohete",
+            "escala": 1.0,
+            "id": "cohete_a"
+          },
+          "elemento_b": {
+            "figura": "cohete",
+            "escala": 0.55,
+            "id": "cohete_b"
+          }
+        },
+        {
+          "id_pareja": "estrella",
+          "elemento_a": {
+            "figura": "estrella",
+            "color": "#FFCB3D",
+            "escala": 1.0,
+            "id": "estrella_a"
+          },
+          "elemento_b": {
+            "figura": "estrella",
+            "color": "#FFCB3D",
+            "escala": 0.55,
+            "id": "estrella_b"
+          }
+        },
+        {
+          "id_pareja": "corazon",
+          "elemento_a": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "escala": 1.0,
+            "id": "corazon_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "escala": 0.55,
+            "id": "corazon_b"
+          }
+        },
+        {
+          "id_pareja": "trex",
+          "elemento_a": {
+            "figura": "trex",
+            "escala": 1.0,
+            "id": "trex_a"
+          },
+          "elemento_b": {
+            "figura": "trex",
+            "escala": 0.55,
+            "id": "trex_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "banderas",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/semilla/ronda_banderas.wav",
+        "pista": "voces/arcoiris/emparejar/semilla/pista_banderas.wav"
+      },
+      "pool": [
+        {
+          "id_pareja": "bandera_chile",
+          "elemento_a": {
+            "figura": "bandera_chile",
+            "id": "bandera_chile_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_chile",
+            "id": "bandera_chile_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/chile.wav",
+          "fijo": true
+        },
+        {
+          "id_pareja": "bandera_japon",
+          "elemento_a": {
+            "figura": "bandera_japon",
+            "id": "bandera_japon_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_japon",
+            "id": "bandera_japon_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/japon.wav",
+          "fijo": true
+        },
+        {
+          "id_pareja": "bandera_francia",
+          "elemento_a": {
+            "figura": "bandera_francia",
+            "id": "bandera_francia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_francia",
+            "id": "bandera_francia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/francia.wav"
+        },
+        {
+          "id_pareja": "bandera_italia",
+          "elemento_a": {
+            "figura": "bandera_italia",
+            "id": "bandera_italia_a"
+          },
+          "elemento_b": {
+            "figura": "bandera_italia",
+            "id": "bandera_italia_b"
+          },
+          "voz": "voces/arcoiris/emparejar/paises/italia.wav"
+        }
+      ]
+    }
+  ]
+}

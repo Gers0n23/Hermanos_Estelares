@@ -2,9 +2,9 @@
   "planeta_id": "arcoiris",
   "nombre": "Planeta Arcoíris",
   "fondo": "res://assets/anclas/planeta_arcoiris_referencia.png",
+  "paisaje": "res://scripts/planetas/arcoiris/paisaje_arcoiris.gd",
   "anfitrion": "res://assets/sprites/personajes/coco_base.png",
-  "estaciones_para_abrir_siguiente": 2,
-  "nota": "Mientras falten minijuegos, abrir la zona siguiente pide min(2, estaciones jugables de la zona). La zona secreta se revela al completar todas las estaciones jugables de la zona anterior.",
+  "nota": "Decision del PO 27-Sep-2026: la zona siguiente (y la secreta) se abre al completar TODAS las estaciones jugables de la zona anterior; los retos dorados son opcionales y no cuentan.",
   "juegos": {
     "lluvia": {
       "nombre": "Lluvia de colores",
@@ -47,8 +47,8 @@
         "rojo"
       ],
       "posicion": [
-        180,
-        318
+        185,
+        330
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_1_llegada.wav",
@@ -90,8 +90,8 @@
         "amarillo"
       ],
       "posicion": [
-        398,
-        252
+        395,
+        240
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_2_llegada.wav",
@@ -134,8 +134,8 @@
         "azul"
       ],
       "posicion": [
-        618,
-        330
+        640,
+        345
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_3_llegada.wav",
@@ -179,8 +179,8 @@
         "naranja"
       ],
       "posicion": [
-        842,
-        255
+        870,
+        250
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_4_llegada.wav",
@@ -223,8 +223,8 @@
         "brillo"
       ],
       "posicion": [
-        1076,
-        190
+        1085,
+        215
       ],
       "secreta": true,
       "voz_llegada": "voces/arcoiris/mapa/zona_5_llegada.wav",

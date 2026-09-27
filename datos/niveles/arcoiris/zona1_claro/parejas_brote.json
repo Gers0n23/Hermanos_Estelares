@@ -1,0 +1,391 @@
+{
+  "id_nivel": "arcoiris_z1_parejas_brote",
+  "motor": "emparejar",
+  "perfil": "brote",
+  "planeta": "arcoiris",
+  "zona": "zona1_claro",
+  "tema": "animales, ropa y primera memoria",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "rondas (PO 27-Sep-2026)",
+  "modo": "identico",
+  "oculto": false,
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 1600,
+  "ayuda_tras_fallos": null,
+  "halo_idle": false,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/brote/intro_z1.wav",
+    "pista": "voces/arcoiris/emparejar/brote/pista_01.wav",
+    "ayuda": "voces/arcoiris/emparejar/brote/ayuda_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/brote/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/brote/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/brote/no_es_este_01.wav",
+      "voces/arcoiris/emparejar/brote/no_es_este_02.wav"
+    ],
+    "acierto_especial": "voces/arcoiris/emparejar/brote/acierto_especial_01.wav",
+    "ronda_superada": [
+      "voces/arcoiris/emparejar/brote/ronda_superada_01.wav",
+      "voces/arcoiris/emparejar/brote/ronda_superada_02.wav",
+      "voces/arcoiris/emparejar/brote/ronda_superada_03.wav"
+    ],
+    "victoria_final": "voces/arcoiris/emparejar/brote/victoria_rondas_01.wav"
+  },
+  "rondas": [
+    {
+      "tema": "animales",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "lineas_voz": {
+        "pista": "voces/arcoiris/emparejar/brote/pista_vista.wav"
+      },
+      "oculto": false,
+      "ayuda_tras_fallos": null,
+      "pool": [
+        {
+          "id_pareja": "jirafa",
+          "elemento_a": {
+            "figura": "jirafa",
+            "id": "jirafa_a"
+          },
+          "elemento_b": {
+            "figura": "jirafa",
+            "id": "jirafa_b"
+          }
+        },
+        {
+          "id_pareja": "pony_rosa",
+          "elemento_a": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "pony_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "pony_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "pony_lila",
+          "elemento_a": {
+            "figura": "pony",
+            "color": "#B48CE8",
+            "id": "pony_lila_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#B48CE8",
+            "id": "pony_lila_b"
+          }
+        },
+        {
+          "id_pareja": "gatito",
+          "elemento_a": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "gatito_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "gatito_b"
+          }
+        },
+        {
+          "id_pareja": "gatito_gris",
+          "elemento_a": {
+            "figura": "gatito",
+            "color": "#A9B4C8",
+            "id": "gatito_gris_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#A9B4C8",
+            "id": "gatito_gris_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "ropa",
+      "cantidad": 4,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 4
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/brote/ronda_ropa.wav",
+        "pista": "voces/arcoiris/emparejar/brote/pista_vista.wav"
+      },
+      "oculto": false,
+      "ayuda_tras_fallos": null,
+      "pool": [
+        {
+          "id_pareja": "vestido_rosa",
+          "elemento_a": {
+            "figura": "vestido",
+            "color": "#F26CA8",
+            "id": "vestido_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "vestido",
+            "color": "#F26CA8",
+            "id": "vestido_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "vestido_turquesa",
+          "elemento_a": {
+            "figura": "vestido",
+            "color": "#45C6C0",
+            "id": "vestido_turquesa_a"
+          },
+          "elemento_b": {
+            "figura": "vestido",
+            "color": "#45C6C0",
+            "id": "vestido_turquesa_b"
+          }
+        },
+        {
+          "id_pareja": "zapato_lila",
+          "elemento_a": {
+            "figura": "zapato",
+            "color": "#B48CE8",
+            "id": "zapato_lila_a"
+          },
+          "elemento_b": {
+            "figura": "zapato",
+            "color": "#B48CE8",
+            "id": "zapato_lila_b"
+          }
+        },
+        {
+          "id_pareja": "zapato_rosa",
+          "elemento_a": {
+            "figura": "zapato",
+            "color": "#F26CA8",
+            "id": "zapato_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "zapato",
+            "color": "#F26CA8",
+            "id": "zapato_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "corona",
+          "elemento_a": {
+            "figura": "corona",
+            "id": "corona_a"
+          },
+          "elemento_b": {
+            "figura": "corona",
+            "id": "corona_b"
+          }
+        },
+        {
+          "id_pareja": "mono",
+          "elemento_a": {
+            "figura": "mono",
+            "color": "#F26CA8",
+            "id": "mono_a"
+          },
+          "elemento_b": {
+            "figura": "mono",
+            "color": "#F26CA8",
+            "id": "mono_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "tapadas",
+      "cantidad": 4,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 4
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/brote/ronda_tapadas.wav"
+      },
+      "oculto": true,
+      "tiempo_volteo_ms": 1800,
+      "ayuda_tras_fallos": 2,
+      "pool": [
+        {
+          "id_pareja": "jirafa",
+          "elemento_a": {
+            "figura": "jirafa",
+            "id": "jirafa_a"
+          },
+          "elemento_b": {
+            "figura": "jirafa",
+            "id": "jirafa_b"
+          }
+        },
+        {
+          "id_pareja": "pony_rosa",
+          "elemento_a": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "pony_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#F7A8D0",
+            "id": "pony_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "pony_lila",
+          "elemento_a": {
+            "figura": "pony",
+            "color": "#B48CE8",
+            "id": "pony_lila_a"
+          },
+          "elemento_b": {
+            "figura": "pony",
+            "color": "#B48CE8",
+            "id": "pony_lila_b"
+          }
+        },
+        {
+          "id_pareja": "gatito",
+          "elemento_a": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "gatito_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#FF9F4A",
+            "id": "gatito_b"
+          }
+        },
+        {
+          "id_pareja": "gatito_gris",
+          "elemento_a": {
+            "figura": "gatito",
+            "color": "#A9B4C8",
+            "id": "gatito_gris_a"
+          },
+          "elemento_b": {
+            "figura": "gatito",
+            "color": "#A9B4C8",
+            "id": "gatito_gris_b"
+          }
+        },
+        {
+          "id_pareja": "vestido_rosa",
+          "elemento_a": {
+            "figura": "vestido",
+            "color": "#F26CA8",
+            "id": "vestido_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "vestido",
+            "color": "#F26CA8",
+            "id": "vestido_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "vestido_turquesa",
+          "elemento_a": {
+            "figura": "vestido",
+            "color": "#45C6C0",
+            "id": "vestido_turquesa_a"
+          },
+          "elemento_b": {
+            "figura": "vestido",
+            "color": "#45C6C0",
+            "id": "vestido_turquesa_b"
+          }
+        },
+        {
+          "id_pareja": "zapato_lila",
+          "elemento_a": {
+            "figura": "zapato",
+            "color": "#B48CE8",
+            "id": "zapato_lila_a"
+          },
+          "elemento_b": {
+            "figura": "zapato",
+            "color": "#B48CE8",
+            "id": "zapato_lila_b"
+          }
+        },
+        {
+          "id_pareja": "zapato_rosa",
+          "elemento_a": {
+            "figura": "zapato",
+            "color": "#F26CA8",
+            "id": "zapato_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "zapato",
+            "color": "#F26CA8",
+            "id": "zapato_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "corona",
+          "elemento_a": {
+            "figura": "corona",
+            "id": "corona_a"
+          },
+          "elemento_b": {
+            "figura": "corona",
+            "id": "corona_b"
+          }
+        },
+        {
+          "id_pareja": "mono",
+          "elemento_a": {
+            "figura": "mono",
+            "color": "#F26CA8",
+            "id": "mono_a"
+          },
+          "elemento_b": {
+            "figura": "mono",
+            "color": "#F26CA8",
+            "id": "mono_b"
+          }
+        },
+        {
+          "id_pareja": "corazon_rosa",
+          "elemento_a": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "id": "corazon_rosa_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "id": "corazon_rosa_b"
+          }
+        },
+        {
+          "id_pareja": "corazon_lila",
+          "elemento_a": {
+            "figura": "corazon",
+            "color": "#B48CE8",
+            "id": "corazon_lila_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#B48CE8",
+            "id": "corazon_lila_b"
+          }
+        }
+      ]
+    }
+  ]
+}

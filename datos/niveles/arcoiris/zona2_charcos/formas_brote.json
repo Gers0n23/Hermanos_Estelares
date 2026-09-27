@@ -7,13 +7,17 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 120,
-  "limite_intentos": null,
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "objetivo_guiado": true,
-  "caras": true,
-  "modo": "simple",
+  "caras": false,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 110,
   "guia_color": true,
+  "limite_intentos": null,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/brote/intro_arma_z2.wav",
     "pista": "voces/arcoiris/formas/brote/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/brote/acierto_01.wav",
@@ -29,98 +33,77 @@
       "voces/arcoiris/formas/brote/victoria_01.wav",
       "voces/arcoiris/formas/brote/victoria_02.wav"
     ],
-    "objetivo_prefijo": "voces/arcoiris/formas/nombres/",
-    "intro": "voces/arcoiris/formas/brote/intro_z2.wav"
+    "objetivo_prefijo": "voces/arcoiris/formas/nombres/"
   },
   "figuras": [
     {
-      "id": "circulo",
+      "id": "micro",
+      "voz_completa": "voces/arcoiris/formas/figuras/micro.wav",
       "piezas": [
         {
-          "forma": "circulo",
-          "ancho": 118,
-          "alto": 118,
-          "color": "#F26CA8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "cuadrado",
-      "piezas": [
+          "forma": "rectangulo",
+          "ancho": 80.0,
+          "alto": 60.0,
+          "color": "#6FD6E8",
+          "nombre_voz": "rectangulo",
+          "x": -110.0,
+          "y": -78.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 80.0,
+          "alto": 60.0,
+          "color": "#6FD6E8",
+          "nombre_voz": "rectangulo",
+          "x": -30.0,
+          "y": -78.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 80.0,
+          "alto": 60.0,
+          "color": "#6FD6E8",
+          "nombre_voz": "rectangulo",
+          "x": 50.0,
+          "y": -78.0
+        },
         {
           "forma": "cuadrado",
-          "ancho": 112,
-          "alto": 112,
-          "color": "#6FD6E8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "triangulo",
-      "piezas": [
+          "ancho": 60.0,
+          "alto": 60.0,
+          "color": "#BDEBFA",
+          "nombre_voz": "cuadrado_chico",
+          "x": 120.0,
+          "y": -78.0
+        },
         {
-          "forma": "triangulo",
-          "ancho": 128,
-          "alto": 112,
+          "forma": "rectangulo",
+          "ancho": 300.0,
+          "alto": 80.0,
           "color": "#FFCB3D",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "estrella",
-      "piezas": [
+          "nombre_voz": "rectangulo_grande",
+          "x": 0.0,
+          "y": -8.0
+        },
         {
-          "forma": "estrella",
-          "ancho": 128,
-          "alto": 128,
-          "color": "#B48CE8",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "corazon",
-      "piezas": [
+          "forma": "circulo",
+          "ancho": 76.0,
+          "alto": 76.0,
+          "color": "#5B3F8C",
+          "nombre_voz": "circulo",
+          "decoracion": "rueda",
+          "x": -82.0,
+          "y": 70.0
+        },
         {
-          "forma": "corazon",
-          "ancho": 126,
-          "alto": 116,
-          "color": "#FF6B6B",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "rombo",
-      "piezas": [
-        {
-          "forma": "rombo",
-          "ancho": 104,
-          "alto": 136,
-          "color": "#45C6C0",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "ovalo",
-      "piezas": [
-        {
-          "forma": "ovalo",
-          "ancho": 150,
-          "alto": 98,
-          "color": "#7DD87A",
-          "x": 0,
-          "y": 0
+          "forma": "circulo",
+          "ancho": 76.0,
+          "alto": 76.0,
+          "color": "#5B3F8C",
+          "nombre_voz": "circulo",
+          "decoracion": "rueda",
+          "x": 82.0,
+          "y": 70.0
         }
       ]
     }

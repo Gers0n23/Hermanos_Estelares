@@ -1,10 +1,11 @@
 extends SceneTree
 
 ## Arnes QA del flujo Mapa Estelar -> mapa del Planeta Arcoiris (zonas y estaciones) -> minijuego.
-## Verifica: tocar Arcoiris abre su mapa; zona 1 abierta y el resto dormidas; estaciones jugables
+## Verifica: la nave empieza en la Tierra y tocar Arcoiris lanza el viaje estelar, que al
+## aterrizar abre su mapa (y luego se entra directo); zona 1 abierta y el resto dormidas; estaciones jugables
 ## segun el hermano; lanzar una estacion entrega el contrato al motor; "salir" y "completado"
-## vuelven al mapa del planeta; completar estaciones abre la zona siguiente (con la regla
-## min(2, jugables)) y devuelve el color; la zona secreta se revela; Cometa lleva a la siguiente
+## vuelven al mapa del planeta; completar TODAS las estaciones jugables abre la zona siguiente
+## (decision del PO 27-Sep-2026) y devuelve el color; el mapa se dibuja con el paisaje de dulces; la zona secreta se revela; Cometa lleva a la siguiente
 ## estacion pendiente; F4 abre todo; la flecha vuelve al Mapa Estelar.
 ## Respalda y restaura `user://progreso.json` para no pisar el progreso real de los ninos.
 ##
@@ -12,6 +13,7 @@ extends SceneTree
 
 const MAPA := "res://escenas/nucleo/mapa_estelar.tscn"
 const ARCOIRIS := "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"
+const VIAJE := "res://escenas/nucleo/viaje_estelar.tscn"
 const GUARDADO := "user://progreso.json"
 
 var _fallos := 0
@@ -77,15 +79,34 @@ func _probar_entrada_desde_mapa_estelar() -> void:
 	toque.pressed = true
 	toque.position = Vector2(300, 545)
 	# Directo al handler (como qa_test_titulo): en headless push_input re-escala las coordenadas.
+	_check(_progreso.obtener_ubicacion_nave("maxi") == "tierra", "la nave empieza posada en la Tierra")
 	mapa._input(toque)
+	await _esperar(0.9)
+	# la nave esta en la Tierra: primero se juega el viaje estelar Tierra -> Arcoiris
+	var viaje := current_scene
+	_check(viaje != null and viaje.scene_file_path == VIAJE, "tocar Arcoiris lanza el viaje estelar (%s)" % str(viaje.scene_file_path if viaje else "nada"))
+	if viaje == null or viaje.scene_file_path != VIAJE:
+		return
+	_check(viaje.planeta_origen == "tierra" and viaje.planeta_destino == "arcoiris", "el viaje va de la Tierra a Arcoiris")
+	var destellos_antes: int = _progreso.obtener_destellos_planeta("maxi", "arcoiris")
+	viaje.completado.emit(3)
 	await _esperar(0.3)
-	_check(current_scene != null and current_scene.scene_file_path == ARCOIRIS, "tocar Arcoiris abre el mapa del planeta (%s)" % str(current_scene.scene_file_path if current_scene else "nada"))
+	_check(current_scene != null and current_scene.scene_file_path == ARCOIRIS, "al aterrizar se abre el mapa del planeta (%s)" % str(current_scene.scene_file_path if current_scene else "nada"))
+	_check(_progreso.obtener_ubicacion_nave("maxi") == "arcoiris", "la nave queda estacionada en Arcoiris")
+	_check(_progreso.obtener_destellos_planeta("maxi", "arcoiris") == destellos_antes + 3, "los destellos del viaje cuentan para Arcoiris")
+	# con la nave ya en Arcoiris, tocarlo entra directo (sin volver a viajar)
+	change_scene_to_file(MAPA)
+	await _esperar(0.2)
+	current_scene._input(toque)
+	await _esperar(0.3)
+	_check(current_scene != null and current_scene.scene_file_path == ARCOIRIS, "con la nave ahi, tocar Arcoiris entra directo al mapa del planeta")
 
 
 func _probar_estado_inicial() -> void:
 	print("-- estado inicial (Maxi) --")
 	var mapa := await _abrir_arcoiris()
 	_check(mapa.planeta_id == "arcoiris" and mapa.zonas.size() == 5, "5 zonas del Planeta Arcoiris")
+	_check(mapa._paisaje != null and mapa._paisaje.has_method("dibujar_hito"), "el planeta se dibuja como mapa ilustrado de dulces (paisaje)")
 	_check(mapa.zonas[0]["abierta"], "zona 1 abierta al llegar")
 	var dormidas := true
 	for i in range(1, 5):
@@ -141,7 +162,7 @@ func _probar_lanzar_y_volver(forma: String) -> void:
 		_check(vuelta.zonas[0]["estaciones"][1]["completada"], "la estacion quedo completada")
 		_check(vuelta.zonas[0]["completa"], "zona 1 completa (todas sus estaciones jugables): vuelve el rojo")
 		_check(vuelta._avance_bandas.has("rojo"), "la banda roja del arcoiris se pinta con animacion")
-		_check(vuelta.zonas[1]["abierta"], "se despierta la zona 2 (min(2, 1 jugable) = 1)")
+		_check(vuelta.zonas[1]["abierta"], "se despierta la zona 2 (su unica estacion jugable esta hecha)")
 		_check(vuelta.seleccion == 1, "el mapa lleva la seleccion a la zona recien abierta")
 
 
@@ -159,12 +180,18 @@ func _probar_apertura_con_dos_estaciones() -> void:
 func _probar_zona_secreta_sofia() -> void:
 	print("-- Sofia: zona secreta y estrellitas --")
 	_progreso.perfil_seleccionado = "sofia"
+	# Regla del PO 27-Sep-2026: con solo UNA de las dos estaciones de la zona 1, la zona 2 sigue dormida.
+	_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z1_formas_estrella", 50, 3)
+	var parcial := await _abrir_arcoiris()
+	_check(parcial.zonas[0]["completadas"] == 1 and parcial.zonas[0]["jugables"] == 2, "Sofia: zona 1 con 1 de 2 estaciones")
+	_check(not parcial.zonas[1]["abierta"], "con 1 de 2 estaciones NO se salta a la zona 2 (hay que completarlas todas)")
 	# Dificultad v3 (PO 14-Sep-2026): Sofia tiene Formas y Parejas en cada zona, asi que abrir la
 	# siguiente pide las 2 estaciones jugables.
 	for n in [1, 2, 3]:
 		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_formas_estrella" % n, 50, 3 if n == 1 else 2)
 		_progreso.marcar_nivel_completado("sofia", "arcoiris", "arcoiris_z%d_parejas_estrella" % n, 50, 2)
 	var mapa := await _abrir_arcoiris()
+	_check(mapa.zonas[1]["abierta"] and mapa.zonas[2]["abierta"], "con todas las estaciones hechas, las zonas 2 y 3 despiertan")
 	_check(mapa.zonas[3]["abierta"] and not mapa.zonas[4]["abierta"], "zona 4 abierta, la Cima sigue secreta")
 	_check(mapa.zonas[0]["estaciones"][1]["estrellitas"] == 3, "la estacion muestra las mejores estrellitas (3)")
 	_check(mapa.zonas[0]["estaciones"][1]["dorado_ruta"] == "", "sin reto dorado fuera de la Cima")

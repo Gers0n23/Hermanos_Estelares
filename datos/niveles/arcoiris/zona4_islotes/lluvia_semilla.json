@@ -1,0 +1,58 @@
+{
+  "id_nivel": "arcoiris_z4_lluvia_semilla",
+  "motor": "clasificar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "lluvia de colores",
+  "variante": "gotas gigantes que se dividen en dos gotitas al tocarlas; 2 gigantes en pantalla",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "modo": "libre",
+  "limite_intentos": null,
+  "iman_tolerancia_px": 200,
+  "tamano_gota": 120,
+  "ayuda_idle_s": 6,
+  "velocidad_caida": 24,
+  "elementos_simultaneos": 2,
+  "colores": [
+    "rojo",
+    "azul",
+    "amarillo",
+    "rosado",
+    "verde"
+  ],
+  "rondas": 5,
+  "por_ronda": 4,
+  "gotas_divisibles": true,
+  "sorpresa_dino": {
+    "cada_min": 9,
+    "cada_max": 13
+  },
+  "lineas_voz": {
+    "intro": "voces/arcoiris/lluvia/semilla/intro_z4.wav",
+    "pista": "voces/arcoiris/lluvia/semilla/pista_z4.wav",
+    "acierto": [
+      "voces/arcoiris/lluvia/semilla/acierto_01.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_02.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_03.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_04.wav",
+      "voces/arcoiris/lluvia/semilla/acierto_05.wav"
+    ],
+    "nueva_ronda": [
+      "voces/arcoiris/lluvia/semilla/ronda_01.wav",
+      "voces/arcoiris/lluvia/semilla/ronda_02.wav",
+      "voces/arcoiris/lluvia/semilla/ronda_03.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/lluvia/semilla/victoria_01.wav",
+      "voces/arcoiris/lluvia/semilla/victoria_02.wav"
+    ],
+    "prefijo_colores": "voces/arcoiris/lluvia/colores/",
+    "dividir": [
+      "voces/arcoiris/lluvia/semilla/dividir_01.wav",
+      "voces/arcoiris/lluvia/semilla/dividir_02.wav"
+    ],
+    "especial": "voces/arcoiris/lluvia/semilla/dino.wav"
+  }
+}

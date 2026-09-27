@@ -1,0 +1,126 @@
+# Voces PROVISIONALES de "Lluvia de colores" (motor clasificar), TTS de Windows (Sabina).
+# Formato: ruta relativa a assets/audio/ <TAB> texto. Regenerar:
+# powershell -NoProfile -File herramientas/generar_voces_tts.ps1 -Lista assets/audio/voces/arcoiris/lluvia/lineas_tts.tsv
+voces/arcoiris/lluvia/colores/rojo.wav	¡Rojo!
+voces/arcoiris/lluvia/colores/azul.wav	¡Azul!
+voces/arcoiris/lluvia/colores/amarillo.wav	¡Amarillo!
+voces/arcoiris/lluvia/colores/rosado.wav	¡Rosado!
+voces/arcoiris/lluvia/colores/verde.wav	¡Verde!
+voces/arcoiris/lluvia/colores/naranja.wav	¡Naranja!
+voces/arcoiris/lluvia/colores/violeta.wav	¡Violeta!
+voces/arcoiris/lluvia/colores/celeste.wav	¡Celeste!
+voces/arcoiris/lluvia/colores/blanco.wav	¡Blanco!
+voces/arcoiris/lluvia/colores/cafe.wav	¡Café!
+voces/arcoiris/lluvia/colores/lila.wav	¡Lila!
+voces/arcoiris/lluvia/colores/verde_claro.wav	¡Verde clarito!
+voces/arcoiris/lluvia/pedidos/rojo.wav	¿Dónde está la gota roja? ¡Tráemela!
+voces/arcoiris/lluvia/pedidos/amarillo.wav	¿Me traes la gota amarilla?
+voces/arcoiris/lluvia/pedidos/azul.wav	¡Busca la gota azul!
+voces/arcoiris/lluvia/pedidos/rosado.wav	¿Dónde está la gota rosada?
+voces/arcoiris/lluvia/pedidos/verde.wav	¡Tráeme la gota verde!
+voces/arcoiris/lluvia/pedidos/naranja.wav	¿Me traes la gota naranja?
+voces/arcoiris/lluvia/pedidos/violeta.wav	¡Busca la gota violeta!
+voces/arcoiris/lluvia/pedidos/celeste.wav	¿Dónde está la gota celeste?
+voces/arcoiris/lluvia/necesito/verde.wav	Necesito verde.
+voces/arcoiris/lluvia/necesito/naranja.wav	Ahora quiero naranja.
+voces/arcoiris/lluvia/necesito/violeta.wav	¡Un violeta, por favor!
+voces/arcoiris/lluvia/necesito/rosado.wav	Necesito rosado.
+voces/arcoiris/lluvia/necesito/celeste.wav	¡Quiero celeste!
+voces/arcoiris/lluvia/necesito/cafe.wav	Necesito café.
+voces/arcoiris/lluvia/necesito/lila.wav	¡Un lila, por favor!
+voces/arcoiris/lluvia/necesito/verde_claro.wav	Necesito verde clarito.
+voces/arcoiris/lluvia/datos/verde.wav	¡Verde! Azul más amarillo. Las plantas son verdes por la clorofila, que usa la luz del sol para fabricar su comida.
+voces/arcoiris/lluvia/datos/naranja.wav	¡Naranja! Rojo más amarillo. ¿Sabías que el color se llama así por la fruta? Primero existió la fruta y después el nombre del color.
+voces/arcoiris/lluvia/datos/violeta.wav	¡Violeta! Rojo más azul. En el arcoíris el violeta está en el borde, y justo después hay una luz que nuestros ojos no pueden ver: la ultravioleta.
+voces/arcoiris/lluvia/datos/rosado.wav	¡Rosado! Rojo más blanco. Los flamencos son rosados por lo que comen: camarones chiquititos y algas con colorante.
+voces/arcoiris/lluvia/datos/celeste.wav	¡Celeste! Azul más blanco. El cielo se ve celeste porque el aire desparrama más la luz azul del sol.
+voces/arcoiris/lluvia/datos/cafe.wav	¡Café! Rojo, amarillo y azul juntos. Por eso el agua del pincel se pone café cuando lavas muchos colores.
+voces/arcoiris/lluvia/datos/lila.wav	¡Lila! Violeta con blanco. Se llama igual que una flor, la lila, que tiene justo ese color.
+voces/arcoiris/lluvia/datos/verde_claro.wav	¡Verde clarito! Verde con blanco. Agregar blanco a un color se llama aclarar, y así se hacen los colores pastel.
+voces/arcoiris/lluvia/semilla/acierto_01.wav	¡Siii!
+voces/arcoiris/lluvia/semilla/acierto_02.wav	¡Qué lindo!
+voces/arcoiris/lluvia/semilla/acierto_03.wav	¡Magia!
+voces/arcoiris/lluvia/semilla/acierto_04.wav	¡Plaf! ¡Qué bonito!
+voces/arcoiris/lluvia/semilla/acierto_05.wav	¡Bravo, Maxi!
+voces/arcoiris/lluvia/semilla/doble_01.wav	¡Doble fiesta!
+voces/arcoiris/lluvia/semilla/doble_02.wav	¡A su casita! ¡Bien, Maxi!
+voces/arcoiris/lluvia/semilla/dino.wav	¡Uy! ¡Un dinosaurio de pintura! ¡Roar!
+voces/arcoiris/lluvia/semilla/dividir_01.wav	¡Plop! ¡Dos gotitas!
+voces/arcoiris/lluvia/semilla/dividir_02.wav	¡Se partió!
+voces/arcoiris/lluvia/semilla/arcoiris_01.wav	¡Un arcoíris gigante! ¡Lo pintaste tú!
+voces/arcoiris/lluvia/semilla/arcoiris_02.wav	¡Mira el cielo, Maxi! ¡Qué lindo!
+voces/arcoiris/lluvia/semilla/ronda_01.wav	¡Llegan más gotitas!
+voces/arcoiris/lluvia/semilla/ronda_02.wav	¡Otra lluvia! ¡Vamos!
+voces/arcoiris/lluvia/semilla/ronda_03.wav	¡Más pintura, Maxi!
+voces/arcoiris/lluvia/semilla/victoria_01.wav	¡Lo hiciste, Maxi! ¡Eres un campeón de los colores!
+voces/arcoiris/lluvia/semilla/victoria_02.wav	¡Siii! ¡Pintaste todo, Maxi!
+voces/arcoiris/lluvia/brote/acierto_01.wav	¡Muy bien, Nicole!
+voces/arcoiris/lluvia/brote/acierto_02.wav	¡Ahí va!
+voces/arcoiris/lluvia/brote/acierto_03.wav	¡Perfecto!
+voces/arcoiris/lluvia/brote/acierto_04.wav	¡Qué lindo color!
+voces/arcoiris/lluvia/brote/no_es_este_01.wav	Todavía no. ¡Mira bien el color!
+voces/arcoiris/lluvia/brote/no_es_este_02.wav	Casi, casi. ¡Prueba otro charco!
+voces/arcoiris/lluvia/brote/no_es_este_03.wav	Esa no es su casita. ¡Tú puedes!
+voces/arcoiris/lluvia/brote/ayuda_01.wav	Mira, Nicole: la gota y su charco están brillando.
+voces/arcoiris/lluvia/brote/charcos_bailan.wav	¡Uy! ¡Los charcos bailan!
+voces/arcoiris/lluvia/brote/jirafa_aparece.wav	¡Mira! ¡Una gotita jirafa! Llévala a su charco.
+voces/arcoiris/lluvia/brote/jirafa_bonus.wav	¡La gotita jirafa llegó a su casa! Gracias por ayudarla, Nicole. ¡Eres una gran amiga!
+voces/arcoiris/lluvia/brote/derrota_gag_01.wav	¡Ay, ay, ay! Las gotas me cayeron encima... ¡Achís! ¡Estornudé un arcoíris! Jajaja. ¡Vamos otra vez!
+voces/arcoiris/lluvia/brote/regalo_01.wav	Te ayudo con una, Nicole. ¡Para eso son las amigas!
+voces/arcoiris/lluvia/brote/ronda_01.wav	¡Viene otra lluvia!
+voces/arcoiris/lluvia/brote/ronda_02.wav	¡Más gotas, Nicole!
+voces/arcoiris/lluvia/brote/ronda_03.wav	¡Qué bien lo haces! ¡Otra tanda!
+voces/arcoiris/lluvia/brote/victoria_01.wav	¡Todas las gotas en su casita! ¡Lo lograste, Nicole!
+voces/arcoiris/lluvia/brote/victoria_02.wav	¡Qué lindos colores, Nicole! ¡Bravo!
+voces/arcoiris/lluvia/estrella/componente_01.wav	¡Va bien! Falta otro color.
+voces/arcoiris/lluvia/estrella/componente_02.wav	¡Ya se está tiñendo!
+voces/arcoiris/lluvia/estrella/componente_03.wav	¡Eso! Sigue así.
+voces/arcoiris/lluvia/estrella/mezcla_01.wav	¡Mezcla lograda!
+voces/arcoiris/lluvia/estrella/mezcla_02.wav	¡Perfecto, Sofía!
+voces/arcoiris/lluvia/estrella/mezcla_03.wav	¡Qué buena mezcla!
+voces/arcoiris/lluvia/estrella/no_es_este_01.wav	Ese color no va en esta receta. ¡Piensa otra vez!
+voces/arcoiris/lluvia/estrella/no_es_este_02.wav	Casi... ese no lo forma. ¡Prueba con otro!
+voces/arcoiris/lluvia/estrella/no_es_este_03.wav	Mmm, ese color no le sirve a este charco.
+voces/arcoiris/lluvia/estrella/gris_01.wav	¡Uy! La gota gris no tiene color. ¡Hay que dejarla pasar!
+voces/arcoiris/lluvia/estrella/gris_02.wav	La gris es tramposa: ¡no sirve para mezclar!
+voces/arcoiris/lluvia/estrella/dejaste_pasar.wav	¡Bien! La dejaste pasar.
+voces/arcoiris/lluvia/estrella/pista_usada_01.wav	Te muestro la receta un momentito.
+voces/arcoiris/lluvia/estrella/regalo_01.wav	Te regalo esta mezcla, Sofía. ¡Pero la próxima es tuya!
+voces/arcoiris/lluvia/estrella/derrota_gag_01.wav	¡Los charcos se desbordaron! ¡Quedé toda pintada! Jajaja, parezco un cuadro. ¡Vamos otra vez, que casi lo tenías!
+voces/arcoiris/lluvia/estrella/ronda_01.wav	¡Nuevos pedidos!
+voces/arcoiris/lluvia/estrella/ronda_02.wav	¡Otra tanda de mezclas!
+voces/arcoiris/lluvia/estrella/ronda_03.wav	¡Vas increíble, Sofía! ¡Más colores!
+voces/arcoiris/lluvia/estrella/a_tiempo.wav	¡A tiempo! ¡Estrellita!
+voces/arcoiris/lluvia/estrella/dato_final.wav	Dato final: el arcoíris siempre tiene sus colores en el mismo orden: rojo, naranja, amarillo, verde, azul, añil y violeta.
+voces/arcoiris/lluvia/estrella/victoria_01.wav	¡Eres una maestra de las mezclas, Sofía!
+voces/arcoiris/lluvia/estrella/victoria_02.wav	¡Todos los colores listos! ¡Qué inteligente, Sofía!
+voces/arcoiris/lluvia/semilla/intro_z1.wav	¡Hola, Maxi! Toca la gotita y mira la magia de colores.
+voces/arcoiris/lluvia/semilla/pista_z1.wav	¡Toca la gotita, Maxi!
+voces/arcoiris/lluvia/semilla/intro_z2.wav	¡Está lloviendo pintura! Toca las gotitas, Maxi.
+voces/arcoiris/lluvia/semilla/pista_z2.wav	Toca una gota que cae. ¡Salta solita al charco!
+voces/arcoiris/lluvia/semilla/intro_z3.wav	¡Mira, Maxi! El charco que brilla llama a su gotita. ¡Toca!
+voces/arcoiris/lluvia/semilla/pista_z3.wav	Toca la gotita. ¡O llévala al charco que brilla!
+voces/arcoiris/lluvia/semilla/intro_z4.wav	¡Gotas gigantes! Tócalas y se parten en dos.
+voces/arcoiris/lluvia/semilla/pista_z4.wav	¡Toca la gota grande!
+voces/arcoiris/lluvia/semilla/intro_z5.wav	¡Fuegos de colores, Maxi! Toca las gotas y pintamos el arcoíris.
+voces/arcoiris/lluvia/semilla/pista_z5.wav	¡Toca la gota y mira el cielo!
+voces/arcoiris/lluvia/brote/intro_z1.wav	Hola, Nicole. Lleva cada gota a su charco del mismo color.
+voces/arcoiris/lluvia/brote/pista_z1.wav	Arrastra la gota hasta el charco de su mismo color.
+voces/arcoiris/lluvia/brote/intro_z2.wav	¡Llueve pintura! Lleva cada gota a su charco. Mira: ¡hay uno rosado con florcitas!
+voces/arcoiris/lluvia/brote/pista_z2.wav	Busca el charco del mismo color que la gota que cae.
+voces/arcoiris/lluvia/brote/intro_z3.wav	¡Ojo, Nicole! Los charcos se cambian de lugar. Mira bien antes de soltar la gota.
+voces/arcoiris/lluvia/brote/pista_z3.wav	Espera que los charcos terminen de moverse, y busca su color.
+voces/arcoiris/lluvia/brote/intro_z4.wav	Ahora hay colores parecidos: rojo y rosado, azul y celeste. ¡Mira con cuidado!
+voces/arcoiris/lluvia/brote/pista_z4.wav	¿Es clarito u oscurito? Busca el charco igualito.
+voces/arcoiris/lluvia/brote/intro_z5.wav	Escucha bien, Nicole. Yo te digo un color, y tú me traes la gota de ese color a mi charco que brilla.
+voces/arcoiris/lluvia/brote/pista_z5.wav	Escucha el color que pide Coco, y busca esa gota.
+voces/arcoiris/lluvia/estrella/intro_z1.wav	Sofía, cada charco quiere un color nuevo. Mira la receta del globito y mezcla dos colores para lograrlo.
+voces/arcoiris/lluvia/estrella/pista_z1.wav	Mira el globito: te dice qué dos colores echar al charco.
+voces/arcoiris/lluvia/estrella/intro_z2.wav	Ahora la receta es secreta: solo ves el color que quiero. ¿Qué dos colores lo forman?
+voces/arcoiris/lluvia/estrella/pista_z2.wav	Piensa en el color que pide Coco. ¿Qué colores primarios lo forman?
+voces/arcoiris/lluvia/estrella/intro_z3.wav	¡Cuidado! Algunas gotas caen rápido, y la gota gris no tiene color: déjala pasar.
+voces/arcoiris/lluvia/estrella/pista_z3.wav	Deja pasar la gota gris, y atrapa solo las que sirven.
+voces/arcoiris/lluvia/estrella/intro_z4.wav	Llegó el blanco: con él, los colores se aclaran. Y para el café... ¡hacen falta tres!
+voces/arcoiris/lluvia/estrella/pista_z4.wav	El blanco aclara: rojo con blanco da rosado. El café lleva tres colores.
+voces/arcoiris/lluvia/estrella/intro_z5.wav	Te haré pedidos, uno tras otro. Si lo logras antes de que se duerma el solcito, ganas estrellitas. ¡Pero sin apuro!
+voces/arcoiris/lluvia/estrella/pista_z5.wav	Mira el pedido del globito. Si necesitas ayuda, toca la estrella dorada.

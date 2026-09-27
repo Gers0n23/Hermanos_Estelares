@@ -1,0 +1,289 @@
+{
+  "id_nivel": "arcoiris_emparejar_semilla_01",
+  "motor": "emparejar",
+  "perfil": "semilla",
+  "planeta": "arcoiris",
+  "zona": "zona2_charcos",
+  "tema": "figuras, dinos y autos",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "dificultad": "rondas (PO 27-Sep-2026)",
+  "modo": "identico",
+  "oculto": false,
+  "limite_intentos": null,
+  "tiempo_volteo_ms": 700,
+  "ayuda_tras_fallos": null,
+  "halo_idle": true,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/emparejar/semilla/intro_01.wav",
+    "pista": "voces/arcoiris/emparejar/semilla/pista_01.wav",
+    "acierto_par": [
+      "voces/arcoiris/emparejar/semilla/acierto_par_01.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_02.wav",
+      "voces/arcoiris/emparejar/semilla/acierto_par_03.wav"
+    ],
+    "no_es_este": [
+      "voces/arcoiris/emparejar/semilla/no_es_este_01.wav"
+    ],
+    "ronda_superada": [
+      "voces/arcoiris/emparejar/semilla/ronda_superada_01.wav",
+      "voces/arcoiris/emparejar/semilla/ronda_superada_02.wav",
+      "voces/arcoiris/emparejar/semilla/ronda_superada_03.wav"
+    ],
+    "victoria_final": "voces/arcoiris/emparejar/semilla/victoria_rondas_01.wav"
+  },
+  "rondas": [
+    {
+      "tema": "figuras",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "pool": [
+        {
+          "id_pareja": "estrella",
+          "elemento_a": {
+            "figura": "estrella",
+            "color": "#FFCB3D",
+            "id": "estrella_a"
+          },
+          "elemento_b": {
+            "figura": "estrella",
+            "color": "#FFCB3D",
+            "id": "estrella_b"
+          }
+        },
+        {
+          "id_pareja": "corazon",
+          "elemento_a": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "id": "corazon_a"
+          },
+          "elemento_b": {
+            "figura": "corazon",
+            "color": "#F26CA8",
+            "id": "corazon_b"
+          }
+        },
+        {
+          "id_pareja": "circulo_azul",
+          "elemento_a": {
+            "figura": "circulo",
+            "color": "#4A8BE0",
+            "id": "circulo_azul_a"
+          },
+          "elemento_b": {
+            "figura": "circulo",
+            "color": "#4A8BE0",
+            "id": "circulo_azul_b"
+          }
+        },
+        {
+          "id_pareja": "triangulo_verde",
+          "elemento_a": {
+            "figura": "triangulo",
+            "color": "#7DD87A",
+            "id": "triangulo_verde_a"
+          },
+          "elemento_b": {
+            "figura": "triangulo",
+            "color": "#7DD87A",
+            "id": "triangulo_verde_b"
+          }
+        },
+        {
+          "id_pareja": "flor_lila",
+          "elemento_a": {
+            "figura": "flor",
+            "color": "#B48CE8",
+            "id": "flor_lila_a"
+          },
+          "elemento_b": {
+            "figura": "flor",
+            "color": "#B48CE8",
+            "id": "flor_lila_b"
+          }
+        },
+        {
+          "id_pareja": "luna_celeste",
+          "elemento_a": {
+            "figura": "luna",
+            "color": "#6FD6E8",
+            "id": "luna_celeste_a"
+          },
+          "elemento_b": {
+            "figura": "luna",
+            "color": "#6FD6E8",
+            "id": "luna_celeste_b"
+          }
+        },
+        {
+          "id_pareja": "gota_turquesa",
+          "elemento_a": {
+            "figura": "gota",
+            "color": "#45C6C0",
+            "id": "gota_turquesa_a"
+          },
+          "elemento_b": {
+            "figura": "gota",
+            "color": "#45C6C0",
+            "id": "gota_turquesa_b"
+          }
+        },
+        {
+          "id_pareja": "cuadrado_naranjo",
+          "elemento_a": {
+            "figura": "cuadrado",
+            "color": "#FF9F4A",
+            "id": "cuadrado_naranjo_a"
+          },
+          "elemento_b": {
+            "figura": "cuadrado",
+            "color": "#FF9F4A",
+            "id": "cuadrado_naranjo_b"
+          }
+        },
+        {
+          "id_pareja": "arcoiris",
+          "elemento_a": {
+            "figura": "arcoiris",
+            "id": "arcoiris_a"
+          },
+          "elemento_b": {
+            "figura": "arcoiris",
+            "id": "arcoiris_b"
+          }
+        },
+        {
+          "id_pareja": "rombo_rojo",
+          "elemento_a": {
+            "figura": "rombo",
+            "color": "#FF6B6B",
+            "id": "rombo_rojo_a"
+          },
+          "elemento_b": {
+            "figura": "rombo",
+            "color": "#FF6B6B",
+            "id": "rombo_rojo_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "dinos",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/semilla/ronda_dinos.wav"
+      },
+      "pool": [
+        {
+          "id_pareja": "trex",
+          "elemento_a": {
+            "figura": "trex",
+            "id": "trex_a"
+          },
+          "elemento_b": {
+            "figura": "trex",
+            "id": "trex_b"
+          }
+        },
+        {
+          "id_pareja": "spinosaurio",
+          "elemento_a": {
+            "figura": "spinosaurio",
+            "id": "spinosaurio_a"
+          },
+          "elemento_b": {
+            "figura": "spinosaurio",
+            "id": "spinosaurio_b"
+          }
+        },
+        {
+          "id_pareja": "carnotauro",
+          "elemento_a": {
+            "figura": "carnotauro",
+            "id": "carnotauro_a"
+          },
+          "elemento_b": {
+            "figura": "carnotauro",
+            "id": "carnotauro_b"
+          }
+        },
+        {
+          "id_pareja": "huevo",
+          "elemento_a": {
+            "figura": "huevo",
+            "id": "huevo_a"
+          },
+          "elemento_b": {
+            "figura": "huevo",
+            "id": "huevo_b"
+          }
+        }
+      ]
+    },
+    {
+      "tema": "autos",
+      "cantidad": 3,
+      "disposicion": {
+        "filas": 2,
+        "columnas": 3
+      },
+      "lineas_voz": {
+        "intro_ronda": "voces/arcoiris/emparejar/semilla/ronda_autos.wav"
+      },
+      "pool": [
+        {
+          "id_pareja": "auto",
+          "elemento_a": {
+            "figura": "auto",
+            "id": "auto_a"
+          },
+          "elemento_b": {
+            "figura": "auto",
+            "id": "auto_b"
+          }
+        },
+        {
+          "id_pareja": "bus",
+          "elemento_a": {
+            "figura": "bus",
+            "id": "bus_a"
+          },
+          "elemento_b": {
+            "figura": "bus",
+            "id": "bus_b"
+          }
+        },
+        {
+          "id_pareja": "bomberos",
+          "elemento_a": {
+            "figura": "bomberos",
+            "id": "bomberos_a"
+          },
+          "elemento_b": {
+            "figura": "bomberos",
+            "id": "bomberos_b"
+          }
+        },
+        {
+          "id_pareja": "cohete",
+          "elemento_a": {
+            "figura": "cohete",
+            "id": "cohete_a"
+          },
+          "elemento_b": {
+            "figura": "cohete",
+            "id": "cohete_b"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -338,6 +338,28 @@ func tiene_pieza_nave(id_perfil: String, planeta_id: String) -> bool:
 	return planeta_id in obtener_perfil(id_perfil).get("piezas_nave", [])
 
 
+## Planeta donde quedó estacionada la nave de ese hermano (el mapa estelar la dibuja ahí
+## y el viaje estelar despega desde ahí). Toda aventura empieza en la Tierra.
+func obtener_ubicacion_nave(id_perfil: String) -> String:
+	return str(obtener_perfil(id_perfil).get("ubicacion_nave", "tierra"))
+
+
+func fijar_ubicacion_nave(id_perfil: String, planeta_id: String) -> void:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		push_warning("Progreso.fijar_ubicacion_nave: id_perfil desconocido '%s'" % id_perfil)
+		return
+	_datos["perfiles"][id_perfil]["ubicacion_nave"] = planeta_id
+	guardar()
+	progreso_actualizado.emit(id_perfil)
+
+
+## Cierre del viaje estelar (se conecta a su señal `completado(destellos)`): los destellos
+## del camino cuentan para el planeta de destino y la nave queda estacionada ahí.
+func registrar_viaje(destellos: int, id_perfil: String, planeta_destino: String) -> void:
+	agregar_destellos(id_perfil, planeta_destino, destellos)
+	fijar_ubicacion_nave(id_perfil, planeta_destino)
+
+
 # ---------------------------------------------------------------------------
 # Volumen por perfil (GDD §6 regla 10; ver TODO en scripts/autoloads/audio.gd)
 # ---------------------------------------------------------------------------

@@ -7,15 +7,19 @@
   "tema": "formas traviesas",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
-  "iman_tolerancia_px": 200,
-  "limite_intentos": null,
+  "modo": "arma_figura",
+  "diseno": "figura primero (PO 27-Sep-2026): herramientas/figuras_formas.py",
   "sin_error": true,
   "toque_lleva_a_casa": true,
   "ayuda_idle_s": 7,
-  "caras": true,
+  "caras": false,
   "guia_color": true,
-  "modo": "simple",
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "iman_tolerancia_px": 5000,
+  "limite_intentos": null,
   "lineas_voz": {
+    "intro": "voces/arcoiris/formas/semilla/intro_arma_z4.wav",
     "pista": "voces/arcoiris/formas/semilla/pista_01.wav",
     "acierto": [
       "voces/arcoiris/formas/semilla/acierto_01.wav",
@@ -25,59 +29,45 @@
     "victoria_final": [
       "voces/arcoiris/formas/semilla/victoria_01.wav",
       "voces/arcoiris/formas/semilla/victoria_02.wav"
-    ],
-    "intro": "voces/arcoiris/formas/semilla/intro_z4.wav"
+    ]
   },
   "figuras": [
     {
-      "id": "circulo_grande",
+      "id": "monito_nieve",
+      "voz_completa": "voces/arcoiris/formas/figuras/monito_nieve.wav",
       "piezas": [
         {
           "forma": "circulo",
-          "ancho": 170,
-          "alto": 170,
-          "color": "#FF6B6B",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "circulo_chico",
-      "piezas": [
+          "ancho": 130.0,
+          "alto": 130.0,
+          "color": "#FFF8EE",
+          "cara": true,
+          "x": -75.0,
+          "y": -50.0
+        },
         {
           "forma": "circulo",
-          "ancho": 100,
-          "alto": 100,
+          "ancho": 200.0,
+          "alto": 200.0,
+          "color": "#FFF8EE",
+          "x": -75.0,
+          "y": 115.0
+        },
+        {
+          "forma": "cuadrado",
+          "ancho": 150.0,
+          "alto": 150.0,
           "color": "#FF6B6B",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "cuadrado_grande",
-      "piezas": [
+          "x": 100.0,
+          "y": 140.0
+        },
         {
           "forma": "cuadrado",
-          "ancho": 160,
-          "alto": 160,
-          "color": "#4A8BE0",
-          "x": 0,
-          "y": 0
-        }
-      ]
-    },
-    {
-      "id": "cuadrado_chico",
-      "piezas": [
-        {
-          "forma": "cuadrado",
-          "ancho": 100,
-          "alto": 100,
-          "color": "#4A8BE0",
-          "x": 0,
-          "y": 0
+          "ancho": 100.0,
+          "alto": 100.0,
+          "color": "#5B3F8C",
+          "x": -75.0,
+          "y": -165.0
         }
       ]
     }
