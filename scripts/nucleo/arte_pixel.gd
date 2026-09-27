@@ -21,6 +21,8 @@ const PALETA := {
 	"D": Color("#d6d6e6"), "d": Color("#9a9ab4"), "O": Color("#ff5f7a"),
 	# animalitos de Animalia (perrito, gatito, conejito)
 	"A": Color("#c98a52"), "a": Color("#8a5a32"), "F": Color("#ffab3d"), "H": Color("#f7f4ff"),
+	# poder de triple disparo (burbuja lila)
+	"M": Color("#b69bff"), "m": Color("#7d5fd6"),
 }
 
 # Cometa, 18x21, dibujado a mano desde assets/anclas/cometa_referencia.png (vista frontal).
@@ -112,6 +114,53 @@ const SATELITE := [
 	"............................",
 ]
 
+
+# --- viaje arcade (disparos, basura espacial y poderes) -----------------------------
+
+# Lata de conservas perdida en el espacio (basura espacial de las escuadrillas), 10x8.
+const LATA := [
+	"..KKKKKK..",
+	".KDDDDDdK.",
+	"KDOOOOOOdK",
+	"KDOWWOOOdK",
+	"KDOYYYYOdK",
+	"KDOOOOOOdK",
+	".KDDDDDdK.",
+	"..KKKKKK..",
+]
+
+# Tuerca suelta (basura espacial de las escuadrillas), 9x7.
+const TUERCA := [
+	"..KKKKK..",
+	".KDDDDdK.",
+	"KDDDKDDdK",
+	"KDDK.KDdK",
+	"KDDDKDddK",
+	".KdddddK.",
+	"..KKKKK..",
+]
+
+# Burbuja de poder: tres puntitos = triple disparo, 11x10.
+const PODER := [
+	"...KKKKK...",
+	"..KMMMMMK..",
+	".KMWWMMMmK.",
+	"KMWMMMMMMmK",
+	"KMMYMYMYMmK",
+	"KMMYMYMYMmK",
+	"KMMMMMMMmmK",
+	".KMMMMMmmK.",
+	"..KmmmmmK..",
+	"...KKKKK...",
+]
+
+
+## Textura de una grilla agrandada `veces` (píxeles gordos): el meteorito gigante (jefe)
+## es la misma roca dormilona, tres veces más grande.
+static func desde_grilla_grande(filas: Array, veces: int) -> ImageTexture:
+	var img := desde_grilla(filas).get_image()
+	img.resize(img.get_width() * veces, img.get_height() * veces, Image.INTERPOLATE_NEAREST)
+	return ImageTexture.create_from_image(img)
 
 static func desde_grilla(filas: Array) -> ImageTexture:
 	var ancho := 0
