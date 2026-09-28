@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nucleo/album_recuerdos.gd" id="1_album"]
+[ext_resource type="Script" uid="uid://b0udchbb76s1h" path="res://scripts/nucleo/capa_estrellas.gd" id="2_estrellas"]
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.353, 0.184, 0.561, 1, 0.165, 0.082, 0.376, 1, 0.075, 0.039, 0.188, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.4)
+fill_to = Vector2(1.15, 0.4)
+
+[node name="album_recuerdos" type="Node2D"]
+script = ExtResource("1_album")
+
+[node name="fondo" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fondo")
+expand_mode = 1
+
+[node name="capa_estrellas" type="Node2D" parent="."]
+script = ExtResource("2_estrellas")
+
+[node name="temporizador_fugaz" type="Timer" parent="capa_estrellas"]
+wait_time = 6.0

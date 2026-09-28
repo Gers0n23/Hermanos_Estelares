@@ -11,16 +11,19 @@ extends Node
 ## Guardado versionado desde el dia uno (decision del PO, 18-Jul-2026, stack §7): el
 ## JSON lleva `version` y `_migrar_datos()` aplica migraciones antes de usar los datos,
 ## para que agregar planetas/capitulos por actualizacion nunca borre el progreso de
-## los ninos. Hoy solo existe v1: el mecanismo queda listo para v2+ sin usarse todavia.
+## los ninos. v2 (27-Sep-2026, album "Las migas de papa") suma `recuerdos_encontrados` GLOBAL
+## (no por perfil: el album familiar es de los tres) con `_migrar_v1_a_v2`.
 
 signal progreso_actualizado(id_perfil: String)
+## Cambio en los recuerdos encontrados/vistos (el boton del album se re-dibuja con esto).
+signal recuerdos_actualizados
 
 const RUTA_GUARDADO := "user://progreso.json"
 
 ## Version actual del formato de guardado. Subir este numero + agregar una funcion
 ## `_migrar_v<N>_a_v<N+1>(datos: Dictionary) -> Dictionary` es todo lo que hace falta
 ## para introducir un cambio de esquema sin romper partidas viejas.
-const VERSION_ACTUAL := 1
+const VERSION_ACTUAL := 2
 
 const PERFILES_DIFICULTAD := ["semilla", "brote", "estrella"]
 
@@ -110,6 +113,7 @@ func _crear_datos_por_defecto() -> Dictionary:
 	return {
 		"version": VERSION_ACTUAL,
 		"perfiles": perfiles,
+		"recuerdos_encontrados": {},
 	}
 
 
@@ -143,10 +147,8 @@ func _asegurar_perfiles_por_defecto() -> void:
 		guardar()
 
 
-## Aplica migraciones de esquema en cadena hasta `VERSION_ACTUAL`. Hoy no hay ninguna
-## migracion real (solo existe v1): esto documenta el mecanismo para cuando un capitulo
-## futuro necesite cambiar el formato sin borrar el progreso ya guardado (stack §7,
-## decision del 18-Jul-2026).
+## Aplica migraciones de esquema en cadena hasta `VERSION_ACTUAL` (stack §7, decision del
+## 18-Jul-2026). Primera migracion real: v1 -> v2 (album de recuerdos, 27-Sep-2026).
 func _migrar_datos(datos: Dictionary) -> Dictionary:
 	var version_datos: int = int(datos.get("version", 1))
 
@@ -156,12 +158,20 @@ func _migrar_datos(datos: Dictionary) -> Dictionary:
 		push_warning("Progreso._migrar_datos: version %d es mas nueva que la soportada (%d)" % [version_datos, VERSION_ACTUAL])
 		return datos
 
-	# Ejemplo de como se veria una migracion real (queda comentado a proposito):
-	# if version_datos == 1:
-	#     datos = _migrar_v1_a_v2(datos)
-	#     version_datos = 2
+	if version_datos == 1:
+		datos = _migrar_v1_a_v2(datos)
+		version_datos = 2
 
 	datos["version"] = VERSION_ACTUAL
+	return datos
+
+
+## v1 -> v2: album de recuerdos (docs/fichas/album-recuerdos.md §8). Solo AGREGA el diccionario
+## global vacio; perfiles, destellos, niveles y parciales quedan intactos.
+func _migrar_v1_a_v2(datos: Dictionary) -> Dictionary:
+	if not datos.get("recuerdos_encontrados", null) is Dictionary:
+		datos["recuerdos_encontrados"] = {}
+	datos["version"] = 2
 	return datos
 
 
@@ -377,3 +387,67 @@ func fijar_volumen(id_perfil: String, bus: String, volumen_lineal: float) -> voi
 		perfil["volumenes"] = {}
 	perfil["volumenes"][bus] = clampf(volumen_lineal, 0.0, 1.0)
 	guardar()
+
+
+# ---------------------------------------------------------------------------
+# Recuerdos del album "Las migas de papa" (global, no por perfil — ficha §8)
+# ---------------------------------------------------------------------------
+# `Progreso` solo guarda ids; que recuerdo existe, a que album pertenece y cuando se entrega lo
+# decide el autoload `Recuerdos` leyendo `datos/recuerdos/catalogo.json`.
+
+func _recuerdos() -> Dictionary:
+	if not _datos.get("recuerdos_encontrados", null) is Dictionary:
+		_datos["recuerdos_encontrados"] = {}
+	return _datos["recuerdos_encontrados"]
+
+
+## Copia de {id: {fecha, visto, dorado, quien}}.
+func obtener_recuerdos_encontrados() -> Dictionary:
+	return _recuerdos().duplicate(true)
+
+
+func tiene_recuerdo(id_recuerdo: String) -> bool:
+	return _recuerdos().has(id_recuerdo)
+
+
+## Registra un recuerdo encontrado. Idempotente: si ya estaba, no cambia nada y devuelve false
+## (nunca se "pierde" ni se re-entrega una foto). `quien` = hermano que lo encontro ("" si nadie).
+func registrar_recuerdo(id_recuerdo: String, quien: String = "") -> bool:
+	if id_recuerdo == "" or _recuerdos().has(id_recuerdo):
+		return false
+	_recuerdos()[id_recuerdo] = {
+		"fecha": Time.get_datetime_string_from_system(false, true),
+		"visto": false,
+		"dorado": false,
+		"quien": quien,
+	}
+	guardar()
+	recuerdos_actualizados.emit()
+	return true
+
+
+func marcar_recuerdo_visto(id_recuerdo: String) -> void:
+	var entrada: Dictionary = _recuerdos().get(id_recuerdo, {})
+	if entrada.is_empty() or entrada.get("visto", false):
+		return
+	entrada["visto"] = true
+	guardar()
+	recuerdos_actualizados.emit()
+
+
+## Marco dorado (estrellitas maximas de Sofia en la zona, ficha §4). Devuelve true si cambio.
+func marcar_recuerdo_dorado(id_recuerdo: String) -> bool:
+	var entrada: Dictionary = _recuerdos().get(id_recuerdo, {})
+	if entrada.is_empty() or entrada.get("dorado", false):
+		return false
+	entrada["dorado"] = true
+	guardar()
+	recuerdos_actualizados.emit()
+	return true
+
+
+func hay_recuerdos_sin_ver() -> bool:
+	for entrada in _recuerdos().values():
+		if not (entrada as Dictionary).get("visto", false):
+			return true
+	return false

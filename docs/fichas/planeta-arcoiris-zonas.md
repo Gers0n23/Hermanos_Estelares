@@ -120,6 +120,19 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 
 ### 3.1 Lluvia de colores — motor `clasificar`
 
+> **Ajuste del PO (27-Sep-2026)**: "a Sofía siempre le pide naranja y verde". Tenía dos causas. La zona 1
+> traía solo 2 colores en 8 tandas, y el mazo de pedidos se rearmaba en cada tanda. Ahora el mazo dura toda
+> la partida: no repite un color hasta pedirlos todos, y dos tandas seguidas nunca piden el mismo grupo.
+> Los pools de Sofía crecen zona a zona:
+>
+> - **Zona 1**: verde, naranja y violeta, en 6 tandas de 2.
+> - **Zona 2**: se suma café, en 5 tandas de 3.
+> - **Zona 3**: llega el blanco, con rosado y celeste.
+> - **Zona 4**: se suman lila y verde claro, de 3 componentes.
+> - **Zona 5**: los 8 colores.
+>
+> Esto reemplaza lo que dice la columna de Sofía de la tabla de abajo.
+
 > **Implementado 27-Sep-2026** (Dev, a pedido del PO): las 15 celdas de esta tabla existen en
 > `datos/niveles/arcoiris/<zona>/lluvia_<perfil>.json`. La escena es
 > `escenas/minijuegos/clasificar/motor_clasificar.tscn` y el motor está en `docs/fichas/motor-clasificar.md`.
@@ -174,9 +187,9 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 > (piezas delgadas de Sofía: columnas, pilotes y almenas de 22-28 px, siempre con zona tocable de
 > 96 px) y playtest con los tres.
 
-| Zona | Maxi · Semilla (3-4 piezas gigantes, color guía, tocar lleva a casa) | Nicole · Brote (6-8 piezas, Coco nombra la forma) | Sofía · Estrella (25-30 piezas, líneas de cada pieza, pista con estrellita) |
+| Zona | Maxi · Semilla (3-4 piezas gigantes, color guía, tocar lleva a casa) | Nicole · Brote (6-8 piezas, Coco nombra la forma) | Sofía · Estrella (25-30 piezas, solo el contorno exterior, pista con estrellita) |
 |---|---|---|---|
-| 1 · Claro | **Casita con su sol**: triángulo, cuadrado y círculo | **Casita** de 6 piezas (techo, paredes, ventanas, puerta), sombras de color | **Iglesia de Castro (Chiloé)**, 25 piezas: torre, techo, pórtico de columnas; sin giro [`limite_intentos: 12`] |
+| 1 · Claro | **Casita con su sol**: triángulo, cuadrado y círculo | **Casita** de 6 piezas (techo, paredes, ventanas, puerta), sombras de color | **Iglesia de Castro (Chiloé)**, 25 piezas: torre, techo, pórtico de columnas; con giro y cada pieza en su color [`limite_intentos: 12`] |
 | 2 · Charcos | **Barquito** de 3 piezas (dos velas y casco) que **se ríen** al encajar | **Micro** de 7 piezas (ventanas, carrocería, ruedas), sombras de color | **Palafitos de Castro**, 27 piezas: tres casas sobre pilotes; desde aquí las piezas llegan giradas y tocarlas las gira [`limite_intentos: 12`] |
 | 3 · Chupetines | **Arbolito de Navidad** con estrella (4 piezas) | **Faro** de 7 piezas, sombras sin color | **Santiago**: Torre Entel, Costanera Center y la cordillera nevada, 24 piezas (varias muy parecidas) [`limite_intentos: 12`] |
 | 4 · Islotes | **Monito de nieve**: círculo grande y chico, cuadrado grande y chico | **Tren** de 8 piezas con ruedas grandes y chicas; las piezas se enderezan solas [`limite_intentos: 12`] | **Moáis de Rapa Nui** sobre su ahu, 28 piezas [`limite_intentos: 14`] |
@@ -198,7 +211,7 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 >
 > | Zona | Maxi: 4 rondas de su pool | Nicole: 3 rondas de su pool | Sofía: monumento y bandera |
 > |---|---|---|---|
-> | 1 · Claro | casita con sol (fija), Japón, Francia, Italia, helado, pez | casita (fija), Francia, Italia, gatito con moño, corazón | iglesia de Castro o **La Moneda**; Chile, Argentina, Perú o Bolivia (límite 8, sin giro) |
+> | 1 · Claro | casita con sol (fija), Japón, Francia, Italia, helado, pez | casita (fija), Francia, Italia, gatito con moño, corazón | iglesia de Castro o **La Moneda**; Chile, Argentina, Perú o Bolivia (límite 8, con giro) |
 > | 2 · Charcos | barquito (fija), Perú, tortuga, bus, patito, ballena | micro (fija), Perú, Colombia, torta, pony | palafitos o **Valparaíso** (casas de colores, cada una en su color); Brasil, Uruguay, Paraguay, Colombia, Venezuela o Ecuador (límite 9, con giro) |
 > | 3 · Chupetines | pino (fija), Chile, volcán Osorno, camión de bomberos, árbol, avión | faro (fija), Chile, Japón, mariposa, jirafa | Santiago o **Torres del Paine**; Japón, Francia o Alemania (límite 9) |
 > | 4 · Islotes | monito de nieve (fija), Torres del Paine, robot, pollito, casita del perro | tren (fija), Argentina, Alemania, Brasil, corona | moáis o **Morro de Arica**; Rusia, China o India (límite 10) |
@@ -218,6 +231,13 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 >   - Brasil va sin la franja del lema.
 > - Pendiente: validación de `disenador-niveles` (pools y límites), `guionista` (voces TTS
 >   provisionales) y `experto-ux-parvulo`, y playtest con los tres.
+
+> **Sofía sin líneas guía (PO, 27-Sep-2026)**: armar figuras le resultaba muy fácil a Sofía. Ahora sus
+> figuras muestran **solo el contorno exterior** (`silueta_unida` a nivel del perfil Estrella), sin las
+> líneas de cada pieza, y los emblemas tampoco se marcan sobre las franjas ya puestas. Sofía se guía
+> solo por la tarjeta del modelo, a la izquierda. Además, **todas sus zonas tienen giro por toque**,
+> también la 1, que antes no lo tenía. Por el giro, la iglesia de Castro exige cada pieza en su color
+> (si no, sus rectángulos de distinto color calzaban cruzados). Maxi y Nicole no cambian.
 
 ### 3.3 Parejas de Coco — motor `emparejar` (cuarto juego)
 

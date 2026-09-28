@@ -93,6 +93,8 @@ func _draw() -> void:
 func _dibujar_capa_encima() -> void:
 	var fuente: Control = principal if principal != null else self
 	for figura in figuras:
+		if figura.get("silueta_unida", false):
+			continue  # sin lineas guia: el emblema tampoco se marca sobre las franjas ya puestas
 		for hueco in figura["huecos"]:
 			if int(hueco.get("capa", 0)) == capa and hueco["pieza"] == null:
 				_dibujar_hueco(hueco)

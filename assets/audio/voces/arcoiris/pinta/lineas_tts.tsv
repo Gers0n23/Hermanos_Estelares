@@ -1,21 +1,27 @@
 # Pinta con Coco (motor lienzo_libre): voces PROVISIONALES con el TTS de Windows (herramientas/generar_voces_tts.ps1).
 # Formato: ruta relativa a assets/audio/ <TAB> texto. Generado junto con los niveles pinta_*.json.
 # Pendiente: pasar a las voces oficiales de Coco/Cometa (generar_voces_fal.py) con OK del PO sobre el costo.
+voces/arcoiris/pinta/brote/elige_tema.wav	¿Qué dibujamos hoy, Nicole? ¡Elige uno!
 voces/arcoiris/pinta/brote/igualita_01.wav	¡Igualito al modelo! ¡Qué buena vista!
 voces/arcoiris/pinta/brote/intro_ala.wav	¡Decora el ala de la nave, Nicole! Rellena con el balde o pinta con tus pinceles.
 voces/arcoiris/pinta/brote/intro_coco_pide.wav	¡Juguemos! Yo te pido un color y tú pintas algo con ese color. ¡Escucha bien!
 voces/arcoiris/pinta/brote/intro_espejo.wav	¡Espejo mágico! Pinta en un lado y mira cómo aparece en el otro. Puedes seguir el dibujito, o inventar el tuyo.
-voces/arcoiris/pinta/brote/intro_libre.wav	¡Hola, Nicole! Elige colores y pinceles, y pinta lo que imagines. Cuando quieras, toca mi carita para mostrarme tu dibujo.
 voces/arcoiris/pinta/brote/intro_viste.wav	¡Ahora vísteme! Elige mi traje abajo y píntalo como quieras.
 voces/arcoiris/pinta/brote/intro_zonas.wav	¡A colorear! Elige un color y toca una parte del dibujo para rellenarla. Arriba tienes un modelito, por si lo quieres copiar.
 voces/arcoiris/pinta/brote/mostrar_01.wav	¡Ooh, Nicole! ¡Qué hermoso!
 voces/arcoiris/pinta/brote/mostrar_02.wav	¡Me encanta! ¡Tienes mucha imaginación!
 voces/arcoiris/pinta/brote/mostrar_03.wav	¡Qué colores tan lindos! Gracias por mostrármelo.
 voces/arcoiris/pinta/brote/pedidos_listos.wav	¡Pintaste todos los colores que te pedí! Ahora pinta lo que quieras y muéstramelo.
+voces/arcoiris/pinta/brote/pista_tema.wav	Toca la bolsa para elegir stickers. Arrástralos para moverlos, y con el balde les cambias el color. Con el camino unes dos cosas.
 voces/arcoiris/pinta/brote/siguiente_01.wav	¡Otra lámina! ¿Qué será?
 voces/arcoiris/pinta/brote/siguiente_02.wav	¡Aquí viene otro dibujo!
 voces/arcoiris/pinta/brote/siguiente_coco_pide.wav	¡Otro dibujo! Escucha qué color te pido.
 voces/arcoiris/pinta/brote/siguiente_espejo.wav	¡Otro espejo mágico!
+voces/arcoiris/pinta/brote/tema_castillo_princesas.wav	¡El castillo de las princesas! Pon el castillo, la carroza y coronas. Une las cosas con un puente arcoíris.
+voces/arcoiris/pinta/brote/tema_escenario_pop.wav	¡Un escenario de estrellas del pop! Pon micrófonos, focos y notas, y cuelga luces.
+voces/arcoiris/pinta/brote/tema_fiesta_gatitos.wav	¡Una fiesta de gatitos! Pon gatitos, globos y un pastel, y cuelga guirnaldas de luces.
+voces/arcoiris/pinta/brote/tema_granja_ponys.wav	¡Una granja de ponys! Pon ponys, flores y árboles, y une las cosas con la cerca.
+voces/arcoiris/pinta/brote/tema_safari_jirafas.wav	¡Un safari de jirafas! Pon jirafas y árboles, y haz un sendero para que paseen.
 voces/arcoiris/pinta/brote/traje_heroina.wav	¡Traje de superheroína!
 voces/arcoiris/pinta/brote/traje_idol.wav	¡Traje de estrella del pop!
 voces/arcoiris/pinta/brote/traje_princesa.wav	¡Traje de princesa!
@@ -42,10 +48,14 @@ voces/arcoiris/pinta/colores/verde_oscuro.wav	¡Verde oscuro, como un bosque!
 voces/arcoiris/pinta/colores/violeta.wav	¡Morado, como una uva!
 voces/arcoiris/pinta/comun/arcoiris_01.wav	¡Muchos colores! ¡Mi cresta se volvió arcoíris!
 voces/arcoiris/pinta/comun/arcoiris_02.wav	¡Wow! ¡Soy una camaleona arcoíris!
+voces/arcoiris/pinta/comun/conectado_01.wav	¡Los conectaste!
+voces/arcoiris/pinta/comun/conectado_02.wav	¡Unidos! ¡Qué buena idea!
 voces/arcoiris/pinta/comun/dino_camina_01.wav	¡Jajaja! ¡Los dinos se fueron de paseo!
 voces/arcoiris/pinta/comun/dino_camina_02.wav	¡Miren! ¡Los dinosaurios caminan!
 voces/arcoiris/pinta/comun/lamina_completa_01.wav	¡Lo pintaste todo! ¿Me lo muestras? Toca mi carita.
 voces/arcoiris/pinta/comun/lamina_completa_02.wav	¡Terminado! ¡Muéstramelo!
+voces/arcoiris/pinta/comun/reto_cumplido_01.wav	¡Reto cumplido! ¡Qué artista!
+voces/arcoiris/pinta/comun/reto_cumplido_02.wav	¡Lo lograste! Un reto menos.
 voces/arcoiris/pinta/comun/uso_pincel_estrella.wav	¡Estrellitas! ¡Qué brillo!
 voces/arcoiris/pinta/comun/uso_sello_auto.wav	¡Brum, brum! ¡Un autito!
 voces/arcoiris/pinta/comun/uso_sello_dino.wav	¡Un dinosaurio! ¡Grrr!
@@ -66,18 +76,26 @@ voces/arcoiris/pinta/datos/m_suecia.wav	Suecia está muy al norte. En invierno e
 voces/arcoiris/pinta/datos/m_torres_paine.wav	Están en la Patagonia, en el sur de Chile. Son tres torres de granito, y abajo hay lagos de color turquesa.
 voces/arcoiris/pinta/datos/m_valparaiso.wav	Valparaíso es una ciudad puerto con casas de muchos colores y ascensores que suben los cerros.
 voces/arcoiris/pinta/datos/m_volcan_osorno.wav	Está en el sur de Chile, junto al lago Llanquihue. Tiene la punta siempre nevada, como un helado.
+voces/arcoiris/pinta/estrella/elige_tema.wav	¿Qué quieres crear hoy, Sofía? Elige tu tema.
 voces/arcoiris/pinta/estrella/intro_ala.wav	¡Decora el ala de la nave! Tienes brillos, lunas, estrellas y tu insignia de pony.
 voces/arcoiris/pinta/estrella/intro_codigo.wav	¡Colorear por código! Cada número tiene su color: míralo en la paleta. Pinta todos los cuadritos y descubre el dibujo secreto.
-voces/arcoiris/pinta/estrella/intro_libre.wav	¡Hola, Sofía! Lienzo libre, con pinceles, estrellas y purpurina. Cuando termines, toca mi carita para mostrármelo.
 voces/arcoiris/pinta/estrella/intro_mandala.wav	¡Mandala arcoíris! Todo lo que pintes se repite seis veces alrededor del centro, como en un caleidoscopio.
 voces/arcoiris/pinta/estrella/intro_mezcla.wav	¡Mezcla en la paleta! Solo hay rojo, amarillo, azul y blanco. Toca los colores para echarlos al platito, y pinta con tu mezcla. ¡Descubre colores nuevos!
 voces/arcoiris/pinta/estrella/mostrar_01.wav	¡Wow, Sofía! ¡Es precioso!
 voces/arcoiris/pinta/estrella/mostrar_02.wav	¡Qué obra de arte! Me encanta cómo combinaste los colores.
 voces/arcoiris/pinta/estrella/mostrar_03.wav	¡Increíble, Sofía! Lo voy a guardar en mi galería.
 voces/arcoiris/pinta/estrella/pedidos_listos.wav	¡Preparaste todas mis mezclas! Eres una maestra de los colores. Termina tu dibujo y muéstramelo.
+voces/arcoiris/pinta/estrella/pista_tema.wav	Toca un sticker para agrandarlo, girarlo o darlo vuelta. El balde les cambia el color, y el conector une dos cosas. Arriba están tus retos.
+voces/arcoiris/pinta/estrella/retos_todos.wav	¡Cumpliste los tres retos! ¡Eres una artista de verdad, Sofía!
 voces/arcoiris/pinta/estrella/siguiente_codigo_01.wav	¡Otro mosaico secreto! ¿Qué será?
 voces/arcoiris/pinta/estrella/siguiente_codigo_02.wav	¡Vamos con el siguiente misterio!
 voces/arcoiris/pinta/estrella/siguiente_mandala.wav	¡Otro mandala! Prueba con otros pinceles.
+voces/arcoiris/pinta/estrella/tema_ciudad_ponys.wav	¡La ciudad de los ponys! Construye su pueblo y une las casas con puentes arcoíris.
+voces/arcoiris/pinta/estrella/tema_concierto_pop.wav	¡Concierto de las estrellas del pop! Arma el escenario más brillante del universo, con focos, parlantes y luces.
+voces/arcoiris/pinta/estrella/tema_escuela_magia.wav	¡Escuela de magia! Crea tu castillo mágico con lechuzas, calderos y varitas, y une todo con caminos de destellos.
+voces/arcoiris/pinta/estrella/tema_mision_espacial.wav	¡Misión espacial! Crea tu propia galaxia con planetas, cohetes y mascotas astronautas, y traza rutas de estrellas.
+voces/arcoiris/pinta/estrella/tema_parque_mascotas.wav	¡El parque de las mascotas! Perritos, gatitos y gerbos. Haz senderos para que salgan a pasear.
+voces/arcoiris/pinta/estrella/tema_tren_chile.wav	¡El tren por Chile! Pon lugares de Chile y únelos con rieles: el tren va a viajar entre ellos y te dirá dónde llegó.
 voces/arcoiris/pinta/estrella/uso_destello.wav	¡Destellos! ¡Brilla, brilla!
 voces/arcoiris/pinta/estrella/uso_luna.wav	¡Una luna dormilona!
 voces/arcoiris/pinta/estrella/uso_pony.wav	¡Tu insignia de pony! Te queda perfecta.
@@ -154,7 +172,6 @@ voces/arcoiris/pinta/pedidos_mezcla/verde.wav	¿Puedes preparar verde en tu plat
 voces/arcoiris/pinta/pedidos_mezcla/violeta.wav	¿Te atreves con el morado?
 voces/arcoiris/pinta/semilla/intro_ala.wav	¡Esta es el ala de tu nave! Elige un color y toca el ala para pintarla.
 voces/arcoiris/pinta/semilla/intro_dedo_magico.wav	¡Dedo mágico! Pasa tu dedo por la hoja y escucha la música del arcoíris.
-voces/arcoiris/pinta/semilla/intro_libre.wav	¡Hola, Maxi! Toca un color y pinta con tu dedo. ¡Lo que tú quieras!
 voces/arcoiris/pinta/semilla/intro_pinta_coco.wav	¡Píntame, Maxi! Elige un color y toca mi cuerpito. ¡Voy a cambiar de color!
 voces/arcoiris/pinta/semilla/intro_sellos.wav	¡Mira esta pradera! Toca abajo un dinosaurio o un autito, y después toca la pradera para ponerlo.
 voces/arcoiris/pinta/semilla/mostrar_01.wav	¡Wow, Maxi! ¡Qué lindo!
@@ -162,9 +179,116 @@ voces/arcoiris/pinta/semilla/mostrar_02.wav	¡Me encanta! ¡Está precioso!
 voces/arcoiris/pinta/semilla/mostrar_03.wav	¡Bravo, Maxi! ¡Qué colores!
 voces/arcoiris/pinta/semilla/muestramelo_01.wav	¿Me muestras tu dibujo? ¡Toca mi carita!
 voces/arcoiris/pinta/semilla/muestramelo_02.wav	¡Qué lindo! Toca mi carita para mostrármelo.
+voces/arcoiris/pinta/semilla/pista_tema.wav	Toca un dibujito de abajo y después toca la hoja. ¡Tócalos para que salten!
 voces/arcoiris/pinta/semilla/siguiente_amigo.wav	¡Ahora pinta a mi amigo!
 voces/arcoiris/pinta/semilla/siguiente_dedo.wav	¡Otra hoja mágica! ¡Pinta y escucha!
 voces/arcoiris/pinta/semilla/siguiente_sellos.wav	¡Otro lugar para jugar! ¡A poner dinosaurios!
+voces/arcoiris/pinta/semilla/tema_bomberos.wav	¡Maxi, hoy eres bombero! Pon el camión, las casitas y el fuego.
+voces/arcoiris/pinta/semilla/tema_espacio.wav	¡Maxi, hoy dibujamos el espacio! Pon cohetes, planetas y estrellas.
+voces/arcoiris/pinta/semilla/tema_parque_dinos.wav	¡Maxi, hoy dibujamos un parque de dinosaurios! Toca un dino abajo y ponlo en el parque.
+voces/arcoiris/pinta/semilla/tema_pista_carreras.wav	¡Maxi, hoy dibujamos una pista de carreras! Pon autos y dibuja la pista con tu dedo.
 voces/arcoiris/pinta/semilla/uso_arcoiris.wav	¡Un arcoíris que canta!
 voces/arcoiris/pinta/semilla/victoria_01.wav	¡Eres un gran pintor, Maxi!
 voces/arcoiris/pinta/semilla/victoria_02.wav	¡Siii! ¡Qué obra de arte!
+voces/arcoiris/pinta/stickers/arbol.wav	¡Un árbol!
+voces/arcoiris/pinta/stickers/arcoiris.wav	¡Un arcoíris!
+voces/arcoiris/pinta/stickers/bandera_chile.wav	¡La bandera de Chile!
+voces/arcoiris/pinta/stickers/bandera_meta.wav	¡La bandera de la meta!
+voces/arcoiris/pinta/stickers/bomberos.wav	¡El camión de bomberos! ¡Iu, iu, iu!
+voces/arcoiris/pinta/stickers/bus.wav	¡Un bus! ¡Todos a bordo!
+voces/arcoiris/pinta/stickers/cactus.wav	¡Un cactus del desierto de Atacama!
+voces/arcoiris/pinta/stickers/caldero.wav	¡Un caldero con poción!
+voces/arcoiris/pinta/stickers/carnotauro.wav	¡Un carnotauro, con sus cuernitos!
+voces/arcoiris/pinta/stickers/carrito.wav	¡Un auto de carreras! ¡Brum, brum!
+voces/arcoiris/pinta/stickers/carroza.wav	¡Una carroza mágica!
+voces/arcoiris/pinta/stickers/casa.wav	¡Una casita!
+voces/arcoiris/pinta/stickers/casa_valpo.wav	¡Una casita de colores de Valparaíso!
+voces/arcoiris/pinta/stickers/castillo.wav	¡Un castillo!
+voces/arcoiris/pinta/stickers/cohete.wav	¡Un cohete! ¡Tres, dos, uno, despegue!
+voces/arcoiris/pinta/stickers/copihue.wav	¡El copihue, la flor nacional de Chile!
+voces/arcoiris/pinta/stickers/corazon.wav	¡Un corazón!
+voces/arcoiris/pinta/stickers/corona.wav	¡Una corona de princesa!
+voces/arcoiris/pinta/stickers/destello.wav	¡Un destello!
+voces/arcoiris/pinta/stickers/escoba.wav	¡Una escoba voladora!
+voces/arcoiris/pinta/stickers/estrella.wav	¡Una estrella!
+voces/arcoiris/pinta/stickers/flor.wav	¡Una flor!
+voces/arcoiris/pinta/stickers/foco.wav	¡Un foco de luz!
+voces/arcoiris/pinta/stickers/fuego.wav	¡Fuego! ¡Llamen a los bomberos!
+voces/arcoiris/pinta/stickers/gatito.wav	¡Un gatito! ¡Miau!
+voces/arcoiris/pinta/stickers/gerbo.wav	¡Un gerbo, chiquitito y curioso!
+voces/arcoiris/pinta/stickers/globo.wav	¡Un globo!
+voces/arcoiris/pinta/stickers/granero.wav	¡Un granero!
+voces/arcoiris/pinta/stickers/hueso.wav	¡Un hueso para el perrito!
+voces/arcoiris/pinta/stickers/jirafa.wav	¡Una jirafa, con su cuello larguísimo!
+voces/arcoiris/pinta/stickers/lechuza.wav	¡Una lechuza! ¡Uh, uh!
+voces/arcoiris/pinta/stickers/libro.wav	¡Un libro de hechizos!
+voces/arcoiris/pinta/stickers/luna.wav	¡La luna!
+voces/arcoiris/pinta/stickers/manzana.wav	¡Una manzana!
+voces/arcoiris/pinta/stickers/microfono.wav	¡Un micrófono! ¡A cantar!
+voces/arcoiris/pinta/stickers/moai.wav	¡Un moái de Rapa Nui, la Isla de Pascua!
+voces/arcoiris/pinta/stickers/montana.wav	¡Las Torres del Paine, en la Patagonia!
+voces/arcoiris/pinta/stickers/nota.wav	¡Una nota musical!
+voces/arcoiris/pinta/stickers/nube.wav	¡Una nube!
+voces/arcoiris/pinta/stickers/ovillo.wav	¡Un ovillo de lana!
+voces/arcoiris/pinta/stickers/palmera.wav	¡Una palmera!
+voces/arcoiris/pinta/stickers/parlante.wav	¡Un parlante! ¡Súbele!
+voces/arcoiris/pinta/stickers/pastel.wav	¡Un pastel de cumpleaños!
+voces/arcoiris/pinta/stickers/pelota.wav	¡Una pelota!
+voces/arcoiris/pinta/stickers/perrito.wav	¡Un perrito! ¡Guau!
+voces/arcoiris/pinta/stickers/pinguino.wav	¡Un pingüino de la Patagonia!
+voces/arcoiris/pinta/stickers/planeta.wav	¡Un planeta con anillos!
+voces/arcoiris/pinta/stickers/pony_amigo.wav	¡Un pony!
+voces/arcoiris/pinta/stickers/regalo.wav	¡Un regalo!
+voces/arcoiris/pinta/stickers/roca.wav	¡Una roca!
+voces/arcoiris/pinta/stickers/sol.wav	¡El sol!
+voces/arcoiris/pinta/stickers/sombrero_mago.wav	¡Un sombrero de mago!
+voces/arcoiris/pinta/stickers/spinosaurio.wav	¡Un espinosaurio, con su vela en la espalda!
+voces/arcoiris/pinta/stickers/tren.wav	¡Un tren! ¡Chu, chu!
+voces/arcoiris/pinta/stickers/trex.wav	¡Un tiranosaurio rex! ¡Grrr!
+voces/arcoiris/pinta/stickers/unicornio.wav	¡Un unicornio!
+voces/arcoiris/pinta/stickers/varita.wav	¡Una varita mágica!
+voces/arcoiris/pinta/stickers/vestido.wav	¡Un vestido precioso!
+voces/arcoiris/pinta/stickers/volcan.wav	¡Un volcán! En Chile hay muchísimos.
+voces/arcoiris/pinta/stickers/zapato.wav	¡Un zapato de princesa!
+voces/arcoiris/pinta/temas/conector_bomberos.wav	¡Una calle! ¡Allá va el camión de bomberos!
+voces/arcoiris/pinta/temas/conector_castillo_princesas.wav	¡Un puente arcoíris! Une dos cosas y la carroza viajará por él.
+voces/arcoiris/pinta/temas/conector_ciudad_ponys.wav	¡Un puente arcoíris! El unicornio lo va a cruzar.
+voces/arcoiris/pinta/temas/conector_concierto_pop.wav	¡Luces de colores! Cuélgalas entre dos cosas del escenario.
+voces/arcoiris/pinta/temas/conector_escenario_pop.wav	¡Luces de colores para el escenario! Úsalas para unir dos cosas.
+voces/arcoiris/pinta/temas/conector_escuela_magia.wav	¡Un camino de destellos! La escoba mágica vuela por él.
+voces/arcoiris/pinta/temas/conector_espacio.wav	¡Una ruta de estrellas! ¡El cohete la sigue!
+voces/arcoiris/pinta/temas/conector_fiesta_gatitos.wav	¡Una guirnalda de luces! Úsala para unir dos cosas.
+voces/arcoiris/pinta/temas/conector_granja_ponys.wav	¡Una cerca! Une dos cosas y mira cómo pasea el pony.
+voces/arcoiris/pinta/temas/conector_mision_espacial.wav	¡Una ruta de estrellas! El cohete viaja por ella.
+voces/arcoiris/pinta/temas/conector_parque_dinos.wav	¡Un sendero! ¡El dinosaurio sale a pasear!
+voces/arcoiris/pinta/temas/conector_parque_mascotas.wav	¡Un sendero! El perrito sale a pasear por él.
+voces/arcoiris/pinta/temas/conector_pista_carreras.wav	¡Dibuja la pista con tu dedo! ¡El auto va a correr por ahí!
+voces/arcoiris/pinta/temas/conector_safari_jirafas.wav	¡Un sendero! La jirafa va a caminar por él.
+voces/arcoiris/pinta/temas/conector_tren_chile.wav	¡Rieles de tren! Une dos lugares de Chile y el tren viajará entre ellos.
+voces/arcoiris/pinta/temas/nombre_bomberos.wav	¡Bomberos al rescate!
+voces/arcoiris/pinta/temas/nombre_castillo_princesas.wav	¡Castillo de princesas!
+voces/arcoiris/pinta/temas/nombre_ciudad_ponys.wav	¡Ciudad de los ponys!
+voces/arcoiris/pinta/temas/nombre_concierto_pop.wav	¡Concierto pop!
+voces/arcoiris/pinta/temas/nombre_escenario_pop.wav	¡Escenario de estrellas del pop!
+voces/arcoiris/pinta/temas/nombre_escuela_magia.wav	¡Escuela de magia!
+voces/arcoiris/pinta/temas/nombre_espacio.wav	¡El espacio!
+voces/arcoiris/pinta/temas/nombre_fiesta_gatitos.wav	¡Fiesta de gatitos!
+voces/arcoiris/pinta/temas/nombre_granja_ponys.wav	¡Granja de ponys!
+voces/arcoiris/pinta/temas/nombre_mision_espacial.wav	¡Misión espacial!
+voces/arcoiris/pinta/temas/nombre_parque_dinos.wav	¡Parque de dinosaurios!
+voces/arcoiris/pinta/temas/nombre_parque_mascotas.wav	¡Parque de mascotas!
+voces/arcoiris/pinta/temas/nombre_pista_carreras.wav	¡Pista de carreras!
+voces/arcoiris/pinta/temas/nombre_safari_jirafas.wav	¡Safari de jirafas!
+voces/arcoiris/pinta/temas/nombre_tren_chile.wav	¡Tren por Chile!
+voces/arcoiris/pinta/temas/reto_ciudad_ponys.wav	Reto de artista: pon dos unicornios en la ciudad.
+voces/arcoiris/pinta/temas/reto_colores_5.wav	Reto de artista: usa cinco colores distintos.
+voces/arcoiris/pinta/temas/reto_colores_6.wav	Reto de artista: usa seis colores distintos.
+voces/arcoiris/pinta/temas/reto_concierto_pop.wav	Reto de artista: ilumina el escenario con tres focos.
+voces/arcoiris/pinta/temas/reto_conexiones_2.wav	Reto de artista: une dos pares de cosas con el conector.
+voces/arcoiris/pinta/temas/reto_distintos_6.wav	Reto de artista: pon seis stickers distintos.
+voces/arcoiris/pinta/temas/reto_distintos_7.wav	Reto de artista: pon siete stickers distintos.
+voces/arcoiris/pinta/temas/reto_distintos_8.wav	Reto de artista: pon ocho stickers distintos.
+voces/arcoiris/pinta/temas/reto_escuela_magia.wav	Reto de artista: pon tres lechuzas en tu escuela de magia.
+voces/arcoiris/pinta/temas/reto_mision_espacial.wav	Reto de artista: crea tres planetas.
+voces/arcoiris/pinta/temas/reto_parque_mascotas.wav	Reto de artista: pon tres perritos en el parque.
+voces/arcoiris/pinta/temas/reto_tren_chile.wav	Reto de artista: pon la bandera de Chile.

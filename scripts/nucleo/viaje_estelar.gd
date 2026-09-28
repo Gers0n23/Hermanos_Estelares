@@ -34,6 +34,12 @@ extends Node2D
 ##   ni vuelta al mapa: el viaje siempre llega al planeta. Desde la segunda avería del
 ##   mismo viaje se suma un corazón extra, sin anunciarlo (ayuda escondida).
 ##
+## Burbuja-recuerdo (album "Las migas de papa", ficha album-recuerdos §4): si el catálogo tiene
+## una foto pendiente para este viaje (evento genérico {tipo: viaje, origen, destino}), una burbuja
+## con una fotito cruza lenta; se atrapa tocándola o chocándola con la nave (a Maxi lo busca sola).
+## Al atraparla el viaje se detiene y llega el sobre-estrella; si se escapa, vuelve a pasar y, si
+## el viaje termina sin atraparla, pasa en el próximo viaje. Nunca se pierde.
+##
 ## Emite `completado(destellos)` cuando termina la celebración del aterrizaje.
 ##
 ## Ver en movimiento (perfil = hermano; viaje=origen,destino; duracion_viaje acorta la
@@ -195,6 +201,14 @@ var _siguiente_escuadrilla := 0
 var _jefe_aparecido := false
 var _reproductor_disparo: AudioStreamPlayer
 
+# burbuja-recuerdo
+const COLORES_HERMANO := {"maxi": "#4aa8ff", "nicole": "#ff5fae", "sofia": "#4fd8e0"}
+var _recuerdo_evento := {}
+var _burbuja := {}         # {pos, fase} mientras cruza la pantalla
+var _proxima_burbuja := -1.0
+var _burbuja_atrapada := false
+var _entrega: Node         # sobre-estrella en curso: el viaje queda en pausa
+
 
 func _ready() -> void:
 	_rng.seed = 11
@@ -245,6 +259,7 @@ func _ready() -> void:
 	var audio := get_node_or_null("/root/Audio")
 	if audio != null:
 		audio.reproducir_musica(MUSICA_VIAJE)
+	_preparar_burbuja_recuerdo()
 
 
 func _exit_tree() -> void:
@@ -295,6 +310,8 @@ func _superficie(id: String, plataforma: int, elevacion: float) -> float:
 # --- bucle -----------------------------------------------------------------------
 
 func _process(delta: float) -> void:
+	if _entrega != null:
+		return  # todo se detiene mientras llega el sobre-estrella
 	_t += delta
 	_fase_t += delta
 	var velocidad: float = _cfg["velocidad"]
@@ -306,6 +323,7 @@ func _process(delta: float) -> void:
 			_recorrido += delta
 			_revisar_punto_control()
 			_generar(delta)
+			_mover_burbuja(delta)
 			if _recorrido >= _cfg["duracion"]:
 				_cambiar_fase("llegada")
 				_despedir_jefe()
@@ -919,6 +937,9 @@ func _unhandled_input(evento: InputEvent) -> void:
 	if _fase != "viaje":
 		return
 	var p := pos / ESCALA
+	if not _burbuja.is_empty() and (_burbuja["pos"] as Vector2).distance_to(p) < 22.0:
+		_atrapar_burbuja()
+		return
 	# tocar un premio lo recoge directo; tocar el cielo lleva la nave hacia ahí
 	for d in _destellos:
 		if d["espera"] <= 0 and d["pos"].distance_to(p) < _cfg["radio_recoger"]:
@@ -960,6 +981,9 @@ func _draw() -> void:
 		var pulso := 1.0 + 0.15 * sin(_t * 8.0 + d["fase"])
 		var col := Color(1, 1, 1, 0.55 if d["espera"] > 0 else 1.0)
 		draw_texture(tex, (d["pos"] - tex.get_size() / 2.0 * pulso).floor(), col)
+
+	if not _burbuja.is_empty():
+		_dibujar_burbuja()
 
 	for o in _obstaculos:
 		var tex: Texture2D = _tex[o["tipo"]]
@@ -1206,3 +1230,108 @@ func _dibujar_hud() -> void:
 			draw_texture(_tex["corazon_grande"], p + Vector2(0, -10.0 * (1.0 - _corazon_perdido)).floor(), Color(1, 1, 1, _corazon_perdido))
 	if _triple > 0 and (_triple > 2.0 or int(_t * 8.0) % 2 == 0):
 		draw_texture(_tex["poder"], Vector2(ANCHO - 14, 18 if _vidas_max > 0 else 4))
+
+
+# --- burbuja-recuerdo (album "Las migas de papa") ---------------------------------
+
+func _id_perfil() -> String:
+	var progreso := get_node_or_null("/root/Progreso")
+	return progreso.perfil_seleccionado if progreso != null else ""
+
+
+func _preparar_burbuja_recuerdo() -> void:
+	var recuerdos := get_node_or_null("/root/Recuerdos")
+	if recuerdos == null or _id_perfil() == "":
+		return
+	var evento := {"tipo": "viaje", "origen": planeta_origen, "destino": planeta_destino}
+	if recuerdos.pendientes(evento, _id_perfil()).is_empty():
+		return
+	_recuerdo_evento = evento
+	_proxima_burbuja = minf(10.0, float(_cfg["duracion"]) * 0.3)
+
+
+func hay_burbuja_pendiente() -> bool:
+	return not _recuerdo_evento.is_empty() and not _burbuja_atrapada
+
+
+func _mover_burbuja(delta: float) -> void:
+	if _recuerdo_evento.is_empty() or _burbuja_atrapada:
+		return
+	if _burbuja.is_empty():
+		_proxima_burbuja -= delta
+		if _proxima_burbuja <= 0.0 and float(_cfg["duracion"]) - _recorrido > 7.0:
+			_burbuja = {"pos": Vector2(ANCHO + 16, clampf(_nave.y, TECHO + 24, ALTO - 24)), "fase": 0.0}
+			_decir_recuerdos("burbuja_aviso")
+		return
+	_burbuja["fase"] += delta
+	var pos: Vector2 = _burbuja["pos"]
+	pos.x -= 0.7 * float(_cfg["velocidad"]) * delta
+	pos.y += sin(_burbuja["fase"] * 2.0) * 10.0 * delta
+	var centro := _centro_nave()
+	var distancia := pos.distance_to(centro)
+	# imán suave hacia la nave; a Maxi (rocas que se apartan) la burbuja lo busca de lejos
+	var iman := 80.0 if _cfg["se_apartan"] else 40.0
+	if distancia < iman:
+		pos = pos.move_toward(centro, (55.0 if _cfg["se_apartan"] else 22.0) * delta)
+	pos.y = clampf(pos.y, TECHO + 12, ALTO - 12)
+	_burbuja["pos"] = pos
+	if distancia < float(_cfg["radio_recoger"]) + 12.0 or pos.distance_to(_centro_cometa()) < float(_cfg["radio_recoger"]) + 6.0:
+		_atrapar_burbuja()
+	elif pos.x < -18:
+		_burbuja = {}
+		_proxima_burbuja = 6.0
+		_decir_recuerdos("burbuja_vuelve")
+
+
+func _atrapar_burbuja() -> void:
+	if _burbuja.is_empty():
+		return
+	var pos: Vector2 = _burbuja["pos"]
+	_burbuja = {}
+	_burbuja_atrapada = true
+	_tocando = false
+	_explosion(pos, ["#bfe8f5", "#ffffff", "#ff9ed6", "#ffd23f"], 30, 110.0)
+	_aros.append({"pos": pos, "radio": 4.0})
+	_salto_cometa = 1.0
+	_sonar(SFX_PODER)
+	var recuerdos := get_node_or_null("/root/Recuerdos")
+	if recuerdos == null:
+		return
+	var nuevos: Array = recuerdos.desbloquear(_recuerdo_evento, _id_perfil())
+	if nuevos.is_empty():
+		return
+	var entrega: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear(nuevos)
+	entrega.name = "entrega_recuerdo"
+	var linea: String = recuerdos.elegir_linea("burbuja_atrapada")
+	if linea != "":
+		entrega.voz_sobre = linea
+	entrega.terminada.connect(func() -> void:
+		_entrega = null
+		_tocando = false
+		_invulnerable = PROTECCION)
+	_entrega = entrega
+	queue_redraw()
+	add_child(entrega)
+
+
+func _dibujar_burbuja() -> void:
+	var c: Vector2 = (_burbuja["pos"] as Vector2).floor()
+	var r := 13.0 + sin(_t * 5.0)
+	_circulo_pixel(c, r + 1.0, Color(1, 1, 1, 0.3))
+	_circulo_pixel(c, r, Color(0.75, 0.91, 0.96, 0.35))
+	draw_rect(Rect2(c + Vector2(-7, -8), Vector2(14, 16)), Arte.CONTORNO)
+	draw_rect(Rect2(c + Vector2(-6, -7), Vector2(12, 14)), Color("#fff8ee"))
+	draw_rect(Rect2(c + Vector2(-5, -6), Vector2(10, 8)), Color(COLORES_HERMANO.get(_id_perfil(), "#6fd6e8")))
+	draw_rect(Rect2(c + Vector2(-1, -4), Vector2(3, 3)), Color("#ffd23f"))
+	draw_arc(c, r, 0, TAU, 32, Color(1, 1, 1, 0.9), 1.0)
+	draw_rect(Rect2(c + Vector2(-r * 0.6, -r * 0.65), Vector2(3, 2)), Color.WHITE)
+
+
+func _decir_recuerdos(clave: String) -> void:
+	var recuerdos := get_node_or_null("/root/Recuerdos")
+	var audio := get_node_or_null("/root/Audio")
+	if recuerdos == null or audio == null:
+		return
+	var ruta: String = recuerdos.elegir_linea(clave)
+	if ruta != "":
+		audio.reproducir_voz(ruta)

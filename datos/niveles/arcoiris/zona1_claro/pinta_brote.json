@@ -29,12 +29,1140 @@
     "verde_oscuro"
   ],
   "color_inicial": "rosa",
-  "herramientas": [
-    "pincel",
-    "pincel_corazon",
-    "pincel_estrella",
-    "goma"
+  "lado_sello": 104,
+  "temas": [
+    {
+      "id": "granja_ponys",
+      "fondo": {
+        "id": "fondo_granja_ponys",
+        "tipo": "zonas",
+        "regiones": [
+          {
+            "id": "cielo",
+            "forma": "rect",
+            "rect": [
+              0,
+              0,
+              824,
+              530
+            ],
+            "redondeo": 0,
+            "inicial": "#BFE8FF"
+          },
+          {
+            "id": "sol",
+            "forma": "circulo",
+            "centro": [
+              724,
+              82
+            ],
+            "radio": 52,
+            "inicial": "#FFD23F"
+          },
+          {
+            "id": "nube",
+            "forma": "poligono",
+            "puntos": [
+              [
+                278.0,
+                90.0
+              ],
+              [
+                277.0,
+                94.7
+              ],
+              [
+                274.2,
+                99.3
+              ],
+              [
+                269.5,
+                103.6
+              ],
+              [
+                263.1,
+                107.6
+              ],
+              [
+                255.2,
+                111.2
+              ],
+              [
+                245.8,
+                114.3
+              ],
+              [
+                235.4,
+                116.7
+              ],
+              [
+                224.1,
+                118.5
+              ],
+              [
+                212.2,
+                119.6
+              ],
+              [
+                200.0,
+                120.0
+              ],
+              [
+                187.8,
+                119.6
+              ],
+              [
+                175.9,
+                118.5
+              ],
+              [
+                164.6,
+                116.7
+              ],
+              [
+                154.2,
+                114.3
+              ],
+              [
+                144.8,
+                111.2
+              ],
+              [
+                136.9,
+                107.6
+              ],
+              [
+                130.5,
+                103.6
+              ],
+              [
+                125.8,
+                99.3
+              ],
+              [
+                123.0,
+                94.7
+              ],
+              [
+                122.0,
+                90.0
+              ],
+              [
+                113.7,
+                82.1
+              ],
+              [
+                122.4,
+                75.5
+              ],
+              [
+                130.5,
+                69.6
+              ],
+              [
+                136.9,
+                63.5
+              ],
+              [
+                144.8,
+                58.2
+              ],
+              [
+                154.2,
+                53.6
+              ],
+              [
+                164.6,
+                49.9
+              ],
+              [
+                175.9,
+                47.2
+              ],
+              [
+                187.8,
+                45.6
+              ],
+              [
+                200.0,
+                42.1
+              ],
+              [
+                213.8,
+                39.6
+              ],
+              [
+                228.3,
+                39.8
+              ],
+              [
+                241.6,
+                42.9
+              ],
+              [
+                252.2,
+                48.5
+              ],
+              [
+                259.2,
+                55.9
+              ],
+              [
+                263.1,
+                63.5
+              ],
+              [
+                269.5,
+                69.6
+              ],
+              [
+                274.2,
+                76.1
+              ],
+              [
+                277.0,
+                83.0
+              ]
+            ],
+            "inicial": "#FFFFFF"
+          },
+          {
+            "id": "colinas",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                300
+              ],
+              [
+                200,
+                250
+              ],
+              [
+                420,
+                290
+              ],
+              [
+                640,
+                240
+              ],
+              [
+                824,
+                280
+              ],
+              [
+                824,
+                530
+              ],
+              [
+                0,
+                530
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#8FD98A"
+          },
+          {
+            "id": "pasto",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                380
+              ],
+              [
+                260,
+                360
+              ],
+              [
+                520,
+                382
+              ],
+              [
+                824,
+                366
+              ],
+              [
+                824,
+                530
+              ],
+              [
+                0,
+                530
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#5CC95F"
+          }
+        ],
+        "detalles": []
+      },
+      "stickers": [
+        "pony_amigo",
+        "granero",
+        "arbol",
+        "manzana",
+        "flor",
+        "sol",
+        "nube",
+        "corazon"
+      ],
+      "conector": {
+        "tipo": "cerca",
+        "viajero": "pony_amigo"
+      },
+      "portada": [
+        "pony_amigo",
+        "granero",
+        "arbol"
+      ],
+      "herramienta_inicial": "sello_pony_amigo",
+      "herramientas": [
+        "pincel",
+        "pincel_corazon",
+        "pincel_estrella",
+        "balde",
+        "goma",
+        "bolsa",
+        "conector"
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/pinta/brote/tema_granja_ponys.wav",
+        "nombre": "voces/arcoiris/pinta/temas/nombre_granja_ponys.wav",
+        "uso_conector": "voces/arcoiris/pinta/temas/conector_granja_ponys.wav",
+        "pista": "voces/arcoiris/pinta/brote/pista_tema.wav"
+      }
+    },
+    {
+      "id": "safari_jirafas",
+      "fondo": {
+        "id": "fondo_safari_jirafas",
+        "tipo": "zonas",
+        "regiones": [
+          {
+            "id": "cielo",
+            "forma": "rect",
+            "rect": [
+              0,
+              0,
+              824,
+              530
+            ],
+            "redondeo": 0,
+            "inicial": "#FFE7B0"
+          },
+          {
+            "id": "sol",
+            "forma": "circulo",
+            "centro": [
+              640,
+              150
+            ],
+            "radio": 80,
+            "inicial": "#FF9A2E"
+          },
+          {
+            "id": "montes",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                300
+              ],
+              [
+                160,
+                240
+              ],
+              [
+                300,
+                290
+              ],
+              [
+                500,
+                230
+              ],
+              [
+                824,
+                290
+              ],
+              [
+                824,
+                340
+              ],
+              [
+                0,
+                340
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#E0B87A"
+          },
+          {
+            "id": "pasto",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                320
+              ],
+              [
+                824,
+                310
+              ],
+              [
+                824,
+                530
+              ],
+              [
+                0,
+                530
+              ]
+            ],
+            "inicial": "#E9D27A"
+          },
+          {
+            "id": "charco",
+            "forma": "elipse",
+            "centro": [
+              620,
+              460
+            ],
+            "radios": [
+              130,
+              34
+            ],
+            "inicial": "#8ED3FF"
+          }
+        ],
+        "detalles": []
+      },
+      "stickers": [
+        "jirafa",
+        "arbol",
+        "roca",
+        "sol",
+        "nube",
+        "flor",
+        "corazon",
+        "estrella"
+      ],
+      "conector": {
+        "tipo": "sendero",
+        "viajero": "jirafa"
+      },
+      "portada": [
+        "jirafa",
+        "arbol",
+        "roca"
+      ],
+      "herramienta_inicial": "sello_jirafa",
+      "herramientas": [
+        "pincel",
+        "pincel_corazon",
+        "pincel_estrella",
+        "balde",
+        "goma",
+        "bolsa",
+        "conector"
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/pinta/brote/tema_safari_jirafas.wav",
+        "nombre": "voces/arcoiris/pinta/temas/nombre_safari_jirafas.wav",
+        "uso_conector": "voces/arcoiris/pinta/temas/conector_safari_jirafas.wav",
+        "pista": "voces/arcoiris/pinta/brote/pista_tema.wav"
+      }
+    },
+    {
+      "id": "castillo_princesas",
+      "fondo": {
+        "id": "fondo_castillo_princesas",
+        "tipo": "zonas",
+        "regiones": [
+          {
+            "id": "cielo",
+            "forma": "rect",
+            "rect": [
+              0,
+              0,
+              824,
+              530
+            ],
+            "redondeo": 0,
+            "inicial": "#FFE3F1"
+          },
+          {
+            "id": "nube_1",
+            "forma": "poligono",
+            "puntos": [
+              [
+                228.0,
+                80.0
+              ],
+              [
+                227.0,
+                84.7
+              ],
+              [
+                224.2,
+                89.3
+              ],
+              [
+                219.5,
+                93.6
+              ],
+              [
+                213.1,
+                97.6
+              ],
+              [
+                205.2,
+                101.2
+              ],
+              [
+                195.8,
+                104.3
+              ],
+              [
+                185.4,
+                106.7
+              ],
+              [
+                174.1,
+                108.5
+              ],
+              [
+                162.2,
+                109.6
+              ],
+              [
+                150.0,
+                110.0
+              ],
+              [
+                137.8,
+                109.6
+              ],
+              [
+                125.9,
+                108.5
+              ],
+              [
+                114.6,
+                106.7
+              ],
+              [
+                104.2,
+                104.3
+              ],
+              [
+                94.8,
+                101.2
+              ],
+              [
+                86.9,
+                97.6
+              ],
+              [
+                80.5,
+                93.6
+              ],
+              [
+                75.8,
+                89.3
+              ],
+              [
+                73.0,
+                84.7
+              ],
+              [
+                72.0,
+                80.0
+              ],
+              [
+                63.7,
+                72.1
+              ],
+              [
+                72.4,
+                65.5
+              ],
+              [
+                80.5,
+                59.6
+              ],
+              [
+                86.9,
+                53.5
+              ],
+              [
+                94.8,
+                48.2
+              ],
+              [
+                104.2,
+                43.6
+              ],
+              [
+                114.6,
+                39.9
+              ],
+              [
+                125.9,
+                37.2
+              ],
+              [
+                137.8,
+                35.6
+              ],
+              [
+                150.0,
+                32.1
+              ],
+              [
+                163.8,
+                29.6
+              ],
+              [
+                178.3,
+                29.8
+              ],
+              [
+                191.6,
+                32.9
+              ],
+              [
+                202.2,
+                38.5
+              ],
+              [
+                209.2,
+                45.9
+              ],
+              [
+                213.1,
+                53.5
+              ],
+              [
+                219.5,
+                59.6
+              ],
+              [
+                224.2,
+                66.1
+              ],
+              [
+                227.0,
+                73.0
+              ]
+            ],
+            "inicial": "#FFFFFF"
+          },
+          {
+            "id": "nube_2",
+            "forma": "poligono",
+            "puntos": [
+              [
+                712.4,
+                110.0
+              ],
+              [
+                711.6,
+                113.8
+              ],
+              [
+                709.3,
+                117.4
+              ],
+              [
+                705.6,
+                120.9
+              ],
+              [
+                700.5,
+                124.1
+              ],
+              [
+                694.1,
+                127.0
+              ],
+              [
+                686.7,
+                129.4
+              ],
+              [
+                678.3,
+                131.4
+              ],
+              [
+                669.3,
+                132.8
+              ],
+              [
+                659.8,
+                133.7
+              ],
+              [
+                650.0,
+                134.0
+              ],
+              [
+                640.2,
+                133.7
+              ],
+              [
+                630.7,
+                132.8
+              ],
+              [
+                621.7,
+                131.4
+              ],
+              [
+                613.3,
+                129.4
+              ],
+              [
+                605.9,
+                127.0
+              ],
+              [
+                599.5,
+                124.1
+              ],
+              [
+                594.4,
+                120.9
+              ],
+              [
+                590.7,
+                117.4
+              ],
+              [
+                588.4,
+                113.8
+              ],
+              [
+                587.6,
+                110.0
+              ],
+              [
+                581.0,
+                103.7
+              ],
+              [
+                587.9,
+                98.4
+              ],
+              [
+                594.4,
+                93.7
+              ],
+              [
+                599.5,
+                88.8
+              ],
+              [
+                605.9,
+                84.5
+              ],
+              [
+                613.3,
+                80.9
+              ],
+              [
+                621.7,
+                77.9
+              ],
+              [
+                630.7,
+                75.8
+              ],
+              [
+                640.2,
+                74.4
+              ],
+              [
+                650.0,
+                71.7
+              ],
+              [
+                661.1,
+                69.7
+              ],
+              [
+                672.6,
+                69.8
+              ],
+              [
+                683.3,
+                72.3
+              ],
+              [
+                691.8,
+                76.8
+              ],
+              [
+                697.3,
+                82.7
+              ],
+              [
+                700.5,
+                88.8
+              ],
+              [
+                705.6,
+                93.7
+              ],
+              [
+                709.3,
+                98.9
+              ],
+              [
+                711.6,
+                104.4
+              ]
+            ],
+            "inicial": "#FFFFFF"
+          },
+          {
+            "id": "colina",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                330
+              ],
+              [
+                260,
+                250
+              ],
+              [
+                560,
+                280
+              ],
+              [
+                824,
+                240
+              ],
+              [
+                824,
+                530
+              ],
+              [
+                0,
+                530
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#D9C2F0"
+          },
+          {
+            "id": "pradera",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                420
+              ],
+              [
+                824,
+                400
+              ],
+              [
+                824,
+                530
+              ],
+              [
+                0,
+                530
+              ]
+            ],
+            "inicial": "#BDE8B0"
+          }
+        ],
+        "detalles": []
+      },
+      "stickers": [
+        "castillo",
+        "carroza",
+        "corona",
+        "vestido",
+        "zapato",
+        "corazon",
+        "estrella",
+        "arcoiris"
+      ],
+      "conector": {
+        "tipo": "arcoiris",
+        "viajero": "carroza"
+      },
+      "portada": [
+        "castillo",
+        "carroza",
+        "corona"
+      ],
+      "herramienta_inicial": "sello_castillo",
+      "herramientas": [
+        "pincel",
+        "pincel_corazon",
+        "pincel_estrella",
+        "balde",
+        "goma",
+        "bolsa",
+        "conector"
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/pinta/brote/tema_castillo_princesas.wav",
+        "nombre": "voces/arcoiris/pinta/temas/nombre_castillo_princesas.wav",
+        "uso_conector": "voces/arcoiris/pinta/temas/conector_castillo_princesas.wav",
+        "pista": "voces/arcoiris/pinta/brote/pista_tema.wav"
+      }
+    },
+    {
+      "id": "fiesta_gatitos",
+      "fondo": {
+        "id": "fondo_fiesta_gatitos",
+        "tipo": "zonas",
+        "regiones": [
+          {
+            "id": "pared",
+            "forma": "rect",
+            "rect": [
+              0,
+              0,
+              824,
+              380
+            ],
+            "redondeo": 0,
+            "inicial": "#FFF1C9"
+          },
+          {
+            "id": "ventana",
+            "forma": "rect",
+            "rect": [
+              90,
+              60,
+              200,
+              150
+            ],
+            "redondeo": 10,
+            "inicial": "#BFE8FF"
+          },
+          {
+            "id": "cuadro",
+            "forma": "rect",
+            "rect": [
+              560,
+              70,
+              150,
+              110
+            ],
+            "redondeo": 8,
+            "inicial": "#FFB3C7"
+          },
+          {
+            "id": "piso",
+            "forma": "rect",
+            "rect": [
+              0,
+              380,
+              824,
+              150
+            ],
+            "redondeo": 0,
+            "inicial": "#E0B48A"
+          },
+          {
+            "id": "alfombra",
+            "forma": "elipse",
+            "centro": [
+              412,
+              455
+            ],
+            "radios": [
+              300,
+              55
+            ],
+            "inicial": "#FF9FC8"
+          }
+        ],
+        "detalles": []
+      },
+      "stickers": [
+        "gatito",
+        "ovillo",
+        "pastel",
+        "globo",
+        "regalo",
+        "corazon",
+        "estrella",
+        "flor"
+      ],
+      "conector": {
+        "tipo": "guirnalda"
+      },
+      "portada": [
+        "gatito",
+        "ovillo",
+        "pastel"
+      ],
+      "herramienta_inicial": "sello_gatito",
+      "herramientas": [
+        "pincel",
+        "pincel_corazon",
+        "pincel_estrella",
+        "balde",
+        "goma",
+        "bolsa",
+        "conector"
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/pinta/brote/tema_fiesta_gatitos.wav",
+        "nombre": "voces/arcoiris/pinta/temas/nombre_fiesta_gatitos.wav",
+        "uso_conector": "voces/arcoiris/pinta/temas/conector_fiesta_gatitos.wav",
+        "pista": "voces/arcoiris/pinta/brote/pista_tema.wav"
+      }
+    },
+    {
+      "id": "escenario_pop",
+      "fondo": {
+        "id": "fondo_escenario_pop",
+        "tipo": "zonas",
+        "regiones": [
+          {
+            "id": "fondo",
+            "forma": "rect",
+            "rect": [
+              0,
+              0,
+              824,
+              530
+            ],
+            "redondeo": 0,
+            "inicial": "#3B2A6B"
+          },
+          {
+            "id": "telon_izq",
+            "forma": "poligono",
+            "puntos": [
+              [
+                0,
+                0
+              ],
+              [
+                150,
+                0
+              ],
+              [
+                110,
+                200
+              ],
+              [
+                60,
+                400
+              ],
+              [
+                0,
+                400
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#F26CA8"
+          },
+          {
+            "id": "telon_der",
+            "forma": "poligono",
+            "puntos": [
+              [
+                824,
+                0
+              ],
+              [
+                674,
+                0
+              ],
+              [
+                714,
+                200
+              ],
+              [
+                764,
+                400
+              ],
+              [
+                824,
+                400
+              ]
+            ],
+            "suave": 2,
+            "inicial": "#F26CA8"
+          },
+          {
+            "id": "escenario",
+            "forma": "rect",
+            "rect": [
+              0,
+              400,
+              824,
+              130
+            ],
+            "redondeo": 0,
+            "inicial": "#9357D6"
+          },
+          {
+            "id": "borde",
+            "forma": "rect",
+            "rect": [
+              0,
+              392,
+              824,
+              16
+            ],
+            "redondeo": 0,
+            "inicial": "#FFCB3D"
+          }
+        ],
+        "detalles": []
+      },
+      "stickers": [
+        "microfono",
+        "nota",
+        "foco",
+        "corazon",
+        "estrella",
+        "corona",
+        "globo",
+        "vestido"
+      ],
+      "conector": {
+        "tipo": "guirnalda"
+      },
+      "portada": [
+        "microfono",
+        "nota",
+        "foco"
+      ],
+      "herramienta_inicial": "sello_microfono",
+      "herramientas": [
+        "pincel",
+        "pincel_corazon",
+        "pincel_estrella",
+        "balde",
+        "goma",
+        "bolsa",
+        "conector"
+      ],
+      "lineas_voz": {
+        "intro": "voces/arcoiris/pinta/brote/tema_escenario_pop.wav",
+        "nombre": "voces/arcoiris/pinta/temas/nombre_escenario_pop.wav",
+        "uso_conector": "voces/arcoiris/pinta/temas/conector_escenario_pop.wav",
+        "pista": "voces/arcoiris/pinta/brote/pista_tema.wav"
+      }
+    }
   ],
+  "temas_por_partida": 3,
+  "opciones_tema": 2,
+  "voces_stickers": "voces/arcoiris/pinta/stickers/%s.wav",
   "lineas_voz": {
     "mostrar": [
       "voces/arcoiris/pinta/brote/mostrar_01.wav",
@@ -60,6 +1188,10 @@
     "igualita": [
       "voces/arcoiris/pinta/brote/igualita_01.wav"
     ],
-    "intro": "voces/arcoiris/pinta/brote/intro_libre.wav"
+    "conectado": [
+      "voces/arcoiris/pinta/comun/conectado_01.wav",
+      "voces/arcoiris/pinta/comun/conectado_02.wav"
+    ],
+    "elige_tema": "voces/arcoiris/pinta/brote/elige_tema.wav"
   }
 }

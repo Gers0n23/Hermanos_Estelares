@@ -1,0 +1,812 @@
+{
+  "version": 1,
+  "nota": "Catalogo de 'Las migas de papa' (docs/fichas/album-recuerdos.md §5 y §8). Reparto PLACEHOLDER: se ajusta al cerrar cada capitulo. 'edad' y 'sugerencia' son solo guia para el PO al elegir fotos. La foto y la voz reales se buscan por id en assets/recuerdos/fotos/<id>.jpg|.png y assets/recuerdos/voces/<id>.ogg|.wav (ver assets/recuerdos/LEEME.md). Un momento con 'requiere' solo aparece como hueco en el album cuando ese archivo existe (pantallas futuras). Placeholders versionados en assets/recuerdos/placeholders/ (recortes de assets/anclas/, regenerables con herramientas/preparar_recuerdos.py placeholders).",
+  "albumes": {
+    "maxi": {
+      "orden": 1,
+      "color": "#4AA8FF",
+      "retrato": "res://assets/sprites/personajes/maxi_base.png",
+      "recorte_retrato": [
+        146,
+        62,
+        220,
+        220
+      ],
+      "placeholder": "res://assets/recuerdos/placeholders/maxi.png",
+      "recorte_placeholder": [],
+      "ajuste": "cubrir"
+    },
+    "nicole": {
+      "orden": 2,
+      "color": "#FF5FAE",
+      "retrato": "res://assets/sprites/personajes/nicole_base.png",
+      "recorte_retrato": [
+        146,
+        62,
+        220,
+        220
+      ],
+      "placeholder": "res://assets/recuerdos/placeholders/nicole.png",
+      "recorte_placeholder": [],
+      "ajuste": "cubrir"
+    },
+    "sofia": {
+      "orden": 3,
+      "color": "#4FD8E0",
+      "retrato": "res://assets/sprites/personajes/sofia_base.png",
+      "recorte_retrato": [
+        146,
+        62,
+        220,
+        220
+      ],
+      "placeholder": "res://assets/recuerdos/placeholders/sofia.png",
+      "recorte_placeholder": [],
+      "ajuste": "cubrir"
+    },
+    "familia": {
+      "orden": 4,
+      "color": "#FFCB3D",
+      "retrato": "",
+      "recorte_retrato": [],
+      "placeholder": "res://assets/recuerdos/placeholders/familia.png",
+      "recorte_placeholder": [],
+      "ajuste": "contener"
+    }
+  },
+  "hueco": {
+    "imagen": "res://assets/recuerdos/placeholders/familia.png",
+    "recorte": [],
+    "ajuste": "contener"
+  },
+  "voces": {
+    "carpeta": "res://assets/audio/voces/recuerdos/",
+    "nota": "Lineas de Cometa del guion docs/guiones/recuerdos.md (id recuerdos_X -> recuerdos/X.ogg o .wav). Todas PENDIENTES de audio: mientras no existan, suena silencio y la animacion hace el trabajo.",
+    "entrega": [
+      "recuerdos_entrega_01",
+      "recuerdos_entrega_02",
+      "recuerdos_entrega_03",
+      "recuerdos_entrega_04"
+    ],
+    "primera": [
+      "recuerdos_primera_01",
+      "recuerdos_primera_02"
+    ],
+    "generica": [
+      "recuerdos_generica_01",
+      "recuerdos_generica_02"
+    ],
+    "dorado": [
+      "recuerdos_dorado_01"
+    ],
+    "familiar": {
+      "maxi": "recuerdos_familiar_maxi_01",
+      "nicole": "recuerdos_familiar_nicole_01",
+      "sofia": "recuerdos_familiar_sofia_01"
+    },
+    "album_nueva": [
+      "recuerdos_album_nueva_01"
+    ],
+    "album_invitacion": [
+      "recuerdos_album_invitacion_01"
+    ],
+    "album_vacio": [
+      "recuerdos_album_vacio_01"
+    ],
+    "tapa": {
+      "maxi": "recuerdos_tapa_maxi_01",
+      "nicole": "recuerdos_tapa_nicole_01",
+      "sofia": "recuerdos_tapa_sofia_01",
+      "familia": "recuerdos_tapa_familia_01"
+    },
+    "burbuja_aviso": [
+      "recuerdos_burbuja_aviso_01",
+      "recuerdos_burbuja_aviso_02"
+    ],
+    "burbuja_atrapada": [
+      "recuerdos_burbuja_atrapada_01",
+      "recuerdos_burbuja_atrapada_02"
+    ],
+    "burbuja_vuelve": [
+      "recuerdos_burbuja_vuelve_01"
+    ]
+  },
+  "recuerdos": [
+    {
+      "id": "maxi_01",
+      "album": "maxi",
+      "orden": 1,
+      "edad": "recién nacido",
+      "sugerencia": "recién nacido/a",
+      "momento": {
+        "tipo": "viaje",
+        "id": "primer_despegue",
+        "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
+      },
+      "pista": "recuerdos_pista_viaje_despegue_01"
+    },
+    {
+      "id": "maxi_02",
+      "album": "maxi",
+      "orden": 2,
+      "edad": "1 mes",
+      "sugerencia": "primer baño",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona2_charcos"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_03",
+      "album": "maxi",
+      "orden": 3,
+      "edad": "3 meses",
+      "sugerencia": "primera sonrisa",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_04",
+      "album": "maxi",
+      "orden": 4,
+      "edad": "5 meses",
+      "sugerencia": "gateando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_05",
+      "album": "maxi",
+      "orden": 5,
+      "edad": "6 meses",
+      "sugerencia": "primer cumpleaños",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_06",
+      "album": "maxi",
+      "orden": 6,
+      "edad": "8 meses",
+      "sugerencia": "primeros pasos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_07",
+      "album": "maxi",
+      "orden": 7,
+      "edad": "10 meses",
+      "sugerencia": "con sus hermanos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_08",
+      "album": "maxi",
+      "orden": 8,
+      "edad": "1 año",
+      "sugerencia": "jugando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_09",
+      "album": "maxi",
+      "orden": 9,
+      "edad": "1 año y 3 meses",
+      "sugerencia": "en el jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_10",
+      "album": "maxi",
+      "orden": 10,
+      "edad": "1 año y 6 meses",
+      "sugerencia": "disfrazado/a",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_11",
+      "album": "maxi",
+      "orden": 11,
+      "edad": "1 año y 9 meses",
+      "sugerencia": "vacaciones",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_12",
+      "album": "maxi",
+      "orden": 12,
+      "edad": "2 años",
+      "sugerencia": "en el colegio o jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_13",
+      "album": "maxi",
+      "orden": 13,
+      "edad": "2 años",
+      "sugerencia": "cumpleaños reciente",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "maxi_14",
+      "album": "maxi",
+      "orden": 14,
+      "edad": "hoy",
+      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "viaje",
+        "id": "viaje_final",
+        "destino": "coleccionauta",
+        "requiere": "res://datos/planetas/coleccionauta/mapa.json"
+      },
+      "pista": "recuerdos_pista_viaje_final_01"
+    },
+    {
+      "id": "nicole_01",
+      "album": "nicole",
+      "orden": 1,
+      "edad": "recién nacida",
+      "sugerencia": "recién nacido/a",
+      "momento": {
+        "tipo": "viaje",
+        "id": "primer_despegue",
+        "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
+      },
+      "pista": "recuerdos_pista_viaje_despegue_01"
+    },
+    {
+      "id": "nicole_02",
+      "album": "nicole",
+      "orden": 2,
+      "edad": "3 meses",
+      "sugerencia": "primer baño",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona2_charcos"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_03",
+      "album": "nicole",
+      "orden": 3,
+      "edad": "6 meses",
+      "sugerencia": "primera sonrisa",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_04",
+      "album": "nicole",
+      "orden": 4,
+      "edad": "9 meses",
+      "sugerencia": "gateando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_05",
+      "album": "nicole",
+      "orden": 5,
+      "edad": "1 año",
+      "sugerencia": "primer cumpleaños",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_06",
+      "album": "nicole",
+      "orden": 6,
+      "edad": "1 año y 6 meses",
+      "sugerencia": "primeros pasos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_07",
+      "album": "nicole",
+      "orden": 7,
+      "edad": "2 años",
+      "sugerencia": "con sus hermanos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_08",
+      "album": "nicole",
+      "orden": 8,
+      "edad": "2 años y 6 meses",
+      "sugerencia": "jugando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_09",
+      "album": "nicole",
+      "orden": 9,
+      "edad": "3 años",
+      "sugerencia": "en el jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_10",
+      "album": "nicole",
+      "orden": 10,
+      "edad": "3 años y 6 meses",
+      "sugerencia": "disfrazado/a",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_11",
+      "album": "nicole",
+      "orden": 11,
+      "edad": "4 años",
+      "sugerencia": "vacaciones",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_12",
+      "album": "nicole",
+      "orden": 12,
+      "edad": "4 años y 6 meses",
+      "sugerencia": "en el colegio o jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_13",
+      "album": "nicole",
+      "orden": 13,
+      "edad": "5 años",
+      "sugerencia": "cumpleaños reciente",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "nicole_14",
+      "album": "nicole",
+      "orden": 14,
+      "edad": "hoy",
+      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "viaje",
+        "id": "viaje_final",
+        "destino": "coleccionauta",
+        "requiere": "res://datos/planetas/coleccionauta/mapa.json"
+      },
+      "pista": "recuerdos_pista_viaje_final_01"
+    },
+    {
+      "id": "sofia_01",
+      "album": "sofia",
+      "orden": 1,
+      "edad": "recién nacida",
+      "sugerencia": "recién nacido/a",
+      "momento": {
+        "tipo": "viaje",
+        "id": "primer_despegue",
+        "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
+      },
+      "pista": "recuerdos_pista_viaje_despegue_01"
+    },
+    {
+      "id": "sofia_02",
+      "album": "sofia",
+      "orden": 2,
+      "edad": "3 meses",
+      "sugerencia": "primer baño",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona2_charcos"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_03",
+      "album": "sofia",
+      "orden": 3,
+      "edad": "6 meses",
+      "sugerencia": "primera sonrisa",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes"
+      },
+      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_04",
+      "album": "sofia",
+      "orden": 4,
+      "edad": "1 año",
+      "sugerencia": "gateando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_05",
+      "album": "sofia",
+      "orden": 5,
+      "edad": "1 año y 6 meses",
+      "sugerencia": "primer cumpleaños",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_06",
+      "album": "sofia",
+      "orden": 6,
+      "edad": "2 años",
+      "sugerencia": "primeros pasos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_07",
+      "album": "sofia",
+      "orden": 7,
+      "edad": "3 años",
+      "sugerencia": "con sus hermanos",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_08",
+      "album": "sofia",
+      "orden": 8,
+      "edad": "4 años",
+      "sugerencia": "jugando",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_09",
+      "album": "sofia",
+      "orden": 9,
+      "edad": "5 años",
+      "sugerencia": "en el jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_10",
+      "album": "sofia",
+      "orden": 10,
+      "edad": "6 años",
+      "sugerencia": "disfrazado/a",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_11",
+      "album": "sofia",
+      "orden": 11,
+      "edad": "6 años y 6 meses",
+      "sugerencia": "vacaciones",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_12",
+      "album": "sofia",
+      "orden": 12,
+      "edad": "7 años",
+      "sugerencia": "en el colegio o jardín",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_13",
+      "album": "sofia",
+      "orden": 13,
+      "edad": "8 años",
+      "sugerencia": "cumpleaños reciente",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      },
+      "pista": "recuerdos_pista_zona_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "sofia_14",
+      "album": "sofia",
+      "orden": 14,
+      "edad": "hoy",
+      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "viaje",
+        "id": "viaje_final",
+        "destino": "coleccionauta",
+        "requiere": "res://datos/planetas/coleccionauta/mapa.json"
+      },
+      "pista": "recuerdos_pista_viaje_final_01"
+    },
+    {
+      "id": "familia_01",
+      "album": "familia",
+      "orden": 1,
+      "sugerencia": "los cinco antes del secuestro (la foto de la billetera)",
+      "momento": {
+        "tipo": "primera_apertura"
+      }
+    },
+    {
+      "id": "familia_02",
+      "album": "familia",
+      "orden": 2,
+      "sugerencia": "mamá y papá con Sofía bebé",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "arcoiris",
+        "requiere": "res://escenas/historia/pieza_nave_arcoiris.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_arcoiris_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_03",
+      "album": "familia",
+      "orden": 3,
+      "sugerencia": "los tres hermanos juntos por primera vez",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "animalia",
+        "requiere": "res://escenas/historia/pieza_nave_animalia.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_animalia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_04",
+      "album": "familia",
+      "orden": 4,
+      "sugerencia": "un paseo en familia",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "melodia",
+        "requiere": "res://escenas/historia/pieza_nave_melodia.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_melodia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_05",
+      "album": "familia",
+      "orden": 5,
+      "sugerencia": "un cumpleaños en familia",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "cuenta_cuentas",
+        "requiere": "res://escenas/historia/pieza_nave_cuenta_cuentas.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_cuentacuentas_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_06",
+      "album": "familia",
+      "orden": 6,
+      "sugerencia": "vacaciones en Chile",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "letralandia",
+        "requiere": "res://escenas/historia/pieza_nave_letralandia.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_letralandia_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_07",
+      "album": "familia",
+      "orden": 7,
+      "sugerencia": "una Navidad o 18 de septiembre",
+      "momento": {
+        "tipo": "pieza_nave",
+        "planeta": "corazon",
+        "requiere": "res://escenas/historia/pieza_nave_corazon.tscn"
+      },
+      "pista": "recuerdos_pista_pieza_corazon_01",
+      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+    },
+    {
+      "id": "familia_08",
+      "album": "familia",
+      "orden": 8,
+      "sugerencia": "los tres hermanos hoy",
+      "momento": {
+        "tipo": "viaje",
+        "id": "viaje_final",
+        "destino": "coleccionauta",
+        "requiere": "res://datos/planetas/coleccionauta/mapa.json"
+      },
+      "pista": "recuerdos_pista_viaje_final_01"
+    },
+    {
+      "id": "familia_09",
+      "album": "familia",
+      "orden": 9,
+      "sugerencia": "los cinco juntos (o los tres jugando este juego)",
+      "momento": {
+        "tipo": "rescate_final",
+        "requiere": "res://escenas/historia/rescate_final.tscn"
+      },
+      "pista": "recuerdos_pista_rescate_01"
+    }
+  ]
+}

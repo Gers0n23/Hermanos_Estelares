@@ -5,7 +5,7 @@
   "planeta": "arcoiris",
   "zona": "zona2_charcos",
   "tema": "lluvia de colores",
-  "variante": "receta oculta (solo se ve el color resultado): verde, naranja y violeta; 2 gotas a la vez",
+  "variante": "receta oculta (solo se ve el color resultado): verde, naranja, violeta y cafe (3 componentes); 2 gotas a la vez",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "mezcla",
@@ -24,9 +24,10 @@
   "pedidos": [
     "verde",
     "naranja",
-    "violeta"
+    "violeta",
+    "cafe"
   ],
-  "rondas": 6,
+  "rondas": 5,
   "por_ronda": 3,
   "limite_intentos": 10,
   "umbrales_estrellitas": {

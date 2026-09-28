@@ -48,7 +48,7 @@ static func color_por_defecto(nombre: String) -> Color:
 	return Color(COLORES.get(nombre, "#FFCB3D"))
 
 
-static func dibujar(l: CanvasItem, nombre: String, color: Color, c: Vector2, r: float, cara := true, feliz := false) -> void:
+static func dibujar(l, nombre: String, color: Color, c: Vector2, r: float, cara := true, feliz := false) -> void:
 	if es_bandera(nombre):
 		bandera(l, nombre.trim_prefix("bandera_"), c, r)
 		return
@@ -90,7 +90,7 @@ static func dibujar(l: CanvasItem, nombre: String, color: Color, c: Vector2, r: 
 
 # --- Maxi: dinosaurios y vehiculos -----------------------------------------------------------
 
-static func _dino(l: CanvasItem, tipo: String, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _dino(l, tipo: String, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var cabeza := _el(c, r, Vector2(0.55, -0.52), 0.4, 0.28)
 	if tipo == "spinosaurio":
 		cabeza = _el(c, r, Vector2(0.6, -0.48), 0.46, 0.22)
@@ -122,7 +122,7 @@ static func _dino(l: CanvasItem, tipo: String, color: Color, c: Vector2, r: floa
 		Figura.dibujar_cara(l, c + Vector2(0.58, -0.5) * r, r * 0.42, feliz)
 
 
-static func _huevo(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _huevo(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var huevo := _el(c, r, Vector2(0, 0.06), 0.64, 0.86, 40)
 	_pintar(l, huevo, color, r, trazo)
 	for punto in [Vector3(-0.3, -0.42, 0.12), Vector3(0.28, -0.3, 0.09), Vector3(-0.36, 0.5, 0.1), Vector3(0.34, 0.56, 0.13)]:
@@ -135,7 +135,7 @@ static func _huevo(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: flo
 		Figura.dibujar_cara(l, c + Vector2(0, 0.26) * r, r * 0.6, feliz)
 
 
-static func _auto(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _auto(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var cabina := _redondear(_poli(c, r, [Vector2(-0.55, -0.02), Vector2(-0.32, -0.52), Vector2(0.3, -0.52), Vector2(0.6, -0.02)]), r * 0.1)
 	var silueta := _unir([_caja(c, r, -0.95, -0.08, 0.95, 0.42, 0.16), cabina])
 	_pintar(l, silueta, color, r, trazo)
@@ -147,7 +147,7 @@ static func _auto(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: floa
 		Figura.dibujar_cara(l, c + Vector2(0.18, 0.16) * r, r * 0.42, feliz)
 
 
-static func _bus(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _bus(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var silueta := _caja(c, r, -0.95, -0.62, 0.95, 0.42, 0.16)
 	_pintar(l, silueta, color, r, trazo)
 	for x in [-0.82, -0.46, -0.1]:
@@ -160,7 +160,7 @@ static func _bus(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float
 		Figura.dibujar_cara(l, c + Vector2(-0.28, 0.03) * r, r * 0.4, feliz)
 
 
-static func _bomberos(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _bomberos(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	# Escalera sobre la carroceria (detras).
 	_detalle(l, _caja(c, r, -0.9, -0.44, 0.22, -0.3, 0.03), LLANTA, trazo * 0.7)
 	for x in [-0.72, -0.5, -0.28, -0.06, 0.14]:
@@ -177,7 +177,7 @@ static func _bomberos(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: 
 		Figura.dibujar_cara(l, c + Vector2(-0.28, 0.04) * r, r * 0.4, feliz)
 
 
-static func _cohete(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _cohete(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var rojo := Color("#FF6B6B")
 	_detalle(l, _poli(c, r, [Vector2(-0.12, 0.66), Vector2(0.12, 0.66), Vector2(0.0, 0.98)]), Color("#FF9F4A"), trazo * 0.7)
 	for lado in [-1.0, 1.0]:
@@ -192,7 +192,7 @@ static func _cohete(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 
 # --- Nicole: animales y ropa ----------------------------------------------------------------
 
-static func _jirafa(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _jirafa(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var partes := [
 		_el(c, r, Vector2(-0.25, 0.16), 0.46, 0.25),
 		_poli(c, r, [Vector2(0.0, 0.1), Vector2(0.32, -0.64), Vector2(0.56, -0.56), Vector2(0.3, 0.18)]),
@@ -218,7 +218,7 @@ static func _jirafa(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 		Figura.dibujar_cara(l, c + Vector2(0.58, -0.66) * r, r * 0.36, feliz)
 
 
-static func _pony(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _pony(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var melena_color := Color("#B48CE8") if color.h < 0.7 or color.h > 0.95 else Color("#F26CA8")
 	var cola := _unir([_el(c, r, Vector2(-0.66, 0.06), 0.14, 0.14), _el(c, r, Vector2(-0.8, 0.26), 0.15, 0.15), _el(c, r, Vector2(-0.78, 0.48), 0.12, 0.12)])
 	_pintar(l, cola, melena_color, r, trazo)
@@ -246,7 +246,7 @@ static func _pony(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: floa
 		Figura.dibujar_cara(l, c + Vector2(0.55, -0.48) * r, r * 0.36, feliz)
 
 
-static func _gatito(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _gatito(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var cola := PackedVector2Array()
 	for i in 12:
 		var t := i / 11.0
@@ -274,7 +274,7 @@ static func _gatito(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 	l.draw_colored_polygon(_poli(c, r, [Vector2(-0.06, -0.08), Vector2(0.06, -0.08), Vector2(0.0, -0.01)]), rosa.darkened(0.15))
 
 
-static func _vestido(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float) -> void:
+static func _vestido(l, color: Color, c: Vector2, r: float, trazo: float) -> void:
 	var silueta := _unir([
 		_poli(c, r, [Vector2(-0.28, -0.62), Vector2(0.28, -0.62), Vector2(0.22, -0.06), Vector2(-0.22, -0.06)]),
 		_redondear(_poli(c, r, [Vector2(-0.24, -0.12), Vector2(0.24, -0.12), Vector2(0.8, 0.84), Vector2(-0.8, 0.84)]), r * 0.08),
@@ -287,7 +287,7 @@ static func _vestido(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: f
 	_lazo(l, c + Vector2(0, -0.1) * r, r * 0.34, Color("#FFCB3D"), trazo * 0.7)
 
 
-static func _zapato(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float) -> void:
+static func _zapato(l, color: Color, c: Vector2, r: float, trazo: float) -> void:
 	_detalle(l, _caja(c, r, -0.9, 0.26, 0.92, 0.46, 0.08), color.darkened(0.35), trazo)
 	var cuerpo := _redondear(_poli(c, r, [Vector2(-0.88, -0.02), Vector2(-0.72, -0.26), Vector2(-0.2, -0.22), Vector2(0.35, -0.08),
 		Vector2(0.82, 0.1), Vector2(0.9, 0.36), Vector2(-0.88, 0.36)]), r * 0.1)
@@ -298,7 +298,7 @@ static func _zapato(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 	_lazo(l, c + Vector2(0.56, 0.04) * r, r * 0.28, Color("#F26CA8"), trazo * 0.6)
 
 
-static func _corona(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float) -> void:
+static func _corona(l, color: Color, c: Vector2, r: float, trazo: float) -> void:
 	var corona := _redondear(_poli(c, r, [Vector2(-0.82, 0.5), Vector2(-0.88, -0.42), Vector2(-0.44, -0.02), Vector2(0.0, -0.66),
 		Vector2(0.44, -0.02), Vector2(0.88, -0.42), Vector2(0.82, 0.5)]), r * 0.06)
 	_pintar(l, corona, color, r, trazo)
@@ -310,12 +310,12 @@ static func _corona(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 		_detalle(l, _el(c, r, Vector2(punta.x, punta.y), punta.z, punta.z), Color("#FFF8EE"), trazo * 0.6)
 
 
-static func _mono(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float) -> void:
+static func _mono(l, color: Color, c: Vector2, r: float, trazo: float) -> void:
 	_lazo(l, c, r, color, trazo)
 
 
 ## Lazo (moño) de dos alas con nudo y cintitas. `r` es el medio ancho.
-static func _lazo(l: CanvasItem, c: Vector2, r: float, color: Color, trazo: float) -> void:
+static func _lazo(l, c: Vector2, r: float, color: Color, trazo: float) -> void:
 	var silueta := _unir([
 		_el(c, r, Vector2.ZERO, 0.2, 0.24),
 		_redondear(_poli(c, r, [Vector2(0.14, 0.0), Vector2(-0.88, -0.52), Vector2(-0.88, 0.52)]), r * 0.14),
@@ -329,7 +329,7 @@ static func _lazo(l: CanvasItem, c: Vector2, r: float, color: Color, trazo: floa
 	_detalle(l, _el(c, r, Vector2.ZERO, 0.2, 0.24), color.darkened(0.12), trazo)
 
 
-static func _sol(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _sol(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var partes := [_el(c, r, Vector2.ZERO, 0.6, 0.6, 40)]
 	for i in 12:
 		var a := TAU * i / 12.0
@@ -341,7 +341,7 @@ static func _sol(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float
 		Figura.dibujar_cara(l, c + Vector2(0, 0.04) * r, r * 0.8, feliz)
 
 
-static func _hoja(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _hoja(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var eje := Vector2(-0.75, 0.65).normalized()
 	var normal := Vector2(-eje.y, eje.x)
 	var hoja := _mayor(Geometry2D.intersect_polygons(_el(c, r, normal * 0.85, 1.2, 1.2, 64), _el(c, r, -normal * 0.85, 1.2, 1.2, 64)))
@@ -354,7 +354,7 @@ static func _hoja(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: floa
 
 
 ## Mancha de pintura: gotas pegadas a un charco central (sin carita: es pintura).
-static func _mancha(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: float) -> void:
+static func _mancha(l, color: Color, c: Vector2, r: float, trazo: float) -> void:
 	var partes := [_el(c, r, Vector2.ZERO, 0.56, 0.52, 40)]
 	for i in 7:
 		var a := TAU * i / 7.0 + 0.3
@@ -369,7 +369,7 @@ static func _mancha(l: CanvasItem, color: Color, c: Vector2, r: float, trazo: fl
 # --- Banderas -------------------------------------------------------------------------------
 
 ## Bandera plana con sus colores y proporcion oficiales, del ancho de la carta. Sin carita.
-static func bandera(l: CanvasItem, pais: String, c: Vector2, r: float) -> void:
+static func bandera(l, pais: String, c: Vector2, r: float) -> void:
 	var proporcion: float = PAISES.get(pais, 1.5)
 	var ancho := r * 2.0
 	var alto := ancho / proporcion
@@ -421,20 +421,20 @@ static func bandera(l: CanvasItem, pais: String, c: Vector2, r: float) -> void:
 	l.draw_rect(rect, COLOR_CONTORNO, false, trazo)
 
 
-static func _franjas_h(l: CanvasItem, rect: Rect2, colores: Array) -> void:
+static func _franjas_h(l, rect: Rect2, colores: Array) -> void:
 	var alto := rect.size.y / colores.size()
 	for i in colores.size():
 		l.draw_rect(Rect2(rect.position + Vector2(0, alto * i), Vector2(rect.size.x, alto + 0.5)), colores[i])
 
 
-static func _franjas_v(l: CanvasItem, rect: Rect2, colores: Array) -> void:
+static func _franjas_v(l, rect: Rect2, colores: Array) -> void:
 	var ancho := rect.size.x / colores.size()
 	for i in colores.size():
 		l.draw_rect(Rect2(rect.position + Vector2(ancho * i, 0), Vector2(ancho + 0.5, rect.size.y)), colores[i])
 
 
 ## Sol de Mayo simplificado: disco dorado con rayos rectos y ondulados alternados y su carita.
-static func _sol_de_mayo(l: CanvasItem, centro: Vector2, alto: float) -> void:
+static func _sol_de_mayo(l, centro: Vector2, alto: float) -> void:
 	var oro := Color("#F6B40E")
 	var borde := Color("#85340A")
 	var radio := alto * 0.075
@@ -455,7 +455,7 @@ static func _sol_de_mayo(l: CanvasItem, centro: Vector2, alto: float) -> void:
 ## Brasil (ley 8.421): 20x14 modulos, rombo a 1,7 del borde, esfera de radio 3,5 y banda blanca
 ## de arcos con centro 2 modulos a la izquierda del pie del diametro vertical (radios 8 y 8,5).
 ## Simplificado: sin lema ni estrellas exactas (un punado de estrellitas blancas).
-static func _brasil(l: CanvasItem, rect: Rect2) -> void:
+static func _brasil(l, rect: Rect2) -> void:
 	var m := rect.size.x / 20.0
 	var o := rect.position
 	l.draw_rect(rect, Color("#009C3B"))
@@ -472,7 +472,7 @@ static func _brasil(l: CanvasItem, rect: Rect2) -> void:
 
 
 ## China: 30x20; estrella grande en (5,5) radio 3; cuatro chicas de radio 1 apuntando a la grande.
-static func _china(l: CanvasItem, rect: Rect2) -> void:
+static func _china(l, rect: Rect2) -> void:
 	var m := rect.size.x / 30.0
 	var o := rect.position
 	l.draw_rect(rect, Color("#EE1C25"))
@@ -486,7 +486,7 @@ static func _china(l: CanvasItem, rect: Rect2) -> void:
 
 ## Corea del Sur: taegeuk de diametro alto/2 (rojo arriba, azul abajo, alineado con la diagonal
 ## geon-gon) y los cuatro trigramas a medio radio del circulo, de largo igual al radio.
-static func _corea_sur(l: CanvasItem, rect: Rect2) -> void:
+static func _corea_sur(l, rect: Rect2) -> void:
 	var alto := rect.size.y
 	var centro := rect.get_center()
 	var radio := alto / 4.0
@@ -526,14 +526,14 @@ static func _corea_sur(l: CanvasItem, rect: Rect2) -> void:
 				_barra(l, medio, a_lo_largo, radio, grosor)
 
 
-static func _barra(l: CanvasItem, medio: Vector2, a_lo_largo: Vector2, largo: float, grosor: float) -> void:
+static func _barra(l, medio: Vector2, a_lo_largo: Vector2, largo: float, grosor: float) -> void:
 	var ancho := Vector2(-a_lo_largo.y, a_lo_largo.x) * grosor / 2.0
 	var mitad := a_lo_largo * largo / 2.0
 	l.draw_colored_polygon(PackedVector2Array([medio - mitad - ancho, medio + mitad - ancho, medio + mitad + ancho, medio - mitad + ancho]), Color.BLACK)
 
 
 ## EE.UU.: 13 franjas, canton de 7/13 del alto y 2/5 del ancho con 50 estrellas en 9 filas (6 y 5).
-static func _eeuu(l: CanvasItem, rect: Rect2) -> void:
+static func _eeuu(l, rect: Rect2) -> void:
 	var rojo := Color("#B22234")
 	var alto_franja := rect.size.y / 13.0
 	l.draw_rect(rect, Color.WHITE)
@@ -564,7 +564,7 @@ static func _estrella(centro: Vector2, radio: float, angulo: float) -> PackedVec
 	return puntos
 
 
-static func _pintar(l: CanvasItem, forma: PackedVector2Array, relleno: Color, r: float, trazo: float) -> void:
+static func _pintar(l, forma: PackedVector2Array, relleno: Color, r: float, trazo: float) -> void:
 	if forma.size() < 3:
 		return
 	_rellenar(l, _mover(forma, Vector2(0, r * 0.07)), Color(COLOR_CONTORNO, 0.22))
@@ -575,7 +575,7 @@ static func _pintar(l: CanvasItem, forma: PackedVector2Array, relleno: Color, r:
 
 
 ## Pieza de detalle encima (ventana, gema...): relleno y contorno, sin sombra.
-static func _detalle(l: CanvasItem, forma: PackedVector2Array, relleno: Color, trazo: float) -> void:
+static func _detalle(l, forma: PackedVector2Array, relleno: Color, trazo: float) -> void:
 	if forma.size() < 3:
 		return
 	l.draw_colored_polygon(forma, relleno)
@@ -583,13 +583,13 @@ static func _detalle(l: CanvasItem, forma: PackedVector2Array, relleno: Color, t
 
 
 ## Pinta `pieza` recortada a `silueta` (manchas, pancita, franjas).
-static func _dentro(l: CanvasItem, pieza: PackedVector2Array, silueta: PackedVector2Array, relleno: Color) -> void:
+static func _dentro(l, pieza: PackedVector2Array, silueta: PackedVector2Array, relleno: Color) -> void:
 	for trozo in Geometry2D.intersect_polygons(pieza, silueta):
 		_rellenar(l, trozo, relleno)
 
 
 ## Relleno a prueba de recortes degenerados (astillas que no se pueden triangular) y de huecos.
-static func _rellenar(l: CanvasItem, forma: PackedVector2Array, relleno: Color) -> void:
+static func _rellenar(l, forma: PackedVector2Array, relleno: Color) -> void:
 	if forma.size() < 3 or absf(_area(forma)) < 0.5:
 		return
 	if Geometry2D.triangulate_polygon(forma).is_empty():
@@ -597,7 +597,7 @@ static func _rellenar(l: CanvasItem, forma: PackedVector2Array, relleno: Color) 
 	l.draw_colored_polygon(forma, relleno)
 
 
-static func _ruedas(l: CanvasItem, c: Vector2, r: float, trazo: float, centros: Array, radio: float) -> void:
+static func _ruedas(l, c: Vector2, r: float, trazo: float, centros: Array, radio: float) -> void:
 	for p: Vector2 in centros:
 		l.draw_circle(c + p * r, radio * r, RUEDA)
 		l.draw_arc(c + p * r, radio * r, 0.0, TAU, 28, COLOR_CONTORNO, trazo, true)

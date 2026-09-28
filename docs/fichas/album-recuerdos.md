@@ -158,6 +158,25 @@ esto hace falta una migración de versión del guardado.
 - Pipeline de fotos: redimensionar a un máximo de 1280 px en el lado largo y usar JPG de calidad
   ~85, para cuidar el tamaño del APK. Un script en `herramientas/` lo automatiza.
 
+### Implementación provisional (Dev, 27-Sep-2026, a pedido del PO)
+
+Pendiente de la validación HE-44. Lo que cambió respecto de lo propuesto arriba:
+
+- **Autoload `Recuerdos`** (`scripts/autoloads/recuerdos.gd`) y `Progreso` en versión 2 del guardado.
+- **`momento.requiere`**: ruta `res://` que debe existir para que el hueco se vea (piezas de la nave,
+  rescate y viaje final apuntan a escenas/datos que todavía no existen). `zona_completa` se deduce
+  sola del `mapa.json` del planeta (por `zona` o por `numero`).
+- **Placeholders en PNG, no SVG**: `assets/recuerdos/placeholders/<album>.png`, recortes de las hojas
+  de `assets/anclas/` (decisión visual del PO: el personaje del álbum a color, con el número del
+  recuerdo dibujado; los huecos, los tres hermanos atenuados con un sello de estrella y "?").
+- **Sin foto ni voz real**: la voz se reemplaza por `recuerdos_generica_*` si está grabada; si no,
+  silencio con la animación.
+- **Entrada al álbum**: botón libro-álbum en la **selección de personaje** (el título entero ya es
+  un solo objetivo táctil, "toca para empezar"). La primera apertura también se entrega ahí: la
+  foto vuela a ese botón. La recomendación del guion (tras la intro) queda para cuando exista la
+  escena de la intro.
+- Instrucciones para el PO: `assets/recuerdos/LEEME.md`; herramienta: `herramientas/preparar_recuerdos.py`.
+
 ## 9. Otras ideas de personalización aprobadas (PO 27-Sep-2026, todas al backlog)
 
 1. **Cumpleaños y fechas especiales**: el día del cumpleaños de cada hermano, Cometa lo saluda por

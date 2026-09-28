@@ -106,6 +106,8 @@ var _decoraciones: Dictionary = {}
 var _paleta: Dictionary = {}
 var _recetas: Dictionary = {}
 var _pedidos_pool: Array = []
+var _mazo_pedidos: Array = []  ## mazo de pedidos de Sofia: persiste entre tandas
+var _ultimos_pedidos: Array = []
 var _paleta_gotas: Array = []
 var _charco_llama := false
 var _divisibles := false
@@ -419,20 +421,41 @@ func _armar_cola_nombrar() -> Array:
 	return cola
 
 
-## Sofia: pedidos de la tanda, sacados del pool sin repetir hasta agotarlo.
+## Sofia: pedidos de la tanda, sacados de un mazo que dura toda la partida. Ningun color se repite
+## hasta haber pedido todos los del pool, y dos tandas seguidas nunca piden el mismo grupo (feedback
+## del PO 27-Sep-2026: antes el mazo se rearmaba en cada tanda y con un pool chico pedia siempre lo
+## mismo).
 func _armar_pedidos() -> Array:
-	var pool := _pedidos_pool.duplicate()
-	pool.shuffle()
 	var lista: Array = []
-	while lista.size() < _por_ronda:
-		if pool.is_empty():
-			pool = _pedidos_pool.duplicate()
-			pool.shuffle()
-		var candidato = pool.pop_front()
-		if not _encadenado and lista.has(candidato) and _pedidos_pool.size() >= _por_ronda:
+	var intentos := 0
+	while lista.size() < _por_ronda and intentos < 100:
+		intentos += 1
+		if _mazo_pedidos.is_empty():
+			_mazo_pedidos = _pedidos_pool.duplicate()
+			_mazo_pedidos.shuffle()
+			# al rearmar, lo recien pedido (esta tanda y la anterior) va al fondo del mazo
+			_mazo_pedidos.sort_custom(func(x, y): return _peso_reciente(x, lista) < _peso_reciente(y, lista))
+		var candidato = _mazo_pedidos.pop_front()
+		if lista.has(candidato) and _pedidos_pool.size() >= _por_ronda:
+			_mazo_pedidos.append(candidato)
 			continue
 		lista.append(candidato)
+	var mismo_grupo := lista.size() == _ultimos_pedidos.size()
+	for c in lista:
+		mismo_grupo = mismo_grupo and _ultimos_pedidos.has(c)
+	if mismo_grupo and _pedidos_pool.size() > _por_ronda and not _mazo_pedidos.is_empty():
+		var cambio = _mazo_pedidos.pop_front()
+		_mazo_pedidos.append(lista[lista.size() - 1])
+		lista[lista.size() - 1] = cambio
+	lista.shuffle()
+	_ultimos_pedidos = lista.duplicate()
 	return lista
+
+
+func _peso_reciente(color, tanda_actual: Array) -> int:
+	if tanda_actual.has(color):
+		return 2
+	return 1 if _ultimos_pedidos.has(color) else 0
 
 
 func _terminar_ronda() -> void:

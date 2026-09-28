@@ -65,7 +65,7 @@ func _draw() -> void:
 
 
 ## Pinta la figura con sombra, volumen (sombra interna y brillo), contorno y carita.
-static func dibujar(lienzo: CanvasItem, nombre: String, relleno: Color, centro: Vector2, radio: float, cara := true, feliz := false) -> void:
+static func dibujar(lienzo, nombre: String, relleno: Color, centro: Vector2, radio: float, cara := true, feliz := false) -> void:
 	var trazo := maxf(2.5, radio * 0.075)
 	if nombre == "arcoiris":
 		_dibujar_arcoiris(lienzo, centro, radio, trazo, cara, feliz)
@@ -92,14 +92,14 @@ static func dibujar(lienzo: CanvasItem, nombre: String, relleno: Color, centro: 
 		dibujar_cara(lienzo, centro + (datos[0] as Vector2) * radio, radio * float(datos[1]), feliz)
 
 
-static func contornear(lienzo: CanvasItem, forma: PackedVector2Array, trazo: float) -> void:
+static func contornear(lienzo, forma: PackedVector2Array, trazo: float) -> void:
 	var cerrado := forma.duplicate()
 	cerrado.append(forma[0])
 	lienzo.draw_polyline(cerrado, COLOR_CONTORNO, trazo, true)
 
 
 ## Ojitos con brillo (o ^^ si esta feliz), mejillas y sonrisa. `escala` ~ ancho de la cara.
-static func dibujar_cara(lienzo: CanvasItem, centro: Vector2, escala: float, feliz := false) -> void:
+static func dibujar_cara(lienzo, centro: Vector2, escala: float, feliz := false) -> void:
 	var grosor := maxf(2.0, escala * 0.055)
 	for lado in [-1.0, 1.0]:
 		var ojo := centro + Vector2(lado * escala * 0.3, -escala * 0.05)
@@ -161,7 +161,7 @@ static func poligono(nombre: String, centro: Vector2, radio: float) -> PackedVec
 	return puntos
 
 
-static func _dibujar_arcoiris(lienzo: CanvasItem, centro: Vector2, radio: float, trazo: float, cara: bool, feliz: bool) -> void:
+static func _dibujar_arcoiris(lienzo, centro: Vector2, radio: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var base := centro + Vector2(0, radio * 0.4)
 	var ancho := radio * 0.12
 	var exterior := radio * 0.92

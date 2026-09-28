@@ -57,10 +57,16 @@
         {
           "juego": "lluvia",
           "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "escenas": {
+            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
+          },
+          "iconos": {
+            "sofia": "taller"
+          },
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris/zona1_claro/lluvia_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona1_claro/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona1_claro/lluvia_estrella.json"
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/mezcla_estrella.json"
           }
         },
         {
@@ -110,10 +116,16 @@
         {
           "juego": "lluvia",
           "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "escenas": {
+            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
+          },
+          "iconos": {
+            "sofia": "taller"
+          },
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/lluvia_estrella.json"
+            "sofia": "res://datos/niveles/arcoiris/zona2_charcos/mezcla_estrella.json"
           }
         },
         {
@@ -163,10 +175,16 @@
         {
           "juego": "lluvia",
           "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "escenas": {
+            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
+          },
+          "iconos": {
+            "sofia": "taller"
+          },
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/lluvia_estrella.json"
+            "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/mezcla_estrella.json"
           }
         },
         {
@@ -217,10 +235,16 @@
         {
           "juego": "lluvia",
           "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "escenas": {
+            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
+          },
+          "iconos": {
+            "sofia": "taller"
+          },
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/lluvia_estrella.json"
+            "sofia": "res://datos/niveles/arcoiris/zona4_islotes/mezcla_estrella.json"
           }
         },
         {
@@ -271,10 +295,16 @@
         {
           "juego": "lluvia",
           "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
+          "escenas": {
+            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
+          },
+          "iconos": {
+            "sofia": "taller"
+          },
           "niveles": {
             "maxi": "res://datos/niveles/arcoiris/zona5_cima/lluvia_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona5_cima/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona5_cima/lluvia_estrella.json"
+            "sofia": "res://datos/niveles/arcoiris/zona5_cima/mezcla_estrella.json"
           }
         },
         {

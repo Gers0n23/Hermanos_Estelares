@@ -1164,9 +1164,14 @@ def voces_semilla(intro, risa=False):
     return v
 
 
+ROT = {"rotacion_por_toque": True, "rotacion_inicial_aleatoria": True}
+
 COMUN_ESTRELLA = {"caras": False, "guia_color": False, "modelo_mini": True, "bandeja_escala_real": True,
                   "piezas_en_bandeja": 6, "pistas_cuestan_estrellita": True, "regalo_tras_derrotas": True,
-                  "iman_tolerancia_px": 70, "paso_rotacion": 90}
+                  "iman_tolerancia_px": 70, "paso_rotacion": 90,
+                  # PO 27-Sep-2026: sin lineas guia. Sofia solo ve el contorno exterior de la figura y se
+                  # guia por la tarjeta del modelo; las piezas siempre se giran con un toque.
+                  "silueta_unida": True, **ROT}
 COMUN_BROTE = {"objetivo_guiado": True, "caras": False, "modelo_mini": True, "bandeja_escala_real": True,
                "iman_tolerancia_px": 110}
 COMUN_SEMILLA = {"sin_error": True, "toque_lleva_a_casa": True, "ayuda_idle_s": 7, "caras": False, "guia_color": True,
@@ -1194,9 +1199,6 @@ def monumento(id_figura, funcion, intro, escala="auto", voz=None, **extra):
     config.update(extra.pop("config", {}))
     return fig(id_figura, funcion, voz=voz, escala=escala, grupo="monumento", config=config, **extra)
 
-
-ROT = {"rotacion_por_toque": True, "rotacion_inicial_aleatoria": True}
-SIN_ROT = {"rotacion_por_toque": False}
 
 ESTACIONES = {
     # ---------------- Maxi · Semilla: 4 rondas por estación ----------------
@@ -1276,16 +1278,17 @@ ESTACIONES = {
         fig("castillo_princesa", castillo_princesa),
     ]},
     # ---------------- Sofía · Estrella: un monumento y una bandera ----------------
-    ("zona1_claro", "estrella"): {"nivel": dict(COMUN_ESTRELLA, **SIN_ROT, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z1.wav")),
+    ("zona1_claro", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z1.wav")),
                                   "rondas": ["monumento", "bandera"], "pool": [
-        monumento("iglesia_chiloe", iglesia_chiloe, "intro_arma_z1.wav", escala=1.15),
+        monumento("iglesia_chiloe", iglesia_chiloe, "intro_arma_z1.wav", escala=1.15,
+                  config={"exigir_color": True}),  # con giro, sus rectangulos de distinto color calzan cruzados
         monumento("la_moneda", la_moneda, "intro_moneda.wav"),
-        bandera_sofia("chile", f_chile_sofia, 8, False),
-        bandera_sofia("argentina", f_argentina_sofia, 8, False),
-        bandera_sofia("peru", f_peru_sofia, 8, False),
-        bandera_sofia("bolivia", f_bolivia_sofia, 8, False),
+        bandera_sofia("chile", f_chile_sofia, 8, True),
+        bandera_sofia("argentina", f_argentina_sofia, 8, True),
+        bandera_sofia("peru", f_peru_sofia, 8, True),
+        bandera_sofia("bolivia", f_bolivia_sofia, 8, True),
     ]},
-    ("zona2_charcos", "estrella"): {"nivel": dict(COMUN_ESTRELLA, **ROT, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z2.wav")),
+    ("zona2_charcos", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z2.wav")),
                                     "rondas": ["monumento", "bandera"], "pool": [
         monumento("palafitos", palafitos, "intro_arma_z2.wav", escala=1.4),
         monumento("valparaiso", valparaiso, "intro_valparaiso.wav", bandera=True),
@@ -1296,7 +1299,7 @@ ESTACIONES = {
         bandera_sofia("venezuela", venezuela, 9, True),
         bandera_sofia("ecuador", f_ecuador_sofia, 9, True),
     ]},
-    ("zona3_chupetines", "estrella"): {"nivel": dict(COMUN_ESTRELLA, **ROT, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z3.wav")),
+    ("zona3_chupetines", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z3.wav")),
                                        "rondas": ["monumento", "bandera"], "pool": [
         monumento("santiago", santiago, "intro_arma_z3.wav", escala=1.2),
         monumento("torres_paine", torres_paine_sofia, "intro_torres_paine.wav", voz="torres_paine_dato"),
@@ -1304,7 +1307,7 @@ ESTACIONES = {
         bandera_sofia("francia", f_francia_sofia, 9, True),
         bandera_sofia("alemania", f_alemania_sofia, 9, True),
     ]},
-    ("zona4_islotes", "estrella"): {"nivel": dict(COMUN_ESTRELLA, **ROT, limite_intentos=14, lineas_voz=voces_estrella("intro_arma_z4.wav")),
+    ("zona4_islotes", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=14, lineas_voz=voces_estrella("intro_arma_z4.wav")),
                                     "rondas": ["monumento", "bandera"], "pool": [
         monumento("moais", moais, "intro_arma_z4.wav", escala=1.5),
         monumento("morro_arica", morro_arica, "intro_morro.wav", voz="morro_arica_dato", bandera=True),
@@ -1312,7 +1315,7 @@ ESTACIONES = {
         bandera_sofia("china", china, 10, True),
         bandera_sofia("india", india, 10, True),
     ]},
-    ("zona5_cima", "estrella"): {"nivel": dict(COMUN_ESTRELLA, **ROT, limite_intentos=16, lineas_voz=voces_estrella("intro_arma_z5.wav")),
+    ("zona5_cima", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=16, lineas_voz=voces_estrella("intro_arma_z5.wav")),
                                  "rondas": ["monumento", "bandera"], "pool": [
         monumento("castillo_santa_lucia", castillo, "intro_arma_z5.wav", escala=1.35),
         monumento("san_cristobal", san_cristobal, "intro_san_cristobal.wav"),

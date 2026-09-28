@@ -96,6 +96,7 @@ assets/audio/voces/
 ├── celebraciones/           # líneas de celebración por hermano (HE-D5) — compartidas por
 │                             # TODAS las escenas de historia y, a futuro, por los motores
 │                             # de minijuego (una sola grabación por hermano, reutilizada)
+├── recuerdos/                # líneas de Cometa del álbum "Las migas de papá" (HE-44)
 ├── emparejar/                # líneas del motor "emparejar" (contrato en su ficha)
 ├── <otro_motor>/              # una carpeta por motor de mecánica compartido (GDD §5)
 └── historia/                  # cinemáticas y escenas de historia (HE-30, HE-39)
@@ -290,6 +291,62 @@ celebración de Beat 6 son las genéricas de `celebraciones/` (no se repiten aqu
 
 *(sfx `final_016` no lleva voz — estornudo de nave + objetos cayendo; ficha de SFX, no este
 documento.)*
+
+## Líneas reales — Las migas de papá: álbum de recuerdos (`recuerdos/`)
+
+Guion completo con acotaciones, decisiones de tono y observaciones: `docs/guiones/recuerdos.md`
+(HE-44, validación de diseño del `guionista`, 27-Sep-2026). Ficha de la épica:
+`docs/fichas/album-recuerdos.md`. Son 41 líneas de Cometa, **todas pendientes de audio** (no se
+generó ninguna). Van con la voz oficial de Cometa cuando el PO apruebe el costo.
+
+Los audios **de cada foto** (grabados por la familia) no van en esta tabla: viven en
+`assets/recuerdos/voces/<id_foto>.ogg`, fuera del repo (ficha §8). La guía para grabarlos está en
+`docs/guiones/recuerdos.md` §6. El esbozo del final (`final_rec_01..03`) tiene ids provisionales y
+se agrega aquí cuando HE-39 lo cierre.
+
+| id_línea | personaje | contexto (cuándo suena) | texto guía (a grabar) | archivo | estado |
+|---|---|---|---|---|---|
+| recuerdos_primera_01 | Cometa | Primera foto (`familia_01`): al aparecer el sobre. Se recomienda al final de la intro, ver guion, Observación 1 | «¡Miren lo que quedó en la alfombra! Papá se rió tanto con las cosquillas del rayo del Coleccionauta, que ¡pffft!, se le volaron todas las fotos de la billetera.» | `recuerdos/primera_01.ogg` | pendiente de audio |
+| recuerdos_primera_02 | Cometa | Primera foto: cuando la foto ya voló al ícono del álbum | «Las demás andan flotando por la galaxia. ¡Las vamos a ir encontrando en el camino, y se las mostramos a papá cuando lo veamos!» | `recuerdos/primera_02.ogg` | pendiente de audio |
+| recuerdos_entrega_01 | Cometa | Entrega de una foto, antes de abrir el sobre (el motor elige al azar entre 01-04) | «¡Mira! ¡Otra foto de la billetera de papá!» | `recuerdos/entrega_01.ogg` | pendiente de audio |
+| recuerdos_entrega_02 | Cometa | Variante de `recuerdos_entrega_01` | «¡Uuuh, una estrella-recuerdo! ¿Quién saldrá en esta foto?» | `recuerdos/entrega_02.ogg` | pendiente de audio |
+| recuerdos_entrega_03 | Cometa | Variante de `recuerdos_entrega_01` | «¡Plin! Otra fotito que se le voló a papá. ¡Ábrela, ábrela!» | `recuerdos/entrega_03.ogg` | pendiente de audio |
+| recuerdos_entrega_04 | Cometa | Variante de `recuerdos_entrega_01` | «¡Miren quién sale aquí! Una foto más para el álbum.» | `recuerdos/entrega_04.ogg` | pendiente de audio |
+| recuerdos_generica_01 | Cometa | Foto abierta sin audio de la familia en disco (relleno, ficha §8) | «¡Qué foto más linda! Esta va directo al álbum.» | `recuerdos/generica_01.ogg` | pendiente de audio |
+| recuerdos_generica_02 | Cometa | Variante de `recuerdos_generica_01` | «¡Mira qué caritas! Un recuerdo calentito, calentito.» | `recuerdos/generica_02.ogg` | pendiente de audio |
+| recuerdos_dorado_01 | Cometa | La foto de una zona gana el marco dorado (estrellitas máximas, solo Sofía) | «¡Marco dorado! Esta foto es de nivel... ¡Estrella!» | `recuerdos/dorado_01.ogg` | pendiente de audio |
+| recuerdos_familiar_maxi_01 | Cometa | Maxi desbloquea una foto del álbum familiar (reemplaza a `entrega_0X`) | «¡Maxi encontró una foto de la familia! ¡Y es para los tres!» | `recuerdos/familiar_maxi_01.ogg` | pendiente de audio |
+| recuerdos_familiar_nicole_01 | Cometa | Nicole desbloquea una foto del álbum familiar | «¡Nicole encontró una foto de la familia! ¡Y es para los tres!» | `recuerdos/familiar_nicole_01.ogg` | pendiente de audio |
+| recuerdos_familiar_sofia_01 | Cometa | Sofía desbloquea una foto del álbum familiar | «¡Sofía encontró una foto de la familia! ¡Y es para los tres!» | `recuerdos/familiar_sofia_01.ogg` | pendiente de audio |
+| recuerdos_album_nueva_01 | Cometa | Título/selección con fotos sin ver: una vez al entrar, con el brillo del botón | «¡Psst! Hay una foto nueva esperando en el álbum.» | `recuerdos/album_nueva_01.ogg` | pendiente de audio |
+| recuerdos_album_invitacion_01 | Cometa | Al abrir el álbum (portada con las 4 tapas) | «¡El álbum de las fotos de papá! Toca una tapa y vamos a mirar.» | `recuerdos/album_invitacion_01.ogg` | pendiente de audio |
+| recuerdos_tapa_maxi_01 | Cometa | Al tocar la tapa de Maxi | «¡El álbum de Maxi! De chiquitito... ¡a grandote!» | `recuerdos/tapa_maxi_01.ogg` | pendiente de audio |
+| recuerdos_tapa_nicole_01 | Cometa | Al tocar la tapa de Nicole | «¡El álbum de Nicole! Cuidado, que aquí hay sonrisas por todos lados.» | `recuerdos/tapa_nicole_01.ogg` | pendiente de audio |
+| recuerdos_tapa_sofia_01 | Cometa | Al tocar la tapa de Sofía | «¡El álbum de Sofía! La capitana... desde que era una capitanita.» | `recuerdos/tapa_sofia_01.ogg` | pendiente de audio |
+| recuerdos_tapa_familia_01 | Cometa | Al tocar la tapa Familia | «¡El álbum de la familia! Aquí caben todos... ¡bien apretaditos!» | `recuerdos/tapa_familia_01.ogg` | pendiente de audio |
+| recuerdos_album_vacio_01 | Cometa | Al abrir un álbum sin ninguna foto | «Este álbum está esperando sus fotos. ¡Van a ir llegando solitas mientras juegan!» | `recuerdos/album_vacio_01.ogg` | pendiente de audio |
+| recuerdos_pista_viaje_despegue_01 | Cometa | Tocar un hueco con momento `viaje` / `primer_despegue` | «Esta foto anda flotando en el primer viaje de la nave. ¡Ya la vamos a ver pasar!» | `recuerdos/pista_viaje_despegue_01.ogg` | pendiente de audio |
+| recuerdos_pista_viaje_final_01 | Cometa | Tocar un hueco con momento `viaje` al planeta final | «Esta foto anda flotando en el viaje al planeta del Coleccionauta. ¡Ya la vamos a ver pasar!» | `recuerdos/pista_viaje_final_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_arcoiris_charcos_01 | Cometa | Tocar un hueco `zona_completa` Arcoíris, zona 2 | «Esta foto está escondida en los Charcos Saltarines del Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_arcoiris_charcos_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_arcoiris_islotes_01 | Cometa | Tocar un hueco `zona_completa` Arcoíris, zona 4 | «Esta foto está escondida en los Islotes Flotantes del Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_arcoiris_islotes_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_arcoiris_01 | Cometa | Hueco `zona_completa` Arcoíris, respaldo si cambia el reparto de zonas | «Esta foto está escondida en el Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_arcoiris_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_animalia_01 | Cometa | Hueco `zona_completa` Animalia (cuando el planeta tenga zonas) | «Esta foto está escondida en el Planeta Animalia. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_animalia_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_melodia_01 | Cometa | Hueco `zona_completa` Melodía | «Esta foto está escondida en el Planeta Melodía. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_melodia_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_cuentacuentas_01 | Cometa | Hueco `zona_completa` Cuenta-Cuentas | «Esta foto está escondida en el Planeta Cuenta-Cuentas. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_cuentacuentas_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_letralandia_01 | Cometa | Hueco `zona_completa` Letralandia | «Esta foto está escondida en el Planeta Letralandia. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_letralandia_01.ogg` | pendiente de audio |
+| recuerdos_pista_zona_corazon_01 | Cometa | Hueco `zona_completa` Corazón | «Esta foto está escondida en el Planeta Corazón. ¡Aparece solita cuando juegues ahí!» | `recuerdos/pista_zona_corazon_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_arcoiris_01 | Cometa | Hueco `pieza_nave` Arcoíris | «Esta foto la guarda Coco, en el Planeta Arcoíris. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_arcoiris_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_animalia_01 | Cometa | Hueco `pieza_nave` Animalia | «Esta foto la guarda Toby, en el Planeta Animalia. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_animalia_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_melodia_01 | Cometa | Hueco `pieza_nave` Melodía | «Esta foto la guarda Octavio, en el Planeta Melodía. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_melodia_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_cuentacuentas_01 | Cometa | Hueco `pieza_nave` Cuenta-Cuentas | «Esta foto la guarda el Profesor Plumas, en el Planeta Cuenta-Cuentas. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_cuentacuentas_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_letralandia_01 | Cometa | Hueco `pieza_nave` Letralandia | «Esta foto la guarda Lila, en el Planeta Letralandia. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_letralandia_01.ogg` | pendiente de audio |
+| recuerdos_pista_pieza_corazon_01 | Cometa | Hueco `pieza_nave` Corazón | «Esta foto la guarda Mimi, en el Planeta Corazón. ¡Llega junto con la pieza de la nave!» | `recuerdos/pista_pieza_corazon_01.ogg` | pendiente de audio |
+| recuerdos_pista_rescate_01 | Cometa | Hueco `rescate_final` | «Esta es la última foto. ¡La guardamos para el final, cuando estemos todos juntos!» | `recuerdos/pista_rescate_01.ogg` | pendiente de audio |
+| recuerdos_burbuja_aviso_01 | Cometa | Viaje estelar: aparece la burbuja-recuerdo | «¡Mira, una burbuja-recuerdo! ¡Tócala o chócala con la nave!» | `recuerdos/burbuja_aviso_01.ogg` | pendiente de audio |
+| recuerdos_burbuja_aviso_02 | Cometa | Variante de `recuerdos_burbuja_aviso_01` | «¡Ahí viene una foto flotando! ¡Atrápala!» | `recuerdos/burbuja_aviso_02.ogg` | pendiente de audio |
+| recuerdos_burbuja_atrapada_01 | Cometa | Al atrapar la burbuja, antes del sobre-estrella | «¡Plop! ¡La atrapaste! Otra foto para el álbum.» | `recuerdos/burbuja_atrapada_01.ogg` | pendiente de audio |
+| recuerdos_burbuja_atrapada_02 | Cometa | Variante de `recuerdos_burbuja_atrapada_01` | «¡Burbuja reventada, foto encontrada!» | `recuerdos/burbuja_atrapada_02.ogg` | pendiente de audio |
+| recuerdos_burbuja_vuelve_01 | Cometa | La burbuja sale de la pantalla sin que la atrapen | «¡Uy, se fue dando botes! Tranqui, ya vuelve a pasar.» | `recuerdos/burbuja_vuelve_01.ogg` | pendiente de audio |
 
 ## Claves estándar ya asumidas por el motor "emparejar" (piloto, 18-Jul-2026)
 

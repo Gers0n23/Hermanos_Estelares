@@ -5,7 +5,7 @@
   "planeta": "arcoiris",
   "zona": "zona3_chupetines",
   "tema": "lluvia de colores",
-  "variante": "gotas a velocidades distintas y una gota gris sin color que hay que dejar pasar",
+  "variante": "gotas a velocidades distintas, gota gris que hay que dejar pasar y llega el blanco: rosado y celeste",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "mezcla",
@@ -16,7 +16,8 @@
   "paleta_gotas": [
     "rojo",
     "azul",
-    "amarillo"
+    "amarillo",
+    "blanco"
   ],
   "guia_receta": false,
   "velocidad_caida": 58,
@@ -28,9 +29,12 @@
   "pedidos": [
     "verde",
     "naranja",
-    "violeta"
+    "violeta",
+    "cafe",
+    "rosado",
+    "celeste"
   ],
-  "rondas": 6,
+  "rondas": 5,
   "por_ronda": 3,
   "limite_intentos": 10,
   "umbrales_estrellitas": {

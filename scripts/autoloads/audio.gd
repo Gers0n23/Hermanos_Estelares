@@ -97,6 +97,15 @@ func reproducir_voz(ruta: String) -> void:
 	_reproductor_voz.play()
 
 
+## Igual que `reproducir_voz`, pero con un stream ya cargado: las voces reales de la familia del
+## album de recuerdos pueden venir de un archivo copiado sin importar (ver `Recuerdos.cargar_audio`).
+func reproducir_voz_stream(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	_reproductor_voz.stream = stream
+	_reproductor_voz.play()
+
+
 func detener_voz() -> void:
 	_reproductor_voz.stop()
 

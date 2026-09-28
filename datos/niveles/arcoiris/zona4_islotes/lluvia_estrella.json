@@ -5,7 +5,7 @@
   "planeta": "arcoiris",
   "zona": "zona4_islotes",
   "tema": "lluvia de colores",
-  "variante": "colores con blanco: rosado, celeste y cafe (3 componentes); dato curioso por mezcla",
+  "variante": "colores con blanco de 3 componentes: lila y verde claro, mas rosado, celeste, cafe y violeta; dato curioso por mezcla",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "mezcla",
@@ -26,9 +26,12 @@
   "pedidos": [
     "rosado",
     "celeste",
-    "cafe"
+    "cafe",
+    "lila",
+    "verde_claro",
+    "violeta"
   ],
-  "rondas": 6,
+  "rondas": 5,
   "por_ronda": 3,
   "limite_intentos": 12,
   "umbrales_estrellitas": {

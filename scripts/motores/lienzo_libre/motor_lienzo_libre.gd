@@ -21,6 +21,12 @@ extends "res://scripts/base/minijuego_base.gd"
 ## - `decora_ala`: pintar el ala de la nave; queda guardada para el hangar (los tres).
 ## - `viste_coco`: elegir y pintar el traje de Coco (Nicole).
 ##
+## LIENZO CON TEMA (zona 1, ficha §8): si el nivel trae `temas`, cada hoja es un tema ("Maxi dibuja
+## una pista de carreras") con su fondo, sus STICKERS vivos (bandeja) y su CONECTOR (pista, rieles,
+## cerca, guirnalda, puente arcoiris...) que un viajero recorre. Maxi recibe el tema; Nicole elige
+## entre 2 tarjetas y Sofia entre 3. Sofia ademas edita los stickers (tamano, giro, espejo) y tiene
+## 3 RETOS DE ARTISTA opcionales que dan destellos extra (nunca se exigen).
+##
 ## Un nivel puede traer varias HOJAS seguidas (laminas de un pool barajado, `laminas_por_partida`)
 ## y varias ETAPAS (`etapas`: p. ej. decorar el ala y despues vestir a Coco). Cada hoja se muestra
 ## a Coco, se guarda como PNG en user://dibujos/<hermano>/ y pasa a la siguiente; la ultima dispara
@@ -37,6 +43,8 @@ const Laminas := preload("res://scripts/motores/lienzo_libre/laminas.gd")
 const Sellos := preload("res://scripts/motores/lienzo_libre/sellos.gd")
 const Cresta := preload("res://scripts/motores/lienzo_libre/cresta_coco.gd")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
+const Stickers := preload("res://scripts/motores/lienzo_libre/stickers.gd")
+const StickerVivo := preload("res://scripts/motores/lienzo_libre/sticker_vivo.gd")
 
 ## Pantalla base 1280x720: a la izquierda salir, tarjeta modelo, "mostrar a Coco" y Coco; al centro
 ## el lienzo; abajo las herramientas; a la derecha la paleta y Cometa.
@@ -48,6 +56,9 @@ const RECT_MOSTRAR := Rect2(46, 262, 142, 142)
 const CARPETA_DIBUJOS := "user://dibujos"
 const DESTELLOS_POR_HOJA := 20
 const MAX_DESTELLOS_COLORES := 10
+const DESTELLOS_POR_RETO := 5
+## Entre dos nombres de sticker dichos por Coco (no ametrallar al estampar muchos seguidos).
+const SEGUNDOS_ENTRE_NOMBRES := 2.2
 const SEGUNDOS_ENTRE_REACCIONES := 2.6
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const SFX_TOQUE := "sfx/ui/toque.ogg"
@@ -117,6 +128,21 @@ var _mezclas_dichas := {}
 var _mis_colores: Array = []
 var _traje := ""
 
+## Lienzo con tema: temas aun no jugados, selector de tarjetas, bandeja de stickers, barra de
+## edicion y retos de Sofia.
+var eligiendo_tema := false
+var _temas_libres: Array = []
+var _selector: Control
+var _bandeja: Control
+var _velo: Button
+var _barra: Control
+var _retos_ui: Control
+var _retos: Array = []  ## [{"datos": Dictionary, "hecho": bool}]
+var _retos_cumplidos := 0
+var _nombrados := {}
+var _ms_ultimo_nombre := -100000
+var _conectados := 0
+
 var _segundos_mostrar := 0.0
 var _tiempo_hoja := 0.0
 var _hubo_toque := false
@@ -160,7 +186,7 @@ func _process(delta: float) -> void:
 	var hablando: bool = audio != null and audio.esta_hablando()
 	var bamboleo := absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0
 	_anfitriona.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
-	if _terminado or _mostrando or _indice_hoja < 0:
+	if _terminado or _mostrando or eligiendo_tema or _indice_hoja < 0:
 		return
 	_tiempo_hoja += delta
 	if not boton_mostrar.visible and _segundos_mostrar > 0.0 and _hubo_toque and _tiempo_hoja >= _segundos_mostrar:
@@ -180,6 +206,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 ## Arma la lista de hojas de la partida: cada etapa aporta 1 o varias laminas de su pool.
 func _armar_hojas() -> void:
 	_hojas.clear()
+	var temas: Array = nivel.get("temas", [])
+	if not temas.is_empty():
+		_armar_hojas_con_tema(temas)
+		return
 	var etapas: Array = nivel.get("etapas", [])
 	if etapas.is_empty():
 		etapas = [{}]
@@ -190,9 +220,36 @@ func _armar_hojas() -> void:
 			_hojas.append({"cfg": cfg, "lamina": elegidas[j], "etapa": i, "primera_de_etapa": j == 0})
 
 
+## Lienzo con tema: una hoja por tema. Con `opciones_tema` <= 1 el tema se asigna al azar (Maxi,
+## asegurando uno de sus favoritos con `al_menos_una`); si no, cada hoja se elige al empezar entre
+## los temas que aun no se jugaron.
+func _armar_hojas_con_tema(temas: Array) -> void:
+	var cuantas := int(nivel.get("temas_por_partida", 2))
+	_temas_libres = temas.duplicate()
+	_temas_libres.shuffle()
+	var asignados: Array = []
+	if int(nivel.get("opciones_tema", 1)) <= 1:
+		asignados = _elegir_laminas({"laminas": temas, "laminas_por_partida": cuantas, "al_menos_una": nivel.get("al_menos_una", "")})
+	for i in cuantas:
+		var hoja := {"cfg": {}, "lamina": {}, "etapa": i, "primera_de_etapa": true, "tema": {}}
+		if i < asignados.size():
+			_asignar_tema(hoja, asignados[i])
+		_hojas.append(hoja)
+
+
+func _asignar_tema(hoja: Dictionary, tema: Dictionary) -> void:
+	hoja["tema"] = tema
+	hoja["cfg"] = _config_de_etapa(tema)
+	hoja["lamina"] = tema.get("fondo", {})
+	for i in range(_temas_libres.size() - 1, -1, -1):
+		if str(_temas_libres[i].get("id", "")) == str(tema.get("id", "")):
+			_temas_libres.remove_at(i)
+
+
 func _config_de_etapa(etapa: Dictionary) -> Dictionary:
 	var cfg := nivel.duplicate(true)
 	cfg.erase("etapas")
+	cfg.erase("temas")
 	for clave in etapa:
 		if clave == "lineas_voz":
 			var voces: Dictionary = nivel.get("lineas_voz", {}).duplicate()
@@ -232,6 +289,9 @@ func _elegir_laminas(cfg: Dictionary) -> Array:
 func _empezar_hoja(indice: int) -> void:
 	_indice_hoja = indice
 	var hoja: Dictionary = _hojas[indice]
+	if hoja.has("tema") and (hoja["tema"] as Dictionary).is_empty():
+		_mostrar_selector()
+		return
 	_cfg = hoja["cfg"]
 	_encargo = str(_cfg.get("encargo", "libre"))
 	_tiempo_hoja = 0.0
@@ -250,6 +310,14 @@ func _empezar_hoja(indice: int) -> void:
 	lienzo.lado_sello = int(_cfg.get("lado_sello", {"semilla": 124, "brote": 88, "estrella": 72}.get(_perfil, 88)))
 	lienzo.sellos_vivos = bool(_cfg.get("sellos_vivos", _perfil == "semilla"))
 	lienzo.rellenar_con_toque = bool(_cfg.get("rellenar_con_toque", false))
+	lienzo.stickers_objeto = _cfg.has("stickers")
+	lienzo.sticker_con_color_actual = _perfil == "semilla"
+	lienzo.conector = _cfg.get("conector", {})
+	lienzo.avisar_completa = not lienzo.stickers_objeto
+	_nombrados.clear()
+	_conectados = 0
+	_cerrar_bandeja()
+	_ocultar_barra()
 	var lamina: Dictionary = hoja["lamina"]
 	if lamina.has("papel"):
 		lienzo.papel = Color(str(lamina["papel"]))
@@ -275,6 +343,7 @@ func _empezar_hoja(indice: int) -> void:
 	_construir_puntos_hojas()
 	_preparar_pedidos()
 	_preparar_mezcla()
+	_preparar_retos()
 
 	_segundos_mostrar = float(_cfg.get("segundos_mostrar", 0.0))
 	boton_mostrar.visible = _segundos_mostrar <= 0.0
@@ -329,6 +398,11 @@ func _construir_interfaz() -> void:
 	lienzo.nota.connect(_tocar_nota)
 	lienzo.purpurina_quieta.connect(_lluvia_dorada)
 	lienzo.color_ciclado.connect(_al_ciclar_color)
+	lienzo.sticker_tocado.connect(_al_tocar_sticker)
+	lienzo.sticker_cambiado.connect(_revisar_retos)
+	lienzo.sticker_borrado.connect(_al_borrar_sticker)
+	lienzo.camino_creado.connect(_al_crear_camino)
+	lienzo.viajero_llego.connect(_al_llegar_viajero)
 
 	_paleta = Control.new()
 	_paleta.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -398,6 +472,40 @@ func _construir_interfaz() -> void:
 	_ui.add_child(_platito)
 	_platito.position = RECT_PALETA.position
 	_platito.size = RECT_PALETA.size
+
+	_retos_ui = Control.new()
+	_retos_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ui.add_child(_retos_ui)
+	_retos_ui.position = Vector2(RECT_LIENZO.position.x, 8)
+	_retos_ui.size = Vector2(3 * 72.0, 66)
+
+	_barra = Control.new()
+	_barra.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ui.add_child(_barra)
+	_barra.hide()
+
+	_velo = Button.new()
+	_velo.flat = true
+	_velo.focus_mode = Control.FOCUS_NONE
+	_velo.tooltip_text = "Cerrar la bolsa de stickers"
+	for estado in ["normal", "hover", "pressed", "disabled", "focus"]:
+		_velo.add_theme_stylebox_override(estado, StyleBoxEmpty.new())
+	_ui.add_child(_velo)
+	_velo.position = Vector2.ZERO
+	_velo.size = Vector2(1280, 720)
+	_velo.pressed.connect(_cerrar_bandeja)
+	_velo.hide()
+	_bandeja = Control.new()
+	_bandeja.mouse_filter = Control.MOUSE_FILTER_STOP
+	_ui.add_child(_bandeja)
+	_bandeja.hide()
+
+	_selector = Control.new()
+	_selector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_ui.add_child(_selector)
+	_selector.position = RECT_LIENZO.position
+	_selector.size = RECT_LIENZO.size
+	_selector.hide()
 
 	var degradado := Gradient.new()
 	degradado.offsets = PackedFloat32Array([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
@@ -555,7 +663,10 @@ func _construir_herramientas() -> void:
 		x += lado + separacion
 	for id in lista:
 		var boton := _boton_herramienta(str(id), Rect2(x, (RECT_HERRAMIENTAS.size.y - lado) / 2.0, lado, lado))
-		boton.pressed.connect(_elegir_herramienta.bind(str(id)))
+		if str(id) == "bolsa":
+			boton.pressed.connect(_abrir_bandeja)
+		else:
+			boton.pressed.connect(_elegir_herramienta.bind(str(id)))
 		x += lado + separacion
 	var inicial := str(_cfg.get("herramienta_inicial", lista[0] if not lista.is_empty() else "pincel"))
 	_elegir_herramienta(inicial, false)
@@ -592,14 +703,21 @@ func _elegir_herramienta(id: String, con_sonido := true) -> void:
 	if con_sonido:
 		_sfx_suave(SFX_ELEGIR)
 	lienzo.herramienta = id
+	# El sticker elegido en la bolsa se marca en el boton de la bolsa (que lo muestra).
+	var en_bolsa := id.begins_with("sello_")
+	for entrada: Dictionary in _botones_herramienta:
+		if entrada["id"] == id:
+			en_bolsa = false
 	for entrada: Dictionary in _botones_herramienta:
 		var boton: Button = entrada["boton"]
-		var elegido: bool = entrada["id"] == id or entrada["id"] == "traje_" + _traje
+		var activo: bool = entrada["id"] == id or (en_bolsa and entrada["id"] == "bolsa")
+		var elegido: bool = activo or entrada["id"] == "traje_" + _traje
 		boton.set_meta("elegido", elegido)
-		_estilizar_boton(boton, Color("#FFE38A") if entrada["id"] == id else (Color("#CFF5F1") if elegido else Color("#FFF8EE")), false)
+		_estilizar_boton(boton, Color("#FFE38A") if activo else (Color("#CFF5F1") if elegido else Color("#FFF8EE")), false)
 		(boton.get_meta("dibujo") as Control).queue_redraw()
-	if id != "sello_dino":
+	if not (id == "sello_dino" or Stickers.es_dino(id.trim_prefix("sello_"))):
 		_dinos_seguidos = 0
+	_ocultar_barra()
 
 
 ## "Viste a Coco": cambia el traje conservando los colores de las partes que ya pinto.
@@ -718,6 +836,10 @@ func _dibujar_puntos_hojas() -> void:
 
 func _al_tocar_lienzo() -> void:
 	_hubo_toque = true
+	if _barra.visible and lienzo.arrastrando() != lienzo.seleccionado:
+		_ocultar_barra()
+	if lienzo.herramienta == "conector":
+		_primer_uso_especial("conector")
 	if lienzo.herramienta in ["pincel_corazon", "pincel_estrella", "purpurina", "arcoiris"]:
 		_primer_uso_especial(lienzo.herramienta)
 	if lienzo.herramienta.begins_with("sello_"):
@@ -739,6 +861,8 @@ func _al_usar_color(color: Color) -> void:
 	var clave := color.to_html(false)
 	var nuevo_en_hoja := not _colores_hoja.has(clave)
 	_colores_hoja[clave] = true
+	if nuevo_en_hoja and not _retos.is_empty():
+		_revisar_retos()
 	_cresta.imitar(_ultimos_colores())
 	_recientes.append([ahora, color])
 	while not _recientes.is_empty() and ahora - int(_recientes[0][0]) > 8000:
@@ -821,8 +945,13 @@ func _id_de_color(color: Color) -> String:
 
 
 func _al_poner_sello(tipo: String, _posicion: Vector2) -> void:
-	_primer_uso_especial("sello_" + tipo)
-	if tipo == "dino":
+	if lienzo.stickers_objeto:
+		# Con tema, Coco nombra el sticker (en vez de la linea generica de "uso_sello").
+		_nombrar_sticker(tipo, false)
+		_revisar_retos()
+	else:
+		_primer_uso_especial("sello_" + tipo)
+	if tipo == "dino" or Stickers.es_dino(tipo):
 		_dinos_seguidos += 1
 		if lienzo.sellos_vivos and _dinos_seguidos >= 3:
 			_dinos_seguidos = 0
@@ -881,6 +1010,424 @@ func _al_completar_lamina() -> void:
 		else:
 			_reproducir_voz("lamina_completa", _linea_al_azar("lamina_completa"))
 		_revelar_boton_mostrar(false))
+
+
+# ---------------------------------------------------------------------------
+# Lienzo con tema: elegir el tema (Nicole entre 2 tarjetas, Sofia entre 3)
+# ---------------------------------------------------------------------------
+
+func _mostrar_selector() -> void:
+	eligiendo_tema = true
+	_cfg = nivel
+	_hubo_toque = false
+	_tiempo_hoja = 0.0
+	_voz_diferida_id += 1
+	lienzo.limpiar()
+	lienzo.bloqueado = true
+	_vaciar(_paleta)
+	_botones_color.clear()
+	_vaciar(_herramientas)
+	_botones_herramienta.clear()
+	_vaciar(_modelo)
+	_vaciar(_retos_ui)
+	_retos.clear()
+	_cerrar_bandeja()
+	_ocultar_barra()
+	boton_mostrar.visible = false
+	_construir_puntos_hojas()
+	if _temas_libres.is_empty():
+		_temas_libres = nivel.get("temas", []).duplicate()
+		_temas_libres.shuffle()
+	var opciones := _temas_libres.slice(0, maxi(1, int(nivel.get("opciones_tema", 2))))
+	_hojas[_indice_hoja]["opciones"] = opciones
+	_vaciar(_selector)
+	_selector.show()
+	var fondo := Panel.new()
+	fondo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var estilo := StyleBoxFlat.new()
+	estilo.bg_color = Color("#FFE3F1")
+	estilo.set_corner_radius_all(14)
+	fondo.add_theme_stylebox_override("panel", estilo)
+	_selector.add_child(fondo)
+	fondo.size = RECT_LIENZO.size
+	var n := opciones.size()
+	var sep := 26.0
+	var ancho := minf(300.0, (RECT_LIENZO.size.x - sep * (n + 1)) / n)
+	var alto := minf(430.0, RECT_LIENZO.size.y - 60.0)
+	var x0 := (RECT_LIENZO.size.x - (ancho * n + sep * (n - 1))) / 2.0
+	for i in n:
+		var tarjeta := _tarjeta_tema(opciones[i], Rect2(x0 + i * (ancho + sep), (RECT_LIENZO.size.y - alto) / 2.0, ancho, alto))
+		tarjeta.pressed.connect(elegir_tema.bind(i))
+		tarjeta.scale = Vector2(0.6, 0.6)
+		var tween := tarjeta.create_tween()
+		tween.tween_interval(0.08 * i)
+		tween.tween_property(tarjeta, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	var voz := _linea("elige_tema")
+	_reproducir_voz("elige_tema", voz)
+	_narrar_opciones(opciones, _duracion_voz(voz) + 0.3)
+	_actualizar_depuracion()
+
+
+## Tarjeta de un tema, sin texto: el fondo en miniatura con tres de sus stickers y, abajo, su
+## conector con el viajero (lo que se va a poder hacer).
+func _tarjeta_tema(tema: Dictionary, rect: Rect2) -> Button:
+	var tarjeta := Button.new()
+	tarjeta.focus_mode = Control.FOCUS_NONE
+	tarjeta.tooltip_text = str(tema.get("id", "tema"))
+	_selector.add_child(tarjeta)
+	tarjeta.position = rect.position
+	tarjeta.size = rect.size
+	tarjeta.pivot_offset = rect.size / 2.0
+	for estado in ["normal", "hover", "pressed", "disabled"]:
+		var caja := StyleBoxFlat.new()
+		caja.bg_color = Color("#FFF8EE").darkened(0.08) if estado == "pressed" else Color("#FFF8EE")
+		caja.border_color = COLOR_CONTORNO
+		caja.set_border_width_all(6)
+		caja.set_corner_radius_all(30)
+		caja.shadow_color = Color(COLOR_CONTORNO, 0.3)
+		caja.shadow_offset = Vector2(0, 7)
+		caja.shadow_size = 3
+		tarjeta.add_theme_stylebox_override(estado, caja)
+	tarjeta.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	tarjeta.button_down.connect(_rebote.bind(tarjeta))
+	var ventana := Control.new()
+	ventana.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ventana.clip_contents = true
+	tarjeta.add_child(ventana)
+	ventana.position = Vector2(16, 16)
+	ventana.size = Vector2(rect.size.x - 32, rect.size.y * 0.66 - 16)
+	var fondo := Laminas.preparar(tema.get("fondo", {})) if not (tema.get("fondo", {}) as Dictionary).is_empty() else {}
+	var portada: Array = tema.get("portada", (tema.get("stickers", []) as Array).slice(0, 3))
+	ventana.draw.connect(func() -> void:
+		var escala := maxf(ventana.size.x / RECT_LIENZO.size.x, ventana.size.y / RECT_LIENZO.size.y)
+		var desfase := (ventana.size - RECT_LIENZO.size * escala) / 2.0
+		if not fondo.is_empty():
+			Laminas.dibujar(ventana, fondo, desfase, escala)
+		var radio := minf(ventana.size.x * 0.2, ventana.size.y * 0.24)
+		for j in portada.size():
+			var p := Vector2(ventana.size.x * (0.22 + 0.28 * j), ventana.size.y * (0.66 if j % 2 == 0 else 0.5))
+			Stickers.dibujar(ventana, str(portada[j]), Stickers.color_por_defecto(str(portada[j])), p, radio))
+	var borde := Panel.new()
+	borde.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var estilo := StyleBoxFlat.new()
+	estilo.draw_center = false
+	estilo.border_color = COLOR_CONTORNO
+	estilo.set_border_width_all(4)
+	estilo.set_corner_radius_all(18)
+	borde.add_theme_stylebox_override("panel", estilo)
+	tarjeta.add_child(borde)
+	borde.position = ventana.position - Vector2(2, 2)
+	borde.size = ventana.size + Vector2(4, 4)
+	var pie := Control.new()
+	pie.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tarjeta.add_child(pie)
+	pie.position = Vector2(16, rect.size.y * 0.66 + 8)
+	pie.size = Vector2(rect.size.x - 32, rect.size.y * 0.34 - 24)
+	var conector: Dictionary = tema.get("conector", {})
+	pie.draw.connect(func() -> void:
+		if conector.is_empty():
+			return
+		var puntos := PackedVector2Array()
+		for i in 25:
+			var t := i / 24.0
+			puntos.append(Vector2(pie.size.x * (0.08 + 0.84 * t), pie.size.y * (0.62 - 0.22 * sin(t * TAU))))
+		Lienzo.dibujar_camino(pie, puntos, str(conector.get("tipo", "camino")), 0.7)
+		var viajero := str(conector.get("viajero", ""))
+		if viajero != "":
+			Stickers.dibujar(pie, viajero, Stickers.color_por_defecto(viajero), Vector2(pie.size.x * 0.5, pie.size.y * 0.45), minf(46.0, pie.size.y * 0.42)))
+	return tarjeta
+
+
+## Despues de "¿que dibujamos?", Coco nombra cada tarjeta mientras salta (Nicole aun no lee).
+func _narrar_opciones(opciones: Array, espera: float) -> void:
+	var id := _voz_diferida_id
+	await get_tree().create_timer(espera).timeout
+	for i in opciones.size():
+		if not eligiendo_tema or id != _voz_diferida_id or not is_inside_tree():
+			return
+		var tarjeta := _selector.get_child(i + 1) as Control
+		if tarjeta != null:
+			_rebote(tarjeta, 2)
+		var nombre := str((opciones[i].get("lineas_voz", {}) as Dictionary).get("nombre", ""))
+		_reproducir_voz("nombre_tema", nombre)
+		await get_tree().create_timer(_duracion_voz(nombre) + 0.35).timeout
+
+
+## Elige la tarjeta `indice` del selector y empieza la hoja con ese tema. Publica para QA.
+func elegir_tema(indice: int) -> void:
+	if not eligiendo_tema:
+		return
+	var hoja: Dictionary = _hojas[_indice_hoja]
+	var opciones: Array = hoja.get("opciones", [])
+	if indice < 0 or indice >= opciones.size():
+		return
+	eligiendo_tema = false
+	_voz_diferida_id += 1
+	_sfx_suave(SFX_ELEGIR)
+	_asignar_tema(hoja, opciones[indice])
+	_selector.hide()
+	_vaciar(_selector)
+	_empezar_hoja(_indice_hoja)
+	lienzo.pivot_offset = RECT_LIENZO.size / 2.0
+	lienzo.scale = Vector2(0.92, 0.92)
+	create_tween().tween_property(lienzo, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+# ---------------------------------------------------------------------------
+# Lienzo con tema: bolsa de stickers y barra de edicion
+# ---------------------------------------------------------------------------
+
+func _abrir_bandeja() -> void:
+	var ids: Array = _cfg.get("stickers", [])
+	if ids.is_empty():
+		return
+	_sfx_suave(SFX_ELEGIR)
+	_ocultar_barra()
+	_vaciar(_bandeja)
+	var lado := 88.0
+	var sep := 10.0
+	var por_fila := mini(ids.size(), 8)
+	var filas := ceili(ids.size() / float(por_fila))
+	var tam := Vector2(por_fila * lado + (por_fila - 1) * sep + 32.0, filas * lado + (filas - 1) * sep + 32.0)
+	_bandeja.size = tam
+	_bandeja.position = Vector2(RECT_LIENZO.position.x + (RECT_LIENZO.size.x - tam.x) / 2.0, RECT_LIENZO.end.y - tam.y - 6.0)
+	_bandeja.pivot_offset = Vector2(tam.x / 2.0, tam.y)
+	var panel := Panel.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var estilo := StyleBoxFlat.new()
+	estilo.bg_color = Color("#FFF8EE")
+	estilo.border_color = COLOR_CONTORNO
+	estilo.set_border_width_all(5)
+	estilo.set_corner_radius_all(28)
+	estilo.shadow_color = Color(COLOR_CONTORNO, 0.35)
+	estilo.shadow_size = 8
+	panel.add_theme_stylebox_override("panel", estilo)
+	_bandeja.add_child(panel)
+	panel.size = tam
+	for i in ids.size():
+		var id := "sello_" + str(ids[i])
+		var boton := Button.new()
+		boton.focus_mode = Control.FOCUS_NONE
+		boton.tooltip_text = str(ids[i])
+		boton.custom_minimum_size = Vector2(64, 64)
+		_bandeja.add_child(boton)
+		boton.position = Vector2(16.0 + (i % por_fila) * (lado + sep), 16.0 + (i / por_fila) * (lado + sep))
+		boton.size = Vector2(lado, lado)
+		boton.pivot_offset = boton.size / 2.0
+		boton.set_meta("id", id)
+		_estilizar_boton(boton, Color("#FFE38A") if lienzo.herramienta == id else Color.WHITE)
+		boton.set_meta("dibujo", _icono(boton, _dibujar_herramienta))
+		boton.pressed.connect(func() -> void:
+			_elegir_herramienta(id)
+			_cerrar_bandeja())
+	_velo.show()
+	_bandeja.show()
+	_ui.move_child(_velo, -1)
+	_ui.move_child(_bandeja, -1)
+	_ui.move_child(_efectos, -1)
+	_bandeja.scale = Vector2(0.9, 0.9)
+	create_tween().tween_property(_bandeja, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _cerrar_bandeja() -> void:
+	if _bandeja == null:
+		return
+	_bandeja.hide()
+	_velo.hide()
+
+
+## Tocar un sticker: salta (o da unos pasitos) y Coco lo nombra. Nicole y Sofia, ademas, ven la
+## barra para agrandarlo, achicarlo, girarlo, espejarlo o borrarlo.
+func _al_tocar_sticker(sticker: StickerVivo) -> void:
+	_sfx_suave(SFX_TOQUE)
+	if sticker.id in Stickers.ANDAN:
+		sticker.andar()
+	else:
+		sticker.saltar()
+	_nombrar_sticker(sticker.id, true)
+	if _perfil == "semilla" or _mostrando:
+		return
+	lienzo.seleccionar(sticker)
+	_mostrar_barra(sticker)
+
+
+func _mostrar_barra(sticker: StickerVivo) -> void:
+	var acciones := ["achicar", "agrandar", "borrar"] if _perfil == "brote" else ["achicar", "agrandar", "girar", "espejo", "borrar"]
+	_vaciar(_barra)
+	var lado := 72.0 if _perfil == "brote" else 64.0
+	var sep := 8.0
+	var tam := Vector2(acciones.size() * lado + (acciones.size() - 1) * sep + 16.0, lado + 16.0)
+	var centro := lienzo.position + sticker.centro()
+	var radio: float = sticker.radio_toque()
+	var y := centro.y - radio - tam.y - 4.0
+	if y < RECT_LIENZO.position.y:
+		y = centro.y + radio + 4.0
+	var x := clampf(centro.x - tam.x / 2.0, RECT_LIENZO.position.x, RECT_LIENZO.end.x - tam.x)
+	_barra.position = Vector2(x, minf(y, RECT_LIENZO.end.y - tam.y))
+	_barra.size = tam
+	var panel := Panel.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var estilo := StyleBoxFlat.new()
+	estilo.bg_color = Color(COLOR_CONTORNO, 0.82)
+	estilo.set_corner_radius_all(int(tam.y / 2.0))
+	panel.add_theme_stylebox_override("panel", estilo)
+	_barra.add_child(panel)
+	panel.size = tam
+	for i in acciones.size():
+		var boton := Button.new()
+		boton.focus_mode = Control.FOCUS_NONE
+		boton.tooltip_text = str(acciones[i])
+		boton.custom_minimum_size = Vector2(64, 64)
+		_barra.add_child(boton)
+		boton.position = Vector2(8.0 + i * (lado + sep), 8.0)
+		boton.size = Vector2(lado, lado)
+		boton.set_meta("accion", acciones[i])
+		_estilizar_boton(boton, Color("#FFB3C7") if acciones[i] == "borrar" else Color("#FFF8EE"))
+		_icono(boton, _dibujar_accion)
+		boton.pressed.connect(_accion_sticker.bind(str(acciones[i])))
+	_barra.show()
+	_ui.move_child(_barra, -1)
+	_ui.move_child(_efectos, -1)
+
+
+func _ocultar_barra() -> void:
+	if _barra == null:
+		return
+	_barra.hide()
+	if lienzo != null:
+		lienzo.seleccionar(null)
+
+
+func _accion_sticker(accion: String) -> void:
+	var sticker := lienzo.seleccionado
+	if not is_instance_valid(sticker):
+		_ocultar_barra()
+		return
+	_sfx_suave(SFX_ELEGIR)
+	match accion:
+		"achicar":
+			sticker.escala = maxf(0.5, sticker.escala / 1.25)
+		"agrandar":
+			sticker.escala = minf(2.4, sticker.escala * 1.25)
+		"girar":
+			sticker.rotation = wrapf(sticker.rotation + PI / 6.0, -PI, PI)
+		"espejo":
+			sticker.espejo = not sticker.espejo
+		"borrar":
+			lienzo.borrar_sticker(sticker)
+			_ocultar_barra()
+			return
+	sticker.saltar()
+	_mostrar_barra(sticker)
+	_revisar_retos()
+
+
+func _al_borrar_sticker(_id: String, posicion: Vector2) -> void:
+	_sfx_suave(SFX_TOQUE)
+	_estallido(lienzo.global_position + posicion, 8, [Color.WHITE, Color("#FFE38A"), Color("#FFB3C7")], 0.8)
+	_revisar_retos()
+
+
+func _al_crear_camino(desde: StickerVivo, hasta: StickerVivo) -> void:
+	_sfx_suave(SFX_RELLENO)
+	_revisar_retos()
+	if desde == null or hasta == null:
+		return
+	_conectados += 1
+	_estallido(lienzo.global_position + (desde.centro() + hasta.centro()) / 2.0, 10, Figura.COLORES_ARCOIRIS, 1.0)
+	_reaccion_anfitriona("salta")
+	if _conectados <= 2:
+		_voz_diferida("conectado", _linea_al_azar("conectado"), 0.5)
+
+
+## El viajero llego a una punta: en el tren por Chile, Coco nombra el lugar (la "estacion").
+func _al_llegar_viajero(sticker: StickerVivo) -> void:
+	if bool(_cfg.get("nombrar_estaciones", false)):
+		_nombrar_sticker(sticker.id, true, 5.0)
+
+
+## Coco nombra el sticker (la primera vez que se pone en la hoja, o al tocarlo con `forzar`).
+func _nombrar_sticker(id: String, forzar: bool, pausa := SEGUNDOS_ENTRE_NOMBRES) -> void:
+	var patron := str(_cfg.get("voces_stickers", ""))
+	if patron == "" or (not forzar and _nombrados.has(id)):
+		return
+	var ahora := Time.get_ticks_msec()
+	if ahora - _ms_ultimo_nombre < pausa * 1000.0:
+		return
+	var ruta := patron % id
+	if not _existe_voz(ruta):
+		return
+	_nombrados[id] = true
+	_ms_ultimo_nombre = ahora
+	_reproducir_voz("sticker", ruta)
+
+
+func _existe_voz(ruta: String) -> bool:
+	var final := resolver_ruta_audio(ruta)
+	return final != "" and ResourceLoader.exists(final)
+
+
+# ---------------------------------------------------------------------------
+# Retos de artista (Sofia): opcionales, dan destellos extra
+# ---------------------------------------------------------------------------
+
+func _preparar_retos() -> void:
+	_vaciar(_retos_ui)
+	_retos.clear()
+	for datos in _cfg.get("retos", []):
+		_retos.append({"datos": datos, "hecho": false})
+	for i in _retos.size():
+		var boton := Button.new()
+		boton.focus_mode = Control.FOCUS_NONE
+		boton.tooltip_text = "Reto de artista"
+		boton.custom_minimum_size = Vector2(64, 64)
+		_retos_ui.add_child(boton)
+		boton.position = Vector2(i * 72.0, 0)
+		boton.size = Vector2(64, 64)
+		boton.set_meta("indice", i)
+		_estilizar_boton(boton, Color("#FFF8EE"))
+		boton.set_meta("dibujo", _icono(boton, _dibujar_reto))
+		boton.pressed.connect(func() -> void:
+			_sfx_suave(SFX_TOQUE)
+			_reproducir_voz("reto", str(_retos[i]["datos"].get("voz", ""))))
+
+
+func _revisar_retos() -> void:
+	if _retos.is_empty() or _mostrando or _terminado:
+		return
+	for i in _retos.size():
+		if _retos[i]["hecho"]:
+			continue
+		var datos: Dictionary = _retos[i]["datos"]
+		var valor := 0
+		match str(datos.get("tipo", "")):
+			"stickers":
+				valor = lienzo.contar_stickers(str(datos.get("sticker", "")))
+			"conexiones":
+				valor = lienzo.conexiones()
+			"colores":
+				valor = _colores_hoja.size()
+			"distintos":
+				valor = lienzo.ids_distintos()
+		if valor >= int(datos.get("n", 1)):
+			_cumplir_reto(i)
+
+
+func _cumplir_reto(indice: int) -> void:
+	_retos[indice]["hecho"] = true
+	_retos_cumplidos += 1
+	var boton := _retos_ui.get_child(indice) as Button
+	_estilizar_boton(boton, Color("#FFE38A"), false)
+	(boton.get_meta("dibujo") as Control).queue_redraw()
+	_rebote(boton, 2)
+	_estallido(boton.global_position + boton.size / 2.0, 12, [DORADO, Color.WHITE, TURQUESA], 1.1)
+	var todos := true
+	for reto: Dictionary in _retos:
+		todos = todos and bool(reto["hecho"])
+	_voz_diferida("reto_cumplido", _linea_al_azar("retos_todos" if todos else "reto_cumplido"), 0.6)
+	if todos:
+		_reaccion_anfitriona("baila")
+	_actualizar_depuracion()
 
 
 # ---------------------------------------------------------------------------
@@ -1165,9 +1712,11 @@ func _despues_de_mostrar() -> void:
 	celebrar(calcular_destellos(), 0, _linea_al_azar("victoria_final"))
 
 
-## 20 destellos por hoja mostrada + 1 por color distinto usado (hasta 10). Nunca se exige nada.
+## 20 destellos por hoja mostrada + 1 por color distinto usado (hasta 10) + 5 por reto de artista
+## cumplido (Sofia). Nunca se exige nada.
 func calcular_destellos() -> int:
-	return maxi(1, _indice_hoja + 1) * DESTELLOS_POR_HOJA + mini(_colores_usados.size(), MAX_DESTELLOS_COLORES)
+	return maxi(1, _indice_hoja + 1) * DESTELLOS_POR_HOJA + mini(_colores_usados.size(), MAX_DESTELLOS_COLORES) \
+		+ _retos_cumplidos * DESTELLOS_POR_RETO
 
 
 ## Colorear por zonas con tarjeta modelo: si cada zona quedo del color de la tarjeta, Coco lo nota.
@@ -1545,6 +2094,16 @@ func _dibujar_herramienta(icono: Control) -> void:
 	if id.begins_with("traje_"):
 		_dibujar_traje_mini(icono, id.trim_prefix("traje_"))
 		return
+	if id == "bolsa":
+		_dibujar_bolsa(icono)
+		return
+	if id == "conector":
+		_dibujar_icono_conector(icono, c, k)
+		return
+	if id.begins_with("sello_") and lienzo.stickers_objeto and Stickers.tiene(id.trim_prefix("sello_")):
+		var sticker := id.trim_prefix("sello_")
+		Stickers.dibujar(icono, sticker, color if _perfil == "semilla" else Stickers.color_por_defecto(sticker), c, 38.0 * k)
+		return
 	if id.begins_with("sello_"):
 		var tipo := id.trim_prefix("sello_")
 		var radio := 34.0 * k
@@ -1589,6 +2148,109 @@ func _dibujar_herramienta(icono: Control) -> void:
 			var figura := id.trim_prefix("pincel_")
 			for p in [[Vector2(-16, 12), 14.0], [Vector2(2, -4), 12.0], [Vector2(18, -18), 10.0]]:
 				Figura.dibujar(icono, figura, color, c + p[0] * k, p[1] * k, false)
+
+
+## Bolsa de stickers: una bolsita con el sticker elegido (o el primero del tema) asomando.
+func _dibujar_bolsa(icono: Control) -> void:
+	var c := icono.size / 2.0
+	var k := icono.size.x / 96.0
+	var sticker := ""
+	if lienzo.herramienta.begins_with("sello_"):
+		sticker = lienzo.herramienta.trim_prefix("sello_")
+	elif not (_cfg.get("stickers", []) as Array).is_empty():
+		sticker = str(_cfg["stickers"][0])
+	var bolsa := Laminas.rectangulo(Rect2(c + Vector2(-30, 4) * k, Vector2(60, 34) * k), 10.0 * k)
+	if sticker != "":
+		Stickers.dibujar(icono, sticker, Stickers.color_por_defecto(sticker), c + Vector2(0, -8) * k, 27.0 * k)
+	icono.draw_colored_polygon(bolsa, Color("#FF9FC8"))
+	Figura.contornear(icono, bolsa, 3.5 * k)
+	for x in [-14.0, 14.0]:
+		icono.draw_circle(c + Vector2(x, 22) * k, 4.0 * k, Color("#FFF8EE"))
+	Figura.dibujar(icono, "corazon", Color("#FFF8EE"), c + Vector2(0, 22) * k, 7.0 * k, false)
+
+
+## Conector del tema: un tramo curvo con su estilo y, si hay, el viajero encima.
+func _dibujar_icono_conector(icono: Control, c: Vector2, k: float) -> void:
+	var conector: Dictionary = _cfg.get("conector", {})
+	var puntos := PackedVector2Array()
+	for i in 17:
+		var t := i / 16.0
+		puntos.append(c + Vector2(-34.0 + 68.0 * t, 16.0 - 20.0 * sin(t * PI)) * k)
+	Lienzo.dibujar_camino(icono, puntos, str(conector.get("tipo", "camino")), 0.45 * k)
+	var viajero := str(conector.get("viajero", ""))
+	if viajero != "":
+		Stickers.dibujar(icono, viajero, lienzo.color_actual if _perfil == "semilla" else Stickers.color_por_defecto(viajero), c + Vector2(4, -12) * k, 22.0 * k)
+	else:
+		# Sin viajero (guirnalda): una manito que "une" dos puntos.
+		for p in [Vector2(-34, 16), Vector2(34, 16)]:
+			icono.draw_circle(c + p * k, 7.0 * k, DORADO)
+			icono.draw_arc(c + p * k, 7.0 * k, 0.0, TAU, 16, COLOR_CONTORNO, 2.5 * k, true)
+
+
+## Iconos de la barra de edicion: chico, grande, girar, espejo y borrar.
+func _dibujar_accion(icono: Control) -> void:
+	var boton := icono.get_parent() as Button
+	var accion: String = boton.get_meta("accion", "")
+	var c := icono.size / 2.0
+	var k := icono.size.x / 64.0
+	match accion:
+		"achicar":
+			Figura.dibujar(icono, "estrella", DORADO, c + Vector2(4, 4) * k, 11.0 * k, false)
+			for dir in [Vector2(-1, -1), Vector2(1, -1)]:
+				icono.draw_line(c + dir * 24.0 * k, c + dir * 14.0 * k, COLOR_CONTORNO, 3.5 * k, true)
+		"agrandar":
+			Figura.dibujar(icono, "estrella", DORADO, c, 24.0 * k, false)
+		"girar":
+			icono.draw_arc(c, 17.0 * k, -PI * 0.9, PI * 0.6, 20, COLOR_CONTORNO, 5.0 * k, true)
+			var punta := c + Vector2.from_angle(PI * 0.6) * 17.0 * k
+			icono.draw_colored_polygon(PackedVector2Array([punta + Vector2(-9, -2) * k, punta + Vector2(7, -8) * k, punta + Vector2(4, 9) * k]), COLOR_CONTORNO)
+		"espejo":
+			icono.draw_colored_polygon(PackedVector2Array([c + Vector2(-6, -16) * k, c + Vector2(-6, 16) * k, c + Vector2(-24, 0) * k]), TURQUESA)
+			icono.draw_colored_polygon(PackedVector2Array([c + Vector2(6, -16) * k, c + Vector2(6, 16) * k, c + Vector2(24, 0) * k]), Color("#FF9FC8"))
+			for y in [-20.0, -8.0, 4.0, 16.0]:
+				icono.draw_line(c + Vector2(0, y) * k, c + Vector2(0, y + 7.0) * k, COLOR_CONTORNO, 3.0 * k)
+		"borrar":
+			var tacho := PackedVector2Array([c + Vector2(-14, -8) * k, c + Vector2(14, -8) * k, c + Vector2(10, 20) * k, c + Vector2(-10, 20) * k])
+			icono.draw_colored_polygon(tacho, Color.WHITE)
+			Figura.contornear(icono, tacho, 3.0 * k)
+			icono.draw_line(c + Vector2(-18, -13) * k, c + Vector2(18, -13) * k, COLOR_CONTORNO, 4.0 * k, true)
+			icono.draw_line(c + Vector2(-5, -18) * k, c + Vector2(5, -18) * k, COLOR_CONTORNO, 4.0 * k, true)
+			for x in [-5.0, 0.0, 5.0]:
+				icono.draw_line(c + Vector2(x, -2) * k, c + Vector2(x * 0.8, 14) * k, COLOR_CONTORNO, 2.0 * k, true)
+
+
+## Reto de artista: lo que pide (sticker, conexion, colores o variedad) y una estrella que se llena.
+func _dibujar_reto(icono: Control) -> void:
+	var boton := icono.get_parent() as Button
+	var i: int = boton.get_meta("indice", 0)
+	if i >= _retos.size():
+		return
+	var datos: Dictionary = _retos[i]["datos"]
+	var hecho: bool = _retos[i]["hecho"]
+	var c := icono.size / 2.0
+	match str(datos.get("tipo", "")):
+		"stickers":
+			var id := str(datos.get("sticker", "estrella"))
+			Stickers.dibujar(icono, id, Stickers.color_por_defecto(id), c + Vector2(-2, -2), 20.0)
+		"conexiones":
+			var conector: Dictionary = _cfg.get("conector", {})
+			var puntos := PackedVector2Array([c + Vector2(-18, 8), c + Vector2(-6, -6), c + Vector2(6, 6), c + Vector2(18, -8)])
+			Lienzo.dibujar_camino(icono, Lienzo.remuestrear(puntos, 3.0), str(conector.get("tipo", "camino")), 0.3)
+			for p in [puntos[0], puntos[3]]:
+				icono.draw_circle(p, 5.0, Color.WHITE)
+				icono.draw_arc(p, 5.0, 0.0, TAU, 12, COLOR_CONTORNO, 2.0, true)
+		"colores":
+			for j in 5:
+				var p := c + Vector2.from_angle(-PI / 2.0 + j * TAU / 5.0) * 13.0 + Vector2(-2, -2)
+				icono.draw_circle(p, 6.0, Figura.COLORES_ARCOIRIS[j])
+				icono.draw_arc(p, 6.0, 0.0, TAU, 12, COLOR_CONTORNO, 1.5, true)
+		_:
+			for j in 3:
+				Figura.dibujar(icono, ["estrella", "corazon", "flor"][j], Figura.COLORES_ARCOIRIS[j * 2], c + Vector2(-13 + j * 13, -2 + (j % 2) * 6), 9.0, false)
+	var esquina := c + Vector2(18, 18)
+	var estrella := Figura.poligono("estrella", esquina, 11.0)
+	icono.draw_colored_polygon(estrella, DORADO if hecho else Color.WHITE)
+	Figura.contornear(icono, estrella, 2.5)
 
 
 func _dibujar_traje_mini(icono: Control, id: String) -> void:

@@ -7,6 +7,9 @@
   validación**: `disenador-mecanicas` (reglas y game feel), `disenador-niveles` (los 15 niveles, las
   tandas y los umbrales de estrellitas son una propuesta de Dev), `guionista` (123 voces TTS
   provisionales), `experto-ux-parvulo` (auditoría sobre la build) y playtest con los tres.
+- **Sofía ya no juega aquí** (PO, 27-Sep-2026): su estación abre el motor `mezclar`
+  (`docs/fichas/motor-mezclar.md`). El modo `mezcla` y los niveles `lluvia_estrella.json` quedan
+  en el código y en `qa_test_clasificar`, pero el mapa no los usa.
 - **Código**: `scripts/motores/clasificar/` (`motor_clasificar.gd`, `gota_clasificar.gd`,
   `charco_clasificar.gd`) y `escenas/minijuegos/clasificar/motor_clasificar.tscn`.
 - **Niveles**: `datos/niveles/arcoiris/<zona>/lluvia_<semilla|brote|estrella>.json` (5 zonas × 3 perfiles).

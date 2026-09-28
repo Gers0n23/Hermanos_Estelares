@@ -189,7 +189,7 @@ func _probar_rondas(ruta: String, nivel: Dictionary, hermano: String) -> void:
 		if i + 1 < ids.size():
 			_check(await _esperar_ronda(motor, i + 1, resultado), "entra la ronda %d" % [i + 2])
 	var t0 := Time.get_ticks_msec()
-	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 20000:
+	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 30000:
 		await process_frame
 	_check(resultado["destellos"] > destellos_ronda_1, "completado(destellos=%d) solo al final de las %d rondas" % [resultado["destellos"], ids.size()])
 	_check(progreso.obtener_estado_parcial(hermano, PLANETA_QA, id_nivel).is_empty(), "al ganar se borra el avance a medio jugar")
@@ -291,7 +291,8 @@ func _probar_nivel(ruta: String, hermano: String, etiqueta := "") -> void:
 	if cola_inicial > 0:
 		_check(motor._cola.is_empty() and repuestas == cola_inicial, "la cola repuso la bandeja al encajar (%d piezas)" % repuestas)
 	var t0 := Time.get_ticks_msec()
-	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 15000:
+	# La fiesta final espera la voz de la figura (con dato, hasta 7,5 s) y la celebracion.
+	while resultado["destellos"] < 0 and Time.get_ticks_msec() - t0 < 30000:
 		await process_frame
 	_check(resultado["destellos"] > 0, "completado(destellos=%d) al terminar" % resultado["destellos"])
 	motor.queue_free()
@@ -355,7 +356,13 @@ func _probar_estrella(motor: Node, piezas: Array, huecos: Array) -> void:
 			var hueco = _hueco_origen(huecos, pieza)
 			if hueco != null and not Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
 				desordenadas += 1
-	_check(desordenadas > 0, "Estrella: %d piezas llegan giradas" % desordenadas)
+	# Piezas casi cuadradas (trozos de franja de Rusia) calzan igual giradas 90°: ahi no hay que girar.
+	var girables := 0
+	for pieza in piezas:
+		var hueco = _hueco_origen(huecos, pieza)
+		if hueco != null and not (Geo.calzan(pieza.poligono(float(hueco["rotacion"]) + 90.0), hueco["forma_centrada"]) and Geo.calzan(pieza.poligono(float(hueco["rotacion"]) + 180.0), hueco["forma_centrada"])):
+			girables += 1
+	_check(desordenadas > 0 or girables == 0, "Estrella: %d piezas llegan giradas (%d necesitan giro)" % [desordenadas, girables])
 	for pieza in piezas:
 		var hueco = _hueco_origen(huecos, pieza)
 		if hueco == null or Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
@@ -560,6 +567,7 @@ func _probar_distribucion(motor: Node, piezas: Array, huecos: Array, perfil: Str
 	var cajas: Array = []
 	var bandeja_ok := true
 	var lado_min := INF
+	var emblemas_ok := true
 	for pieza in piezas:
 		var medida: Vector2 = Geo.caja(pieza.poligono()).size * pieza.escala_bandeja
 		var caja := Rect2(pieza.casa - medida / 2.0, medida)
@@ -567,8 +575,14 @@ func _probar_distribucion(motor: Node, piezas: Array, huecos: Array, perfil: Str
 		for otra in cajas:
 			bandeja_ok = bandeja_ok and not caja.grow(-3).intersects(otra)
 		cajas.append(caja)
+		var origen = _hueco_origen(huecos, pieza)
+		if origen != null and int(origen.get("capa", 0)) > 0:
+			# Emblema encima (estrella de Chile de Maxi): se ve de >= 52 px; su zona tocable es de 96 px.
+			emblemas_ok = emblemas_ok and minf(medida.x, medida.y) >= minf(52.0, LADO_MINIMO[perfil])
+			continue
 		lado_min = minf(lado_min, minf(medida.x, medida.y))
 	_check(bandeja_ok, "piezas dentro de la bandeja sin encimarse (factor %.2f)" % piezas[0].escala_bandeja)
+	_check(emblemas_ok, "emblemas encima de al menos 52 px")
 	_check(lado_min >= LADO_MINIMO[perfil], "pieza mas chica en bandeja: %.0f px (minimo %s %.0f; zona tocable >= 96 px)" % [lado_min, perfil, LADO_MINIMO[perfil]])
 
 

@@ -1,0 +1,49 @@
+# Voces PROVISIONALES del "Taller de pinturas de Coco" (motor mezclar, Sofia), TTS de Windows (Sabina).
+# Pasan a la voz oficial de Coco (fal.ai) cuando el PO apruebe el costo. Regenerar:
+# powershell -NoProfile -File herramientas/generar_voces_tts.ps1 -Lista assets/audio/voces/arcoiris/mezclar/lineas_tts.tsv
+voces/arcoiris/mezclar/intro_z1.wav	¡Sofía, ayúdame a pintar mi mural! Necesito tres latas de pintura. Te muestro la receta: memorízala. Después mueve el frasco para atrapar solo las gotas de la receta, ¡y agítalo para mezclar!
+voces/arcoiris/mezclar/intro_z2.wav	Ahora las recetas llevan más de una gota del mismo color. ¡Cuenta bien! Si entra una gota de más, la mezcla se ensucia.
+voces/arcoiris/mezclar/intro_z3.wav	¡Llegó el blanco, que aclara los colores! Y cuidado con la gota gris: déjala pasar, que ensucia la pintura.
+voces/arcoiris/mezclar/intro_z4.wav	Recetas de tres y cuatro gotas, y el frasco ya no te dice cuántas faltan. ¡Usa tu memoria!
+voces/arcoiris/mezclar/intro_z5.wav	¡Tres murales en la cima! Esta vez la receta se ve solo un ratito. ¡Memoriza rápido, maestra pintora!
+voces/arcoiris/mezclar/pista.wav	Mueve el frasco con el dedo y atrapa solo las gotas de la receta. Si no te acuerdas, toca la libreta, pero cuesta una estrellita.
+voces/arcoiris/mezclar/pista_agitar.wav	¡Agita el frasco de un lado a otro, o déjalo apretado, hasta que se llene el círculo dorado!
+voces/arcoiris/mezclar/memoriza.wav	¡Memorízala bien! Cuando estés lista, toca el visto bueno.
+voces/arcoiris/mezclar/memoriza_rapido.wav	¡Mírala bien, que se esconde en un ratito!
+voces/arcoiris/mezclar/a_atrapar_01.wav	¡Ahí vienen las gotas!
+voces/arcoiris/mezclar/a_atrapar_02.wav	¡A atrapar gotas!
+voces/arcoiris/mezclar/bien_01.wav	¡Esa sí!
+voces/arcoiris/mezclar/bien_02.wav	¡Bien atrapada!
+voces/arcoiris/mezclar/bien_03.wav	¡Justo!
+voces/arcoiris/mezclar/sucio_01.wav	¡Puaj! Esa gota no iba. Vaciamos el frasco y empezamos esta lata otra vez.
+voces/arcoiris/mezclar/sucio_02.wav	¡Uy, se ensució la mezcla! No importa: frasco limpio y a intentarlo de nuevo.
+voces/arcoiris/mezclar/sucio_03.wav	¡Glup! Esa no era de la receta. ¡Otra vez, que tú puedes!
+voces/arcoiris/mezclar/gris_01.wav	¡La gota gris ensució la pintura! Déjala pasar la próxima vez.
+voces/arcoiris/mezclar/a_mezclar.wav	¡Receta completa! Ahora agita el frasco de un lado a otro para mezclar.
+voces/arcoiris/mezclar/lata_01.wav	¡Una lata lista!
+voces/arcoiris/mezclar/lata_02.wav	¡Qué color más lindo!
+voces/arcoiris/mezclar/lata_03.wav	¡Perfecto! Otra lata para mi mural.
+voces/arcoiris/mezclar/revisar.wav	Aquí está la receta otra vez. Esta vez te cuesta una estrellita.
+voces/arcoiris/mezclar/mural_pedido_01.wav	¡Quiero pintar un mural nuevo! Mira: necesito estas tres latas.
+voces/arcoiris/mezclar/mural_pedido_02.wav	¡Otra pared para pintar! Estos son los colores que necesito.
+voces/arcoiris/mezclar/entregar.wav	¡Tres latas! Pásamelas, ¡voy a pintar!
+voces/arcoiris/mezclar/mural_listo_01.wav	¡Mira mi mural! ¡Quedó precioso gracias a ti, Sofía!
+voces/arcoiris/mezclar/mural_listo_02.wav	¡Qué obra de arte! ¡Eres una pintora increíble!
+voces/arcoiris/mezclar/recetas/verde.wav	Verde: una gota amarilla y una gota azul.
+voces/arcoiris/mezclar/recetas/naranja.wav	Naranja: una gota roja y una gota amarilla.
+voces/arcoiris/mezclar/recetas/violeta.wav	Violeta: una gota roja y una gota azul.
+voces/arcoiris/mezclar/recetas/verde_limon.wav	Verde limón: dos gotas amarillas y una azul.
+voces/arcoiris/mezclar/recetas/verde_azulado.wav	Verde azulado: dos gotas azules y una amarilla.
+voces/arcoiris/mezclar/recetas/mango.wav	Color mango: dos gotas amarillas y una roja.
+voces/arcoiris/mezclar/recetas/tomate.wav	Rojo tomate: dos gotas rojas y una amarilla.
+voces/arcoiris/mezclar/recetas/fucsia.wav	Fucsia: dos gotas rojas y una azul.
+voces/arcoiris/mezclar/recetas/anil.wav	Añil: dos gotas azules y una roja.
+voces/arcoiris/mezclar/recetas/rosado.wav	Rosado: una gota roja y dos blancas.
+voces/arcoiris/mezclar/recetas/celeste.wav	Celeste: una gota azul y dos blancas.
+voces/arcoiris/mezclar/recetas/durazno.wav	Color durazno: una roja, una amarilla y una blanca.
+voces/arcoiris/mezclar/recetas/cafe.wav	Café: una roja, una amarilla y una azul.
+voces/arcoiris/mezclar/recetas/lila.wav	Lila: una roja, una azul y una blanca.
+voces/arcoiris/mezclar/recetas/verde_claro.wav	Verde clarito: una amarilla, una azul y una blanca.
+voces/arcoiris/mezclar/recetas/turquesa.wav	Turquesa: dos azules, una amarilla y una blanca.
+voces/arcoiris/mezclar/recetas/verde_oliva.wav	Verde oliva: dos amarillas, una azul y una roja.
+voces/arcoiris/mezclar/recetas/chocolate.wav	Chocolate: dos rojas, una amarilla y una azul.

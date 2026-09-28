@@ -1,0 +1,95 @@
+{
+  "id_nivel": "arcoiris_z5_lluvia_estrella",
+  "motor": "mezclar",
+  "perfil": "estrella",
+  "planeta": "arcoiris",
+  "zona": "zona5_cima",
+  "tema": "taller de pinturas de Coco",
+  "variante": "tres murales con todo el recetario: la receta se ve solo un ratito (solcito de 6 s despues de que Coco la lee), gota gris y caida mas rapida",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "pedidos": [
+    "verde_limon",
+    "verde_azulado",
+    "mango",
+    "tomate",
+    "fucsia",
+    "anil",
+    "rosado",
+    "celeste",
+    "durazno",
+    "cafe",
+    "lila",
+    "verde_claro",
+    "turquesa",
+    "verde_oliva",
+    "chocolate"
+  ],
+  "velocidad_caida": 145,
+  "variacion_velocidad": 0.35,
+  "elementos_simultaneos": 3,
+  "intervalo_gotas_s": 0.9,
+  "probabilidad_util": 0.5,
+  "ranuras_visibles": false,
+  "memorizar_s": 6,
+  "murales": 3,
+  "gota_distractora": {
+    "probabilidad": 0.15
+  },
+  "dibujos_mural": [
+    "mariposa",
+    "cohete",
+    "arcoiris"
+  ],
+  "umbrales_estrellitas": {
+    "tres": 4,
+    "dos": 9
+  },
+  "tamano_gota": 84,
+  "libreta_cuesta_estrellita": true,
+  "lineas_voz": {
+    "intro": "voces/arcoiris/mezclar/intro_z5.wav",
+    "pista": "voces/arcoiris/mezclar/pista.wav",
+    "pista_agitar": "voces/arcoiris/mezclar/pista_agitar.wav",
+    "memoriza": "voces/arcoiris/mezclar/memoriza_rapido.wav",
+    "a_atrapar": [
+      "voces/arcoiris/mezclar/a_atrapar_01.wav",
+      "voces/arcoiris/mezclar/a_atrapar_02.wav"
+    ],
+    "bien": [
+      "voces/arcoiris/mezclar/bien_01.wav",
+      "voces/arcoiris/mezclar/bien_02.wav",
+      "voces/arcoiris/mezclar/bien_03.wav"
+    ],
+    "sucio": [
+      "voces/arcoiris/mezclar/sucio_01.wav",
+      "voces/arcoiris/mezclar/sucio_02.wav",
+      "voces/arcoiris/mezclar/sucio_03.wav"
+    ],
+    "gris": [
+      "voces/arcoiris/mezclar/gris_01.wav"
+    ],
+    "a_mezclar": "voces/arcoiris/mezclar/a_mezclar.wav",
+    "lata_lista": [
+      "voces/arcoiris/mezclar/lata_01.wav",
+      "voces/arcoiris/mezclar/lata_02.wav",
+      "voces/arcoiris/mezclar/lata_03.wav"
+    ],
+    "revisar": "voces/arcoiris/mezclar/revisar.wav",
+    "mural_pedido": [
+      "voces/arcoiris/mezclar/mural_pedido_01.wav",
+      "voces/arcoiris/mezclar/mural_pedido_02.wav"
+    ],
+    "entregar": "voces/arcoiris/mezclar/entregar.wav",
+    "mural_listo": [
+      "voces/arcoiris/mezclar/mural_listo_01.wav",
+      "voces/arcoiris/mezclar/mural_listo_02.wav"
+    ],
+    "victoria_final": [
+      "voces/arcoiris/lluvia/estrella/victoria_01.wav",
+      "voces/arcoiris/lluvia/estrella/victoria_02.wav"
+    ],
+    "prefijo_recetas": "voces/arcoiris/mezclar/recetas/",
+    "prefijo_datos": "voces/arcoiris/lluvia/datos/"
+  }
+}

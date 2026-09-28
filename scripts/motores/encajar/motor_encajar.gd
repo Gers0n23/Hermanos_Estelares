@@ -519,7 +519,8 @@ func _construir_figuras() -> void:
 		var figura := {
 			"id": str(datos.get("id", "figura_%d" % i)),
 			"huecos": [],
-			"silueta_unida": bool(datos.get("silueta_unida", false)),
+			# Sin lineas guia (Sofia): solo el contorno exterior. La figura o el nivel lo piden.
+			"silueta_unida": bool(datos.get("silueta_unida", _cfg.get("silueta_unida", false))),
 			"union": [],
 			"voz_completa": str(datos.get("voz_completa", "")),
 			"especial": bool(datos.get("especial", false)),

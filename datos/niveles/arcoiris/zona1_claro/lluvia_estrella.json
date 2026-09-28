@@ -5,7 +5,7 @@
   "planeta": "arcoiris",
   "zona": "zona1_claro",
   "tema": "lluvia de colores",
-  "variante": "mezclas guiadas: el globito muestra los dos colores de la receta (verde y naranja)",
+  "variante": "mezclas guiadas: el globito muestra los dos colores de la receta; verde, naranja y violeta, sin repetir la misma tanda",
   "anfitrion_id": "coco",
   "fondo_id": "planeta_arcoiris",
   "modo": "mezcla",
@@ -23,9 +23,10 @@
   "elementos_simultaneos": 2,
   "pedidos": [
     "verde",
-    "naranja"
+    "naranja",
+    "violeta"
   ],
-  "rondas": 8,
+  "rondas": 6,
   "por_ronda": 2,
   "limite_intentos": 10,
   "umbrales_estrellitas": {

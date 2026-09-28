@@ -13,6 +13,7 @@ extends SceneTree
 const MOTOR := "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn"
 const Laminas := preload("res://scripts/motores/lienzo_libre/laminas.gd")
 const Colores := preload("res://scripts/motores/lienzo_libre/colores_lienzo.gd")
+const Stickers := preload("res://scripts/motores/lienzo_libre/stickers.gd")
 const ZONAS := ["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islotes", "zona5_cima"]
 const HERMANOS := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
 const CARPETA_QA := "user://qa_dibujos"
@@ -84,13 +85,17 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 		while motor._indice_hoja != h and is_instance_valid(motor):
 			await process_frame
 		await _esperar(0.35)
+		if motor.eligiendo_tema:
+			await _elegir_tema(motor, nivel, h)
 		var hoja: Dictionary = motor._hojas[h]
 		var lamina: Dictionary = hoja["lamina"]
 		var encargo: String = motor._encargo
 		print("   hoja %d/%d: %s · %s" % [h + 1, hojas, encargo, lamina.get("id", "papel en blanco")])
 		_revisar_tactil(motor, perfil)
 		var lienzo = motor.lienzo
-		if not lienzo.mosaico.is_empty():
+		if lienzo.stickers_objeto:
+			await _jugar_tema(motor, perfil)
+		elif not lienzo.mosaico.is_empty():
 			await _jugar_mosaico(motor)
 		elif encargo == "mezcla_paleta":
 			await _jugar_mezcla(motor)
@@ -115,6 +120,195 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 	_check(resultado["destellos"] > 0, "completado(destellos) recibido: %d" % resultado["destellos"])
 	motor.queue_free()
 	await process_frame
+
+
+## Selector de tema (Nicole 2 tarjetas, Sofia 3): tarjetas grandes y distintas de lo ya jugado.
+func _elegir_tema(motor, nivel: Dictionary, h: int) -> void:
+	var opciones: Array = motor._hojas[h].get("opciones", [])
+	_check(opciones.size() == int(nivel.get("opciones_tema", 1)), "selector de tema con %d tarjetas" % opciones.size())
+	var chicas := 0
+	for hijo in motor._selector.get_children():
+		if hijo is Button and minf(hijo.size.x, hijo.size.y) < 200.0:
+			chicas += 1
+	_check(chicas == 0, "tarjetas de tema grandes (>= 200 px)")
+	var jugados: Array = []
+	for i in h:
+		jugados.append(str(motor._hojas[i]["tema"].get("id", "")))
+	var repetidas := 0
+	for tema: Dictionary in opciones:
+		if jugados.has(str(tema.get("id", ""))):
+			repetidas += 1
+	_check(repetidas == 0, "las tarjetas no repiten temas ya jugados (%s)" % str(jugados))
+	motor.elegir_tema(h % opciones.size())
+	await _esperar(0.3)
+	_check(not motor.eligiendo_tema and not motor._hojas[h]["tema"].is_empty(), "tema elegido: %s" % motor._hojas[h]["tema"].get("id", "?"))
+
+
+## Lienzo con tema: pone cada sticker, lo toca, lo arrastra, lo edita, lo recolorea, lo conecta con
+## el conector (y ve andar al viajero), cierra un circuito, y cumple los retos de Sofia.
+func _jugar_tema(motor, perfil: String) -> void:
+	var lienzo = motor.lienzo
+	var cfg: Dictionary = motor._cfg
+	var tema: Dictionary = motor._hojas[motor._indice_hoja]["tema"]
+	var ids: Array = cfg.get("stickers", [])
+	print("   tema %s: %d stickers, conector %s" % [tema.get("id", "?"), ids.size(), str(cfg.get("conector", {}))])
+	_check(not lienzo.lamina.is_empty() and lienzo.lamina["regiones"].size() >= 4, "fondo del tema con %d zonas" % lienzo.lamina.get("regiones", []).size())
+	_check(ids.size() >= (3 if perfil == "semilla" else 8), "%d stickers para %s (Sofia >= 13, Nicole 8, Maxi 3)" % [ids.size(), perfil])
+	if perfil == "estrella":
+		_check(ids.size() >= 13, "Sofia tiene muchas opciones: %d stickers" % ids.size())
+	var faltan: Array = []
+	for id in ids:
+		if not Stickers.tiene(str(id)):
+			faltan.append(id)
+		elif not _existe_voz(str(cfg.get("voces_stickers", "")) % id):
+			faltan.append("voz " + str(id))
+	_check(faltan.is_empty(), "stickers en el catalogo y con voz%s" % ("" if faltan.is_empty() else " — faltan: %s" % str(faltan)))
+	var tiene_bolsa := (cfg.get("herramientas", []) as Array).has("bolsa")
+	_check(tiene_bolsa == (perfil != "semilla"), "bolsa de stickers solo para Nicole y Sofia (Maxi los tiene a mano)")
+	if tiene_bolsa:
+		motor._abrir_bandeja()
+		var botones: Array = []
+		for hijo in motor._bandeja.get_children():
+			if hijo is Button:
+				botones.append(hijo)
+		var chicos := botones.filter(func(b) -> bool: return minf(b.size.x, b.size.y) < 64.0)
+		_check(motor._bandeja.visible and botones.size() == ids.size() and chicos.is_empty(), "bolsa abierta con %d stickers >= 64 px" % botones.size())
+		var dentro := Rect2(Vector2(232, 80), Vector2(824, 530)).encloses(Rect2(motor._bandeja.position, motor._bandeja.size))
+		_check(dentro, "la bolsa cabe sobre el lienzo (%s)" % Rect2(motor._bandeja.position, motor._bandeja.size))
+		botones[1].pressed.emit()
+		_check(not motor._bandeja.visible and lienzo.herramienta == "sello_" + str(ids[1]), "elegir en la bolsa cierra y deja el sticker listo")
+
+	# Poner cada sticker en una grilla.
+	var puestos: Array = []
+	for i in maxi(ids.size(), 8):
+		motor._elegir_herramienta("sello_" + str(ids[i % ids.size()]), false)
+		var p := Vector2(90 + (i % 6) * 128, 90 + (i / 6) * 150)
+		lienzo.empezar_trazo(p)
+		lienzo.terminar_trazo()
+		puestos.append(p)
+	_check(lienzo.stickers().size() == puestos.size(), "%d stickers puestos" % lienzo.stickers().size())
+
+	# Tocar un sticker: salta (no se pone otro encima); Nicole y Sofia ven la barra de edicion.
+	var tocados := {"n": 0}
+	lienzo.sticker_tocado.connect(func(_s) -> void: tocados["n"] += 1, CONNECT_ONE_SHOT)
+	var cuantos: int = lienzo.stickers().size()
+	lienzo.empezar_trazo(puestos[0])
+	lienzo.terminar_trazo()
+	_check(tocados["n"] == 1 and lienzo.stickers().size() == cuantos, "tocar un sticker lo hace saltar (sin duplicarlo)")
+	_check(motor._barra.visible == (perfil != "semilla"), "barra de edicion: %s" % ("no (Maxi)" if perfil == "semilla" else "si"))
+	if motor._barra.visible:
+		var chicos := 0
+		for hijo in motor._barra.get_children():
+			if hijo is Button and minf(hijo.size.x, hijo.size.y) < 64.0:
+				chicos += 1
+		_check(chicos == 0, "botones de edicion >= 64 px")
+		var sticker = lienzo.seleccionado
+		motor._accion_sticker("agrandar")
+		_check(sticker.escala > 1.0, "agrandar: escala %.2f" % sticker.escala)
+		if perfil == "estrella":
+			motor._accion_sticker("girar")
+			motor._accion_sticker("espejo")
+			_check(absf(sticker.rotation) > 0.1 and sticker.espejo, "Sofia gira y espeja el sticker")
+		motor._accion_sticker("achicar")
+
+	# Arrastrar un sticker lo mueve.
+	var movido = lienzo.stickers()[1]
+	var antes: Vector2 = movido.centro()
+	lienzo.empezar_trazo(antes)
+	for k in range(1, 11):
+		lienzo.continuar_trazo(antes + Vector2(6.0 * k, 4.0 * k))
+	lienzo.terminar_trazo()
+	_check(movido.centro().distance_to(antes + Vector2(60, 40)) < 2.0, "arrastrar mueve el sticker")
+
+	# Balde sobre un sticker lo recolorea (Nicole y Sofia).
+	if (cfg.get("herramientas", []) as Array).has("balde"):
+		motor._elegir_herramienta("balde", false)
+		lienzo.color_actual = Color("#9357D6")
+		var pintado = lienzo.stickers()[2]
+		lienzo.empezar_trazo(pintado.centro())
+		lienzo.terminar_trazo()
+		_check((pintado.color as Color).is_equal_approx(Color("#9357D6")), "el balde recolorea el sticker")
+
+	# Conector: unir dos stickers; si hay viajero, anda.
+	var conector: Dictionary = cfg.get("conector", {})
+	_check(not conector.is_empty() and (cfg.get("herramientas", []) as Array).has("conector"), "conector del tema: %s" % str(conector))
+	motor._elegir_herramienta("conector", false)
+	var a = lienzo.stickers()[3]
+	var b = lienzo.stickers()[4]
+	_trazar(lienzo, [a.centro(), (a.centro() + b.centro()) / 2.0 + Vector2(0, 60), b.centro()])
+	_check(lienzo.caminos.size() == 1 and lienzo.conexiones() == 1, "el conector une dos stickers (%d caminos)" % lienzo.caminos.size())
+	if str(conector.get("viajero", "")) != "":
+		_check(lienzo.viajeros().size() == 1, "el viajero %s sale a recorrer el camino" % conector["viajero"])
+		var inicio: Vector2 = lienzo.viajeros()[0].centro()
+		await _esperar(0.8)
+		_check(lienzo.viajeros()[0].centro().distance_to(inicio) > 20.0, "el viajero avanza por el camino")
+	# Un circuito cerrado lejos de los stickers: el viajero da vueltas.
+	var centro := Vector2(412, 420)
+	var circulo: Array = []
+	for i in 25:
+		circulo.append(centro + Vector2.from_angle(TAU * i / 24.0 + 0.2) * Vector2(170, 70))
+	var libres: bool = lienzo.sticker_en(circulo[0]) == null and lienzo.sticker_en(circulo[circulo.size() - 1]) == null
+	_trazar(lienzo, circulo)
+	if libres:
+		_check(bool(lienzo.caminos.back()["cerrado"]), "un camino que vuelve al inicio queda cerrado (circuito)")
+	var c = lienzo.stickers()[5]
+	_trazar(lienzo, [b.centro(), c.centro() + Vector2(0, 1)])
+	_check(lienzo.conexiones() >= 2, "segunda conexion (%d)" % lienzo.conexiones())
+
+	# Goma sobre un sticker lo borra.
+	if (cfg.get("herramientas", []) as Array).has("goma"):
+		motor._elegir_herramienta("goma", false)
+		var total: int = lienzo.stickers().size()
+		var borrado = lienzo.stickers().back()
+		lienzo.empezar_trazo(borrado.centro())
+		lienzo.terminar_trazo()
+		await process_frame
+		_check(lienzo.stickers().size() == total - 1, "la goma borra un sticker")
+
+	# Pintar un poco con el pincel (bajo los stickers) y con varios colores.
+	motor._elegir_herramienta("pincel", false)
+	for i in mini(6, motor._botones_color.size()):
+		motor._seleccionar_color(motor._botones_color[i], false)
+		lienzo.empezar_trazo(Vector2(40 + i * 120, 500))
+		lienzo.continuar_trazo(Vector2(90 + i * 120, 510))
+		lienzo.terminar_trazo()
+
+	# Retos de Sofia.
+	if perfil == "estrella":
+		_check(motor._retos.size() == 3, "3 retos de artista")
+		for reto: Dictionary in motor._retos:
+			var datos: Dictionary = reto["datos"]
+			if str(datos.get("tipo", "")) == "stickers":
+				motor._elegir_herramienta("sello_" + str(datos["sticker"]), false)
+				for k in int(datos.get("n", 1)):
+					lienzo.empezar_trazo(Vector2(120 + k * 110, 470))
+					lienzo.terminar_trazo()
+			_check(_existe_voz(str(datos.get("voz", ""))), "voz del reto %s" % datos.get("tipo", "?"))
+		motor._revisar_retos()
+		var hechos := 0
+		for reto: Dictionary in motor._retos:
+			if reto["hecho"]:
+				hechos += 1
+		_check(hechos == 3, "retos cumplidos: %d de 3" % hechos)
+	else:
+		_check(motor._retos.is_empty(), "sin retos para %s" % perfil)
+	var imagen: Image = lienzo.componer()
+	var solo_fondo := Image.create(lienzo.tamano.x, lienzo.tamano.y, false, Image.FORMAT_RGBA8)
+	solo_fondo.fill(lienzo.papel)
+	Laminas.rasterizar(solo_fondo, lienzo.lamina)
+	var con_sticker: Vector2 = c.centro()
+	_check(not imagen.get_pixelv(Vector2i(con_sticker)).is_equal_approx(solo_fondo.get_pixelv(Vector2i(con_sticker))), "el PNG incluye los stickers")
+	await _esperar(0.1)
+
+
+func _trazar(lienzo, puntos: Array) -> void:
+	lienzo.empezar_trazo(puntos[0])
+	for i in range(1, puntos.size()):
+		var desde: Vector2 = puntos[i - 1]
+		var hasta: Vector2 = puntos[i]
+		for k in range(1, 9):
+			lienzo.continuar_trazo(desde.lerp(hasta, k / 8.0))
+	lienzo.terminar_trazo()
 
 
 func _toque() -> InputEventMouseButton:

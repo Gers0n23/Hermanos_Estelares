@@ -23,6 +23,7 @@ buses/default_bus_layout="res://assets/audio/buses_audio.tres"
 
 Progreso="*res://scripts/autoloads/progreso.gd"
 Audio="*res://scripts/autoloads/audio.gd"
+Recuerdos="*res://scripts/autoloads/recuerdos.gd"
 
 [display]
 

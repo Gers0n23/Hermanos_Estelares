@@ -40,6 +40,7 @@ const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
 const RADIO_ZONA := 62.0
 const LADO_TARJETA := 196.0
+const RUTA_ICONOS := "res://assets/sprites/ui/iconos_juegos/%s.svg"
 const PANEL_ESTACIONES := Rect2(236, 470, 894, 236)
 const COLOR_DORMIDA := Color("#B9B4C9")
 const BANDAS := ["rojo", "naranja", "amarillo", "verde", "azul", "violeta"]
@@ -81,6 +82,7 @@ var _anfitriona: TextureRect
 var _boton_cometa: Button
 var _boton_salir: Button
 var _cache_ids := {}
+var _texturas_icono := {}
 var _tiempo := 0.0
 var _lanzando := false
 var _siguiente: Array = [-1, -1]
@@ -114,6 +116,7 @@ func _ready() -> void:
 	seleccion = elegida if elegida >= 0 and elegida < zonas.size() and zonas[elegida]["abierta"] else zona_sugerida()
 	_celebrar_cambios()
 	_mostrar_estaciones()
+	_entregar_recuerdos_zonas()
 
 
 func _process(delta: float) -> void:
@@ -160,7 +163,9 @@ func calcular_estado() -> void:
 		var completadas := 0
 		for datos_estacion: Dictionary in datos_zona.get("estaciones", []):
 			var ruta_nivel := str(datos_estacion.get("niveles", {}).get(id_perfil, ""))
-			var escena := str(datos_estacion.get("escena", ""))
+			# Una estacion puede abrir otro motor para un hermano (`escenas`: {id_perfil: ruta}); p. ej.
+			# la Lluvia de colores de Sofia abre el taller de mezclas. El mapa no sabe que motor es.
+			var escena := str(datos_estacion.get("escenas", {}).get(id_perfil, datos_estacion.get("escena", "")))
 			var jugable := ruta_nivel != "" and escena != "" and ResourceLoader.exists(escena) and FileAccess.file_exists(ruta_nivel)
 			var id_nivel := _id_nivel(ruta_nivel) if jugable else ""
 			var completada := false
@@ -290,6 +295,58 @@ func _celebrar_cambios() -> void:
 	if not lista.is_empty():
 		_reproducir_sfx(SFX_FIESTA)
 		_decir_en_orden(lista, 0.6)
+
+
+# ---------------------------------------------------------------------------
+# Recuerdos del album "Las migas de papa" (docs/fichas/album-recuerdos.md §4)
+# ---------------------------------------------------------------------------
+
+## Evento GENERICO de zona completa: el catalogo de recuerdos decide si toca una foto (este mapa
+## no sabe cuales zonas dan foto ni de quien). `perfecta` = estrellitas maximas en todas las
+## estaciones de nivel Estrella (marco dorado de Sofia).
+func evento_zona(i: int) -> Dictionary:
+	var zona: Dictionary = zonas[i]
+	var perfecta := false
+	var jugables: Array = zona["estaciones"].filter(func(e: Dictionary) -> bool: return e["jugable"])
+	if not jugables.is_empty():
+		perfecta = jugables.all(func(e: Dictionary) -> bool: return e["perfil_nivel"] == "estrella" and int(e["estrellitas"]) >= 3)
+	return {"tipo": "zona_completa", "planeta": planeta_id, "zona": str(zona["datos"].get("id", "")),
+		"numero": int(zona["datos"].get("numero", i + 1)), "perfecta": perfecta}
+
+
+## Cada vez que se entra al mapa se avisan las zonas completas; `Recuerdos.desbloquear` es
+## idempotente, asi que solo lo nuevo se entrega (tambien lo completado antes de existir el album:
+## nada se pierde). La entrega espera a que termine la celebracion de la zona y recien ahi guarda.
+func _entregar_recuerdos_zonas() -> void:
+	var recuerdos := get_node_or_null("/root/Recuerdos")
+	if recuerdos == null or id_perfil == "":
+		return
+	var eventos: Array = []
+	var hay_algo := false
+	for i in zonas.size():
+		if zonas[i]["completa"]:
+			var evento := evento_zona(i)
+			eventos.append(evento)
+			hay_algo = hay_algo or evento["perfecta"] or not recuerdos.pendientes(evento, id_perfil).is_empty()
+	if not hay_algo:
+		return
+	await get_tree().create_timer(1.2).timeout
+	var espera := 0.0
+	var audio := get_node_or_null("/root/Audio")
+	while is_inside_tree() and espera < 8.0 and audio != null and audio.esta_hablando():
+		await get_tree().create_timer(0.25).timeout
+		espera += 0.25
+	if not is_inside_tree():
+		return
+	# Se guarda recien ahora, al mostrarse: si el nino salio antes, la foto llega la proxima vez.
+	var nuevos: Array = []
+	for evento in eventos:
+		nuevos.append_array(recuerdos.desbloquear(evento, id_perfil))
+	if nuevos.is_empty():
+		return
+	var entrega: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear(nuevos)
+	entrega.name = "entrega_recuerdo"
+	add_child(entrega)
 
 
 # ---------------------------------------------------------------------------
@@ -928,7 +985,9 @@ func _dibujar_tarjeta(control: Control, j: int) -> void:
 		brillo.expand_margin_bottom = 6
 		control.draw_style_box(brillo, Rect2(Vector2.ZERO, lado))
 	var centro_icono := Vector2(lado.x / 2.0, lado.y * 0.43)
-	_dibujar_icono(control, estacion["juego"], centro_icono, 56.0, estacion["jugable"])
+	# Icono por hermano opcional (`iconos`: {id_perfil: icono}), como `escenas`.
+	var icono := str(estacion["datos"].get("iconos", {}).get(id_perfil, estacion["juego"]))
+	_dibujar_icono(control, icono, centro_icono, 56.0, estacion["jugable"])
 	var abajo := Vector2(lado.x / 2.0, lado.y - 30.0)
 	if estacion["completada"]:
 		Figura.dibujar(control, "estrella", DORADO, Vector2(lado.x - 30.0, 30.0), 24.0, true, true)
@@ -953,7 +1012,18 @@ func _dibujar_triangulo_jugar(control: Control, centro: Vector2, radio: float) -
 
 
 ## Iconos universales de cada minijuego (sin texto, GDD §6 regla 3).
+## Primero el arte SVG (assets/sprites/ui/iconos_juegos/<icono>.svg, herramientas/generar_iconos_juegos.py);
+## si falta, el dibujo por codigo de respaldo.
 func _dibujar_icono(control: Control, juego: String, centro: Vector2, radio: float, activo: bool) -> void:
+	if not _texturas_icono.has(juego):
+		var ruta := RUTA_ICONOS % juego
+		_texturas_icono[juego] = load(ruta) if ResourceLoader.exists(ruta) else null
+	var textura: Texture2D = _texturas_icono[juego]
+	if textura != null:
+		var lado := radio * 2.35
+		var modulado := Color.WHITE if activo else Color(0.72, 0.7, 0.82, 0.55)
+		control.draw_texture_rect(textura, Rect2(centro - Vector2(lado, lado) / 2.0, Vector2(lado, lado)), false, modulado)
+		return
 	var tono := func(color: Color) -> Color: return color if activo else Color(color.lerp(Color("#9A96AD"), 0.75), 0.7)
 	match juego:
 		"lluvia":

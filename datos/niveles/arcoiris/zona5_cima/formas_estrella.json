@@ -18,6 +18,7 @@
   "regalo_tras_derrotas": true,
   "iman_tolerancia_px": 70,
   "paso_rotacion": 90,
+  "silueta_unida": true,
   "rotacion_por_toque": true,
   "rotacion_inicial_aleatoria": true,
   "limite_intentos": 16,
