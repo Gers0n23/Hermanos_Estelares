@@ -167,6 +167,22 @@ func _probar_rondas(ruta: String, nivel: Dictionary, hermano: String) -> void:
 			curva_ok = curva_ok and int(por_id[ids[i]]["dificultad"]) >= int(por_id[ids[i - 1]]["dificultad"])
 		_check(curva_ok, "las rondas suben suave (dificultad no baja)")
 	_check(motor._medallas != null and motor._medallas.visible, "medallas de rondas visibles (sin numeros)")
+	if motor._medallas != null:
+		# UX HE-40 R13: con la pista visible (se fuerza si el nivel no la usa) y 2, 3 o 4 rondas, las
+		# medallas nunca quedan encima del boton de pista.
+		var pista_visible: bool = motor._boton_pista.visible
+		motor._boton_pista.visible = true
+		var originales: Array = motor._rondas.duplicate()
+		var sin_choque := true
+		for cantidad in [originales.size(), 3, 4]:
+			while motor._rondas.size() < cantidad:
+				motor._rondas.append(originales[0].duplicate())
+			motor._actualizar_medallas()
+			sin_choque = sin_choque and motor._medallas.position.x + motor._medallas.size.x <= 1150.0
+		motor._rondas.assign(originales)
+		motor._boton_pista.visible = pista_visible
+		motor._actualizar_medallas()
+		_check(sin_choque, "UX R13: con la pista visible las medallas (2, 3 y 4 rondas) terminan antes de x 1150")
 
 	# Ronda 1 y el avance guardado.
 	var ok: bool = await _completar_ronda(motor)

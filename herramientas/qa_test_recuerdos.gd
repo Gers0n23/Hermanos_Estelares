@@ -203,6 +203,8 @@ func _probar_desbloqueo() -> void:
 	_check(not _progreso.tiene_recuerdo("maxi_01"), "pendientes() no guarda nada")
 	_check(_ids(_recuerdos.desbloquear(viaje, "maxi")) == ["maxi_01"], "primer viaje de Maxi => maxi_01")
 	_check(_recuerdos.desbloquear(viaje, "maxi").is_empty(), "segundo viaje de Maxi: nada repetido")
+	# HE-44 #7: con tope, lo que no cabe NO se guarda y llega la proxima vez.
+	_check(_recuerdos.desbloquear(viaje, "nicole", 0).is_empty() and not _progreso.tiene_recuerdo("nicole_01"), "HE-44 #7: con tope 0 no se entrega ni se guarda nada")
 	_check(_ids(_recuerdos.desbloquear(viaje, "nicole")) == ["nicole_01"], "primer viaje de Nicole => nicole_01 (personal)")
 	var zona2 := {"tipo": "zona_completa", "planeta": "arcoiris", "zona": "zona2_charcos", "numero": 2, "perfecta": false}
 	_check(_ids(_recuerdos.desbloquear(zona2, "maxi")) == ["maxi_02"], "zona 2 de Arcoiris (Maxi) => maxi_02")
@@ -264,14 +266,44 @@ func _probar_album() -> void:
 	_check(album._foto_grande.size.y >= 600.0, "foto abierta grande (%d px de alto)" % int(album._foto_grande.size.y))
 	album.volver()
 	_check(album.vista == "pagina", "volver cierra la foto")
+	# UX HE-44 R6: la foto actua al soltar; un toque corto la abre.
+	album._al_tocar_celda(_clic(Vector2(400, 300), true), 0)
+	album._al_tocar_celda(_clic(Vector2(406, 303), false), 0)
+	_check(album.vista == "foto", "R6: presionar y soltar casi sin moverse abre la foto")
+	album.volver()
+	# UX HE-44 R10: boton de Cometa de 116 px que repite la instruccion, sin tapar nada.
+	var cometa: Rect2 = album._boton_cometa.get_global_rect()
+	var libre := cometa.size.x >= 116.0 and pantalla.encloses(cometa)
+	for nodo in visibles + album._tapas.values() + [album._flecha_der, album._boton_volver]:
+		libre = libre and not nodo.get_global_rect().intersects(cometa)
+	_check(libre, "R10: boton de Cometa de 116 px dentro de la pantalla y sin tapar fotos, tapas ni flechas")
+	album.repetir_instruccion()
+	_check(album.vista == "pagina", "R10: tocar a Cometa en la pagina repite la instruccion (no navega)")
 	album.volver()
 	_check(album.vista == "portada", "volver de la pagina lleva a la portada")
+	album.repetir_instruccion()
+	_check(album.vista == "portada", "R10: tocar a Cometa en la portada repite la invitacion")
 	album.abrir_album("familia")
 	_check(album._celdas[0].visible and not album._celdas[0].hueco, "album familiar con la foto de la primera apertura")
+	# UX HE-44 R6: deslizar empezando SOBRE una foto pasa de pagina (no la abre).
+	var pagina_esperada: int = mini(1, album.paginas() - 1)
+	album._al_tocar_celda(_clic(Vector2(700, 300), true), 0)
+	album._al_tocar_celda(_clic(Vector2(560, 310), false), 0)
+	_check(album.vista == "pagina" and album.pagina == pagina_esperada,
+		"R6: deslizar sobre una foto no la abre y pasa de pagina si hay otra (pagina %d de %d)" % [album.pagina + 1, album.paginas()])
 	album.volver()
 	album.volver()
 	await _esperar(0.2)
 	_check(current_scene != null and current_scene.scene_file_path == SELECCION, "volver desde la portada lleva a la seleccion de personaje")
+
+
+func _clic(punto: Vector2, presionado: bool) -> InputEventMouseButton:
+	var evento := InputEventMouseButton.new()
+	evento.button_index = MOUSE_BUTTON_LEFT
+	evento.pressed = presionado
+	evento.position = punto
+	evento.global_position = punto
+	return evento
 
 
 func _probar_entrega() -> void:
@@ -285,6 +317,7 @@ func _probar_entrega() -> void:
 	await _esperar(0.3)
 	_check(entrega.estado() == "entrando", "el sobre baja girando")
 	_check(entrega._sobre.size.x > 200.0, "sobre-estrella grande (> 200 px)")
+	_check(entrega.destino_album == entrega.DESTINO_ALBUM, "UX HE-44 R8: sin boton propio, la foto vuela abajo a la derecha, donde vive el album")
 	_check(entrega._abrir_en >= entrega.AUTO_ABRIR and entrega._abrir_en <= entrega.TOPE_ABRIR, "HE-44 #2: el sobre se abre tras la frase de Cometa, entre 3 y 6 s (%.1f s)" % entrega._abrir_en)
 	await _esperar(entrega.BAJADA + entrega._abrir_en + 0.3)
 	_check(entrega.estado() in ["abriendo", "foto"], "sin toque, se abre solo (%s)" % entrega.estado())
@@ -323,10 +356,31 @@ func _probar_entrega() -> void:
 		await _esperar(0.1)
 	await _esperar(1.2)
 	_check(entrega2.esta_activa() and entrega2.estado() in ["entrando", "sobre", "abriendo", "foto"], "con dos fotos llega el segundo sobre (%s)" % entrega2.estado())
+	_check(entrega2._mostrados == 2 and entrega2._linea_sobre().contains("otra_"), "HE-44 #7: desde el 2.o sobre Cometa dice la linea corta (%s)" % entrega2._linea_sobre().get_file())
+	_check(entrega2._velo.color.a > 0.5, "HE-44 #7: el velo sigue puesto entre recuerdos")
+	_check(entrega2.TOPE_SOBRES == 3, "HE-44 #7: tope de 3 sobres por entrega")
 	var t2 := Time.get_ticks_msec()
 	while not terminada[0] and Time.get_ticks_msec() - t2 < 25000:
 		await _esperar(0.25)
 	_check(terminada[0], "sin tocar nada, la entrega de dos fotos termina sola")
+	# HE-44 #8: solo marco dorado (Sofia ya tenia la foto): sin sobre, el marco se dibuja alrededor.
+	terminada[0] = false
+	var dorado: Dictionary = _recuerdos.obtener("sofia_02").duplicate()
+	dorado["_quien"] = "sofia"
+	dorado["_dorado"] = true
+	dorado["_solo_dorado"] = true
+	var entrega3: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear([dorado])
+	entrega3.terminada.connect(func() -> void: terminada[0] = true)
+	get_root().add_child(entrega3)
+	await _esperar(0.3)
+	_check(not entrega3._sobre.visible and entrega3._foto != null and is_instance_valid(entrega3._marco), "HE-44 #8: solo marco dorado -> sin sobre, la foto aparece directo con su marco")
+	_check(entrega3._progreso_marco > 0.0 and entrega3._progreso_marco < 1.0, "HE-44 #8: el marco se va dibujando (%.2f)" % entrega3._progreso_marco)
+	await _esperar(entrega3.DIBUJO_MARCO + 0.2)
+	_check(is_equal_approx(entrega3._progreso_marco, 1.0) and entrega3.estado() == "foto", "HE-44 #8: en 1,2 s el marco queda completo (%s)" % entrega3.estado())
+	var t3 := Time.get_ticks_msec()
+	while not terminada[0] and Time.get_ticks_msec() - t3 < 10000:
+		await _esperar(0.25)
+	_check(terminada[0], "HE-44 #8: la foto dorada vuela al album y la entrega termina sola")
 
 
 func _probar_seleccion() -> void:
@@ -342,6 +396,9 @@ func _probar_seleccion() -> void:
 		var nodo: Control = seleccion.get_node(nombre)
 		choca = choca or Rect2(nodo.global_position, nodo.size).intersects(seleccion._boton_album.get_global_rect())
 	_check(not choca, "el boton del album no choca con tarjetas ni botones")
+	var sofia: Control = seleccion.get_node("tarjeta_sofia")
+	var separacion: float = seleccion._boton_album.global_position.y - (sofia.global_position.y + sofia.size.y)
+	_check(separacion >= 36.0, "UX HE-44 R7: el album queda a >= 36 px de la tarjeta de Sofia (%d px)" % int(separacion))
 	_check(_progreso.tiene_recuerdo("familia_01") and seleccion._entrega != null, "primera apertura: llega el sobre con familia_01")
 	_check(seleccion._bloqueado, "mientras llega el sobre no se elige personaje por accidente")
 	# La foto espera a que termine su voz (HE-44): se espera la entrega entera, con tope.

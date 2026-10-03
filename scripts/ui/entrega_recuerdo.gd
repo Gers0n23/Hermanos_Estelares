@@ -24,6 +24,14 @@ extends CanvasLayer
 ## - Tocar la foto ANTES de que termine su audio no la cierra: la foto reacciona (squash, chispas y
 ##   "clic"). Despues del audio, un toque la guarda; si no, se va sola 1,5 s despues (4,5 s si no hay
 ##   audio). En Semilla (Maxi) los toques nunca la cierran: se va sola.
+##
+## HE-44 mecanicas #7 y #8 (03-Oct-2026, PROVISIONAL):
+## - Cola: el velo se queda puesto entre recuerdos y desde el 2.o sobre Cometa dice una linea corta
+##   ("¡Y otra mas!"). Tope de `TOPE_SOBRES` por entrega: quien la monta desbloquea solo esos y el resto
+##   llega la proxima vez (`Recuerdos.desbloquear(..., maximo)`).
+## - Solo marco dorado (Sofia ya tenia la foto): sin sobre. La polaroid aparece directo y un marco dorado
+##   se dibuja a su alrededor en 1,2 s con un brillo que recorre el borde; suena `dorado`, cae confeti
+##   dorado y la foto vuela al album.
 
 signal terminada
 
@@ -52,6 +60,10 @@ const COLA_TRAS_AUDIO := 1.5
 const MAX_FOTO := 14.0
 const VUELO := 0.65
 const HALO_ICONO := 0.8
+const TOPE_SOBRES := 3
+## Centro del boton del album en la seleccion de personaje (`seleccion_personaje.gd` RECT_ALBUM).
+const DESTINO_ALBUM := Vector2(1000, 656)
+const DIBUJO_MARCO := 1.2
 
 ## Donde esta el icono del album en la pantalla que monta la entrega; si es negativo, la entrega
 ## dibuja su propio icono arriba a la derecha.
@@ -84,6 +96,10 @@ var _cola_audio: Array = []
 var _hay_audio_foto := false
 var _audio_termino_en := -1.0
 var _flash: ColorRect
+var _mostrados := 0
+## Marco dorado que se dibuja alrededor de la foto (entrega de solo marco dorado).
+var _marco: Control
+var _progreso_marco := 0.0
 
 
 ## Crea la entrega lista para agregar al arbol.
@@ -132,10 +148,12 @@ func _construir() -> void:
 	_velo.size = PANTALLA
 	_icono_propio = destino_album.x < 0.0
 	if _icono_propio:
-		destino_album = Vector2(1170, 96)
+		# Donde vive el boton real del album (seleccion de personaje, abajo a la derecha): asi el nino
+		# aprende un solo lugar (UX HE-44 R8, 03-Oct-2026).
+		destino_album = DESTINO_ALBUM
 		_icono = BotonAlbum.new()
 		_icono.interactivo = false
-		_icono.size = Vector2(150, 150)
+		_icono.size = Vector2(140, 120)
 		_icono.position = destino_album - _icono.size / 2.0
 		_icono.modulate.a = 0.0
 		_fondo.add_child(_icono)
@@ -156,10 +174,14 @@ func _construir() -> void:
 
 func _siguiente() -> void:
 	_actual = _cola.pop_front()
-	_cambiar("entrando")
+	_mostrados += 1
 	_velo.create_tween().tween_property(_velo, "color:a", 0.6, 0.35)
 	if _icono_propio:
 		_icono.create_tween().tween_property(_icono, "modulate:a", 1.0, 0.35)
+	if bool(_actual.get("_solo_dorado", false)):
+		_mostrar_marco_dorado()
+		return
+	_cambiar("entrando")
 	_sobre.show()
 	_sobre.modulate.a = 1.0
 	_sobre.scale = Vector2.ONE
@@ -188,6 +210,11 @@ func _linea_sobre() -> String:
 		return ""
 	if bool(_actual.get("_solo_dorado", false)):
 		return recuerdos.elegir_linea("dorado")
+	# Desde el 2.o sobre de la misma entrega, una linea corta: Cometa no repite la entrada completa.
+	if _mostrados > 1:
+		var corta: String = recuerdos.elegir_linea("otra")
+		if corta != "":
+			return corta
 	var quien := str(_actual.get("_quien", ""))
 	if str(_actual.get("album", "")) == "familia" and quien != "":
 		return recuerdos.elegir_linea("familiar", quien)
@@ -205,6 +232,8 @@ func _process(delta: float) -> void:
 	_tiempo += delta
 	if _sobre.visible:
 		_sobre.queue_redraw()
+	if is_instance_valid(_marco):
+		_marco.queue_redraw()
 	match _estado:
 		"entrando":
 			if _t >= BAJADA:
@@ -273,17 +302,7 @@ func _abrir() -> void:
 	tween.tween_property(_sobre, "modulate:a", 0.0, 0.3)
 	tween.chain().tween_callback(_sobre.hide)
 	_estallido(PANTALLA / 2.0)
-	# polaroid estelar
-	if _foto != null:
-		_foto.queue_free()
-	_foto = FotoRecuerdo.new()
-	_foto.name = "foto"
-	var alto := ALTO_FOTO
-	_foto.size = Vector2(alto * 0.84, alto)
-	_foto.pivot_offset = _foto.size / 2.0
-	_foto.position = PANTALLA / 2.0 - _foto.size / 2.0
-	_fondo.add_child(_foto)
-	_foto.configurar(_actual, false)
+	_crear_foto()
 	_foto.scale = Vector2(0.15, 0.15)
 	_foto.rotation = -0.2
 	var crecer := _foto.create_tween().set_parallel(true)
@@ -299,6 +318,82 @@ func _abrir() -> void:
 		if _estado == "abriendo":
 			_cambiar("foto"))
 	_despues(PAUSA_VOZ_FAMILIA, _siguiente_audio_foto)
+
+
+## Polaroid estelar al centro, a ~70 % de la pantalla.
+func _crear_foto() -> void:
+	if _foto != null:
+		_foto.queue_free()
+	_foto = FotoRecuerdo.new()
+	_foto.name = "foto"
+	_foto.size = Vector2(ALTO_FOTO * 0.84, ALTO_FOTO)
+	_foto.pivot_offset = _foto.size / 2.0
+	_foto.position = PANTALLA / 2.0 - _foto.size / 2.0
+	_fondo.add_child(_foto)
+	_foto.configurar(_actual, false)
+
+
+## Solo marco dorado (HE-44 #8): Sofia ya tenia la foto, asi que no hay sobre. La foto aparece directo
+## y el marco dorado se dibuja a su alrededor; despues sigue como cualquier foto (sin audio de familia).
+func _mostrar_marco_dorado() -> void:
+	_cambiar("abriendo")
+	_sobre.hide()
+	_decir(_linea_sobre())
+	_crear_foto()
+	_foto.scale = Vector2(0.92, 0.92)
+	_foto.modulate.a = 0.0
+	var aparecer := _foto.create_tween().set_parallel(true)
+	aparecer.tween_property(_foto, "modulate:a", 1.0, 0.25)
+	aparecer.tween_property(_foto, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_foto.rotation = -0.03
+	_marco = Control.new()
+	_marco.name = "marco_dorado"
+	_marco.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_marco.size = _foto.size
+	_marco.draw.connect(_dibujar_marco_dorado)
+	_foto.add_child(_marco)
+	_progreso_marco = 0.0
+	var dibujar := _marco.create_tween()
+	dibujar.tween_property(self, "_progreso_marco", 1.0, DIBUJO_MARCO).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	dibujar.tween_callback(func() -> void:
+		_sfx(SFX_FIESTA)
+		_estallido(_foto.global_position + _foto.size / 2.0, 12))
+	_lanzar_confeti(true)
+	_cola_audio = []
+	_hay_audio_foto = false
+	_audio_termino_en = -1.0
+	_despues(DIBUJO_MARCO, func() -> void:
+		if _estado == "abriendo":
+			_cambiar("foto"))
+
+
+## Recorre el borde de la foto desde arriba al centro en sentido horario hasta `_progreso_marco`,
+## con una chispa brillante en la punta.
+func _dibujar_marco_dorado() -> void:
+	var s := _marco.size
+	var m := -10.0
+	var esquinas := [Vector2(s.x / 2.0, m), Vector2(s.x - m, m), Vector2(s.x - m, s.y - m), Vector2(m, s.y - m), Vector2(m, m), Vector2(s.x / 2.0, m)]
+	var total := 0.0
+	for i in esquinas.size() - 1:
+		total += (esquinas[i + 1] - esquinas[i]).length()
+	var falta := total * _progreso_marco
+	var trazo := PackedVector2Array([esquinas[0]])
+	for i in esquinas.size() - 1:
+		var tramo: float = (esquinas[i + 1] - esquinas[i]).length()
+		if falta >= tramo:
+			trazo.append(esquinas[i + 1])
+			falta -= tramo
+		else:
+			trazo.append(esquinas[i].lerp(esquinas[i + 1], falta / tramo))
+			break
+	if trazo.size() < 2:
+		return
+	_marco.draw_polyline(trazo, COLOR_CONTORNO, 22.0, true)
+	_marco.draw_polyline(trazo, DORADO, 15.0, true)
+	_marco.draw_polyline(trazo, Color("#FFF3B0"), 4.0, true)
+	var punta: Vector2 = trazo[trazo.size() - 1]
+	if _progreso_marco < 1.0:
+		Figura.dibujar(_marco, "estrella", Color("#FFF3B0"), punta, 22.0 + 4.0 * sin(_tiempo * 20.0), false)
 
 
 ## Lo que suena con la foto abierta, en orden. El pie no suena si la familia ya lo dijo (`pie_en_audio`).
@@ -474,7 +569,7 @@ func _estallido(centro: Vector2, cantidad := 16) -> void:
 
 
 ## Confeti suave cayendo desde arriba mientras se mira la foto.
-func _lanzar_confeti() -> void:
+func _lanzar_confeti(dorado := false) -> void:
 	if _confeti != null:
 		_confeti.queue_free()
 	_confeti = CPUParticles2D.new()
@@ -496,9 +591,10 @@ func _lanzar_confeti() -> void:
 	gradiente.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
 	var colores := PackedColorArray()
 	var offsets := PackedFloat32Array()
-	for i in Figura.COLORES_ARCOIRIS.size():
-		offsets.append(float(i) / Figura.COLORES_ARCOIRIS.size())
-		colores.append(Figura.COLORES_ARCOIRIS[i])
+	var paleta: Array = [DORADO, Color("#FFE38A"), Color("#FFF3B0"), Color("#F2A93B")] if dorado else Figura.COLORES_ARCOIRIS
+	for i in paleta.size():
+		offsets.append(float(i) / paleta.size())
+		colores.append(paleta[i])
 	gradiente.offsets = offsets
 	gradiente.colors = colores
 	_confeti.color_initial_ramp = gradiente

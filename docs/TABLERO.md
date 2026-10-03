@@ -193,6 +193,33 @@
 
 ## REGISTRO DE AVANCES
 
+- **[03-Oct-2026]** HE-15 / HE-42 / HE-43 / HE-45 / HE-46 / HE-47 — **Segunda parte del día: se cierran los pendientes de HE-40/HE-44 que no dependen de decisiones del PO ni de APIs pagadas.** Es trabajo PROVISIONAL, a pedido del PO ("continúa con el roadmap, no pares hasta que termines todo lo que puedas"), adelantado dentro del alcance de tarjetas existentes: HE-15/HE-42/HE-43 para Sofía y Nicole, y HE-45/HE-46/HE-47 para el álbum. **No se mueve ninguna tarjeta**: HE-02 y HE-10 siguen 🔄 En curso, WIP 2/2, y el avance sigue en 21/79 (`dev-godot`; evidencia en §5 de `docs/validaciones/2026-09-28_dev-correcciones-HE-40-HE-44.md`, comprobada en disco por el Scrum Master).
+  - **Mecánicas**:
+    - HE-40 #8: la pista del marco del reto dorado considera todas las soluciones. `herramientas/soluciones_marco.py` enumera las 2.339 familias del 6×10 y las guarda en `soluciones_marco`. La pista nunca devuelve una pieza bien puesta de otra solución válida y responde en 11 ms.
+    - HE-44 #7: tope de 3 sobres por entrega (el resto llega la próxima vez) y una línea corta "¡Y otra más!" desde el 2.º sobre.
+    - HE-44 #8: la entrega de solo marco dorado va sin sobre. El marco se dibuja en 1,2 s con confeti dorado.
+    - HE-40 #17 y #18 (Lluvia de Nicole): tocar un charco sin gota elegida dice su color y hace saltar su gota; los charcos no se mueven mientras hay una gota en la mano.
+    - HE-40 #20: en el mosaico de Sofía el pincel pinta la celda más cercana dentro de 32 px.
+  - **UX**:
+    - HE-40 R13: las medallas ya no tapan la pista.
+    - HE-40 R16: la zona dormida suena con unas campanitas de sueño sintetizadas (`zona_dormida.ogg`), en vez del sonido de error.
+    - HE-44 R6: deslizar sobre una foto del álbum pasa de página.
+    - HE-44 R7: el botón del álbum queda a 36 px de la tarjeta de Sofía.
+    - HE-44 R8: la foto vuela abajo a la derecha, donde vive el álbum.
+    - HE-44 R10: el álbum tiene un botón de Cometa que repite la instrucción.
+    - P8: hay una sola lista de bichos prohibidos.
+  - **DoD de lo adelantado**: el parseo `--check-only` no da errores. La regresión completa está en verde con los 15 arneses en Godot 4.7.1 headless, con chequeos nuevos para cada cambio (`retos_sofia`, `recuerdos` 126, `encajar`, `clasificar`, `lienzo`, `mapa_planeta`). El md5 del guardado se midió antes y después de cada arnés. **No se usó ninguna API de pago.** Comprobé en disco `herramientas/soluciones_marco.py`, `herramientas/componer_sfx_ui.py`, `assets/audio/sfx/ui/zona_dormida.ogg`, `recuerdos/otra_01.wav` y `otra_02.wav`, y las referencias a `soluciones_marco` en `motor_encajar.gd` y `formas_estrella_dorado.json`.
+  - **Pendientes que siguen abiertos** (reemplazan la lista de la primera parte del día):
+    - N4, Cometa con dos voces: necesita el OK del PO sobre el COSTO de fal.ai.
+    - "naranjo" o "naranja": decisión del PO.
+    - Monumentos de 16-20 piezas: decisión del PO.
+    - R14: registrar la excepción en GDD §6.2. Es documento de diseño, no de Dev.
+    - N6: verificar en el playtest.
+    - Textos nuevos escritos por Dev, a revisar por el `guionista`: `recuerdos_otra_01/02`.
+  - **Incidente con el guardado real (bloqueo resuelto)**: durante la regresión el juego estuvo abierto en paralelo. Una sesión de juego cargó el guardado mientras `qa_test_recuerdos` lo tenía reiniciado y lo volvió a guardar, así que el progreso real quedó en 0. Se recuperó desde el respaldo de la sesión. Además había una partida real de Lluvia z1 de Nicole (+100 destellos), que se fusionó a mano. **Guardado actual: Maxi 236, Nicole 347, Sofía 600.** Se comprobó que ningún arnés, corrido solo, altera el guardado.
+    - **Recomendación operativa**: el PO no debe jugar mientras corren los arneses.
+    - **Propuesta de tarea técnica del Scrum Master (no se crea la tarjeta hasta que el PO la apruebe)**: que los arneses de `herramientas/qa_test_*.gd` usen una ruta de guardado de prueba propia, aislada del guardado real en `user://`. Es una mejora de infraestructura de QA y no pertenece a ninguna tarjeta existente. Si el PO la aprueba, entra como tarjeta técnica de la Fase 1 y compite por el WIP con prioridad baja, salvo que vuelva a pasar el incidente.
+
 - **[03-Oct-2026]** HE-40 / HE-44 — **Se cierran las dos validaciones de diseño como ✅ Hecho**: la ficha de zonas del Planeta Arcoíris con las mecánicas v3 de Sofía, y el álbum "Las migas de papá". Pasan de ⬜ Backlog a ✅ Hecho; no ocupaban WIP de Dev. HE-02 y HE-10 siguen 🔄 En curso, WIP 2/2. **Avance 21/79**: se corrige el total, que era 79 y no 80 (diseñadores + `guionista` + `experto-ux-parvulo`; correcciones de `dev-godot` PROVISIONALES a pedido del PO; evidencia comprobada en disco por el Scrum Master).
   - **DoD**: (1) la regresión completa del 02/03-Oct está en verde con los 15 arneses en Godot 4.7.1 headless: `qa_test_encajar` 1.900 checks y 0 fallos, `lienzo` 535, `parejas_zonas` 425, `retos_sofia` 117, `recuerdos` 111, `viaje_arcade` 84, `celebracion` 76, `mapa_planeta` 63, `emparejar_rutas` 51, `mezclar` 0 fallos, y `clasificar`, `emparejar`, `progreso`, `titulo` y `voces` con salida 0; (2) están las validaciones de `disenador-niveles`, `disenador-mecanicas`, `disenador-personajes` y `guionista` en `docs/validaciones/`; (3) la re-auditoría UX (`docs/auditorias-ux/2026-10-02_cierre-HE-40-HE-44.md`) **APRUEBA** las dos tarjetas: los bloqueantes R1 están resueltos y no hay bloqueantes nuevos; (4) queda registrado aquí. Lo comprobé en disco: no queda `mariposa.wav`, y existen `pieza_nave` en `mapa.json`, el osito en `paisaje_arcoiris.gd`, `segundos_recordar_mostrar` y `esperar_frase_completa`, además de los SVG de `assets/fuentes_svg/ui/recuerdos/`.
   - **Continuación del 02-Oct (§4, PROVISIONAL a pedido del PO: "continúa con el roadmap")**: mascotas perrito y gerbo en Parejas z1 de Sofía y silueta del pony en el reto dorado; en la Pinta de Maxi, el botón "mostrar" aparece a los 45 s y, 90 s después, Coco pregunta una sola vez "¿me lo muestras?", sin auto-mostrar; la silueta del ala de la nave se pinta por zona en el mapa (data-driven, `pieza_nave`); los textos definitivos del guionista se regeneraron con el TTS gratuito de Windows y quedaron en `pendientes_fal.txt`; correcciones UX N1 (orden fijo en la primera apertura), N2 (sin "0" grande en el reto dorado), N3 (osito de gomita en vez de gusanito) y N5 (el 2.º toque hace latir el globo de pista); se borró el audio huérfano de la mariposa; se arreglaron los arneses `mapa_planeta`, `mezclar` y `encajar` y se limpiaron del guardado los datos de prueba `qa_encajar`. **No se usó ninguna API de pago.**

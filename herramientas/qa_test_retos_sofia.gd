@@ -320,6 +320,8 @@ func _probar_marco(motor: Node, probar_derrotas: bool) -> void:
 	_distribucion_ok(motor)
 	if bool(motor._cfg.get("boton_espejo", false)):
 		await _probar_toques_marco(motor, solucion)
+	if not motor._marco["soluciones"].is_empty():
+		await _probar_pista_todas(motor, solucion)
 	if probar_derrotas:
 		await _probar_derrotas_marco(motor)
 	var todas := true
@@ -379,6 +381,73 @@ func _orientar(motor: Node, pieza: PiezaEncajar, celdas: Array):
 			if iguales:
 				return centro
 	return null
+
+
+## Mecanicas HE-40 #8: la pista del marco respeta cualquier solucion valida, no solo la del nivel.
+func _probar_pista_todas(motor: Node, solucion: Array) -> void:
+	var marco: Dictionary = motor._marco
+	var ancho: int = marco["ancho"]
+	if ancho == 10 and int(marco["alto"]) == 6:
+		_check(marco["soluciones"].size() == 2339, "6x10: 2.339 familias de soluciones (%d)" % marco["soluciones"].size())
+	var por_id := {}
+	for pieza: PiezaEncajar in motor._piezas:
+		por_id[pieza.id] = pieza
+	# Una pieza de OTRA solucion (no la del nivel) puesta a mano.
+	var del_nivel := {}
+	for entrada in solucion:
+		var celdas: Array = []
+		for celda in entrada["celdas"]:
+			celdas.append(int(celda[1]) * ancho + int(celda[0]))
+		celdas.sort()
+		del_nivel[entrada["id"]] = celdas
+	var otra_letra := ""
+	var otras_celdas: Array = []
+	for texto: String in marco["soluciones"]:
+		for letra: String in del_nivel:
+			var celdas: Array = []
+			for i in texto.length():
+				if texto[i] == letra:
+					celdas.append(i)
+			if celdas != del_nivel[letra]:
+				otra_letra = letra
+				for i in celdas:
+					otras_celdas.append([i % ancho, i / ancho])
+				break
+		if otra_letra != "":
+			break
+	var ajena: PiezaEncajar = por_id[otra_letra]
+	_check(motor._colocar_marco_en(ajena, otras_celdas, true), "pista-todas: pieza %s de otra solucion puesta" % otra_letra)
+	var celdas_ajena: Array = motor._celdas_de.get(ajena, []).duplicate()
+	var antes: int = motor._encajados
+	var t0 := Time.get_ticks_msec()
+	_check(motor.colocar_pista(), "pista-todas: la pista pone algo")
+	var ms := Time.get_ticks_msec() - t0
+	_check(ajena.colocada and motor._celdas_de.get(ajena, []) == celdas_ajena and motor._encajados == antes + 1,
+		"pista-todas: no devuelve la pieza bien puesta de otra solucion y agrega una (%d ms)" % ms)
+	_check(ms < 300, "pista-todas: responde rapido (%d ms < 300)" % ms)
+	await _esperar(0.3)
+	# Una X que deja aislada una esquina no calza en ninguna solucion: la pista la devuelve.
+	var x: PiezaEncajar = por_id.get("X")
+	var esquinas := [[[1, 0], [0, 1], [1, 1], [2, 1], [1, 2]], [[ancho - 2, 0], [ancho - 3, 1], [ancho - 2, 1], [ancho - 1, 1], [ancho - 2, 2]]]
+	var puesta := false
+	if x != null and not x.colocada:
+		for celdas in esquinas:
+			var libres := true
+			for celda in celdas:
+				libres = libres and not marco["ocupadas"].has(Vector2i(celda[0], celda[1]))
+			if libres and motor._colocar_marco_en(x, celdas, true):
+				puesta = true
+				break
+	if puesta:
+		_check(motor.colocar_pista() and not x.colocada and ajena.colocada,
+			"pista-todas: la X que aisla una esquina vuelve a la bandeja y la otra pieza se queda")
+		await _esperar(0.5)
+	# Deja el marco vacio para el resto de la prueba.
+	for pieza in motor._celdas_de.keys():
+		motor._quitar_colocada(pieza)
+		pieza.bloqueada = false
+		pieza.volver_a_casa()
+	await _esperar(0.5)
 
 
 func _probar_derrotas_marco(motor: Node) -> void:

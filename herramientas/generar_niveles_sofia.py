@@ -12,6 +12,7 @@ referencia). Escribe solo el reto dorado de Formas y los niveles de Parejas.
 
 HE-40 (28-Sep-2026, PROVISIONAL): umbrales de estrellitas de Parejas (disenador-niveles §2.2) y bandeja
 del reto dorado 6x10 con celdas de 50 px, piezas acostadas a 0,64 y espejo pegado (disenador-mecanicas #7).
+Al final llama a `soluciones_marco.py` (HE-40 #8, 03-Oct-2026): la pista del marco usa todas las soluciones.
 
 Uso: python herramientas/generar_niveles_sofia.py
 """
@@ -335,3 +336,6 @@ def generar_parejas():
 if __name__ == "__main__":
     generar_dorado()
     generar_parejas()
+    # Mecanicas HE-40 #8: todas las soluciones del marco para la pista (si no, regenerar las borraria).
+    import soluciones_marco  # noqa: E402
+    soluciones_marco.main()

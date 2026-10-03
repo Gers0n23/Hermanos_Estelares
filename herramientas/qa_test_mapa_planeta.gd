@@ -141,6 +141,7 @@ func _probar_estado_inicial() -> void:
 	_check(not choque, "estaciones no chocan con Coco ni Cometa")
 	mapa._tocar_zona(1)
 	_check(mapa.seleccion == 0, "tocar una zona dormida no la abre (solo menea y Coco explica)")
+	_check(str(mapa.SFX_NO).ends_with("zona_dormida.ogg") and ResourceLoader.exists(mapa.SFX_NO), "UX R16: la zona dormida suena con campanitas de sueño (no el error de Kenney)")
 	var sin_nivel := -1
 	for j in estaciones.size():
 		if not estaciones[j]["jugable"]:

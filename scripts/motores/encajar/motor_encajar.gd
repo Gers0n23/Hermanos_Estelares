@@ -452,9 +452,13 @@ func _actualizar_medallas(recien := false) -> void:
 		_medallas.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_medallas.z_index = 30
 		_tablero.get_parent().add_child(_medallas)
-		_medallas.position = Vector2(976, 18)
-		_medallas.size = Vector2(290, 92)
 		_medallas.draw.connect(_dibujar_medallas)
+	# UX HE-40 R13 (03-Oct-2026): con la pista visible la fila termina antes de x 1150, nunca encima
+	# del boton (con 3 o mas rondas se corre a la izquierda).
+	var ancho := _centro_medalla(_rondas.size() - 1).x + _radio_medalla() + 6.0
+	var borde := 1150.0 if _boton_pista != null and _boton_pista.visible else 1266.0
+	_medallas.position = Vector2(minf(976.0, borde - ancho), 18)
+	_medallas.size = Vector2(ancho, 92)
 	_medallas.queue_redraw()
 	if recien:
 		_medallas.pivot_offset = _centro_medalla(_indice_prueba)
@@ -812,7 +816,9 @@ func _construir_marco() -> void:
 				lista.append(Vector2i(c, f))
 	var medida := Vector2(columnas, filas.size()) * lado
 	var origen := (_zona_figuras.get_center() - medida / 2.0).round()
-	_marco = {"origen": origen, "lado": lado, "celdas": celdas, "lista": lista, "ocupadas": {}, "medida": medida}
+	_marco = {"origen": origen, "lado": lado, "celdas": celdas, "lista": lista, "ocupadas": {}, "medida": medida,
+		"ancho": columnas, "alto": filas.size(), "soluciones": PackedStringArray(_cfg.get("soluciones_marco", [])),
+		"simetrias": _simetrias_marco(celdas, columnas, filas.size())}
 	_siluetas.marco = {"origen": origen, "lado": lado, "celdas": lista}
 	_requeridos = int(_cfg.get("piezas_necesarias", ceili(lista.size() / 5.0)))
 	for datos: Dictionary in _cfg.get("piezas_marco", []):
@@ -1793,7 +1799,115 @@ func _pista_libre() -> bool:
 	return _devolver_mal_puesta()
 
 
+## Pista del marco contra TODAS las soluciones (mecanicas HE-40 #8, 03-Oct-2026, PROVISIONAL):
+## coloca una pieza de la primera solucion compatible con lo que Sofia ya puso, empezando por el hueco
+## mas encerrado. Si ninguna es compatible, devuelve la pieza que, al quitarla, deja alguna compatible.
+## Sin `soluciones_marco` en el nivel, usa la `solucion` unica de siempre.
 func _pista_marco() -> bool:
+	if _marco["soluciones"].is_empty():
+		return _pista_marco_unica()
+	var compatible := _solucion_compatible(_celdas_de.keys())
+	if not compatible.is_empty():
+		return _poner_de_solucion(compatible)
+	for pieza in _celdas_de.keys():
+		var resto: Array = _celdas_de.keys()
+		resto.erase(pieza)
+		if _solucion_compatible(resto).is_empty():
+			continue
+		_quitar_colocada(pieza)
+		pieza.bloqueada = false
+		pieza.volver_a_casa(true)
+		pieza.brillar(SEGUNDOS_PISTA)
+		return true
+	return _devolver_mal_puesta()
+
+
+## Primera solucion (ya llevada a la orientacion del tablero) en que cada pieza de `puestas` ocupa
+## justo las celdas de su letra; "" si no hay. Publica para los arneses QA.
+func _solucion_compatible(puestas: Array) -> String:
+	var ancho: int = _marco["ancho"]
+	var alto: int = _marco["alto"]
+	for simetria: Vector2i in _marco["simetrias"]:
+		# En vez de girar las 2.339 soluciones, se gira la consulta: (celda, letra) de lo ya puesto.
+		var consulta: Array = []
+		for pieza in puestas:
+			var letra: int = str(pieza.id).unicode_at(0)
+			for celda: Vector2i in _celdas_de[pieza]:
+				consulta.append(Vector2i(_reflejar_indice(celda, ancho, alto, simetria), letra))
+		for texto in _marco["soluciones"]:
+			var calza := true
+			for par: Vector2i in consulta:
+				if texto.unicode_at(par.x) != par.y:
+					calza = false
+					break
+			if calza:
+				return _reflejar_texto(texto, ancho, alto, simetria)
+	return ""
+
+
+## Pone la pieza de `texto` que cubre la celda libre mas encerrada (la esquina primero).
+func _poner_de_solucion(texto: String) -> bool:
+	var ancho: int = _marco["ancho"]
+	var mejor := Vector2i(-1, -1)
+	var menos_vecinas := 5
+	for celda: Vector2i in _marco["lista"]:
+		if _marco["ocupadas"].has(celda):
+			continue
+		var vecinas := 0
+		for paso in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+			var otra: Vector2i = celda + paso
+			if _marco["celdas"].has(otra) and not _marco["ocupadas"].has(otra):
+				vecinas += 1
+		if vecinas < menos_vecinas:
+			menos_vecinas = vecinas
+			mejor = celda
+	if mejor.x < 0:
+		return false
+	var letra := texto[mejor.y * ancho + mejor.x]
+	for pieza in _piezas:
+		if pieza.id != letra or pieza.colocada:
+			continue
+		var celdas: Array = []
+		for i in texto.length():
+			if texto[i] == letra:
+				celdas.append([i % ancho, i / ancho])
+		_dejar_de_flotar(pieza, false)
+		pieza.brillar(SEGUNDOS_PISTA)
+		return _colocar_marco_en(pieza, celdas, false)
+	return false
+
+
+## Espejos (horizontal, vertical) que dejan el marco igual a si mismo; los mismos con que
+## `herramientas/soluciones_marco.py` agrupa las soluciones en familias.
+func _simetrias_marco(celdas: Dictionary, ancho: int, alto: int) -> Array:
+	var salida: Array = []
+	for simetria in [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
+		var igual := true
+		for celda: Vector2i in celdas:
+			var i := _reflejar_indice(celda, ancho, alto, simetria)
+			igual = igual and celdas.has(Vector2i(i % ancho, i / ancho))
+		if igual:
+			salida.append(simetria)
+	return salida
+
+
+func _reflejar_indice(celda: Vector2i, ancho: int, alto: int, simetria: Vector2i) -> int:
+	var x := ancho - 1 - celda.x if simetria.x == 1 else celda.x
+	var y := alto - 1 - celda.y if simetria.y == 1 else celda.y
+	return y * ancho + x
+
+
+func _reflejar_texto(texto: String, ancho: int, alto: int, simetria: Vector2i) -> String:
+	if simetria == Vector2i.ZERO:
+		return texto
+	var letras := PackedStringArray()
+	letras.resize(texto.length())
+	for i in texto.length():
+		letras[_reflejar_indice(Vector2i(i % ancho, i / ancho), ancho, alto, simetria)] = texto[i]
+	return "".join(letras)
+
+
+func _pista_marco_unica() -> bool:
 	for entrada: Dictionary in _cfg.get("solucion", []):
 		var pieza: PiezaEncajar = null
 		for candidata in _piezas:

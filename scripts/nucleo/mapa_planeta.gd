@@ -37,7 +37,9 @@ const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const RUTA_COMETA := "res://assets/sprites/personajes/cometa_base.png"
 const SFX_TOQUE := "res://assets/audio/sfx/ui/toque.ogg"
 const SFX_ELEGIR := "res://assets/audio/sfx/ui/seleccionar.ogg"
-const SFX_NO := "res://assets/audio/sfx/ui/no_es_este.ogg"
+## "Todavia no" (zona dormida, estacion que llega pronto): campanitas de sueño, no el `error` de
+## Kenney (UX HE-40 R16, 03-Oct-2026; herramientas/componer_sfx_ui.py).
+const SFX_NO := "res://assets/audio/sfx/ui/zona_dormida.ogg"
 const SFX_FIESTA := "res://assets/audio/sfx/ui/confirmar.ogg"
 const COLOR_CONTORNO := Color("#2B3350")
 const DORADO := Color("#FFCB3D")
@@ -395,9 +397,13 @@ func _entregar_recuerdos_zonas() -> void:
 	if not is_inside_tree() or _lanzando:
 		return
 	# Se guarda recien ahora, al mostrarse: si el nino salio antes, la foto llega la proxima vez.
+	# Tope de sobres por entrega (HE-44 #7): el resto llega la proxima vez que entre al mapa.
 	var nuevos: Array = []
+	var tope: int = load("res://scripts/ui/entrega_recuerdo.gd").TOPE_SOBRES
 	for evento in eventos:
-		nuevos.append_array(recuerdos.desbloquear(evento, id_perfil))
+		if nuevos.size() >= tope:
+			break
+		nuevos.append_array(recuerdos.desbloquear(evento, id_perfil, tope - nuevos.size()))
 	if nuevos.is_empty():
 		return
 	var entrega: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear(nuevos)

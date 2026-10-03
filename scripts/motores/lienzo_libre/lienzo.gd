@@ -1044,8 +1044,30 @@ func celdas_correctas() -> int:
 	return cuenta
 
 
-func _pintar_celda(punto: Vector2) -> void:
+## Mecanicas HE-40 #20 (03-Oct-2026): las celdas miden ~42 px, bajo los 64 del GDD. El pincel pinta la
+## celda mas cercana al dedo dentro de `RADIO_CELDA` px, asi un dedo que cae justo afuera del borde
+## igual pinta (zona efectiva >= 64 px).
+const RADIO_CELDA := 32.0
+const PASO_TRAZO_CELDAS := 10.0
+
+
+func celda_cercana(punto: Vector2) -> Vector2i:
 	var celda := celda_en(punto)
+	if celda.x >= 0:
+		return celda
+	var filas: Array = mosaico.get("celdas", [])
+	if filas.is_empty():
+		return Vector2i(-1, -1)
+	var rel := (punto - _origen_mosaico) / _lado_celda
+	var y := clampi(floori(rel.y), 0, filas.size() - 1)
+	var x := clampi(floori(rel.x), 0, str(filas[y]).length() - 1)
+	var rect := Rect2(_origen_mosaico + Vector2(x, y) * _lado_celda, Vector2.ONE * _lado_celda)
+	var dentro := Vector2(clampf(punto.x, rect.position.x, rect.end.x), clampf(punto.y, rect.position.y, rect.end.y))
+	return Vector2i(x, y) if punto.distance_to(dentro) <= RADIO_CELDA else Vector2i(-1, -1)
+
+
+func _pintar_celda(punto: Vector2) -> void:
+	var celda := celda_cercana(punto)
 	if celda.x < 0 or celda == _ultima_celda:
 		return
 	_ultima_celda = celda
@@ -1059,7 +1081,8 @@ func _pintar_celda(punto: Vector2) -> void:
 
 
 func _pintar_linea_celdas(desde: Vector2, hasta: Vector2) -> void:
-	var pasos := maxi(1, ceili(desde.distance_to(hasta) / (_lado_celda * 0.4)))
+	# Arrastrar pinta todas las celdas que cruza el trazo (un punto cada 10 px, HE-40 #20).
+	var pasos := maxi(1, ceili(desde.distance_to(hasta) / minf(PASO_TRAZO_CELDAS, _lado_celda * 0.4)))
 	for k in range(1, pasos + 1):
 		_pintar_celda(desde.lerp(hasta, float(k) / pasos))
 

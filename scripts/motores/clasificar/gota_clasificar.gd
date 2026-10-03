@@ -109,6 +109,11 @@ func _gui_input(evento: InputEvent) -> void:
 			movida.emit(self, evento.global_position)
 
 
+## El nino la tiene apretada (tomada o arrastrando).
+func presionada() -> bool:
+	return _presionada
+
+
 ## El motor cancela un arrastre en curso (derrota-gag, fin de tanda).
 func cancelar_arrastre() -> void:
 	_presionada = false

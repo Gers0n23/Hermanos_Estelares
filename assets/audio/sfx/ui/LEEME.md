@@ -15,6 +15,7 @@ que el código nunca referencie nombres genéricos `click_001.ogg`.
 | `seleccionar.ogg` | Selección de un ítem (p. ej. elegir personaje) | `select_003.ogg` |
 | `soltar.ogg` | Soltar un elemento arrastrado en su lugar | `drop_002.ogg` |
 | `no_es_este.ogg` | Feedback amistoso de "todavía no" (NUNCA un buzzer de error — GDD §6, ficha `docs/fichas/motor-emparejar.md` §6) | `error_002.ogg` |
+| `zona_dormida.ogg` | "Todavía no" del mapa (zona dormida, estación que llega pronto): campanitas de sueño mi-sol-mi (UX HE-40 R16) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
 
 Este set es intencionalmente pequeño (un archivo por categoría) para no bloquear el
 resto del núcleo; se puede ampliar variando con `_002`, `_003`, etc. del mismo pack

@@ -83,6 +83,10 @@
     "dorado": [
       "recuerdos_dorado_01"
     ],
+    "otra": [
+      "recuerdos_otra_01",
+      "recuerdos_otra_02"
+    ],
     "familiar": {
       "maxi": "recuerdos_familiar_maxi_01",
       "nicole": "recuerdos_familiar_nicole_01",

@@ -23,7 +23,8 @@ const EntregaRecuerdoScript := preload("res://scripts/ui/entrega_recuerdo.gd")
 ## Boton del album de recuerdos (ficha album-recuerdos §7). Va AQUI y no en el titulo: el titulo
 ## entero es un solo objetivo tactil ("toca para empezar") y un boton adentro competiria con el;
 ## la seleccion es donde se juntan los tres, sin perfil elegido, y el album es de todos.
-const RECT_ALBUM := Rect2(930, 578, 150, 132)
+## UX HE-44 R7 (03-Oct-2026): 36 px bajo la tarjeta de Sofia (antes 18) y 78 px de "volver".
+const RECT_ALBUM := Rect2(930, 596, 140, 120)
 
 @onready var _temporizador_recordatorio: Timer = $temporizador_recordatorio
 @onready var _boton_volver: Control = $boton_volver

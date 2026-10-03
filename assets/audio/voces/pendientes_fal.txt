@@ -259,3 +259,5 @@ voces/arcoiris/mezclar/escupe_01.wav
 voces/arcoiris/mezclar/escupe_02.wav
 voces/arcoiris/pinta/semilla/me_lo_muestras_01.wav
 voces/arcoiris/pinta/semilla/me_lo_muestras_02.wav
+voces/recuerdos/otra_01.wav
+voces/recuerdos/otra_02.wav

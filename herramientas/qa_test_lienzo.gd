@@ -458,6 +458,10 @@ func _jugar_mosaico(motor) -> void:
 	var total: int = lienzo.total_celdas()
 	_check(lienzo._lado_celda >= 40.0, "celdas de %d px (%dx%d)" % [lienzo._lado_celda, str(lienzo.mosaico["celdas"][0]).length(), lienzo.mosaico["celdas"].size()])
 	_check(motor._botones_color.size() == lienzo.mosaico.get("colores", {}).size(), "leyenda con %d colores numerados" % motor._botones_color.size())
+	# HE-40 mecanicas #20: un dedo hasta 32 px fuera del borde igual pinta la celda mas cercana.
+	var esquina: Vector2 = lienzo.centro_celda(Vector2i(0, 0)) - Vector2.ONE * lienzo._lado_celda / 2.0
+	_check(lienzo.celda_cercana(esquina + Vector2(-25, 5)) == Vector2i(0, 0) and lienzo.celda_cercana(esquina + Vector2(-45, 5)) == Vector2i(-1, -1),
+		"#20: el pincel del mosaico alcanza la celda mas cercana a 25 px del borde (no a 45)")
 	for entrada: Dictionary in motor._botones_color:
 		motor._seleccionar_color(entrada, false)
 		var filas: Array = lienzo.mosaico["celdas"]

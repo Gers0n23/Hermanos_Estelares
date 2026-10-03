@@ -174,3 +174,46 @@ Cierre de pendientes de §2 y de los hallazgos nuevos de la re-auditoría UX
 **Revisado y sin cambios**: la burbuja-recuerdo del viaje ya se atrapa tocándola (radio de 22 px de juego × escala 4 = 88 px en pantalla), así que mecánicas HE-44 #9 ya estaba cubierto. **UX N6** (postergar la foto) queda para verificar en el playtest, como pide UX.
 
 **Sigue pendiente**: N4 (Cometa con dos voces: requiere OK del PO sobre el costo de fal.ai), "naranjo/naranja" (decisión del PO; el guionista recomienda "naranja"), monumentos de 16-20 piezas (decisión del PO), pista del marco contra todas las soluciones, cola de más de 3 sobres y marco dorado sin sobre (HE-44 #7/#8), y los menores UX de backlog.
+
+## 5. Continuación 03-Oct-2026 (dev, PROVISIONAL, a pedido del PO: "no pares hasta que termines todo lo que puedas")
+
+Pendientes de §4 y menores de backlog que **no dependen de decisiones del PO ni de APIs pagadas**. Con HE-40 y HE-44 ya ✅, los cambios quedan como adelanto dentro del alcance de HE-15/HE-42/HE-43 (Sofía, Nicole) y HE-45/HE-46/HE-47 (álbum).
+
+| Origen | Cambio | Archivos |
+|---|---|---|
+| Mecánicas HE-40 #8 | **Pista del marco contra todas las soluciones.** `herramientas/soluciones_marco.py` enumera offline todas las soluciones de cada marco con bitmasks (6×10: 2.339 familias en ~50 s; mismo resultado que `resolver_marco` en tableros chicos) y las guarda en `soluciones_marco`, agrupadas por simetrías del tablero. El motor no gira las 2.339 soluciones: gira la consulta. La pista pone una pieza de la primera solución compatible con lo que ya puso Sofía, empezando por la celda libre más encerrada. Si ninguna es compatible, devuelve la pieza que, al quitarla, deja alguna compatible. Responde en ~11 ms. `generar_niveles_sofia.py` lo llama al final para que regenerar no borre el campo | `soluciones_marco.py`, `generar_niveles_sofia.py`, `formas_estrella_dorado.json`, `motor_encajar.gd`, `qa_test_retos_sofia.gd` |
+| Mecánicas HE-44 #7 | Cola de recuerdos: el velo sigue puesto entre sobres. Desde el 2.º sobre, Cometa dice una línea corta (`recuerdos_otra_01/02`: "¡Y otra más!", "¡Otra foto! ¡Otra!"). **Tope de 3 sobres por entrega** con `Recuerdos.desbloquear(..., maximo)`: lo que no cabe no se guarda y llega la próxima vez que se entre al mapa | `entrega_recuerdo.gd`, `recuerdos.gd`, `mapa_planeta.gd`, `catalogo.json`, TSV + `.wav` |
+| Mecánicas HE-44 #8 | Entrega de solo marco dorado: sin sobre. La polaroid aparece directo, un marco dorado se dibuja a su alrededor en 1,2 s con una chispa en la punta, suena `dorado`, cae confeti dorado y la foto vuela al álbum | `entrega_recuerdo.gd` |
+| Mecánicas HE-40 #17 | Lluvia de Nicole (`directo`): tocar un charco sin gota elegida no suelta nada. El charco late, dice su color y la gota de ese color más cercana da un saltito | `motor_clasificar.gd` |
+| Mecánicas HE-40 #18 | Charcos que bailan (Nicole z3): no se mueven mientras haya una gota elegida o en la mano. Esperan a que la suelte, con tope de 6 s | `motor_clasificar.gd`, `gota_clasificar.gd` (`presionada()`) |
+| Mecánicas HE-40 #20 | Mosaico de Sofía: el pincel pinta la celda más cercana dentro de 32 px del borde (zona efectiva ≥ 64 px) y el trazo interpola cada 10 px | `lienzo.gd` (`celda_cercana`) |
+| UX HE-40 R13 | Medallas de ronda: con la pista visible, la fila termina antes de x 1150 (con 3 o 4 rondas se corre a la izquierda) | `motor_encajar.gd` |
+| UX HE-40 R16 | "Todavía no" del mapa (zona dormida, estación que llega pronto): campanitas de sueño mi-sol-mi sintetizadas, en vez del `error_002` de Kenney | `componer_sfx_ui.py`, `sfx/ui/zona_dormida.ogg`, `mapa_planeta.gd`, `sfx/ui/LEEME.md` |
+| UX HE-44 R6 | Álbum: las fotos rebotan al presionar pero actúan al soltar. Un toque corto (≤ 20 px) abre la foto y un deslizamiento (≥ 90 px) pasa de página | `album_recuerdos.gd` |
+| UX HE-44 R7 | Botón del álbum en la selección: `Rect2(930, 596, 140, 120)`, a 36 px de la tarjeta de Sofía (antes 18) y a 78 px de "volver" | `seleccion_personaje.gd` |
+| UX HE-44 R8 | Cuando la pantalla no tiene botón de álbum (mapa, viaje), la foto vuela abajo a la derecha, donde vive el álbum real (antes, arriba a la derecha) | `entrega_recuerdo.gd` |
+| UX HE-44 R10 | Álbum: botón de Cometa de 116 px abajo a la derecha, como en los minijuegos. Repite la invitación en la portada, la línea de la tapa en la página y la voz de la foto abierta | `album_recuerdos.gd` |
+| UX P8 | Una sola lista de bichos: `generar_niveles_mezcla.py` importa `PROHIBIDOS` de `figuras_formas.py` (suma chinita, escarabajo, grillo y caracol). Los niveles actuales no nombran ninguno | `generar_niveles_mezcla.py` |
+
+**Textos escritos por dev sin guion** (a revisar por el `guionista`): `recuerdos_otra_01` ("¡Y otra más!") y `recuerdos_otra_02` ("¡Otra foto! ¡Otra!"). Están generados con el TTS de Windows (gratis) y anotados en `pendientes_fal.txt`.
+
+**No se tocó**: R14 (registrar en GDD §6.2 que en el mapa Cometa lleva al juego y Coco repite) porque es documento de diseño y no de dev. Tampoco N4, "naranjo/naranja" ni los monumentos de 16-20 piezas, que esperan una decisión del PO.
+
+Verificación (Godot 4.7.1 headless):
+
+- **Parseo**: `--check-only` sobre todos los scripts y arneses tocados, sin errores.
+- **Regresión completa, los 15 arneses en verde**. El md5 del guardado real se midió antes y después de cada arnés, y ninguno lo cambia:
+
+| Arnés | Resultado | Chequeos nuevos |
+|---|---|---|
+| `qa_test_retos_sofia` | OK, 0 fallos | pista-todas: 2.339 familias; no devuelve la pieza bien puesta de otra solución (11 ms); devuelve la X que aísla una esquina |
+| `qa_test_recuerdos` | OK (126) | #7 tope y línea corta, #8 marco dorado sin sobre, R6, R7 (36 px), R8 y R10 |
+| `qa_test_encajar` (completo) | OK, 0 fallos | R13 con 2, 3 y 4 rondas |
+| `qa_test_clasificar` | OK, 0 fallos | #17 y #18 (con una gota de prueba extra, porque Nicole tiene una gota a la vez) |
+| `qa_test_lienzo` | OK, 0 fallos | #20 a 25 px sí, a 45 px no |
+| `qa_test_mapa_planeta` | OK, 0 fallos | R16 |
+| `qa_test_viaje_arcade` | OK (84) | — |
+| `celebracion`, `emparejar_rutas`, `parejas_zonas`, `mezclar` | OK, 0 fallos | — |
+| `emparejar`, `progreso`, `titulo`, `voces` | OK (salida 0) | — |
+
+**Incidente con el guardado real (03-Oct, madrugada)**: durante la regresión el juego estuvo abierto en paralelo. Una sesión de juego cargó el guardado mientras `qa_test_recuerdos` lo tenía reiniciado y lo volvió a guardar encima del restaurado: los perfiles quedaron en 0. Se recuperó desde el respaldo de la sesión, sin los datos `qa_encajar`. Además apareció una partida real de Lluvia z1 de Nicole (+100 destellos), que se fusionó a mano: Maxi 236, Nicole 347, Sofía 600. Se comprobó que ningún arnés, corrido solo, altera el guardado. **Recomendación**: no jugar mientras corren los arneses y, como mejora, que los arneses usen una ruta de guardado de prueba propia.

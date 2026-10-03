@@ -212,13 +212,17 @@ func pendientes(evento: Dictionary, id_perfil: String) -> Array:
 ## recuerdos NUEVOS, con `_quien` (hermano) y `_dorado`. Si el evento trae `perfecta` (estrellitas
 ## maximas de Sofia) y la foto de esa zona ya estaba, se devuelve con `_solo_dorado` = true: la
 ## foto no se repite, solo gana su marco dorado.
-func desbloquear(evento: Dictionary, id_perfil: String) -> Array:
+## `maximo` >= 0 corta la entrega (HE-44 #7, tope de sobres): los que no caben NO se guardan y llegan
+## la proxima vez.
+func desbloquear(evento: Dictionary, id_perfil: String, maximo: int = -1) -> Array:
 	var progreso := _progreso()
 	var entregados: Array = []
 	if progreso == null:
 		return entregados
 	var perfecta := bool(evento.get("perfecta", false))
 	for rec in recuerdos:
+		if maximo >= 0 and entregados.size() >= maximo:
+			break
 		if not coincide(rec, evento, id_perfil):
 			continue
 		var id := str(rec["id"])

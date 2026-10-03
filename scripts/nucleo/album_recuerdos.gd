@@ -13,6 +13,12 @@ extends Node2D
 ##
 ## Data-driven: todo sale de `Recuerdos` (catalogo) y `Progreso` (encontrados). No conoce
 ## planetas ni minijuegos.
+##
+## UX HE-44 (03-Oct-2026, PROVISIONAL):
+## - R6: las fotos rebotan al presionar pero actuan al SOLTAR: si el dedo casi no se movio, abren la
+##   foto; si se deslizo, pasan de pagina (antes el deslizar casi nunca funcionaba).
+## - R10: boton de Cometa de 116 px abajo a la derecha, como en los minijuegos: repite la instruccion
+##   (invitacion en la portada, la linea de la tapa en la pagina).
 
 const FotoRecuerdo := preload("res://scripts/ui/foto_recuerdo.gd")
 const BotonAlbum := preload("res://scripts/ui/boton_album.gd")
@@ -38,6 +44,8 @@ const TAM_TAPA := Vector2(250, 340)
 const TAM_CELDA := Vector2(200, 238)
 const POR_PAGINA := 6
 const DESLIZAR_MIN := 90.0
+const TOQUE_MAX := 20.0
+const RUTA_COMETA := "res://assets/sprites/personajes/cometa_base.png"
 
 var _id_voz_foto := 0
 var album_abierto := ""
@@ -59,11 +67,15 @@ var _fuente: Font
 var _tiempo := 0.0
 var _toque_inicio := Vector2.INF
 var _caras: Dictionary = {}
+var _boton_cometa: Control
+var _textura_cometa: Texture2D
 
 
 func _ready() -> void:
 	if ResourceLoader.exists(RUTA_FUENTE):
 		_fuente = load(RUTA_FUENTE)
+	if ResourceLoader.exists(RUTA_COMETA):
+		_textura_cometa = load(RUTA_COMETA)
 	for id in RETRATOS:
 		if ResourceLoader.exists(RETRATOS[id]):
 			_caras[id] = load(RETRATOS[id])
@@ -79,6 +91,7 @@ func _recuerdos() -> Node:
 func _process(delta: float) -> void:
 	_tiempo += delta
 	_boton_volver.queue_redraw()
+	_boton_cometa.queue_redraw()
 	if vista == "portada":
 		for tapa in _tapas.values():
 			tapa.queue_redraw()
@@ -124,7 +137,7 @@ func _construir() -> void:
 		celda.pivot_offset = TAM_CELDA / 2.0
 		_capa_pagina.add_child(celda)
 		celda.mouse_filter = Control.MOUSE_FILTER_STOP
-		celda.gui_input.connect(_al_tocar.bind(_tocar_celda.bind(k)))
+		celda.gui_input.connect(_al_tocar_celda.bind(k))
 		_celdas.append(celda)
 	_flecha_izq = _boton(_capa_pagina, Rect2(40, 300, 120, 120), Color("#FFF8EE"), _dibujar_flecha.bind(-1.0), pasar_pagina.bind(-1))
 	_flecha_izq.name = "flecha_izq"
@@ -133,6 +146,8 @@ func _construir() -> void:
 
 	_boton_volver = _boton(_ui, Rect2(24, 20, 112, 112), Color("#FFF8EE"), _dibujar_volver, volver)
 	_boton_volver.name = "boton_volver"
+	_boton_cometa = _boton(_ui, Rect2(1144, 584, 116, 116), Color("#CFF5F1"), _dibujar_cometa, repetir_instruccion)
+	_boton_cometa.name = "boton_cometa"
 
 	_capa_foto = _capa("foto")
 	var velo := ColorRect.new()
@@ -336,6 +351,41 @@ func _al_deslizar(evento: InputEvent) -> void:
 			pasar_pagina(-1 if dx > 0 else 1)
 
 
+## Presionar da el rebote leve al instante; soltar decide: toque corto abre, deslizar pasa de pagina.
+func _al_tocar_celda(evento: InputEvent, k: int) -> void:
+	if not (evento is InputEventMouseButton and evento.button_index == MOUSE_BUTTON_LEFT):
+		return
+	get_viewport().set_input_as_handled()
+	if evento.pressed:
+		_toque_inicio = evento.global_position
+		_rebotar(_celdas[k], 1.04)
+		return
+	if _toque_inicio == Vector2.INF:
+		return
+	var movido: Vector2 = evento.global_position - _toque_inicio
+	_toque_inicio = Vector2.INF
+	if absf(movido.x) >= DESLIZAR_MIN:
+		pasar_pagina(-1 if movido.x > 0 else 1)
+	elif movido.length() <= TOQUE_MAX:
+		_tocar_celda(k)
+
+
+## Cometa repite la instruccion de la vista actual (GDD §6 regla 2).
+func repetir_instruccion() -> void:
+	_rebotar(_boton_cometa)
+	var recuerdos := _recuerdos()
+	if recuerdos == null:
+		return
+	match vista:
+		"portada":
+			_decir(recuerdos.elegir_linea("album_invitacion"))
+		"pagina":
+			var vacio: bool = recuerdos.contar(album_abierto)[0] == 0 and recuerdos.recuerdos_album(album_abierto).is_empty()
+			_decir(recuerdos.elegir_linea("album_vacio") if vacio else recuerdos.elegir_linea("tapa", album_abierto))
+		"foto":
+			_repetir_voz()
+
+
 func _tocar_celda(k: int) -> void:
 	if vista != "pagina":
 		return
@@ -481,6 +531,17 @@ func _dibujar_flecha(c: Control, direccion: float) -> void:
 		puntos.append(centro + Vector2(p.x * direccion, p.y))
 	c.draw_colored_polygon(puntos, TURQUESA)
 	Figura.contornear(c, puntos, 5.0)
+
+
+func _dibujar_cometa(c: Control) -> void:
+	if _textura_cometa == null:
+		Figura.dibujar(c, "estrella", DORADO, c.size / 2.0, 40.0, true)
+		return
+	# Mismo retrato que el boton de Cometa de los minijuegos, sin deformarlo.
+	var alto := c.size.y - 14.0
+	var ancho := alto * _textura_cometa.get_width() / float(_textura_cometa.get_height())
+	var bote := 3.0 * sin(_tiempo * 3.0)
+	c.draw_texture_rect(_textura_cometa, Rect2(Vector2((c.size.x - ancho) / 2.0, 8.0 + bote), Vector2(ancho, alto)), false)
 
 
 func _dibujar_volver(c: Control) -> void:

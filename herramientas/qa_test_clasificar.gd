@@ -213,6 +213,17 @@ func _probar_reglas(motor, nivel: Dictionary) -> void:
 	if gota == null:
 		_chequear(false, "hay una gota util en pantalla")
 		return
+	if motor._modo == "directo" and not motor._nombrar and motor._gota_elegida == null:
+		# HE-40 mecanicas #17: con varias gotas, tocar un charco sin gota elegida no suelta nada; dice su
+		# color y su gota salta. Si el nivel tiene una sola gota a la vez, se agrega otra para probarlo.
+		var extra: GotaClasificar = _gota_extra(motor, gota.color_id) if motor.gotas_activas().size() < 2 else null
+		var antes: int = motor._logrados_ronda
+		var libres_antes: int = motor.gotas_activas().size()
+		motor._al_tocar_charco(motor.charco_correcto_para(gota))
+		await _esperar(0.3)
+		_chequear(motor._logrados_ronda == antes and motor.gotas_activas().size() == libres_antes,
+			"#17: tocar un charco sin gota elegida no suelta ninguna (dice su color y la gota salta)")
+		await _quitar_gota(motor, extra)
 	var correcto = motor.charco_correcto_para(gota)
 	var incorrecto = null
 	for charco in motor.charcos_activos():
@@ -255,6 +266,23 @@ func _probar_reglas(motor, nivel: Dictionary) -> void:
 		for charco in motor.charcos_activos():
 			otras.append(charco.position)
 		_chequear(otras != posiciones, "los charcos cambiaron de lugar tras el acierto")
+		# HE-40 mecanicas #18: con una gota elegida, los charcos esperan a que la suelte.
+		var en_mano: GotaClasificar = _gota_extra(motor, motor.charcos_activos()[0].color_id)
+		if en_mano != null:
+			motor._gota_elegida = en_mano
+			motor._mover_charcos_cuando_quieto()
+			await _esperar(1.2)
+			var quietas: Array = []
+			for charco in motor.charcos_activos():
+				quietas.append(charco.position)
+			_chequear(quietas == otras, "#18: con una gota elegida los charcos no se mueven")
+			motor._gota_elegida = null
+			await _esperar(1.6)
+			var despues: Array = []
+			for charco in motor.charcos_activos():
+				despues.append(charco.position)
+			_chequear(despues != otras, "#18: al soltarla, los charcos recien se mueven")
+			await _quitar_gota(motor, en_mano)
 	if nivel.has("gota_distractora"):
 		await _esperar_jugable(motor)
 		var gris = motor._crear_gota("gris", "gris")
@@ -304,6 +332,26 @@ func _probar_derrota(motor, limite: int) -> void:
 	_chequear(motor._logrados_ronda >= logrados, "lo logrado se conserva tras el reintento")
 	await _esperar_gotas(motor)
 	_chequear(not motor.gotas_activas().is_empty(), "vuelven las gotas tras el reintento")
+
+
+## Gota de prueba quieta (no cuenta para la ronda: se quita con `_quitar_gota`).
+func _gota_extra(motor, color_id: String) -> GotaClasificar:
+	var gota: GotaClasificar = motor._crear_gota(color_id)
+	gota.cayendo = false
+	gota.fijar_centro(Vector2(260, 220))
+	return gota
+
+
+func _quitar_gota(motor, gota) -> void:
+	if gota == null or not is_instance_valid(gota):
+		return
+	if motor._gota_elegida == gota:
+		motor._gota_elegida = null
+	motor._gotas.erase(gota)
+	gota.queue_free()
+	# Si el motor quiso reponer mientras la gota de prueba ocupaba el cupo, repone ahora.
+	await process_frame
+	motor._reponer()
 
 
 func _probar_pista(motor) -> void:

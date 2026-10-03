@@ -11,6 +11,7 @@ avance del mapa (la estacion es la misma; solo cambia el juego que abre).
 Uso: python herramientas/generar_niveles_mezcla.py
 """
 import json
+import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -65,7 +66,9 @@ ZONAS = [
 ]
 
 # Sin bichos en ningun nivel donde juegue Nicole o Sofia (perfil-jugadores; auditoria UX HE-40 R1/R2).
-PROHIBIDOS = ("mariposa", "abeja", "arana", "araña", "bicho", "insecto", "catarina", "gusano", "hormiga", "mosca", "libelula")
+# Una sola lista de bichos para todo el juego (UX P8, 03-Oct-2026): la de figuras_formas.py.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from figuras_formas import PROHIBIDOS  # noqa: E402
 
 # Parametros comunes (disenador-mecanicas HE-40 #13, 28-Sep-2026, PROVISIONAL): las gotas nuevas
 # nunca caen a menos de 190 px en x de otra que siga arriba, y la 1.a gota equivocada de una lata solo

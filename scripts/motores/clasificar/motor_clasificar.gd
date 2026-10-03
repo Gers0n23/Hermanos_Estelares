@@ -736,6 +736,18 @@ func _al_tocar_charco(charco: CharcoClasificar) -> void:
 		_decir_pedido()
 	elif _modo == "directo" and not _nombrar and libres.size() == 1:
 		soltar_gota_en(libres[0], charco)
+	elif _modo == "directo" and not _nombrar and libres.size() > 1:
+		# Mecanicas HE-40 #17 (03-Oct-2026): sin gota elegida, el charco dice su color y la gota de ese
+		# color mas cercana da un saltito. Asi Nicole aprende a tocar primero la gota.
+		_reproducir_voz("color", _voz_color(charco.color_id))
+		var cercana = null
+		for gota in libres:
+			if gota.color_id != charco.color_id:
+				continue
+			if cercana == null or gota.centro_global().distance_to(charco.centro_charco()) < cercana.centro_global().distance_to(charco.centro_charco()):
+				cercana = gota
+		if cercana != null:
+			cercana.saltito(24.0)
 
 
 func _charco_cerca(punto: Vector2):
@@ -865,7 +877,7 @@ func _acierto(gota: GotaClasificar, charco: CharcoClasificar) -> void:
 		_reaccion_anfitriona("salta")
 	gota_clasificada.emit(gota.color_id, charco.id)
 	if _charcos_moviles and _logrados_ronda < _meta_ronda:
-		_despues(0.55, _mover_charcos)
+		_despues(0.55, _mover_charcos_cuando_quieto)
 		_tras_logro(1.7)
 	else:
 		_tras_logro(0.5)
@@ -1156,6 +1168,27 @@ func _actualizar_llamada() -> void:
 	for charco in _charcos:
 		if is_instance_valid(charco):
 			charco.llamando = colores.has(charco.color_id)
+
+
+## Mecanicas HE-40 #18 (03-Oct-2026): ningun charco se mueve con una gota elegida o en la mano. Espera
+## a que la suelte (tope 6 s); si sigue con ella, esta vez no se mueven.
+func _mover_charcos_cuando_quieto() -> void:
+	var espera := 0.0
+	while is_inside_tree() and espera < 6.0 and hay_gota_en_mano():
+		await get_tree().create_timer(0.2).timeout
+		espera += 0.2
+	if is_inside_tree() and not _terminado and not hay_gota_en_mano():
+		_mover_charcos()
+
+
+## Publica para los arneses QA.
+func hay_gota_en_mano() -> bool:
+	if _gota_elegida != null and is_instance_valid(_gota_elegida):
+		return true
+	for gota in _gotas:
+		if is_instance_valid(gota) and gota.presionada():
+			return true
+	return false
 
 
 ## Nicole z3 (y entre tandas): los charcos cambian de lugar con una vuelta suave.
