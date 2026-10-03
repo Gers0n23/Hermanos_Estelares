@@ -2,28 +2,28 @@
 # Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
 # Regenerar: python herramientas/generar_voces_fal.py --lista <este archivo> [--solo-personaje coco] [--estimar]
 # personaje: coco
-voces/arcoiris/mapa/zona_1_llegada.wav	Este es el Claro del Trébol. ¡Aquí vive el color rojo!
-voces/arcoiris/mapa/zona_1_completada.wav	¡Volvió el rojo! ¡Mira mi cresta!
-voces/arcoiris/mapa/zona_2_llegada.wav	¡Los Charcos Saltarines! Ayúdame a recuperar el amarillo.
-voces/arcoiris/mapa/zona_2_completada.wav	¡Volvió el amarillo! ¡Qué brillante!
-voces/arcoiris/mapa/zona_3_llegada.wav	El Bosque de Chupetines. ¡Aquí se escondió el azul!
-voces/arcoiris/mapa/zona_3_completada.wav	¡Volvió el azul! ¡Mi planeta está más lindo!
-voces/arcoiris/mapa/zona_4_llegada.wav	¡Los Islotes Flotantes! Aquí están el verde y el naranja.
-voces/arcoiris/mapa/zona_4_completada.wav	¡Volvieron el verde y el naranja!
-voces/arcoiris/mapa/zona_5_llegada.wav	¡La Cima del Arcoíris! Aquí está el violeta, y el brillo del planeta.
-voces/arcoiris/mapa/zona_5_completada.wav	¡Volvió el violeta! ¡Mi planeta brilla entero!
+voces/arcoiris/mapa/zona_1_llegada.wav	¡Este es el Claro del Trébol! ¿Ven la frutilla gigante? Está grisecita... ¡aquí se escondió el rojo!
+voces/arcoiris/mapa/zona_1_completada.wav	¡Volvió el rojo! Mírenme, mírenme... ¡ahora soy rojo frutilla!
+voces/arcoiris/mapa/zona_2_llegada.wav	¡Los Charcos Saltarines! La gelatina de limón tiembla porque le falta el amarillo. ¿Me ayudan?
+voces/arcoiris/mapa/zona_2_completada.wav	¡Volvió el amarillo! Ahora soy... ¡amarillo limón! ¡Brillo como un sol!
+voces/arcoiris/mapa/zona_3_llegada.wav	El Bosque de Chupetines. Mis chupetines perdieron su azul... ¡vamos a buscarlo!
+voces/arcoiris/mapa/zona_3_completada.wav	¡Volvió el azul! Ahora soy... ¡azul chupetín!
+voces/arcoiris/mapa/zona_4_llegada.wav	¡Los Islotes Flotantes! Flotan en una laguna de soda... y aquí se escondieron el verde y el naranja.
+voces/arcoiris/mapa/zona_4_completada.wav	¡Volvieron el verde y el naranja! Ahora soy... ¡verde menta con pintitas naranjas!
+voces/arcoiris/mapa/zona_5_llegada.wav	¡La Cima del Arcoíris! Aquí arriba duerme el violeta... y el brillo de todo mi planeta.
+voces/arcoiris/mapa/zona_5_completada.wav	¡Volvió el violeta! ¡Y el brillo! Ahora soy... ¡arcoíris de pies a cabeza!
 voces/arcoiris/mapa/juego_lluvia.wav	¡Lluvia de colores!
 voces/arcoiris/mapa/juego_formas.wav	¡Formas traviesas!
 voces/arcoiris/mapa/juego_parejas.wav	¡Parejas de Coco!
 voces/arcoiris/mapa/juego_pinta.wav	¡Pinta con Coco!
 voces/arcoiris/mapa/bienvenida.wav	¡Bienvenidos a mi Planeta Arcoíris! Se le perdieron los colores. Toca un rincón, y elige un juego para devolvérselos.
-voces/arcoiris/mapa/zona_dormida.wav	Ese rincón todavía está dormidito. ¡Juega en los otros, y lo despertamos!
+voces/arcoiris/mapa/zona_dormida.wav	Ese rincón está dormidito, le falta color. ¡Juega todos los juegos de este lado y lo despertamos!
 # personaje: cometa
 voces/arcoiris/mapa/zona_abierta.wav	¡Se despertó un rincón nuevo del planeta!
 # personaje: cometa
-voces/arcoiris/mapa/secreta_lejana.wav	¿Viste ese brillo allá arriba? Es un lugar secreto. Algún día llegaremos.
+voces/arcoiris/mapa/secreta_lejana.wav	¿Viste ese brillito allá arriba, en la montaña? Es un lugar secreto... ¡se despierta cuando pintemos los Islotes!
 # personaje: cometa
-voces/arcoiris/mapa/secreta_revelada.wav	¡Apareció la Cima del Arcoíris! ¡Un lugar secreto!
+voces/arcoiris/mapa/secreta_revelada.wav	¡Miren arriba! ¡Apareció la Cima del Arcoíris, un lugar secreto! ¡Tiene una torta gigante!
 # personaje: coco
 voces/arcoiris/mapa/estacion_pronto.wav	¡Este juego todavía se está pintando! Prueba otro.
 # personaje: cometa
@@ -31,3 +31,22 @@ voces/arcoiris/mapa/cometa_vamos.wav	¡Vamos al siguiente juego!
 voces/arcoiris/mapa/todo_listo.wav	¡Jugaste todo lo que hay! Puedes repetir el que más te guste.
 # personaje: coco
 voces/arcoiris/mapa/dorado_disponible.wav	¡Sofía! Apareció un reto dorado. Tócalo si te atreves.
+# Guion 28-Sep-2026 (HE-40/HE-44): relleno de Windows (generar_voces_tts.ps1 -IgnorarPersonaje) hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/mapa/zona_1_regalo.wav	Les regalo mi pincel rojo. ¡Cuélguenlo en su nave!
+voces/arcoiris/mapa/zona_2_regalo.wav	Tomen: una gota dorada saltarina. ¡Cuidado, que rebota! Boing.
+voces/arcoiris/mapa/zona_3_regalo.wav	Un chupetín espiral azul, para su nave. ¡Pero no se lo coman, eh!
+voces/arcoiris/mapa/zona_4_regalo.wav	Les regalo una estrella flotante, verde y naranja. ¡Suéltenla y miren cómo flota!
+voces/arcoiris/mapa/zona_5_regalo.wav	El plumón arcoíris de la cima. Es mi favorito... ¡y ahora es de ustedes!
+voces/arcoiris/mapa/zona_dormida_02.wav	Shhh... ese rincón está durmiendo siesta. ¡Lo despertamos cuando terminemos por acá!
+voces/arcoiris/mapa/estacion_repetida_01.wav	¡Otra vez! ¡Me encanta!
+voces/arcoiris/mapa/estacion_repetida_02.wav	¡Este juego de nuevo! ¡Yupi!
+voces/arcoiris/mapa/estacion_repetida_03.wav	¿Jugamos otra vez? Ahora soy... ¡verde de alegría!
+voces/arcoiris/mapa/juego_taller.wav	¡El taller de pinturas de Coco!
+voces/arcoiris/mapa/dorado_entrar.wav	¡Entramos al reto dorado! Ahora soy... ¡dorada de la emoción! ¡Vamos, campeona!
+# Guion 28-Sep-2026 (HE-40/HE-44): relleno de Windows (generar_voces_tts.ps1 -IgnorarPersonaje) hasta generar con fal.ai.
+# personaje: cometa
+voces/arcoiris/mapa/zona_2_abierta.wav	¡Se despertó un rincón nuevo! ¡Los Charcos Saltarines! ¡Boing, boing!
+voces/arcoiris/mapa/zona_3_abierta.wav	¡Otro rincón despierto! ¡El Bosque de Chupetines! Mmm... huele a dulce.
+voces/arcoiris/mapa/zona_4_abierta.wav	¡Miren allá! ¡Los Islotes Flotantes se despertaron! Flotan como malvaviscos.
+voces/arcoiris/mapa/planeta_completo.wav	¡El Planeta Arcoíris brilla entero! ¡Qué equipo más increíble!

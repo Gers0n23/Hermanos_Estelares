@@ -255,77 +255,75 @@
       ]
     },
     {
-      "id": "mariposa",
-      "voz_completa": "voces/arcoiris/formas/figuras/mariposa.wav",
+      "id": "pony",
+      "voz_completa": "voces/arcoiris/formas/figuras/pony.wav",
       "dificultad": 7,
       "piezas": [
         {
           "forma": "rectangulo",
-          "ancho": 72.8,
-          "alto": 350.0,
-          "color": "#7A4FB5",
+          "ancho": 308.0,
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_grande",
+          "x": -7.0,
+          "y": 28.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 78.4,
+          "alto": 112.0,
+          "color": "#D9A6F2",
           "nombre_voz": "rectangulo",
-          "x": 0.0,
+          "x": 107.8,
+          "y": -98.0
+        },
+        {
+          "forma": "rectangulo",
+          "ancho": 140.0,
+          "alto": 84.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo",
+          "cara": true,
+          "x": 175.0,
+          "y": -196.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 112.0,
+          "alto": 75.6,
+          "color": "#F26CA8",
+          "rotacion": 270,
+          "nombre_voz": "triangulo",
+          "x": 30.8,
+          "y": -98.0
+        },
+        {
+          "forma": "triangulo_rect",
+          "ancho": 84.0,
+          "alto": 126.0,
+          "color": "#F26CA8",
+          "rotacion": 180,
+          "nombre_voz": "triangulo",
+          "x": -203.0,
           "y": 21.0
         },
         {
-          "forma": "triangulo_rect",
-          "ancho": 210.0,
-          "alto": 210.0,
-          "color": "#F26CA8",
-          "rotacion": 180,
-          "nombre_voz": "triangulo_grande",
-          "x": -141.4,
-          "y": -91.0
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 210.0,
-          "alto": 210.0,
-          "color": "#F26CA8",
-          "rotacion": 90,
-          "nombre_voz": "triangulo_grande",
-          "x": 141.4,
-          "y": -91.0
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 154.0,
-          "alto": 154.0,
-          "color": "#B48CE8",
-          "rotacion": 270,
-          "nombre_voz": "triangulo_chico",
-          "x": -113.4,
-          "y": 91.0
-        },
-        {
-          "forma": "triangulo_rect",
-          "ancho": 154.0,
-          "alto": 154.0,
-          "color": "#B48CE8",
-          "nombre_voz": "triangulo_chico",
-          "x": 113.4,
-          "y": 91.0
-        },
-        {
-          "forma": "circulo",
+          "forma": "rectangulo",
           "ancho": 72.8,
-          "alto": 72.8,
-          "color": "#6FD6E8",
-          "capa": 1,
-          "nombre_voz": "circulo",
-          "x": -99.4,
-          "y": -133.0
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_chico",
+          "x": -110.6,
+          "y": 168.0
         },
         {
-          "forma": "circulo",
+          "forma": "rectangulo",
           "ancho": 72.8,
-          "alto": 72.8,
-          "color": "#6FD6E8",
-          "capa": 1,
-          "nombre_voz": "circulo",
-          "x": 99.4,
-          "y": -133.0
+          "alto": 140.0,
+          "color": "#D9A6F2",
+          "nombre_voz": "rectangulo_chico",
+          "x": 96.6,
+          "y": 168.0
         }
       ]
     },

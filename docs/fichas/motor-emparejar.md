@@ -63,6 +63,15 @@ Todo tocable responde en **<100 ms**, según GDD §6.4.
 > par (momento memorable con voz `acierto_especial`), `ayuda_tras_fallos` (Brote) y `halo_idle` (Semilla).
 > Niveles por hermano: `datos/niveles/arcoiris_emparejar_{semilla,brote,estrella}_01.json`.
 
+> **Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)**: **se aprueba** el cambio de la
+> fila 4. `tiempo_volteo_ms` pasa a significar "cuánto se ve el par fallido". Además:
+>
+> - `visible_minimo_ms` (Brote 600): los toques que llegan antes quedan en espera.
+> - La pista de Sofía revela la compañera de la carta que está arriba.
+> - Se usan el medidor de estrellitas y la confirmación de pista.
+>
+> Detalle en `docs/validaciones/HE-40_disenador-mecanicas.md`, hallazgos 10-12.
+
 Entrada: solo toque/clic (sin arrastre en este motor — GDD §6.4). Si el input unificado
 detecta un gesto de arrastre iniciado sobre un elemento, se trata como un toque simple sobre
 el punto de origen (no se implementa drag, para no confundir con otros motores).
@@ -313,3 +322,9 @@ carta movida. La idea es afinar los límites con el playtest.
 - **`disenador-niveles`**: una vez el motor esté validado, reemplazar el contenido placeholder
   de este piloto por niveles reales, alineados a los gustos de cada hermano en
   `docs/perfil-jugadores.md` (y a lo que falte cerrar en HE-D1).
+
+## Implementación dev-godot 28-Sep-2026 (validaciones HE-40, PROVISIONAL)
+
+- §7: `umbrales_estrellitas {tres, dos}` en fallos (z1 10/16, z2 9/15, z3 17/42, z4 15/24, z5 21/32, dorado 27/42). Sin el campo, la regla vieja.
+- Pista con costo: medidor + globo de confirmación (`scripts/ui/pista_con_costo.gd`); si ya hay una carta arriba, la pista revela su compañera.
+- `visible_minimo_ms` (Brote 600 por defecto): un toque durante el "no es este" queda en espera (la carta pulsa) y se aplica al cumplirse el mínimo.

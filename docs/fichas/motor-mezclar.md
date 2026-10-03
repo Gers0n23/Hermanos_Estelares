@@ -70,10 +70,10 @@ repiten dentro de un mural, y se evitan los 2 últimos colores hechos.
 | Zona | Recetas | Frasco muestra cuántas | Receta visible | Caída | Gris | Murales |
 |---|---|---|---|---|---|---|
 | 1 · Claro | verde, naranja, violeta + verde limón | sí | hasta el visto bueno | 105 px/s, 2 gotas | no | 2 (flor, casa) |
-| 2 · Charcos | las 6 de proporción 2+1 | sí | hasta el visto bueno | 120 ±15 %, 3 gotas | no | 2 (pez, mariposa) |
+| 2 · Charcos | las 6 de proporción 2+1 | sí | hasta el visto bueno | 120 ±15 %, 3 gotas | no | 2 (pez, pony) |
 | 3 · Chupetines | blanco: rosado, celeste, durazno + 2+1 | sí | hasta el visto bueno | 130 ±35 % | 20 % | 2 (cohete, arcoíris) |
 | 4 · Islotes | 3 y 4 gotas: café, lila, verde clarito, turquesa, oliva, chocolate, durazno | **no** | hasta el visto bueno | 135 ±30 % | 12 % | 2 (casa, pez) |
-| 5 · Cima | las 15 | no | **6 s** tras la lectura | 145 ±35 % | 15 % | 3 (mariposa, cohete, arcoíris) |
+| 5 · Cima | las 15 | no | **6 s** tras la lectura | 145 ±35 % | 15 % | 3 (pony, cohete, arcoíris) |
 
 Duración estimada: 6 latas por nivel (9 en z5), unos 30 a 40 s por lata, o sea ~4 min por
 estación. **Hay que confirmarlo en el playtest.**
@@ -99,7 +99,7 @@ estación. **Hay que confirmarlo en el playtest.**
   "gota_distractora": {"probabilidad": 0.2},
   "ranuras_visibles": true,          // la etiqueta del frasco muestra cuántas gotas lleva la receta
   "memorizar_s": 0,                  // > 0: la receta se esconde sola N s después de leerla
-  "murales": 2, "dibujos_mural": ["flor", "casa"],  // flor | casa | cohete | pez | mariposa | arcoiris
+  "murales": 2, "dibujos_mural": ["flor", "casa"],  // flor | casa | cohete | pez | pony | arcoiris
   "tamano_gota": 84,
   "libreta_cuesta_estrellita": true,
   "umbrales_estrellitas": {"tres": 2, "dos": 5},
@@ -131,3 +131,19 @@ estación. **Hay que confirmarlo en el playtest.**
   diseña aparte).
 - Validar en el playtest: velocidad de caída, umbrales, si 6 s de memoria en z5 son justos y si
   la libreta se entiende sin explicación.
+
+## Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado con cambios** (`docs/validaciones/HE-40_disenador-mecanicas.md`, hallazgos 13-15):
+
+- `separacion_min_gotas_px: 190`, para no atrapar gotas sin querer.
+- `fallos_para_reiniciar_lata: 2`: con la 1.ª gota equivocada, el frasco la escupe y se quedan las capas
+  buenas.
+- Mantener apretado para agitar: 0,4 por segundo, con vibración.
+- La libreta usa el medidor de estrellitas y el globo de confirmación del hallazgo 4.
+
+## Implementación dev-godot 28-Sep-2026 (validaciones HE-40, PROVISIONAL)
+
+- `separacion_min_gotas_px: 190` (si no hay lugar, la gota espera) y `fallos_para_reiniciar_lata: 2`: la 1.ª gota equivocada sale escupida (voz `escupe`), las capas buenas se quedan y cuenta un fallo; la 2.ª vacía el frasco.
+- Umbrales: z1 2/5, z2 3/6, z3 3/7, z4 4/8, z5 5/10. Pista de Cometa por zona (`pista_z2..z5`). Mural "pony" en lugar de la mariposa (z2 y z5). Mantener apretado agita a 0,4/s.
+- Libreta con medidor y globo de confirmación (`pista_con_costo.gd`).

@@ -32,7 +32,7 @@ ZONAS = [
         "pedidos": ["verde_limon", "verde_azulado", "mango", "tomate", "fucsia", "anil"],
         "velocidad_caida": 120, "variacion_velocidad": 0.15, "elementos_simultaneos": 3, "intervalo_gotas_s": 1.1,
         "probabilidad_util": 0.55, "ranuras_visibles": True, "memorizar_s": 0, "murales": 2,
-        "dibujos_mural": ["pez", "mariposa"], "umbrales_estrellitas": {"tres": 2, "dos": 5},
+        "dibujos_mural": ["pez", "pony"], "umbrales_estrellitas": {"tres": 3, "dos": 6},
     },
     {
         "zona": "zona3_chupetines", "n": 3,
@@ -41,7 +41,7 @@ ZONAS = [
         "velocidad_caida": 130, "variacion_velocidad": 0.35, "elementos_simultaneos": 3, "intervalo_gotas_s": 1.0,
         "probabilidad_util": 0.5, "ranuras_visibles": True, "memorizar_s": 0, "murales": 2,
         "gota_distractora": {"probabilidad": 0.2},
-        "dibujos_mural": ["cohete", "arcoiris"], "umbrales_estrellitas": {"tres": 3, "dos": 6},
+        "dibujos_mural": ["cohete", "arcoiris"], "umbrales_estrellitas": {"tres": 3, "dos": 7},
     },
     {
         "zona": "zona4_islotes", "n": 4,
@@ -50,7 +50,7 @@ ZONAS = [
         "velocidad_caida": 135, "variacion_velocidad": 0.3, "elementos_simultaneos": 3, "intervalo_gotas_s": 1.0,
         "probabilidad_util": 0.5, "ranuras_visibles": False, "memorizar_s": 0, "murales": 2,
         "gota_distractora": {"probabilidad": 0.12},
-        "dibujos_mural": ["casa", "pez"], "umbrales_estrellitas": {"tres": 3, "dos": 7},
+        "dibujos_mural": ["casa", "pez"], "umbrales_estrellitas": {"tres": 4, "dos": 8},
     },
     {
         "zona": "zona5_cima", "n": 5,
@@ -60,9 +60,17 @@ ZONAS = [
         "velocidad_caida": 145, "variacion_velocidad": 0.35, "elementos_simultaneos": 3, "intervalo_gotas_s": 0.9,
         "probabilidad_util": 0.5, "ranuras_visibles": False, "memorizar_s": 6, "murales": 3,
         "gota_distractora": {"probabilidad": 0.15},
-        "dibujos_mural": ["mariposa", "cohete", "arcoiris"], "umbrales_estrellitas": {"tres": 4, "dos": 9},
+        "dibujos_mural": ["pony", "cohete", "arcoiris"], "umbrales_estrellitas": {"tres": 5, "dos": 10},
     },
 ]
+
+# Sin bichos en ningun nivel donde juegue Nicole o Sofia (perfil-jugadores; auditoria UX HE-40 R1/R2).
+PROHIBIDOS = ("mariposa", "abeja", "arana", "araña", "bicho", "insecto", "catarina", "gusano", "hormiga", "mosca", "libelula")
+
+# Parametros comunes (disenador-mecanicas HE-40 #13, 28-Sep-2026, PROVISIONAL): las gotas nuevas
+# nunca caen a menos de 190 px en x de otra que siga arriba, y la 1.a gota equivocada de una lata solo
+# sale escupida (las capas buenas se quedan); recien la 2.a vacia el frasco.
+COMUNES = {"separacion_min_gotas_px": 190, "fallos_para_reiniciar_lata": 2}
 
 RECETAS_VOZ = {
     "verde": "Verde: una gota amarilla y una gota azul.",
@@ -85,12 +93,20 @@ RECETAS_VOZ = {
     "chocolate": "Chocolate: dos rojas, una amarilla y una azul.",
 }
 
+# Textos reescritos por el guionista (docs/guiones/zonas_arcoiris.md §3 y §4.5, 28-Sep-2026).
 INTROS = {
-    1: "¡Sofía, ayúdame a pintar mi mural! Necesito tres latas de pintura. Te muestro la receta: memorízala. Después mueve el frasco para atrapar solo las gotas de la receta, ¡y agítalo para mezclar!",
+    1: "¡Sofía, ayúdame a pintar mi mural! Mira la receta y memorízala. Después mueve el frasco, atrapa solo esas gotas... ¡y agítalo para mezclar!",
     2: "Ahora las recetas llevan más de una gota del mismo color. ¡Cuenta bien! Si entra una gota de más, la mezcla se ensucia.",
     3: "¡Llegó el blanco, que aclara los colores! Y cuidado con la gota gris: déjala pasar, que ensucia la pintura.",
     4: "Recetas de tres y cuatro gotas, y el frasco ya no te dice cuántas faltan. ¡Usa tu memoria!",
-    5: "¡Tres murales en la cima! Esta vez la receta se ve solo un ratito. ¡Memoriza rápido, maestra pintora!",
+    5: "¡Tres murales en la cima! Esta vez la receta se ve solo un ratito. ¡Mírala bien, maestra pintora!",
+}
+
+PISTAS_ZONA = {
+    2: "Mira cuántas gotas de cada color lleva la receta. ¡A veces son dos iguales!",
+    3: "La gota gris es tramposa: déjala pasar y atrapa solo las de la receta.",
+    4: "Cuenta las gotas con los dedos mientras miras la receta. ¡Así no se te olvida ninguna!",
+    5: "Di los colores en voz alta mientras se ve la receta. ¡Así se te quedan en la cabeza!",
 }
 
 LINEAS = {
@@ -106,7 +122,9 @@ LINEAS = {
     "sucio_01": "¡Puaj! Esa gota no iba. Vaciamos el frasco y empezamos esta lata otra vez.",
     "sucio_02": "¡Uy, se ensució la mezcla! No importa: frasco limpio y a intentarlo de nuevo.",
     "sucio_03": "¡Glup! Esa no era de la receta. ¡Otra vez, que tú puedes!",
-    "gris_01": "¡La gota gris ensució la pintura! Déjala pasar la próxima vez.",
+    "gris_01": "¡Pfff, se coló la gota gris! La muy tramposa... la próxima la dejamos pasar.",
+    "escupe_01": "¡Puaj! Esa no va. ¡Fuera, gotita! Lo demás sigue bien.",
+    "escupe_02": "¡Ptui! Esa no era de la receta. Tu mezcla sigue a salvo.",
     "a_mezclar": "¡Receta completa! Ahora agita el frasco de un lado a otro para mezclar.",
     "lata_01": "¡Una lata lista!",
     "lata_02": "¡Qué color más lindo!",
@@ -124,13 +142,14 @@ def lineas_voz(z: dict) -> dict:
     n = z["n"]
     return {
         "intro": f"{VOZ}intro_z{n}.wav",
-        "pista": f"{VOZ}pista.wav",
+        "pista": f"{VOZ}pista_z{n}.wav" if n in PISTAS_ZONA else f"{VOZ}pista.wav",
         "pista_agitar": f"{VOZ}pista_agitar.wav",
         "memoriza": f"{VOZ}{'memoriza_rapido' if z['memorizar_s'] else 'memoriza'}.wav",
         "a_atrapar": [f"{VOZ}a_atrapar_01.wav", f"{VOZ}a_atrapar_02.wav"],
         "bien": [f"{VOZ}bien_01.wav", f"{VOZ}bien_02.wav", f"{VOZ}bien_03.wav"],
         "sucio": [f"{VOZ}sucio_01.wav", f"{VOZ}sucio_02.wav", f"{VOZ}sucio_03.wav"],
         "gris": [f"{VOZ}gris_01.wav"],
+        "escupe": [f"{VOZ}escupe_01.wav", f"{VOZ}escupe_02.wav"],
         "a_mezclar": f"{VOZ}a_mezclar.wav",
         "lata_lista": [f"{VOZ}lata_01.wav", f"{VOZ}lata_02.wav", f"{VOZ}lata_03.wav"],
         "revisar": f"{VOZ}revisar.wav",
@@ -145,6 +164,9 @@ def lineas_voz(z: dict) -> dict:
 
 def main() -> None:
     for z in ZONAS:
+        malos = [d for d in z["dibujos_mural"] if any(b in d for b in PROHIBIDOS)]
+        if malos:
+            raise SystemExit(f"ERROR: {z['zona']} tiene dibujos prohibidos (bichos): {malos}")
         nivel = {
             "id_nivel": f"arcoiris_z{z['n']}_lluvia_estrella",
             "motor": "mezclar",
@@ -161,6 +183,7 @@ def main() -> None:
                       "dibujos_mural", "umbrales_estrellitas"]:
             if clave in z:
                 nivel[clave] = z[clave]
+        nivel.update(COMUNES)
         nivel["tamano_gota"] = 84
         nivel["libreta_cuesta_estrellita"] = True
         nivel["lineas_voz"] = lineas_voz(z)
@@ -177,6 +200,8 @@ def main() -> None:
         filas.append(f"{VOZ}intro_z{n}.wav\t{texto}")
     for clave, texto in LINEAS.items():
         filas.append(f"{VOZ}{clave}.wav\t{texto}")
+    for n, texto in PISTAS_ZONA.items():
+        filas.append(f"{VOZ}pista_z{n}.wav\t{texto}")
     for color, texto in RECETAS_VOZ.items():
         filas.append(f"{VOZ}recetas/{color}.wav\t{texto}")
     tsv = RAIZ / "assets/audio" / VOZ / "lineas_tts.tsv"

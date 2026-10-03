@@ -66,7 +66,7 @@ voces/arcoiris/formas/figuras/gato.wav	¡Miau! ¡Un gatito!
 voces/arcoiris/formas/figuras/barco.wav	¡Un barquito velero!
 voces/arcoiris/formas/figuras/pez.wav	¡Un pez! ¡Blub, blub!
 voces/arcoiris/formas/figuras/abeto.wav	¡Un pino de Navidad!
-voces/arcoiris/formas/figuras/corona.wav	¡Una corona! Sofía, te corono líder de la misión.
+voces/arcoiris/formas/figuras/corona.wav	¡Una corona brillante! ¡Te queda preciosa!
 voces/arcoiris/formas/brote/especial_01.wav	¡El corazón dorado! ¡Te mando un corazón gigante, Nicole!
 voces/arcoiris/formas/semilla/intro_z1.wav	¡Hola, Maxi! Mis formas se escaparon. ¡Llévalas a su casita!
 voces/arcoiris/formas/semilla/intro_z2.wav	¡Maxi, estas formas tienen cosquillas! Ponlas en su casita y escucha cómo se ríen.
@@ -105,8 +105,8 @@ voces/arcoiris/formas/estrella/pista_marco_01.wav	Llena todos los cuadraditos. T
 
 # "Arma la figura" (PO 27-Sep-2026): figura primero, piezas cortadas de ella. Relleno de Windows hasta generar con fal.ai.
 # personaje: coco
-voces/arcoiris/formas/estrella/intro_arma_z1.wav	¡Sofía, mira la tarjeta! Es la iglesia de Castro, en Chiloé, y tiene veinticinco piezas. Busca en la bandeja la pieza que calza en cada lugar.
-voces/arcoiris/formas/estrella/intro_arma_z2.wav	¡Los palafitos de Chiloé, las casitas sobre el agua! Ahora algunas piezas llegan giradas: tócalas para darlas vuelta.
+voces/arcoiris/formas/estrella/intro_arma_z1.wav	¡Sofía, mira la tarjeta! Es la iglesia de Castro, en Chiloé: veinticinco piezas y sin líneas de ayuda. Si una pieza llega chueca, tócala para girarla.
+voces/arcoiris/formas/estrella/intro_arma_z2.wav	¡Los palafitos de Castro, casitas sobre el agua! Tres casas con sus pilotes. ¡Mira bien la tarjeta!
 voces/arcoiris/formas/estrella/intro_arma_z3.wav	¡Santiago con la cordillera! Arma la Torre Entel y el Costanera Center. Ojo, que hay piezas muy parecidas.
 voces/arcoiris/formas/estrella/intro_arma_z4.wav	¡Viajamos a Rapa Nui! Arma los moáis con sus sombreros rojos. Fíjate bien en el tamaño de cada pieza.
 voces/arcoiris/formas/estrella/intro_arma_z5.wav	¡El gran desafío de la cima! El castillo del cerro Santa Lucía, ¡con treinta piezas! ¡Tú puedes, Sofía!
@@ -199,7 +199,6 @@ voces/arcoiris/formas/figuras/castillo_princesa.wav	¡Un castillo de princesas!
 voces/arcoiris/formas/figuras/corazon.wav	¡Un corazón gigante para ti, Nicole!
 voces/arcoiris/formas/figuras/gatito.wav	¡Miau! ¡Un gatito con su moño!
 voces/arcoiris/formas/figuras/jirafa.wav	¡Una jirafa!
-voces/arcoiris/formas/figuras/mariposa.wav	¡Una mariposa!
 voces/arcoiris/formas/figuras/pony.wav	¡Un pony!
 voces/arcoiris/formas/figuras/torta.wav	¡Una torta de cumpleaños!
 voces/arcoiris/formas/figuras/sol.wav	¡Un sol brillante!
@@ -215,3 +214,6 @@ voces/arcoiris/formas/nombres/color_celeste.wav	¡Busca el color celeste!
 voces/arcoiris/formas/nombres/color_negro.wav	¡Busca el color negro!
 voces/arcoiris/formas/nombres/color_rojo.wav	¡Busca el color rojo!
 voces/arcoiris/formas/nombres/color_verde.wav	¡Busca el color verde!
+# Guion 28-Sep-2026 (HE-40/HE-44): relleno de Windows (generar_voces_tts.ps1 -IgnorarPersonaje) hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/formas/estrella/intro_bandera_primero.wav	¡Sofía, primero una bandera, para calentar los dedos! Cada pieza va en su color. Si una llega chueca, tócala para girarla.

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="500" viewBox="0 0 420 500">
+  <!-- Polaroid estelar DORADA (premio de Sofia con estrellitas maximas, ficha §4). PROVISIONAL.
+       Misma geometria que marco_polaroid.svg: ventana transparente x 29..391, y 29..405.
+       La banda dorada ocupa el borde (19 px = 4,5% del ancho, como el codigo) y cuatro estrellas
+       adornan las esquinas, dentro del lienzo. -->
+  <defs>
+    <linearGradient id="g_crema" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFF8EE"/>
+      <stop offset="1" stop-color="#F1E2CC"/>
+    </linearGradient>
+    <linearGradient id="g_amarillo" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF1A6"/>
+      <stop offset="0.45" stop-color="#FFD23F"/>
+      <stop offset="1" stop-color="#F2A92C"/>
+    </linearGradient>
+  </defs>
+  <g id="papel">
+    <path fill="url(#g_crema)" fill-rule="evenodd"
+      d="M29 4 H391 A25 25 0 0 1 416 29 V471 A25 25 0 0 1 391 496 H29 A25 25 0 0 1 4 471 V29 A25 25 0 0 1 29 4 Z
+         M35 29 H385 A6 6 0 0 1 391 35 V399 A6 6 0 0 1 385 405 H35 A6 6 0 0 1 29 399 V35 A6 6 0 0 1 35 29 Z"/>
+  </g>
+  <g id="banda_dorada">
+    <rect x="13" y="13" width="394" height="474" rx="18" fill="none" stroke="url(#g_amarillo)" stroke-width="18"/>
+    <rect x="13" y="13" width="394" height="474" rx="18" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.55" transform="translate(-3 -3)"/>
+    <rect x="22" y="22" width="376" height="456" rx="12" fill="none" stroke="#2B3350" stroke-width="3" opacity="0.45"/>
+  </g>
+  <g id="contorno">
+    <rect x="4" y="4" width="412" height="492" rx="25" fill="none" stroke="#2B3350" stroke-width="7"/>
+    <rect x="29" y="29" width="362" height="376" rx="6" fill="none" stroke="#2B3350" stroke-width="4" opacity="0.6"/>
+  </g>
+  <g id="estrellas_esquinas" fill="url(#g_amarillo)" stroke="#2B3350" stroke-width="4" stroke-linejoin="round">
+    <polygon points="26.0,4.4 32.1,17.6 46.5,19.3 35.8,29.2 38.7,43.4 26.0,36.3 13.3,43.4 16.2,29.2 5.5,19.3 19.9,17.6"/>
+    <polygon points="394.0,4.4 400.1,17.6 414.5,19.3 403.8,29.2 406.7,43.4 394.0,36.3 381.3,43.4 384.2,29.2 373.5,19.3 387.9,17.6"/>
+    <polygon points="394.0,452.4 400.1,465.6 414.5,467.3 403.8,477.2 406.7,491.4 394.0,484.3 381.3,491.4 384.2,477.2 373.5,467.3 387.9,465.6"/>
+    <polygon points="26.0,452.4 32.1,465.6 46.5,467.3 35.8,477.2 38.7,491.4 26.0,484.3 13.3,491.4 16.2,477.2 5.5,467.3 19.9,465.6"/>
+  </g>
+  <g id="brillos" fill="#FFFFFF" opacity="0.8">
+    <ellipse cx="22" cy="18" rx="2.5" ry="4.5" transform="rotate(30 22 18)"/>
+    <ellipse cx="390" cy="18" rx="2.5" ry="4.5" transform="rotate(30 390 18)"/>
+    <ellipse cx="390" cy="466" rx="2.5" ry="4.5" transform="rotate(30 390 466)"/>
+    <ellipse cx="22" cy="466" rx="2.5" ry="4.5" transform="rotate(30 22 466)"/>
+  </g>
+</svg>

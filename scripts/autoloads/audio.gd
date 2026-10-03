@@ -30,6 +30,7 @@ var _volumenes: Dictionary = {
 var _reproductor_musica: AudioStreamPlayer
 var _reproductor_voz: AudioStreamPlayer
 var _pool_sfx: Array[AudioStreamPlayer] = []
+var _tween_voz: Tween
 
 
 func _ready() -> void:
@@ -93,6 +94,7 @@ func reproducir_voz(ruta: String) -> void:
 		# solo avisa en consola para que el equipo la complete.
 		push_warning("Audio.reproducir_voz: linea pendiente de grabar: %s" % ruta)
 		return
+	_restaurar_volumen_voz()
 	_reproductor_voz.stream = load(ruta)
 	_reproductor_voz.play()
 
@@ -102,12 +104,34 @@ func reproducir_voz(ruta: String) -> void:
 func reproducir_voz_stream(stream: AudioStream) -> void:
 	if stream == null:
 		return
+	_restaurar_volumen_voz()
 	_reproductor_voz.stream = stream
 	_reproductor_voz.play()
 
 
 func detener_voz() -> void:
+	_restaurar_volumen_voz()
 	_reproductor_voz.stop()
+
+
+## Baja la voz en curso a cero en `segundos` y la detiene (fundido, no corte seco): p. ej. Cometa antes
+## de que entre la voz real de la familia en el album de recuerdos (HE-44 mecanicas #2).
+func desvanecer_voz(segundos := 0.15) -> void:
+	if not _reproductor_voz.playing:
+		return
+	if _tween_voz != null and _tween_voz.is_valid():
+		_tween_voz.kill()
+	_tween_voz = create_tween()
+	_tween_voz.tween_property(_reproductor_voz, "volume_db", -60.0, segundos)
+	_tween_voz.tween_callback(func() -> void:
+		_reproductor_voz.stop()
+		_reproductor_voz.volume_db = 0.0)
+
+
+func _restaurar_volumen_voz() -> void:
+	if _tween_voz != null and _tween_voz.is_valid():
+		_tween_voz.kill()
+	_reproductor_voz.volume_db = 0.0
 
 
 func esta_hablando() -> bool:

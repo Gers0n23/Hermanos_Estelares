@@ -409,6 +409,9 @@ func _dibujar_figura(centro: Vector2, s: Vector2) -> void:
 		Dibujos.dibujar(_cuerpo, figura, color_figura, c, radio, true, esta_acertada)
 	elif not es_sombra():
 		Figura.dibujar(_cuerpo, figura, color_figura, c, radio, true, esta_acertada)
+	elif not Dibujos.silueta(figura, c, radio).is_empty():
+		for parte in Dibujos.silueta(figura, c, radio):
+			_cuerpo.draw_colored_polygon(parte, COLOR_SOMBRA)
 	elif figura == "arcoiris":
 		var base := c + Vector2(0, radio * 0.4)
 		_cuerpo.draw_arc(base, radio * 0.56, PI, TAU, 40, COLOR_SOMBRA, radio * 0.72, true)

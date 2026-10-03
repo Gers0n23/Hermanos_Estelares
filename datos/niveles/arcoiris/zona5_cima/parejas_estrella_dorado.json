@@ -20,6 +20,10 @@
     "columnas": 9
   },
   "limite_intentos": 42,
+  "umbrales_estrellitas": {
+    "tres": 27,
+    "dos": 42
+  },
   "intercambios_tras_acierto": 2,
   "pares": [
     {
@@ -219,19 +223,6 @@
       }
     },
     {
-      "id_pareja": "flor",
-      "elemento_a": {
-        "figura": "flor",
-        "color": "#FF6B6B",
-        "id": "flor_a"
-      },
-      "elemento_b": {
-        "figura": "flor",
-        "estilo": "sombra",
-        "id": "flor_b"
-      }
-    },
-    {
       "id_pareja": "arcoiris_secreto",
       "elemento_a": {
         "figura": "arcoiris",
@@ -274,6 +265,20 @@
         "estilo": "sombra",
         "id": "triangulo_rect_180_b"
       }
+    },
+    {
+      "id_pareja": "pony_especial",
+      "elemento_a": {
+        "figura": "pony",
+        "color": "#F7A8D0",
+        "id": "pony_especial_a"
+      },
+      "elemento_b": {
+        "figura": "pony",
+        "estilo": "sombra",
+        "id": "pony_especial_b"
+      },
+      "especial": true
     }
   ],
   "lineas_voz": {

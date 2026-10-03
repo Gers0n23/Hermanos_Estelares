@@ -1,0 +1,82 @@
+# Voces de Cometa del album 'Las migas de papa' (docs/guiones/recuerdos.md, HE-44).
+# RELLENO con el TTS de Windows (generar_voces_tts.ps1 -IgnorarPersonaje, 28-Sep-2026, sin costo): todas estan en
+# assets/audio/voces/pendientes_fal.txt para regenerarlas con la voz oficial de Cometa cuando el PO apruebe el costo.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. id recuerdos_X -> voces/recuerdos/X.wav (Recuerdos.ruta_linea).
+# personaje: cometa
+voces/recuerdos/primera_01.wav	¡Miren lo que quedó en la alfombra! Papá se rió tanto con las cosquillas del rayo del Coleccionauta, que ¡pffft!, se le volaron todas las fotos de la billetera.
+voces/recuerdos/primera_02.wav	Las demás andan flotando por la galaxia. ¡Las vamos a ir encontrando en el camino, y se las mostramos a papá cuando lo veamos!
+voces/recuerdos/entrega_01.wav	¡Mira! ¡Otra foto de la billetera de papá!
+voces/recuerdos/entrega_02.wav	¡Uuuh, una estrella-recuerdo! ¿Quién saldrá en esta foto?
+voces/recuerdos/entrega_03.wav	¡Plin! Otra fotito que se le voló a papá. ¡Ábrela, ábrela!
+voces/recuerdos/entrega_04.wav	¡Miren quién sale aquí! Una foto más para el álbum.
+voces/recuerdos/entrega_zona_01.wav	¡Y eso no es todo! El viento trajo algo más... ¡una foto de papá!
+voces/recuerdos/entrega_zona_02.wav	¡Esperen, esperen! ¡Viene bajando una estrella-recuerdo!
+voces/recuerdos/generica_01.wav	¡Qué foto más linda! Esta va directo al álbum.
+voces/recuerdos/generica_02.wav	¡Mira qué caritas! Un recuerdo calentito, calentito.
+voces/recuerdos/dorado_01.wav	¡Marco dorado! Esta foto es de nivel... ¡Estrella!
+voces/recuerdos/familiar_maxi_01.wav	¡Maxi encontró una foto de la familia! ¡Y es para los tres!
+voces/recuerdos/familiar_nicole_01.wav	¡Nicole encontró una foto de la familia! ¡Y es para los tres!
+voces/recuerdos/familiar_sofia_01.wav	¡Sofía encontró una foto de la familia! ¡Y es para los tres!
+voces/recuerdos/album_nueva_01.wav	¡Psst! Hay una foto nueva esperando en el álbum.
+voces/recuerdos/album_invitacion_01.wav	¡El álbum de las fotos de papá! Toca una tapa y vamos a mirar.
+voces/recuerdos/tapa_maxi_01.wav	¡El álbum de Maxi! De chiquitito... ¡a grandote!
+voces/recuerdos/tapa_nicole_01.wav	¡El álbum de Nicole! Cuidado, que aquí hay sonrisas por todos lados.
+voces/recuerdos/tapa_sofia_01.wav	¡El álbum de Sofía! La capitana... desde que era una capitanita.
+voces/recuerdos/tapa_familia_01.wav	¡El álbum de la familia! Aquí caben todos... ¡bien apretaditos!
+voces/recuerdos/album_vacio_01.wav	Este álbum está esperando sus fotos. ¡Van a ir llegando solitas mientras juegan!
+voces/recuerdos/pista_viaje_despegue_01.wav	Esta foto anda flotando en el primer viaje de la nave. ¡Ya la vamos a ver pasar!
+voces/recuerdos/pista_viaje_final_01.wav	Esta foto anda flotando en el viaje al planeta del Coleccionauta. ¡Ya la vamos a ver pasar!
+voces/recuerdos/pista_zona_arcoiris_charcos_01.wav	Esta foto está escondida en los Charcos Saltarines del Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_arcoiris_islotes_01.wav	Esta foto está escondida en los Islotes Flotantes del Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_arcoiris_01.wav	Esta foto está escondida en el Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_animalia_01.wav	Esta foto está escondida en el Planeta Animalia. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_melodia_01.wav	Esta foto está escondida en el Planeta Melodía. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_cuentacuentas_01.wav	Esta foto está escondida en el Planeta Cuenta-Cuentas. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_letralandia_01.wav	Esta foto está escondida en el Planeta Letralandia. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_zona_corazon_01.wav	Esta foto está escondida en el Planeta Corazón. ¡Aparece solita cuando juegues todos los juegos de ahí!
+voces/recuerdos/pista_pieza_arcoiris_01.wav	Esta foto la guarda Coco, en el Planeta Arcoíris. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_pieza_animalia_01.wav	Esta foto la guarda Toby, en el Planeta Animalia. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_pieza_melodia_01.wav	Esta foto la guarda Octavio, en el Planeta Melodía. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_pieza_cuentacuentas_01.wav	Esta foto la guarda el Profesor Plumas, en el Planeta Cuenta-Cuentas. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_pieza_letralandia_01.wav	Esta foto la guarda Lila, en el Planeta Letralandia. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_pieza_corazon_01.wav	Esta foto la guarda Mimi, en el Planeta Corazón. ¡Llega junto con la pieza de la nave!
+voces/recuerdos/pista_rescate_01.wav	Esta es la última foto. ¡La guardamos para el final, cuando estemos todos juntos!
+voces/recuerdos/burbuja_aviso_01.wav	¡Mira, una burbuja-recuerdo! ¡Tócala o chócala con la nave!
+voces/recuerdos/burbuja_aviso_02.wav	¡Ahí viene una foto flotando! ¡Atrápala!
+voces/recuerdos/burbuja_atrapada_01.wav	¡Plop! ¡La atrapaste! Otra foto para el álbum.
+voces/recuerdos/burbuja_atrapada_02.wav	¡Burbuja reventada, foto encontrada!
+voces/recuerdos/burbuja_vuelve_01.wav	¡Uy, se fue dando botes! Tranqui, ya vuelve a pasar.
+voces/recuerdos/pie_recien_nacido.wav	¡Aquí recién llegaba al mundo!
+voces/recuerdos/pie_1_mes.wav	Aquí tenía un mesecito.
+voces/recuerdos/pie_3_meses.wav	Aquí tenía tres mesecitos.
+voces/recuerdos/pie_5_meses.wav	Aquí tenía cinco meses.
+voces/recuerdos/pie_6_meses.wav	Aquí tenía seis meses. ¡Medio añito!
+voces/recuerdos/pie_8_meses.wav	Aquí tenía ocho meses.
+voces/recuerdos/pie_9_meses.wav	Aquí tenía nueve meses.
+voces/recuerdos/pie_10_meses.wav	Aquí tenía diez meses.
+voces/recuerdos/pie_1_ano.wav	¡Aquí tenía un añito!
+voces/recuerdos/pie_1_ano_3_meses.wav	Aquí tenía un año... y un poquito.
+voces/recuerdos/pie_1_ano_6_meses.wav	Aquí tenía un año y medio.
+voces/recuerdos/pie_1_ano_9_meses.wav	¡Aquí tenía casi dos años!
+voces/recuerdos/pie_2_anos.wav	Aquí tenía dos años.
+voces/recuerdos/pie_2_anos_6_meses.wav	Aquí tenía dos años y medio.
+voces/recuerdos/pie_3_anos.wav	Aquí tenía tres años.
+voces/recuerdos/pie_3_anos_6_meses.wav	Aquí tenía tres años y medio.
+voces/recuerdos/pie_4_anos.wav	Aquí tenía cuatro años.
+voces/recuerdos/pie_4_anos_6_meses.wav	Aquí tenía cuatro años y medio.
+voces/recuerdos/pie_5_anos.wav	Aquí tenía cinco años.
+voces/recuerdos/pie_6_anos.wav	Aquí tenía seis años.
+voces/recuerdos/pie_6_anos_6_meses.wav	Aquí tenía seis años y medio.
+voces/recuerdos/pie_7_anos.wav	Aquí tenía siete años.
+voces/recuerdos/pie_8_anos.wav	Aquí tenía ocho años.
+voces/recuerdos/pie_hoy.wav	¡Y esta foto es de ahora, ahora!
+voces/recuerdos/pie_familia_billetera.wav	¡La foto de la billetera de papá! Los cinco, juntitos.
+voces/recuerdos/pie_familia_mama_papa_guagua.wav	¡Mamá y papá con una guagua chiquitita! ¿Adivinan quién es?
+voces/recuerdos/pie_familia_hermanos_primera_vez.wav	¡Los tres hermanos juntos, por primera vez!
+voces/recuerdos/pie_familia_paseo.wav	¡De paseo en familia!
+voces/recuerdos/pie_familia_cumpleanos.wav	¡Un cumpleaños en familia! ¿Cuántas velitas había?
+voces/recuerdos/pie_familia_vacaciones_chile.wav	¡De vacaciones por Chile!
+voces/recuerdos/pie_familia_navidad.wav	¡Navidad en familia!
+voces/recuerdos/pie_familia_dieciocho.wav	¡Celebrando el Dieciocho! ¡Viva Chile!
+voces/recuerdos/pie_familia_hermanos_hoy.wav	¡Los tres hermanos... así de grandes hoy!
+voces/recuerdos/pie_familia_todos_juntos.wav	¡Todos juntos! Esta es la foto más nueva de todas.

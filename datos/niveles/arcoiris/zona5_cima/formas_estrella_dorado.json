@@ -26,28 +26,31 @@
     "##########",
     "##########"
   ],
-  "lado_celda": 54,
+  "lado_celda": 50,
   "limite_intentos": null,
   "piezas_necesarias": 12,
   "guardar_avance": true,
   "zona_figuras": [
     236,
-    104,
+    96,
     900,
-    360
+    312
   ],
   "zona_bandeja": [
     236,
-    470,
-    894,
-    238
+    416,
+    848,
+    292
   ],
   "boton_espejo_rect": [
-    1150,
-    250,
-    110,
-    110
+    1110,
+    440,
+    120,
+    120
   ],
+  "escala_bandeja_fija": 0.64,
+  "bandeja_acostadas": true,
+  "relleno_bandeja": 24,
   "piezas_marco": [
     {
       "id": "F",

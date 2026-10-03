@@ -12,6 +12,10 @@
   `cometa_saludo_01` → `cometa/saludo_01.ogg`).
 - **Las voces de cada foto** (lo que graba la familia) **no** están en esta tabla: viven en
   `assets/recuerdos/voces/<id_foto>.ogg`, fuera del repo (ficha §8). Ver §6 de este guion.
+- **Revisión 28-Sep-2026 (HE-44)**: se suman la entrega tras el regalo del anfitrión (§1.2b, 2
+  líneas) y los pies de foto narrados (§8, 34 líneas), y se reescriben las 8 pistas de zona (§4.2)
+  por la regla de zona completa. Falta copiar estas filas a `assets/audio/voces/guion_voces.md` y
+  sumar las claves `entrega_zona` y `pie` al catálogo (`dev-godot`).
 - **Estado de todas las líneas**: pendientes de audio. Van con la voz oficial de Cometa cuando el
   PO lo decida (y apruebe el costo). Este guion no genera audio.
 
@@ -69,6 +73,18 @@ video-llamada de papá, antes de "¿Listos para volar?"), no al abrir el juego p
 | recuerdos_entrega_02 | Cometa | «¡Uuuh, una estrella-recuerdo! ¿Quién saldrá en esta foto?» | curioso, en secreto |
 | recuerdos_entrega_03 | Cometa | «¡Plin! Otra fotito que se le voló a papá. ¡Ábrela, ábrela!» | saltarín, impaciente de gusto |
 | recuerdos_entrega_04 | Cometa | «¡Miren quién sale aquí! Una foto más para el álbum.» | cálido, orgulloso |
+
+### 1.2b Entrega que sigue al regalo del anfitrión (zonas 2 y 4)
+
+*(Agregado 28-Sep-2026, HE-44.)* Cuando la foto llega al completar una zona, antes sonaron
+`zona_<n>_completada` y `zona_<n>_regalo` de Coco (`docs/guiones/zonas_arcoiris.md` §1). Estas
+variantes reemplazan a las de §1.2 en ese momento: enlazan las dos sorpresas sin que se encimen
+("y eso no es todo") y dejan claro que la foto no es otro regalo de Coco, sino algo que trajo el viento.
+
+| id | Personaje | Línea | Intención |
+|---|---|---|---|
+| recuerdos_entrega_zona_01 | Cometa | «¡Y eso no es todo! El viento trajo algo más... ¡una foto de papá!» | sorpresa en dos tiempos, pausa antes de "¡una foto!" |
+| recuerdos_entrega_zona_02 | Cometa | «¡Esperen, esperen! ¡Viene bajando una estrella-recuerdo!» | emocionado, mirando hacia arriba |
 
 ### 1.3 Relleno cuando la foto todavía no tiene audio de la familia
 
@@ -148,16 +164,21 @@ Solo existen las de planetas con zonas ya creadas (ficha §5: sin zonas no hay h
 Capítulo 1 con el nombre de la zona (el planeta está pulido al detalle); los demás con el
 planeta. `recuerdos_pista_zona_arcoiris_01` queda de respaldo por si el reparto de zonas cambia.
 
+*(Reescritas 28-Sep-2026, HE-44.)* Antes terminaban en "¡Aparece solita cuando juegues ahí!". Con
+la regla del PO del 27-Sep la foto llega al completar **todos** los juegos de la zona. Un niño que
+juega uno solo y no ve la foto sentiría que la promesa no se cumplió. Ahora dicen "cuando juegues
+todos los juegos de ahí", que es cierto y sigue sin exigir desempeño.
+
 | id | Personaje | Línea | Intención | Momento |
 |---|---|---|---|---|
-| recuerdos_pista_zona_arcoiris_charcos_01 | Cometa | «Esta foto está escondida en los Charcos Saltarines del Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` arcoiris, zona 2 |
-| recuerdos_pista_zona_arcoiris_islotes_01 | Cometa | «Esta foto está escondida en los Islotes Flotantes del Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` arcoiris, zona 4 |
-| recuerdos_pista_zona_arcoiris_01 | Cometa | «Esta foto está escondida en el Planeta Arcoíris. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` arcoiris (respaldo) |
-| recuerdos_pista_zona_animalia_01 | Cometa | «Esta foto está escondida en el Planeta Animalia. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` animalia |
-| recuerdos_pista_zona_melodia_01 | Cometa | «Esta foto está escondida en el Planeta Melodía. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` melodia |
-| recuerdos_pista_zona_cuentacuentas_01 | Cometa | «Esta foto está escondida en el Planeta Cuenta-Cuentas. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` cuentacuentas |
-| recuerdos_pista_zona_letralandia_01 | Cometa | «Esta foto está escondida en el Planeta Letralandia. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` letralandia |
-| recuerdos_pista_zona_corazon_01 | Cometa | «Esta foto está escondida en el Planeta Corazón. ¡Aparece solita cuando juegues ahí!» | cómplice | `zona_completa` corazon |
+| recuerdos_pista_zona_arcoiris_charcos_01 | Cometa | «Esta foto está escondida en los Charcos Saltarines del Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` arcoiris, zona 2 |
+| recuerdos_pista_zona_arcoiris_islotes_01 | Cometa | «Esta foto está escondida en los Islotes Flotantes del Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` arcoiris, zona 4 |
+| recuerdos_pista_zona_arcoiris_01 | Cometa | «Esta foto está escondida en el Planeta Arcoíris. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` arcoiris (respaldo) |
+| recuerdos_pista_zona_animalia_01 | Cometa | «Esta foto está escondida en el Planeta Animalia. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` animalia |
+| recuerdos_pista_zona_melodia_01 | Cometa | «Esta foto está escondida en el Planeta Melodía. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` melodia |
+| recuerdos_pista_zona_cuentacuentas_01 | Cometa | «Esta foto está escondida en el Planeta Cuenta-Cuentas. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` cuentacuentas |
+| recuerdos_pista_zona_letralandia_01 | Cometa | «Esta foto está escondida en el Planeta Letralandia. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` letralandia |
+| recuerdos_pista_zona_corazon_01 | Cometa | «Esta foto está escondida en el Planeta Corazón. ¡Aparece solita cuando juegues todos los juegos de ahí!» | cómplice | `zona_completa` corazon |
 
 ### 4.3 Pieza de la nave (álbum familiar)
 
@@ -290,6 +311,80 @@ su caja con candados bajo el brazo.
 La lección la dice el Coleccionauta, que la descubre él solo y se enreda con ella. No la dicen
 Cometa ni papá, así no suena a sermón. Rima con `final_038` de Cometa ("los amigos son la mejor
 colección").
+
+---
+
+## 8. Pies de foto narrados (HE-44, 28-Sep-2026)
+
+**Acotación**: la ficha (§7, "Foto abierta") propone un pie opcional con la edad ("Maxi, 3 meses"),
+dibujado y narrado. Lo dice Cometa, corto (1-2 s) y tierno, **antes** del audio de la familia.
+
+**Decisiones**:
+
+- **Sin nombre en el pie.** La tapa del álbum ya dijo de quién es (`recuerdos_tapa_*`). Pegar
+  "Maxi" + "tres meses" suena cortado (mismo motivo de §4). Además, con "Aquí tenía..." sirve la
+  misma línea para los tres, sin problemas de nacido/nacida.
+- **Diminutivos en las edades de guagua** ("mesecito", "añito"); edades de grande, dichas sin
+  diminutivo, para que Sofía no sienta que la tratan de chica.
+- **Edades raras, redondeadas para el oído**: "1 año y 3 meses" → "un año y un poquito"; "1 año y
+  9 meses" → "casi dos años". Es como se dice en la casa.
+- **Cuándo suena** (propuesta para `dev-godot`): en la foto abierta del álbum y en la entrega,
+  antes del audio de la familia. Si ese audio ya trae el pie grabado por la familia (§6.1), el
+  catálogo marca `pie_en_audio: true` y el pie de Cometa no suena. Si no hay audio familiar, suena
+  el pie y después `recuerdos_generica_*`.
+- **Dato nuevo en el catálogo**: campo `pie` en cada recuerdo, con el id de la línea (data-driven;
+  la tabla de abajo da la correspondencia con el campo `edad` actual). La ruta sigue la convención
+  del autoload: `recuerdos_pie_X` → `assets/audio/voces/recuerdos/pie_X.wav` (u `.ogg`).
+
+### 8.1 Pies por edad (álbumes de Maxi, Nicole y Sofía)
+
+| id | Personaje | Línea | Intención | `edad` del catálogo | Ruta sugerida |
+|---|---|---|---|---|---|
+| recuerdos_pie_recien_nacido | Cometa | «¡Aquí recién llegaba al mundo!» | maravillado, bajito | recién nacido / recién nacida | `voces/recuerdos/pie_recien_nacido.wav` |
+| recuerdos_pie_1_mes | Cometa | «Aquí tenía un mesecito.» | tierno | 1 mes | `voces/recuerdos/pie_1_mes.wav` |
+| recuerdos_pie_3_meses | Cometa | «Aquí tenía tres mesecitos.» | tierno | 3 meses | `voces/recuerdos/pie_3_meses.wav` |
+| recuerdos_pie_5_meses | Cometa | «Aquí tenía cinco meses.» | tierno | 5 meses | `voces/recuerdos/pie_5_meses.wav` |
+| recuerdos_pie_6_meses | Cometa | «Aquí tenía seis meses. ¡Medio añito!» | tierno, con risa al final | 6 meses | `voces/recuerdos/pie_6_meses.wav` |
+| recuerdos_pie_8_meses | Cometa | «Aquí tenía ocho meses.» | tierno | 8 meses | `voces/recuerdos/pie_8_meses.wav` |
+| recuerdos_pie_9_meses | Cometa | «Aquí tenía nueve meses.» | tierno | 9 meses | `voces/recuerdos/pie_9_meses.wav` |
+| recuerdos_pie_10_meses | Cometa | «Aquí tenía diez meses.» | tierno | 10 meses | `voces/recuerdos/pie_10_meses.wav` |
+| recuerdos_pie_1_ano | Cometa | «¡Aquí tenía un añito!» | alegre | 1 año | `voces/recuerdos/pie_1_ano.wav` |
+| recuerdos_pie_1_ano_3_meses | Cometa | «Aquí tenía un año... y un poquito.» | juguetón, pausa antes de "y un poquito" | 1 año y 3 meses | `voces/recuerdos/pie_1_ano_3_meses.wav` |
+| recuerdos_pie_1_ano_6_meses | Cometa | «Aquí tenía un año y medio.» | tierno | 1 año y 6 meses | `voces/recuerdos/pie_1_ano_6_meses.wav` |
+| recuerdos_pie_1_ano_9_meses | Cometa | «¡Aquí tenía casi dos años!» | alegre | 1 año y 9 meses | `voces/recuerdos/pie_1_ano_9_meses.wav` |
+| recuerdos_pie_2_anos | Cometa | «Aquí tenía dos años.» | alegre | 2 años | `voces/recuerdos/pie_2_anos.wav` |
+| recuerdos_pie_2_anos_6_meses | Cometa | «Aquí tenía dos años y medio.» | alegre | 2 años y 6 meses | `voces/recuerdos/pie_2_anos_6_meses.wav` |
+| recuerdos_pie_3_anos | Cometa | «Aquí tenía tres años.» | alegre | 3 años | `voces/recuerdos/pie_3_anos.wav` |
+| recuerdos_pie_3_anos_6_meses | Cometa | «Aquí tenía tres años y medio.» | alegre | 3 años y 6 meses | `voces/recuerdos/pie_3_anos_6_meses.wav` |
+| recuerdos_pie_4_anos | Cometa | «Aquí tenía cuatro años.» | alegre | 4 años | `voces/recuerdos/pie_4_anos.wav` |
+| recuerdos_pie_4_anos_6_meses | Cometa | «Aquí tenía cuatro años y medio.» | alegre | 4 años y 6 meses | `voces/recuerdos/pie_4_anos_6_meses.wav` |
+| recuerdos_pie_5_anos | Cometa | «Aquí tenía cinco años.» | alegre | 5 años | `voces/recuerdos/pie_5_anos.wav` |
+| recuerdos_pie_6_anos | Cometa | «Aquí tenía seis años.» | alegre | 6 años | `voces/recuerdos/pie_6_anos.wav` |
+| recuerdos_pie_6_anos_6_meses | Cometa | «Aquí tenía seis años y medio.» | alegre | 6 años y 6 meses | `voces/recuerdos/pie_6_anos_6_meses.wav` |
+| recuerdos_pie_7_anos | Cometa | «Aquí tenía siete años.» | alegre | 7 años | `voces/recuerdos/pie_7_anos.wav` |
+| recuerdos_pie_8_anos | Cometa | «Aquí tenía ocho años.» | alegre | 8 años | `voces/recuerdos/pie_8_anos.wav` |
+| recuerdos_pie_hoy | Cometa | «¡Y esta foto es de ahora, ahora!» | con risa, el "ahora, ahora" rebotado | hoy | `voces/recuerdos/pie_hoy.wav` |
+
+### 8.2 Pies del álbum familiar
+
+Uno por tipo de foto de la lista sugerida del catálogo (`sugerencia` de `familia_01` a `familia_09`).
+El PO elige la que calce con la foto real; si ninguna calza, el pie se omite (es opcional).
+
+| id | Personaje | Línea | Intención | Foto sugerida | Ruta sugerida |
+|---|---|---|---|---|---|
+| recuerdos_pie_familia_billetera | Cometa | «¡La foto de la billetera de papá! Los cinco, juntitos.» | cálido, orgulloso | los cinco antes del secuestro (`familia_01`) | `voces/recuerdos/pie_familia_billetera.wav` |
+| recuerdos_pie_familia_mama_papa_guagua | Cometa | «¡Mamá y papá con una guagua chiquitita! ¿Adivinan quién es?» | cómplice, pregunta de juego | mamá y papá con Sofía bebé | `voces/recuerdos/pie_familia_mama_papa_guagua.wav` |
+| recuerdos_pie_familia_hermanos_primera_vez | Cometa | «¡Los tres hermanos juntos, por primera vez!» | emocionado | los tres hermanos juntos por primera vez | `voces/recuerdos/pie_familia_hermanos_primera_vez.wav` |
+| recuerdos_pie_familia_paseo | Cometa | «¡De paseo en familia!» | alegre | un paseo en familia | `voces/recuerdos/pie_familia_paseo.wav` |
+| recuerdos_pie_familia_cumpleanos | Cometa | «¡Un cumpleaños en familia! ¿Cuántas velitas había?» | fiesta, pregunta de juego | un cumpleaños en familia | `voces/recuerdos/pie_familia_cumpleanos.wav` |
+| recuerdos_pie_familia_vacaciones_chile | Cometa | «¡De vacaciones por Chile!» | alegre | vacaciones en Chile | `voces/recuerdos/pie_familia_vacaciones_chile.wav` |
+| recuerdos_pie_familia_navidad | Cometa | «¡Navidad en familia!» | cálido | Navidad | `voces/recuerdos/pie_familia_navidad.wav` |
+| recuerdos_pie_familia_dieciocho | Cometa | «¡Celebrando el Dieciocho! ¡Viva Chile!» | fiesta patria | 18 de septiembre | `voces/recuerdos/pie_familia_dieciocho.wav` |
+| recuerdos_pie_familia_hermanos_hoy | Cometa | «¡Los tres hermanos... así de grandes hoy!» | admirado, "grandes" estirado | los tres hermanos hoy | `voces/recuerdos/pie_familia_hermanos_hoy.wav` |
+| recuerdos_pie_familia_todos_juntos | Cometa | «¡Todos juntos! Esta es la foto más nueva de todas.» | tierno, cierre | los cinco juntos, rescate final (`familia_09`) | `voces/recuerdos/pie_familia_todos_juntos.wav` |
+
+> "Guagua" es la palabra de la casa (chileno). Con la voz de Cometa (latino neutro) se entiende
+> igual. Si el TTS la pronuncia raro, la alternativa es "¡Mamá y papá con un bebé chiquitito!".
 
 ---
 

@@ -67,8 +67,13 @@ func _entregar_primera_apertura() -> bool:
 		return false
 	_bloqueado = true
 	_entrega = EntregaRecuerdoScript.crear(nuevos, RECT_ALBUM.get_center())
-	_entrega.voz_sobre = recuerdos.elegir_linea("primera")
+	# Guion §1.1 en orden fijo (UX N1, 02-Oct-2026): primero que paso ("¡pffft!, se le volaron las
+	# fotos"), y al guardar la foto, que las demas andan flotando. La historia no se corta: el sobre
+	# espera la frase completa.
 	var lineas: Array = recuerdos.catalogo.get("voces", {}).get("primera", [])
+	if not lineas.is_empty():
+		_entrega.voz_sobre = recuerdos.ruta_linea(str(lineas[0]))
+		_entrega.esperar_frase_completa = true
 	if lineas.size() > 1:
 		_entrega.voz_final = recuerdos.ruta_linea(str(lineas[1]))
 	_entrega.rebote_album.connect(func() -> void: _boton_album.rebotar())

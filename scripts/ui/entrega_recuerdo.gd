@@ -15,6 +15,15 @@ extends CanvasLayer
 ## 6. Sin boton de continuar: al terminar el audio (o con un toque) se vuelve al juego.
 ## Cada toque responde al instante con sonido y rebote (GDD §6 regla 5). Mientras dura, bloquea
 ## los toques a la pantalla de abajo.
+##
+## HE-44 (validacion disenador-mecanicas + auditoria UX, 28-Sep-2026, PROVISIONAL):
+## - El sobre se abre solo recien cuando Cometa termina su frase (+0,4 s; minimo 3 s, tope 6 s). Si el
+##   nino lo abre antes, la voz de Cometa se desvanece en 0,15 s y la de la familia entra 0,35 s despues.
+## - Antes de la voz de la familia, Cometa narra el pie de foto ("Aqui tenia tres mesecitos"), salvo que
+##   el catalogo marque `pie_en_audio`. Sin audio de la familia: pie + linea generica.
+## - Tocar la foto ANTES de que termine su audio no la cierra: la foto reacciona (squash, chispas y
+##   "clic"). Despues del audio, un toque la guarda; si no, se va sola 1,5 s despues (4,5 s si no hay
+##   audio). En Semilla (Maxi) los toques nunca la cierran: se va sola.
 
 signal terminada
 
@@ -32,17 +41,26 @@ const PANTALLA := Vector2(1280, 720)
 const TAM_SOBRE := Vector2(260, 190)
 const ALTO_FOTO := 504.0            # ~70% de 720
 const BAJADA := 0.9
-const AUTO_ABRIR := 3.0
-const MIN_FOTO := 2.5               # la foto se queda al menos esto (sin audio de la familia)
+const AUTO_ABRIR := 3.0             # minimo desde que llega el sobre
+const TOPE_ABRIR := 6.0             # maximo, aunque Cometa siga hablando
+const MARGEN_VOZ_SOBRE := 0.4       # despues de la frase de Cometa
+const FUNDIDO_COMETA := 0.15
+const PAUSA_VOZ_FAMILIA := 0.35     # la polaroid ya crecio cuando entra la voz
+const INVITAR_TOQUE := 1.5          # el sobre salta para invitar a tocarlo (Maxi)
+const MIN_FOTO_SIN_AUDIO := 4.5
+const COLA_TRAS_AUDIO := 1.5
 const MAX_FOTO := 14.0
-const TOQUE_FOTO_DESDE := 0.7       # un toque que venia de antes no se salta la foto
 const VUELO := 0.65
+const HALO_ICONO := 0.8
 
 ## Donde esta el icono del album en la pantalla que monta la entrega; si es negativo, la entrega
 ## dibuja su propio icono arriba a la derecha.
 var destino_album := Vector2(-1, -1)
 ## Linea de Cometa al aparecer el sobre y al guardar la foto (primera apertura: guion §1.1).
 var voz_sobre := ""
+## La frase del sobre cuenta la historia (primera apertura): el sobre no se abre solo antes de que
+## termine, aunque pase el tope de 6 s (UX N1). El nino igual puede abrirlo antes con un toque.
+var esperar_frase_completa := false
 var voz_final := ""
 
 var _cola: Array = []
@@ -58,6 +76,14 @@ var _icono: Control
 var _confeti: CPUParticles2D
 var _icono_propio := false
 var _tiempo := 0.0
+## Segundos (desde que llega el sobre) en que se abre solo: tras la frase de Cometa, entre 3 y 6 s.
+var _abrir_en := AUTO_ABRIR
+var _invito := false
+## Audio de la foto: cola de lineas (rutas res:// o AudioStream) que suenan una tras otra.
+var _cola_audio: Array = []
+var _hay_audio_foto := false
+var _audio_termino_en := -1.0
+var _flash: ColorRect
 
 
 ## Crea la entrega lista para agregar al arbol.
@@ -121,6 +147,11 @@ func _construir() -> void:
 	_sobre.draw.connect(_dibujar_sobre)
 	_fondo.add_child(_sobre)
 	_sobre.hide()
+	_flash = ColorRect.new()
+	_flash.color = Color(1, 1, 1, 0.0)
+	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_flash.size = PANTALLA
+	_fondo.add_child(_flash)
 
 
 func _siguiente() -> void:
@@ -137,7 +168,14 @@ func _siguiente() -> void:
 	var tween := _sobre.create_tween().set_parallel(true)
 	tween.tween_property(_sobre, "position:y", PANTALLA.y / 2.0 - TAM_SOBRE.y / 2.0 - 20.0, BAJADA).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(_sobre, "rotation", 0.0, BAJADA).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_decir(_linea_sobre())
+	_sobre.set_meta("estrella_grande", 1.0)
+	var linea := _linea_sobre()
+	_decir(linea)
+	# Se abre solo recien cuando Cometa termina su frase (nunca la corta): 3 s minimo, 6 s tope.
+	var tope := maxf(TOPE_ABRIR, _duracion(linea) - BAJADA + MARGEN_VOZ_SOBRE) if esperar_frase_completa else TOPE_ABRIR
+	esperar_frase_completa = false
+	_abrir_en = clampf(_duracion(linea) - BAJADA + MARGEN_VOZ_SOBRE, AUTO_ABRIR, tope)
+	_invito = false
 
 
 func _linea_sobre() -> String:
@@ -173,12 +211,15 @@ func _process(delta: float) -> void:
 				_cambiar("sobre")
 		"sobre":
 			_sobre.rotation = sin(_tiempo * 5.0) * 0.06
-			if _tocado or _t >= AUTO_ABRIR:
+			if not _invito and _t >= INVITAR_TOQUE and not _tocado:
+				_invitar_a_tocar()
+			if _tocado or _t >= _abrir_en:
 				_abrir()
 		"foto":
-			var audio := get_node_or_null("/root/Audio")
-			var hablando: bool = audio != null and audio.esta_hablando()
-			if (_tocado and _t >= TOQUE_FOTO_DESDE) or (_t >= MIN_FOTO and not hablando) or _t >= MAX_FOTO:
+			_avanzar_audio_foto()
+			if foto_lista() and (_t >= _cierre_automatico() or (_tocado and not _es_semilla())):
+				_guardar_foto()
+			elif _t >= MAX_FOTO:
 				_guardar_foto()
 		"volando":
 			if _t >= VUELO + 0.25:
@@ -191,14 +232,14 @@ func _process(delta: float) -> void:
 func _al_input(evento: InputEvent) -> void:
 	if evento is InputEventMouseButton and evento.pressed and evento.button_index == MOUSE_BUTTON_LEFT:
 		_fondo.accept_event()
-		_al_tocar()
+		_al_tocar(evento.position)
 
 
 ## Respuesta inmediata a cualquier toque (<100 ms): sonido y rebote de lo que esta en pantalla.
-func _al_tocar() -> void:
+func _al_tocar(punto := Vector2(-1, -1)) -> void:
 	_sfx(SFX_TOQUE)
-	# en la foto, un toque que venia de antes (<0,7 s) no se la salta
-	_tocado = _estado != "foto" or _t >= TOQUE_FOTO_DESDE
+	# En la foto, un toque solo cuenta para guardarla cuando ya sono su audio (HE-44 #1, UX R2).
+	_tocado = _estado != "foto" or foto_lista()
 	match _estado:
 		"entrando", "sobre":
 			_sobre.scale = Vector2(1.12, 0.9)
@@ -209,13 +250,24 @@ func _al_tocar() -> void:
 				_t = AUTO_ABRIR
 		"foto":
 			if _foto != null:
+				# Reaccion juguetona (nunca un toque muerto): squash, chispas desde el dedo y "clic".
 				_foto.scale = Vector2(1.04, 0.97)
 				_foto.create_tween().tween_property(_foto, "scale", Vector2.ONE, 0.2)
+				if not foto_lista() or _es_semilla():
+					_estallido(punto if punto.x >= 0.0 else PANTALLA / 2.0, 4)
+					_sfx(SFX_GUARDAR)
 
 
 func _abrir() -> void:
 	_cambiar("abriendo")
 	_sfx(SFX_ABRIR)
+	# Si el nino abrio antes de que Cometa terminara, su voz se desvanece (no se corta en seco).
+	var audio_ := get_node_or_null("/root/Audio")
+	if audio_ != null and audio_.esta_hablando():
+		audio_.desvanecer_voz(FUNDIDO_COMETA)
+	# Flash de polaroid.
+	_flash.color.a = 0.35
+	_flash.create_tween().tween_property(_flash, "color:a", 0.0, 0.12)
 	var tween := _sobre.create_tween().set_parallel(true)
 	tween.tween_property(_sobre, "scale", Vector2(1.6, 1.6), 0.3)
 	tween.tween_property(_sobre, "modulate:a", 0.0, 0.3)
@@ -239,20 +291,101 @@ func _abrir() -> void:
 	crecer.tween_property(_foto, "rotation", -0.03, 0.55)
 	_lanzar_confeti()
 	_sfx(SFX_FIESTA)
-	# voz de la familia; si todavia no existe, una linea generica de Cometa (si esta grabada)
-	var recuerdos := get_node_or_null("/root/Recuerdos")
-	var audio := get_node_or_null("/root/Audio")
-	var stream: AudioStream = recuerdos.stream_voz(_actual) if recuerdos != null else null
-	if audio != null:
-		if stream != null:
-			audio.reproducir_voz_stream(stream)
-		elif recuerdos != null and not bool(_actual.get("_solo_dorado", false)):
-			var generica: String = recuerdos.elegir_linea("generica")
-			if generica != "":
-				audio.reproducir_voz(generica)
+	# Audio de la foto: pie narrado por Cometa + voz de la familia (o, si falta, una linea generica).
+	_cola_audio = _audio_de_la_foto()
+	_hay_audio_foto = not _cola_audio.is_empty()
+	_audio_termino_en = -1.0
 	_despues(0.55, func() -> void:
 		if _estado == "abriendo":
 			_cambiar("foto"))
+	_despues(PAUSA_VOZ_FAMILIA, _siguiente_audio_foto)
+
+
+## Lo que suena con la foto abierta, en orden. El pie no suena si la familia ya lo dijo (`pie_en_audio`).
+func _audio_de_la_foto() -> Array:
+	var cola: Array = []
+	var recuerdos := get_node_or_null("/root/Recuerdos")
+	if recuerdos == null or bool(_actual.get("_solo_dorado", false)):
+		return cola
+	var stream: AudioStream = recuerdos.stream_voz(_actual)
+	if not bool(_actual.get("pie_en_audio", false)):
+		var pie: String = recuerdos.ruta_linea(str(_actual.get("pie", "")))
+		if pie != "":
+			cola.append(pie)
+	if stream != null:
+		cola.append(stream)
+	else:
+		var generica: String = recuerdos.elegir_linea("generica")
+		if generica != "":
+			cola.append(generica)
+	return cola
+
+
+func _siguiente_audio_foto() -> void:
+	if not (_estado in ["abriendo", "foto"]):
+		return
+	var audio := get_node_or_null("/root/Audio")
+	if _cola_audio.is_empty() or audio == null:
+		return
+	var siguiente = _cola_audio.pop_front()
+	if siguiente is AudioStream:
+		audio.reproducir_voz_stream(siguiente)
+	else:
+		audio.reproducir_voz(str(siguiente))
+
+
+## Encadena las lineas de la foto y anota cuando termino todo su audio.
+func _avanzar_audio_foto() -> void:
+	if _audio_termino_en >= 0.0 or not _hay_audio_foto:
+		return
+	var audio := get_node_or_null("/root/Audio")
+	var hablando: bool = audio != null and audio.esta_hablando()
+	if hablando or _t < 0.1:
+		return
+	if not _cola_audio.is_empty():
+		_siguiente_audio_foto()
+		return
+	_audio_termino_en = _t
+
+
+## La foto ya se vio: termino su audio (o pasaron 4,5 s si no tiene). Recien ahi un toque la guarda.
+func foto_lista() -> bool:
+	if _estado != "foto":
+		return false
+	if _hay_audio_foto:
+		return _audio_termino_en >= 0.0
+	return _t >= MIN_FOTO_SIN_AUDIO
+
+
+func _cierre_automatico() -> float:
+	return (_audio_termino_en + COLA_TRAS_AUDIO) if _hay_audio_foto else MIN_FOTO_SIN_AUDIO
+
+
+## A los 2 anos el toque no es una decision de seguir: en Semilla la foto siempre se va sola.
+func _es_semilla() -> bool:
+	var quien := str(_actual.get("_quien", ""))
+	if quien == "":
+		var progreso := get_node_or_null("/root/Progreso")
+		quien = str(progreso.perfil_seleccionado) if progreso != null else ""
+	return quien == "maxi"
+
+
+## A los 1,5 s sin toque el sobre salta y su estrella crece: invita a tocarlo (HE-44 #4).
+func _invitar_a_tocar() -> void:
+	_invito = true
+	_sfx(SFX_TOQUE)
+	var base := _sobre.position
+	var tween := _sobre.create_tween()
+	tween.tween_property(_sobre, "position:y", base.y - 18.0, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(_sobre, "position:y", base.y, 0.13).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	_sobre.set_meta("estrella_grande", 1.15)
+
+
+func _duracion(ruta: String) -> float:
+	if ruta == "" or not ResourceLoader.exists(ruta):
+		return 0.0
+	var stream := load(ruta) as AudioStream
+	return stream.get_length() if stream != null else 0.0
 
 
 func _guardar_foto() -> void:
@@ -289,7 +422,8 @@ func _terminar() -> void:
 	var tween := create_tween().set_parallel(true)
 	tween.tween_property(_velo, "color:a", 0.0, 0.3)
 	if _icono_propio and _icono != null:
-		tween.tween_property(_icono, "modulate:a", 0.0, 0.3).set_delay(0.3)
+		# El icono se queda un momento con su halo: asi se aprende donde quedo la foto (HE-44 #6).
+		tween.tween_property(_icono, "modulate:a", 0.0, 0.3).set_delay(HALO_ICONO)
 	tween.chain().tween_callback(func() -> void:
 		terminada.emit()
 		queue_free())
@@ -314,7 +448,7 @@ func _dibujar_sobre() -> void:
 	var solapa := PackedVector2Array([Vector2(12, 12), Vector2(s.x - 12, 12), Vector2(s.x / 2.0, s.y * 0.58)])
 	_sobre.draw_colored_polygon(solapa, Color("#CDB8FA"))
 	_sobre.draw_polyline(PackedVector2Array([Vector2(12, 12), Vector2(s.x / 2.0, s.y * 0.58), Vector2(s.x - 12, 12)]), COLOR_CONTORNO, 5.0, true)
-	var pulso := 1.0 + 0.06 * sin(_tiempo * 6.0)
+	var pulso := (1.0 + 0.06 * sin(_tiempo * 6.0)) * float(_sobre.get_meta("estrella_grande", 1.0))
 	Figura.dibujar(_sobre, "estrella", DORADO, Vector2(s.x / 2.0, s.y * 0.56), 62.0 * pulso, true, true)
 	for k in 4:
 		var angulo := _tiempo * 1.5 + k * TAU / 4.0

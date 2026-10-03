@@ -5,11 +5,29 @@
   "paisaje": "res://scripts/planetas/arcoiris/paisaje_arcoiris.gd",
   "anfitrion": "res://assets/sprites/personajes/coco_base.png",
   "nota": "Decision del PO 27-Sep-2026: la zona siguiente (y la secreta) se abre al completar TODAS las estaciones jugables de la zona anterior; los retos dorados son opcionales y no cuentan.",
+  "destellos_por_estacion": 100,
+  "destellos_reto_dorado": 0,
+  "nota_destellos": "PROVISIONAL (disenador-niveles HE-40 §2.3, 28-Sep-2026): cada estacion da 100 destellos la primera vez, igual para los tres hermanos; los retos dorados dan 0 (su premio es cosmetico). Las aperturas cuentan estaciones, nunca destellos.",
+  "pieza_nave": {
+    "zonas": [
+      1,
+      2,
+      3
+    ],
+    "posicion": [
+      420,
+      92
+    ],
+    "nota": "HE-40 mecanicas #3 (PROVISIONAL): silueta del ala que se pinta un tercio por zona completada; la pieza llega al completar la zona 3."
+  },
   "juegos": {
     "lluvia": {
       "nombre": "Lluvia de colores",
       "icono": "lluvia",
-      "voz": "voces/arcoiris/mapa/juego_lluvia.wav"
+      "voz": "voces/arcoiris/mapa/juego_lluvia.wav",
+      "voces_perfil": {
+        "sofia": "voces/arcoiris/mapa/juego_taller.wav"
+      }
     },
     "formas": {
       "nombre": "Formas traviesas",
@@ -29,14 +47,24 @@
   },
   "voces": {
     "bienvenida": "voces/arcoiris/mapa/bienvenida.wav",
-    "zona_dormida": "voces/arcoiris/mapa/zona_dormida.wav",
+    "zona_dormida": [
+      "voces/arcoiris/mapa/zona_dormida.wav",
+      "voces/arcoiris/mapa/zona_dormida_02.wav"
+    ],
     "zona_abierta": "voces/arcoiris/mapa/zona_abierta.wav",
     "secreta_lejana": "voces/arcoiris/mapa/secreta_lejana.wav",
     "secreta_revelada": "voces/arcoiris/mapa/secreta_revelada.wav",
     "estacion_pronto": "voces/arcoiris/mapa/estacion_pronto.wav",
     "cometa_vamos": "voces/arcoiris/mapa/cometa_vamos.wav",
     "todo_listo": "voces/arcoiris/mapa/todo_listo.wav",
-    "dorado_disponible": "voces/arcoiris/mapa/dorado_disponible.wav"
+    "dorado_disponible": "voces/arcoiris/mapa/dorado_disponible.wav",
+    "estacion_repetida": [
+      "voces/arcoiris/mapa/estacion_repetida_01.wav",
+      "voces/arcoiris/mapa/estacion_repetida_02.wav",
+      "voces/arcoiris/mapa/estacion_repetida_03.wav"
+    ],
+    "planeta_completo": "voces/arcoiris/mapa/planeta_completo.wav",
+    "dorado_entrar": "voces/arcoiris/mapa/dorado_entrar.wav"
   },
   "zonas": [
     {
@@ -53,6 +81,7 @@
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_1_llegada.wav",
       "voz_completada": "voces/arcoiris/mapa/zona_1_completada.wav",
+      "voz_regalo": "voces/arcoiris/mapa/zona_1_regalo.wav",
       "estaciones": [
         {
           "juego": "lluvia",
@@ -112,6 +141,8 @@
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_2_llegada.wav",
       "voz_completada": "voces/arcoiris/mapa/zona_2_completada.wav",
+      "voz_abierta": "voces/arcoiris/mapa/zona_2_abierta.wav",
+      "voz_regalo": "voces/arcoiris/mapa/zona_2_regalo.wav",
       "estaciones": [
         {
           "juego": "lluvia",
@@ -171,6 +202,8 @@
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_3_llegada.wav",
       "voz_completada": "voces/arcoiris/mapa/zona_3_completada.wav",
+      "voz_abierta": "voces/arcoiris/mapa/zona_3_abierta.wav",
+      "voz_regalo": "voces/arcoiris/mapa/zona_3_regalo.wav",
       "estaciones": [
         {
           "juego": "lluvia",
@@ -231,6 +264,8 @@
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_4_llegada.wav",
       "voz_completada": "voces/arcoiris/mapa/zona_4_completada.wav",
+      "voz_abierta": "voces/arcoiris/mapa/zona_4_abierta.wav",
+      "voz_regalo": "voces/arcoiris/mapa/zona_4_regalo.wav",
       "estaciones": [
         {
           "juego": "lluvia",
@@ -291,6 +326,7 @@
       "secreta": true,
       "voz_llegada": "voces/arcoiris/mapa/zona_5_llegada.wav",
       "voz_completada": "voces/arcoiris/mapa/zona_5_completada.wav",
+      "voz_regalo": "voces/arcoiris/mapa/zona_5_regalo.wav",
       "estaciones": [
         {
           "juego": "lluvia",

@@ -242,3 +242,31 @@ Flujo:
 - Umbrales de estrellitas y límites definitivos por nivel (`disenador-niveles`).
 - Voz real de la familia (HE-28); hoy TTS.
 - Auditoría UX sobre build: tolerancia de imán para Nicole y el giro por toque de Sofía.
+
+## Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado con cambios, sin bloqueantes.** El detalle está en
+`docs/validaciones/HE-40_disenador-mecanicas.md`. Los cambios mayores son:
+
+- **Pista**: medidor visible de 3 estrellitas y confirmación con un globo de 150 px (un segundo
+  objetivo, no un doble toque). En el piso de 1 estrellita, la pista es gratis.
+- **Giro en Sofía**: `giro_cuenta_fallo: false`. La pieza chueca se queda 2,5 s sobre su hueco y se
+  gira con un toque.
+- **Regalo**: `_derrotas` se reinicia en cada ronda y el regalo pone el 15 % de las piezas pendientes
+  (entre 1 y 4).
+- **Reto dorado**:
+  - `lado_celda` 50, `escala_bandeja_fija` 0,64, `bandeja_acostadas`, `relleno_bandeja` 24.
+  - Zona tocable del polígono agrandada 16 px.
+  - Botón espejo en [1120, 470, 120, 120].
+  - La pista busca entre todas las soluciones compatibles (`soluciones_marco`).
+
+## Implementación dev-godot 28-Sep-2026 (validaciones HE-40, PROVISIONAL)
+
+- `umbrales_estrellitas {tres, dos}` en fallos, a nivel del archivo o en el `config` de cada figura/ronda (vale la peor ronda): ≤ tres → 3, ≤ dos → 2, si no 1; derrota-gag → 1; cada pista resta 1 (mínimo 1). Sin el campo, la regla vieja.
+- `giro_cuenta_fallo` (por defecto `false` en Estrella): lugar correcto con la pieza chueca no cuenta fallo; la pieza flota 2,5 s sobre el hueco (alfa 0,7, meciéndose ±4°) y un toque la gira ahí mismo.
+- Regalo tras 2 derrotas **de la ronda** (`_derrotas` se reinicia por ronda): 15 % de las piezas que faltan (1-4), una cada 0,35 s, empezando por los huecos con más "no es este" y luego los más grandes.
+- Pista con costo: medidor de 3 estrellitas bajo el botón y globo de confirmación (componente `scripts/ui/pista_con_costo.gd`); con 1 estrellita, gratis.
+- Marco (reto dorado 6×10): `lado_celda` 50, `escala_bandeja_fija` 0,64, `bandeja_acostadas`, `relleno_bandeja` 24, zona tocable por la forma +16 px, espejo en [1110, 440, 120, 120]. Tocar una pieza puesta solo da un saltito (sale del marco recién al arrastrarla); con espejo, el 1.er toque solo elige la pieza.
+- Bandeja: el círculo tocable de 96 px ya no le roba el toque a la forma de una pieza vecina.
+- Rondas "Arma la figura": avance guardado pieza a pieza dentro de la ronda (`huecos_hechos`).
+- Pendiente: pista del marco contra todas las soluciones (hallazgo 8 de mecánicas).

@@ -1,5 +1,7 @@
 {
   "id_nivel": "arcoiris_z4_lluvia_estrella",
+  "legado": true,
+  "nota_legado": "LEGADO (disenador-niveles HE-40 #10): desde el 27-Sep la Lluvia de Sofia abre el Taller de pinturas (mezcla_estrella.json, mismo id_nivel a proposito para no perder avance). Este archivo solo lo usan los arneses QA de clasificar; el mapa nunca lo carga.",
   "motor": "clasificar",
   "perfil": "estrella",
   "planeta": "arcoiris",

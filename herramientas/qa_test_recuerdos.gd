@@ -285,14 +285,24 @@ func _probar_entrega() -> void:
 	await _esperar(0.3)
 	_check(entrega.estado() == "entrando", "el sobre baja girando")
 	_check(entrega._sobre.size.x > 200.0, "sobre-estrella grande (> 200 px)")
-	await _esperar(4.0)
-	_check(entrega.estado() in ["abriendo", "foto"], "sin toque, se abre solo a los 3 s (%s)" % entrega.estado())
+	_check(entrega._abrir_en >= entrega.AUTO_ABRIR and entrega._abrir_en <= entrega.TOPE_ABRIR, "HE-44 #2: el sobre se abre tras la frase de Cometa, entre 3 y 6 s (%.1f s)" % entrega._abrir_en)
+	await _esperar(entrega.BAJADA + entrega._abrir_en + 0.3)
+	_check(entrega.estado() in ["abriendo", "foto"], "sin toque, se abre solo (%s)" % entrega.estado())
 	await _esperar(0.7)
 	_check(entrega._foto != null and entrega._foto.size.y >= 480.0, "la polaroid ocupa ~70% del alto")
-	await _esperar(0.9)
-	entrega.avanzar()
-	await _esperar(1.5)
-	_check(terminada[0], "tras la foto vuela al album y la entrega termina sola")
+	_check(entrega._hay_audio_foto, "HE-44 UX R1: la foto tiene voz (pie narrado + linea de Cometa mientras falta la familia)")
+	# Maxi toca muchas veces seguidas: la foto NO se va antes de terminar su audio (HE-44 #1, UX R2).
+	for k in 10:
+		entrega.avanzar()
+		await _esperar(0.1)
+	_check(entrega.estado() == "foto", "10 toques seguidos no se saltan la foto ni su voz (%s)" % entrega.estado())
+	var t0 := Time.get_ticks_msec()
+	while entrega.estado() == "foto" and Time.get_ticks_msec() - t0 < 16000:
+		await _esperar(0.2)
+	var dur := (Time.get_ticks_msec() - t0) / 1000.0
+	_check(entrega._audio_termino_en >= 0.0, "la foto espero a que terminara su audio")
+	await _esperar(2.6)
+	_check(terminada[0], "en Semilla la foto se va sola tras su audio (+1,5 s) y la entrega termina (%.1f s)" % dur)
 	# un toque temprano abre el sobre apenas llega
 	terminada[0] = false
 	var entrega2: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear([rec, _recuerdos.obtener("familia_01")])
@@ -304,9 +314,18 @@ func _probar_entrega() -> void:
 	_check(entrega2.estado() in ["abriendo", "foto"], "un toque en cualquier parte abre el sobre")
 	await _esperar(0.3)
 	entrega2.avanzar()
+	await _esperar(0.3)
+	_check(entrega2.estado() == "foto", "un toque antes de que termine el audio no guarda la foto")
+	var t1 := Time.get_ticks_msec()
+	while entrega2.estado() == "foto" and Time.get_ticks_msec() - t1 < 16000:
+		if entrega2.foto_lista() and not entrega2._es_semilla():
+			entrega2.avanzar()
+		await _esperar(0.1)
 	await _esperar(1.2)
-	_check(entrega2.esta_activa() and entrega2.estado() in ["entrando", "sobre"], "con dos fotos llega el segundo sobre")
-	await _esperar(9.0)
+	_check(entrega2.esta_activa() and entrega2.estado() in ["entrando", "sobre", "abriendo", "foto"], "con dos fotos llega el segundo sobre (%s)" % entrega2.estado())
+	var t2 := Time.get_ticks_msec()
+	while not terminada[0] and Time.get_ticks_msec() - t2 < 25000:
+		await _esperar(0.25)
 	_check(terminada[0], "sin tocar nada, la entrega de dos fotos termina sola")
 
 
@@ -325,7 +344,11 @@ func _probar_seleccion() -> void:
 	_check(not choca, "el boton del album no choca con tarjetas ni botones")
 	_check(_progreso.tiene_recuerdo("familia_01") and seleccion._entrega != null, "primera apertura: llega el sobre con familia_01")
 	_check(seleccion._bloqueado, "mientras llega el sobre no se elige personaje por accidente")
-	await _esperar(9.0)
+	# La foto espera a que termine su voz (HE-44): se espera la entrega entera, con tope.
+	var t_sel := Time.get_ticks_msec()
+	while seleccion._entrega != null and Time.get_ticks_msec() - t_sel < 40000:
+		await _esperar(0.25)
+	await _esperar(0.3)
 	_check(seleccion._entrega == null and not seleccion._bloqueado, "al terminar la entrega la seleccion vuelve a responder")
 	_check(seleccion._boton_album.nuevos, "el boton del album brilla: hay una foto nueva")
 	change_scene_to_file(SELECCION)
@@ -355,7 +378,10 @@ func _probar_mapa_planeta() -> void:
 	var mapa := current_scene
 	_check(mapa.zonas[1]["completa"], "zona 2 de Maxi completa")
 	_check(not _progreso.tiene_recuerdo("maxi_02"), "la foto se guarda recien al mostrarse (no antes)")
-	await _esperar(9.5)
+	# El mapa espera la celebracion completa (bienvenida / zona / regalo) antes del sobre (HE-44 #10).
+	var t_mapa := Time.get_ticks_msec()
+	while mapa.get_node_or_null("entrega_recuerdo") == null and Time.get_ticks_msec() - t_mapa < 30000:
+		await _esperar(0.25)
 	_check(_progreso.tiene_recuerdo("maxi_02"), "zona 2 completa => maxi_02 encontrada")
 	_check(not _progreso.tiene_recuerdo("maxi_03"), "zona 4 aun no => maxi_03 sigue escondida")
 	_check(mapa.get_node_or_null("entrega_recuerdo") != null, "llega el sobre-estrella sobre el mapa")
@@ -386,7 +412,10 @@ func _probar_viaje() -> void:
 	var t_antes: float = viaje._t
 	await _esperar(0.5)
 	_check(is_equal_approx(viaje._t, t_antes), "el viaje queda en pausa durante la entrega")
-	await _esperar(9.0)
+	var t_viaje := Time.get_ticks_msec()
+	while viaje._entrega != null and Time.get_ticks_msec() - t_viaje < 40000:
+		await _esperar(0.25)
+	await _esperar(0.3)
 	_check(viaje._entrega == null and viaje._t > t_antes, "al terminar la entrega el viaje sigue")
 	viaje.queue_free()
 	await _esperar(0.1)

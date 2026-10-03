@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="300" viewBox="0 0 260 300">
+  <!-- Sobre-estrella ABIERTO, con la polaroid asomando (fotograma intermedio opcional de la
+       entrega, ficha §6 paso 3-4). PROVISIONAL: pendiente del PO.
+       El cuerpo del sobre ocupa EXACTAMENTE el mismo rectangulo que sobre_estrella.svg desplazado
+       110 px hacia abajo (y 118..288): para cambiar de cerrado a abierto sin salto, alinear
+       por la base (ancla inferior-centro (130, 190) del cerrado = (130, 300) de este).
+       Grupos (atras -> adelante): interior / solapa_abierta / polaroid / bolsillo / sello_estrella / brillos.
+       El grupo polaroid puede extraerse y subir por separado si se anima por piezas. -->
+  <defs>
+    <linearGradient id="g_lila" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#F6F0FF"/>
+      <stop offset="0.45" stop-color="#E9DDFF"/>
+      <stop offset="1" stop-color="#D3C0F6"/>
+    </linearGradient>
+    <linearGradient id="g_solapa_interior" x1="0.5" y1="1" x2="0.5" y2="0">
+      <stop offset="0" stop-color="#C7B0F5"/>
+      <stop offset="1" stop-color="#E4D7FF"/>
+    </linearGradient>
+    <linearGradient id="g_crema" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFF8EE"/>
+      <stop offset="1" stop-color="#F1E2CC"/>
+    </linearGradient>
+    <linearGradient id="g_noche" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#7A52C9"/>
+      <stop offset="1" stop-color="#5B3F8F"/>
+    </linearGradient>
+    <linearGradient id="g_amarillo" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF1A6"/>
+      <stop offset="0.45" stop-color="#FFD23F"/>
+      <stop offset="1" stop-color="#F2A92C"/>
+    </linearGradient>
+  </defs>
+  <g id="interior">
+    <rect x="6" y="118" width="248" height="170" rx="22" fill="#2B3350" opacity="0.18" transform="translate(3 6)"/>
+    <rect x="6" y="118" width="248" height="170" rx="22" fill="#B89DEE" stroke="#2B3350" stroke-width="6"/>
+  </g>
+  <g id="solapa_abierta">
+    <path d="M22 123 H238 Q248 123 241 115 L140 30 Q130 22 120 30 L19 115 Q12 123 22 123 Z" fill="url(#g_solapa_interior)" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+  <g id="polaroid" transform="rotate(-6 130 110)">
+    <rect x="72" y="40" width="116" height="138" rx="10" fill="url(#g_crema)" stroke="#2B3350" stroke-width="5"/>
+    <rect x="81" y="49" width="98" height="102" rx="4" fill="url(#g_noche)" stroke="#2B3350" stroke-width="3" opacity="1"/>
+    <g fill="#FFFFFF" opacity="0.8">
+      <circle cx="94" cy="62" r="2.5"/><circle cx="168" cy="70" r="2"/><circle cx="160" cy="136" r="2.5"/><circle cx="96" cy="130" r="2"/>
+    </g>
+    <polygon points="130.0,66.6 138.8,85.8 159.8,88.3 144.3,102.6 148.4,123.4 130.0,113.0 111.6,123.4 115.7,102.6 100.2,88.3 121.2,85.8" fill="url(#g_amarillo)" stroke="#2B3350" stroke-width="4" stroke-linejoin="round"/>
+    <g fill="none" stroke="#2B3350" stroke-width="3" stroke-linecap="round">
+      <path d="M121 97 Q124.5 93 128 97"/><path d="M132 97 Q135.5 93 139 97"/><path d="M125.5 103 Q130 107.5 134.5 103"/>
+    </g>
+  </g>
+  <g id="bolsillo">
+    <path d="M9 150 Q9 146 13 147 L130 188 L247 147 Q251 146 251 150 V266 Q251 285 232 285 H28 Q9 285 9 266 Z" fill="url(#g_lila)" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M20 160 L112 192" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <path d="M18 272 Q70 238 108 228" fill="none" stroke="#2B3350" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+    <path d="M242 272 Q190 238 152 228" fill="none" stroke="#2B3350" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+  </g>
+  <g id="sello_estrella">
+    <polygon points="130.0,210.5 137.2,226.1 154.2,228.1 141.6,239.8 145.0,256.6 130.0,248.2 115.0,256.6 118.4,239.8 105.8,228.1 122.8,226.1" fill="url(#g_amarillo)" stroke="#2B3350" stroke-width="4" stroke-linejoin="round"/>
+    <g fill="none" stroke="#2B3350" stroke-width="2.5" stroke-linecap="round">
+      <path d="M122 236 Q125 232.5 128 236"/><path d="M132 236 Q135 232.5 138 236"/><path d="M126.5 241 Q130 244.5 133.5 241"/>
+    </g>
+  </g>
+  <g id="brillos" stroke="#2B3350" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M44 34 Q46 43 55 45 Q46 47 44 56 Q42 47 33 45 Q42 43 44 34 Z" fill="#FFE38A"/>
+    <path d="M216 22 Q217.6 29.4 225 31 Q217.6 32.6 216 40 Q214.4 32.6 207 31 Q214.4 29.4 216 22 Z" fill="#FFE38A"/>
+    <path d="M226 72 Q227.1 76.9 232 78 Q227.1 79.1 226 84 Q224.9 79.1 220 78 Q224.9 76.9 226 72 Z" fill="#FFFFFF"/>
+    <path d="M26 88 Q27.1 92.9 32 94 Q27.1 95.1 26 100 Q24.9 95.1 20 94 Q24.9 92.9 26 88 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

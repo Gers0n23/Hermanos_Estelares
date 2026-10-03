@@ -99,6 +99,10 @@ func _probar_ruta(ruta: Dictionary) -> void:
 	await _esperar(0.05)
 	z[0].tocada.emit(z[0])
 	await _esperar(0.05)
+	if motor._visible_minimo > 0.0 and oculto:
+		# HE-40 mecanicas #11 (Nicole): el par fallido se ve al menos `visible_minimo_ms`; el toque espera.
+		_check(motor._procesando and x[0].mostrando and y[0].mostrando, "toque impaciente: el par fallido sigue a la vista %.1f s" % motor._visible_minimo)
+		await _esperar(motor._visible_minimo + 0.05)
 	_check(not motor._procesando and motor._seleccionadas == [z[0]], "toque durante 'no es este' adelanta el tapado y selecciona la nueva")
 	_check(x[0].mostrando == (not oculto), "la carta del fallo anterior quedo como estaba")
 

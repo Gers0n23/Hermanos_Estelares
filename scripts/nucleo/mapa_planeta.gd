@@ -24,7 +24,11 @@ extends Node2D
 ##
 ## UX (GDD §6): todo narrado por voz, objetivos >=96 px, sin texto obligatorio (los nombres son un
 ## extra para Sofia). Tocar a Cometa lleva directo a la siguiente estacion pendiente (riesgo 5 de la
-## ficha: Maxi no tiene que navegar). F4 (solo PC, depuracion del PO) abre todas las zonas.
+## ficha: Maxi no tiene que navegar). F4 (solo builds de depuracion del PO) abre todas las zonas.
+##
+## HE-40/HE-44 (28-Sep-2026, PROVISIONAL): el mapa pasa a cada motor `destellos_fijos` (100 por estacion y
+## 0 en retos dorados, `mapa.json`), la zona "perfecta" (marco dorado) solo mira las estaciones cuyo nivel
+## puntua estrellitas (Pinta no), y la entrega del album espera la senal `celebracion_zona_terminada`.
 
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 const RUTA_MAPA_ESTELAR := "res://escenas/nucleo/mapa_estelar.tscn"
@@ -63,6 +67,10 @@ static var _ruta_por_defecto := ""
 ## F4: el PO puede abrir todas las zonas para revisar variantes sin jugar las anteriores.
 static var todo_abierto := false
 
+## Termino la secuencia de voces que celebra lo que cambio al volver (zona completa, regalo, zona que
+## despierta). La entrega del album la espera para no cortar a Coco (HE-44 mecanicas #10, UX R11).
+signal celebracion_zona_terminada
+
 @export_file("*.json") var ruta_mapa: String = ""
 
 var mapa: Dictionary = {}
@@ -75,6 +83,8 @@ var _ui: Control
 var _efectos: Control
 var _camino: Control
 var _arcoiris: Control
+## Silueta de la pieza de la nave que se pinta por zona completada (`pieza_nave` en el mapa).
+var _pieza: Control
 var _nodos_zona: Array = []
 var _tarjetas: Array = []
 var _titulo_zona: Label
@@ -91,6 +101,9 @@ var _salto_coco := 0.0
 var _base_coco := Vector2.ZERO
 var _id_voces := 0
 var _paisaje: Control
+## true mientras suena la secuencia de celebracion de `_celebrar_cambios`.
+var _celebrando := false
+var _entrega: Node
 
 
 func _ready() -> void:
@@ -137,7 +150,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_key_input(evento: InputEvent) -> void:
-	if evento is InputEventKey and evento.pressed and not evento.echo and evento.keycode == KEY_F4:
+	if evento is InputEventKey and evento.pressed and not evento.echo and evento.keycode == KEY_F4 and OS.is_debug_build():
 		todo_abierto = not todo_abierto
 		print("[mapa_planeta] F4 todas las zonas abiertas: %s" % todo_abierto)
 		calcular_estado()
@@ -185,6 +198,7 @@ func calcular_estado() -> void:
 			estaciones.append({"datos": datos_estacion, "juego": str(datos_estacion.get("juego", "")), "jugable": jugable,
 				"completada": completada, "estrellitas": estrellitas, "ruta_nivel": ruta_nivel, "escena": escena,
 				"perfil_nivel": _perfil_nivel(ruta_nivel) if jugable else "",
+				"puntua": _puntua_nivel(ruta_nivel) if jugable else false,
 				"dorado_ruta": ruta_dorado if hay_dorado else "", "dorado_completado": dorado_completado,
 				"dorado_disponible": hay_dorado and (estrellitas >= 3 or dorado_completado or todo_abierto)})
 		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
@@ -207,16 +221,24 @@ func _id_nivel(ruta: String) -> String:
 	var datos: Variant = JSON.parse_string(FileAccess.get_file_as_string(ruta))
 	var id := ruta.get_file().get_basename()
 	var perfil := ""
+	var puntua := true
 	if datos is Dictionary:
 		id = str(datos.get("id_nivel", id))
 		perfil = str(datos.get("perfil", ""))
-	_cache_ids[ruta] = {"id": id, "perfil": perfil}
+		puntua = bool(datos.get("puntua_estrellitas", true))
+	_cache_ids[ruta] = {"id": id, "perfil": perfil, "puntua": puntua}
 	return id
 
 
 func _perfil_nivel(ruta: String) -> String:
 	_id_nivel(ruta)
 	return _cache_ids[ruta]["perfil"]
+
+
+## Un nivel puntua estrellitas salvo que declare `"puntua_estrellitas": false` (Pinta con Coco).
+func _puntua_nivel(ruta: String) -> bool:
+	_id_nivel(ruta)
+	return bool(_cache_ids[ruta]["puntua"])
 
 
 ## Primera zona abierta con algo pendiente; si todo esta hecho, la ultima abierta.
@@ -273,28 +295,54 @@ func _celebrar_cambios() -> void:
 	_marcar_visto()
 	var voces: Dictionary = mapa.get("voces", {})
 	if previo == null:
-		_decir_en_orden([str(voces.get("bienvenida", ""))], 0.5)
+		_decir_en_orden([_voz_de(voces.get("bienvenida", ""))], 0.5)
 		return
 	var lista: Array = []
+	var todas_completas := true
+	var alguna_nueva := false
 	for i in zonas.size():
+		todas_completas = todas_completas and zonas[i]["completa"]
 		if zonas[i]["completa"] and not previo["completas"][i]:
+			alguna_nueva = true
 			for banda in zonas[i]["datos"].get("bandas", []):
 				_avance_bandas[banda] = 0.0
-			lista.append(str(zonas[i]["datos"].get("voz_completada", "")))
+			# Orden del guion (zonas_arcoiris.md §1): completada (Coco) -> regalo (Coco).
+			lista.append(_voz_de(zonas[i]["datos"].get("voz_completada", "")))
+			lista.append(_voz_de(zonas[i]["datos"].get("voz_regalo", "")))
 			_despues(0.6, _fiesta_zona.bind(i))
 	for i in zonas.size():
 		if zonas[i]["abierta"] and not previo["abiertas"][i]:
 			seleccion = i
-			lista.append(str(voces.get("secreta_revelada" if zonas[i]["secreta"] else "zona_abierta", "")))
+			var abierta := _voz_de(zonas[i]["datos"].get("voz_abierta", ""))
+			if zonas[i]["secreta"] or abierta == "":
+				abierta = _voz_de(voces.get("secreta_revelada" if zonas[i]["secreta"] else "zona_abierta", ""))
+			lista.append(abierta)
 			_despues(0.9, _fiesta_zona.bind(i))
+	if todas_completas and alguna_nueva:
+		lista.append(_voz_de(voces.get("planeta_completo", "")))
 	for clave in _visto[_clave()].get("dorados", []):
 		if not previo.get("dorados", []).has(clave):
 			seleccion = int(str(clave).get_slice("_", 0))
 			lista.append(str(voces.get("dorado_disponible", "")))
 			break
+	lista = lista.filter(func(r) -> bool: return str(r) != "")
 	if not lista.is_empty():
 		_reproducir_sfx(SFX_FIESTA)
-		_decir_en_orden(lista, 0.6)
+		_celebrando = true
+		await _decir_en_orden(lista, 0.6)
+		_celebrando = false
+	celebracion_zona_terminada.emit()
+
+
+## Una clave de voz del mapa puede ser una ruta o una lista de variantes (se elige una al azar).
+func _voz_de(valor) -> String:
+	if valor is Array:
+		return str(valor.pick_random()) if not valor.is_empty() else ""
+	return str(valor)
+
+
+func celebrando() -> bool:
+	return _celebrando
 
 
 # ---------------------------------------------------------------------------
@@ -303,13 +351,14 @@ func _celebrar_cambios() -> void:
 
 ## Evento GENERICO de zona completa: el catalogo de recuerdos decide si toca una foto (este mapa
 ## no sabe cuales zonas dan foto ni de quien). `perfecta` = estrellitas maximas en todas las
-## estaciones de nivel Estrella (marco dorado de Sofia).
+## estaciones de nivel Estrella QUE PUNTUAN (marco dorado de Sofia). Pinta no tiene puntaje y no cuenta
+## (disenador-niveles HE-40 §2.4, auditoria UX HE-44 R4): antes el marco era inalcanzable.
 func evento_zona(i: int) -> Dictionary:
 	var zona: Dictionary = zonas[i]
 	var perfecta := false
-	var jugables: Array = zona["estaciones"].filter(func(e: Dictionary) -> bool: return e["jugable"])
-	if not jugables.is_empty():
-		perfecta = jugables.all(func(e: Dictionary) -> bool: return e["perfil_nivel"] == "estrella" and int(e["estrellitas"]) >= 3)
+	var con_puntaje: Array = zona["estaciones"].filter(func(e: Dictionary) -> bool: return e["jugable"] and e["puntua"])
+	if not con_puntaje.is_empty():
+		perfecta = con_puntaje.all(func(e: Dictionary) -> bool: return e["perfil_nivel"] == "estrella" and int(e["estrellitas"]) >= 3)
 	return {"tipo": "zona_completa", "planeta": planeta_id, "zona": str(zona["datos"].get("id", "")),
 		"numero": int(zona["datos"].get("numero", i + 1)), "perfecta": perfecta}
 
@@ -330,13 +379,20 @@ func _entregar_recuerdos_zonas() -> void:
 			hay_algo = hay_algo or evento["perfecta"] or not recuerdos.pendientes(evento, id_perfil).is_empty()
 	if not hay_algo:
 		return
+	# Espera la celebracion COMPLETA de la zona (completada -> regalo -> zona que despierta), no solo el
+	# clip que suena, con tope de 15 s (HE-44 mecanicas #10, UX R11). Despues, una pausa corta.
 	await get_tree().create_timer(1.2).timeout
 	var espera := 0.0
 	var audio := get_node_or_null("/root/Audio")
-	while is_inside_tree() and espera < 8.0 and audio != null and audio.esta_hablando():
+	while is_inside_tree() and espera < 15.0 and (_celebrando or (audio != null and audio.esta_hablando())):
 		await get_tree().create_timer(0.25).timeout
 		espera += 0.25
-	if not is_inside_tree():
+	if not is_inside_tree() or _lanzando:
+		# UX R3: si el nino ya lanzo un juego, la foto NO se desbloquea ahora (se perderia el momento con
+		# el cambio de escena): llega la proxima vez que entre al mapa. Nada se pierde.
+		return
+	await get_tree().create_timer(0.4).timeout
+	if not is_inside_tree() or _lanzando:
 		return
 	# Se guarda recien ahora, al mostrarse: si el nino salio antes, la foto llega la proxima vez.
 	var nuevos: Array = []
@@ -346,7 +402,17 @@ func _entregar_recuerdos_zonas() -> void:
 		return
 	var entrega: Node = load("res://scripts/ui/entrega_recuerdo.gd").crear(nuevos)
 	entrega.name = "entrega_recuerdo"
+	# Al completar una zona, la foto llega "con el viento" tras el regalo de Coco (guion recuerdos §1.2b).
+	var linea_zona: String = recuerdos.elegir_linea("entrega_zona")
+	if linea_zona != "":
+		entrega.voz_sobre = linea_zona
+	_entrega = entrega
 	add_child(entrega)
+
+
+## Mientras la entrega del album esta en pantalla, el mapa no lanza juegos ni navega (UX HE-44 R3).
+func _entrega_activa() -> bool:
+	return _entrega != null and is_instance_valid(_entrega) and _entrega.esta_activa()
 
 
 # ---------------------------------------------------------------------------
@@ -372,6 +438,11 @@ func _construir_ui() -> void:
 
 	_camino = _control_dibujo(Rect2(0, 0, 1280, 720), _dibujar_camino)
 	_arcoiris = _control_dibujo(Rect2(440, 6, 400, 160), _dibujar_arcoiris)
+	var pieza: Dictionary = mapa.get("pieza_nave", {})
+	if not (pieza.get("zonas", []) as Array).is_empty():
+		var pos: Array = pieza.get("posicion", [430, 105])
+		_pieza = _control_dibujo(Rect2(Vector2(float(pos[0]), float(pos[1])) - Vector2(80, 50), Vector2(160, 100)), _dibujar_pieza)
+		_pieza.pivot_offset = _pieza.size / 2.0
 
 	for i in zonas.size():
 		var posicion: Array = zonas[i]["datos"].get("posicion", [200 + i * 220, 300])
@@ -418,7 +489,9 @@ func _construir_ui() -> void:
 		dorado.tooltip_text = "Reto dorado"
 		dorado.custom_minimum_size = Vector2(96, 96)
 		tarjeta.add_child(dorado)
-		dorado.position = Vector2(LADO_TARJETA - 70.0, -34.0)
+		# Centrado sobre el borde superior: no tapa la estrella de completada ni invade la tarjeta
+		# vecina (UX HE-40 R7).
+		dorado.position = Vector2(LADO_TARJETA / 2.0 - 48.0, -56.0)
 		dorado.size = Vector2(96, 96)
 		dorado.pivot_offset = dorado.size / 2.0
 		for estado in ["normal", "hover", "pressed"]:
@@ -444,6 +517,11 @@ func _construir_ui() -> void:
 				icono.draw_colored_polygon(chispa, Color.WHITE)
 				Figura.contornear(icono, chispa, 2.0))
 		dorado.pressed.connect(_tocar_dorado.bind(j))
+		# UX R9: respuesta inmediata al presionar (aplastado + sonido), como los demas botones.
+		dorado.button_down.connect(func() -> void:
+			_reproducir_sfx(SFX_TOQUE)
+			dorado.scale = Vector2(0.9, 0.9)
+			dorado.create_tween().tween_property(dorado, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT))
 		dorado.hide()
 		tarjeta.set_meta("dorado", dorado)
 
@@ -592,6 +670,8 @@ func _refrescar() -> void:
 		nodo.queue_redraw()
 	_camino.queue_redraw()
 	_arcoiris.queue_redraw()
+	if _pieza != null:
+		_pieza.queue_redraw()
 	_mostrar_estaciones()
 
 
@@ -621,14 +701,14 @@ func _al_tocar(evento: InputEvent, accion: Callable) -> void:
 
 
 func _tocar_zona(i: int) -> void:
-	if _lanzando:
+	if _lanzando or _entrega_activa():
 		return
 	var nodo: Control = _nodos_zona[i]
 	var voces: Dictionary = mapa.get("voces", {})
 	if not zonas[i]["abierta"]:
 		_reproducir_sfx(SFX_NO)
 		_menear(nodo)
-		_decir(str(voces.get("secreta_lejana" if zonas[i]["secreta"] else "zona_dormida", "")))
+		_decir(_voz_de(voces.get("secreta_lejana" if zonas[i]["secreta"] else "zona_dormida", "")))
 		return
 	_reproducir_sfx(SFX_ELEGIR)
 	_rebotar(nodo)
@@ -639,7 +719,7 @@ func _tocar_zona(i: int) -> void:
 
 
 func _tocar_estacion(j: int) -> void:
-	if _lanzando or j >= zonas[seleccion]["estaciones"].size():
+	if _lanzando or _entrega_activa() or j >= zonas[seleccion]["estaciones"].size():
 		return
 	var estacion: Dictionary = zonas[seleccion]["estaciones"][j]
 	var tarjeta: Control = _tarjetas[j]
@@ -661,7 +741,7 @@ func _tocar_coco() -> void:
 
 ## Cometa lleva directo a la siguiente estacion pendiente (un toque, sin navegar).
 func _tocar_cometa() -> void:
-	if _lanzando:
+	if _lanzando or _entrega_activa():
 		return
 	_reproducir_sfx(SFX_TOQUE)
 	var voces: Dictionary = mapa.get("voces", {})
@@ -676,7 +756,7 @@ func _tocar_cometa() -> void:
 
 
 func _tocar_dorado(j: int) -> void:
-	if _lanzando or j >= zonas[seleccion]["estaciones"].size():
+	if _lanzando or _entrega_activa() or j >= zonas[seleccion]["estaciones"].size():
 		return
 	lanzar_estacion(seleccion, j, 0.0, true)
 
@@ -696,7 +776,14 @@ func lanzar_estacion(i: int, j: int, espera := 0.0, dorado := false) -> void:
 	tween.tween_property(tarjeta, "scale", Vector2.ONE * 1.06, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	if espera <= 0.0:
 		var juego: Dictionary = mapa.get("juegos", {}).get(estacion["juego"], {})
-		_decir(str(juego.get("voz", "")))
+		var voces: Dictionary = mapa.get("voces", {})
+		# La voz dice lo que el nino va a ver: el taller de Sofia no es "Lluvia de colores" (guion §1.6).
+		var voz := _voz_de(juego.get("voces_perfil", {}).get(id_perfil, juego.get("voz", "")))
+		if dorado and voces.has("dorado_entrar"):
+			voz = _voz_de(voces["dorado_entrar"])
+		elif estacion["completada"] and voces.has("estacion_repetida"):
+			voz = _voz_de(voces["estacion_repetida"])
+		_decir(voz)
 		espera = 0.9
 	await get_tree().create_timer(espera).timeout
 	if not is_inside_tree():
@@ -706,6 +793,10 @@ func lanzar_estacion(i: int, j: int, espera := 0.0, dorado := false) -> void:
 	motor.ruta_nivel = estacion["dorado_ruta"] if dorado else estacion["ruta_nivel"]
 	motor.planeta_id = planeta_id
 	motor.id_perfil = id_perfil
+	# Economia (HE-40 §2.3): monto fijo e igual para los tres; los retos dorados no dan destellos.
+	var clave_destellos := "destellos_reto_dorado" if dorado else "destellos_por_estacion"
+	if mapa.has(clave_destellos) and "destellos_fijos" in motor:
+		motor.destellos_fijos = int(mapa[clave_destellos])
 	var arbol := get_tree()
 	var volver := Callable(arbol, "change_scene_to_file").bind(scene_file_path if scene_file_path != "" else "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn")
 	motor.completado.connect(volver.unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
@@ -719,6 +810,10 @@ func lanzar_estacion(i: int, j: int, espera := 0.0, dorado := false) -> void:
 
 
 func _volver_al_mapa_estelar() -> void:
+	if _entrega_activa():
+		return
+	# UX R15: F4 nunca queda activo al salir del planeta.
+	todo_abierto = false
 	_reproducir_sfx(SFX_TOQUE)
 	get_tree().change_scene_to_file(RUTA_MAPA_ESTELAR)
 
@@ -786,6 +881,10 @@ func _menear(nodo: Control) -> void:
 
 
 func _fiesta_zona(i: int) -> void:
+	if _pieza != null and (mapa.get("pieza_nave", {}).get("zonas", []) as Array).has(float(i + 1)):
+		# Se pinta otro pedacito del ala: late para que Maxi vea que se acerca (HE-40 mecanicas #3).
+		_pieza.scale = Vector2.ONE * 0.7
+		_pieza.create_tween().tween_property(_pieza, "scale", Vector2.ONE, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	var nodo: Control = _nodos_zona[i]
 	nodo.scale = Vector2.ONE * 0.6
 	nodo.create_tween().tween_property(nodo, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
@@ -871,6 +970,52 @@ func _dibujar_arcoiris(control: Control) -> void:
 			var angulo := PI + PI * (k + 0.5) / 5.0
 			var punto := base + Vector2.from_angle(angulo) * (exterior + 12.0 + sin(_tiempo * 4.0 + k) * 4.0)
 			Figura.dibujar(control, "estrella", COLOR_BANDA["brillo"], punto, 11.0, false)
+
+
+## Pieza de la nave (disenador-mecanicas HE-40 #3): silueta que se pinta un tramo por cada zona de
+## `pieza_nave.zonas` completada, con el color de esa zona. Solo visual: no cambia ninguna regla.
+func _dibujar_pieza(control: Control) -> void:
+	var numeros: Array = mapa.get("pieza_nave", {}).get("zonas", [])
+	var c := control.size / 2.0
+	var ala := PackedVector2Array()
+	# La misma ala que Maxi decora en Pinta z5 (`generar_pinta.py` ala(), escalada), para que la reconozca.
+	for p in [Vector2(-70, 28), Vector2(-43, -15), Vector2(70, -24), Vector2(56, 18)]:
+		ala.append(c + p)
+	ala = Geometry2D.offset_polygon(ala, 6.0, Geometry2D.JOIN_ROUND)[0]
+	var listas := 0
+	# Placa clarita detras, para que la silueta se lea sobre el paisaje.
+	var placa := StyleBoxFlat.new()
+	placa.bg_color = Color(1, 1, 1, 0.75)
+	placa.set_corner_radius_all(30)
+	placa.border_color = Color(COLOR_CONTORNO, 0.25)
+	placa.set_border_width_all(3)
+	control.draw_style_box(placa, Rect2(Vector2(2, 2), control.size - Vector2(4, 4)))
+	control.draw_colored_polygon(ala, Color("#E4E0EE"))
+	for k in numeros.size():
+		var i := int(numeros[k]) - 1
+		if i < 0 or i >= zonas.size() or not zonas[i]["completa"]:
+			continue
+		listas += 1
+		var x0 := c.x - 72.0 + 144.0 * k / numeros.size()
+		var franja := PackedVector2Array([Vector2(x0, 0), Vector2(x0 + 144.0 / numeros.size(), 0),
+			Vector2(x0 + 144.0 / numeros.size(), control.size.y), Vector2(x0, control.size.y)])
+		for parte in Geometry2D.intersect_polygons(ala, franja):
+			control.draw_colored_polygon(parte, _color_zona(i))
+	var cerrada := ala.duplicate()
+	cerrada.append(ala[0])
+	control.draw_polyline(cerrada, COLOR_CONTORNO, 4.0, true)
+	# Tramos que faltan: lineas punteadas, como un "para pintar".
+	for k in range(1, numeros.size()):
+		var x := c.x - 72.0 + 144.0 * k / numeros.size()
+		control.draw_dashed_line(Vector2(x, c.y - 34), Vector2(x, c.y + 30), Color(COLOR_CONTORNO, 0.45), 2.0, 6.0)
+	for luz in [[Vector2(-60, 22), Color("#FF6B6B")], [Vector2(62, -18), Color("#7DD87A")]]:
+		control.draw_circle(c + luz[0], 7.5, COLOR_CONTORNO)
+		control.draw_circle(c + luz[0], 5.0, luz[1])
+	if listas == numeros.size():
+		# Ala lista: la estrella de la pieza de Pinta, blanca con contorno para que se vea sobre cualquier color.
+		var estrella := Figura.poligono("estrella", c + Vector2(4, 0), 20.0)
+		control.draw_colored_polygon(estrella, Color.WHITE)
+		Figura.contornear(control, estrella, 3.0)
 
 
 func _color_zona(i: int) -> Color:

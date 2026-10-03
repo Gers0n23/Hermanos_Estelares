@@ -144,6 +144,11 @@ var _ms_ultimo_nombre := -100000
 var _conectados := 0
 
 var _segundos_mostrar := 0.0
+## Maxi (disenador-niveles HE-40 #11): segundos con el boton ya a la vista tras los que Coco pregunta
+## "¿me lo muestras?" una vez por hoja (0 = nunca). Nunca muestra la hoja sola: el nino decide.
+var _segundos_recordar := 0.0
+var _recordado := false
+var _boton_visible_desde := 0.0
 var _tiempo_hoja := 0.0
 var _hubo_toque := false
 var _tiempo := 0.0
@@ -191,6 +196,11 @@ func _process(delta: float) -> void:
 	_tiempo_hoja += delta
 	if not boton_mostrar.visible and _segundos_mostrar > 0.0 and _hubo_toque and _tiempo_hoja >= _segundos_mostrar:
 		_revelar_boton_mostrar(true)
+	elif boton_mostrar.visible and not _recordado and _segundos_recordar > 0.0 \
+			and _tiempo_hoja >= _boton_visible_desde + _segundos_recordar:
+		_recordado = true
+		_revelar_boton_mostrar(false)
+		_reproducir_voz("me_lo_muestras", _linea_al_azar("me_lo_muestras"))
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -346,6 +356,9 @@ func _empezar_hoja(indice: int) -> void:
 	_preparar_retos()
 
 	_segundos_mostrar = float(_cfg.get("segundos_mostrar", 0.0))
+	_segundos_recordar = float(_cfg.get("segundos_recordar_mostrar", 0.0))
+	_recordado = false
+	_boton_visible_desde = 0.0
 	boton_mostrar.visible = _segundos_mostrar <= 0.0
 	boton_mostrar.scale = Vector2.ONE
 	if _tween_mostrar != null and _tween_mostrar.is_valid():
@@ -556,7 +569,8 @@ func _construir_paleta() -> void:
 		for id in _cfg.get("paleta", PALETA_SEMILLA if _perfil == "semilla" else PALETA_COMPLETA):
 			entradas.append([str(id), Colores.color(str(id)), ""])
 
-	var columnas := 1 if not lienzo.mosaico.is_empty() else 2
+	# Mosaicos de mas de 6 colores: 2 columnas, para no bajar hasta Cometa (UX HE-40 R10).
+	var columnas := 1 if not lienzo.mosaico.is_empty() and entradas.size() <= 6 else 2
 	var ancho := RECT_PALETA.size.x if columnas == 1 else (RECT_PALETA.size.x - 8.0) / 2.0
 	var alto := 0.0
 	if _perfil == "semilla" and lienzo.mosaico.is_empty():
@@ -1256,7 +1270,9 @@ func _mostrar_barra(sticker: StickerVivo) -> void:
 	_vaciar(_barra)
 	var lado := 72.0 if _perfil == "brote" else 64.0
 	var sep := 8.0
-	var tam := Vector2(acciones.size() * lado + (acciones.size() - 1) * sep + 16.0, lado + 16.0)
+	# "Borrar" (sin deshacer) queda separado del resto por 24 px (UX HE-40 R11).
+	var sep_borrar := 24.0
+	var tam := Vector2(acciones.size() * lado + (acciones.size() - 2) * sep + sep_borrar + 16.0, lado + 16.0)
 	var centro := lienzo.position + sticker.centro()
 	var radio: float = sticker.radio_toque()
 	var y := centro.y - radio - tam.y - 4.0
@@ -1279,7 +1295,7 @@ func _mostrar_barra(sticker: StickerVivo) -> void:
 		boton.tooltip_text = str(acciones[i])
 		boton.custom_minimum_size = Vector2(64, 64)
 		_barra.add_child(boton)
-		boton.position = Vector2(8.0 + i * (lado + sep), 8.0)
+		boton.position = Vector2(8.0 + i * (lado + sep) + (sep_borrar - sep if acciones[i] == "borrar" else 0.0), 8.0)
 		boton.size = Vector2(lado, lado)
 		boton.set_meta("accion", acciones[i])
 		_estilizar_boton(boton, Color("#FFB3C7") if acciones[i] == "borrar" else Color("#FFF8EE"))
@@ -1651,6 +1667,8 @@ func _revelar_boton_mostrar(con_voz: bool) -> void:
 	if _terminado or _mostrando:
 		return
 	var ya_visible := boton_mostrar.visible
+	if not ya_visible:
+		_boton_visible_desde = _tiempo_hoja
 	boton_mostrar.visible = true
 	if _tween_mostrar != null and _tween_mostrar.is_valid():
 		_tween_mostrar.kill()

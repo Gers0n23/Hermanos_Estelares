@@ -44,6 +44,10 @@ func _initialize() -> void:
 	var filtro_figura: String = args[1] if args.size() > 1 else ""
 	var respaldo = FileAccess.get_file_as_string(GUARDADO) if FileAccess.file_exists(GUARDADO) else null
 	DirAccess.make_dir_recursive_absolute(CARPETA_TEMPORAL)
+	if filtro == "" and filtro_figura == "":
+		_probar_sin_bichos()
+		await _probar_umbrales_y_regalo()
+		await _probar_guardado_pieza_a_pieza()
 	for zona in ZONAS:
 		for perfil in HERMANOS:
 			var ruta := "res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]
@@ -375,16 +379,30 @@ func _probar_estrella(motor: Node, piezas: Array, huecos: Array) -> void:
 			continue
 		var antes: int = motor._intentos_usados
 		var r: String = motor.soltar_pieza(pieza, hueco["centro"])
-		_check(r == "girar" and motor._intentos_usados == antes + 1, "Estrella: pieza correcta pero chueca -> pide girar (%s)" % r)
-		await _esperar(0.6)
-		var giros := 0
-		while not Geo.calzan(pieza.poligono(), hueco["forma_centrada"]) and giros < 8:
-			pieza.tocada.emit(pieza)
-			giros += 1
-		_check(giros > 0 and giros < 8, "Estrella: tocar gira la pieza (%d toques)" % giros)
-		await _esperar(0.3)
-		r = motor.soltar_pieza(pieza, hueco["centro"])
-		_check(r == "encajo", "Estrella: ya girada, encaja")
+		if motor._giro_cuenta_fallo:
+			_check(r == "girar" and motor._intentos_usados == antes + 1, "Estrella: pieza correcta pero chueca -> pide girar (%s)" % r)
+			await _esperar(0.6)
+			var giros := 0
+			while not Geo.calzan(pieza.poligono(), hueco["forma_centrada"]) and giros < 8:
+				pieza.tocada.emit(pieza)
+				giros += 1
+			_check(giros > 0 and giros < 8, "Estrella: tocar gira la pieza (%d toques)" % giros)
+			await _esperar(0.3)
+			r = motor.soltar_pieza(pieza, hueco["centro"])
+			_check(r == "encajo", "Estrella: ya girada, encaja")
+		else:
+			# HE-40 #5: acertar el lugar con la pieza chueca no es fallo; queda flotando sobre su hueco.
+			_check(r == "girar" and motor._intentos_usados == antes and motor.pieza_flotando() == pieza,
+				"Estrella: pieza correcta pero chueca -> NO cuenta fallo y queda flotando sobre su hueco (%s, intentos %d)" % [r, motor._intentos_usados])
+			await _esperar(0.3)
+			_check(pieza.modulate.a < 0.9 and pieza.centro_global().distance_to(hueco["centro"]) < 4.0, "Estrella: flota semitransparente sobre el hueco")
+			var giros := 0
+			while not pieza.colocada and giros < 8:
+				pieza.tocada.emit(pieza)
+				giros += 1
+				await _esperar(0.05)
+			_check(pieza.colocada and giros < 8, "Estrella: con toques gira ahi mismo y encaja sola (%d toques)" % giros)
+			_check(motor.pieza_flotando() == null and is_equal_approx(pieza.modulate.a, 1.0), "Estrella: deja de flotar al encajar")
 		break
 
 
@@ -613,3 +631,123 @@ func _probar_voces(nivel: Dictionary, huecos: Array) -> void:
 		if not ResourceLoader.exists("res://assets/audio/" + str(ruta)):
 			faltan.append(ruta)
 	_check(faltan.is_empty(), "todas las voces del nivel existen (%d) %s" % [rutas.size(), "" if faltan.is_empty() else str(faltan)])
+
+
+# ---------------------------------------------------------------------------
+# HE-40 (28-Sep-2026): sin bichos, umbrales de estrellitas, bandera primero y regalo por ronda
+# ---------------------------------------------------------------------------
+
+const PROHIBIDOS := ["mariposa", "abeja", "arana", "bicho", "insecto", "catarina", "chinita", "gusano", "hormiga", "mosca", "libelula"]
+
+
+## Auditoria UX HE-40 R1 (bloqueante): ninguna figura ni voz nombra un bicho en ningun perfil.
+func _probar_sin_bichos() -> void:
+	print("-- HE-40 R1: sin bichos en ningun nivel de Formas --")
+	var encontrados: Array = []
+	for zona in ZONAS:
+		for perfil in HERMANOS:
+			var texto := FileAccess.get_file_as_string("res://datos/niveles/arcoiris/%s/formas_%s.json" % [zona, perfil]).to_lower()
+			for bicho in PROHIBIDOS:
+				if texto.contains(bicho):
+					encontrados.append("%s/%s: %s" % [zona, perfil, bicho])
+	_check(encontrados.is_empty(), "ninguna figura de Formas es un bicho %s" % str(encontrados))
+
+
+## Sofia (zona 1): la bandera va primero y trae sus umbrales; la regla 3/2/1 en los bordes; el regalo
+## tras 2 derrotas pone el 15 % de lo que falta (1-4) y `_derrotas` se reinicia en cada ronda.
+func _probar_umbrales_y_regalo() -> void:
+	print("-- HE-40: umbrales de estrellitas, bandera primero y regalo por ronda (Sofia z1) --")
+	var ruta := "res://datos/niveles/arcoiris/zona1_claro/formas_estrella.json"
+	var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ruta))
+	_check(nivel.get("rondas", []) == ["bandera", "monumento"], "Sofia arma primero la bandera y cierra con el monumento")
+	_check(int(nivel.get("piezas_en_bandeja", 0)) == 4, "zona 1: 4 piezas en la bandeja (curva suave)")
+	var progreso := get_root().get_node("Progreso")
+	progreso.borrar_estado_parcial("sofia", PLANETA_QA, str(nivel.get("id_nivel", "")))
+	var motor := _nuevo_motor(ruta, "sofia", false)
+	await _esperar(0.9)
+	var umbrales: Dictionary = motor._umbrales
+	_check(not umbrales.is_empty() and int(umbrales["tres"]) == 3 and int(umbrales["dos"]) == 8, "la ronda de bandera lee sus umbrales (%s)" % str(umbrales))
+	var casos := {3: 3, 4: 2, 8: 2, 9: 1}
+	var bordes_ok := true
+	for fallos in casos:
+		motor._intentos_usados = fallos
+		bordes_ok = bordes_ok and motor._estrellitas_base() == casos[fallos]
+	_check(bordes_ok, "umbrales en los bordes: <=3 -> 3, 4..8 -> 2, 9 -> 1")
+	motor._intentos_usados = 0
+	motor._pistas_usadas = 1
+	_check(motor._calcular_estrellitas() == 2, "cada pista resta una estrellita")
+	motor._pistas_usadas = 0
+	# Dos derrotas en la ronda: el regalo pone el 15 % de lo que falta (entre 1 y 4).
+	var piezas: Array = motor._piezas.duplicate()
+	var huecos: Array = motor._huecos
+	var esperado: int = motor.piezas_de_regalo()
+	_check(esperado == clampi(ceili(0.15 * (motor._requeridos - motor._encajados)), 1, 4), "regalo = 15 %% de las %d que faltan -> %d" % [motor._requeridos - motor._encajados, esperado])
+	var antes: int = motor._encajados
+	for vuelta in 2:
+		var par := _par_equivocado(motor, motor._piezas.filter(func(p: PiezaEncajar) -> bool: return not p.colocada), huecos)
+		if par.is_empty():
+			print("        (sin par equivocado para forzar la derrota-gag)")
+			break
+		motor._intentos_usados = int(motor._limite_intentos) - 1
+		motor.soltar_pieza(par[0], par[1]["centro"])
+		_check(motor._en_gag, "derrota-gag %d en la ronda" % (vuelta + 1))
+		await _esperar(1.5)
+		motor._boton_otra_vez.pressed.emit()
+		await _esperar(0.3)
+	await _esperar(0.7 + esperado * 0.35 + 0.4)
+	_check(motor._encajados == antes + esperado and motor._pistas_usadas == 0, "tras 2 derrotas Coco regala %d pieza(s) sin costo (%d -> %d)" % [esperado, antes, motor._encajados])
+	_check(motor._derrotas == 2, "la ronda lleva 2 derrotas")
+	motor._limpiar_tablero()
+	_check(motor._derrotas == 0 and not motor._regalo_dado, "bug HE-40 #6: las derrotas se reinician en cada ronda")
+	motor.queue_free()
+	await _esperar(0.2)
+
+
+## disenador-niveles HE-40 #12: salir a mitad de una ronda no pierde las piezas puestas.
+func _probar_guardado_pieza_a_pieza() -> void:
+	print("-- HE-40 #12: guardado pieza a pieza dentro de la ronda (Sofia z3) --")
+	var ruta := "res://datos/niveles/arcoiris/zona3_chupetines/formas_estrella.json"
+	var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ruta))
+	var progreso := get_root().get_node("Progreso")
+	var id_nivel := str(nivel.get("id_nivel", ""))
+	progreso.borrar_estado_parcial("sofia", PLANETA_QA, id_nivel)
+	var motor := _nuevo_motor(ruta, "sofia", true)
+	await _esperar(0.9)
+	var ids: Array = motor._rondas.map(func(r: Dictionary) -> String: return r["id"])
+	var puestas := 0
+	# La bandeja se repone al encajar (cola): se relee en cada intento en vez de recorrer una copia
+	# fija, que dejaba fuera las piezas nuevas y fallaba al azar segun la bandera sorteada.
+	for intento in 20:
+		if puestas >= 3:
+			break
+		var pieza: PiezaEncajar = null
+		var libre = null
+		for candidata: PiezaEncajar in motor._en_bandeja():
+			libre = _hueco_libre_para(motor, candidata)
+			if libre is Dictionary:
+				pieza = candidata
+				break
+		if pieza == null:
+			await _esperar(0.2)
+			continue
+		var hueco: Dictionary = libre
+		for k in 8:
+			if Geo.calzan(pieza.poligono(), hueco["forma_centrada"]):
+				break
+			pieza.tocada.emit(pieza)
+		if motor.soltar_pieza(pieza, hueco["centro"]) == "encajo":
+			puestas += 1
+		await _esperar(0.05)
+	var estado: Dictionary = progreso.obtener_estado_parcial("sofia", PLANETA_QA, id_nivel)
+	_check(puestas == 3 and (estado.get("huecos_hechos", []) as Array).size() == 3 and int(estado.get("indice", -1)) == 0, "cada pieza puesta queda guardada (%d huecos)" % (estado.get("huecos_hechos", []) as Array).size())
+	motor.queue_free()
+	await _esperar(0.3)
+	motor = _nuevo_motor(ruta, "sofia", true)
+	await _esperar(0.9)
+	var ids2: Array = motor._rondas.map(func(r: Dictionary) -> String: return r["id"])
+	_check(motor._indice_prueba == 0 and ids2 == ids and motor._encajados == 3, "al volver, la misma ronda con sus 3 piezas puestas (%d)" % motor._encajados)
+	var colocadas: int = motor._piezas.filter(func(p: PiezaEncajar) -> bool: return p.colocada).size()
+	_check(colocadas == 3 and motor._en_bandeja().size() > 0, "las piezas repuestas estan en su lugar y la bandeja sigue con piezas")
+	motor.queue_free()
+	progreso.borrar_estado_parcial("sofia", PLANETA_QA, id_nivel)
+	await _esperar(0.2)

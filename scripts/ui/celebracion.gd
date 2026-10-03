@@ -307,6 +307,9 @@ func _iniciar() -> void:
 
 
 func _iniciar_conteo() -> void:
+	if destellos <= 0:
+		_sello_sin_destellos()
+		return
 	var t := create_tween().set_parallel(true)
 	t.tween_property(_estrella_conteo, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	t.tween_property(_etiqueta_conteo, "modulate:a", 1.0, 0.2)
@@ -340,6 +343,21 @@ func _al_terminar_conteo() -> void:
 	_estallido_estrellitas(_estrella_conteo.position, 8, [])
 	for i in mini(estrellitas, _slots_estrellitas.size()):
 		_despues(0.4 * (i + 1), _llenar_estrellita.bind(i))
+
+
+## Retos dorados (0 destellos por diseno, HE-40 §7.3): nunca un "0" grande (UX N2, 02-Oct-2026).
+## La estrella del contador queda como sello dorado que gira y crece; las estrellitas se llenan igual.
+func _sello_sin_destellos() -> void:
+	_etiqueta_conteo.text = ""
+	var t := create_tween().set_parallel(true)
+	t.tween_property(_estrella_conteo, "scale", Vector2.ONE * 1.35, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.tween_property(_estrella_conteo, "rotation", TAU, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	for slot in _slots_estrellitas:
+		t.tween_property(slot, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_sfx(SFX_TINTINEO)
+	_estallido_estrellitas(_estrella_conteo.position, 12, [])
+	for i in mini(estrellitas, _slots_estrellitas.size()):
+		_despues(0.6 + 0.4 * (i + 1), _llenar_estrellita.bind(i))
 
 
 func _llenar_estrellita(indice: int) -> void:

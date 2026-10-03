@@ -21,6 +21,8 @@ const UMBRAL_TOQUE_PX := 18.0
 ## Radio minimo tocable en pantalla (96 px de diametro, GDD §6.1) aunque la pieza sea delgada.
 const RADIO_TOQUE_MINIMO := 48.0
 const MARGEN_TOQUE := 14.0
+## Oscilacion de la pieza chueca que flota sobre su hueco esperando un toque (HE-40 #5).
+const MECIDO_FLOTANDO := 4.0
 
 var id := ""
 var forma := "circulo"
@@ -46,6 +48,12 @@ var volteada := false:
 			return
 		volteada = valor
 		_reconstruir()
+## Zona tocable SOLO por su forma agrandada `margen_toque_px` px de pantalla, sin el circulo minimo de
+## 96 px (piezas del marco de Sofia: con el circulo se pisaban con las vecinas; UX R5, HE-40 #7).
+var solo_poligono := false
+var margen_toque_px := 16.0
+## Chueca sobre su hueco (Sofia): semitransparente y meciendose hasta que la giren o vuelva a la bandeja.
+var flotando := false
 ## La última pieza tocada: a ella se aplica el botón espejo. Se marca con un borde dorado.
 var elegida := false:
 	set(valor):
@@ -126,11 +134,37 @@ func radio_visual() -> float:
 	return maxf(ancho, alto) / 2.0
 
 
+## Zona tocable en dos pasadas (auditoria UX HE-40, R5): primero la FORMA (agrandada un poco); el
+## circulo minimo de 96 px de las piezas delgadas solo vale si el punto no cae en la forma de otra pieza
+## vecina y si esta pieza es la de centro mas cercano. Asi tocar el dibujo visible de una pieza nunca
+## levanta a la de al lado.
 func _has_point(punto: Vector2) -> bool:
 	var local := punto - size / 2.0
+	var escala := maxf(scale.x, 0.01)
+	if solo_poligono:
+		return Geometry2D.is_point_in_polygon(local, _base) or Geo.distancia(local, _base) * escala <= margen_toque_px
 	if Geometry2D.is_point_in_polygon(local, _toque):
 		return true
-	return local.length() * maxf(scale.x, 0.01) <= RADIO_TOQUE_MINIMO
+	var distancia := local.length() * escala
+	if distancia > RADIO_TOQUE_MINIMO:
+		return false
+	var en_padre := get_transform() * punto
+	for otra in get_parent().get_children():
+		if otra == self or not (otra is PiezaEncajar) or not otra.visible or otra.bloqueada:
+			continue
+		var local_otra: Vector2 = otra.get_transform().affine_inverse() * en_padre - otra.size / 2.0
+		if otra.contiene_forma(local_otra):
+			return false
+		if not otra.solo_poligono and local_otra.length() * maxf(otra.scale.x, 0.01) < distancia:
+			return false
+	return true
+
+
+## El punto (local al centro de la pieza) cae en su forma tocable (sin el circulo minimo).
+func contiene_forma(local: Vector2) -> bool:
+	if solo_poligono:
+		return Geometry2D.is_point_in_polygon(local, _base) or Geo.distancia(local, _base) * maxf(scale.x, 0.01) <= margen_toque_px
+	return Geometry2D.is_point_in_polygon(local, _toque)
 
 
 func _gui_input(evento: InputEvent) -> void:
@@ -235,6 +269,7 @@ func volver_a_casa(sacudir := false) -> void:
 
 
 func encajar_en(centro: Vector2, grados: float) -> void:
+	dejar_de_flotar()
 	colocada = true
 	bloqueada = true
 	cancelar_arrastre()
@@ -256,6 +291,25 @@ func encajar_en(centro: Vector2, grados: float) -> void:
 func encajar_libre(centro: Vector2, grados: float) -> void:
 	encajar_en(centro, grados)
 	bloqueada = false
+
+
+## Queda flotando sobre `centro` (el hueco que acerto, pero chueca): semitransparente y meciendose.
+func flotar_en(centro: Vector2) -> void:
+	flotando = true
+	var tween := nuevo_tween()
+	tween.tween_property(self, "position", centro - size / 2.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "modulate:a", 0.7, 0.18)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.18)
+	set_process(true)
+
+
+func dejar_de_flotar() -> void:
+	if not flotando:
+		return
+	flotando = false
+	modulate.a = 1.0
+	if not colocada and (_tween_giro == null or not _tween_giro.is_valid()):
+		rotation = deg_to_rad(rotacion_grados)
 
 
 ## Sale de su lugar en el tablero (el niño la volvió a tomar o una pista la devolvió).
@@ -330,10 +384,15 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if flotando:
+		# Mecido de +-4 grados alrededor de su giro (sin pisar el tween de giro de un toque).
+		if _tween_giro == null or not _tween_giro.is_valid():
+			rotation = deg_to_rad(rotacion_grados + sin(Time.get_ticks_msec() / 1000.0 * 6.0) * MECIDO_FLOTANDO)
 	_brillo -= delta
 	if _brillo <= 0.0:
 		_brillo = 0.0
-		set_process(false)
+		if not flotando:
+			set_process(false)
 	queue_redraw()
 
 

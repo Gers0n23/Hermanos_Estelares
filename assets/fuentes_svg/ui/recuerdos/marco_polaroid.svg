@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="500" viewBox="0 0 420 500">
+  <!-- Polaroid estelar (HE-44, album "Las migas de papa"). PROVISIONAL: pendiente de aprobacion del PO.
+       Misma geometria que scripts/ui/foto_recuerdo.gd: proporcion 0,84; margen m = 7% del ancho (29 px);
+       pie = 19% del alto (95 px). Ventana de la foto TRANSPARENTE: x 29..391, y 29..405 (362 x 376).
+       Se dibuja ENCIMA de la foto. Sin sombra (la pone el codigo). -->
+  <defs>
+    <linearGradient id="g_crema" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFF8EE"/>
+      <stop offset="1" stop-color="#F1E2CC"/>
+    </linearGradient>
+  </defs>
+  <g id="papel">
+    <path fill="url(#g_crema)" fill-rule="evenodd"
+      d="M29 4 H391 A25 25 0 0 1 416 29 V471 A25 25 0 0 1 391 496 H29 A25 25 0 0 1 4 471 V29 A25 25 0 0 1 29 4 Z
+         M35 29 H385 A6 6 0 0 1 391 35 V399 A6 6 0 0 1 385 405 H35 A6 6 0 0 1 29 399 V35 A6 6 0 0 1 35 29 Z"/>
+    <rect x="15" y="15" width="390" height="470" rx="16" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.6"/>
+  </g>
+  <g id="contorno">
+    <rect x="4" y="4" width="412" height="492" rx="25" fill="none" stroke="#2B3350" stroke-width="8"/>
+    <rect x="29" y="29" width="362" height="376" rx="6" fill="none" stroke="#2B3350" stroke-width="4" opacity="0.6"/>
+  </g>
+  <g id="brillos">
+    <path d="M388 440 Q389.9 448.6 398 450 Q389.9 451.4 388 460 Q386.1 451.4 378 450 Q386.1 448.6 388 440 Z" fill="#FFE38A" stroke="#2B3350" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M366 470 Q367.1 474.9 372 476 Q367.1 477.1 366 482 Q364.9 477.1 360 476 Q364.9 474.9 366 470 Z" fill="#FFFFFF" stroke="#2B3350" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+</svg>

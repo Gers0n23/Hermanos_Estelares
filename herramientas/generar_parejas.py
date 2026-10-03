@@ -138,7 +138,7 @@ S = V + 'semilla/'
 B = V + 'brote/'
 intro_s = {
     1: voz(S + 'intro_z1.wav', '¡Hola, Maxi! ¡Busca dos iguales y tócalas!'),
-    2: S + 'intro_01.wav',
+    2: S + 'intro_z2.wav',  # guion zonas_arcoiris.md §2 (texto en el TSV de emparejar, bajo '# personaje: coco')
     3: voz(S + 'intro_z3.wav', '¡Maxi! ¡Hay dinosaurios y autos! ¡Toca dos iguales!'),
     4: voz(S + 'intro_z4.wav', '¡Maxi, mira! Una mamá grande y su bebé chiquitito. ¡Júntalos!'),
     5: voz(S + 'intro_z5.wav', '¡Las cartas bailan, Maxi! ¡Toca dos iguales!'),
@@ -163,7 +163,7 @@ pista_banderas_s = voz(S + 'pista_banderas.wav', 'Mira los colores de las bander
 intro_b = {
     1: voz(B + 'intro_z1.wav', '¡Hola, Nicole! Hoy jugamos a las parejas. Primero, con las cartas a la vista. ¡Toca dos iguales!'),
     2: voz(B + 'intro_z2.wav', '¡Nicole! Ahora mis cartas se esconden. Da vuelta dos, y busca las que son iguales.'),
-    3: B + 'intro_01.wav',
+    3: B + 'intro_z3.wav',  # guion zonas_arcoiris.md §2 (texto en el TSV de emparejar, bajo '# personaje: coco')
     4: voz(B + 'intro_z4.wav', '¡Nicole! Cada color busca una cosa de su mismo color. La mancha amarilla va con la jirafa amarilla.'),
     5: voz(B + 'intro_z5.wav', '¡Nicole, juguemos con letras! Cada dibujo busca la letra con que empieza. Sol empieza con la ese.'),
 }

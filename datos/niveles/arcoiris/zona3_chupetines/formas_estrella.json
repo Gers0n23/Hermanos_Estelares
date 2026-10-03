@@ -13,12 +13,13 @@
   "guia_color": false,
   "modelo_mini": true,
   "bandeja_escala_real": true,
-  "piezas_en_bandeja": 6,
+  "piezas_en_bandeja": 5,
   "pistas_cuestan_estrellita": true,
   "regalo_tras_derrotas": true,
   "iman_tolerancia_px": 70,
   "paso_rotacion": 90,
   "silueta_unida": true,
+  "giro_cuenta_fallo": false,
   "rotacion_por_toque": true,
   "rotacion_inicial_aleatoria": true,
   "limite_intentos": 12,
@@ -48,8 +49,8 @@
     ]
   },
   "rondas": [
-    "monumento",
-    "bandera"
+    "bandera",
+    "monumento"
   ],
   "figuras": [
     {
@@ -58,8 +59,14 @@
       "dificultad": 24,
       "grupo": "monumento",
       "config": {
+        "limite_intentos": 12,
+        "umbrales_estrellitas": {
+          "tres": 6,
+          "dos": 12
+        },
         "lineas_voz": {
-          "intro": "voces/arcoiris/formas/estrella/intro_arma_z3.wav"
+          "intro": "voces/arcoiris/formas/estrella/intro_arma_z3.wav",
+          "intro_ronda": "voces/arcoiris/formas/estrella/intro_arma_z3.wav"
         }
       },
       "piezas": [
@@ -264,8 +271,14 @@
       "dificultad": 22,
       "grupo": "monumento",
       "config": {
+        "limite_intentos": 12,
+        "umbrales_estrellitas": {
+          "tres": 6,
+          "dos": 12
+        },
         "lineas_voz": {
-          "intro": "voces/arcoiris/formas/estrella/intro_torres_paine.wav"
+          "intro": "voces/arcoiris/formas/estrella/intro_torres_paine.wav",
+          "intro_ronda": "voces/arcoiris/formas/estrella/intro_torres_paine.wav"
         }
       },
       "piezas": [
@@ -457,7 +470,12 @@
         "limite_intentos": 9,
         "rotacion_por_toque": true,
         "rotacion_inicial_aleatoria": true,
+        "umbrales_estrellitas": {
+          "tres": 3,
+          "dos": 9
+        },
         "lineas_voz": {
+          "intro": "voces/arcoiris/formas/estrella/intro_bandera_primero.wav",
           "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
         },
         "exigir_color": true
@@ -555,7 +573,12 @@
         "limite_intentos": 9,
         "rotacion_por_toque": true,
         "rotacion_inicial_aleatoria": true,
+        "umbrales_estrellitas": {
+          "tres": 3,
+          "dos": 9
+        },
         "lineas_voz": {
+          "intro": "voces/arcoiris/formas/estrella/intro_bandera_primero.wav",
           "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
         },
         "exigir_color": true
@@ -668,7 +691,12 @@
         "limite_intentos": 9,
         "rotacion_por_toque": true,
         "rotacion_inicial_aleatoria": true,
+        "umbrales_estrellitas": {
+          "tres": 3,
+          "dos": 9
+        },
         "lineas_voz": {
+          "intro": "voces/arcoiris/formas/estrella/intro_bandera_primero.wav",
           "intro_ronda": "voces/arcoiris/formas/estrella/intro_bandera.wav"
         },
         "exigir_color": true

@@ -133,6 +133,12 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 >
 > Esto reemplaza lo que dice la columna de Sofía de la tabla de abajo.
 
+> **Taller de pinturas (PO, 27-Sep-2026; lo registra HE-40)**: la estación Lluvia de Sofía ya no usa
+> `clasificar`. Abre el motor `mezclar` (`mapa.json` → `escenas.sofia`, nivel
+> `<zona>/mezcla_estrella.json`, ficha `docs/fichas/motor-mezclar.md`). Los `lluvia_estrella.json`
+> quedan como legado para QA y comparten `id_nivel` con el Taller a propósito. La columna de Sofía de
+> abajo y la nota anterior quedan como historia. Umbrales validados en §7.
+
 > **Implementado 27-Sep-2026** (Dev, a pedido del PO): las 15 celdas de esta tabla existen en
 > `datos/niveles/arcoiris/<zona>/lluvia_<perfil>.json`. La escena es
 > `escenas/minijuegos/clasificar/motor_clasificar.tscn` y el motor está en `docs/fichas/motor-clasificar.md`.
@@ -213,7 +219,7 @@ corchetes son los campos del contrato de datos del motor. Todo lo que ya dicen l
 > |---|---|---|---|
 > | 1 · Claro | casita con sol (fija), Japón, Francia, Italia, helado, pez | casita (fija), Francia, Italia, gatito con moño, corazón | iglesia de Castro o **La Moneda**; Chile, Argentina, Perú o Bolivia (límite 8, con giro) |
 > | 2 · Charcos | barquito (fija), Perú, tortuga, bus, patito, ballena | micro (fija), Perú, Colombia, torta, pony | palafitos o **Valparaíso** (casas de colores, cada una en su color); Brasil, Uruguay, Paraguay, Colombia, Venezuela o Ecuador (límite 9, con giro) |
-> | 3 · Chupetines | pino (fija), Chile, volcán Osorno, camión de bomberos, árbol, avión | faro (fija), Chile, Japón, mariposa, jirafa | Santiago o **Torres del Paine**; Japón, Francia o Alemania (límite 9) |
+> | 3 · Chupetines | pino (fija), Chile, volcán Osorno, camión de bomberos, árbol, avión | faro (fija), Chile, Japón, pony, jirafa | Santiago o **Torres del Paine**; Japón, Francia o Alemania (límite 9) |
 > | 4 · Islotes | monito de nieve (fija), Torres del Paine, robot, pollito, casita del perro | tren (fija), Argentina, Alemania, Brasil, corona | moáis o **Morro de Arica**; Rusia, China o India (límite 10) |
 > | 5 · Cima | autito, dino, platillo volador, braquiosaurio, auto de carreras, cohete | jardín con corazón dorado (fija), Bolivia, Torres del Paine, Morro de Arica, castillo | castillo del Santa Lucía o **cerro San Cristóbal**; EE.UU. (32 piezas, límite 14) o México (límite 10). El reto dorado no cambia |
 >
@@ -424,3 +430,83 @@ tiene solo 3 de sus colores de vuelta.
 5. **Maxi y la navegación del mapa**: el mapa del planeta debe ser tocable en grande y narrado
    (GDD §6). A los 2 años puede necesitar que Cometa **lo lleve solo a la siguiente estación**
    pendiente con un toque.
+
+## Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado con cambios, sin bloqueantes.** El detalle está en
+`docs/validaciones/HE-40_disenador-mecanicas.md`.
+
+- **Formas de Sofía**: las estaciones duran unos 7-9 min (estimado) y la escalera sube solo en cantidad
+  de piezas. Propuesta: monumentos de 16-20 piezas y una regla nueva por zona (espejo, distractoras,
+  modelo que se esconde).
+- **§3.1**: agregar que Sofía juega `mezclar`.
+- **Mapa**: una silueta del ala que se va pintando por zona, para que Maxi vea que se acerca.
+
+---
+
+## 7. Validación HE-40 — disenador-niveles (28-Sep-2026)
+
+> Veredicto: **aprobado con cambios**. Informe completo, con los hallazgos numerados y los cambios
+> para Dev, en `docs/validaciones/HE-40_disenador-niveles.md`. Todo lo de esta sección es una
+> **PROPUESTA** de `disenador-niveles` (el PO pidió avanzar sin consultarle). Se calibra en el
+> playtest y el PO puede revertirla.
+
+### 7.1 Apertura
+
+- La zona siguiente, y la secreta, se abre con **todas las estaciones jugables** de la zona
+  anterior (PO, 27-Sep). La regla temporal `min(2, jugables)` queda retirada definitivamente: hoy
+  son 4 de 4 en las 5 zonas para los 3 hermanos.
+- Toda estación es completable: Pinta y el Taller no tienen derrota, y hay regalo y pistas donde hay
+  límite.
+- La pieza de la nave (ala) y la escena llegan al completar la zona 3 (12 estaciones).
+
+### 7.2 Estrellitas (Sofía): formato común `umbrales_estrellitas: {tres, dos}` en fallos
+
+- Regla en los cuatro motores con puntaje: fallos ≤ `tres` → 3; fallos ≤ `dos` → 2; si no, 1.
+  Derrota-gag → 1. Cada pista, libreta o vistazo resta 1, sin bajar de 1.
+- Objetivo: 3 estrellitas en ~1 de cada 4 partidas bien jugadas.
+
+| Motor | z1 | z2 | z3 | z4 | z5 | Reto dorado |
+|---|---|---|---|---|---|---|
+| `emparejar` (tres / dos) | 10 / 16 | 9 / 15 | 17 / 42 | 15 / 24 | 21 / 32 | 27 / 42 |
+| `encajar` monumento (límite · tres) | **14** · 7 | 12 · 6 | 12 · 6 | 14 · 7 | 16 · 8 | marco sin límite |
+| `encajar` bandera (límite · tres) | 8 · 3 | 9 · 3 | 9 · 3 | 10 · 4 | México 10 · 4, EE.UU. 14 · 5 | — |
+| `mezclar` (tres / dos) | 2 / 5 | **3 / 6** | **3 / 7** | **4 / 8** | **5 / 10** | — |
+
+En `encajar`, `dos` = el límite de la ronda y vale la peor ronda.
+
+### 7.3 Economía de destellos
+
+- Las aperturas y la pieza cuentan **estaciones**, nunca destellos.
+- Cada estación da **100 destellos fijos la primera vez**, iguales para los tres hermanos (equidad
+  Nicole/Sofía: el HUD nunca compara). Rejugar da 0.
+- Los retos dorados dan 0 destellos; su premio es cosmético.
+- Planeta completo: 2.000 por hermano.
+- Las estrellitas son la moneda propia de Sofía y nunca se convierten en destellos.
+- El planeta 2 se abre con la pieza, no con destellos.
+
+### 7.4 Maestría
+
+La "zona perfecta" (marco dorado, Corona de colores) cuenta solo las estaciones que puntúan: Pinta
+queda fuera.
+
+### 7.5 Contenido
+
+- **Sin bichos**: la mariposa pasa a **pony** en los murales del Taller (z2 y z5) y en el pool de
+  Formas de Nicole z3 (respaldo: flor en maceta).
+- **Sofía**:
+  - Cachorros y ponys en Parejas z1.
+  - Pony especial en el reto dorado.
+  - Formas con la bandera primero y el monumento como cierre.
+  - `piezas_en_bandeja` 4 / 5 / 5 / 6 / 6 por zona.
+- **Maxi**: autito en el pool de Formas z1, en lugar de Italia.
+
+## Implementación dev-godot 28-Sep-2026 (validaciones HE-40/HE-44, PROVISIONAL)
+
+- §3.1: la estación Lluvia de Sofía abre el **Taller de pinturas** (`mezcla_estrella.json`, ver `motor-mezclar.md`); los `lluvia_estrella.json` quedan marcados `"legado": true` (solo QA).
+- Sin bichos: Nicole z3 Formas `mariposa` → `pony`; murales del taller z2/z5 → `pony`. Los generadores (`figuras_formas.py`, `generar_niveles_mezcla.py`) rechazan bichos.
+- Maxi z1 Formas: `bandera_italia` → `autito`. Sofía: rondas `["bandera", "monumento"]`, bandeja 4/5/5/6/6, límite del monumento z1 = 14, umbrales por ronda (§2.2 de la validación).
+- Economía: `mapa.json` declara `destellos_por_estacion: 100` y `destellos_reto_dorado: 0`; el mapa los pasa al motor (`destellos_fijos` del contrato base).
+- Zona "perfecta" (marco dorado): solo cuentan las estaciones que puntúan (`"puntua_estrellitas": false` en los 15 `pinta_*.json`).
+- Regla de apertura: todas las estaciones jugables (la regla `min(2, jugables)` ya no existe en el código).
+- Voces nuevas del mapa: `voz_abierta`/`voz_regalo` por zona, `zona_dormida` con variantes, `estacion_repetida`, `juego_taller` (voz por perfil), `planeta_completo`, `dorado_entrar` (relleno TTS de Windows, en `pendientes_fal.txt`).

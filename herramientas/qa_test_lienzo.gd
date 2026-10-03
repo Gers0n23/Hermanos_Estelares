@@ -108,6 +108,17 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 		if not motor.boton_mostrar.visible:
 			motor._al_tocar_anfitriona(_toque())
 		_check(motor.boton_mostrar.visible, "boton 'mostrar a Coco' visible (Semilla: al tocar a Coco o tras un momento)")
+		if perfil == "semilla":
+			# Mecanicas HE-40 #21: el boton aparece a los >= 45 s. Niveles HE-40 #11: si Maxi sigue
+			# pintando 90 s mas, Coco pregunta "¿me lo muestras?" una sola vez y no muestra la hoja sola.
+			_check(float(hoja["cfg"].get("segundos_mostrar", 0.0)) >= 45.0, "Semilla: boton a los >= 45 s (%s)" % hoja["cfg"].get("segundos_mostrar"))
+			_check(motor._segundos_recordar > 0.0 and _existe_voz(str((nivel["lineas_voz"].get("me_lo_muestras", [""]) as Array)[0])),
+				"Semilla: recordatorio 'me lo muestras' con voz a los %s s" % motor._segundos_recordar)
+			motor._tiempo_hoja = motor._boton_visible_desde + motor._segundos_recordar + 0.1
+			await process_frame
+			await process_frame
+			_check(motor._recordado and motor._indice_hoja == h and motor.boton_mostrar.visible,
+				"Semilla: Coco recuerda una vez y la hoja sigue abierta (sin auto-mostrar)")
 		var png: String = motor.mostrar_a_coco()
 		_revisar_png(png, motor.lienzo.tamano)
 		if bool(hoja["cfg"].get("guardar_como", "") != ""):

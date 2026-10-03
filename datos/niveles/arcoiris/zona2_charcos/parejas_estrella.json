@@ -20,6 +20,10 @@
     "columnas": 5
   },
   "limite_intentos": 15,
+  "umbrales_estrellitas": {
+    "tres": 9,
+    "dos": 15
+  },
   "pares": [
     {
       "id_pareja": "verde",

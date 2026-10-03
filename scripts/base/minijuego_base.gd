@@ -62,6 +62,11 @@ const MARGEN_VOZ_AUTO_CONTINUAR := 1.5
 @export var id_perfil: String = ""
 ## Segundos tras los que la celebracion continua sola si nadie toca el boton (0 = nunca).
 @export var segundos_auto_continuar: float = 8.0
+## Economia de destellos (disenador-niveles HE-40 §2.3, PROVISIONAL): si el contenedor lo fija (>= 0),
+## la estacion celebra y registra ESTE monto en vez del calculo del motor (100 por estacion, 0 en retos
+## dorados), igual para los tres hermanos. -1 = cada motor calcula el suyo (demo, arneses QA). El
+## conteo por pieza/par/gota se sigue viendo durante el juego como feedback.
+@export var destellos_fijos: int = -1
 
 ## Contenido del nivel ya parseado (Dictionary). Vacio si la carga fallo.
 var nivel: Dictionary = {}
@@ -146,6 +151,7 @@ func celebrar(destellos: int, estrellitas: int = 0, linea_voz: String = "") -> v
 	if _celebrando or _completado_emitido:
 		return
 	_celebrando = true
+	destellos = _destellos_finales(destellos)
 	var estrellitas_visibles := _estrellitas_visibles(estrellitas)
 	# B1: el progreso queda guardado antes de la fiesta (salir siempre es seguro, GDD §6 regla 8).
 	_registrar_una_vez(destellos, estrellitas_visibles)
@@ -165,6 +171,10 @@ func celebrar(destellos: int, estrellitas: int = 0, linea_voz: String = "") -> v
 		audio.detener_voz()
 	_celebrando = false
 	emitir_completado(destellos, estrellitas_visibles)
+
+
+func _destellos_finales(destellos: int) -> int:
+	return destellos_fijos if destellos_fijos >= 0 else destellos
 
 
 ## Estrellitas solo en niveles Estrella jugados por quien tiene ese perfil (M4): un hermano
@@ -196,6 +206,7 @@ func emitir_completado(destellos: int, estrellitas: int = 0) -> void:
 	if _completado_emitido:
 		return
 	_completado_emitido = true
+	destellos = _destellos_finales(destellos)
 	_registrar_una_vez(destellos, estrellitas)
 	completado.emit(destellos)
 

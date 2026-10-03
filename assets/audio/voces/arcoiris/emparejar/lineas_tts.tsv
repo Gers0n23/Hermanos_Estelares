@@ -38,7 +38,7 @@ voces/arcoiris/emparejar/estrella/derrota_gag_01.wav	¡Jaja! ¡Las cartas se mar
 # personaje: coco
 voces/arcoiris/emparejar/estrella/intro_z1.wav	¡Sofía, doce parejas escondidas! Algunas se parecen mucho. A ver esa memoria de líder.
 voces/arcoiris/emparejar/estrella/intro_z2.wav	Esta vez cada color busca su receta. El verde va con azul y amarillo. ¡Piensa y recuerda!
-voces/arcoiris/emparejar/estrella/intro_z3.wav	¡Tríos! Tienes que dar vuelta tres cartas iguales para ganarlas. ¡Es mucho más difícil!
+voces/arcoiris/emparejar/estrella/intro_z3.wav	¡Tríos! Ahora hay que encontrar tres cartas iguales. ¡Un reto de campeona!
 voces/arcoiris/emparejar/estrella/intro_z4.wav	¡Mis cartas son traviesas! Cada vez que encuentras una pareja, dos cartas escondidas cambian de lugar. ¡Síguelas con la mirada!
 voces/arcoiris/emparejar/estrella/intro_z5.wav	¡El desafío final! Cada figura busca su sombra, pero cuidado: hay sombras dadas vuelta que parecen iguales. Y las cartas se mueven.
 voces/arcoiris/emparejar/estrella/intro_dorado.wav	¡Reto dorado! Dieciocho sombras traviesas y cartas que se mueven. ¿Te atreves, Sofía?
@@ -141,3 +141,7 @@ voces/arcoiris/emparejar/letras/d_dinosaurio.wav	¡De de dinosaurio!
 voces/arcoiris/emparejar/letras/letra_d.wav	La letra de.
 voces/arcoiris/emparejar/letras/z_zapato.wav	¡Zeta de zapato!
 voces/arcoiris/emparejar/letras/letra_z.wav	La letra zeta.
+# Guion 28-Sep-2026 (HE-40/HE-44): relleno de Windows (generar_voces_tts.ps1 -IgnorarPersonaje) hasta generar con fal.ai.
+# personaje: coco
+voces/arcoiris/emparejar/semilla/intro_z2.wav	¡Hola otra vez, Maxi! Figuras, dinosaurios y autos... ¡toca dos iguales!
+voces/arcoiris/emparejar/brote/intro_z3.wav	¡Nicole, en mi Bosque de Chupetines las cartas se esconden! Da vuelta dos y busca las iguales. Dicen que hay un corazón mágico...

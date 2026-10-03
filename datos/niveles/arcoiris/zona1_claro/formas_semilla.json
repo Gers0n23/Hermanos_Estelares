@@ -207,36 +207,36 @@
       ]
     },
     {
-      "id": "bandera_italia",
-      "voz_completa": "voces/arcoiris/formas/figuras/bandera_italia.wav",
+      "id": "autito",
+      "voz_completa": "voces/arcoiris/formas/figuras/autito.wav",
       "dificultad": 3,
-      "config": {
-        "exigir_color": true
-      },
       "piezas": [
         {
           "forma": "rectangulo",
-          "ancho": 195.0,
-          "alto": 390.0,
-          "color": "#009246",
-          "x": -195.0,
-          "y": 0.0
-        },
-        {
-          "forma": "rectangulo",
-          "ancho": 195.0,
-          "alto": 390.0,
-          "color": "#FFFFFF",
+          "ancho": 320.0,
+          "alto": 120.0,
+          "color": "#FF6B6B",
+          "decoracion": "ventanas",
           "x": 0.0,
-          "y": 0.0
+          "y": -55.0
         },
         {
-          "forma": "rectangulo",
-          "ancho": 195.0,
-          "alto": 390.0,
-          "color": "#CE2B37",
-          "x": 195.0,
-          "y": 0.0
+          "forma": "circulo",
+          "ancho": 110.0,
+          "alto": 110.0,
+          "color": "#FFCB3D",
+          "decoracion": "rueda",
+          "x": -95.0,
+          "y": 60.0
+        },
+        {
+          "forma": "circulo",
+          "ancho": 110.0,
+          "alto": 110.0,
+          "color": "#FFCB3D",
+          "decoracion": "rueda",
+          "x": 95.0,
+          "y": 60.0
         }
       ]
     }

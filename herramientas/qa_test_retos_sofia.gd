@@ -143,6 +143,15 @@ func _distribucion_ok(motor: Node) -> void:
 		var medida: Vector2 = Geo.caja(pieza.poligono()).size * pieza.escala_bandeja
 		ok = ok and bandeja.encloses(Rect2(pieza.casa - medida / 2.0, medida))
 	_check(ok, "piezas dentro de la bandeja (factor %.2f)" % motor._piezas[0].escala_bandeja)
+	if float(motor._cfg.get("escala_bandeja_fija", 0.0)) > 0.0:
+		# HE-40 #7: bandeja del reto dorado a escala fija 0,64 (celdas de 32 px), piezas acostadas.
+		_check(motor._piezas[0].escala_bandeja >= float(motor._cfg["escala_bandeja_fija"]) - 0.001, "reto dorado: bandeja a escala %.2f (celdas de %.0f px)" % [motor._piezas[0].escala_bandeja, motor._piezas[0].escala_bandeja * float(motor._marco["lado"])])
+		var acostadas := true
+		for pieza: PiezaEncajar in motor._piezas:
+			var caja := Geo.caja(pieza.poligono()).size
+			acostadas = acostadas and caja.x >= caja.y - 0.5
+		_check(acostadas, "reto dorado: todas las piezas entran acostadas (ancho >= alto)")
+		_check(motor._piezas.all(func(p: PiezaEncajar) -> bool: return p.solo_poligono), "reto dorado: zona tocable por la forma de la pieza (+16 px), sin circulo")
 
 
 ## Tangram libre: arma la silueta con la solucion del nivel, soltando cada pieza corrida unos px.
@@ -185,6 +194,7 @@ func _probar_tangram(motor: Node) -> void:
 			pista_probada = true
 			var antes: int = motor._encajados
 			motor._al_tocar_pista()
+			motor.confirmar_pista()
 			await _esperar(0.3)
 			_check(motor._encajados == antes + 1 and motor._pistas_usadas == 1, "pista: coloca una pieza correcta y gasta una estrellita")
 			continue
@@ -308,6 +318,8 @@ func _probar_marco(motor: Node, probar_derrotas: bool) -> void:
 		celdas_solucion += entrada["celdas"].size()
 	_check(celdas_solucion == marco["lista"].size(), "la solucion cubre las %d celdas del marco" % marco["lista"].size())
 	_distribucion_ok(motor)
+	if bool(motor._cfg.get("boton_espejo", false)):
+		await _probar_toques_marco(motor, solucion)
 	if probar_derrotas:
 		await _probar_derrotas_marco(motor)
 	var todas := true
@@ -442,8 +454,11 @@ func _probar_parejas(ruta: String) -> void:
 	_check(motor._intentos_usados == antes + 1 and motor._seleccionadas.is_empty(), "grupo equivocado -> fallo y el turno termina al primer error")
 	await _esperar(float(nivel.get("tiempo_volteo_ms", 900)) / 1000.0 + 0.2)
 
-	# Pista y regalo tras 2 derrotas.
+	# Pista (con globo de confirmacion, HE-40 #4) y regalo tras 2 derrotas.
 	motor._al_tocar_pista()
+	await _esperar(0.1)
+	_check(motor._pista_costo.globo_abierto() and motor._pistas_usadas == 0, "el 1.er toque a la pista abre el globo y no cobra")
+	motor.confirmar_pista()
 	await _esperar(0.2)
 	_check(motor._pistas_usadas == 1, "pista usada (resta estrellita)")
 	await _esperar(1.5)
@@ -550,3 +565,51 @@ func _probar_mapa() -> void:
 	if progreso != null:
 		progreso.perfil_seleccionado = previo
 	await _esperar(0.2)
+
+
+## Auditoria UX HE-40 R3/R4 en el reto dorado: (R4) con espejo, el 1.er toque a una pieza de la bandeja
+## solo la ELIGE (no la gira) y el espejo la voltea sin girarla; el 2.o toque ya gira. (R3) tocar una
+## pieza ya puesta en el marco solo le da un saltito: no sale del marco ni gira.
+func _probar_toques_marco(motor: Node, solucion: Array) -> void:
+	var libre: PiezaEncajar = null
+	for pieza: PiezaEncajar in motor._piezas:
+		if not pieza.colocada:
+			libre = pieza
+			break
+	if libre == null:
+		return
+	var giro := libre.rotacion_grados
+	libre.tomada.emit(libre)
+	libre.tocada.emit(libre)
+	await _esperar(0.25)
+	_check(motor._pieza_elegida == libre and is_equal_approx(libre.rotacion_grados, giro), "R4: el 1.er toque solo elige la pieza (no la gira)")
+	var volteada := libre.volteada
+	motor._al_tocar_espejo()
+	await _esperar(0.35)
+	_check(libre.volteada != volteada and is_equal_approx(libre.rotacion_grados, giro), "R4: el espejo la voltea sin girarla")
+	libre.tomada.emit(libre)
+	libre.tocada.emit(libre)
+	await _esperar(0.25)
+	_check(is_equal_approx(libre.rotacion_grados, wrapf(giro + motor._paso_rotacion, 0.0, 360.0)), "R4: el 2.o toque (ya elegida) la gira")
+	# R3: pieza puesta en el marco + toque sin moverse = saltito, sigue puesta y sin girar.
+	var entrada: Dictionary = solucion[0]
+	var pieza_sol: PiezaEncajar = null
+	for candidata: PiezaEncajar in motor._piezas:
+		if candidata.id == entrada["id"]:
+			pieza_sol = candidata
+	if pieza_sol == null or not motor._colocar_marco_en(pieza_sol, entrada["celdas"], true):
+		_check(false, "R3: no se pudo poner una pieza de la solucion")
+		return
+	var giro_puesta := pieza_sol.rotacion_grados
+	var celdas_antes: Array = motor._celdas_de.get(pieza_sol, []).duplicate()
+	pieza_sol.tomada.emit(pieza_sol)
+	pieza_sol.tocada.emit(pieza_sol)
+	await _esperar(0.3)
+	_check(pieza_sol.colocada and motor._celdas_de.get(pieza_sol, []) == celdas_antes and is_equal_approx(pieza_sol.rotacion_grados, giro_puesta), "R3: tocar una pieza puesta no la saca del marco ni la gira")
+	# Arrastrarla si la saca (para volver a ponerla en otro lado).
+	pieza_sol.tomada.emit(pieza_sol)
+	pieza_sol.movida.emit(pieza_sol, pieza_sol.centro_global() + Vector2(40, 0))
+	_check(not pieza_sol.colocada and not motor._celdas_de.has(pieza_sol), "R3: arrastrarla si la saca del marco")
+	motor.soltar_pieza(pieza_sol, Vector2(-500, -500))
+	pieza_sol.volver_a_casa()
+	await _esperar(0.4)

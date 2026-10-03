@@ -11,6 +11,7 @@
   "sin_fallo": true,
   "coco_imita_color": true,
   "guardar_dibujo": true,
+  "puntua_estrellitas": false,
   "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
   "paleta": [
     "rojo",
@@ -23,7 +24,8 @@
   "herramientas": [],
   "rellenar_con_toque": true,
   "tinte_coco": true,
-  "segundos_mostrar": 40,
+  "segundos_mostrar": 45,
+  "segundos_recordar_mostrar": 90,
   "laminas": [
     {
       "id": "coco",
@@ -804,6 +806,10 @@
     "muestramelo": [
       "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
       "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
+    ],
+    "me_lo_muestras": [
+      "voces/arcoiris/pinta/semilla/me_lo_muestras_01.wav",
+      "voces/arcoiris/pinta/semilla/me_lo_muestras_02.wav"
     ],
     "uso_sello_dino": "voces/arcoiris/pinta/comun/uso_sello_dino.wav",
     "uso_sello_auto": "voces/arcoiris/pinta/comun/uso_sello_auto.wav",

@@ -475,7 +475,7 @@ def mosaicos():
     estrella = ["111111", "112211", "122221", "112211", "121121", "111111"]
     M.append(mosaico("m_chile", {"1": "#0039A6", "2": "#FFFFFF", "3": "#D52B1E"},
                      grilla(lambda x, y: (estrella[y][x] if x < 6 else "2") if y < 6 else "3"),
-                     "¡Es la bandera de Chile!", "La estrella blanca se llama la estrella solitaria. El azul es el cielo, el blanco la nieve de la cordillera y el rojo, la sangre de los héroes.", ["chile", "bandera"]))
+                     "¡Es la bandera de Chile!", "La estrella blanca se llama la estrella solitaria. El azul es el cielo, el blanco la nieve de la cordillera y el rojo, el corazón valiente de los héroes.", ["chile", "bandera"]))
     M.append(mosaico("m_japon", {"1": "#FFFFFF", "2": "#BC002D"},
                      grilla(lambda x, y: "2" if math.hypot(x + 0.5 - 9, y + 0.5 - 6) <= 3.4 else "1"),
                      "¡Es la bandera de Japón!", "Japón es un país de islas, al otro lado del océano Pacífico. Su bandera es un sol rojo: le dicen el país del sol naciente.", ["mundo", "bandera"]))
@@ -599,7 +599,7 @@ def mosaicos():
 # ---------------------------------------------------------------- voces comunes
 COLORES_VOZ = {
     "rojo": "¡Rojo, como una frutilla!", "naranja": "¡Naranja, como una mandarina!", "amarillo": "¡Amarillo, como el sol!",
-    "verde": "¡Verde, como el pasto!", "azul": "¡Azul, como el mar!", "violeta": "¡Morado, como una uva!",
+    "verde": "¡Verde, como el pasto!", "azul": "¡Azul, como el mar!", "violeta": "¡Violeta, como una uva!",
     "rosa": "¡Rosado, como un algodón de azúcar!", "turquesa": "¡Turquesa, como una laguna mágica!", "blanco": "¡Blanco, como una nube!",
     "negro": "¡Negro, como la noche!", "cafe": "¡Café, como el chocolate!", "celeste": "¡Celeste, como el cielo!",
     "gris": "¡Gris, como una roca!", "verde_oscuro": "¡Verde oscuro, como un bosque!", "rosado": "¡Rosadito, como un chicle!",
@@ -609,26 +609,26 @@ for k, t in COLORES_VOZ.items():
     voz("colores/" + k, t)
 PEDIDOS = {
     "rojo": "¿Puedes pintar algo de color rojo?", "naranja": "Ahora, ¡pinta algo naranja!", "amarillo": "¿Me pintas algo amarillo?",
-    "verde": "¡Busca el verde y pinta algo!", "azul": "¿Qué tal algo de color azul?", "violeta": "Ahora quiero ver algo morado.",
+    "verde": "¡Busca el verde y pinta algo!", "azul": "¿Qué tal algo de color azul?", "violeta": "Ahora quiero ver algo violeta.",
     "rosa": "¡Pinta algo rosado, mi color favorito!", "turquesa": "¿Encuentras el turquesa? ¡Pinta algo con él!",
     "celeste": "Ahora, algo celeste, como el cielo.", "cafe": "¿Me pintas algo café?",
 }
 LOGRADO = {
     "rojo": "¡Siii, rojo! ¡Muy bien!", "naranja": "¡Naranja! ¡Perfecto!", "amarillo": "¡Amarillo! ¡Lo encontraste!",
-    "verde": "¡Verde! ¡Bravo!", "azul": "¡Azul! ¡Qué bien escuchas!", "violeta": "¡Morado! ¡Precioso!",
+    "verde": "¡Verde! ¡Bravo!", "azul": "¡Azul! ¡Qué bien escuchas!", "violeta": "¡Violeta! ¡Precioso!",
     "rosa": "¡Rosado! ¡Me encanta!", "turquesa": "¡Turquesa! ¡Lo lograste!", "celeste": "¡Celeste! ¡Muy bien!", "cafe": "¡Café! ¡Genial!",
 }
 for k in PEDIDOS:
     voz("pedidos/" + k, PEDIDOS[k]); voz("logrado/" + k, LOGRADO[k])
 PEDIDOS_MEZCLA = {
-    "verde": "¿Puedes preparar verde en tu platito?", "naranja": "Ahora, prepara naranja.", "violeta": "¿Te atreves con el morado?",
+    "verde": "¿Puedes preparar verde en tu platito?", "naranja": "Ahora, prepara naranja.", "violeta": "¿Te atreves con el violeta?",
     "rosado": "Quiero un rosado clarito. ¿Cómo lo harías?", "celeste": "¿Puedes hacer celeste?", "cafe": "Un desafío: ¡prepara café!",
     "lila": "El más difícil: ¡color lila!",
 }
 MEZCLAS = {
-    "verde": "¡Verde! Azul con amarillo.", "naranja": "¡Naranja! Rojo con amarillo.", "violeta": "¡Morado! Rojo con azul.",
+    "verde": "¡Verde! Azul con amarillo.", "naranja": "¡Naranja! Rojo con amarillo.", "violeta": "¡Violeta! Rojo con azul.",
     "cafe": "¡Café! Los tres colores juntos.", "rosado": "¡Rosado! Rojo con blanco.", "celeste": "¡Celeste! Azul con blanco.",
-    "lila": "¡Lila! Morado con blanco.", "verde_claro": "¡Verde clarito! Verde con blanco.", "amarillo_claro": "¡Amarillo clarito! Amarillo con blanco.",
+    "lila": "¡Lila! Violeta con blanco.", "verde_claro": "¡Verde clarito! Verde con blanco.", "amarillo_claro": "¡Amarillo clarito! Amarillo con blanco.",
     "gris": "¡Gris! Café con blanco.",
 }
 for k, t in PEDIDOS_MEZCLA.items():
@@ -668,6 +668,9 @@ def voces_perfil(perfil):
     }
     if perfil == "semilla":
         comunes["muestramelo"] = [voz(p + "muestramelo_01", "¿Me muestras tu dibujo? ¡Toca mi carita!"), voz(p + "muestramelo_02", "¡Qué lindo! Toca mi carita para mostrármelo.")]
+        # disenador-niveles HE-40 #11 + guionista 02-Oct-2026: si Maxi sigue pintando ~90 s con el boton ya
+        # a la vista, Coco pregunta una vez por hoja (sin auto-mostrar: el nino decide cuando).
+        comunes["me_lo_muestras"] = [voz(p + "me_lo_muestras_01", "¡Maxi! ¿Me lo muestras? ¡Toca mi carita!"), voz(p + "me_lo_muestras_02", "¡Ooh, qué colores! ¿Me lo muestras, Maxi? ¡Toca mi carita!")]
         comunes.update({"uso_sello_dino": V_DINO, "uso_sello_auto": V_AUTO, "dino_camina": V_DINO_CAMINA})
     if perfil == "brote":
         comunes["uso_pincel_corazon"] = voz(p + "uso_corazon", "¡Corazones! Te hago un corazón, Nicole.")
@@ -959,7 +962,9 @@ def nivel(zona_i, perfil, encargo, lineas, **kw):
     zona = ZONAS[zona_i]
     d = {"id_nivel": "arcoiris_z%d_pinta_%s" % (zona_i + 1, perfil), "motor": "lienzo_libre", "perfil": perfil,
          "planeta": "arcoiris", "zona": zona, "tema": "pinta con coco", "anfitrion_id": "coco", "fondo_id": "planeta_arcoiris",
-         "encargo": encargo, "sin_fallo": True, "coco_imita_color": True, "guardar_dibujo": True}
+         "encargo": encargo, "sin_fallo": True, "coco_imita_color": True, "guardar_dibujo": True,
+         # Pinta no tiene fallo ni puntaje: no cuenta para la zona "perfecta" (marco dorado, HE-40 §2.4).
+         "puntua_estrellitas": False}
     d.update(PATRONES)
     d.update(kw)
     voces = voces_perfil(perfil)
@@ -981,7 +986,7 @@ HERR_E = ["pincel", "pincel_grueso", "pincel_estrella", "purpurina", "goma"]
 
 niveles = []
 # Zona 1: lienzo libre CON TEMA (ficha motor-lienzo-libre.md §8, pedido del PO 27-Sep-2026)
-niveles.append(nivel(0, "semilla", "libre", voces_lienzo_tema("semilla"), paleta=PAL_SEM, segundos_mostrar=25, sellos_vivos=True,
+niveles.append(nivel(0, "semilla", "libre", voces_lienzo_tema("semilla"), paleta=PAL_SEM, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True,
                      temas=temas_de("semilla"), temas_por_partida=2, opciones_tema=1, al_menos_una="favorito",
                      voces_stickers=PREF_STICKERS))
 niveles.append(nivel(0, "brote", "libre", voces_lienzo_tema("brote"), paleta=PAL_COMP, color_inicial="rosa", lado_sello=104,
@@ -992,7 +997,7 @@ niveles.append(nivel(0, "estrella", "libre", voces_lienzo_tema("estrella"), pale
 niveles.append(nivel(1, "semilla", "sellos_escena", {"intro": voz("semilla/intro_sellos", "¡Mira esta pradera! Toca abajo un dinosaurio o un autito, y después toca la pradera para ponerlo."),
                                                       "siguiente": [voz("semilla/siguiente_sellos", "¡Otro lugar para jugar! ¡A poner dinosaurios!")]},
                      paleta=PAL_SEM, herramientas=["sello_dino", "sello_auto", "sello_estrella", "pincel"], herramienta_inicial="sello_dino",
-                     laminas=[pradera(), valle_dinos()], laminas_por_partida=2, segundos_mostrar=30, sellos_vivos=True))
+                     laminas=[pradera(), valle_dinos()], laminas_por_partida=2, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True))
 niveles.append(nivel(1, "brote", "colorear_zonas", {"intro": voz("brote/intro_zonas", "¡A colorear! Elige un color y toca una parte del dibujo para rellenarla. Arriba tienes un modelito, por si lo quieres copiar."),
                                                      "siguiente": [voz("brote/siguiente_01", "¡Otra lámina! ¿Qué será?"), voz("brote/siguiente_02", "¡Aquí viene otro dibujo!")]},
                      paleta=PAL_COMP, herramientas=["balde", "pincel", "pincel_corazon", "pincel_estrella"], herramienta_inicial="balde", modelo=True,
@@ -1003,7 +1008,7 @@ niveles.append(nivel(1, "estrella", "colorear_codigo", {"intro": voz("estrella/i
 # Zona 3
 niveles.append(nivel(2, "semilla", "pinta_coco", {"intro": voz("semilla/intro_pinta_coco", "¡Píntame, Maxi! Elige un color y toca mi cuerpito. ¡Voy a cambiar de color!"),
                                                    "siguiente": [voz("semilla/siguiente_amigo", "¡Ahora pinta a mi amigo!")]},
-                     paleta=PAL_SEM, herramientas=[], rellenar_con_toque=True, tinte_coco=True, segundos_mostrar=40,
+                     paleta=PAL_SEM, herramientas=[], rellenar_con_toque=True, tinte_coco=True, segundos_mostrar=45, segundos_recordar_mostrar=90,
                      laminas=[coco(), dino_amigo(), auto_amigo()], primera_fija=True, laminas_por_partida=2))
 niveles.append(nivel(2, "brote", "coco_pide", {"intro": voz("brote/intro_coco_pide", "¡Juguemos! Yo te pido un color y tú pintas algo con ese color. ¡Escucha bien!"),
                                                 "siguiente": [voz("brote/siguiente_coco_pide", "¡Otro dibujo! Escucha qué color te pido.")],
@@ -1026,7 +1031,7 @@ niveles.append(nivel(2, "estrella", "mezcla_paleta", {"intro": voz("estrella/int
 niveles.append(nivel(3, "semilla", "dedo_magico", {"intro": voz("semilla/intro_dedo_magico", "¡Dedo mágico! Pasa tu dedo por la hoja y escucha la música del arcoíris."),
                                                     "siguiente": [voz("semilla/siguiente_dedo", "¡Otra hoja mágica! ¡Pinta y escucha!")],
                                                     "uso_arcoiris": voz("semilla/uso_arcoiris", "¡Un arcoíris que canta!")},
-                     paleta=[], herramientas=[], herramienta_inicial="arcoiris", notas=True, radio_pincel=30, segundos_mostrar=25,
+                     paleta=[], herramientas=[], herramienta_inicial="arcoiris", notas=True, radio_pincel=30, segundos_mostrar=45, segundos_recordar_mostrar=90,
                      laminas=[{"id": "noche", "tipo": "papel", "papel": "#232851"}, {"id": "rosa", "tipo": "papel", "papel": "#FFE3F1"}], laminas_por_partida=2))
 niveles.append(nivel(3, "brote", "espejo", {"intro": voz("brote/intro_espejo", "¡Espejo mágico! Pinta en un lado y mira cómo aparece en el otro. Puedes seguir el dibujito, o inventar el tuyo."),
                                              "siguiente": [voz("brote/siguiente_espejo", "¡Otro espejo mágico!")]},
@@ -1040,7 +1045,7 @@ niveles.append(nivel(3, "estrella", "mandala", {"intro": voz("estrella/intro_man
 NAVE = "res://assets/sprites/nave/nave_estrella.png"
 niveles.append(nivel(4, "semilla", "decora_ala", {"intro": voz("semilla/intro_ala", "¡Esta es el ala de tu nave! Elige un color y toca el ala para pintarla.")},
                      paleta=PAL_SEM, herramientas=["balde", "sello_dino", "sello_auto", "sello_estrella"], herramienta_inicial="balde",
-                     laminas=[ala()], guardar_como="ala_nave", imagen_modelo=NAVE, modelo=True, segundos_mostrar=35, sellos_vivos=True))
+                     laminas=[ala()], guardar_como="ala_nave", imagen_modelo=NAVE, modelo=True, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True))
 niveles.append(nivel(4, "brote", "decora_ala", {"intro": voz("brote/intro_ala", "¡Decora el ala de la nave, Nicole! Rellena con el balde o pinta con tus pinceles.")},
                      paleta=PAL_COMP, color_inicial="rosa", etapas=[
                          {"encargo": "decora_ala", "herramientas": ["balde", "pincel", "pincel_corazon", "sello_corazon", "sello_estrella"], "herramienta_inicial": "balde",

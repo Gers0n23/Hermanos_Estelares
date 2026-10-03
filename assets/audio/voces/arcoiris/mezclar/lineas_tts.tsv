@@ -1,11 +1,11 @@
 # Voces PROVISIONALES del "Taller de pinturas de Coco" (motor mezclar, Sofia), TTS de Windows (Sabina).
 # Pasan a la voz oficial de Coco (fal.ai) cuando el PO apruebe el costo. Regenerar:
 # powershell -NoProfile -File herramientas/generar_voces_tts.ps1 -Lista assets/audio/voces/arcoiris/mezclar/lineas_tts.tsv
-voces/arcoiris/mezclar/intro_z1.wav	¡Sofía, ayúdame a pintar mi mural! Necesito tres latas de pintura. Te muestro la receta: memorízala. Después mueve el frasco para atrapar solo las gotas de la receta, ¡y agítalo para mezclar!
+voces/arcoiris/mezclar/intro_z1.wav	¡Sofía, ayúdame a pintar mi mural! Mira la receta y memorízala. Después mueve el frasco, atrapa solo esas gotas... ¡y agítalo para mezclar!
 voces/arcoiris/mezclar/intro_z2.wav	Ahora las recetas llevan más de una gota del mismo color. ¡Cuenta bien! Si entra una gota de más, la mezcla se ensucia.
 voces/arcoiris/mezclar/intro_z3.wav	¡Llegó el blanco, que aclara los colores! Y cuidado con la gota gris: déjala pasar, que ensucia la pintura.
 voces/arcoiris/mezclar/intro_z4.wav	Recetas de tres y cuatro gotas, y el frasco ya no te dice cuántas faltan. ¡Usa tu memoria!
-voces/arcoiris/mezclar/intro_z5.wav	¡Tres murales en la cima! Esta vez la receta se ve solo un ratito. ¡Memoriza rápido, maestra pintora!
+voces/arcoiris/mezclar/intro_z5.wav	¡Tres murales en la cima! Esta vez la receta se ve solo un ratito. ¡Mírala bien, maestra pintora!
 voces/arcoiris/mezclar/pista.wav	Mueve el frasco con el dedo y atrapa solo las gotas de la receta. Si no te acuerdas, toca la libreta, pero cuesta una estrellita.
 voces/arcoiris/mezclar/pista_agitar.wav	¡Agita el frasco de un lado a otro, o déjalo apretado, hasta que se llene el círculo dorado!
 voces/arcoiris/mezclar/memoriza.wav	¡Memorízala bien! Cuando estés lista, toca el visto bueno.
@@ -18,7 +18,9 @@ voces/arcoiris/mezclar/bien_03.wav	¡Justo!
 voces/arcoiris/mezclar/sucio_01.wav	¡Puaj! Esa gota no iba. Vaciamos el frasco y empezamos esta lata otra vez.
 voces/arcoiris/mezclar/sucio_02.wav	¡Uy, se ensució la mezcla! No importa: frasco limpio y a intentarlo de nuevo.
 voces/arcoiris/mezclar/sucio_03.wav	¡Glup! Esa no era de la receta. ¡Otra vez, que tú puedes!
-voces/arcoiris/mezclar/gris_01.wav	¡La gota gris ensució la pintura! Déjala pasar la próxima vez.
+voces/arcoiris/mezclar/gris_01.wav	¡Pfff, se coló la gota gris! La muy tramposa... la próxima la dejamos pasar.
+voces/arcoiris/mezclar/escupe_01.wav	¡Ptui! Al frasco no le gustó esa gotita. ¡Las demás se quedan!
+voces/arcoiris/mezclar/escupe_02.wav	¡Ups! El frasco hizo ptui y la escupió. Tu mezcla sigue a salvo.
 voces/arcoiris/mezclar/a_mezclar.wav	¡Receta completa! Ahora agita el frasco de un lado a otro para mezclar.
 voces/arcoiris/mezclar/lata_01.wav	¡Una lata lista!
 voces/arcoiris/mezclar/lata_02.wav	¡Qué color más lindo!
@@ -29,6 +31,10 @@ voces/arcoiris/mezclar/mural_pedido_02.wav	¡Otra pared para pintar! Estos son l
 voces/arcoiris/mezclar/entregar.wav	¡Tres latas! Pásamelas, ¡voy a pintar!
 voces/arcoiris/mezclar/mural_listo_01.wav	¡Mira mi mural! ¡Quedó precioso gracias a ti, Sofía!
 voces/arcoiris/mezclar/mural_listo_02.wav	¡Qué obra de arte! ¡Eres una pintora increíble!
+voces/arcoiris/mezclar/pista_z2.wav	Mira cuántas gotas de cada color lleva la receta. ¡A veces son dos iguales!
+voces/arcoiris/mezclar/pista_z3.wav	La gota gris es tramposa: déjala pasar y atrapa solo las de la receta.
+voces/arcoiris/mezclar/pista_z4.wav	Cuenta las gotas con los dedos mientras miras la receta. ¡Así no se te olvida ninguna!
+voces/arcoiris/mezclar/pista_z5.wav	Di los colores en voz alta mientras se ve la receta. ¡Así se te quedan en la cabeza!
 voces/arcoiris/mezclar/recetas/verde.wav	Verde: una gota amarilla y una gota azul.
 voces/arcoiris/mezclar/recetas/naranja.wav	Naranja: una gota roja y una gota amarilla.
 voces/arcoiris/mezclar/recetas/violeta.wav	Violeta: una gota roja y una gota azul.

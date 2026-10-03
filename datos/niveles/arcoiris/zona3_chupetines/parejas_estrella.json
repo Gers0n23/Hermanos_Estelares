@@ -21,6 +21,10 @@
     "columnas": 7
   },
   "limite_intentos": 42,
+  "umbrales_estrellitas": {
+    "tres": 17,
+    "dos": 42
+  },
   "grupos": [
     {
       "id_grupo": "estrella",

@@ -20,148 +20,152 @@
     "columnas": 6
   },
   "limite_intentos": 16,
+  "umbrales_estrellitas": {
+    "tres": 10,
+    "dos": 16
+  },
   "pares": [
     {
-      "id_pareja": "estrella",
+      "id_pareja": "perrito_cafe",
       "elemento_a": {
-        "figura": "estrella",
-        "color": "#FFCB3D",
-        "id": "estrella_a"
+        "figura": "perrito",
+        "color": "#B07A4F",
+        "id": "perrito_cafe_a"
       },
       "elemento_b": {
-        "figura": "estrella",
-        "color": "#FFCB3D",
-        "id": "estrella_b"
+        "figura": "perrito",
+        "color": "#B07A4F",
+        "id": "perrito_cafe_b"
       }
     },
     {
-      "id_pareja": "estrella_rosa",
+      "id_pareja": "perrito_crema",
       "elemento_a": {
-        "figura": "estrella",
-        "color": "#F26CA8",
-        "id": "estrella_rosa_a"
+        "figura": "perrito",
+        "color": "#F2E6D0",
+        "id": "perrito_crema_a"
       },
       "elemento_b": {
-        "figura": "estrella",
-        "color": "#F26CA8",
-        "id": "estrella_rosa_b"
+        "figura": "perrito",
+        "color": "#F2E6D0",
+        "id": "perrito_crema_b"
       }
     },
     {
-      "id_pareja": "corazon",
+      "id_pareja": "perrito_gris",
       "elemento_a": {
-        "figura": "corazon",
-        "color": "#F26CA8",
-        "id": "corazon_a"
+        "figura": "perrito",
+        "color": "#A7A9B4",
+        "id": "perrito_gris_a"
       },
       "elemento_b": {
-        "figura": "corazon",
-        "color": "#F26CA8",
-        "id": "corazon_b"
+        "figura": "perrito",
+        "color": "#A7A9B4",
+        "id": "perrito_gris_b"
       }
     },
     {
-      "id_pareja": "corazon_azul",
+      "id_pareja": "gatito_naranjo",
       "elemento_a": {
-        "figura": "corazon",
-        "color": "#4A8BE0",
-        "id": "corazon_azul_a"
-      },
-      "elemento_b": {
-        "figura": "corazon",
-        "color": "#4A8BE0",
-        "id": "corazon_azul_b"
-      }
-    },
-    {
-      "id_pareja": "circulo",
-      "elemento_a": {
-        "figura": "circulo",
-        "color": "#4A8BE0",
-        "id": "circulo_a"
-      },
-      "elemento_b": {
-        "figura": "circulo",
-        "color": "#4A8BE0",
-        "id": "circulo_b"
-      }
-    },
-    {
-      "id_pareja": "triangulo",
-      "elemento_a": {
-        "figura": "triangulo",
-        "color": "#7DD87A",
-        "id": "triangulo_a"
-      },
-      "elemento_b": {
-        "figura": "triangulo",
-        "color": "#7DD87A",
-        "id": "triangulo_b"
-      }
-    },
-    {
-      "id_pareja": "cuadrado",
-      "elemento_a": {
-        "figura": "cuadrado",
+        "figura": "gatito",
         "color": "#FF9F4A",
-        "id": "cuadrado_a"
+        "id": "gatito_naranjo_a"
       },
       "elemento_b": {
-        "figura": "cuadrado",
+        "figura": "gatito",
         "color": "#FF9F4A",
-        "id": "cuadrado_b"
+        "id": "gatito_naranjo_b"
       }
     },
     {
-      "id_pareja": "luna",
+      "id_pareja": "gatito_gris",
       "elemento_a": {
-        "figura": "luna",
+        "figura": "gatito",
+        "color": "#A7A9B4",
+        "id": "gatito_gris_a"
+      },
+      "elemento_b": {
+        "figura": "gatito",
+        "color": "#A7A9B4",
+        "id": "gatito_gris_b"
+      }
+    },
+    {
+      "id_pareja": "gatito_amarillo",
+      "elemento_a": {
+        "figura": "gatito",
+        "color": "#FFE38A",
+        "id": "gatito_amarillo_a"
+      },
+      "elemento_b": {
+        "figura": "gatito",
+        "color": "#FFE38A",
+        "id": "gatito_amarillo_b"
+      }
+    },
+    {
+      "id_pareja": "gerbo_dorado",
+      "elemento_a": {
+        "figura": "gerbo",
+        "color": "#F2C98E",
+        "id": "gerbo_dorado_a"
+      },
+      "elemento_b": {
+        "figura": "gerbo",
+        "color": "#F2C98E",
+        "id": "gerbo_dorado_b"
+      }
+    },
+    {
+      "id_pareja": "gerbo_cafe",
+      "elemento_a": {
+        "figura": "gerbo",
+        "color": "#C9A27A",
+        "id": "gerbo_cafe_a"
+      },
+      "elemento_b": {
+        "figura": "gerbo",
+        "color": "#C9A27A",
+        "id": "gerbo_cafe_b"
+      }
+    },
+    {
+      "id_pareja": "pony_rosado",
+      "elemento_a": {
+        "figura": "pony",
+        "color": "#F7A8D0",
+        "id": "pony_rosado_a"
+      },
+      "elemento_b": {
+        "figura": "pony",
+        "color": "#F7A8D0",
+        "id": "pony_rosado_b"
+      }
+    },
+    {
+      "id_pareja": "pony_lila",
+      "elemento_a": {
+        "figura": "pony",
         "color": "#B48CE8",
-        "id": "luna_a"
+        "id": "pony_lila_a"
       },
       "elemento_b": {
-        "figura": "luna",
+        "figura": "pony",
         "color": "#B48CE8",
-        "id": "luna_b"
+        "id": "pony_lila_b"
       }
     },
     {
-      "id_pareja": "gota",
+      "id_pareja": "pony_celeste",
       "elemento_a": {
-        "figura": "gota",
-        "color": "#45C6C0",
-        "id": "gota_a"
+        "figura": "pony",
+        "color": "#6FD6E8",
+        "id": "pony_celeste_a"
       },
       "elemento_b": {
-        "figura": "gota",
-        "color": "#45C6C0",
-        "id": "gota_b"
-      }
-    },
-    {
-      "id_pareja": "rombo",
-      "elemento_a": {
-        "figura": "rombo",
-        "color": "#FF6B6B",
-        "id": "rombo_a"
-      },
-      "elemento_b": {
-        "figura": "rombo",
-        "color": "#FF6B6B",
-        "id": "rombo_b"
-      }
-    },
-    {
-      "id_pareja": "flor",
-      "elemento_a": {
-        "figura": "flor",
-        "color": "#FFB25B",
-        "id": "flor_a"
-      },
-      "elemento_b": {
-        "figura": "flor",
-        "color": "#FFB25B",
-        "id": "flor_b"
+        "figura": "pony",
+        "color": "#6FD6E8",
+        "id": "pony_celeste_b"
       }
     },
     {

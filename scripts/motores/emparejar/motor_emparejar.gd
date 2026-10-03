@@ -37,6 +37,7 @@ signal carta_intercambiada(a: CartaEmparejar, b: CartaEmparejar)
 ## B4 (auditoria UX 18-Jul-2026): la senal de salida `salir_solicitado()` vive desde HE-10
 ## en el contrato base (`minijuego_base.gd`), comun a todos los motores.
 
+const PistaConCosto := preload("res://scripts/ui/pista_con_costo.gd")
 const CARTA_ESCENA: PackedScene = preload("res://escenas/minijuegos/emparejar/carta_emparejar.tscn")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 const Icono := preload("res://scripts/motores/emparejar/icono_emparejar.gd")
@@ -110,6 +111,15 @@ var _pistas_usadas := 0
 var _derrotas := 0
 var _regalo_dado := false
 var _boton_pista: Button
+var _pista_costo: Control
+## Umbrales de estrellitas del nivel ({"tres": N, "dos": M} en fallos; vacio = regla vieja).
+var _umbrales: Dictionary = {}
+## Nicole (HE-40 mecanicas #11): el par fallido se ve al menos esto aunque toque impaciente; el toque
+## queda en espera (la carta pulsa al instante) y se aplica al cumplirse el minimo.
+var _visible_minimo := 0.0
+var _no_es_este_desde := 0.0
+var _toques_en_espera: Array[CartaEmparejar] = []
+var _espera_programada := false
 ## Rondas (Maxi y Nicole). `_conf` es el nivel con la ronda actual aplicada; sin rondas es el nivel.
 var _conf: Dictionary = {}
 var _rondas: Array = []
@@ -180,6 +190,9 @@ func _configurar_desde_nivel() -> void:
 	_tamano_grupo = maxi(2, int(_conf.get("tamano_grupo", 2)))
 	_intercambios = int(_conf.get("intercambios_tras_acierto", 0))
 	_bailes = int(_conf.get("cartas_bailan", 0))
+	_visible_minimo = float(_conf.get("visible_minimo_ms", 600 if obtener_perfil_dificultad() == "brote" else 0)) / 1000.0
+	var umbrales = _conf.get("umbrales_estrellitas", nivel.get("umbrales_estrellitas", {}))
+	_umbrales = umbrales if umbrales is Dictionary else {}
 	_pares_totales = _grupos_del_nivel().size()
 
 
@@ -297,6 +310,17 @@ func _al_tocar_carta(carta: CartaEmparejar) -> void:
 	if carta.esta_acertada or _en_gag or _en_transicion:
 		return
 
+	if _procesando and _oculto and _visible_minimo > 0.0:
+		var falta := _visible_minimo - (Time.get_ticks_msec() / 1000.0 - _no_es_este_desde)
+		if falta > 0.0:
+			carta.pulso_espera()
+			if not _toques_en_espera.has(carta):
+				_toques_en_espera.append(carta)
+			if not _espera_programada:
+				_espera_programada = true
+				_despues(falta, _procesar_toque_en_espera)
+			return
+
 	if _procesando:
 		# Tocar cualquier carta mientras se ve un "no es este" tapa el par al tiro y cuenta como
 		# el primer toque de la jugada siguiente (si es una de las dos, queda a la vista).
@@ -365,6 +389,7 @@ func _resolver_par() -> void:
 	_actualizar_depuracion()
 
 	_procesando = true
+	_no_es_este_desde = Time.get_ticks_msec() / 1000.0
 	_no_es_este = grupo
 	_id_resolucion += 1
 	var id := _id_resolucion
@@ -372,6 +397,15 @@ func _resolver_par() -> void:
 	await get_tree().create_timer(espera).timeout
 	if id == _id_resolucion:
 		_terminar_no_es_este()
+
+
+func _procesar_toque_en_espera() -> void:
+	_espera_programada = false
+	var cartas := _toques_en_espera.duplicate()
+	_toques_en_espera.clear()
+	for carta in cartas:
+		if is_instance_valid(carta):
+			_al_tocar_carta(carta)
 
 
 func _terminar_no_es_este(excepto: CartaEmparejar = null) -> void:
@@ -394,7 +428,7 @@ func _terminar_no_es_este(excepto: CartaEmparejar = null) -> void:
 
 ## Brote (ficha de motor §5): tras varios fallos seguidos, Coco "muestra un secretito":
 ## un par pendiente se destapa un momento con halo dorado.
-func _dar_ayuda(con_voz := true) -> void:
+func _dar_ayuda(con_voz := true, preferido := "") -> void:
 	var pendientes := {}
 	for carta in _cartas:
 		if not carta.esta_acertada:
@@ -404,7 +438,8 @@ func _dar_ayuda(con_voz := true) -> void:
 	if pendientes.is_empty():
 		return
 	var claves := pendientes.keys()
-	for carta in pendientes[claves[randi() % claves.size()]]:
+	var elegido = preferido if pendientes.has(preferido) else claves[randi() % claves.size()]
+	for carta in pendientes[elegido]:
 		carta.revelar_momento(SEGUNDOS_AYUDA)
 	_reaccion_anfitriona("salta")
 	if con_voz:
@@ -524,31 +559,35 @@ func _crear_boton_pista() -> void:
 			Figura.contornear(icono, chispa, 2.0))
 	_boton_pista.pressed.connect(_al_tocar_pista)
 	_boton_pista.hide()
+	# Medidor de estrellitas y globo de confirmacion bajo el boton (HE-40 #4).
+	_pista_costo = PistaConCosto.crear(padre, _boton_pista, _calcular_estrellitas)
 
 
-## Pista de Sofia: Coco destapa un momento una pareja pendiente y se gasta una estrellita.
+## Pista de Sofia: Coco destapa un momento una pareja pendiente (la companera de la carta que ya tiene
+## arriba, si hay: HE-40 #12). El 1.er toque abre el globo "¿te ayudo?"; tocarlo gasta la estrellita
+## (HE-40 #4). Con 1 sola estrellita va directa y de regalo.
 func _al_tocar_pista() -> void:
 	if _en_gag or _pares_acertados >= _pares_totales:
 		return
-	reproducir_sfx(SFX_TOQUE)
-	if _procesando:
-		_terminar_no_es_este()
-	_pistas_usadas += 1
-	_dar_ayuda(false)
-	_reproducir_voz("pista_usada", _linea("pista_usada"))
-	var estrella := Figura.new()
-	estrella.figura = "estrella"
-	estrella.con_cara = false
-	estrella.color = DORADO
-	estrella.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	estrella.size = Vector2.ONE * 46.0
-	_efectos.add_child(estrella)
-	estrella.global_position = _boton_pista.global_position + Vector2(25, 25)
-	var tween := estrella.create_tween().set_parallel(true)
-	tween.tween_property(estrella, "position:y", estrella.position.y + 90.0, 0.9).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_property(estrella, "modulate:a", 0.0, 0.9).set_delay(0.3)
-	tween.chain().tween_callback(estrella.queue_free)
-	_actualizar_depuracion()
+	_pista_costo.pedir(func(gratis: bool) -> bool:
+		if _en_gag or _pares_acertados >= _pares_totales:
+			return false
+		var preferido := ""
+		if not _seleccionadas.is_empty() and not _procesando:
+			preferido = str(_seleccionadas[0].id_pareja)
+		if _procesando:
+			_terminar_no_es_este()
+		_pistas_usadas += 1
+		_dar_ayuda(false, preferido)
+		if not gratis:
+			_reproducir_voz("pista_usada", _linea("pista_usada"))
+		_actualizar_depuracion()
+		return true)
+
+
+## Equivale a tocar el globo de confirmacion de la pista (arneses QA).
+func confirmar_pista() -> void:
+	_pista_costo.confirmar()
 
 
 func _despues(segundos: float, accion: Callable) -> void:
@@ -917,14 +956,22 @@ func _encender_marcador(indice: int) -> void:
 	_estallido(marcador.global_position + marcador.size / 2.0, 8, [DORADO, TURQUESA], 0.7)
 
 
-## Puntaje 1-3 estrellitas del perfil Estrella (ficha motor-emparejar §7). Regla PROVISIONAL
-## hasta que `disenador-niveles` defina umbrales en el nivel: ganar siempre da al menos 1.
-## Sin limite de intentos -> 3; tras una derrota-gag -> 1; con la mitad o mas de los intentos
-## sobrantes -> 3; si no -> 2. `celebrar()` solo las muestra en niveles Estrella.
+## Puntaje 1-3 estrellitas del perfil Estrella (ficha motor-emparejar §7). Con `umbrales_estrellitas`
+## (HE-40): fallos <= tres -> 3, <= dos -> 2, si no 1. Sin el campo, la regla vieja: sin limite -> 3;
+## con la mitad o mas de los intentos sobrantes -> 3; si no -> 2. Tras una derrota-gag -> 1. Ganar
+## siempre da al menos 1. `celebrar()` solo las muestra en niveles Estrella.
 func _calcular_estrellitas() -> int:
 	var base := 3
 	if _derrota_disparada:
 		base = 1
+	elif not _umbrales.is_empty():
+		# disenador-niveles HE-40 §2.2: fallos <= tres -> 3, <= dos -> 2, si no 1.
+		if _intentos_usados <= int(_umbrales.get("tres", 0)):
+			base = 3
+		elif _intentos_usados <= int(_umbrales.get("dos", 0)):
+			base = 2
+		else:
+			base = 1
 	elif _limite_intentos != null:
 		var sobrantes: int = max(int(_limite_intentos) - _intentos_usados, 0)
 		base = 3 if sobrantes * 2 >= int(_limite_intentos) else 2

@@ -20,6 +20,10 @@
     "columnas": 8
   },
   "limite_intentos": 32,
+  "umbrales_estrellitas": {
+    "tres": 21,
+    "dos": 32
+  },
   "intercambios_tras_acierto": 1,
   "pares": [
     {

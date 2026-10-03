@@ -61,12 +61,16 @@
   },
   "voces": {
     "carpeta": "res://assets/audio/voces/recuerdos/",
-    "nota": "Lineas de Cometa del guion docs/guiones/recuerdos.md (id recuerdos_X -> recuerdos/X.ogg o .wav). Todas PENDIENTES de audio: mientras no existan, suena silencio y la animacion hace el trabajo.",
+    "nota": "Lineas de Cometa del guion docs/guiones/recuerdos.md (id recuerdos_X -> recuerdos/X.ogg o .wav). 28-Sep-2026: RELLENO con el TTS de Windows (assets/audio/voces/recuerdos/lineas_tts.tsv), pendientes de la voz oficial (pendientes_fal.txt). `entrega_zona`: al completar una zona, tras el regalo del anfitrion (guion §1.2b). `pie` de cada recuerdo: pie de foto narrado (guion §8); no suena si `pie_en_audio` es true (la familia ya lo dijo en su grabacion).",
     "entrega": [
       "recuerdos_entrega_01",
       "recuerdos_entrega_02",
       "recuerdos_entrega_03",
       "recuerdos_entrega_04"
+    ],
+    "entrega_zona": [
+      "recuerdos_entrega_zona_01",
+      "recuerdos_entrega_zona_02"
     ],
     "primera": [
       "recuerdos_primera_01",
@@ -117,6 +121,8 @@
       "album": "maxi",
       "orden": 1,
       "edad": "recién nacido",
+      "pie": "recuerdos_pie_recien_nacido",
+      "pie_en_audio": false,
       "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
@@ -130,6 +136,8 @@
       "album": "maxi",
       "orden": 2,
       "edad": "1 mes",
+      "pie": "recuerdos_pie_1_mes",
+      "pie_en_audio": false,
       "sugerencia": "primer baño",
       "momento": {
         "tipo": "zona_completa",
@@ -144,6 +152,8 @@
       "album": "maxi",
       "orden": 3,
       "edad": "3 meses",
+      "pie": "recuerdos_pie_3_meses",
+      "pie_en_audio": false,
       "sugerencia": "primera sonrisa",
       "momento": {
         "tipo": "zona_completa",
@@ -158,6 +168,8 @@
       "album": "maxi",
       "orden": 4,
       "edad": "5 meses",
+      "pie": "recuerdos_pie_5_meses",
+      "pie_en_audio": false,
       "sugerencia": "gateando",
       "momento": {
         "tipo": "zona_completa",
@@ -172,6 +184,8 @@
       "album": "maxi",
       "orden": 5,
       "edad": "6 meses",
+      "pie": "recuerdos_pie_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "primer cumpleaños",
       "momento": {
         "tipo": "zona_completa",
@@ -186,6 +200,8 @@
       "album": "maxi",
       "orden": 6,
       "edad": "8 meses",
+      "pie": "recuerdos_pie_8_meses",
+      "pie_en_audio": false,
       "sugerencia": "primeros pasos",
       "momento": {
         "tipo": "zona_completa",
@@ -200,6 +216,8 @@
       "album": "maxi",
       "orden": 7,
       "edad": "10 meses",
+      "pie": "recuerdos_pie_10_meses",
+      "pie_en_audio": false,
       "sugerencia": "con sus hermanos",
       "momento": {
         "tipo": "zona_completa",
@@ -214,6 +232,8 @@
       "album": "maxi",
       "orden": 8,
       "edad": "1 año",
+      "pie": "recuerdos_pie_1_ano",
+      "pie_en_audio": false,
       "sugerencia": "jugando",
       "momento": {
         "tipo": "zona_completa",
@@ -228,6 +248,8 @@
       "album": "maxi",
       "orden": 9,
       "edad": "1 año y 3 meses",
+      "pie": "recuerdos_pie_1_ano_3_meses",
+      "pie_en_audio": false,
       "sugerencia": "en el jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -242,6 +264,8 @@
       "album": "maxi",
       "orden": 10,
       "edad": "1 año y 6 meses",
+      "pie": "recuerdos_pie_1_ano_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "disfrazado/a",
       "momento": {
         "tipo": "zona_completa",
@@ -256,6 +280,8 @@
       "album": "maxi",
       "orden": 11,
       "edad": "1 año y 9 meses",
+      "pie": "recuerdos_pie_1_ano_9_meses",
+      "pie_en_audio": false,
       "sugerencia": "vacaciones",
       "momento": {
         "tipo": "zona_completa",
@@ -270,6 +296,8 @@
       "album": "maxi",
       "orden": 12,
       "edad": "2 años",
+      "pie": "recuerdos_pie_2_anos",
+      "pie_en_audio": false,
       "sugerencia": "en el colegio o jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -284,6 +312,8 @@
       "album": "maxi",
       "orden": 13,
       "edad": "2 años",
+      "pie": "recuerdos_pie_2_anos",
+      "pie_en_audio": false,
       "sugerencia": "cumpleaños reciente",
       "momento": {
         "tipo": "zona_completa",
@@ -298,6 +328,8 @@
       "album": "maxi",
       "orden": 14,
       "edad": "hoy",
+      "pie": "recuerdos_pie_hoy",
+      "pie_en_audio": false,
       "sugerencia": "hoy",
       "momento": {
         "tipo": "viaje",
@@ -312,6 +344,8 @@
       "album": "nicole",
       "orden": 1,
       "edad": "recién nacida",
+      "pie": "recuerdos_pie_recien_nacido",
+      "pie_en_audio": false,
       "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
@@ -325,6 +359,8 @@
       "album": "nicole",
       "orden": 2,
       "edad": "3 meses",
+      "pie": "recuerdos_pie_3_meses",
+      "pie_en_audio": false,
       "sugerencia": "primer baño",
       "momento": {
         "tipo": "zona_completa",
@@ -339,6 +375,8 @@
       "album": "nicole",
       "orden": 3,
       "edad": "6 meses",
+      "pie": "recuerdos_pie_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "primera sonrisa",
       "momento": {
         "tipo": "zona_completa",
@@ -353,6 +391,8 @@
       "album": "nicole",
       "orden": 4,
       "edad": "9 meses",
+      "pie": "recuerdos_pie_9_meses",
+      "pie_en_audio": false,
       "sugerencia": "gateando",
       "momento": {
         "tipo": "zona_completa",
@@ -367,6 +407,8 @@
       "album": "nicole",
       "orden": 5,
       "edad": "1 año",
+      "pie": "recuerdos_pie_1_ano",
+      "pie_en_audio": false,
       "sugerencia": "primer cumpleaños",
       "momento": {
         "tipo": "zona_completa",
@@ -381,6 +423,8 @@
       "album": "nicole",
       "orden": 6,
       "edad": "1 año y 6 meses",
+      "pie": "recuerdos_pie_1_ano_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "primeros pasos",
       "momento": {
         "tipo": "zona_completa",
@@ -395,6 +439,8 @@
       "album": "nicole",
       "orden": 7,
       "edad": "2 años",
+      "pie": "recuerdos_pie_2_anos",
+      "pie_en_audio": false,
       "sugerencia": "con sus hermanos",
       "momento": {
         "tipo": "zona_completa",
@@ -409,6 +455,8 @@
       "album": "nicole",
       "orden": 8,
       "edad": "2 años y 6 meses",
+      "pie": "recuerdos_pie_2_anos_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "jugando",
       "momento": {
         "tipo": "zona_completa",
@@ -423,6 +471,8 @@
       "album": "nicole",
       "orden": 9,
       "edad": "3 años",
+      "pie": "recuerdos_pie_3_anos",
+      "pie_en_audio": false,
       "sugerencia": "en el jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -437,6 +487,8 @@
       "album": "nicole",
       "orden": 10,
       "edad": "3 años y 6 meses",
+      "pie": "recuerdos_pie_3_anos_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "disfrazado/a",
       "momento": {
         "tipo": "zona_completa",
@@ -451,6 +503,8 @@
       "album": "nicole",
       "orden": 11,
       "edad": "4 años",
+      "pie": "recuerdos_pie_4_anos",
+      "pie_en_audio": false,
       "sugerencia": "vacaciones",
       "momento": {
         "tipo": "zona_completa",
@@ -465,6 +519,8 @@
       "album": "nicole",
       "orden": 12,
       "edad": "4 años y 6 meses",
+      "pie": "recuerdos_pie_4_anos_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "en el colegio o jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -479,6 +535,8 @@
       "album": "nicole",
       "orden": 13,
       "edad": "5 años",
+      "pie": "recuerdos_pie_5_anos",
+      "pie_en_audio": false,
       "sugerencia": "cumpleaños reciente",
       "momento": {
         "tipo": "zona_completa",
@@ -493,6 +551,8 @@
       "album": "nicole",
       "orden": 14,
       "edad": "hoy",
+      "pie": "recuerdos_pie_hoy",
+      "pie_en_audio": false,
       "sugerencia": "hoy",
       "momento": {
         "tipo": "viaje",
@@ -507,6 +567,8 @@
       "album": "sofia",
       "orden": 1,
       "edad": "recién nacida",
+      "pie": "recuerdos_pie_recien_nacido",
+      "pie_en_audio": false,
       "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
@@ -520,6 +582,8 @@
       "album": "sofia",
       "orden": 2,
       "edad": "3 meses",
+      "pie": "recuerdos_pie_3_meses",
+      "pie_en_audio": false,
       "sugerencia": "primer baño",
       "momento": {
         "tipo": "zona_completa",
@@ -534,6 +598,8 @@
       "album": "sofia",
       "orden": 3,
       "edad": "6 meses",
+      "pie": "recuerdos_pie_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "primera sonrisa",
       "momento": {
         "tipo": "zona_completa",
@@ -548,6 +614,8 @@
       "album": "sofia",
       "orden": 4,
       "edad": "1 año",
+      "pie": "recuerdos_pie_1_ano",
+      "pie_en_audio": false,
       "sugerencia": "gateando",
       "momento": {
         "tipo": "zona_completa",
@@ -562,6 +630,8 @@
       "album": "sofia",
       "orden": 5,
       "edad": "1 año y 6 meses",
+      "pie": "recuerdos_pie_1_ano_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "primer cumpleaños",
       "momento": {
         "tipo": "zona_completa",
@@ -576,6 +646,8 @@
       "album": "sofia",
       "orden": 6,
       "edad": "2 años",
+      "pie": "recuerdos_pie_2_anos",
+      "pie_en_audio": false,
       "sugerencia": "primeros pasos",
       "momento": {
         "tipo": "zona_completa",
@@ -590,6 +662,8 @@
       "album": "sofia",
       "orden": 7,
       "edad": "3 años",
+      "pie": "recuerdos_pie_3_anos",
+      "pie_en_audio": false,
       "sugerencia": "con sus hermanos",
       "momento": {
         "tipo": "zona_completa",
@@ -604,6 +678,8 @@
       "album": "sofia",
       "orden": 8,
       "edad": "4 años",
+      "pie": "recuerdos_pie_4_anos",
+      "pie_en_audio": false,
       "sugerencia": "jugando",
       "momento": {
         "tipo": "zona_completa",
@@ -618,6 +694,8 @@
       "album": "sofia",
       "orden": 9,
       "edad": "5 años",
+      "pie": "recuerdos_pie_5_anos",
+      "pie_en_audio": false,
       "sugerencia": "en el jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -632,6 +710,8 @@
       "album": "sofia",
       "orden": 10,
       "edad": "6 años",
+      "pie": "recuerdos_pie_6_anos",
+      "pie_en_audio": false,
       "sugerencia": "disfrazado/a",
       "momento": {
         "tipo": "zona_completa",
@@ -646,6 +726,8 @@
       "album": "sofia",
       "orden": 11,
       "edad": "6 años y 6 meses",
+      "pie": "recuerdos_pie_6_anos_6_meses",
+      "pie_en_audio": false,
       "sugerencia": "vacaciones",
       "momento": {
         "tipo": "zona_completa",
@@ -660,6 +742,8 @@
       "album": "sofia",
       "orden": 12,
       "edad": "7 años",
+      "pie": "recuerdos_pie_7_anos",
+      "pie_en_audio": false,
       "sugerencia": "en el colegio o jardín",
       "momento": {
         "tipo": "zona_completa",
@@ -674,6 +758,8 @@
       "album": "sofia",
       "orden": 13,
       "edad": "8 años",
+      "pie": "recuerdos_pie_8_anos",
+      "pie_en_audio": false,
       "sugerencia": "cumpleaños reciente",
       "momento": {
         "tipo": "zona_completa",
@@ -688,6 +774,8 @@
       "album": "sofia",
       "orden": 14,
       "edad": "hoy",
+      "pie": "recuerdos_pie_hoy",
+      "pie_en_audio": false,
       "sugerencia": "hoy",
       "momento": {
         "tipo": "viaje",
@@ -702,6 +790,8 @@
       "album": "familia",
       "orden": 1,
       "sugerencia": "los cinco antes del secuestro (la foto de la billetera)",
+      "pie": "recuerdos_pie_familia_billetera",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "primera_apertura"
       }
@@ -711,6 +801,8 @@
       "album": "familia",
       "orden": 2,
       "sugerencia": "mamá y papá con Sofía bebé",
+      "pie": "recuerdos_pie_familia_mama_papa_guagua",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "arcoiris",
@@ -724,6 +816,8 @@
       "album": "familia",
       "orden": 3,
       "sugerencia": "los tres hermanos juntos por primera vez",
+      "pie": "recuerdos_pie_familia_hermanos_primera_vez",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "animalia",
@@ -737,6 +831,8 @@
       "album": "familia",
       "orden": 4,
       "sugerencia": "un paseo en familia",
+      "pie": "recuerdos_pie_familia_paseo",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "melodia",
@@ -750,6 +846,8 @@
       "album": "familia",
       "orden": 5,
       "sugerencia": "un cumpleaños en familia",
+      "pie": "recuerdos_pie_familia_cumpleanos",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "cuenta_cuentas",
@@ -763,6 +861,8 @@
       "album": "familia",
       "orden": 6,
       "sugerencia": "vacaciones en Chile",
+      "pie": "recuerdos_pie_familia_vacaciones_chile",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "letralandia",
@@ -776,6 +876,8 @@
       "album": "familia",
       "orden": 7,
       "sugerencia": "una Navidad o 18 de septiembre",
+      "pie": "recuerdos_pie_familia_navidad",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "pieza_nave",
         "planeta": "corazon",
@@ -789,6 +891,8 @@
       "album": "familia",
       "orden": 8,
       "sugerencia": "los tres hermanos hoy",
+      "pie": "recuerdos_pie_familia_hermanos_hoy",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "viaje",
         "id": "viaje_final",
@@ -802,6 +906,8 @@
       "album": "familia",
       "orden": 9,
       "sugerencia": "los cinco juntos (o los tres jugando este juego)",
+      "pie": "recuerdos_pie_familia_todos_juntos",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "rescate_final",
         "requiere": "res://escenas/historia/rescate_final.tscn"

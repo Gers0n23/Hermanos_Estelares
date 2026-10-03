@@ -11,7 +11,9 @@ extends "res://scripts/base/minijuego_base.gd"
 ##    libreta la vuelve a mostrar, pero cuesta una estrellita.
 ## 3. Caen gotas desde arriba y Sofia mueve el FRASCO (arrastrar, o tocar donde quiere que vaya)
 ##    para atrapar solo las de la receta. Una gota que no va (color equivocado, una de mas o la
-##    gris) ensucia la mezcla: gag de "¡puaj!", el frasco se vacia y esa lata se empieza de nuevo.
+##    gris) hace "¡puaj!": la 1.a de la lata solo sale escupida (las capas buenas se quedan) y
+##    recien la `fallos_para_reiniciar_lata`-esima vacia el frasco y esa lata se empieza de nuevo
+##    (disenador-mecanicas HE-40 #13 y UX R6, 28-Sep-2026, PROVISIONAL).
 ##    Nunca se pierden las latas ya hechas ni se termina el nivel (GDD §6, regla de oro 2).
 ## 4. Con la receta completa se tapa el frasco y se AGITA (arrastrar de lado a lado, o mantener
 ##    presionado): las capas de colores se funden en el color final y sale una lata.
@@ -25,6 +27,7 @@ signal lata_lista(color_id: String)
 signal mural_terminado(indice: int)
 
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
+const PistaConCosto := preload("res://scripts/ui/pista_con_costo.gd")
 
 ## Pigmentos y colores resultantes. Los resultados son la mezcla real aproximada (RYB).
 const PALETA := {
@@ -58,7 +61,9 @@ const RECETAS := {
 	"chocolate": {"rojo": 2, "amarillo": 1, "azul": 1},
 }
 const ORDEN_PIGMENTOS := ["rojo", "amarillo", "azul", "blanco"]
-const DIBUJOS_MURAL := ["flor", "casa", "cohete", "pez", "mariposa", "arcoiris"]
+## Sin bichos: Nicole les tiene miedo y Sofia siente rechazo (perfil-jugadores; HE-40 R1/R2). "pony"
+## reemplaza al antiguo dibujo con alas (disenador-niveles 28-Sep-2026, PROVISIONAL).
+const DIBUJOS_MURAL := ["flor", "casa", "cohete", "pez", "pony", "arcoiris"]
 
 ## Zona de juego: las gotas caen dentro de AREA y el frasco recorre su parte baja.
 const AREA := Rect2(250, 128, 880, 560)
@@ -118,6 +123,11 @@ var _numero_murales := 2
 var _dibujos: Array = []
 var _libreta_cuesta := true
 var _umbrales: Dictionary = {}
+## Dos gotas cerca de la parte alta nunca caen a menos de esto en x (atrapar una sin tragarse otra).
+var _separacion_gotas := 170.0
+## Gotas equivocadas en una misma lata hasta que el frasco se vacia (1 = vaciar a la primera).
+var _fallos_reiniciar := 1
+var _errores_lata := 0
 
 # Estado
 var _fase := "intro"  ## intro | receta | atrapar | sucio | agitar | lata | mural | fin
@@ -162,6 +172,7 @@ var _base_anfitriona := Vector2.ZERO
 var _salto_anfitriona := 0.0
 var _tween_anfitriona: Tween
 var _fuente: Font
+var _pista_costo: Control
 
 
 func _ready() -> void:
@@ -175,6 +186,8 @@ func _ready() -> void:
 	_boton_cometa.pressed.connect(_al_tocar_cometa)
 	_boton_salir.pressed.connect(func() -> void: salir_solicitado.emit())
 	_boton_libreta.pressed.connect(_al_tocar_libreta)
+	# Medidor de estrellitas y globo de confirmacion bajo la libreta (HE-40 #4).
+	_pista_costo = PistaConCosto.crear(_boton_libreta.get_parent(), _boton_libreta, _calcular_estrellitas)
 	_boton_listo.pressed.connect(_al_tocar_listo)
 	_anfitriona.mouse_filter = Control.MOUSE_FILTER_STOP
 	_anfitriona.gui_input.connect(_al_tocar_anfitriona)
@@ -214,7 +227,7 @@ func _process(delta: float) -> void:
 		_mover_gotas(delta)
 	elif _fase == "agitar" and _presionado and absf(_ultimo_puntero.x - _frasco_x) < FRASCO_ANCHO:
 		# Alternativa a sacudir: mantener presionado el frasco tambien mezcla (mas lento).
-		_sumar_agitado(delta * 0.3)
+		_sumar_agitado(delta * 0.4)
 	if _tarjeta.visible and _tarjeta_hasta > 0.0 and _ahora() >= _tarjeta_hasta:
 		_cerrar_tarjeta()
 	for s in _salpicaduras.duplicate():
@@ -272,6 +285,8 @@ func _configurar_desde_nivel() -> void:
 	_dibujos = nivel.get("dibujos_mural", DIBUJOS_MURAL.duplicate())
 	_libreta_cuesta = bool(nivel.get("libreta_cuesta_estrellita", true))
 	_umbrales = nivel.get("umbrales_estrellitas", {"tres": 2, "dos": 5})
+	_separacion_gotas = maxf(0.0, float(nivel.get("separacion_min_gotas_px", 170.0)))
+	_fallos_reiniciar = maxi(1, int(nivel.get("fallos_para_reiniciar_lata", 1)))
 	_mazo = []
 
 
@@ -345,6 +360,7 @@ func _siguiente_lata() -> void:
 	_color_pedido = str(_pedidos_mural[_latas.size()])
 	_receta = (_recetas[_color_pedido] as Dictionary).duplicate()
 	_capas.clear()
+	_errores_lata = 0
 	_agitado = 0.0
 	_tapa = 0.0
 	_suciedad = 0.0
@@ -371,6 +387,12 @@ func _mover_frasco_a(x: float) -> void:
 # ---------------------------------------------------------------------------
 
 func _crear_gota() -> void:
+	# Lejos de la gota anterior y de las que siguen arriba (franja de 200 px), para que se puedan
+	# distinguir y atrapar de a una sin tragarse una vecina. Si no hay lugar, espera un poquito.
+	var x := _x_libre_para_gota()
+	if is_nan(x):
+		_espera_spawn = 0.15
+		return
 	var faltan := faltantes()
 	var color := ""
 	var forzar_util := _sin_util >= 2 and not faltan.is_empty()
@@ -384,21 +406,38 @@ func _crear_gota() -> void:
 		_sin_util = 0
 	else:
 		_sin_util += 1
-	# Lejos de la gota anterior, para que se puedan distinguir y atrapar de a una.
-	var x := 0.0
-	for intento in 8:
-		x = randf_range(AREA.position.x + 70.0, AREA.end.x - 70.0)
-		if absf(x - _ultima_x_spawn) > 170.0:
-			break
 	_ultima_x_spawn = x
 	var vel := _velocidad * (1.0 + randf_range(-_variacion, _variacion))
 	_gotas.append({"color": color, "pos": Vector2(x, Y_APARICION), "vel": vel, "radio": _tam_gota * 0.5,
 		"giro": randf_range(-0.12, 0.12), "nace": 0.0})
 
 
+## Una x donde la gota nueva queda a >= `_separacion_gotas` de la anterior y de toda gota que siga
+## en la franja alta (200 px bajo la aparicion). NAN si ahora no hay lugar (se reintenta enseguida).
+func _x_libre_para_gota() -> float:
+	for intento in 24:
+		var x := randf_range(AREA.position.x + 70.0, AREA.end.x - 70.0)
+		var distancia := absf(x - _ultima_x_spawn)
+		for gota in _gotas:
+			if float(gota["pos"].y) - Y_APARICION < 200.0:
+				distancia = minf(distancia, absf(x - float(gota["pos"].x)))
+		if distancia >= _separacion_gotas:
+			return x
+	return NAN
+
+
 func _mover_gotas(delta: float) -> void:
 	for gota in _gotas.duplicate():
 		var y_antes: float = gota["pos"].y
+		if gota.has("escupida"):
+			# Gota escupida: sube, se frena y cae de lado, lejos de la boca del frasco.
+			gota["vel"] += 900.0 * delta
+			gota["pos"].x += float(gota["escupida"]) * 170.0 * delta
+			gota["pos"].y += gota["vel"] * delta
+			if gota["pos"].y > Y_SUELO:
+				_gotas.erase(gota)
+				_salpicaduras.append({"pos": Vector2(gota["pos"].x, Y_SUELO - 6.0), "color": _color(gota["color"]), "t": 0.0})
+			continue
 		gota["pos"].y += gota["vel"] * delta
 		gota["nace"] = minf(1.0, gota["nace"] + delta * 5.0)
 		var y_ahora: float = gota["pos"].y
@@ -413,13 +452,17 @@ func _mover_gotas(delta: float) -> void:
 			_salpicaduras.append({"pos": Vector2(gota["pos"].x, Y_SUELO - 6.0), "color": _color(gota["color"]), "t": 0.0})
 
 
-## Resultado de que una gota caiga dentro del frasco: "sirve", "completa" o "sucio".
+## Resultado de que una gota caiga dentro del frasco: "sirve", "completa", "escupida" o "sucio".
 func _atrapar(color: String) -> String:
 	var faltan := faltantes()
 	_capas.append(color)
 	var centro := Vector2(_frasco_x, Y_BOCA + 20.0)
 	if not faltan.has(color):
 		gota_atrapada.emit(color, false)
+		_errores_lata += 1
+		if _errores_lata < _fallos_reiniciar:
+			_escupir(color)
+			return "escupida"
 		_ensuciar(color)
 		return "sucio"
 	gota_atrapada.emit(color, true)
@@ -453,9 +496,32 @@ func _ensuciar(color: String) -> void:
 	_actualizar_depuracion()
 
 
+## "¡Puaj!" corto (0,6 s): el frasco escupe la gota equivocada hacia arriba con un rebote y las capas
+## buenas se quedan. Cuenta un fallo para las estrellitas (el reto no baja), pero no se pierde nada.
+func _escupir(color: String) -> void:
+	_capas.pop_back()
+	_fallos += 1
+	_fallos_mural += 1
+	reproducir_sfx(SFX_PUAJ)
+	_reaccion_anfitriona("rie")
+	var clave := "gris" if color == "gris" and _linea("gris") != "" else ("escupe" if _linea("escupe") != "" else "sucio")
+	_reproducir_voz(clave, _linea_al_azar(clave), true)
+	var tween := create_tween()
+	tween.tween_property(self, "_suciedad", 0.6, 0.15)
+	tween.tween_property(self, "_suciedad", 0.0, 0.45)
+	_bamboleo = 0.25
+	# La gota sale volando hacia arriba y cae fuera del frasco (se aplasta en el suelo como las demas).
+	var lado := -1.0 if randf() < 0.5 else 1.0
+	_gotas.append({"color": color, "pos": Vector2(_frasco_x + lado * 30.0, Y_BOCA - 10.0), "vel": -260.0,
+		"radio": _tam_gota * 0.5, "giro": lado * 0.3, "nace": 1.0, "escupida": lado})
+	_estallido(Vector2(_frasco_x, Y_BOCA), 6, [_color(color), Color.WHITE], 0.7)
+	_actualizar_depuracion()
+
+
 func _vaciar_frasco() -> void:
 	_estallido(Vector2(_frasco_x, Y_BOCA + 40.0), 10, [_color("sucio"), Color("#6B5B4A"), Color.WHITE], 1.0)
 	_capas.clear()
+	_errores_lata = 0
 
 
 func _seguir_tras_ensuciar() -> void:
@@ -599,24 +665,38 @@ func _cerrar_tarjeta() -> void:
 		_fase = previa if previa in ["atrapar", "agitar"] else "atrapar"
 
 
-## Libreta: vuelve a mostrar la receta de la lata en curso. Cuesta una estrellita (sin bajar de 1).
+## Libreta: vuelve a mostrar la receta de la lata en curso. Cuesta una estrellita (sin bajar de 1):
+## el 1.er toque abre el globo "¿te ayudo?" y tocarlo la cobra; con 1 sola estrellita es gratis
+## (HE-40 #4, componente comun `pista_con_costo.gd`).
 func _al_tocar_libreta() -> void:
 	if not (_fase in ["atrapar", "agitar"]) or _color_pedido == "":
 		reproducir_sfx(SFX_TOQUE)
 		return
-	reproducir_sfx(SFX_TOQUE)
+	if not _libreta_cuesta:
+		reproducir_sfx(SFX_TOQUE)
+		_abrir_libreta(true)
+		return
+	_pista_costo.pedir(_abrir_libreta)
+
+
+func _abrir_libreta(gratis: bool) -> bool:
+	if not (_fase in ["atrapar", "agitar"]) or _color_pedido == "":
+		return false
 	var antes := 0.0
 	if _libreta_cuesta:
 		_revisiones += 1
-		_estrellita_que_cae(_boton_libreta.position + Vector2(25, 25))
-		var ruta := _linea("revisar")
-		_reproducir_voz("revisar", ruta, true)
-		antes = clampf(_duracion_voz(ruta), 0.5, 4.0) if ruta != "" else 0.0
+		if not gratis:
+			var ruta := _linea("revisar")
+			_reproducir_voz("revisar", ruta, true)
+			antes = clampf(_duracion_voz(ruta), 0.5, 4.0) if ruta != "" else 0.0
+		else:
+			antes = 1.2
 	_mostrar_tarjeta("revisar", antes)
 	_despues(antes, func() -> void:
 		if _tarjeta.visible and _tarjeta_modo == "revisar":
 			_reproducir_voz("receta", _voz_receta(_color_pedido), true))
 	_actualizar_depuracion()
+	return true
 
 
 # ---------------------------------------------------------------------------
@@ -776,6 +856,14 @@ func fallos() -> int:
 	return _fallos
 
 
+func capas() -> Array:
+	return _capas.duplicate()
+
+
+func errores_lata() -> int:
+	return _errores_lata
+
+
 func revisiones() -> int:
 	return _revisiones
 
@@ -798,6 +886,11 @@ func confirmar_receta() -> void:
 
 func tocar_libreta() -> void:
 	_al_tocar_libreta()
+
+
+## Equivale a tocar el globo de confirmacion de la libreta (arneses QA).
+func confirmar_pista() -> void:
+	_pista_costo.confirmar()
 
 
 ## Simula que una gota de `color` cae dentro del frasco. Devuelve "sirve", "completa", "sucio" o "".
@@ -1060,7 +1153,7 @@ func _centro_region(dibujo: String, i: int) -> Vector2:
 		"casa": [Vector2(0.5, 0.66), Vector2(0.5, 0.3), Vector2(0.5, 0.75)],
 		"cohete": [Vector2(0.5, 0.48), Vector2(0.5, 0.2), Vector2(0.5, 0.86)],
 		"pez": [Vector2(0.45, 0.5), Vector2(0.82, 0.5), Vector2(0.44, 0.24)],
-		"mariposa": [Vector2(0.5, 0.32), Vector2(0.5, 0.7), Vector2(0.5, 0.5)],
+		"pony": [Vector2(0.48, 0.55), Vector2(0.4, 0.4), Vector2(0.36, 0.56)],
 		"arcoiris": [Vector2(0.5, 0.3), Vector2(0.5, 0.45), Vector2(0.5, 0.6)],
 	}
 	return (centros.get(dibujo, centros["flor"]) as Array)[i]
@@ -1098,12 +1191,23 @@ func _dibujar_mural(lienzo: CanvasItem, rect: Rect2, dibujo: String, colores: Ar
 			regiones[2].append(PackedVector2Array([p.call(0.3, 0.33), p.call(0.44, 0.12), p.call(0.58, 0.33)]))
 			regiones[2].append(Figura._elipse(p.call(0.1, 0.34), escala * 0.08, escala * 0.08))
 			regiones[2].append(Figura._elipse(p.call(0.16, 0.14), escala * 0.06, escala * 0.06))
-		"mariposa":
-			regiones[0].append(Figura._elipse(p.call(0.33, 0.34), rect.size.x * 0.16, rect.size.y * 0.2))
-			regiones[0].append(Figura._elipse(p.call(0.67, 0.34), rect.size.x * 0.16, rect.size.y * 0.2))
-			regiones[1].append(Figura._elipse(p.call(0.36, 0.68), rect.size.x * 0.12, rect.size.y * 0.15))
-			regiones[1].append(Figura._elipse(p.call(0.64, 0.68), rect.size.x * 0.12, rect.size.y * 0.15))
-			regiones[2].append(Figura._elipse(p.call(0.5, 0.5), rect.size.x * 0.045, rect.size.y * 0.32))
+		"pony":
+			# Pony kawaii de perfil: cuerpo y cabeza (lata 1), crin y cola (lata 2), corazon en el
+			# anca y cascos (lata 3).
+			regiones[0].append(Figura._elipse(p.call(0.46, 0.55), rect.size.x * 0.23, rect.size.y * 0.17))
+			regiones[0].append(PackedVector2Array([p.call(0.58, 0.5), p.call(0.64, 0.26), p.call(0.77, 0.3), p.call(0.7, 0.6)]))
+			regiones[0].append(Figura._elipse(p.call(0.74, 0.29), rect.size.x * 0.11, rect.size.y * 0.12))
+			regiones[0].append(Figura._elipse(p.call(0.84, 0.35), rect.size.x * 0.07, rect.size.y * 0.075))
+			regiones[0].append(PackedVector2Array([p.call(0.69, 0.2), p.call(0.71, 0.08), p.call(0.76, 0.19)]))
+			for x in [0.3, 0.38, 0.52, 0.6]:
+				regiones[0].append(_rect_poly(Rect2(p.call(x, 0.64), rect.size * Vector2(0.055, 0.2))))
+			for c in [Vector2(0.66, 0.17), Vector2(0.63, 0.27), Vector2(0.61, 0.38), Vector2(0.6, 0.48)]:
+				regiones[1].append(Figura._elipse(p.call(c.x, c.y), escala * 0.075, escala * 0.075))
+			for c in [Vector2(0.22, 0.46), Vector2(0.17, 0.58), Vector2(0.19, 0.72)]:
+				regiones[1].append(Figura._elipse(p.call(c.x, c.y), escala * 0.08, escala * 0.08))
+			regiones[2].append(Figura.poligono("corazon", p.call(0.36, 0.54), escala * 0.09))
+			for x in [0.3, 0.38, 0.52, 0.6]:
+				regiones[2].append(_rect_poly(Rect2(p.call(x - 0.005, 0.83), rect.size * Vector2(0.065, 0.06))))
 		"arcoiris":
 			for i in 3:
 				var radio_ext := rect.size.x * (0.4 - i * 0.09)
@@ -1136,6 +1240,11 @@ func _dibujar_mural(lienzo: CanvasItem, rect: Rect2, dibujo: String, colores: Ar
 					if trozo.size() >= 3:
 						lienzo.draw_colored_polygon(trozo, color)
 			Figura.contornear(lienzo, forma, trazo)
+	if dibujo == "pony":
+		# Ojo grande y brillante de pony kawaii (siempre visible, aunque no este pintado).
+		var ojo_pony: Vector2 = p.call(0.76, 0.27)
+		lienzo.draw_circle(ojo_pony, escala * 0.035, COLOR_CONTORNO)
+		lienzo.draw_circle(ojo_pony + Vector2(-escala * 0.01, -escala * 0.012), escala * 0.012, Color.WHITE)
 	if dibujo == "flor" or dibujo == "pez":
 		var ojo: Vector2 = p.call(0.5, 0.36) if dibujo == "flor" else p.call(0.32, 0.46)
 		Figura.dibujar_cara(lienzo, ojo, escala * (0.16 if dibujo == "flor" else 0.2), float(pintado[1]) >= 1.0)

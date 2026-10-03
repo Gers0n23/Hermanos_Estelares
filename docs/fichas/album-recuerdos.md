@@ -204,3 +204,22 @@ Pendiente de la validación HE-44. Lo que cambió respecto de lo propuesto arrib
   hasta el jardín o el colegio y hoy.
 - Los audios, con nombre `<id>.ogg` (o WAV, que el pipeline convierte), de 3-10 s cada uno.
 - Opcional: la edad o el momento de cada foto, para el pie de foto narrado.
+
+## Validación HE-44 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado con cambios, sin bloqueantes.** El detalle está en
+`docs/validaciones/HE-44_disenador-mecanicas.md`. Los cambios mayores son:
+
+- **Toques sobre la foto**: no la cierran hasta que termina la voz de la familia. Mientras tanto dan una
+  reacción juguetona. En Semilla, la foto nunca se cierra con un toque.
+- **Apertura automática**: ocurre después de la línea de Cometa (mínimo 3 s, tope 6 s). Cometa se
+  apaga en 0,15 s en vez de cortarse.
+- **Salida de la foto**: queda 1,5 s a la vista después del audio. Sin audio, 4,5 s.
+
+## Implementación dev-godot 28-Sep-2026 (validaciones HE-44, PROVISIONAL)
+
+- Voces de Cometa del guion (`recuerdos.md`, 77 líneas) con relleno TTS de Windows en `assets/audio/voces/recuerdos/*.wav` (TSV propio, todas en `pendientes_fal.txt`).
+- Catálogo: `entrega_zona` (tras el regalo del anfitrión) y `pie` / `pie_en_audio` por recuerdo; el pie suena antes del audio de la familia en la entrega y en el álbum.
+- Entrega: el sobre se abre tras la frase de Cometa (+0,4 s, entre 3 y 6 s) con invitación a tocar a los 1,5 s; si el niño abre antes, Cometa se desvanece en 0,15 s; flash de polaroid; la foto no se cierra antes de terminar su audio (toques = reacción juguetona), se va sola 1,5 s después (4,5 s sin audio); en Semilla nunca se cierra por toque; ícono con 0,8 s de halo.
+- Mapa: la entrega espera la señal `celebracion_zona_terminada` (tope 15 s), no se desbloquea si ya se lanzó un juego y bloquea los toques del mapa mientras está activa. Marco dorado alcanzable (Pinta no cuenta).
+- Álbum: tocar fuera de la foto la cierra.

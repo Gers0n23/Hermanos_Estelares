@@ -30,6 +30,8 @@
     "tres": 2,
     "dos": 5
   },
+  "separacion_min_gotas_px": 190,
+  "fallos_para_reiniciar_lata": 2,
   "tamano_gota": 84,
   "libreta_cuesta_estrellita": true,
   "lineas_voz": {
@@ -53,6 +55,10 @@
     ],
     "gris": [
       "voces/arcoiris/mezclar/gris_01.wav"
+    ],
+    "escupe": [
+      "voces/arcoiris/mezclar/escupe_01.wav",
+      "voces/arcoiris/mezclar/escupe_02.wav"
     ],
     "a_mezclar": "voces/arcoiris/mezclar/a_mezclar.wav",
     "lata_lista": [

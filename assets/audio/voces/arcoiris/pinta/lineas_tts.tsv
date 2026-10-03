@@ -45,7 +45,7 @@ voces/arcoiris/pinta/colores/turquesa.wav	¡Turquesa, como una laguna mágica!
 voces/arcoiris/pinta/colores/verde.wav	¡Verde, como el pasto!
 voces/arcoiris/pinta/colores/verde_claro.wav	¡Verde clarito, como la menta!
 voces/arcoiris/pinta/colores/verde_oscuro.wav	¡Verde oscuro, como un bosque!
-voces/arcoiris/pinta/colores/violeta.wav	¡Morado, como una uva!
+voces/arcoiris/pinta/colores/violeta.wav	¡Violeta, como una uva!
 voces/arcoiris/pinta/comun/arcoiris_01.wav	¡Muchos colores! ¡Mi cresta se volvió arcoíris!
 voces/arcoiris/pinta/comun/arcoiris_02.wav	¡Wow! ¡Soy una camaleona arcoíris!
 voces/arcoiris/pinta/comun/conectado_01.wav	¡Los conectaste!
@@ -63,7 +63,7 @@ voces/arcoiris/pinta/comun/uso_sello_estrella.wav	¡Una estrella brillante!
 voces/arcoiris/pinta/datos/m_alemania.wav	Alemania está en Europa y tiene castillos que parecen de cuento.
 voces/arcoiris/pinta/datos/m_argentina.wav	Argentina es vecina de Chile: la cordillera de los Andes está entre los dos países. ¿Viste el sol del centro?
 voces/arcoiris/pinta/datos/m_brasil.wav	Brasil es el país más grande de Sudamérica. Ahí está la selva del Amazonas.
-voces/arcoiris/pinta/datos/m_chile.wav	La estrella blanca se llama la estrella solitaria. El azul es el cielo, el blanco la nieve de la cordillera y el rojo, la sangre de los héroes.
+voces/arcoiris/pinta/datos/m_chile.wav	La estrella blanca se llama la estrella solitaria. El azul es el cielo, el blanco la nieve de la cordillera y el rojo, el corazón valiente de los héroes.
 voces/arcoiris/pinta/datos/m_colombia.wav	Colombia tiene playas en dos océanos, montañas altísimas y muchísimas flores.
 voces/arcoiris/pinta/datos/m_francia.wav	En Francia está la torre Eiffel, en la ciudad de París.
 voces/arcoiris/pinta/datos/m_italia.wav	Italia tiene forma de bota. ¡Ahí nacieron la pizza y los tallarines!
@@ -142,17 +142,17 @@ voces/arcoiris/pinta/logrado/rojo.wav	¡Siii, rojo! ¡Muy bien!
 voces/arcoiris/pinta/logrado/rosa.wav	¡Rosado! ¡Me encanta!
 voces/arcoiris/pinta/logrado/turquesa.wav	¡Turquesa! ¡Lo lograste!
 voces/arcoiris/pinta/logrado/verde.wav	¡Verde! ¡Bravo!
-voces/arcoiris/pinta/logrado/violeta.wav	¡Morado! ¡Precioso!
+voces/arcoiris/pinta/logrado/violeta.wav	¡Violeta! ¡Precioso!
 voces/arcoiris/pinta/mezclas/amarillo_claro.wav	¡Amarillo clarito! Amarillo con blanco.
 voces/arcoiris/pinta/mezclas/cafe.wav	¡Café! Los tres colores juntos.
 voces/arcoiris/pinta/mezclas/celeste.wav	¡Celeste! Azul con blanco.
 voces/arcoiris/pinta/mezclas/gris.wav	¡Gris! Café con blanco.
-voces/arcoiris/pinta/mezclas/lila.wav	¡Lila! Morado con blanco.
+voces/arcoiris/pinta/mezclas/lila.wav	¡Lila! Violeta con blanco.
 voces/arcoiris/pinta/mezclas/naranja.wav	¡Naranja! Rojo con amarillo.
 voces/arcoiris/pinta/mezclas/rosado.wav	¡Rosado! Rojo con blanco.
 voces/arcoiris/pinta/mezclas/verde.wav	¡Verde! Azul con amarillo.
 voces/arcoiris/pinta/mezclas/verde_claro.wav	¡Verde clarito! Verde con blanco.
-voces/arcoiris/pinta/mezclas/violeta.wav	¡Morado! Rojo con azul.
+voces/arcoiris/pinta/mezclas/violeta.wav	¡Violeta! Rojo con azul.
 voces/arcoiris/pinta/pedidos/amarillo.wav	¿Me pintas algo amarillo?
 voces/arcoiris/pinta/pedidos/azul.wav	¿Qué tal algo de color azul?
 voces/arcoiris/pinta/pedidos/cafe.wav	¿Me pintas algo café?
@@ -162,18 +162,20 @@ voces/arcoiris/pinta/pedidos/rojo.wav	¿Puedes pintar algo de color rojo?
 voces/arcoiris/pinta/pedidos/rosa.wav	¡Pinta algo rosado, mi color favorito!
 voces/arcoiris/pinta/pedidos/turquesa.wav	¿Encuentras el turquesa? ¡Pinta algo con él!
 voces/arcoiris/pinta/pedidos/verde.wav	¡Busca el verde y pinta algo!
-voces/arcoiris/pinta/pedidos/violeta.wav	Ahora quiero ver algo morado.
+voces/arcoiris/pinta/pedidos/violeta.wav	Ahora quiero ver algo violeta.
 voces/arcoiris/pinta/pedidos_mezcla/cafe.wav	Un desafío: ¡prepara café!
 voces/arcoiris/pinta/pedidos_mezcla/celeste.wav	¿Puedes hacer celeste?
 voces/arcoiris/pinta/pedidos_mezcla/lila.wav	El más difícil: ¡color lila!
 voces/arcoiris/pinta/pedidos_mezcla/naranja.wav	Ahora, prepara naranja.
 voces/arcoiris/pinta/pedidos_mezcla/rosado.wav	Quiero un rosado clarito. ¿Cómo lo harías?
 voces/arcoiris/pinta/pedidos_mezcla/verde.wav	¿Puedes preparar verde en tu platito?
-voces/arcoiris/pinta/pedidos_mezcla/violeta.wav	¿Te atreves con el morado?
+voces/arcoiris/pinta/pedidos_mezcla/violeta.wav	¿Te atreves con el violeta?
 voces/arcoiris/pinta/semilla/intro_ala.wav	¡Esta es el ala de tu nave! Elige un color y toca el ala para pintarla.
 voces/arcoiris/pinta/semilla/intro_dedo_magico.wav	¡Dedo mágico! Pasa tu dedo por la hoja y escucha la música del arcoíris.
 voces/arcoiris/pinta/semilla/intro_pinta_coco.wav	¡Píntame, Maxi! Elige un color y toca mi cuerpito. ¡Voy a cambiar de color!
 voces/arcoiris/pinta/semilla/intro_sellos.wav	¡Mira esta pradera! Toca abajo un dinosaurio o un autito, y después toca la pradera para ponerlo.
+voces/arcoiris/pinta/semilla/me_lo_muestras_01.wav	¡Maxi! ¿Me lo muestras? ¡Toca mi carita!
+voces/arcoiris/pinta/semilla/me_lo_muestras_02.wav	¡Ooh, qué colores! ¿Me lo muestras, Maxi? ¡Toca mi carita!
 voces/arcoiris/pinta/semilla/mostrar_01.wav	¡Wow, Maxi! ¡Qué lindo!
 voces/arcoiris/pinta/semilla/mostrar_02.wav	¡Me encanta! ¡Está precioso!
 voces/arcoiris/pinta/semilla/mostrar_03.wav	¡Bravo, Maxi! ¡Qué colores!

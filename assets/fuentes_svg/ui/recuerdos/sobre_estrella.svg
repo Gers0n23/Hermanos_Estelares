@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="190" viewBox="0 0 260 190">
+  <!-- Sobre-estrella CERRADO (entrega de un recuerdo, ficha §6). PROVISIONAL: pendiente del PO.
+       Lienzo = TAM_SOBRE de scripts/ui/entrega_recuerdo.gd (260 x 190). Pivote: centro (130, 95).
+       Mismos colores que el dibujo por codigo actual: cuerpo lila #E9DDFF, solapa #CDB8FA,
+       sello estrella dorada #FFCB3D con carita feliz. Grupos nombrados para animar por piezas:
+       cuerpo / pliegues / solapa / sello_estrella (el sello puede latir por separado). -->
+  <defs>
+    <linearGradient id="g_lila" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#F6F0FF"/>
+      <stop offset="0.45" stop-color="#E9DDFF"/>
+      <stop offset="1" stop-color="#D3C0F6"/>
+    </linearGradient>
+    <linearGradient id="g_solapa" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#DCCBFF"/>
+      <stop offset="0.5" stop-color="#CDB8FA"/>
+      <stop offset="1" stop-color="#B89DEE"/>
+    </linearGradient>
+    <linearGradient id="g_amarillo" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF1A6"/>
+      <stop offset="0.45" stop-color="#FFD23F"/>
+      <stop offset="1" stop-color="#F2A92C"/>
+    </linearGradient>
+  </defs>
+  <g id="cuerpo">
+    <rect x="6" y="8" width="248" height="170" rx="22" fill="#2B3350" opacity="0.18" transform="translate(3 6)"/>
+    <rect x="6" y="8" width="248" height="170" rx="22" fill="url(#g_lila)" stroke="#2B3350" stroke-width="6"/>
+    <rect x="16" y="18" width="228" height="150" rx="14" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.6"/>
+  </g>
+  <g id="pliegues" fill="none" stroke="#2B3350" stroke-width="4" stroke-linecap="round" opacity="0.3">
+    <path d="M18 166 Q70 132 108 120"/>
+    <path d="M242 166 Q190 132 152 120"/>
+  </g>
+  <g id="solapa">
+    <path d="M22 13 H238 Q248 13 241 21 L140 106 Q130 114 120 106 L19 21 Q12 13 22 13 Z" fill="url(#g_solapa)" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M40 22 L120 90" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  </g>
+  <g id="sello_estrella">
+    <polygon points="130.0,57.0 144.4,88.2 178.5,92.3 153.2,115.6 160.0,149.2 130.0,132.4 100.0,149.2 106.8,115.6 81.5,92.3 115.6,88.2" fill="#2B3350" opacity="0.18" transform="translate(2 5)"/>
+    <polygon points="130.0,57.0 144.4,88.2 178.5,92.3 153.2,115.6 160.0,149.2 130.0,132.4 100.0,149.2 106.8,115.6 81.5,92.3 115.6,88.2" fill="url(#g_amarillo)" stroke="#2B3350" stroke-width="5" stroke-linejoin="round"/>
+    <ellipse cx="121" cy="82" rx="3" ry="6" fill="#FFFFFF" opacity="0.75" transform="rotate(25 121 82)"/>
+    <g id="carita" fill="none" stroke="#2B3350" stroke-width="3.5" stroke-linecap="round">
+      <path d="M113 107 Q118 101 123 107"/>
+      <path d="M137 107 Q142 101 147 107"/>
+      <path d="M124 115 Q130 121 136 115"/>
+    </g>
+    <ellipse cx="111" cy="116" rx="5" ry="3" fill="#F26CA8" opacity="0.55"/>
+    <ellipse cx="149" cy="116" rx="5" ry="3" fill="#F26CA8" opacity="0.55"/>
+  </g>
+  <g id="brillos" stroke="#2B3350" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M36 128 Q37.6 135.4 45 137 Q37.6 138.6 36 146 Q34.4 138.6 27 137 Q34.4 135.4 36 128 Z" fill="#FFE38A"/>
+    <path d="M222 132 Q223.1 136.9 228 138 Q223.1 139.1 222 144 Q220.9 139.1 216 138 Q220.9 136.9 222 132 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

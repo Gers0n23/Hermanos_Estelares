@@ -107,6 +107,8 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 	var probe_fisica := false
 	var probe_solcito := false
 	var pedidos_vistos: Array = []
+	var separacion: float = float(nivel.get("separacion_min_gotas_px", 0.0))
+	var peor_separacion := INF
 	var latas_hechas := 0
 	var inicio := Time.get_ticks_msec()
 	while resultado["destellos"] < 0 and Time.get_ticks_msec() - inicio < 150000:
@@ -125,6 +127,11 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 						motor.confirmar_receta()
 				await _esperar(0.3)
 			"atrapar":
+				# Gotas recien nacidas (franja alta) siempre separadas en x (HE-40 #13).
+				var altas: Array = motor.gotas_en_pantalla().filter(func(g: Dictionary) -> bool: return not g.has("escupida") and g["pos"].y - motor.Y_APARICION < 60.0)
+				for i in altas.size():
+					for j in range(i + 1, altas.size()):
+						peor_separacion = minf(peor_separacion, absf(altas[i]["pos"].x - altas[j]["pos"].x))
 				if not pedidos_vistos.has(motor.pedidos_mural()):
 					var p: Array = motor.pedidos_mural()
 					pedidos_vistos.append(p)
@@ -132,6 +139,13 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 				if not probe_pasar:
 					probe_pasar = true
 					var antes: int = motor.fallos()
+					# Una gota nacida justo sobre el borde puede caer igual en el frasco: esas atrapadas
+					# malas si cuentan (es la fisica correcta); solo dejar pasar no debe contar.
+					var malas := [0]
+					var contar_malas := func(_c: String, sirve: bool) -> void:
+						if not sirve:
+							malas[0] += 1
+					motor.gota_atrapada.connect(contar_malas)
 					motor._mover_frasco_a(motor.FRASCO_MAX_X if motor.frasco_x() < 690.0 else motor.FRASCO_MIN_X)
 					var t := 0.0
 					var llegaron := 0
@@ -141,7 +155,8 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 						t += 0.1
 						if motor.gotas_en_pantalla().size() < n:
 							llegaron += 1
-					_chequear(motor.fallos() == antes, "dejar pasar gotas no cuenta fallo")
+					motor.gota_atrapada.disconnect(contar_malas)
+					_chequear(motor.fallos() == antes + malas[0], "dejar pasar gotas no cuenta fallo")
 				if not probe_fisica and motor.fase() == "atrapar":
 					# Frasco bajo la gota mas baja: debe entrar sola por la fisica de caida.
 					var capas_antes: int = motor._capas.size()
@@ -170,15 +185,27 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 						if not motor.faltantes().has(pigmento):
 							malo = pigmento
 							break
+					var capas_antes: Array = motor.capas()
+					var a_reiniciar: int = int(nivel.get("fallos_para_reiniciar_lata", 1))
+					# Las sondas anteriores pueden haber atrapado por fisica una gota equivocada de esta lata.
+					if a_reiniciar - motor.errores_lata() >= 2:
+						# HE-40 (#13 / R6): la 1.a gota equivocada de la lata solo sale escupida.
+						var r1: String = motor.atrapar_color(malo)
+						_chequear(r1 == "escupida" and motor.fallos() == antes + 1 and motor.fase() == "atrapar" and motor.capas() == capas_antes,
+							"1.a gota equivocada: sale escupida, cuenta un fallo y las capas buenas se quedan (%s)" % malo)
+						antes = motor.fallos()
 					var r: String = motor.atrapar_color(malo)
 					_chequear(r == "sucio" and motor.fallos() == antes + 1 and motor.fase() == "sucio", "gota que no va ensucia y cuenta un fallo (%s)" % malo)
 					await _esperar_fase(motor, ["atrapar"], 12.0)
-					_chequear(motor._capas.is_empty() and motor.latas().size() == latas_antes, "tras el puaj el frasco queda vacio y las latas hechas se conservan")
+					_chequear(motor._capas.is_empty() and motor.latas().size() == latas_antes and motor.errores_lata() == 0, "tras el puaj el frasco queda vacio y las latas hechas se conservan")
 					continue
 				if not probe_libreta and zona == "zona2_charcos" and motor.fase() == "atrapar":
 					probe_libreta = true
 					var e_antes: int = motor.estrellitas_calculadas()
 					motor.tocar_libreta()
+					await _esperar(0.1)
+					_chequear(motor._pista_costo.globo_abierto() and motor.revisiones() == 0, "HE-40 #4: el 1.er toque a la libreta abre el globo y no cobra")
+					motor.confirmar_pista()
 					await _esperar(0.2)
 					_chequear(motor.tarjeta_visible() and motor.revisiones() == 1, "la libreta muestra la receta y cuenta una revision")
 					_chequear(motor.estrellitas_calculadas() == maxi(1, e_antes - 1), "la libreta cuesta una estrellita")
@@ -202,6 +229,9 @@ func _probar_nivel(ruta: String, zona: String) -> void:
 	_chequear(resultado["destellos"] > 0, "completado(destellos=%d)" % resultado["destellos"])
 	_chequear(murales_emitidos[0] == murales and motor.murales_hechos() == murales, "se pintaron %d murales (%d)" % [murales, murales_emitidos[0]])
 	_chequear(motor._latas_total == murales * 3, "latas totales = %d (%d)" % [murales * 3, motor._latas_total])
+	if separacion > 0.0:
+		_chequear(peor_separacion >= separacion - 0.5, "gotas nuevas separadas >= %d px en x (peor %s)" % [separacion, str(peor_separacion)])
+	_chequear(not (nivel.get("dibujos_mural", []) as Array).has("mariposa"), "mural sin bichos %s" % str(nivel.get("dibujos_mural", [])))
 	var estrellitas: int = motor.estrellitas_calculadas()
 	_chequear(estrellitas >= 1 and estrellitas <= 3, "estrellitas en rango (%d)" % estrellitas)
 	_resumen.append("%s: murales %d, latas %d, fallos %d, libreta %d, estrellitas %d, destellos %d" % [

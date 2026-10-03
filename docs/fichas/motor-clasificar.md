@@ -170,3 +170,11 @@ café = rojo + amarillo + azul, lila = rojo + azul + blanco y verde clarito = az
 - Voces oficiales de Coco y Cometa (hoy TTS de Windows, provisionales).
 - Validar en el playtest la duración, la velocidad de caída de Sofía z3 y z5, los umbrales de
   estrellitas y la carga de Nicole z4 (rojo/rosado y azul/celeste).
+
+## Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado** (`docs/validaciones/HE-40_disenador-mecanicas.md`, hallazgos 16-18). Cambios menores:
+
+- En modo `directo`, tocar un charco sin gota elegida hace una onda, dice el color y hace saltar la gota
+  de ese color más cercana.
+- Los charcos móviles nunca se mueven mientras haya una gota elegida o en arrastre.

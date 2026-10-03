@@ -33,13 +33,15 @@
   ],
   "umbrales_estrellitas": {
     "tres": 3,
-    "dos": 6
+    "dos": 7
   },
+  "separacion_min_gotas_px": 190,
+  "fallos_para_reiniciar_lata": 2,
   "tamano_gota": 84,
   "libreta_cuesta_estrellita": true,
   "lineas_voz": {
     "intro": "voces/arcoiris/mezclar/intro_z3.wav",
-    "pista": "voces/arcoiris/mezclar/pista.wav",
+    "pista": "voces/arcoiris/mezclar/pista_z3.wav",
     "pista_agitar": "voces/arcoiris/mezclar/pista_agitar.wav",
     "memoriza": "voces/arcoiris/mezclar/memoriza.wav",
     "a_atrapar": [
@@ -58,6 +60,10 @@
     ],
     "gris": [
       "voces/arcoiris/mezclar/gris_01.wav"
+    ],
+    "escupe": [
+      "voces/arcoiris/mezclar/escupe_01.wav",
+      "voces/arcoiris/mezclar/escupe_02.wav"
     ],
     "a_mezclar": "voces/arcoiris/mezclar/a_mezclar.wav",
     "lata_lista": [

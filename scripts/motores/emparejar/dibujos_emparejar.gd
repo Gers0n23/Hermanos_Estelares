@@ -23,7 +23,7 @@ const LLANTA := Color("#C9D0E0")
 const COLORES := {
 	"trex": "#7DD87A", "spinosaurio": "#45C6C0", "carnotauro": "#FF6B6B", "huevo": "#FFF1C9",
 	"auto": "#FF6B6B", "bus": "#4A8BE0", "bomberos": "#E8423F", "cohete": "#EEF2FA",
-	"jirafa": "#FFCB3D", "pony": "#F7A8D0", "gatito": "#FF9F4A",
+	"jirafa": "#FFCB3D", "pony": "#F7A8D0", "gatito": "#FF9F4A", "perrito": "#E0A86A", "gerbo": "#F2C98E",
 	"vestido": "#F26CA8", "zapato": "#B48CE8", "corona": "#FFCB3D", "mono": "#F26CA8",
 	"sol": "#FFCB3D", "hoja": "#7DD87A", "mancha": "#FF6B6B",
 }
@@ -72,6 +72,10 @@ static func dibujar(l, nombre: String, color: Color, c: Vector2, r: float, cara 
 			_pony(l, color, c, r, trazo, cara, feliz)
 		"gatito":
 			_gatito(l, color, c, r, trazo, cara, feliz)
+		"perrito":
+			_perrito(l, color, c, r, trazo, cara, feliz)
+		"gerbo":
+			_gerbo(l, color, c, r, trazo, cara, feliz)
 		"vestido":
 			_vestido(l, color, c, r, trazo)
 		"zapato":
@@ -218,10 +222,42 @@ static func _jirafa(l, color: Color, c: Vector2, r: float, trazo: float, cara: b
 		Figura.dibujar_cara(l, c + Vector2(0.58, -0.66) * r, r * 0.36, feliz)
 
 
+## Siluetas de una sola pieza para el estilo "sombra" de las cartas (pony especial del reto dorado de
+## Sofia, disenador-niveles HE-40 §7.5). Vacio si el dibujo no tiene silueta.
+static func silueta(nombre: String, c: Vector2, r: float) -> Array[PackedVector2Array]:
+	var salida: Array[PackedVector2Array] = []
+	if nombre == "pony":
+		salida.append(_pony_cola(c, r))
+		salida.append(_unir(_pony_partes(c, r)))
+		salida.append(_pony_melena(c, r))
+	return salida
+
+
+static func _pony_cola(c: Vector2, r: float) -> PackedVector2Array:
+	return _unir([_el(c, r, Vector2(-0.66, 0.06), 0.14, 0.14), _el(c, r, Vector2(-0.8, 0.26), 0.15, 0.15), _el(c, r, Vector2(-0.78, 0.48), 0.12, 0.12)])
+
+
+static func _pony_melena(c: Vector2, r: float) -> PackedVector2Array:
+	return _unir([_el(c, r, Vector2(0.36, -0.7), 0.14, 0.14), _el(c, r, Vector2(0.24, -0.5), 0.15, 0.15),
+		_el(c, r, Vector2(0.16, -0.28), 0.14, 0.14), _el(c, r, Vector2(0.1, -0.06), 0.12, 0.12)])
+
+
+static func _pony_partes(c: Vector2, r: float) -> Array:
+	var partes := [
+		_el(c, r, Vector2(-0.15, 0.2), 0.5, 0.28),
+		_poli(c, r, [Vector2(0.1, 0.05), Vector2(0.3, -0.45), Vector2(0.58, -0.4), Vector2(0.4, 0.15)]),
+		_el(c, r, Vector2(0.52, -0.5), 0.3, 0.24),
+		_el(c, r, Vector2(0.76, -0.38), 0.2, 0.16),
+		_poli(c, r, [Vector2(0.36, -0.66), Vector2(0.42, -0.95), Vector2(0.54, -0.7)]),
+	]
+	for x in [-0.58, -0.38, 0.02, 0.2]:
+		partes.append(_caja(c, r, x, 0.3, x + 0.16, 0.92, 0.05))
+	return partes
+
+
 static func _pony(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
 	var melena_color := Color("#B48CE8") if color.h < 0.7 or color.h > 0.95 else Color("#F26CA8")
-	var cola := _unir([_el(c, r, Vector2(-0.66, 0.06), 0.14, 0.14), _el(c, r, Vector2(-0.8, 0.26), 0.15, 0.15), _el(c, r, Vector2(-0.78, 0.48), 0.12, 0.12)])
-	_pintar(l, cola, melena_color, r, trazo)
+	_pintar(l, _pony_cola(c, r), melena_color, r, trazo)
 	var partes := [
 		_el(c, r, Vector2(-0.15, 0.2), 0.5, 0.28),
 		_poli(c, r, [Vector2(0.1, 0.05), Vector2(0.3, -0.45), Vector2(0.58, -0.4), Vector2(0.4, 0.15)]),
@@ -272,6 +308,57 @@ static func _gatito(l, color: Color, c: Vector2, r: float, trazo: float, cara: b
 	if cara:
 		Figura.dibujar_cara(l, c + Vector2(0, -0.14) * r, r * 0.72, feliz)
 	l.draw_colored_polygon(_poli(c, r, [Vector2(-0.06, -0.08), Vector2(0.06, -0.08), Vector2(0.0, -0.01)]), rosa.darkened(0.15))
+
+
+# --- Sofia: sus mascotas favoritas (HE-40 niveles §7.5, guinos en Parejas z1) ---------------------
+
+static func _perrito(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+	# Colita parada que asoma detras del cuerpo.
+	_pintar(l, _redondear(_poli(c, r, [Vector2(0.42, 0.34), Vector2(0.86, -0.06), Vector2(0.94, 0.04), Vector2(0.52, 0.5)]), r * 0.06), color, r, trazo)
+	var silueta := _unir([
+		_el(c, r, Vector2(0, -0.2), 0.54, 0.46),
+		_el(c, r, Vector2(0, 0.5), 0.46, 0.38),
+	])
+	_pintar(l, silueta, color, r, trazo)
+	_dentro(l, _el(c, r, Vector2(0.0, 0.0), 0.3, 0.2), silueta, Color("#FFF8EE"))
+	# Orejas caidas, mas oscuras, por delante de la cabeza.
+	var oreja := color.darkened(0.3)
+	for lado in [-1.0, 1.0]:
+		_pintar(l, _el(c, r, Vector2(0.5 * lado, -0.18), 0.17, 0.32, 24), oreja, r, trazo)
+		_detalle(l, _el(c, r, Vector2(0.22 * lado, 0.86), 0.15, 0.09), Color("#FFF8EE"), trazo * 0.6)
+	_detalle(l, _el(c, r, Vector2(0, 0.42), 0.36, 0.08), Color("#FF6B6B"), trazo * 0.6)
+	_detalle(l, _el(c, r, Vector2(0, 0.54), 0.08, 0.08), Color("#FFCB3D"), trazo * 0.5)
+	if cara:
+		Figura.dibujar_cara(l, c + Vector2(0, -0.18) * r, r * 0.66, feliz)
+	l.draw_colored_polygon(_el(c, r, Vector2(0.0, -0.04), 0.08, 0.055), COLOR_CONTORNO)
+
+
+static func _gerbo(l, color: Color, c: Vector2, r: float, trazo: float, cara: bool, feliz: bool) -> void:
+	# Cola larga y finita con su pompon en la punta.
+	var cola := PackedVector2Array()
+	for i in 12:
+		var t := i / 11.0
+		cola.append(c + Vector2(-0.5 - 0.42 * t, 0.5 - 0.9 * t + 0.5 * t * t) * r)
+	l.draw_polyline(cola, COLOR_CONTORNO, maxf(2.0, r * 0.1), true)
+	l.draw_polyline(cola, color.darkened(0.15), maxf(1.0, r * 0.1 - trazo * 1.4), true)
+	_pintar(l, _el(c, r, Vector2(-0.9, 0.1), 0.1, 0.13), color.darkened(0.3), r, trazo * 0.8)
+	var silueta := _unir([
+		_el(c, r, Vector2(-0.08, 0.3), 0.56, 0.44),
+		_el(c, r, Vector2(0.34, -0.22), 0.42, 0.38),
+		_el(c, r, Vector2(0.12, -0.62), 0.16, 0.18),
+		_el(c, r, Vector2(0.58, -0.6), 0.16, 0.18),
+	])
+	_pintar(l, silueta, color, r, trazo)
+	var rosa := Color("#F7A8D0")
+	for x in [0.12, 0.58]:
+		_dentro(l, _el(c, r, Vector2(x, -0.62), 0.09, 0.11), silueta, rosa)
+	_dentro(l, _el(c, r, Vector2(0.0, 0.46), 0.34, 0.24), silueta, Color("#FFF8EE"))
+	for x in [-0.36, 0.2]:
+		_detalle(l, _el(c, r, Vector2(x, 0.74), 0.12, 0.07), rosa, trazo * 0.5)
+	if cara:
+		Figura.dibujar_cara(l, c + Vector2(0.36, -0.2) * r, r * 0.5, feliz)
+	for dy in [-0.05, 0.06]:
+		l.draw_line(c + Vector2(0.62, -0.1) * r, c + Vector2(0.92, -0.12 + dy) * r, COLOR_CONTORNO, trazo * 0.5, true)
 
 
 static func _vestido(l, color: Color, c: Vector2, r: float, trazo: float) -> void:

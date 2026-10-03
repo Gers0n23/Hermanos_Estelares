@@ -11,6 +11,7 @@
   "sin_fallo": true,
   "coco_imita_color": true,
   "guardar_dibujo": true,
+  "puntua_estrellitas": false,
   "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
   "herramientas": [],
   "laminas": [

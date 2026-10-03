@@ -234,7 +234,7 @@ func _dibujar_decorados(v: float) -> void:
 
 
 # ---------------------------------------------------------------------------
-# Capa animada: nubes de algodón de azúcar, chocolate que corre y un gusanito de gomita
+# Capa animada: nubes de algodón de azúcar, chocolate que corre y un osito de gomita
 # ---------------------------------------------------------------------------
 
 func _dibujar_animado() -> void:
@@ -244,12 +244,18 @@ func _dibujar_animado() -> void:
 	for k in 14:
 		var punto := _punto_rio(fposmod(_tiempo * 26.0 + k * _largo_rio / 14.0, _largo_rio))
 		lienzo.draw_colored_polygon(_elipse(punto, 7.0, 3.0), Color(_tono(CHOCOLATE_CLARO, v), 0.9))
-	# gusanito de gomita nadando en el mar
-	var cabeza := Vector2(180 + sin(_tiempo * 0.5) * 30.0, 38)
-	for k in range(6, -1, -1):
-		var p := cabeza + Vector2(-k * 13.0, sin(_tiempo * 4.0 - k * 0.9) * 6.0)
-		lienzo.draw_circle(p, 9.0, _tono([Color("#FF6B6B"), Color("#FFCB3D"), Color("#7DD87A")][k % 3], v))
-	Figura.dibujar_cara(lienzo, cabeza + Vector2(0, -1), 16.0, true)
+	# osito de gomita que flota de espaldas en el mar (sin bichos en ningun fondo: UX N3 / perfil de Nicole)
+	var centro := Vector2(170 + sin(_tiempo * 0.5) * 30.0, 40 + sin(_tiempo * 1.6) * 3.0)
+	var gomita := _tono(Color("#FF6B6B"), v)
+	var brillo := Color(1, 1, 1, 0.45)
+	for lado in [-1.0, 1.0]:
+		lienzo.draw_circle(centro + Vector2(lado * 11.0, -17.0), 5.5, gomita)
+		lienzo.draw_circle(centro + Vector2(lado * 15.0, 2.0 + sin(_tiempo * 3.0 + lado) * 2.0), 5.0, gomita)
+		lienzo.draw_circle(centro + Vector2(lado * 8.0, 17.0), 5.5, gomita)
+	lienzo.draw_colored_polygon(_elipse(centro + Vector2(0, 6), 12.0, 14.0), gomita)
+	lienzo.draw_circle(centro + Vector2(0, -9), 11.0, gomita)
+	lienzo.draw_circle(centro + Vector2(-4, -13), 3.0, brillo)
+	Figura.dibujar_cara(lienzo, centro + Vector2(0, -8), 14.0, true)
 	# nubes de algodón de azúcar que pasan despacito
 	for datos in [[110.0, 0.0, Color("#FFD1E6")], [205.0, 520.0, Color("#D6E6FF")], [120.0, 980.0, Color("#E7D9FF")]]:
 		var x := fposmod(float(datos[1]) + _tiempo * 9.0, size.x + 260.0) - 130.0

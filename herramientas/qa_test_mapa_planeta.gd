@@ -38,6 +38,7 @@ func _initialize() -> void:
 	await _probar_zona_secreta_sofia()
 	await _probar_cometa()
 	await _probar_f4_y_salida()
+	await _probar_marco_dorado_y_destellos()
 
 	if _respaldo != null:
 		var archivo := FileAccess.open(GUARDADO, FileAccess.WRITE)
@@ -271,3 +272,58 @@ func _probar_f4_y_salida() -> void:
 	mapa._volver_al_mapa_estelar()
 	await _esperar(0.3)
 	_check(current_scene != null and current_scene.scene_file_path == MAPA, "la flecha vuelve al Mapa Estelar")
+
+
+## HE-40 / HE-44 (28-Sep-2026): la zona "perfecta" (marco dorado de Sofia) no cuenta Pinta, que no
+## puntua; el mapa pasa a cada motor el monto fijo de destellos (100 por estacion, 0 en reto dorado).
+func _probar_marco_dorado_y_destellos() -> void:
+	print("-- HE-40/HE-44: marco dorado alcanzable y destellos fijos por estacion --")
+	_progreso.perfil_seleccionado = "sofia"
+	var mapa := await _abrir_arcoiris()
+	var pinta: Dictionary = mapa.zonas[0]["estaciones"][3]
+	_check(pinta["juego"] == "pinta" and not pinta["puntua"], "Pinta con Coco no puntua estrellitas")
+	_check(mapa.zonas[0]["estaciones"][1]["puntua"], "Formas si puntua")
+	# Zona 1 de Sofia con 2 estrellitas en alguna estacion con puntaje: no es perfecta.
+	_check(not mapa.evento_zona(0)["perfecta"], "zona con una estacion de 2 estrellitas: sin marco dorado")
+	_completar_estaciones(mapa, "sofia", 0, 3, 3)
+	_progreso.marcar_nivel_completado("sofia", "arcoiris", mapa._id_nivel(pinta["ruta_nivel"]), 50, 0)
+	mapa = await _abrir_arcoiris()
+	_check(mapa.evento_zona(0)["perfecta"], "3 estrellitas en Lluvia/Taller, Formas y Parejas (Pinta con 0): marco dorado alcanzable")
+	# HE-40 mecanicas #3: la silueta del ala existe y ya tiene pintado el tramo de la zona 1
+	# (_probar_zona_secreta_sofia ya completo otras zonas de Sofia; aqui solo importa la 1).
+	_check(mapa._pieza != null and mapa._pieza.visible and mapa.zonas[0]["completa"],
+		"silueta del ala en el mapa con el tramo de la zona 1 pintado")
+	var datos: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://datos/planetas/arcoiris/mapa.json"))
+	_check(int(datos.get("destellos_por_estacion", -1)) == 100 and int(datos.get("destellos_reto_dorado", -1)) == 0, "mapa.json: 100 destellos por estacion, 0 en retos dorados")
+	# Nicole juega una estacion nueva: celebra y guarda 100, no el calculo del motor.
+	_progreso.perfil_seleccionado = "nicole"
+	mapa = await _abrir_arcoiris()
+	var antes: int = _progreso.obtener_destellos_planeta("nicole", "arcoiris")
+	mapa._tocar_estacion(1)
+	await _esperar(1.3)
+	var motor := current_scene
+	_check(motor is MinijuegoBase and motor.destellos_fijos == 100, "el mapa fija 100 destellos en el motor (%s)" % str(motor.get("destellos_fijos") if motor else "?"))
+	if motor is MinijuegoBase:
+		motor.emitir_completado(37, 0)
+		await _esperar(0.4)
+	_check(_progreso.obtener_destellos_planeta("nicole", "arcoiris") == antes + 100, "se guardan 100 destellos, iguales para todos (antes %d)" % antes)
+	# Reto dorado: 0 destellos (su premio es cosmetico).
+	_progreso.perfil_seleccionado = "sofia"
+	mapa = await _abrir_arcoiris()
+	mapa.todo_abierto = true
+	mapa.calcular_estado()
+	var cima: Array = mapa.zonas[4]["estaciones"]
+	var j_dorado := -1
+	for j in cima.size():
+		if cima[j]["dorado_ruta"] != "":
+			j_dorado = j
+			break
+	_check(j_dorado >= 0, "hay un reto dorado en la Cima")
+	if j_dorado >= 0:
+		mapa.lanzar_estacion(4, j_dorado, 0.0, true)
+		await _esperar(1.3)
+		_check(current_scene is MinijuegoBase and current_scene.destellos_fijos == 0, "el reto dorado no da destellos (destellos_fijos = 0)")
+		if current_scene is MinijuegoBase:
+			current_scene.salir_solicitado.emit()
+			await _esperar(0.4)
+	current_scene.todo_abierto = false

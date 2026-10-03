@@ -39,6 +39,7 @@ const TAM_CELDA := Vector2(200, 238)
 const POR_PAGINA := 6
 const DESLIZAR_MIN := 90.0
 
+var _id_voz_foto := 0
 var album_abierto := ""
 var pagina := 0
 var vista := "portada"   # portada | pagina | foto
@@ -138,6 +139,8 @@ func _construir() -> void:
 	velo.color = Color(0.08, 0.04, 0.2, 0.82)
 	velo.size = Vector2(1280, 720)
 	velo.mouse_filter = Control.MOUSE_FILTER_STOP
+	# UX HE-44 R5: tocar fuera de la foto la cierra (nunca un toque muerto).
+	velo.gui_input.connect(_al_tocar.bind(cerrar_foto))
 	_capa_foto.add_child(velo)
 	_foto_grande = FotoRecuerdo.new()
 	_foto_grande.name = "foto_grande"
@@ -283,6 +286,9 @@ func abrir_foto(rec: Dictionary) -> void:
 
 
 func cerrar_foto() -> void:
+	if vista != "foto":
+		return
+	_id_voz_foto += 1
 	_sfx(SFX_CERRAR)
 	_detener_voz()
 	vista = "pagina"
@@ -357,7 +363,8 @@ func _tocar_cabecera() -> void:
 		_decir(recuerdos.elegir_linea("tapa", album_abierto))
 
 
-## Tocar la foto abierta repite su voz.
+## Tocar la foto abierta repite su voz. Antes, Cometa narra el pie de foto ("Aqui tenia tres
+## mesecitos", guion recuerdos §8; UX HE-44 R9), salvo que la familia ya lo diga en su audio.
 func _repetir_voz(con_sonido := true) -> void:
 	if _recuerdo_abierto.is_empty():
 		return
@@ -367,7 +374,20 @@ func _repetir_voz(con_sonido := true) -> void:
 	var audio := get_node_or_null("/root/Audio")
 	if recuerdos == null or audio == null:
 		return
-	var stream: AudioStream = recuerdos.stream_voz(_recuerdo_abierto)
+	_id_voz_foto += 1
+	var id := _id_voz_foto
+	var rec := _recuerdo_abierto
+	var stream: AudioStream = recuerdos.stream_voz(rec)
+	var pie := "" if bool(rec.get("pie_en_audio", false)) else str(recuerdos.ruta_linea(str(rec.get("pie", ""))))
+	if pie != "":
+		_decir(pie)
+		var largo := 1.5
+		var recurso := load(pie) as AudioStream
+		if recurso != null:
+			largo = recurso.get_length()
+		await get_tree().create_timer(largo + 0.25).timeout
+		if not is_inside_tree() or id != _id_voz_foto or _recuerdo_abierto != rec:
+			return
 	if stream != null:
 		audio.reproducir_voz_stream(stream)
 	else:

@@ -226,3 +226,11 @@ animales solo se inclinan. Topes: 30 caminos y 8 viajeros.
 
 Resultado (27-Sep-2026, Godot 4.7.1): **506 OK / 0 fallos** en las 15 rutas. Regresiones: emparejar
 sin fallos, `qa_test_voces` 815 OK y mapa del planeta OK.
+
+## Validación HE-40 — disenador-mecanicas (28-Sep-2026, PROPUESTA)
+
+**Aprobado** (`docs/validaciones/HE-40_disenador-mecanicas.md`, hallazgos 19-21). Cambios menores:
+
+- El pincel del mosaico pinta la celda más cercana dentro de un radio de 32 px y, al arrastrar, pinta
+  todas las celdas que cruza.
+- En Semilla, "mostrar a Coco" aparece con `segundos_mostrar` de al menos 45 s y entra con un rebote.

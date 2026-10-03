@@ -5,17 +5,21 @@
 > Fuente de verdad: `docs/diseno-juego.md` §1, §4; `docs/guia-estilo-generacion.md` §3 (fichas de
 > Camaleona Coco y Nave-estrella).
 
-- **Disparador** *(actualizado 14-Sep-2026, mapa de zonas del planeta)*: al abrir la **zona 4**
-  del mapa del planeta, es decir, con 2 estaciones completadas en la zona 3 «El Bosque de
-  Chupetines» (`docs/fichas/planeta-arcoiris-zonas.md` §2.1). En ese momento el planeta ya
-  recuperó rojo, amarillo y azul. **Pendiente `guionista`**: ajustar `arcoiris_001` ("terminaron
-  todo mi arcoíris del claro"), porque el arcoíris completo recién vuelve en la zona 5. Antes el
-  disparador era completar los 3 minijuegos originales.
+- **Disparador** *(actualizado 28-Sep-2026, HE-40)*: al abrir la **zona 4** del mapa del planeta,
+  es decir, al completar **todas las estaciones jugables** de la zona 3 «El Bosque de Chupetines»
+  (regla del PO del 27-Sep-2026, `docs/fichas/planeta-arcoiris-zonas.md` §2.1). En ese momento el
+  planeta recuperó **rojo, amarillo y azul**; verde, naranja, violeta y el brillo siguen dormidos
+  en las zonas 4 y 5. `arcoiris_001`, `arcoiris_008` y `arcoiris_017` ya están ajustados a ese
+  momento. La escena **reemplaza** a la voz `zona_3_completada` del mapa (su Beat 1 ya celebra el
+  azul) y el regalo de la zona 3 llega después (`docs/guiones/zonas_arcoiris.md` §1).
 - **Duración estimada**: 20-30 s de cinemática sin interacción (GDD §4, "Escena de historia por
   planeta"), pensada para reproducirse con los tres hermanos presentes (modo misión familiar).
 - **Personajes**: Maxi, Nicole, Sofía, Cometa, Camaleona Coco, Papá (voz, video-llamada).
-- **Escenario**: Planeta Arcoíris — claro central en forma de trébol (ficha en
-  `docs/guia-estilo-generacion.md` §3, "Planeta Arcoíris").
+- **Escenario**: Planeta Arcoíris — el Bosque de Chupetines (zona 3), recién pintado de azul, con
+  el camino hacia los Islotes Flotantes todavía descolorido al fondo (ficha en
+  `docs/guia-estilo-generacion.md` §3, "Planeta Arcoíris", y mapa-isla en la ficha de zonas §2.0).
+  *(Antes: claro central en forma de trébol; se movió porque la escena ahora ocurre al terminar la
+  zona 3, y el Beat 2 ya saca el ala de un árbol-chupetín.)*
 - **Prefijo de id de línea / carpeta de audio**: `arcoiris_XXX` →
   `assets/audio/voces/historia/arcoiris/`
 
@@ -29,14 +33,14 @@ papá vuelve a aparecer relajado y bromista, sin gancho de urgencia.
 
 ## Beat 1 — Coco agradece y celebra
 
-**Acotación**: Coco espera en el claro central (plataforma en forma de trébol); su cresta de
+**Acotación**: Coco espera en el Bosque de Chupetines, entre los tres chupetines de espiral; su cresta de
 nuditos a lo largo del lomo se enciende arcoíris de la emoción, tal como describe su ficha de
 personaje ("se ilumina y brilla más fuerte con la emoción"). Tic verbal de Coco: anuncia en voz
 alta el color que "es" en cada momento, como parte del juego de imitar colores.
 
 | id | Personaje | Línea | Intención |
 |---|---|---|---|
-| arcoiris_001 | Coco | «¡Uy, uy, uy, miren nada más! Terminaron todo mi arcoíris del claro. ¡Ahora soy... color FELIZ!» | asombrada, encantada (tic: anuncia su color) |
+| arcoiris_001 | Coco | «¡Uy, uy, uy, miren nada más! Rojo, amarillo y azul... ¡volvieron los tres primeros colores de mi planeta! Ahora soy... ¡color FELIZ!» | asombrada, encantada; nombra los tres colores lento, uno por uno (tic: anuncia su color). *Reescrita 28-Sep-2026 (HE-40): antes decía "terminaron todo mi arcoíris del claro", falso desde que la escena ocurre en la zona 3* |
 | arcoiris_002 | Cometa | «Coco, ¡lo lograron los tres, cada uno jugando a su manera!» | celebra sin comparar a nadie |
 | arcoiris_003 | Nicole | «¡Pinté un charco entero de rosado, Coco! Como tú.» | orgullosa, conectando con Coco |
 | arcoiris_004 | Coco | «¡El rosado me queda regio! Miren... ahora soy... ¡rosado chicle!» | cambia de color en vivo (tic), tierna |
@@ -52,7 +56,7 @@ franjas multicolor pastel, ver ficha de Nave-estrella §3).
 
 | id | Personaje | Línea | Intención |
 |---|---|---|---|
-| arcoiris_008 | Coco | «Esto es para su nave. El ala del Arcoíris... la pinté yo misma, con todos los colores que me enseñaron hoy.» | orgullosa, tierna, un poco solemne-juguetona |
+| arcoiris_008 | Coco | «Esto es para su nave. El ala del Arcoíris... la pinté yo misma, con los colores que ustedes me devolvieron.» | orgullosa, tierna, un poco solemne-juguetona. *Reescrita 28-Sep-2026 (HE-40): sin "hoy", porque las zonas 1 a 3 se juegan en varias tardes* |
 | arcoiris_009 | Cometa | «¡La primera pieza! Miren cómo le queda a la nave.» | entusiasta — la nave brilla, el hueco fantasma se llena |
 
 ## Beat 3 — Celebración con los gestos canon
@@ -95,7 +99,7 @@ espiral; se ve a lo lejos, en el Mapa Estelar, el Planeta Animalia brillando "to
 
 | id | Personaje | Línea | Intención |
 |---|---|---|---|
-| arcoiris_017 | Coco | «Vuelvan cuando quieran, ¡mi arcoíris siempre los espera!» | cálida despedida |
+| arcoiris_017 | Coco | «Vuelvan cuando quieran, ¡mi arcoíris siempre los espera! Y en los Islotes Flotantes todavía hay colores escondidos...» | cálida despedida; la segunda frase en secreto, como invitación (nunca "tienen que"). *Reescrita 28-Sep-2026 (HE-40): las zonas 4-5 son expedición extra y esto las presenta sin apuro* |
 | arcoiris_018 | Cometa | «Vamos, Hermanos Estelares... el siguiente planeta nos espera, brillando allá lejos.» | invita, sin apuro, ilusiona |
 
 ---

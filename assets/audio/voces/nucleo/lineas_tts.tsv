@@ -10,3 +10,7 @@ voces/planetas/melodia_invitacion_01.ogg	¡Vamos al Planeta Melodía!
 voces/planetas/cuenta_cuentas_invitacion_01.ogg	¡Vamos al Planeta Cuenta-Cuentas!
 voces/planetas/letralandia_invitacion_01.ogg	¡Vamos al Planeta Letralandia!
 voces/planetas/corazon_invitacion_01.ogg	¡Vamos al Planeta Corazón!
+# Guion 28-Sep-2026 (HE-40/HE-44): relleno de Windows (generar_voces_tts.ps1 -IgnorarPersonaje) hasta generar con fal.ai.
+# personaje: cometa
+voces/nucleo/pista_confirmar.wav	¿Te soplo una pista? Cuesta una estrellita. ¡Toca el globito si la quieres!
+voces/nucleo/pista_gratis.wav	¡Esta pista va de regalo! Mira, mira...

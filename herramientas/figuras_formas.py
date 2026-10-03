@@ -37,6 +37,11 @@ TABLERO = (640, 590)
 BANDEJA_UTIL = (366 - 32, 440 - 32)  # ZONA_BANDEJA menos RELLENO_BANDEJA a cada lado
 LADO_MINIMO = {"semilla": 96, "brote": 52, "estrella": 22}  # los mismos de qa_test_encajar.gd
 TOLERANCIA_CALCE = 0.1
+# Nada de bichos en ningun nivel, fondo o transicion donde juegue Nicole (le dan miedo) ni Sofia
+# (rechazo): perfil-jugadores.md y auditoria UX HE-40 (R1). Como todo esta desbloqueado entre hermanos,
+# vale para los tres perfiles. El validador corta si una figura o su voz nombra alguno.
+PROHIBIDOS = ("mariposa", "abeja", "arana", "araña", "bicho", "insecto", "catarina", "chinita", "gusano",
+              "hormiga", "mosca", "libelula", "escarabajo", "grillo", "caracol")
 
 # ---------------------------------------------------------------------------
 # Primitivas (x, y = esquina superior izquierda de la caja YA girada, en px)
@@ -855,13 +860,6 @@ def pony():
             R(218, 210, 52, 100, lila, nombre_voz="rectangulo_chico")]
 
 
-def mariposa():
-    return [R(170, 30, 52, 250, "#7A4FB5", nombre_voz="rectangulo"),
-            TR(20, 0, 150, 150, ROSADO, "◥", nombre_voz="triangulo_grande"), TR(222, 0, 150, 150, ROSADO, "◤", nombre_voz="triangulo_grande"),
-            TR(60, 150, 110, 110, LILA, "◢", nombre_voz="triangulo_chico"), TR(222, 150, 110, 110, LILA, "◣", nombre_voz="triangulo_chico"),
-            C(99, 19, 52, CELESTE, capa=1, nombre_voz="circulo"), C(241, 19, 52, CELESTE, capa=1, nombre_voz="circulo")]
-
-
 def jirafa():
     amarillo, mancha = "#FFCB3D", "#C98A3C"
     return [R(40, 150, 200, 100, amarillo, nombre_voz="rectangulo_grande"), R(184, 0, 56, 150, amarillo, nombre_voz="rectangulo"),
@@ -1171,7 +1169,10 @@ COMUN_ESTRELLA = {"caras": False, "guia_color": False, "modelo_mini": True, "ban
                   "iman_tolerancia_px": 70, "paso_rotacion": 90,
                   # PO 27-Sep-2026: sin lineas guia. Sofia solo ve el contorno exterior de la figura y se
                   # guia por la tarjeta del modelo; las piezas siempre se giran con un toque.
-                  "silueta_unida": True, **ROT}
+                  "silueta_unida": True,
+                  # disenador-mecanicas HE-40 (#5): acertar el lugar con la pieza chueca no es fallo; la
+                  # pieza queda flotando sobre el hueco y un toque la gira ahi mismo.
+                  "giro_cuenta_fallo": False, **ROT}
 COMUN_BROTE = {"objetivo_guiado": True, "caras": False, "modelo_mini": True, "bandeja_escala_real": True,
                "iman_tolerancia_px": 110}
 COMUN_SEMILLA = {"sin_error": True, "toque_lleva_a_casa": True, "ayuda_idle_s": 7, "caras": False, "guia_color": True,
@@ -1188,14 +1189,19 @@ def fig(id_figura, funcion, voz=None, escala="auto", fija=False, grupo=None, con
             "grupo": grupo, "config": config, "validacion": validacion}
 
 
-def bandera_sofia(pais, funcion, limite, giro):
+# Umbrales de estrellitas por ronda (disenador-niveles HE-40 §2.2, PROVISIONAL): fallos <= tres -> 3,
+# <= dos -> 2, si no 1. Vale la peor ronda. La bandera va PRIMERO (calienta) y el monumento cierra.
+def bandera_sofia(pais, funcion, limite, giro, tres=3):
     config = {"limite_intentos": limite, "rotacion_por_toque": giro, "rotacion_inicial_aleatoria": giro,
-              "lineas_voz": {"intro_ronda": VOCES + "estrella/intro_bandera.wav"}}
+              "umbrales_estrellitas": {"tres": tres, "dos": limite},
+              "lineas_voz": {"intro": VOCES + "estrella/intro_bandera_primero.wav",
+                             "intro_ronda": VOCES + "estrella/intro_bandera.wav"}}
     return fig("bandera_" + pais, funcion, voz="bandera_%s_dato" % pais, grupo="bandera", config=config, bandera=True)
 
 
-def monumento(id_figura, funcion, intro, escala="auto", voz=None, **extra):
-    config = {"lineas_voz": {"intro": VOCES + "estrella/" + intro}}
+def monumento(id_figura, funcion, intro, escala="auto", voz=None, limite=12, **extra):
+    config = {"limite_intentos": limite, "umbrales_estrellitas": {"tres": limite // 2, "dos": limite},
+              "lineas_voz": {"intro": VOCES + "estrella/" + intro, "intro_ronda": VOCES + "estrella/" + intro}}
     config.update(extra.pop("config", {}))
     return fig(id_figura, funcion, voz=voz, escala=escala, grupo="monumento", config=config, **extra)
 
@@ -1208,7 +1214,8 @@ ESTACIONES = {
         fig("bandera_francia", f_francia_maxi, bandera=True),
         fig("helado", helado),
         fig("pez", pez),
-        fig("bandera_italia", f_italia_maxi, bandera=True),
+        # disenador-niveles HE-40 (#10): su primer contacto trae uno de sus temas fuertes (autos).
+        fig("autito", autito, escala=1.0),
     ]},
     ("zona2_charcos", "semilla"): {"nivel": dict(COMUN_SEMILLA, risa_al_encajar=True, lineas_voz=voces_semilla("intro_arma_z2.wav", risa=True)), "rondas": 4, "pool": [
         fig("barquito", barquito, voz="barco", escala=1.0, fija=True),
@@ -1260,7 +1267,8 @@ ESTACIONES = {
         fig("faro", faro, escala=1.25, fija=True),
         fig("bandera_chile", f_chile_nicole, bandera=True, config={"guia_color": True}),
         fig("bandera_japon", f_japon_nicole, bandera=True, config={"guia_color": True}),
-        fig("mariposa", mariposa),
+        # HE-40 R1 (bloqueante): sin bichos; el pony es tema confirmado de Nicole.
+        fig("pony", pony),
         fig("jirafa", jirafa),
     ]},
     ("zona4_islotes", "brote"): {"nivel": dict(COMUN_BROTE, guia_color=False, limite_intentos=12, lineas_voz=voces_brote("intro_arma_z4.wav")), "rondas": 3, "pool": [
@@ -1278,18 +1286,18 @@ ESTACIONES = {
         fig("castillo_princesa", castillo_princesa),
     ]},
     # ---------------- Sofía · Estrella: un monumento y una bandera ----------------
-    ("zona1_claro", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z1.wav")),
-                                  "rondas": ["monumento", "bandera"], "pool": [
-        monumento("iglesia_chiloe", iglesia_chiloe, "intro_arma_z1.wav", escala=1.15,
+    ("zona1_claro", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=14, piezas_en_bandeja=4, lineas_voz=voces_estrella("intro_arma_z1.wav")),
+                                  "rondas": ["bandera", "monumento"], "pool": [
+        monumento("iglesia_chiloe", iglesia_chiloe, "intro_arma_z1.wav", escala=1.15, limite=14,
                   config={"exigir_color": True}),  # con giro, sus rectangulos de distinto color calzan cruzados
-        monumento("la_moneda", la_moneda, "intro_moneda.wav"),
+        monumento("la_moneda", la_moneda, "intro_moneda.wav", limite=14),
         bandera_sofia("chile", f_chile_sofia, 8, True),
         bandera_sofia("argentina", f_argentina_sofia, 8, True),
         bandera_sofia("peru", f_peru_sofia, 8, True),
         bandera_sofia("bolivia", f_bolivia_sofia, 8, True),
     ]},
-    ("zona2_charcos", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z2.wav")),
-                                    "rondas": ["monumento", "bandera"], "pool": [
+    ("zona2_charcos", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, piezas_en_bandeja=5, lineas_voz=voces_estrella("intro_arma_z2.wav")),
+                                    "rondas": ["bandera", "monumento"], "pool": [
         monumento("palafitos", palafitos, "intro_arma_z2.wav", escala=1.4),
         monumento("valparaiso", valparaiso, "intro_valparaiso.wav", bandera=True),
         bandera_sofia("brasil", f_brasil_sofia, 9, True),
@@ -1299,28 +1307,28 @@ ESTACIONES = {
         bandera_sofia("venezuela", venezuela, 9, True),
         bandera_sofia("ecuador", f_ecuador_sofia, 9, True),
     ]},
-    ("zona3_chupetines", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, lineas_voz=voces_estrella("intro_arma_z3.wav")),
-                                       "rondas": ["monumento", "bandera"], "pool": [
+    ("zona3_chupetines", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=12, piezas_en_bandeja=5, lineas_voz=voces_estrella("intro_arma_z3.wav")),
+                                       "rondas": ["bandera", "monumento"], "pool": [
         monumento("santiago", santiago, "intro_arma_z3.wav", escala=1.2),
         monumento("torres_paine", torres_paine_sofia, "intro_torres_paine.wav", voz="torres_paine_dato"),
         bandera_sofia("japon", f_japon_sofia, 9, True),
         bandera_sofia("francia", f_francia_sofia, 9, True),
         bandera_sofia("alemania", f_alemania_sofia, 9, True),
     ]},
-    ("zona4_islotes", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=14, lineas_voz=voces_estrella("intro_arma_z4.wav")),
-                                    "rondas": ["monumento", "bandera"], "pool": [
-        monumento("moais", moais, "intro_arma_z4.wav", escala=1.5),
-        monumento("morro_arica", morro_arica, "intro_morro.wav", voz="morro_arica_dato", bandera=True),
-        bandera_sofia("rusia", f_rusia_sofia, 10, True),
-        bandera_sofia("china", china, 10, True),
-        bandera_sofia("india", india, 10, True),
+    ("zona4_islotes", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=14, piezas_en_bandeja=6, lineas_voz=voces_estrella("intro_arma_z4.wav")),
+                                    "rondas": ["bandera", "monumento"], "pool": [
+        monumento("moais", moais, "intro_arma_z4.wav", escala=1.5, limite=14),
+        monumento("morro_arica", morro_arica, "intro_morro.wav", voz="morro_arica_dato", bandera=True, limite=14),
+        bandera_sofia("rusia", f_rusia_sofia, 10, True, tres=4),
+        bandera_sofia("china", china, 10, True, tres=4),
+        bandera_sofia("india", india, 10, True, tres=4),
     ]},
-    ("zona5_cima", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=16, lineas_voz=voces_estrella("intro_arma_z5.wav")),
-                                 "rondas": ["monumento", "bandera"], "pool": [
-        monumento("castillo_santa_lucia", castillo, "intro_arma_z5.wav", escala=1.35),
-        monumento("san_cristobal", san_cristobal, "intro_san_cristobal.wav"),
-        bandera_sofia("eeuu", eeuu, 14, True),
-        bandera_sofia("mexico", mexico, 10, True),
+    ("zona5_cima", "estrella"): {"nivel": dict(COMUN_ESTRELLA, limite_intentos=16, piezas_en_bandeja=6, lineas_voz=voces_estrella("intro_arma_z5.wav")),
+                                 "rondas": ["bandera", "monumento"], "pool": [
+        monumento("castillo_santa_lucia", castillo, "intro_arma_z5.wav", escala=1.35, limite=16),
+        monumento("san_cristobal", san_cristobal, "intro_san_cristobal.wav", limite=16),
+        bandera_sofia("eeuu", eeuu, 14, True, tres=5),
+        bandera_sofia("mexico", mexico, 10, True, tres=4),
     ]},
 }
 
@@ -1444,6 +1452,8 @@ def main():
             cfg = dict(estacion["nivel"], **entrada["config"])
             cfg.update(entrada["validacion"])
             errores, avisos = validar(entrada["id"], piezas, perfil, cfg)
+            nombres = (entrada["id"] + " " + str(entrada["voz"])).lower()
+            errores += ["figura prohibida (bicho): %s" % b for b in PROHIBIDOS if b in nombres]
             estado = "OK" if not errores else "ERROR"
             print("%-6s %-16s %-9s %-24s %2d piezas  %dx%d  escala %.2f" % (estado, zona, perfil, entrada["id"], len(piezas), medida[0], medida[1], escala))
             for e in errores:

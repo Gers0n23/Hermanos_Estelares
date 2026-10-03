@@ -15,7 +15,7 @@
   "ayuda_tras_fallos": null,
   "halo_idle": true,
   "lineas_voz": {
-    "intro": "voces/arcoiris/emparejar/semilla/intro_01.wav",
+    "intro": "voces/arcoiris/emparejar/semilla/intro_z2.wav",
     "pista": "voces/arcoiris/emparejar/semilla/pista_01.wav",
     "acierto_par": [
       "voces/arcoiris/emparejar/semilla/acierto_par_01.wav",

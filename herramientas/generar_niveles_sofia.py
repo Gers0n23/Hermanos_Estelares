@@ -6,6 +6,13 @@ solución verificada, y las pistas del motor usan esa solución. Escribe:
 - `datos/niveles/arcoiris/<zona>/formas_estrella.json` (5 zonas) + `zona5_cima/formas_estrella_dorado.json`
 - `datos/niveles/arcoiris/<zona>/parejas_estrella.json` (5 zonas) + `zona5_cima/parejas_estrella_dorado.json`
 
+Desde "Arma la figura" (PO 27-Sep-2026) los `formas_estrella.json` de las 5 zonas los escribe
+`herramientas/figuras_formas.py`: este script ya NO los toca (quedo `generar_formas_v3()` como
+referencia). Escribe solo el reto dorado de Formas y los niveles de Parejas.
+
+HE-40 (28-Sep-2026, PROVISIONAL): umbrales de estrellitas de Parejas (disenador-niveles §2.2) y bandeja
+del reto dorado 6x10 con celdas de 50 px, piezas acostadas a 0,64 y espejo pegado (disenador-mecanicas #7).
+
 Uso: python herramientas/generar_niveles_sofia.py
 """
 
@@ -115,7 +122,8 @@ def escribir(ruta: Path, datos):
     print("escrito", ruta.relative_to(D.RAIZ).as_posix())
 
 
-def generar_formas():
+def generar_formas_v3():
+    """Niveles v3 (14-Sep) de Formas de Sofia, REEMPLAZADOS por figuras_formas.py. No se llama."""
     soluciones = {n: D.resolver_tangram(s, D.JUEGO_TANGRAM, 50) for n, s in SILUETAS.items()}
     voz = lambda n: FIGURAS_VOZ.get(n, "")
     tangram = lambda n, colores=COLORES_TANGRAM: figura_tangram(n, soluciones[n][0], colores, voz(n))
@@ -192,12 +200,16 @@ def generar_formas():
              "lineas_voz": {"intro": VOZ_FORMAS + "intro_cima_3.wav", "pista": VOZ_FORMAS + "pista_memoria_01.wav"}},
         ]))
 
+
+
+def generar_dorado():
     dorado = D.resolver_marco(["##########"] * 6, list("FILPTUVWXYZN"), 1)[0]
     escribir(NIVELES / "zona5_cima" / "formas_estrella_dorado.json", nivel_formas(
         "zona5_cima", "_dorado", mecanica="marco", modo="reto_dorado", boton_espejo=True, rotacion_por_toque=True,
-        paso_rotacion=90, iman_tolerancia_px=60, marco=["##########"] * 6, lado_celda=54, limite_intentos=None,
+        paso_rotacion=90, iman_tolerancia_px=60, marco=["##########"] * 6, lado_celda=50, limite_intentos=None,
         piezas_necesarias=12, guardar_avance=True, regalo_tras_derrotas=False,
-        zona_figuras=[236, 104, 900, 360], zona_bandeja=[236, 470, 894, 238], boton_espejo_rect=[1150, 250, 110, 110],
+        zona_figuras=[236, 96, 900, 312], zona_bandeja=[236, 416, 848, 292], boton_espejo_rect=[1110, 440, 120, 120],
+        escala_bandeja_fija=0.64, bandeja_acostadas=True, relleno_bandeja=24,
         piezas_marco=pentominos("FILPTUVWXYZN"), solucion=solucion_marco(dorado),
         lineas_voz=voces_formas(intro="intro_dorado.wav", pista="pista_marco_01.wav", victoria_final="victoria_dorado_01.wav")))
 
@@ -245,8 +257,14 @@ def generar_parejas():
     colores = [("estrella", "#FFCB3D"), ("estrella_rosa", "#F26CA8"), ("corazon", "#F26CA8"), ("corazon_azul", "#4A8BE0"),
                ("circulo", "#4A8BE0"), ("triangulo", "#7DD87A"), ("cuadrado", "#FF9F4A"), ("luna", "#B48CE8"),
                ("gota", "#45C6C0"), ("rombo", "#FF6B6B"), ("flor", "#FFB25B")]
+    # Guiño de Sofía (disenador-niveles HE-40 §7.5): en z1 las parejas son sus mascotas favoritas,
+    # cachorros y ponys, y la trampa de color se mantiene (la misma mascota en 2-3 colores).
+    mascotas = [("perrito_cafe", "#B07A4F"), ("perrito_crema", "#F2E6D0"), ("perrito_gris", "#A7A9B4"),
+                ("gatito_naranjo", "#FF9F4A"), ("gatito_gris", "#A7A9B4"), ("gatito_amarillo", "#FFE38A"),
+                ("gerbo_dorado", "#F2C98E"), ("gerbo_cafe", "#C9A27A"),
+                ("pony_rosado", "#F7A8D0"), ("pony_lila", "#B48CE8"), ("pony_celeste", "#6FD6E8")]
     escribir(NIVELES / "zona1_claro" / "parejas_estrella.json", nivel_parejas(
-        "zona1_claro", "", disposicion={"filas": 4, "columnas": 6}, limite_intentos=16, pares=pares_identicos(colores),
+        "zona1_claro", "", disposicion={"filas": 4, "columnas": 6}, limite_intentos=16, umbrales_estrellitas={"tres": 10, "dos": 16}, pares=pares_identicos(mascotas),
         lineas_voz=voces_parejas(1, "pista_01.wav")))
 
     rojo, amarillo, azul, blanco, negro = "#FF4B4B", "#FFD23D", "#3F7FE0", "#FFFFFF", "#2B3350"
@@ -256,21 +274,21 @@ def generar_parejas():
                ("gris", "#A7A9B4", [negro, blanco]), ("lila", "#D2B8F0", ["#9B6BD9", blanco]),
                ("crema", "#FFF0A8", [amarillo, blanco]), ("verde_claro", "#C4F0B8", ["#4CC25A", blanco])]
     escribir(NIVELES / "zona2_charcos" / "parejas_estrella.json", nivel_parejas(
-        "zona2_charcos", "", modo="correspondencia", disposicion={"filas": 4, "columnas": 5}, limite_intentos=15,
+        "zona2_charcos", "", modo="correspondencia", disposicion={"filas": 4, "columnas": 5}, limite_intentos=15, umbrales_estrellitas={"tres": 9, "dos": 15},
         pares=[par(n, {"figura": "gota", "color": c}, {"estilo": "receta", "receta": r}) for n, c, r in recetas],
         lineas_voz=voces_parejas(2, "pista_z2.wav")))
 
     trios = [("estrella", "#FFCB3D"), ("corazon", "#F26CA8"), ("circulo", "#4A8BE0"), ("triangulo", "#7DD87A"),
              ("luna", "#B48CE8"), ("gota", "#45C6C0"), ("flor", "#FF9F4A")]
     escribir(NIVELES / "zona3_chupetines" / "parejas_estrella.json", nivel_parejas(
-        "zona3_chupetines", "", modo="trios", tamano_grupo=3, disposicion={"filas": 3, "columnas": 7}, limite_intentos=42,
+        "zona3_chupetines", "", modo="trios", tamano_grupo=3, disposicion={"filas": 3, "columnas": 7}, limite_intentos=42, umbrales_estrellitas={"tres": 17, "dos": 42},
         tiempo_volteo_ms=1000,
         grupos=[{"id_grupo": n, "elementos": [{"id": f"{n}_{k}", "figura": n, "color": c} for k in range(3)]} for n, c in trios],
         lineas_voz=voces_parejas(3, "pista_z3.wav")))
 
     catorce = colores + [("rombo_verde", "#7DD87A"), ("luna_amarilla", "#FFCB3D")]
     escribir(NIVELES / "zona4_islotes" / "parejas_estrella.json", nivel_parejas(
-        "zona4_islotes", "", modo="traviesas", disposicion={"filas": 4, "columnas": 7}, limite_intentos=24,
+        "zona4_islotes", "", modo="traviesas", disposicion={"filas": 4, "columnas": 7}, limite_intentos=24, umbrales_estrellitas={"tres": 15, "dos": 24},
         intercambios_tras_acierto=2, pares=pares_identicos(catorce[:13]), lineas_voz=voces_parejas(4, "pista_z4.wav")))
 
     sombras = [
@@ -292,6 +310,8 @@ def generar_parejas():
         ("arcoiris_secreto", {"figura": "arcoiris", "color": "#FFFFFF"}),
         ("triangulo_rect_90", {"forma": "triangulo_rect", "color": "#7DD87A", "rotacion": 90}),
         ("triangulo_rect_180", {"forma": "triangulo_rect", "color": "#FFCB3D", "rotacion": 180}),
+        # Guiño de Sofía (HE-40 niveles §7.5): su pony, pareja especial del reto dorado.
+        ("pony_especial", {"figura": "pony", "color": "#F7A8D0"}),
     ]
 
     def pares_sombra(lista):
@@ -299,19 +319,19 @@ def generar_parejas():
         for nombre, figura in lista:
             sombra = {k: v for k, v in figura.items() if k != "color"}
             sombra["estilo"] = "sombra"
-            salida.append(par(nombre, figura, sombra, nombre == "arcoiris_secreto"))
+            salida.append(par(nombre, figura, sombra, nombre in ("arcoiris_secreto", "pony_especial")))
         return salida
 
     escribir(NIVELES / "zona5_cima" / "parejas_estrella.json", nivel_parejas(
-        "zona5_cima", "", modo="sombras", disposicion={"filas": 4, "columnas": 8}, limite_intentos=32,
+        "zona5_cima", "", modo="sombras", disposicion={"filas": 4, "columnas": 8}, limite_intentos=32, umbrales_estrellitas={"tres": 21, "dos": 32},
         tiempo_volteo_ms=800, intercambios_tras_acierto=1, pares=pares_sombra(sombras[:16]),
         lineas_voz=voces_parejas(5, "pista_z5.wav")))
     escribir(NIVELES / "zona5_cima" / "parejas_estrella_dorado.json", nivel_parejas(
-        "zona5_cima", "_dorado", modo="sombras", disposicion={"filas": 4, "columnas": 9}, limite_intentos=42,
-        tiempo_volteo_ms=800, intercambios_tras_acierto=2, regalo_tras_derrotas=False, pares=pares_sombra(sombras),
+        "zona5_cima", "_dorado", modo="sombras", disposicion={"filas": 4, "columnas": 9}, limite_intentos=42, umbrales_estrellitas={"tres": 27, "dos": 42},
+        tiempo_volteo_ms=800, intercambios_tras_acierto=2, regalo_tras_derrotas=False, pares=pares_sombra([s for s in sombras if s[0] != "flor"]),
         lineas_voz=voces_parejas(5, "pista_z5.wav", intro="intro_dorado.wav", victoria_final="victoria_dorado_01.wav")))
 
 
 if __name__ == "__main__":
-    generar_formas()
+    generar_dorado()
     generar_parejas()
