@@ -61,7 +61,14 @@ func _ready() -> void:
 
 ## Con `godot --script herramientas/...gd` el MainLoop es un SceneTree con script propio;
 ## el juego normal nunca le pone script. Asi se reconoce un arnes sin que tenga que avisar.
+##
+## Ojo (06-Oct-2026): cuando corre este `_ready()`, Godot 4.7 todavía no le asignó el script al
+## SceneTree, así que esa revisión sola daba false y los arneses escribían el guardado REAL. Por eso
+## primero se mira la línea de comandos (`--script` / `-s`), que existe desde el arranque.
 func _corre_desde_herramienta() -> bool:
+	for arg in OS.get_cmdline_args():
+		if arg == "--script" or arg == "-s":
+			return true
 	var bucle := Engine.get_main_loop()
 	return bucle != null and bucle.get_script() != null
 
