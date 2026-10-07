@@ -481,7 +481,13 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
     ],                                  // secuencia, no variantes
     "rival_entra": "voces/arcoiris/emparejar/equipo/coleccionauta_entra.wav",
     "coco_juntemos": "voces/arcoiris/emparejar/equipo/coco_juntemos.wav",
-    "intro_equipo_trucos": { "maxi": "PENDIENTE", "nicole": "PENDIENTE", "sofia": "PENDIENTE" },  // M2: falta en el guion
+    "intro_equipo_trucos_apertura": "voces/arcoiris/emparejar/equipo/intro_trucos.wav",  // M2: "¡Cada uno juega con su propio truco!"
+    "intro_equipo_trucos": {            // un fragmento por hermano que juega, en el orden de los turnos
+      "maxi": "voces/arcoiris/emparejar/equipo/intro_trucos_maxi.wav",
+      "nicole": "voces/arcoiris/emparejar/equipo/intro_trucos_nicole.wav",
+      "sofia": "voces/arcoiris/emparejar/equipo/intro_trucos_sofia.wav",  // EQUIDAD: hay que reescribirla (ver nota)
+      "equipo": "PENDIENTE"             // cierre común: "¡y quien haga tres parejas seguidas, hace retroceder al Coleccionauta!"
+    },
     "vistazo": "voces/arcoiris/emparejar/equipo/vistazo.wav",
 
     // Pase de turno (§2 del guion; capa genérica)
@@ -490,14 +496,21 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
       "nicole": ["voces/nucleo/equipo/le_toca_nicole_01.wav", "voces/nucleo/equipo/le_toca_nicole_02.wav", "voces/nucleo/equipo/le_toca_nicole_03.wav"],
       "sofia":  ["voces/nucleo/equipo/le_toca_sofia_01.wav",  "voces/nucleo/equipo/le_toca_sofia_02.wav",  "voces/nucleo/equipo/le_toca_sofia_03.wav"]
     },
-    "te_toca_recordatorio": {           // m5: como máximo 2 veces (el texto se ajusta a B1, ver nota)
+    "te_toca_recordatorio": {           // m5: como máximo 2 veces; puerta de TOQUE (texto ajustado a B1 en el guion v2)
       "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
       "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
       "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
     },
+    "te_toca_recordatorio_ventanita": { // m5: como máximo 2 veces; puerta de ARRASTRE (tras un turno de Maxi). Sin "maxi": Maxi nunca sigue a Maxi
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
     "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
-    "sube_ventanita": { "maxi": "PENDIENTE", "nicole": "PENDIENTE", "sofia": "PENDIENTE" },  // B1.2: falta en el guion
-    "porras_fin_maxi": "PENDIENTE",     // M3.3: falta en el guion
+    "sube_ventanita": {                 // B1.2: reemplaza a le_toca cuando la puerta es de arrastre. Sin "maxi"
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "porras_fin_maxi": "voces/arcoiris/emparejar/equipo/porras_fin_maxi.wav",  // M3.3
 
     // Turno guiado de Maxi (§3.2 del guion)
     "maxi_brillan": [
@@ -506,7 +519,7 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
     ],
     "maxi_aqui": "voces/arcoiris/emparejar/equipo/maxi_aqui.wav",
     "maxi_par": "voces/arcoiris/emparejar/equipo/maxi_par.wav",
-    "maxi_lupa": "PENDIENTE",           // Maxi forma la pareja lupa: falta en el guion
+    "maxi_lupa": "voces/arcoiris/emparejar/equipo/maxi_lupa.wav",
 
     // Acierto y fallo de Nicole y Sofía (§3.3 del guion), sin nombre
     "acierto_equipo": [
