@@ -1053,10 +1053,12 @@ define en la tabla de abajo** (UX HE-66, B1.6):
 
 ### 14.4 Cómo se ve el avance de la batalla (sin números) [Propuesta]
 
-- **Siempre a la vista, arriba a la derecha**: la **mochila-torre del Coleccionauta, con tres pisos de
-  colores** (rojo, amarillo y azul, de abajo hacia arriba).
+- **Un solo indicador de batalla, sobre el propio Coleccionauta (UX HE-66, M5.4)**: la mochila-torre de
+  tres pisos (rojo, amarillo y azul, de abajo hacia arriba) va **en su espalda, en la pista de galletas**.
+  No hay un widget aparte. El avance **dentro** de la ronda lo muestra la cinta de la mesa del equipo, que
+  se llena con gotas, piezas o pares.
 - **Al ganar una ronda**:
-  1. El piso de ese color tiembla, se infla y **estornuda**.
+  1. En el interludio, a pantalla completa, el piso de ese color tiembla, se infla y **estornuda**.
   2. El color sale en chorro de arcoíris y **vuelve a su banda del cielo**: el arcoíris del fondo
      recupera esa franja.
   3. La mochila-torre queda **un piso más baja**, y el Coleccionauta, más liviano, da un saltito
@@ -1067,7 +1069,9 @@ define en la tabla de abajo** (UX HE-66, B1.6):
   camino de la isla):
   - las rondas ganadas se ven pintadas con su color;
   - la siguiente brilla;
-  - Coco salta a la siguiente.
+  - Coco salta a la siguiente;
+  - todos los hitos responden al toque en menos de 100 ms (se menean y Coco nombra el juego), pero
+    **solo el hito que brilla lleva a jugar**. Los otros nunca saltan rondas (m3).
   
   No hay "1/3" ni barras.
 - **Al final** (antes del epílogo), la mochila-torre queda **gris y vacía**, y el arcoíris del cielo,
