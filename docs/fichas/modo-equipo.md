@@ -532,7 +532,12 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
     ],
     "segunda_oportunidad": "voces/arcoiris/emparejar/equipo/nicole_otra.wav",  // B2: solo voz, nada en pantalla
     "brote_ayuda": "voces/arcoiris/emparejar/equipo/brote_ayuda.wav",
-    "animo_hermanos": "PENDIENTE",      // B2: voces de los niños opcionales; si no hay, solo animación y SFX
+    "animo_hermanos": {                 // B2: grabación opcional de los niños. Por cada "no es este", suena UNO solo:
+                                        // un hermano al azar entre los que miran (nunca el que juega). Si no hay grabación, solo animación y SFX
+      "maxi":   ["voces/nucleo/equipo/animo_maxi_01.wav",   "voces/nucleo/equipo/animo_maxi_02.wav"],
+      "nicole": ["voces/nucleo/equipo/animo_nicole_01.wav", "voces/nucleo/equipo/animo_nicole_02.wav"],
+      "sofia":  ["voces/nucleo/equipo/animo_sofia_01.wav",  "voces/nucleo/equipo/animo_sofia_02.wav"]
+    },
 
     // Rival (§4 del guion; capa genérica salvo lo de cartas)
     "rival_avanza": [
@@ -547,20 +552,28 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
       "voces/nucleo/equipo/coleccionauta/embobado_01.wav", "voces/nucleo/equipo/coleccionauta/embobado_02.wav",
       "voces/nucleo/equipo/coleccionauta/embobado_03.wav"
     ],
-    "rival_retrocede": "PENDIENTE",     // M1, racha de 3: falta en el guion
+    "rival_retrocede": [                // M1, racha de 3
+      "voces/nucleo/equipo/coleccionauta/retrocede_01.wav", "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"
+    ],
+    "rival_retrocede_celebra": "voces/arcoiris/emparejar/equipo/retrocede_celebra.wav",  // Coco, justo después; sin nombre
     "rival_aplaude": [
       "voces/nucleo/equipo/coleccionauta/aplaude_01.wav", "voces/nucleo/equipo/coleccionauta/aplaude_02.wav"
     ],
     "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav",
 
-    // Derrota-gag (§4.3 del guion), secuencia en este orden
+    // Derrota-gag (§4.3 del guion), secuencia en este orden. AL FINAL, después de coco_otra_vez, suena
+    // pares_juntados[N], con N = parejas ya formadas, o nos_alcanzo si N = 0 (B3.3)
     "derrota_gag_equipo": [
       "voces/arcoiris/emparejar/equipo/coleccionauta_aspira.wav",
       "voces/arcoiris/emparejar/equipo/coleccionauta_estornuda.wav",
       "voces/arcoiris/emparejar/equipo/coleccionauta_cansado.wav",
       "voces/arcoiris/emparejar/equipo/coco_otra_vez.wav"
     ],
-    "pares_juntados": {},               // B3.3 "¡igual juntamos N parejas!": falta en el guion (1-12)
+    "pares_juntados": {                 // Cometa, "¡igual juntamos N parejas!"
+      "1": "voces/nucleo/equipo/pares_juntados_1.wav"
+      // … "2" a "12": voces/nucleo/equipo/pares_juntados_<N>.wav
+    },
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav",  // si N = 0
 
     // Victoria (§5 del guion), secuencia
     "victoria_equipo": "voces/arcoiris/emparejar/equipo/coco_victoria.wav",
