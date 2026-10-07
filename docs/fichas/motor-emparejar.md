@@ -384,8 +384,12 @@ carta movida. La idea es afinar los límites con el playtest.
     **banderita-cupcake a la altura del récord**. Cuando la barra la pasa, la banderita salta, hay
     confeti chico y suena una palabra ("¡récord!"). **No se pausa el juego** (GDD §5: ritmo rápido).
   - **Al final**: "¡Nuevo récord!" con Coco sosteniendo el **trofeo-cupcake** (mismo asset que el Río).
+  - **Sin récord previo (m6)**: no hay banderita, y al final suena "¡tu primer récord!".
+  - **Los récords parten en cero [PO]**, también en las estaciones ya jugadas.
   - **Sin rankings entre hermanos** [PO]: cada uno compite con su propio récord, y el HUD nunca muestra
     el récord de otro.
+- **En modo equipo no existe el bloque `puntaje` (M1)**: la racha va solo con sonido y la cresta en
+  arcoíris. Ver `modo-equipo.md` §5.2.
 
 **Por perfil** [Propuesta]:
 
@@ -393,9 +397,72 @@ carta movida. La idea es afinar los límites con el playtest.
 |---|---|---|---|
 | Racha | **Solo sonido y cresta** (tono que sube, nuditos). Sin número ni puntaje | Completa: contador, multiplicador y nuditos | Completa |
 | "¡A la primera!" | No (con cartas a la vista no aplica) | Sí | Sí |
-| Tiempo par | No | Sí: la vela, holgada (≈ 1,5 veces lo que tarda una niña de 5 años que juega bien) | Sí: la vela, ajustada (≈ 1,1 veces la mediana del jugador simulado) |
-| Récord | No | **Sí: es su reto principal** | Sí, junto a las estrellitas |
-| Estrellitas | No | No (igual que hoy; ver §10.8, pregunta 1) | Sin cambios: por fallos. El puntaje y la vela **no** cambian las estrellitas |
+| Tiempo par | No | **Desde la zona 2** (M7.4) y solo cuando ya hay récord (M7.1). Holgada: ≈ 1,5 veces lo que tarda una niña de 5 años que juega bien | Sí, desde la primera partida. Ajustada: ≈ 1,1 veces la mediana del jugador simulado |
+| Récord | No | Sí, como **reto extra** [PO] | Sí, junto a las estrellitas |
+| Estrellitas | No | **Sí, de 1 a 3 por puntaje [PO]** (§10.1.1) | Sin cambios: por fallos (`umbrales_estrellitas`). El puntaje y la vela **no** cambian las estrellitas de Sofía |
+
+**Criterio para el playtest (M7.5)**: si Nicole mira la vela más que el tablero, o falla más cuando la
+vela está por terminarse, se pone `tiempo_par_s: null` en los niveles Brote.
+
+#### 10.1.1 Las estrellitas de Nicole por puntaje [PO: sí, de 1 a 3; Propuesta: umbrales y forma]
+
+**Qué puntaje cuenta**: el **puntaje base**, que es la suma de pares × racha, "¡a la primera!", la
+carta dorada y la revancha. **Sin el bono de la vela**, porque la vela no existe en la primera partida
+(M7.1) y entonces sus estrellitas no serían comparables. En estaciones con rondas, el puntaje base
+suma las 3 rondas.
+
+**Umbrales** (campo `umbrales_puntaje: { "dos": X, "tres": Y }`, en puntos):
+
+- **1 estrellita**: completar la estación. Nicole nunca pierde, así que **siempre tiene al menos 1**.
+- **2 estrellitas**: puntaje base ≥ `dos`, que es la **mediana (p50)** de una jugadora simulada de 5
+  años:
+  - memoria visual de ~3 cartas, olvidando las más antiguas;
+  - con el vistazo de M6 y las especiales de su zona;
+  - 3.000 partidas por nivel, el mismo método que los límites de Sofía.
+- **3 estrellitas**: puntaje base ≥ `tres`, el **percentil 80** de la misma simulación. Así 3
+  estrellitas salen en ~1 de cada 5 partidas bien jugadas: igual de exigente que con Sofía (zonas §7.2).
+- **Valores por defecto**, si el nivel no trae `umbrales_puntaje` (solo para que funcione mientras se
+  simula): `dos = 150 × pares` y `tres = 230 × pares`, con `pares` = total de pares de todas las rondas,
+  sin contar las especiales. `disenador-niveles` los reemplaza con el simulador.
+- Si el nivel tiene `umbrales_puntaje`, la estación puntúa. Nicole no tiene `limite_intentos`, pistas
+  con costo ni derrota, y eso no cambia.
+
+**Que la estrellita 1 se sienta como un logro, no como un castigo**:
+
+1. **Nunca se muestran huecos vacíos**: ni contornos ni "1 de 3". En la celebración aparecen **solo las
+   estrellitas ganadas**, una por una (0,4 s cada una), cada una con su campanita y una nota más aguda.
+2. **La primera estrellita es "la estrella de terminar"**: es la más grande, dorada, cae girando desde
+   arriba y Coco la atrapa con la lengua y se la pega en la cresta. Tiene la misma animación que la 3,
+   no una versión "chica".
+3. **La voz habla del logro, nunca de lo que faltó**:
+   - 1 estrellita: "¡Terminaste! ¡Una estrella brillante para ti!";
+   - 2 estrellitas: "¡Dos estrellas! ¡Qué memoria!";
+   - 3 estrellitas: "¡Tres estrellas! ¡Memoria arcoíris!".
+
+   Nunca "solo una", "te faltó" ni "la próxima vez más".
+4. **El incentivo para repetir va en el mapa, no en la celebración**: en la tarjeta de la estación se
+   ven las estrellitas ganadas, y Coco **solo menciona otra estrellita si Nicole vuelve a entrar** a esa
+   estación: "¡con una racha larga sale otra estrellita!". Lo dice como pista, no como reproche.
+5. **Equidad (`perfil-jugadores.md`)**: Nicole y Sofía tienen **la misma animación, el mismo tamaño y
+   el mismo sonido de estrellitas**. La diferencia está solo en cómo se ganan (puntaje o fallos), y
+   ninguna pantalla muestra las de la otra.
+
+**Para `dev-godot`**:
+
+- `minijuego_base._estrellitas_visibles()` hoy devuelve 0 si el perfil no es `estrella`. Debe aceptar
+  también **un nivel `brote` jugado por quien tiene perfil `brote`, cuando el nivel trae
+  `umbrales_puntaje`**.
+- El mapa del planeta ya muestra estrellitas por estación (`Progreso.obtener_estrellitas_nivel`).
+  Debe mostrarlas también para Nicole.
+- El botón de reto dorado (que aparece con 3 estrellitas) **no cambia**, porque Nicole no tiene
+  `niveles_dorados`. La "zona perfecta" (corona) sigue siendo solo de Sofía hasta que el PO diga otra
+  cosa.
+
+**Voces nuevas** (encargo al `guionista`): las 3 líneas del punto 3, la del punto 4 y `vela_dormida`
+(M7.3).
+
+> **Conflicto con el guion**: la decisión 10 del guion dice que cuando la vela se apaga no hay voz. UX
+> M7.3 pide que Coco diga algo positivo, y manda UX: se agrega `vela_dormida`.
 
 **Contrato** [Propuesta]:
 
@@ -404,9 +471,21 @@ carta movida. La idea es afinar los límites con el playtest.
   "por_par": 100,
   "racha_tope": 5,
   "bono_a_la_primera": 200,
-  "tiempo_par_s": 95,            // null = sin vela
+  "tiempo_par_s": 95,            // null = sin vela; en Brote solo aparece si ya hay récord (M7)
+  "vela_desde_primera": false,   // true en Estrella
   "bono_por_segundo": 10,
-  "mostrar": "barra"             // "barra" (Brote/Estrella) | "solo_sonido" (Semilla)
+  "mostrar": "barra"             // "barra" (Brote/Estrella) | "solo_sonido" (Semilla y siempre en equipo)
+},
+"umbrales_puntaje": { "dos": 1350, "tres": 2070 },  // solo Brote: estrellitas por puntaje base (§10.1.1)
+"lineas_voz": {                  // se suman a las del nivel; ids del guion §6 (voces/arcoiris/emparejar/reto/)
+  "racha": { "2": "…/racha_2.wav", "3": "…/racha_3.wav", "4": "…/racha_4.wav", "5": "…/racha_5.wav", "sigue": "…/racha_sigue.wav" },
+  "a_la_primera": ["…/a_la_primera_01.wav", "…/a_la_primera_02.wav"],
+  "record_pasa": "…/record_pasa.wav",
+  "record_nuevo": ["…/record_nuevo_01.wav", "…/record_nuevo_02.wav"],
+  "primer_record": "PENDIENTE",
+  "vela_presenta": "…/vela_presenta.wav", "vela_encendida": "…/vela_encendida.wav", "vela_dormida": "PENDIENTE",
+  "estrellitas_brote": { "1": "PENDIENTE", "2": "PENDIENTE", "3": "PENDIENTE" },
+  "vistazo": "…/vistazo_mira.wav", "vistazo_presenta": "…/vistazo_presenta.wav"
 }
 ```
 
