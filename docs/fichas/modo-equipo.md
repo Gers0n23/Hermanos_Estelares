@@ -254,7 +254,7 @@ Regla común: **si formas una pareja, sigues jugando; con el "no es este" que co
 | Pares por turno | `pares_turno_semilla` (**1**), y después viene el ritual de fin de turno (§4.3, paso 0) | Ilimitados mientras acierte | Ilimitados mientras acierte |
 | "No es este" | **No existe** para Maxi | **Segunda oportunidad**: el primer "no es este" del turno **no** lo termina. Se comunica **solo** con la voz de Coco ("¡uy, otra!") y un gesto de Coco (guiño y besito soplado). **Nada queda en pantalla para contar** (B2). El segundo fallo pasa el turno | Pasa el turno en el acto |
 | Ayuda extra | — | Si pasa **2 turnos seguidos sin par**, al empezar el siguiente, una carta de una pareja **ya vista** brilla tenue | Ninguna |
-| Su truco (M2) | "Cartas que brillan" | "El besito de Coco" (la segunda oportunidad) | "Hacer retroceder al Coleccionauta" (§5.3, racha de 3), que vale para Nicole también, pero es su gran momento |
+| Su truco (M2) | "Cartas que brillan" | "El besito de Coco" (la segunda oportunidad) | **"Juega como en la mesa de verdad, como los grandes"**: su regla sin ayudas se presenta como un rango, no como una desventaja. El retroceso con racha de 3 **no es su truco**: es **del equipo**, porque Nicole también puede lograrlo (equidad) |
 | ¿Mueve al rival? | **No**. El Coleccionauta **se queda embobado mirándolo** y aplaude su fiesta | Sí, un salto durante el pase siguiente | Sí, un salto durante el pase siguiente |
 
 **Racha en equipo (M1)**:
@@ -281,9 +281,19 @@ Regla común: **si formas una pareja, sigues jugando; con el "no es este" que co
 | Carta del Coleccionauta | **No** (él ya es el rival) |
 
 **Presentación del modo (M2)**: la primera partida en equipo de cada combinación de hermanos empieza con
-Coco (voz `intro_equipo_trucos`): "¡Cada uno juega con su propio truco! Maxi tiene cartas que brillan,
-Nicole tiene un besito mío, y Sofía puede hacer retroceder al Coleccionauta". La línea se arma según
-quiénes juegan, con tres variantes. Las partidas siguientes usan la intro corta `intro_equipo`.
+Coco. La frase se arma con fragmentos, según quiénes juegan:
+
+1. `intro_equipo_trucos_apertura`: "¡Cada uno juega con su propio truco!".
+2. Un fragmento por cada hermano que juega:
+   - Maxi: "Maxi tiene cartas que brillan";
+   - Nicole: "Nicole tiene un besito mío: ¡una oportunidad extra!";
+   - Sofía: "Sofía juega como en la mesa de verdad, ¡como los grandes!". Este fragmento hay que
+     reescribirlo en el guion.
+3. Cierre común `intro_equipo_trucos.equipo`: "¡Y quien haga tres parejas seguidas, hace retroceder al
+   Coleccionauta!".
+
+**Equidad**: el retroceso no se atribuye a ningún hermano, porque lo puede lograr cualquiera de los
+mayores. Las partidas siguientes usan la intro corta `intro_equipo`.
 
 ### 5.3 El rival: el Coleccionauta y la pista de galletas [PO: el Coleccionauta; Propuesta: forma]
 
@@ -582,11 +592,11 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
       "gesto": { "maxi": "voces/nucleo/equipo/fiesta_maxi.wav", "nicole": "voces/nucleo/equipo/fiesta_nicole.wav", "sofia": "voces/nucleo/equipo/fiesta_sofia.wav" },  // o las tres o ninguna
       "choca": "voces/nucleo/equipo/choca.wav",
       "equipo_estelar": "voces/nucleo/equipo/equipo_estelar.wav",
-      "destellos": "voces/nucleo/equipo/destellos.wav",
+      "destellos": "voces/nucleo/equipo/destellos.wav",  // "¡Destellos para todos!": SOLO si TODOS los del equipo reciben; si no, solo tintineo
       "estrellita": "voces/nucleo/equipo/estrellita.wav"
     },
     "record_equipo": "voces/arcoiris/emparejar/equipo/record.wav",
-    "primer_record_equipo": "PENDIENTE" // m6: falta en el guion
+    "primer_record_equipo": "voces/arcoiris/emparejar/equipo/primer_record.wav"  // m6
   }
 }
 ```
@@ -594,8 +604,16 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
 **Voces de la selección y del mapa** (no van en el nivel, las leen directamente la selección y
 `mapa_planeta.gd`):
 
-- `nucleo_equipo_juntos`, `nucleo_equipo_armar`, `nucleo_equipo_al_puf_01/02`, `nucleo_equipo_vuelve`,
-  `nucleo_equipo_yo_tambien_<hermano>`, `nucleo_equipo_minimo_dos` y `nucleo_equipo_despegar`;
+- `nucleo_equipo_presenta` (presentación única, M5.2) y `nucleo_seleccion_invitacion_equipo` (invitación
+  alternada, M5.3);
+- `nucleo_equipo_juntos`, `nucleo_equipo_armar`, `nucleo_equipo_minimo_dos` y `nucleo_equipo_despegar`;
+- **confirmaciones del puf con nombre (m2)**:
+  - `nucleo_equipo_al_puf_<hermano>`, cuando el hermano sale del equipo;
+  - `nucleo_equipo_sube_nave_<hermano>`, cuando vuelve;
+  - si existe la grabación del niño, `nucleo_equipo_yo_tambien_<hermano>` suena después de
+    `sube_nave`.
+  
+  Las líneas genéricas `al_puf_01/02` y `vuelve` de la v1 del guion **ya no se usan**.
 - `arcoiris_mapa_equipo_llegada` y `arcoiris_mapa_equipo_estacion_pronto`.
 
 **Reglas de mezcla de voces**:
@@ -605,23 +623,15 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
 - **La voz del rival al formarse un par**: como máximo 1 de cada 3 pares.
 - **En Maxi**, `maxi_par` reemplaza a `acierto_equipo`.
 
-**Líneas que faltan, encargo de vuelta al `guionista`** (marcadas `"PENDIENTE"`: si falta el archivo,
-el motor sigue sin voz y nunca falla):
+**Estado de las voces** (guion v2, §10): todas las claves tienen sus ids, salvo dos que están marcadas
+`"PENDIENTE"`. Si falta un archivo, el motor sigue sin voz y nunca falla.
 
-- `intro_equipo_trucos` (M2);
-- `sube_ventanita` (B1);
-- `porras_fin_maxi` (M3);
-- `maxi_lupa`;
-- `rival_retrocede` (M1);
-- `pares_juntados` 1-12 (B3);
-- `primer_record_equipo` (m6).
-
-**Conflictos del guion con la validación UX** (el `guionista` debe corregirlos):
-
-- `te_toca_<hermano>` dice "Toca la pantalla", pero con B1 la puerta se abre **solo tocando el
-  retrato**: debe decir "¡toca tu carita!", o, después de un turno de Maxi, "¡sube a tu ventanita!".
-- `nucleo_equipo_coleccionauta_avanza_*` tiene como disparador "fin de turno", pero según B3 suena
-  **durante el pase** (paso 2 del §4.3).
+- **Pendiente 1**: `intro_equipo_trucos.equipo`, el cierre común "¡y quien haga tres parejas seguidas,
+  hace retroceder al Coleccionauta!".
+- **Pendiente 2**: reescribir `intro_equipo_trucos.sofia`. Hoy dice que el retroceso es "el truco de
+  Sofía", pero Nicole también puede lograrlo (ver la nota de equidad en §5.2).
+- `te_toca` ya quedó corregido en la v2 del guion.
+- El avance del rival suena durante el pase (B3).
 
 **Reglas de lectura del contrato**:
 

@@ -482,9 +482,10 @@ suma las 3 rondas.
   "a_la_primera": ["…/a_la_primera_01.wav", "…/a_la_primera_02.wav"],
   "record_pasa": "…/record_pasa.wav",
   "record_nuevo": ["…/record_nuevo_01.wav", "…/record_nuevo_02.wav"],
-  "primer_record": "PENDIENTE",
-  "vela_presenta": "…/vela_presenta.wav", "vela_encendida": "…/vela_encendida.wav", "vela_dormida": "PENDIENTE",
-  "estrellitas_brote": { "1": "PENDIENTE", "2": "PENDIENTE", "3": "PENDIENTE" },
+  "primer_record": "…/primer_record.wav",
+  "vela_presenta": "…/vela_presenta.wav", "vela_encendida": "…/vela_encendida.wav", "vela_dormida": "…/vela_dormida.wav",
+  "estrellitas_brote": { "1": "…/estrellitas_brote_1.wav", "2": "…/estrellitas_brote_2.wav", "3": "…/estrellitas_brote_3.wav" },
+  "otra_estrellita": "…/otra_estrellita.wav",   // §10.1.1, punto 4: al volver a entrar con 1 o 2 estrellitas
   "vistazo": "…/vistazo_mira.wav", "vistazo_presenta": "…/vistazo_presenta.wav"
 }
 ```
