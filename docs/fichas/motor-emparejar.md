@@ -543,8 +543,8 @@ Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
 |---|---|---|---|---|
 | **Comodín arcoíris** (comodín de *Luxor*, como la gota arcoíris del Río) | **Una sola carta**, sin compañera. Su cara tiene franjas arcoíris que giran | Va con **cualquier** carta. Si sale segunda, completa la pareja de la carta de arriba: **la compañera de esa carta se da vuelta sola y vuela a juntarse**, y se forma el par con las tres juntas. Si sale primera, se queda arriba y la próxima carta que se toque se completa igual. **Nunca produce "no es este"**. Cuenta como un eslabón más de la racha | Al darse vuelta, baño arcoíris en Coco y ojos de estrella. La compañera vuela con estela arcoíris (0,5 s) | Nicole (Brote). En equipo, cualquiera si Nicole juega |
 | **Carta dorada** | Una **pareja normal con el dorso dorado y brillante**: Sofía sabe que vale, pero no qué figura es | Al formarla: **+500 y el próximo par vale doble** (además de la racha) | Lluvia de monedas-destello, campana grave y nudito dorado en la cresta | Sofía (Estrella). En equipo, no |
-| **Carta lupa** | Una **pareja normal con una lupa en la cara** (el dorso es común: no se sabe dónde está) | Al formarla, **todas las cartas tapadas se dan vuelta a la vez 1 s** (Brote 1,5 s) y se tapan en cascada | Coco se pone una lupa en el ojo (que se agranda chistoso) y suena "¡tadá!" en arpa | Nicole y Sofía. En equipo, sí |
-| **Carta del Coleccionauta** (la carta Bowser de *Mario Party*) | **Una sola carta**, con la cara del Coleccionauta sonriendo con su monóculo | Al darse vuelta, el Coleccionauta **se asoma por el borde**, dice "¡qué lindas! Me llevo… no, mejor las cambio de lugar" y **cambia dos cartas tapadas de lugar** con un vuelo visible de 0,6 s (prefiere cartas ya vistas, que es lo que hace del gag un reto de atención). La carta se va con él. **No cuenta como fallo**, no corta la racha ni el turno, y si había una carta arriba, sigue arriba | El cambio es lento y a la vista, como las "cartas traviesas". Coco se tapa la boca y se ríe. El Coleccionauta se despide tropezando | Sofía (Estrella), solo en solitario |
+| **Carta lupa** | Una **pareja normal con una lupa en la cara** (el dorso es común: no se sabe dónde está) | Al formarla, **todas las cartas tapadas se dan vuelta a la vez 1 s** (Brote 1,5 s) y se tapan en cascada | **Coco abre bien grandes sus ojos de camaleón**, que giran juntos una vuelta (siempre juntos), y de la punta de su cresta sale **un abanico de luz arcoíris** que barre el tablero mientras las cartas se muestran. Suena "¡tadá!" en arpa. **No se pone una lupa en el ojo**: eso se confundía con las gafas-lupa del Coleccionauta (`guionista`). El ícono de la carta sigue siendo una lupa | Nicole y Sofía. En equipo, sí |
+| **Carta del Coleccionauta** (la carta Bowser de *Mario Party*) | **Una sola carta**, con la cara del Coleccionauta sonriendo con sus gafas-lupa (canon: gafas-lupa y mochila-torre) | Al darse vuelta, el Coleccionauta **se asoma por el borde**, dice "¡qué lindas! Me llevo… no, mejor las cambio de lugar" y **cambia dos cartas tapadas de lugar** con un vuelo visible de 0,6 s (prefiere cartas ya vistas, que es lo que hace del gag un reto de atención). La carta se va con él. **No cuenta como fallo**, no corta la racha ni el turno, y si había una carta arriba, sigue arriba | El cambio es lento y a la vista, como las "cartas traviesas". Coco se tapa la boca y se ríe. El Coleccionauta se despide tropezando | Sofía (Estrella), solo en solitario |
 
 **Reglas comunes**:
 
@@ -552,9 +552,23 @@ Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
   la ruta de un hermano, al darse vuelta el juego se detiene 1,5 s, la carta se agranda al centro con un
   brillo, Coco hace el gesto y suena una palabra ("¡Lupa!"). Se puede saltar con un toque. Las veces
   siguientes no se detiene. Se guarda en `Progreso` qué especiales conoce cada hermano.
-- **Tablero impar**: el comodín y la carta del Coleccionauta son cartas solas. Si el total de cartas
-  queda impar, el lugar sobrante de la grilla lleva un **adorno de Coco** (una gomita) que no se puede
-  tocar y es visiblemente distinto de una carta.
+- **Revancha contra la carta del Coleccionauta [UX M8]**:
+  1. Las dos cartas movidas dejan una **estela de brillitos durante 1,5 s**. Si después Sofía forma un
+     par con alguna de ellas, suena "¡te pillé, Coleccionauta!", gana **+300 puntos** (`bono_revancha`)
+     y el Coleccionauta, desde el borde, se cae de su silla. Así la rabia se convierte en "le gané al
+     villano".
+  2. La carta **nunca aparece** cuando quedan 3 pares o menos, ni en la partida que sigue a una derrota.
+     Si se sorteó, el motor la retira antes de repartir.
+  3. Como máximo, una por tablero.
+  4. Respaldo, si en el playtest igual hay llanto: con `"modo": "solo_gag"`, el Coleccionauta solo mira
+     las cartas y las devuelve donde estaban.
+- **En el turno guiado de Maxi (modo equipo, M10)**: el comodín y la lupa que no tienen halo **no se dan
+  vuelta**; solo hacen el pulso con un sonido amable. La pareja lupa sí puede recibir el halo
+  (`modo-equipo.md` §5.2).
+- **Tablero impar (m8)**: el comodín y la carta del Coleccionauta son cartas solas. Si el total de
+  cartas queda impar, el lugar sobrante de la grilla lleva una **gomita de Coco**: redonda, del 60 % del
+  tamaño de una carta y sin dorso, para que no se confunda con una carta. **Al tocarla se menea y hace
+  "boing"** (GDD §6.5). No cuenta para nada.
 - **Calendario por zona** [Propuesta, lo ajusta `disenador-niveles`]:
 
 | Zona | Nicole · Brote | Sofía · Estrella |
@@ -571,9 +585,15 @@ Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
     { "tipo": "comodin" },
     { "tipo": "lupa", "ms": 1500 },
     { "tipo": "dorada", "bono": 500 },
-    { "tipo": "coleccionauta", "intercambios": 1 }
+    { "tipo": "coleccionauta", "intercambios": 1, "bono_revancha": 300, "modo": "cambia" }  // "cambia" | "solo_gag"
   ]
   ```
+  - Voces: las del §7 del guion (`voces/arcoiris/emparejar/especiales/`), en
+    `lineas_voz.especiales.<tipo>`, con `presenta` (una vez por hermano) y la palabra corta.
+  - Falta pedirle al `guionista` la línea de revancha "¡te pillé, Coleccionauta!" (Coco) y la reacción
+    del Coleccionauta al caerse (grabación casera de papá).
+  - La voz de presentación de la lupa del guion habla de "el ojo agrandado": hay que ajustarla al gesto
+    nuevo (ojos grandes y abanico de luz).
   - La lupa y la dorada **toman una pareja del pool** y la marcan.
   - El comodín y el Coleccionauta **agregan** una carta.
   - En niveles con `rondas`, va por ronda.
