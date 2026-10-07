@@ -510,11 +510,17 @@ ve más tiempo y Sofía ve menos cartas.
 | | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
 | ¿Vistazo? | No: sus cartas ya están a la vista | Sí, en cada ronda tapada | Sí |
-| Cuántas cartas | — | `max(4, cartas − 8)`: **4 de 12, 8 de 16, 12 de 20** (la tabla del PO). Se muestran **parejas completas** | `round(cartas / 4)`, **sueltas** (nunca las dos cartas de un mismo par): 6 de 24, 8 de 32, 9 de 36. Con los tableros grandes de Sofía, la fórmula de la tabla mostraría casi todo |
+| Cuántas cartas | — | **[Propuesta UX M6, por confirmar con el PO]**: **1 par (2 cartas) con 10 cartas o menos** y **2 pares (4 cartas) con 12 a 16**, siempre **parejas completas**. Reemplaza a la tabla del PO (4 de 12, 8 de 16, 12 de 20): con los tableros tapados de Nicole (8 a 12 cartas), esa tabla le resolvía medio tablero ("dificultad de bebé") | `round(cartas / 4)`, **sueltas** (nunca las dos cartas de un mismo par): 6 de 24, 8 de 32, 9 de 36 |
 | Duración | — | **3000 ms** | **2000 ms** |
+| En modo equipo | **[Propuesta UX M6, por confirmar con el PO]**: **como máximo 3 pares (6 cartas), en 3 s**, parejas completas, sea cual sea el tablero | | |
 
-- **Contrato**: `"vistazo": { "cartas": 8, "ms": 3000, "pares_completos": true }`. `cartas: "auto"` usa
-  la fórmula del perfil, y la ausencia del campo significa sin vistazo.
+Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
+
+- **Contrato**: `"vistazo": { "cartas": 4, "ms": 3000, "pares_completos": true }`.
+  - `cartas: "auto"` usa la fórmula del perfil de la tabla: Brote 2 o 4 según el tablero; Estrella
+    `round(cartas/4)`.
+  - Si no está el campo, no hay vistazo.
+  - En equipo se usa `equipo.vistazo: { "pares": 3, "ms": 3000 }` (`modo-equipo.md` §8).
 - **No es una pista**: no cuesta estrellitas. La regla del 7.2 de la ficha de zonas ("cada vistazo
   resta 1") se refiere al vistazo **a pedido** de otros motores.
 - **Recalibrar los límites de Sofía**: con vistazo, el simulador debe partir con esas cartas "vistas".
