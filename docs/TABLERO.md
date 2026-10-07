@@ -159,7 +159,7 @@
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
-| HE-39 | Capítulo final: planeta del Coleccionauta — prueba final cooperativa (intento fallido cómico → cooperación por roles → rescate de papá, guion de HE-D5) + modo misión familiar + regreso al living | ⬜ Backlog | HE-38, HE-D5 | Dev |
+| HE-39 | Capítulo final: planeta del Coleccionauta — prueba final cooperativa (intento fallido cómico → cooperación por roles → rescate de papá, guion de HE-D5) + modo misión familiar + regreso al living. **Nota 06-Oct-2026 (decisión del PO)**: la parte del "modo misión familiar" (turnos en el mismo dispositivo, GDD §3 y P6 de §9) **se adelanta y se concreta** en la épica "Juego en equipo y Parejas de Coco con reto real" (HE-57 a HE-65). Esta tarjeta conserva la prueba final cooperativa del rescate de papá y reutiliza el modo equipo ya construido allí | ⬜ Backlog | HE-38, HE-D5; reutiliza HE-59 | Dev |
 | HE-28 | Grabar/integrar voces definitivas según `guion_voces.md` (decisión de HE-D5) — pasada final de consistencia; cada capítulo ya entrega sus voces pulidas | ⬜ Backlog | HE-39 | PO + Dev |
 | HE-29 | Música por planeta + mezcla de audio final — pasada final de consistencia; cada capítulo ya entrega su música pulida | ⬜ Backlog | HE-39 | Dev |
 | HE-33 | 🧒 Playtest final en tablet (juego completo) + correcciones | ⬜ Backlog | HE-28, HE-29 | PO |
