@@ -957,14 +957,26 @@ un color de vuelta al cielo**.
 
 ### 14.3 Rondas: qué minijuegos entran y cómo aporta cada uno
 
-**Regla común a todas las rondas** (la misma del modo equipo, ya validada por UX):
+**Regla común a todas las rondas**. Está validada para Parejas; **en el Río y en Formas, el turno se
+define en la tabla de abajo** (UX HE-66, B1.6):
 
-- Por turnos, en el orden `maxi_intercalado`, con la puerta de turno (B1) y el pase con el salto del
-  rival (B3).
-- **"Si aciertas, sigues; con el fallo, pasa el turno"**:
-  - Nicole tiene la segunda oportunidad, comunicada solo por voz (B2);
-  - Maxi juega un turno guiado que **siempre** aporta;
-  - con una racha de 3 aciertos en un turno, el Coleccionauta retrocede (M1).
+- Por turnos, en el orden `maxi_intercalado`, con la puerta de turno (B1 de HE-58) y el pase con el salto
+  del rival (B3 de HE-58).
+- **Cuándo termina un turno, según la ronda**:
+  - **Parejas**: "si aciertas, sigues; con el fallo, pasa el turno", con la segunda oportunidad de
+    Nicole (§5.2).
+  - **Formas**: lo mismo, pero **con un tope de aciertos por turno** (B2).
+  - **Río**: **se miden gotas, no fallos** (B1).
+- Con una racha de 3 aciertos en un turno, el Coleccionauta retrocede (M1 de HE-58).
+- **Regla general de las batallas, también para HE-39 (UX HE-66, B3.3)**: **el turno de Maxi en una
+  ronda de batalla nunca le exige más que su ruta Semilla del mismo motor.**
+- **Maxi nunca deja la partida esperando (UX HE-66, M2)**: si en su turno pasan **20 s sin ningún
+  toque**, el turno se resuelve solo y Coco dice "¡Maxi nos dejó un regalito!":
+  - **Parejas**: las cartas del halo quedan a la vista y se forman solas a los 3 s.
+  - **Formas**: la pieza del halo vuela sola a su lugar.
+  - **Río**: la gota sale sola hacia el grupo con halo.
+  
+  Es el parámetro genérico `semilla_auto_s: 20` del `GestorTurnos`.
 - **El reloj de la ronda es la pista de galletas** (§5.3). Es la única forma de perder una ronda, y
   ningún juego tiene derrota propia dentro de la batalla: ni remolino, ni límite de fallos.
 - **Sin puntaje, racha con número, estrellitas ni récords individuales en la batalla** (R2 y M1).
@@ -973,35 +985,57 @@ un color de vuelta al cielo**.
 
 | Ronda | Juego (motor) | Color que recupera | Qué es un "acierto" | Turno de Maxi (aporte real) | Turno de Nicole | Turno de Sofía |
 |---|---|---|---|---|---|---|
-| **1** | **Río de pintura** (`rio`) | Rojo | Un disparo que **revienta** un grupo | **Un disparo con imán total**: Coco carga un color que ya tiene ≥ 2 gotas juntas en el río, y toque donde toque, la lengua **va sola al grupo** y lo revienta. Siempre revienta: es el gesto de Maxi (tocar y que pase algo grande). Su turno termina con 1 reventón | Línea de guía completa (como su río); el disparo que no revienta gasta su segunda oportunidad | Sin guía. Un disparo que provoca una **cadena** (retroceso que revienta) cuenta como **2 aciertos** de racha: su manera de hacer retroceder al Coleccionauta |
-| **2** | **Formas traviesas** (`encajar`) | Amarillo | Una pieza **bien encajada** en la silueta compartida | **Una pieza grande con halo** (la más grande que queda) y su lugar en la silueta, que también brilla. **Imán de 140 px**: al soltarla cerca, encaja. Si la suelta lejos, vuelve blandito y el halo la llama. Tras 2 intentos o 6 s, la pieza se acerca sola hasta medio camino | Piezas sin rotación, con silueta interior visible (como su ruta) | Piezas que **hay que girar** (`rotacion_por_toque`) para encajar |
-| **3 (final) [PO]** | **Parejas en equipo** (`emparejar`) | Azul | Una pareja | §5.2 | §5.2 | §5.2 |
-| **Epílogo** (no se pierde) | **Pinta con Coco** (`lienzo_libre`, encargo `colorear_zonas`) | — (se **regalan** colores) | — | **Un toque rellena una parte grande** de la mochila-torre gris (el modo "Pinta a Coco" de su ruta) | Rellena una parte con el color que elige | Rellena una parte con el color que elige |
+| **1** | **Río de pintura** (`rio`) | Rojo | Un disparo que **revienta** un grupo. **No existe el fallo**: un disparo que no revienta es neutro (el "plop" de inserción, sin voz de fallo) [UX B1] | **1 gota por turno (B3.2)**: <br>- antes de su toque, el grupo objetivo **ya brilla con halo dorado**;<br>- **toda la pantalla dispara**, también un toque sobre Coco, porque **en su turno el intercambio está desactivado**;<br>- la lengua sale **primero hacia su dedo** (0,1 s) y la gota curva con estela hacia el grupo, que **siempre revienta**;<br>- si tocó a menos de 150 px del halo, suena "¡justo ahí!" | **3 gotas por turno** [UX B1], que se ven sin números como **3 gotas en la mano de Coco** (la de la boca y dos de reserva) y se gastan una por disparo. Línea de guía completa. **La segunda oportunidad no aplica en esta ronda**, porque no hay fallo | **3 gotas por turno**, sin guía. Una **cadena** (retroceso que revienta) vale **2 aciertos** de racha. Con 3 reventones en un turno, el Coleccionauta retrocede |
+| **2** | **Formas traviesas** (`encajar`) | Amarillo | Una pieza **bien encajada** en la silueta compartida. **Fallo** = soltar la pieza sobre un hueco equivocado. **Soltarla en el vacío no es fallo**: vuelve a la bandeja (el resultado `"nada"` del motor) [UX B2.2] | **1 pieza por turno, con las mismas reglas de su ruta (B3.1)**: la pieza con halo es la más grande que queda (lado corto ≥ 110 px) y funciona con **`toque_lleva_a_casa`** (al tocarla vuela a su lugar con estela, en 0,5 s), **`iman_tolerancia_px: 5000`** si la arrastra, y **`sin_error`**. Su hueco respira, y Coco dice "¡Maxi, la pieza que brilla!". Las otras piezas de la bandeja solo hacen el pulso con un sonido amable: no se pueden tomar | **Tope de 2 aciertos por turno** [UX B2.1]. Piezas sin rotación y con silueta interior visible (como su ruta). Al empezar su turno, las piezas **se enderezan con un "fiu" visible**. Segunda oportunidad con el primer fallo | **Tope de 3 aciertos por turno** [UX B2.1]. Al empezar su turno, las piezas **giran a un ángulo al azar con un "fiu" visible**, y hay que girarlas (`rotacion_por_toque`). Pasa el turno con el primer fallo. Su "turno perfecto" de 3 piezas es su racha de retroceso |
+| **3 (final) [PO]** | **Parejas en equipo** (`emparejar`) | Azul | Una pareja | §5.2, más el turno que se resuelve solo a los 20 s (M2) | §5.2 | §5.2 |
+| **Epílogo** (no se pierde) | **Pinta con Coco** (`lienzo_libre`, encargo `colorear_zonas`) | — (se **regalan** colores) | — | **Un toque rellena una parte grande** de la mochila-torre gris (el modo "Pinta a Coco" de su ruta) | Rellena una parte con el color que elige (muestras de la paleta ≥ 96 px) | Igual que Nicole |
+
+- **Al llegar al tope de aciertos en Formas**, el turno termina **en celebración** ("¡turno perfecto!",
+  con el gesto corto del hermano), nunca como fallo (UX B2.1). Parámetro:
+  `aciertos_max_turno: {"semilla": 1, "brote": 2, "estrella": 3}`.
+- **Carga de Coco en la batalla (UX B1.4)**: Coco **nunca carga un color sin pareja en el río**. Siempre
+  carga uno que ya tenga al menos 1 gota en el cauce. Solo en los turnos de Nicole y Sofía se puede
+  cambiar la gota con Coco (la regla normal).
+- **Cada hermano juega al menos 2 turnos por ronda (UX B2.3)** en una partida típica. `disenador-niveles`
+  dimensiona las rondas con esa regla.
+  - Ejemplo en Formas: con el tope, un ciclo M → N → M → S encaja hasta 7 piezas (1 + 2 + 1 + 3).
+  - Si no alcanza, se suben las piezas o se baja el tope.
+  - En el Río: Maxi revienta 1 grupo por turno y Nicole y Sofía tiran 3 gotas.
+- **El epílogo no usa puerta ni pista (UX M9)**:
+  - el retrato de quien sigue vuela a la barra con "¡ahora Nicole!", y el siguiente toque pinta por
+    ella; si pinta otro, no pasa nada;
+  - son **3 partes grandes, una por hermano**, más un **cierre "¡todos juntos!"**: la tapa de la
+    mochila se rellena con los tres tocando por turno su ventanita de la barra, y cada toque agrega una
+    franja de su color. Nunca hay toque simultáneo (GDD §6.4);
+  - **al empezar, Coco llama "¡Maxi, ven a pintar!"** y su retrato salta en la barra (M1.4). Si Maxi no
+    está, un hermano pinta su parte (§4.3).
 
 - **Por qué 3 rondas y un epílogo** [Propuesta; el PO pidió 3 o 4]:
   - 3 rondas que se pueden perder son 3 colores, que es la cuenta que el planeta ya enseña (zonas 1 a
-    3), y caben en unos 15 a 18 min.
+    3).
   - El cuarto juego del planeta (Pinta) no se puede perder en ningún perfil (zonas §3.4). Por eso entra
     como **epílogo**, para no forzarle una derrota.
   - **Se pinta la mochila del Coleccionauta para regalarle colores**: es la lección del arco hecha
     juego, y la celebración más larga es justo una donde **Maxi es el mejor**.
   - Si el PO prefiere 4 rondas "de verdad", el epílogo pasa a ser la ronda 3 (sin pista de galletas,
     con una ronda de respiro) y Parejas sigue siendo la última.
-- **Tamaño de cada ronda** (para que la batalla no pase de unos 20 min):
-  - Río: 30 gotas, 4 colores, a la velocidad de Maxi (13 px/s). El río avanza solo durante los turnos,
-    **se detiene en el pase** y **nunca pasa del 70 %**: en la batalla no hay remolino que se lo trague.
-  - Formas: una silueta de 9 a 10 piezas.
-  - Parejas: el tablero de los tres del §5.3.
-  - Pinta: 6 partes, 2 por hermano, una por turno.
-  - `pasos_rival` por ronda lo calibra `disenador-niveles`, con la misma meta de ~8 de cada 10 rondas
-    ganadas.
-- **Trabajo de motor** que esto implica (para estimar en el tablero):
-  - `rio` y `encajar` tienen que implementar el contrato de turnos del §11.4: llamar a
-    `notificar_acierto()` y `terminar_turno()`, pausar durante `entrada_bloqueada_cambio(true)` y
-    aplicar la capa de Maxi;
-  - `lienzo_libre` solo necesita turnos de "una parte por turno", sin pista ni derrota
-    (`equipo.rival: null`);
-  - en el Río, la pista de galletas ocupa la franja superior: hay que verificar que no tape el cauce.
+- **Duración (UX HE-66, M1)**: la meta es **15 min o menos en total y 5 min o menos por ronda**, sin
+  derrotas, contando pases reales de 8 a 12 s. Tamaños de partida, que calibra `disenador-niveles`:
+  - **Río: 24 gotas**, 4 colores, a la velocidad de Maxi (13 px/s). El río avanza solo durante los
+    turnos, **se detiene en el pase** y **nunca pasa del 70 %**: en la batalla no hay remolino que se lo
+    trague.
+  - **Formas: 8 piezas.**
+  - **Parejas: 8 pares, 4×4** (no los 10 del §5.3), porque es la tercera ronda y llegan más cansados.
+  - **Epílogo: 3 partes y el cierre "¡todos juntos!"** (M9).
+  - `pasos_rival` por ronda, con la misma meta de ~8 de cada 10 rondas ganadas.
+  - **Criterio para el playtest**: medir la duración de cada ronda y en qué ronda se va Maxi. Si se va
+    antes de terminar la ronda 1, se acorta el Río.
+- **Pausas naturales (M1.2)**: después del interludio de la ronda 1 y del de la ronda 2, la pantalla
+  queda en el **mapa de batalla** con el hito siguiente brillando, y **no avanza sola**: para seguir, hay
+  que tocar el hito.
+  - Coco dice "¡ya volvió el rojo! ¿Vamos por el amarillo, o descansamos y volvemos después?".
+  - La casa está a la vista. **Jugar la batalla en dos sesiones es el caso normal.**
+- **Trabajo de motor**: está todo en el §14.15 (UX HE-66, M8).
 
 ### 14.4 Cómo se ve el avance de la batalla (sin números) [Propuesta]
 

@@ -486,16 +486,19 @@ H5 con playtest real.
 
 ### Tarjetas propuestas para el tablero (las crea `scrum-master`)
 
-| ID sugerido | Tarjeta | Depende de | Responsable |
+> Los IDs `RP-n` son provisionales: HE-57 a HE-70 ya los usa la épica del modo equipo (06-Oct-2026).
+> `scrum-master` asigna los IDs definitivos al crearlas.
+
+| Tarjeta | Descripción | Depende de | Responsable |
 |---|---|---|---|
-| HE-57 | Ficha del motor `rio` (Zuma) | — | disenador-mecanicas |
-| HE-58 | Curva y recorridos de los 45 ríos | HE-57 | disenador-niveles |
-| HE-59 | Motor `rio` núcleo + Coco provisional + 2 ríos Z1 + arnés QA + mini-playtest | HE-57, HE-10 | dev-godot + tester-qa + PO |
-| HE-60 | Coco: despiece, rig cutout y catálogo de animaciones | HE-59 | disenador-personajes + dev-godot |
-| HE-61 | Escenarios de las 5 zonas y "el mundo se pinta" | HE-59 | disenador-personajes + dev-godot |
-| HE-62 | Poderes, cresta súper, bonus, ayudas y obstáculos | HE-59 | dev-godot |
-| HE-63 | Contenido de las 5 zonas + jefe Nube Gris + voces + sonido | HE-58, HE-60, HE-61, HE-62 | dev-godot + guionista |
-| HE-64 | Auditoría UX/QA + playtest del Río de pintura | HE-63 | experto-ux-parvulo + tester-qa + PO |
+| RP-1 | Ficha del motor `rio` (Zuma) | — | disenador-mecanicas |
+| RP-2 | Curva y recorridos de los 45 ríos | RP-1 | disenador-niveles |
+| RP-3 | Motor `rio` núcleo + Coco provisional + 3 ríos Z1 (uno por hermano) + arnés QA + mini-playtest (**hecho salvo el playtest**, ver estado H1) | RP-1, HE-10 | dev-godot + tester-qa + PO |
+| RP-4 | Coco: despiece, rig cutout y catálogo de animaciones | RP-3 | disenador-personajes + dev-godot |
+| RP-5 | Escenarios de las 5 zonas y "el mundo se pinta" | RP-3 | disenador-personajes + dev-godot |
+| RP-6 | Poderes, cresta súper, bonus, ayudas y obstáculos | RP-3 | dev-godot |
+| RP-7 | Contenido de las 5 zonas + jefe Nube Gris + voces + sonido | RP-2, RP-4, RP-5, RP-6 | dev-godot + guionista |
+| RP-8 | Auditoría UX/QA + playtest del Río de pintura | RP-7 | experto-ux-parvulo + tester-qa + PO |
 
 Estas tarjetas reemplazan la Lluvia de colores (los tres perfiles) que hoy cuelga de
 HE-14 y HE-43; `scrum-master` decide si las anota ahí o como épica propia.
