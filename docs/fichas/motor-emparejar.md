@@ -573,7 +573,7 @@ Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
 
 | Zona | Nicole · Brote | Sofía · Estrella |
 |---|---|---|
-| 1 | — (llegan la racha, el vistazo y el récord) | **Dorada** (1 pareja) |
+| 1 | — (llegan un solo sistema nuevo, "los puntos", que son la racha, el récord y las estrellitas, y el vistazo, que es pasivo. La vela entra desde la zona 2: M7.4) | **Dorada** (1 pareja) |
 | 2 | **Comodín** (1) | **Lupa** (1) |
 | 3 | **Lupa** (1) | **Coleccionauta** (1). Con tríos, la lupa y la dorada serían tríos |
 | 4 | Comodín + lupa | Dorada + lupa (las traviesas ya mueven cartas: sin Coleccionauta) |
@@ -709,6 +709,21 @@ Sofía.
 
 ### 10.6 Riesgos de usabilidad de estas mejoras (para `experto-ux-parvulo`)
 
+> **Estado (v2)**: la validación de HE-58 ya revisó estos riesgos, y sus correcciones están
+> incorporadas:
+>
+> - riesgo 1 → m10;
+> - riesgo 3 → M7;
+> - riesgo 4 → M6;
+> - riesgo 6 → M8;
+> - riesgo 7 → M9;
+> - riesgo 8 → m8.
+>
+> Queda verificarlos sobre el build en HE-64. Se suma un riesgo:
+>
+> - **Riesgo 10. ¿La estrellita 1 de Nicole se vive como logro?** Observar su cara cuando gana 1. Si
+>   se decepciona, la palanca es bajar `dos`, nunca quitar las estrellitas.
+
 1. **El contador de racha y los "+200" pueden tapar cartas**: los números salen y suben **fuera de la
    grilla**, o sobre el par que se va, nunca sobre una carta tapada.
 2. **¿Nicole lee el récord sin números?** Validar la barra con banderita-cupcake. A los 5 años puede
@@ -750,14 +765,29 @@ Sofía.
   "¡récord!", la explicación del camino y los nombres de la colección (hay que estimar el costo del TTS
   y pedir el OK del PO antes de generarlo).
 
-### 10.8 Preguntas para el PO
+### 10.8 Decisiones del PO (06-Oct-2026) y lo que queda por confirmar
 
-1. **Nicole y las estrellitas**: ¿Nicole sigue sin estrellitas, con el récord como reto (propuesta), o
-   se le dan estrellitas por puntaje? Esto toca la equidad con Sofía, cuya moneda propia son las
-   estrellitas.
-2. **Camino de colores**: ¿reto dorado de Parejas en la zona 4 de Sofía (propuesta), zona secreta o
-   estación propia?
-3. **Colección**: ¿en la casita de Coco del mapa del planeta (propuesta) o en la selección, junto al
-   álbum?
-4. **¿Las mejoras llegan a las estaciones ya jugadas?** Al rejugar, sí traen racha, vistazo y
-   especiales. ¿Y el récord parte en cero para todos (propuesta)?
+| # | Decisión [PO] | Dónde |
+|---|---|---|
+| 1 | Nicole gana **estrellitas por puntaje (de 1 a 3)** jugando sola, como Sofía. El récord sigue como reto extra | §10.1.1 |
+| 2 | El Camino de colores es el **reto dorado de Parejas de la zona 4** de Sofía | §10.4 |
+| 3 | La colección va en la **casita de Coco** del mapa del planeta | §10.5 |
+| 4 | Los récords **parten en cero**. Al rejugar, las estaciones ya jugadas traen racha, vistazo y especiales | §10.1 |
+
+**Por confirmar con el PO**: las cantidades del vistazo de M6 (§10.2). Cambian la tabla que el PO había
+dado.
+
+### 10.9 Para Dev
+
+Los menores de la validación UX (m1 a m11) están en el §13 de `docs/fichas/modo-equipo.md`. Los que
+tocan este motor (m6, m8, m9 y m10) ya están integrados en §10.1, §10.3 y §10.5. Además:
+
+- Las señales nuevas del motor son `racha_cambiada(n)`, `a_la_primera(id_pareja)`, `record_superado()`
+  y `especial_activada(tipo)`.
+- En modo equipo, el motor llama a `turnos.notificar_acierto()` y a `turnos.terminar_turno(con_fallo)`
+  (`modo-equipo.md` §11.4).
+- `Progreso`:
+  - `registrar_coleccionable`, `obtener_coleccion`, `especial_conocido` y `marcar_especial_conocido`
+    (`modo-equipo.md` §11.5);
+  - el récord en solitario usa el `registrar_puntaje_nivel` que ya existe (más es mejor);
+  - las estrellitas de Nicole usan el `marcar_nivel_completado` de siempre.
