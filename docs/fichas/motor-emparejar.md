@@ -616,8 +616,25 @@ Sofía.
   entre las dos:
   - del color común, si comparten color;
   - con estampitas de la figura, si comparten figura.
-- **Si no comparte**: "no es este" con el meneo amistoso. **El camino se desarma**: todas sus cartas
-  se tapan en cascada (400 ms), pero quedan donde estaban, así que Sofía las recuerda. Cuenta 1 fallo.
+- **Tramos horneados [UX M9.1]**: cada 4 cartas, el glaseado del tramo **se hornea** con un brillo
+  dorado y un "ding" de horno, y **ese tramo ya no se desarma**. La meta de 12 cartas son 3 tramos.
+- **Si no comparte**: "no es este" con el meneo amistoso. **Solo se desarma el tramo en curso**, el que
+  todavía no se horneó:
+  - sus cartas quedan **1 s a la vista** (M9.4) y después se tapan en cascada (400 ms);
+  - quedan donde estaban, así que Sofía las recuerda;
+  - el camino sigue desde la última carta horneada;
+  - cuenta 1 fallo.
+- **Ficha "busca" [UX M9.2]**: junto a Coco, sin texto, hay dos burbujas separadas por un "o" visual
+  (un puntito arcoíris):
+  - una con la **mancha del color** de la última carta;
+  - otra con la **silueta de su figura**.
+  
+  Además, la última carta del camino queda **agrandada al 110 % y con borde**. No regala posiciones:
+  solo libera memoria para el verdadero reto.
+- **Demostración [UX M9.3]**: antes de la primera partida, Coco muestra 3 cartas: una que comparte el
+  color, otra que comparte la figura y **una que no comparte nada** ("¡esta no, no tiene nada igual!").
+  Usa las voces `camino/demo_01..03` del guion. Falta pedirle al `guionista` la línea del caso que no
+  comparte nada.
 - **Meta**: armar un camino de `largo_meta` cartas (propuesta: **12**). También se gana si el camino
   llega a un punto **sin salida**, cuando ninguna carta tapada comparte nada con la última. Entonces
   Coco dice "¡no queda por dónde seguir: llegaste al final!".
@@ -629,9 +646,9 @@ Sofía.
   camino. `regalo_tras_derrotas`: tras 2 derrotas, Coco arma solo los 3 primeros pasos.
 - **Accesibilidad**: 5 colores bien distintos (rojo, amarillo, azul, verde y rosado) y 5 figuras de
   silueta muy distinta (estrella, corazón, gota, luna y círculo) para que nunca dependa solo del tono.
-- **Ubicación** [Pregunta PO 2]: propongo **reto dorado de Parejas zona 4** de Sofía (hoy solo la cima
-  tiene reto dorado de Parejas). Así la regla nueva llega como premio a las 3 estrellitas y no como
-  obligación.
+- **Ubicación [PO]**: es el **reto dorado de Parejas de la zona 4** de Sofía. Archivo
+  `datos/niveles/arcoiris/zona4_islotes/parejas_estrella_dorado.json`, declarado en `niveles_dorados`
+  de esa estación en `mapa.json`. Aparece con 3 estrellitas en la estación y no bloquea nada.
 - **Contrato**:
   ```jsonc
   {
@@ -640,6 +657,9 @@ Sofía.
     "colores": ["rojo", "amarillo", "azul", "verde", "rosado"],
     "disposicion": { "filas": 5, "columnas": 5 },
     "largo_meta": 12,
+    "largo_tramo": 4,            // M9: tramos horneados (0 = sin hornear, no recomendado)
+    "ms_tramo_visible": 1000,    // M9.4
+    "demostracion": true,        // M9.3: solo la primera partida de cada hermano
     "limite_intentos": null,
     "umbrales_estrellitas": null
   }
@@ -660,11 +680,14 @@ Sofía.
   - la figura que vuela a la barra lleva una **estrellita de "¡nueva!"** pegada y suena un "clink" de
     álbum;
   - al final de la celebración, después del conteo de destellos, las cartas nuevas **vuelan a una
-    cajita de Coco** contándose ("una, dos, tres"), 0,3 s cada una.
+    cajita de Coco**, **0,5 s cada una** (`guionista`). La voz cuenta **solo hasta seis**
+    (`coleccion/cuenta_1..6`). Desde la séptima, solo suena el "clink", sin voz. Antes de que vuelen
+    suena `coleccion/final`, o `final_equipo` en modo equipo.
 - **Pantalla de colección** ("La caja de cartas de Coco"):
   - una carpeta con las cartas de Arcoíris en grilla, ordenadas por familia (figuras, dinos y vehículos,
     animales, ropa, banderas, sombras y recetas);
   - las que faltan son **siluetas con un signo de pregunta**, nunca con candado;
+  - **sin contadores** como "23/60" (m9): las siluetas bastan;
   - **tocar una carta la da vuelta y Coco dice su nombre** ("¡Japón!", "¡Spinosaurio!"). Para las
     banderas, esto refuerza el pedido de aprender países (memoria del proyecto).
 - **Una colección por hermano**, sin comparar números entre ellos. Maxi también colecciona: para él,
@@ -679,9 +702,10 @@ Sofía.
 - **Tono**: el `guionista` cuida que no choque con el arco del Coleccionauta ("los amigos no se
   coleccionan"). Son cartas que Coco regala para jugar y mostrar, y la pantalla puede tener un botón
   "mostrarle a un hermano" en el futuro.
-- **Ubicación** [Pregunta PO 3]: propongo la **casita-cupcake de Coco en el mapa del planeta**, un
-  botón de ≥ 96 px. Alternativa: junto al álbum de recuerdos en la selección (riesgo de confundirlo con
-  las fotos de papá).
+- **Ubicación [PO]**: la **casita-cupcake de Coco en el mapa del planeta**, como objetivo tocable de
+  ≥ 96 px. Abre la colección **del hermano que juega**, y cada hermano ve solo la suya (m9). En modo
+  equipo, la casita no abre la colección: se ve dormida, para evitar comparaciones.
+- **Voces**: las del §9 del guion (`voces/arcoiris/coleccion/`).
 
 ### 10.6 Riesgos de usabilidad de estas mejoras (para `experto-ux-parvulo`)
 

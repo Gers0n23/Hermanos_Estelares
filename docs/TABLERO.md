@@ -76,7 +76,7 @@
 
 ## FASE 1 — Núcleo + Capítulo 1 completo
 
-**Criterio de salida**: el **capítulo 1 entregado a los niños en su tablet**: desde la cinemática del secuestro de papá hasta completar el planeta 1 y ganar su pieza de la nave. La **maqueta del juego completo** existe (título, selección de personaje, mapa con todos los planetas visibles como tease ilusionante, hangar estelar, zona de padres) pero **solo el planeta 1 es jugable**, pulido hasta el último detalle: nada de su contenido queda genérico ni placeholder, con las **3 rutas personalizadas completas** y cierre en celebración con gancho. Playtest del capítulo 1 aprobado por los 3 niños. **Requisito de arranque**: HE-D1 cerrada (las fichas de gustos definen el planeta 1 y sus temas).
+**Criterio de salida**: el **capítulo 1 entregado a los niños en su tablet**: desde la cinemática del secuestro de papá hasta completar el planeta 1 y ganar su pieza de la nave. La **maqueta del juego completo** existe (título, selección de personaje, mapa con todos los planetas visibles como tease ilusionante, hangar estelar, zona de padres) pero **solo el planeta 1 es jugable**, pulido hasta el último detalle: nada de su contenido queda genérico ni placeholder, con las **3 rutas personalizadas completas** y cierre en celebración con gancho. **Actualización 06-Oct-2026 (decisión del PO)**: el planeta 1 cierra con la **batalla final de Arcoíris** (HE-69), la primera batalla de los tres hermanos juntos contra el Coleccionauta; el capítulo 1 no se entrega sin ella. Playtest del capítulo 1 aprobado por los 3 niños. **Requisito de arranque**: HE-D1 cerrada (las fichas de gustos definen el planeta 1 y sus temas).
 
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
