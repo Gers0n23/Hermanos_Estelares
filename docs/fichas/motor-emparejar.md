@@ -510,9 +510,9 @@ ve más tiempo y Sofía ve menos cartas.
 | | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
 |---|---|---|---|
 | ¿Vistazo? | No: sus cartas ya están a la vista | Sí, en cada ronda tapada | Sí |
-| Cuántas cartas | — | **[Propuesta UX M6, por confirmar con el PO]**: **1 par (2 cartas) con 10 cartas o menos** y **2 pares (4 cartas) con 12 a 16**, siempre **parejas completas**. Reemplaza a la tabla del PO (4 de 12, 8 de 16, 12 de 20): con los tableros tapados de Nicole (8 a 12 cartas), esa tabla le resolvía medio tablero ("dificultad de bebé") | `round(cartas / 4)`, **sueltas** (nunca las dos cartas de un mismo par): 6 de 24, 8 de 32, 9 de 36 |
+| Cuántas cartas | — | **[PO: acepta M6 de UX, 06-Oct-2026]**: **1 par (2 cartas) con 10 cartas o menos** y **2 pares (4 cartas) con 12 a 16**, siempre **parejas completas**. Reemplaza a la tabla del PO (4 de 12, 8 de 16, 12 de 20): con los tableros tapados de Nicole (8 a 12 cartas), esa tabla le resolvía medio tablero ("dificultad de bebé") | `round(cartas / 4)`, **sueltas** (nunca las dos cartas de un mismo par): 6 de 24, 8 de 32, 9 de 36 |
 | Duración | — | **3000 ms** | **2000 ms** |
-| En modo equipo | **[Propuesta UX M6, por confirmar con el PO]**: **como máximo 3 pares (6 cartas), en 3 s**, parejas completas, sea cual sea el tablero | | |
+| En modo equipo | **[PO: acepta M6]**: **como máximo 3 pares (6 cartas), en 3 s**, parejas completas, sea cual sea el tablero | | |
 
 Regla general (M6): ≈ 1 s por par mostrado, mínimo 2 s.
 
@@ -773,9 +773,7 @@ Sofía.
 | 2 | El Camino de colores es el **reto dorado de Parejas de la zona 4** de Sofía | §10.4 |
 | 3 | La colección va en la **casita de Coco** del mapa del planeta | §10.5 |
 | 4 | Los récords **parten en cero**. Al rejugar, las estaciones ya jugadas traen racha, vistazo y especiales | §10.1 |
-
-**Por confirmar con el PO**: las cantidades del vistazo de M6 (§10.2). Cambian la tabla que el PO había
-dado.
+| 5 | **M6 aceptado**: las cantidades del vistazo de UX son las definitivas | §10.2 |
 
 ### 10.9 Para Dev
 

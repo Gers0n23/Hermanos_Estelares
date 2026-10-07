@@ -228,6 +228,13 @@ que el juego dure muchas horas y crezca con los niños:
   >   de equipo con el gesto de cada uno) está en `docs/fichas/modo-equipo.md`, como propuesta de
   >   `disenador-mecanicas` pendiente de UX y playtest.
   > - La prueba final cooperativa sigue siendo HE-39.
+  > - **Actualización, ese mismo día (decisión del PO)**: el modo equipo **debuta como la Batalla final
+  >   de Arcoíris**, el final de temporada del planeta 1 y la primera batalla de los tres contra el
+  >   Coleccionauta, que aparece en Arcoíris.
+  >   - Tiene 3 o 4 rondas, una por minijuego del planeta jugado por turnos, y la última es Parejas en
+  >     equipo.
+  >   - El botón "¡Juntos!" es el premio, y no está disponible antes.
+  >   - Diseño propuesto en `docs/fichas/modo-equipo.md` §14. HE-39 sigue siendo "la última batalla".
 
 ---
 

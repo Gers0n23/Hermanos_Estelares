@@ -14,6 +14,11 @@
   
   La ficha queda lista para implementar el modo equipo (HE-59, según la validación UX). Los números
   marcados como estimados se calibran con el simulador y el playtest.
+- **v3, 06-Oct-2026**:
+  - incorpora las correcciones del `guionista` (`docs/guiones/voces-modo-equipo-parejas.md`): el canon
+    del Coleccionauta, el límite de su voz y las claves de voz del §8;
+  - incorpora la decisión del PO de que **el modo equipo debuta como la Batalla final de Arcoíris**
+    (§14, diseño nuevo, todavía sin auditar por UX).
 - **Referencias**:
   - GDD §1 (tono y derrota-gag), §3 (modo misión familiar), §5 ("Mecánicas probadas y reto real"), §6
     (UX obligatoria) y §8 (alcance negativo);
@@ -59,6 +64,15 @@ nadie: gana o pierde el equipo.
 
 ### 3.1 El botón "¡Juntos!" [PO: opción nueva en la selección; UX M5: lugar y presentación]
 
+> **Decisión del PO (06-Oct-2026, posterior)**: el modo equipo **debuta como la Batalla final de
+> Arcoíris** (§14). El botón "¡Juntos!" **no está disponible desde el inicio**:
+>
+> - **aparece como premio al ganar la batalla**, y desde ahí permite repetir en equipo cualquier zona
+>   de Arcoíris;
+> - antes de la batalla, la selección es exactamente la de hoy;
+> - la "presentación única" (M5.2) ocurre **al volver a la selección después de ganar la batalla**;
+> - la selección lo muestra si `Progreso.modo_equipo_desbloqueado()` (§14.9).
+
 - En modo normal la selección no cambia: tocar una tarjeta lleva directo al mapa con ese hermano.
 - **Ubicación exacta**: `RECT_JUNTOS := Rect2(640, 598, 240, 110)`, en `seleccion_personaje.gd`.
   Medida actual de la escena:
@@ -71,7 +85,8 @@ nadie: gana o pierde el equipo.
   juguete** del living. En reposo hace un **vaivén suave** (±3°, 2,4 s) y **nunca parpadea**.
 - Debajo del ícono, dentro del mismo rectángulo, van **5 estrellitas de equipo** (una por zona de
   Arcoíris ganada en equipo, §7.3). Parten apagadas, nunca con candado. **[PO: se mantienen.]**
-- **Presentación única** (M5.2): la primera vez que la selección se abre con el modo disponible, la nave
+- **Presentación única** (M5.2): la primera vez que la selección se abre con el modo disponible (o sea,
+  después de ganar la batalla), la nave
   entra volando desde la derecha, se estaciona en su lugar (1,5 s) y Cometa dice "¡Ahora pueden jugar
   juntos! Toquen la nave". Se guarda con `Progreso.marcar_modo_equipo_presentado()` (§11.4).
   - Si en esa misma apertura toca entregar la foto de primera apertura del álbum, la presentación de la
@@ -310,7 +325,7 @@ quiénes juegan, con tres variantes. Las partidas siguientes usan la intro corta
   gatito y ropa de Nicole; cachorros y ponys de Sofía), figuras del planeta y banderas (Chile con
   `fijo: true`). Va en estilo Semilla ("peluche pintado", grande). Lo arma `disenador-niveles`.
 
-### 5.4 El vistazo al repartir en equipo [Propuesta UX M6, por confirmar con el PO]
+### 5.4 El vistazo al repartir en equipo [PO: acepta M6 de UX, 06-Oct-2026]
 
 - Siempre en el formato de Brote: **parejas completas**, con **como máximo 3 pares (6 cartas)**, durante
   **3 s**, sea cual sea el tablero y el equipo.
@@ -445,7 +460,7 @@ Archivo: `datos/niveles/arcoiris/<zona>/parejas_equipo.json`.
     "ayuda_brote_tras_turnos_sin_par": 2,
     "maxi_mueve_rival": false,
     "racha_retrocede_rival": 3,         // M1; 0 = desactivado
-    "vistazo": { "pares": 3, "ms": 3000 },  // M6 (Propuesta UX, por confirmar con el PO)
+    "vistazo": { "pares": 3, "ms": 3000 },  // M6, aceptado por el PO
     "composiciones": {                  // clave_equipo: ids en orden alfabético unidos por "+"
       "maxi+nicole":       { "filas": 3, "columnas": 4, "cantidad": 6,  "pasos_rival": 7 },
       "maxi+sofia":        { "filas": 4, "columnas": 4, "cantidad": 8,  "pasos_rival": 6 },
@@ -828,8 +843,13 @@ func marcar_especial_conocido(id_perfil: String, tipo: String) -> void
 | 5 | Los récords parten en cero | §7.2 |
 | 6 | La carrera tipo *Zicke Zacke* queda para después | §5.1 |
 | 7 | La mesa con parejas propias de cada hermano queda solo de respaldo | §5.1 |
-
-**Pendiente de confirmar por el PO**: el vistazo de equipo con como máximo 3 pares en 3 s (M6, §5.4).
+| 8 | El modo equipo **debuta como la Batalla final de Arcoíris** (final de temporada del planeta 1): la primera batalla de los tres contra el Coleccionauta | §14 |
+| 9 | El botón "¡Juntos!" **aparece como premio al ganar la batalla** | §3.1, §14.7 |
+| 10 | La batalla tiene **varias rondas (3 o 4)**: cada una es un minijuego distinto de Arcoíris por turnos, y **la última es Parejas en equipo** | §14.3 |
+| 11 | El Coleccionauta aparece en Arcoíris (la licencia de historia queda aprobada) | §14.2 |
+| 12 | **M6 aceptado**: en equipo, el vistazo muestra como máximo 3 pares en 3 s, y Nicole sola ve 1 o 2 pares según el tablero | §5.4; motor §10.2 |
+| 13 | La batalla se desbloquea cuando **el primer hermano recibe el ala** | §14.7 |
+| 14 | La batalla se juega **solo con los tres hermanos** | §14.7 |
 
 ---
 
@@ -848,3 +868,396 @@ func marcar_especial_conocido(id_perfil: String, tipo: String) -> void
 | m9 | Colección sin contadores ("23/60"). Cada hermano ve solo la suya, desde su mapa | motor §10.5 |
 | m10 | El texto flotante ("+200", "×3") nunca se dibuja sobre cartas tapadas, y en equipo no aparece | motor §10.1; §5.2 |
 | m11 | UX recomendaba abrir solo las zonas del hermano más avanzado; **el PO decidió todas las zonas** | §3.3 |
+
+---
+
+## 14. Batalla final de Arcoíris (final de temporada del planeta 1)
+
+> **Decisión del PO (06-Oct-2026)**:
+>
+> - el modo equipo **debuta como el final de temporada del Planeta Arcoíris**: es **la primera batalla
+>   de los tres hermanos contra el Coleccionauta**;
+> - los tres tienen que aportar para ganarle, y la batalla **cierra el primer planeta**;
+> - tiene **3 o 4 rondas**: cada una es **un minijuego distinto de Arcoíris jugado por turnos**, y **la
+>   última es Parejas en equipo**;
+> - **el botón "¡Juntos!" es el premio**;
+> - **el Coleccionauta aparece en Arcoíris** (la licencia de historia queda aprobada).
+>
+> El resto de esta sección es **[Propuesta]** de `disenador-mecanicas`, salvo lo marcado [PO] o [UX].
+> Todo lo que la validación UX de HE-58 exige para el modo equipo (B1-B3 y M1-M10) **vale también en
+> cada ronda de la batalla**.
+
+### 14.1 La idea en una frase
+
+Justo cuando los hermanos le devolvieron al planeta sus tres primeros colores, el Coleccionauta aterriza
+en Arcoíris y **se los aspira con su mochila-torre** "para su colección". Los tres hermanos, por turnos,
+le ganan tres rondas de los juegos del planeta, y con cada ronda **un piso de la mochila-torre estornuda
+un color de vuelta al cielo**.
+
+### 14.2 La historia y el arco del Coleccionauta [PO: aparece en Arcoíris; Propuesta: cómo]
+
+- **Por qué viene**: se entera, por la video-llamada de papá en la escena del ala, de que existe un
+  "planeta que recupera sus colores" y quiere esos colores para su colección.
+- **Qué hace**: con su **mochila-torre** (su canon) aspira las tres bandas que el equipo devolvió:
+  - **rojo** (zona 1);
+  - **amarillo** (zona 2);
+  - **azul** (zona 3).
+  
+  La mochila-torre queda con **tres pisos**, cada uno brillando con un color robado. El cielo del
+  planeta vuelve a quedar gris arriba, pero **la isla no se despinta**: lo ganado en el mapa no se toca.
+- **Qué aprende** (la semilla del final del juego, sin decirla):
+  - en la batalla descubre que "un equipo no cabe en una mochila" (el guion ya lo siembra en
+    `coleccionauta_aplaude_02`);
+  - al final, los hermanos **le regalan colores** pintando su mochila (§14.3, epílogo): los colores se
+    comparten, no se guardan.
+  - No se lleva nada. Se va contento y con la promesa chistosa de volver "con una mochila más grande",
+    que es el gancho de HE-39.
+- **Nunca menciona a papá** durante la batalla (decisión 4 del guion). Papá aparece solo en la
+  video-llamada del cierre (§14.8).
+- **Coherencia**: el Coleccionauta se ve **siempre** como en su canon (`guia-estilo-generacion.md` y la
+  intro): **gafas-lupa y mochila-torre**. Sin monóculo, sin nave-aspiradora y sin red. Las preguntas del
+  roadmap del Río sobre la Nube Gris (§8 del roadmap) no cambian: en la batalla, el gris es el que sale
+  de la mochila-torre.
+
+### 14.3 Rondas: qué minijuegos entran y cómo aporta cada uno
+
+**Regla común a todas las rondas** (la misma del modo equipo, ya validada por UX):
+
+- Por turnos, en el orden `maxi_intercalado`, con la puerta de turno (B1) y el pase con el salto del
+  rival (B3).
+- **"Si aciertas, sigues; con el fallo, pasa el turno"**:
+  - Nicole tiene la segunda oportunidad, comunicada solo por voz (B2);
+  - Maxi juega un turno guiado que **siempre** aporta;
+  - con una racha de 3 aciertos en un turno, el Coleccionauta retrocede (M1).
+- **El reloj de la ronda es la pista de galletas** (§5.3). Es la única forma de perder una ronda, y
+  ningún juego tiene derrota propia dentro de la batalla: ni remolino, ni límite de fallos.
+- **Sin puntaje, racha con número, estrellitas ni récords individuales en la batalla** (R2 y M1).
+- Solo se usan **motores que ya existen**: `rio`, `encajar`, `lienzo_libre` y `emparejar`. Los
+  motores `clasificar` y `mezclar` quedan fuera, porque el Río los reemplazó (roadmap del Río).
+
+| Ronda | Juego (motor) | Color que recupera | Qué es un "acierto" | Turno de Maxi (aporte real) | Turno de Nicole | Turno de Sofía |
+|---|---|---|---|---|---|---|
+| **1** | **Río de pintura** (`rio`) | Rojo | Un disparo que **revienta** un grupo | **Un disparo con imán total**: Coco carga un color que ya tiene ≥ 2 gotas juntas en el río, y toque donde toque, la lengua **va sola al grupo** y lo revienta. Siempre revienta: es el gesto de Maxi (tocar y que pase algo grande). Su turno termina con 1 reventón | Línea de guía completa (como su río); el disparo que no revienta gasta su segunda oportunidad | Sin guía. Un disparo que provoca una **cadena** (retroceso que revienta) cuenta como **2 aciertos** de racha: su manera de hacer retroceder al Coleccionauta |
+| **2** | **Formas traviesas** (`encajar`) | Amarillo | Una pieza **bien encajada** en la silueta compartida | **Una pieza grande con halo** (la más grande que queda) y su lugar en la silueta, que también brilla. **Imán de 140 px**: al soltarla cerca, encaja. Si la suelta lejos, vuelve blandito y el halo la llama. Tras 2 intentos o 6 s, la pieza se acerca sola hasta medio camino | Piezas sin rotación, con silueta interior visible (como su ruta) | Piezas que **hay que girar** (`rotacion_por_toque`) para encajar |
+| **3 (final) [PO]** | **Parejas en equipo** (`emparejar`) | Azul | Una pareja | §5.2 | §5.2 | §5.2 |
+| **Epílogo** (no se pierde) | **Pinta con Coco** (`lienzo_libre`, encargo `colorear_zonas`) | — (se **regalan** colores) | — | **Un toque rellena una parte grande** de la mochila-torre gris (el modo "Pinta a Coco" de su ruta) | Rellena una parte con el color que elige | Rellena una parte con el color que elige |
+
+- **Por qué 3 rondas y un epílogo** [Propuesta; el PO pidió 3 o 4]:
+  - 3 rondas que se pueden perder son 3 colores, que es la cuenta que el planeta ya enseña (zonas 1 a
+    3), y caben en unos 15 a 18 min.
+  - El cuarto juego del planeta (Pinta) no se puede perder en ningún perfil (zonas §3.4). Por eso entra
+    como **epílogo**, para no forzarle una derrota.
+  - **Se pinta la mochila del Coleccionauta para regalarle colores**: es la lección del arco hecha
+    juego, y la celebración más larga es justo una donde **Maxi es el mejor**.
+  - Si el PO prefiere 4 rondas "de verdad", el epílogo pasa a ser la ronda 3 (sin pista de galletas,
+    con una ronda de respiro) y Parejas sigue siendo la última.
+- **Tamaño de cada ronda** (para que la batalla no pase de unos 20 min):
+  - Río: 30 gotas, 4 colores, a la velocidad de Maxi (13 px/s). El río avanza solo durante los turnos,
+    **se detiene en el pase** y **nunca pasa del 70 %**: en la batalla no hay remolino que se lo trague.
+  - Formas: una silueta de 9 a 10 piezas.
+  - Parejas: el tablero de los tres del §5.3.
+  - Pinta: 6 partes, 2 por hermano, una por turno.
+  - `pasos_rival` por ronda lo calibra `disenador-niveles`, con la misma meta de ~8 de cada 10 rondas
+    ganadas.
+- **Trabajo de motor** que esto implica (para estimar en el tablero):
+  - `rio` y `encajar` tienen que implementar el contrato de turnos del §11.4: llamar a
+    `notificar_acierto()` y `terminar_turno()`, pausar durante `entrada_bloqueada_cambio(true)` y
+    aplicar la capa de Maxi;
+  - `lienzo_libre` solo necesita turnos de "una parte por turno", sin pista ni derrota
+    (`equipo.rival: null`);
+  - en el Río, la pista de galletas ocupa la franja superior: hay que verificar que no tape el cauce.
+
+### 14.4 Cómo se ve el avance de la batalla (sin números) [Propuesta]
+
+- **Siempre a la vista, arriba a la derecha**: la **mochila-torre del Coleccionauta, con tres pisos de
+  colores** (rojo, amarillo y azul, de abajo hacia arriba).
+- **Al ganar una ronda**:
+  1. El piso de ese color tiembla, se infla y **estornuda**.
+  2. El color sale en chorro de arcoíris y **vuelve a su banda del cielo**: el arcoíris del fondo
+     recupera esa franja.
+  3. La mochila-torre queda **un piso más baja**, y el Coleccionauta, más liviano, da un saltito
+     ("¡uy, mi mochila está más livianita!").
+  
+  Es el mismo gag del estornudo de Parejas (§5.5), pero esta vez a favor del equipo.
+- **Entre rondas**, un **mapa de batalla** de 3 hitos (los íconos de Río, Formas y Parejas sobre el
+  camino de la isla):
+  - las rondas ganadas se ven pintadas con su color;
+  - la siguiente brilla;
+  - Coco salta a la siguiente.
+  
+  No hay "1/3" ni barras.
+- **Al final** (antes del epílogo), la mochila-torre queda **gris y vacía**, y el arcoíris del cielo,
+  completo con sus tres primeras bandas.
+
+### 14.5 Si pierden una ronda [Propuesta + UX B3, m4]
+
+- Es la derrota-gag del §5.5, con el retrato del siguiente ya en el centro, sin nombres y con voces en
+  plural. Hay una **variante por ronda**:
+  - **Río**: el Coleccionauta llega a la orilla y **aspira las gotas** que quedan con su mochila-torre,
+    que se atora, estornuda y las devuelve al cauce.
+  - **Formas**: **aspira las piezas sueltas** de la bandeja, y salen estornudadas de vuelta, girando como
+    trompos.
+  - **Parejas**: aspira las cartas (§5.5).
+- **Botón "¡otra vez!" de ≥ 160 × 160 px** (m4). Al reintentar:
+  - **todo lo logrado en la ronda se conserva**: gotas reventadas, piezas encajadas y parejas formadas;
+  - el Coleccionauta vuelve a la galleta 0 con `pasos_rival` completo.
+  
+  Siempre se termina ganando.
+- **Las rondas ganadas nunca se pierden**: perder la ronda 3 no devuelve el rojo ni el amarillo.
+- **Cometa cierra el gag con un logro común**, como "¡igual le sacamos el rojo!" (B3.3).
+
+### 14.6 Si abandonan la batalla a la mitad [Propuesta + GDD §6.8]
+
+- **Siempre se puede salir** con el botón casa (≥ 96 px), en cualquier momento.
+- **Lo que se guarda**: las **rondas ganadas** (`Progreso`, §14.9) y si el epílogo se completó.
+- **Lo que no se guarda**: el avance dentro de una ronda sin terminar. Las rondas duran 4 a 6 min, así
+  que perderlo no duele.
+- **Al volver**:
+  - el hito de la batalla en el mapa muestra la mochila-torre con los pisos que le quedan (sin números);
+  - al tocarlo, Coco dice "¡seguimos donde quedamos!" y se va **directo a la ronda pendiente**, sin
+    repetir la cinemática de entrada (solo un recordatorio corto de 3 s).
+- **Si un hermano tiene que irse a la mitad**:
+  - se sale con la casa;
+  - las rondas ganadas quedan, y la batalla sigue otro día con los tres;
+  - mientras tanto, cada uno sigue jugando su ruta normal: la batalla nunca bloquea nada.
+
+### 14.7 Cuándo se desbloquea y cómo se entra [Propuesta + Pregunta PO]
+
+**Cómo se cierra hoy el planeta** (revisado):
+
+- **GDD §3**: la pieza llega al completar la zona 3, y las zonas 4-5 son expedición extra.
+- **`mapa.json`**: `pieza_nave.zonas: [1, 2, 3]`, con la nota "la pieza llega al completar la zona 3".
+- **Ficha de zonas §2.1-2.2**: escena del ala más video-llamada de papá en la zona 3, y "planeta
+  completo" al terminar la zona 5.
+- **Progreso**: la pieza y las zonas son **por hermano**.
+
+**Propuesta**:
+
+- **Aparece cuando el primer hermano recibe el ala**, al completar su zona 3. Es el momento en que la
+  historia del planeta llega a su clímax.
+- La escena del ala **termina con un teaser**: en la video-llamada de papá se cuela el Coleccionauta
+  ("¿un planeta que recupera colores? ¡Para mi colección!"), y en el mapa aterriza su mochila-torre.
+- **No espera a que los otros dos completen su zona 3**: con desbloqueo generoso, la batalla usa
+  niveles propios con la dificultad de cada uno, así que Maxi puede jugarla aunque vaya en la zona 1.
+- **Las zonas 4 y 5 siguen siendo expedición extra**: la batalla no las bloquea ni depende de ellas.
+  Después de la batalla, el planeta sigue jugable entero.
+- **[PO]**: se abre con **el primer hermano que recibe el ala**.
+
+**El hito en el mapa**:
+
+- En el **Claro del Trébol** (zona 1, abierta para todos), junto a la nave estacionada de los
+  hermanos, aparece la **mochila-torre gris** con el Coleccionauta, que asoma y saluda.
+- Está a la vista en el mapa de **cualquier** hermano.
+- Es tocable (≥ 120 px), respira y se ve chistosa, no amenazante. Lo describe el bloque `batalla` de
+  `mapa.json` (§14.9).
+
+**Entrar a la batalla**:
+
+1. Al tocar el hito, Cometa dice "¡Es el Coleccionauta! Para ganarle necesitamos a los tres. ¿Están
+   todos?".
+2. **Pantalla "¡todos a la nave!"**: los tres retratos en grande. **Cada hermano toca el suyo** y salta a
+   su asiento (como en "armar equipo", pero sin poder sacar a nadie). Cuando están los tres, se enciende
+   "¡Despegar!", en el mismo rectángulo que "¡Juntos!" (M5.4).
+3. La batalla **es de los tres [PO: "los tres tienen que aportar"]**. Si falta uno, Cometa dice "¡lo
+   esperamos! La batalla es de los tres", y se puede volver al mapa sin perder nada.
+   - **[PO]**: la batalla se juega **solo con los tres hermanos**. No hay opción de jugarla con dos
+     (`minimo_hermanos: 3`, fijo).
+
+### 14.8 El premio [PO: "¡Juntos!"; Propuesta: lo demás]
+
+| Premio | Para quién | Por qué es coherente |
+|---|---|---|
+| **El botón "¡Juntos!"** en la selección, con su presentación única (M5.2) [PO] | La familia | Ganaron juntos, y desde ahora pueden jugar juntos cuando quieran (cualquier zona, §3.3) |
+| **El arcoíris del cielo vuelve, y el Coleccionauta se va con la mochila pintada de colores** | El planeta | Cierra el arco del planeta: se ve, sin palabras |
+| **Una "miga de papá" familiar**: una foto de **los tres hermanos juntos** (álbum familiar) | Los tres (los recuerdos familiares son de todos, `album-recuerdos.md` §3) | El álbum familiar admite fotos "de a dos o tres hermanos". Premia **lo que hicieron juntos**, y no compite con la pieza (el ala ya trajo su foto familiar en la zona 3). Agrega un momento `batalla` al catálogo; los familiares pasan de 9 a 10, dentro del rango de la ficha (8-10). **El PO elige y graba la foto y su audio** (privacidad: fuera del repo) |
+| **100 destellos** para cada hermano, una sola vez | Cada uno, por igual | Igual que una estación (economía HE-40 §7.3). **[Propuesta]**, aceptada por ahora por el PO |
+| **No hay pieza de la nave** | — | La pieza del planeta ya llegó con el ala (zona 3). Darla de nuevo rompería la regla de "una pieza por planeta" de la nave aprobada (HE-A6) |
+
+### 14.9 Datos y guardado (para `dev-godot`)
+
+**`mapa.json`**: bloque nuevo `batalla`.
+
+```jsonc
+"batalla": {
+  "id": "arcoiris_batalla_final",
+  "datos": "res://datos/batallas/arcoiris_final.json",
+  "escena": "res://escenas/nucleo/batalla.tscn",
+  "aparece_tras_zona": 3,              // número de zona
+  "condicion": "primer_hermano",       // [PO]
+  "posicion": [260, 380],              // junto a la nave estacionada en el Claro
+  "voz_hito": "PENDIENTE"
+}
+```
+
+**`datos/batallas/arcoiris_final.json`** (nuevo):
+
+```jsonc
+{
+  "id": "arcoiris_batalla_final",
+  "planeta_id": "arcoiris",
+  "minimo_hermanos": 3,                // [PO] solo con los tres
+  "destellos_por_hermano": 100,        // [Propuesta]
+  "recuerdo_momento": { "tipo": "batalla", "planeta": "arcoiris" },
+  "cinematica_entrada": "PENDIENTE",   // director-cinematicas
+  "cinematica_cierre": "PENDIENTE",
+  "rondas": [
+    { "id": "rio",     "color": "rojo",     "escena": "res://escenas/minijuegos/rio/motor_rio.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/rio_equipo.json" },
+    { "id": "formas",  "color": "amarillo", "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/formas_equipo.json" },
+    { "id": "parejas", "color": "azul",     "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/parejas_equipo.json" }
+  ],
+  "epilogo": { "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+               "nivel": "res://datos/niveles/arcoiris/batalla/pinta_mochila_equipo.json" }
+}
+```
+
+- Cada nivel de ronda lleva `"modo_juego": "equipo"` y el bloque `equipo` del §8, con `pasos_rival`
+  propio. El del epílogo lleva `"rival": null`.
+
+**Escena genérica `escenas/nucleo/batalla.tscn` + `scripts/nucleo/batalla.gd`**:
+
+- Lee el JSON de la batalla, muestra el mapa de batalla y la mochila-torre (§14.4), e **instancia la
+  `escena` de cada ronda** con `ruta_nivel`, `planeta_id`, `equipo = ["maxi", "nicole", "sofia"]` y
+  `destellos_fijos = 0`. Las rondas sueltas no dan destellos: el premio es de la batalla.
+- Escucha `completado` (ronda ganada) y `salir_solicitado`.
+- Reproduce las interludios y las cinemáticas.
+- **No sabe qué juego es cada ronda**: solo rutas. El núcleo sigue sin conocer minijuegos (regla de
+  oro 4).
+- Las rondas ganadas en la batalla **no** cuentan como victorias de "nivel de equipo" (`ganados`, §7.3),
+  ni encienden las estrellitas del botón. Son contenido aparte.
+
+**`Progreso`**: se suma al bloque `equipo` de la v3 (§11.5), sin otra migración.
+
+```jsonc
+"equipo": {
+  // … §11.5 …
+  "batallas": {
+    "arcoiris_batalla_final": {
+      "rondas_ganadas": ["rio"],        // ids de ronda; nunca se borran
+      "epilogo": false,
+      "ganada": false,                  // true al terminar el epílogo
+      "premiados": []                   // hermanos que ya cobraron sus destellos
+    }
+  }
+}
+```
+
+```gdscript
+func registrar_ronda_batalla(id_batalla: String, id_ronda: String) -> void
+func obtener_rondas_batalla(id_batalla: String) -> Array
+## Marca ganada, paga destellos_por_hermano a quien no esté en "premiados" y devuelve los premiados.
+func registrar_batalla_ganada(id_batalla: String, planeta_id: String, ids: Array[String], destellos_por_hermano: int) -> Array[String]
+func batalla_ganada(id_batalla: String) -> bool
+## true si hay al menos una batalla ganada: la selección muestra "¡Juntos!" (§3.1).
+func modo_equipo_desbloqueado() -> bool
+```
+
+- **La foto**: `batalla.gd` llama a `Recuerdos.desbloquear({"tipo": "batalla", "planeta": "arcoiris"},
+  "")` al ganar, igual que hace hoy la selección con `primera_apertura`. Hay que agregar el tipo
+  `batalla` a la ficha del álbum §8.
+- **Arnés de QA** (`tester-qa`): `qa_test_batalla_arcoiris.gd`, que respalde `progreso.json` y
+  verifique:
+  - la aparición tras la zona 3;
+  - las rondas guardadas y retomadas;
+  - el reintento que conserva lo logrado;
+  - los destellos una sola vez;
+  - la foto;
+  - "¡Juntos!" visible solo después de ganar;
+  - que las zonas 4-5 nunca se bloquean.
+
+### 14.10 Qué hace falta de cinemáticas (para `director-cinematicas`)
+
+Solo se enumeran; el storyboard es de `director-cinematicas`.
+
+1. **Teaser** al final de la escena del ala (zona 3): el Coleccionauta se cuela en la video-llamada de
+   papá y su mochila-torre aterriza en el Claro. Unos 8 a 10 s, y extiende la escena existente.
+2. **Entrada de la batalla**: el Coleccionauta aspira las tres bandas del cielo con su mochila-torre y
+   quedan tres pisos de colores. Coco y los hermanos se ponen en guardia, en tono de juego. 15 a 20 s.
+   Se puede saltar con un toque desde la segunda vez.
+3. **Interludio entre rondas** (motor, no video): el piso estornuda, el color vuelve al cielo y Coco
+   salta al hito siguiente en el mapa de batalla. 3 a 4 s, tres veces.
+4. **Gags de derrota por ronda** (motor): aspira y estornuda gotas, piezas o cartas (§14.5).
+5. **Antes del epílogo**: la mochila-torre gris y vacía, el Coleccionauta sentado con cara de "¿y ahora
+   qué colecciono?", y Coco con la idea de pintarle la mochila. 6 a 8 s.
+6. **Cierre de temporada**:
+   - el Coleccionauta, con la mochila pintada, se mira encantado, dice que "un equipo no cabe en una
+     mochila" y se despide prometiendo volver "con una mochila más grande" (gancho de HE-39);
+   - fiesta de los tres (§5.6);
+   - entrega de la foto (ficha del álbum §6);
+   - **video-llamada de papá con el gancho del planeta 2** (la que el GDD §3 pone al cierre de cada
+     capítulo);
+   - al volver a la selección, la nave "¡Juntos!" entra volando (M5.2).
+
+   Duración: 30 a 45 s, más la foto.
+
+### 14.11 Qué hace falta de voces (para `guionista`)
+
+Solo se enumeran, y todas van **en plural y sin nombres en los fallos** (B2, B3):
+
+- Cometa en el hito y en "¡todos a la nave!": "¿Están todos?", "¡Lo esperamos!" y "¡seguimos donde
+  quedamos!".
+- El Coleccionauta (grabación casera de papá):
+  - el teaser;
+  - la entrada (aspira los colores);
+  - una presentación por ronda;
+  - un "¡uy, mi mochila está más livianita!" por piso;
+  - los gags de derrota de Río y Formas (los de Parejas ya existen);
+  - el antes del epílogo;
+  - la despedida con el gancho de HE-39.
+- Coco:
+  - la intro corta de cada ronda (la regla de turno de ese juego, en una frase);
+  - un "¡volvió el rojo!", "¡volvió el amarillo!" y "¡volvió el azul!" por color (con su tic de color);
+  - la idea del epílogo ("¡regalémosle colores!");
+  - la celebración final.
+- Cometa: un logro común tras cada derrota de ronda ("¡igual le sacamos el rojo!") y "¡Equipo estelar!"
+  (ya existe).
+- Las líneas de turno de Maxi en Río y en Formas ("¡Maxi, toca donde quieras!" y "¡Maxi, la pieza que
+  brilla!").
+- La video-llamada de cierre de papá: **grabación familiar**, si el PO lo decide (backlog del álbum §9,
+  idea 4).
+
+**Antes de generar cualquier TTS: `--estimar` y OK del PO sobre el costo.**
+
+### 14.12 Cómo encaja con HE-39 (la prueba final cooperativa)
+
+| | **Batalla de Arcoíris** (la primera) | **Prueba final, HE-39** (la última) |
+|---|---|---|
+| Dónde | Planeta 1, al cerrar el capítulo 1 | Planeta del Coleccionauta, al reunir las 6 piezas |
+| Qué establece | El idioma de las batallas: pista de galletas, mochila-torre, turnos con puerta, gags de estornudo, rondas que se conservan y "nadie tiene la culpa" | Lo reutiliza todo (`batalla.gd` y un JSON propio) con una ronda por planeta visitado, y suma lo que el GDD §1 le reserva: "Sofía lee la pista y arma el plan" y "Nicole se gana la confianza" del Coleccionauta |
+| El Coleccionauta | Aprende que "un equipo no cabe en una mochila" y se va con colores regalados | Cierra el arco: aprende que los amigos no se coleccionan, se hacen, y devuelve a papá |
+| Premio | "¡Juntos!" y una foto de los tres | El rescate y la última foto familiar (álbum §4) |
+
+- **Capítulos 2 a 6** [Propuesta, aceptada por ahora por el PO]: **solo hay batalla en Arcoíris y en
+  HE-39**. `batalla.gd` y sus datos dejan abierta la puerta de sumar otras batallas si un capítulo lo
+  pide, pero eso sería una decisión nueva.
+
+### 14.13 Riesgos para UX (para auditar antes de implementar)
+
+1. **Duración**: entre 3 rondas, el epílogo y las cinemáticas, son unos 20 min. Para Maxi es mucho de
+   una vez. El diseño ya guarda las rondas, pero hay que observar si conviene que **Coco proponga una
+   pausa** entre la ronda 2 y la 3.
+2. **"La batalla es de los tres" [PO]**: si Maxi no quiere jugar ese día, ¿frustra a Sofía no poder
+   jugar el final? Mitigación del diseño: el hito nunca bloquea nada, las rondas ganadas se guardan y
+   Cometa lo dice con cariño ("¡lo esperamos!").
+3. **El turno de Maxi en el Río**: un imán total significa que su disparo "siempre funciona". Validar que
+   lo vive como suyo, y que no se siente como "el juego jugó por mí".
+4. **La pista de galletas sobre el Río**: verificar que no tape el cauce ni la lectura del peligro.
+5. **El tono del Coleccionauta "robando colores"**: verificar que no asuste a Maxi. Tiene que leerse
+   como travesura, porque es el villano chistoso del GDD §1.
+6. **El cielo gris durante la batalla**: no puede sentirse como "perdimos lo que ganamos". La isla
+   conserva sus colores y solo el arcoíris del cielo se va. Que Coco lo diga al inicio: "¡lo vamos a
+   recuperar juntos!".
+
+### 14.14 Estado de las decisiones de la batalla (06-Oct-2026)
+
+| Tema | Estado |
+|---|---|
+| Desbloqueo con el primer hermano que recibe el ala | **[PO]** |
+| Solo con los tres hermanos | **[PO]** |
+| 100 destellos por hermano | [Propuesta], aceptada por ahora |
+| Solo hay batalla en Arcoíris y en HE-39 | [Propuesta], aceptada por ahora |
+| 3 rondas más el epílogo de Pinta | [Propuesta], aceptada por ahora |
+| La foto familiar de los tres (el PO la elige y la graba) | [Propuesta], aceptada por ahora |
+| El Coleccionauta aspira las bandas del cielo | [Propuesta], aceptada por ahora. Pendiente de la auditoría UX (riesgo 6) |
