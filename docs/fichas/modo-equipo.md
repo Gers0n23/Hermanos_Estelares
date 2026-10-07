@@ -939,8 +939,22 @@ un color de vuelta al cielo**.
   - **amarillo** (zona 2);
   - **azul** (zona 3).
   
-  La mochila-torre queda con **tres pisos**, cada uno brillando con un color robado. El cielo del
-  planeta vuelve a quedar gris arriba, pero **la isla no se despinta**: lo ganado en el mapa no se toca.
+  La mochila-torre queda con **tres pisos transparentes**, uno por color.
+
+  **[UX HE-66, M3]** El robo existe **solo dentro de la escena de la batalla** (`batalla.tscn` y sus
+  cinemáticas):
+
+  - **el mapa de cada hermano nunca pierde color**; ahí solo aparece el hito chistoso de la
+    mochila-torre;
+  - en la escena se agrisa **solo la franja del arcoíris**, sin oscurecer la pantalla (m7);
+  - dentro de los pisos, los colores **se ven intactos y contentos**: rebotan y saludan, no están
+    atrapados ni llorando. Coco dice de inmediato "¡están guardados ahí! ¡Los vamos a sacar juntos!". Es
+    un rescate, no una pérdida;
+  - el aspirado suena a **sorbete con bombilla** (un "sluuurp" corto de 1,5 s o menos), nunca a motor
+    de aspiradora (m7);
+  - la mochila-torre no tiene patas, antenas ni nada parecido a un bicho (m7);
+  - si en el playtest alguien dice "¡nos robó lo que ganamos!", el respaldo es que el Coleccionauta
+    traiga colores robados de otro lado.
 - **Qué aprende** (la semilla del final del juego, sin decirla):
   - en la batalla descubre que "un equipo no cabe en una mochila" (el guion ya lo siembra en
     `coleccionauta_aplaude_02`);
@@ -985,7 +999,7 @@ define en la tabla de abajo** (UX HE-66, B1.6):
 
 | Ronda | Juego (motor) | Color que recupera | Qué es un "acierto" | Turno de Maxi (aporte real) | Turno de Nicole | Turno de Sofía |
 |---|---|---|---|---|---|---|
-| **1** | **Río de pintura** (`rio`) | Rojo | Un disparo que **revienta** un grupo. **No existe el fallo**: un disparo que no revienta es neutro (el "plop" de inserción, sin voz de fallo) [UX B1] | **1 gota por turno (B3.2)**: <br>- antes de su toque, el grupo objetivo **ya brilla con halo dorado**;<br>- **toda la pantalla dispara**, también un toque sobre Coco, porque **en su turno el intercambio está desactivado**;<br>- la lengua sale **primero hacia su dedo** (0,1 s) y la gota curva con estela hacia el grupo, que **siempre revienta**;<br>- si tocó a menos de 150 px del halo, suena "¡justo ahí!" | **3 gotas por turno** [UX B1], que se ven sin números como **3 gotas en la mano de Coco** (la de la boca y dos de reserva) y se gastan una por disparo. Línea de guía completa. **La segunda oportunidad no aplica en esta ronda**, porque no hay fallo | **3 gotas por turno**, sin guía. Una **cadena** (retroceso que revienta) vale **2 aciertos** de racha. Con 3 reventones en un turno, el Coleccionauta retrocede |
+| **1** | **Río de pintura** (`rio`) | Rojo | Un disparo que **revienta** un grupo. **No existe el fallo**: un disparo que no revienta es neutro (el "plop" de inserción, sin voz de fallo) [UX B1] | **1 gota por turno (B3.2)**. (1) Antes de su toque, el grupo objetivo **ya brilla con halo dorado**. (2) **Toda la pantalla dispara**, también un toque sobre Coco, porque **en su turno el intercambio está desactivado**. (3) La lengua sale **primero hacia su dedo** (0,1 s) y la gota curva con estela hacia el grupo, que **siempre revienta**. (4) Si tocó a menos de 150 px del halo, suena "¡justo ahí!" | **3 gotas por turno** [UX B1], que se ven sin números como **3 gotas en la mano de Coco** (la de la boca y dos de reserva) y se gastan una por disparo. Línea de guía completa. **La segunda oportunidad no aplica en esta ronda**, porque no hay fallo | **3 gotas por turno**, sin guía. Una **cadena** (retroceso que revienta) vale **2 aciertos** de racha. Con 3 reventones en un turno, el Coleccionauta retrocede |
 | **2** | **Formas traviesas** (`encajar`) | Amarillo | Una pieza **bien encajada** en la silueta compartida. **Fallo** = soltar la pieza sobre un hueco equivocado. **Soltarla en el vacío no es fallo**: vuelve a la bandeja (el resultado `"nada"` del motor) [UX B2.2] | **1 pieza por turno, con las mismas reglas de su ruta (B3.1)**: la pieza con halo es la más grande que queda (lado corto ≥ 110 px) y funciona con **`toque_lleva_a_casa`** (al tocarla vuela a su lugar con estela, en 0,5 s), **`iman_tolerancia_px: 5000`** si la arrastra, y **`sin_error`**. Su hueco respira, y Coco dice "¡Maxi, la pieza que brilla!". Las otras piezas de la bandeja solo hacen el pulso con un sonido amable: no se pueden tomar | **Tope de 2 aciertos por turno** [UX B2.1]. Piezas sin rotación y con silueta interior visible (como su ruta). Al empezar su turno, las piezas **se enderezan con un "fiu" visible**. Segunda oportunidad con el primer fallo | **Tope de 3 aciertos por turno** [UX B2.1]. Al empezar su turno, las piezas **giran a un ángulo al azar con un "fiu" visible**, y hay que girarlas (`rotacion_por_toque`). Pasa el turno con el primer fallo. Su "turno perfecto" de 3 piezas es su racha de retroceso |
 | **3 (final) [PO]** | **Parejas en equipo** (`emparejar`) | Azul | Una pareja | §5.2, más el turno que se resuelve solo a los 20 s (M2) | §5.2 | §5.2 |
 | **Epílogo** (no se pierde) | **Pinta con Coco** (`lienzo_libre`, encargo `colorear_zonas`) | — (se **regalan** colores) | — | **Un toque rellena una parte grande** de la mochila-torre gris (el modo "Pinta a Coco" de su ruta) | Rellena una parte con el color que elige (muestras de la paleta ≥ 96 px) | Igual que Nicole |
