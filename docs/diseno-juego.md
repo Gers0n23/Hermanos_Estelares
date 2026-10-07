@@ -215,6 +215,20 @@ que el juego dure muchas horas y crezca con los niños:
   Se diseña como capa sobre los niveles existentes, no como contenido aparte. La **prueba final
   cooperativa** del planeta del Coleccionauta es el nivel pensado para jugarse así los tres.
 
+  > **Actualización (06-Oct-2026, decisión del PO)**: el modo se adelanta y se concreta como
+  > **"juego en equipo"**, una opción nueva en la pantalla de selección donde se elige quiénes juegan
+  > (2 o 3 hermanos).
+  >
+  > - Es **cooperativo**: los hermanos juegan contra un rival común (el Coleccionauta, un reloj o la
+  >   nube gris), nunca entre ellos, y sin rankings entre hermanos.
+  > - Se juega por turnos en la misma tablet. Cada uno juega su turno **con su propia dificultad**, y
+  >   **Maxi juega guiado** para que siempre aporte.
+  > - El primer minijuego con modo equipo es **Parejas de Coco**; los demás se suman después.
+  > - El diseño (cómo se arma el equipo, el "le toca a…", el rival, el reparto del avance y la fiesta
+  >   de equipo con el gesto de cada uno) está en `docs/fichas/modo-equipo.md`, como propuesta de
+  >   `disenador-mecanicas` pendiente de UX y playtest.
+  > - La prueba final cooperativa sigue siendo HE-39.
+
 ---
 
 ## 4. Los planetas (mundos)
@@ -470,6 +484,6 @@ Para proteger el proyecto de crecer hasta no terminarse nunca:
 | P3 | ¿Qué tablet Android concreta usarán? (define resolución y rendimiento objetivo) | Product Owner | Abierta |
 | P4 | Herramienta MCP definitiva para generación de sprites (ver stack técnico) | Dev | Parcial — GodotPrompter + godot-mcp adoptados (stack §4); generación de imágenes se decide en HE-03 |
 | P5 | Catálogo de niveles temáticos por hermano (¿6 planetas universales o menos planetas con misiones personalizadas?) — requiere fichas completas de HE-D1 | PO + Dev | **Resuelta (HE-D3, 06-Ago-2026)** — se mantienen los 6 planetas universales tal como estaban (temas, nombres, anfitriones y orden 1-6), con contenido personalizado por hermano dentro de cada uno (motores + variantes, §4-§5); planeta 1 confirmado = Arcoíris. Abierto solo el detalle fino de fichas de nivel por hermano (trabajo normal de diseño, no de negocio). |
-| P6 | Diseño detallado de la prueba final cooperativa y del modo misión familiar (flujo de turnos, UI de "le toca a...") | PO + Dev | Abierta |
+| P6 | Diseño detallado de la prueba final cooperativa y del modo misión familiar (flujo de turnos, UI de "le toca a...") | PO + Dev | **Parcial (06-Oct-2026)**. El modo misión familiar pasa a ser el **"juego en equipo"** (decisión del PO): cooperativo contra un rival común, por turnos, cada uno con su dificultad, Maxi guiado y primero en Parejas de Coco. El flujo de turnos, el "le toca a…", la elección del equipo y el reparto del avance están propuestos en `docs/fichas/modo-equipo.md`, con 7 preguntas al PO en su §12. **Sigue abierto**: el diseño de la prueba final cooperativa (HE-39) |
 | P8 | Mapa de zonas del planeta (14-Sep-2026): ¿el capítulo 1 se entrega con las 5 zonas de Arcoíris o con las zonas 1-3 (que ya incluyen la pieza y la escena) y las zonas 4-5 como actualización "expedición extra" antes del capítulo 2? ¿Aperturas y pieza cuentan estaciones completadas en vez de destellos? | PO + `disenador-niveles` | Abierta — propuesta en `docs/fichas/planeta-arcoiris-zonas.md` §6 |
 | P7 | Nombres "Cometa" y "El Coleccionauta" — aprobados por el PO en HE-A1/HE-A3 (diseño) y confirmados definitivamente por el PO el 06-Ago-2026 (ya no son provisionales). La reacción espontánea de Maxi, Nicole y Sofía al verlos/oírlos en el juego real queda como observación natural del primer playtest, no como aprobación pendiente | PO | Cerrada (nombres definitivos) |

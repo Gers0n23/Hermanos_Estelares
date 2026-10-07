@@ -10,6 +10,8 @@
 - **Autor**: `disenador-mecanicas`
 - **Estado**: piloto — pendiente de implementación (`dev-godot`), auditoría UX y QA
 - **Referencia GDD**: §5 (motores compartidos, ejemplo "emparejar"), §6 (UX obligatoria), §1 (tono/derrota-gag), §8 (alcance negativo)
+- **06-Oct-2026**: el PO aprobó las mejoras de reto (racha, vistazo, cartas especiales, camino de
+  colores y colección), detalladas en el **§10**, y el **modo equipo** (`docs/fichas/modo-equipo.md`).
 
 ---
 
@@ -328,3 +330,305 @@ carta movida. La idea es afinar los límites con el playtest.
 - §7: `umbrales_estrellitas {tres, dos}` en fallos (z1 10/16, z2 9/15, z3 17/42, z4 15/24, z5 21/32, dorado 27/42). Sin el campo, la regla vieja.
 - Pista con costo: medidor + globo de confirmación (`scripts/ui/pista_con_costo.gd`); si ya hay una carta arriba, la pista revela su compañera.
 - `visible_minimo_ms` (Brote 600 por defecto): un toque durante el "no es este" queda en espera (la carta pulsa) y se aplica al cumplirse el mínimo.
+
+---
+
+## 10. Mejoras de reto: racha, vistazo, cartas especiales, camino de colores y colección (06-Oct-2026)
+
+> **Decisión del PO (06-Oct-2026)**: tras investigar memorice populares, el PO aprobó **cinco mejoras**
+> para Parejas de Coco. El objetivo es cumplir la regla del playtest del 03-Oct-2026: **reto real para
+> Nicole y Sofía** (GDD §5, "Mecánicas probadas y reto real"). Hoy Nicole juega sin límite y sin poder
+> perder, así que **la racha, el puntaje y el récord son su reto principal**.
+>
+> El modo equipo de este motor está en `docs/fichas/modo-equipo.md`.
+>
+> - **Marcas**:
+>   - **[PO]** = decisión del PO;
+>   - **[UX]** = corrección de la validación UX de HE-58
+>     (`docs/validaciones/2026-10-06_ux-HE-58-modo-equipo-parejas.md`);
+>   - **[Propuesta UX, por confirmar con el PO]** = cambia algo marcado [PO];
+>   - **[Propuesta]** = de `disenador-mecanicas`.
+> - **v2 (06-Oct-2026)**:
+>   - incorpora las decisiones del PO del 06-Oct (Nicole con estrellitas por puntaje; Camino como reto
+>     dorado de la zona 4; colección en la casita de Coco; récords en cero);
+>   - incorpora las correcciones UX M6-M10 y los menores m6, m8, m9 y m10;
+>   - incorpora las correcciones del `guionista` (`docs/guiones/voces-modo-equipo-parejas.md`).
+>   
+>   Los menores para `dev-godot` están en el §13 de `docs/fichas/modo-equipo.md`.
+> - **Lenguaje visual**: se reutiliza el del Río de pintura (`docs/roadmap-rio-de-pintura.md` §3.3, §6 y
+>   §9): tono que sube un semitono por acierto, nuditos de la cresta de Coco, ojos de estrella con
+>   combo 3+, trofeo-cupcake del récord y presentación de cada novedad de a una.
+> - **Lo que no cambia**:
+>   - las estrellitas de Sofía siguen contando **fallos** (`umbrales_estrellitas`);
+>   - Maxi sigue sin poder perder;
+>   - un fallo **nunca resta puntos**: solo corta la racha.
+
+### 10.1 Racha, "¡a la primera!", tiempo par y récord personal
+
+**[PO]** Racha o combo, bono "¡a la primera!", tiempo par y récord personal por estación. Referencias:
+*MatchBlitz*, *Flipout!* y el memorice de *New Super Mario Bros.* **[Propuesta]** Valores y forma:
+
+**Puntaje de una partida** (en una estación con rondas, suma todas las rondas):
+
+| Evento | Puntos | Feedback (< 100 ms) |
+|---|---|---|
+| Pareja formada | 100 × multiplicador de racha | El "ding" del par sube **un semitono por eslabón** (como el reventón del Río). Los números "+200" salen del par en el color de la carta y suben flotando 0,6 s. **Nunca se dibujan sobre cartas tapadas** (m10): suben desde el par que se va o se dibujan fuera de la grilla. Desde la racha ×2, la voz de racha (`racha_2` a `racha_5` y `racha_sigue`) **reemplaza** a `acierto_par`; no suenan las dos (`guionista`). Cuando la racha se corta no hay voz |
+| Racha (pares seguidos sin "no es este") | Multiplicador ×1, ×2, ×3, ×4, ×5 (tope) | Junto a Coco, un **contador de racha** grande que rebota ("×3"). Cada eslabón **enciende un nudito de su cresta**, y con ×3 o más, ojos de estrella. Al cortarse, los nuditos se apagan de a uno con un "fiuu" suave, **sin sonido de error** |
+| **"¡A la primera!"** (las dos cartas del par se dieron vuelta **por primera vez** en esa misma jugada: suerte pura) | +200, sin multiplicador | Estela dorada entre las dos cartas, campanita doble y sello "¡a la primera!" (un trébol dorado) que vuela al costado |
+| **Tiempo par** (tablero completo antes de `tiempo_par_s`) | +10 por segundo que sobra | Se ve como una **vela de cumpleaños sobre un cupcake**, fuera del área de juego y de **menos de 80 px de alto**, que se consume. **[UX M7]**: sin tic-tac; no parpadea, no cambia de color y no acelera al final; y en Nicole **solo aparece si la estación ya tiene récord suyo** (la primera partida es para aprender), mientras que en Sofía aparece desde la primera partida. Si se acaba, la llama hace un "puf" suave y Coco dice algo positivo (voz `vela_dormida`, "¡la vela se fue a dormir, sigue tranquila!"); **no pasa nada más**. Si se termina el tablero antes, la vela sigue encendida y al final sus segundos se convierten en puntos con tintineo |
+| Carta dorada (§10.3) | +500 y el próximo par vale doble | §10.3 |
+
+- **Récord personal por estación** [PO], por hermano (`Progreso.records.<hermano>.<id_nivel>`, el mismo
+  campo opcional que ya usa el Río):
+  - **Durante la partida se ve sin leer**: a la derecha hay una **barra vertical de puntaje** con una
+    **banderita-cupcake a la altura del récord**. Cuando la barra la pasa, la banderita salta, hay
+    confeti chico y suena una palabra ("¡récord!"). **No se pausa el juego** (GDD §5: ritmo rápido).
+  - **Al final**: "¡Nuevo récord!" con Coco sosteniendo el **trofeo-cupcake** (mismo asset que el Río).
+  - **Sin rankings entre hermanos** [PO]: cada uno compite con su propio récord, y el HUD nunca muestra
+    el récord de otro.
+
+**Por perfil** [Propuesta]:
+
+| | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
+|---|---|---|---|
+| Racha | **Solo sonido y cresta** (tono que sube, nuditos). Sin número ni puntaje | Completa: contador, multiplicador y nuditos | Completa |
+| "¡A la primera!" | No (con cartas a la vista no aplica) | Sí | Sí |
+| Tiempo par | No | Sí: la vela, holgada (≈ 1,5 veces lo que tarda una niña de 5 años que juega bien) | Sí: la vela, ajustada (≈ 1,1 veces la mediana del jugador simulado) |
+| Récord | No | **Sí: es su reto principal** | Sí, junto a las estrellitas |
+| Estrellitas | No | No (igual que hoy; ver §10.8, pregunta 1) | Sin cambios: por fallos. El puntaje y la vela **no** cambian las estrellitas |
+
+**Contrato** [Propuesta]:
+
+```jsonc
+"puntaje": {
+  "por_par": 100,
+  "racha_tope": 5,
+  "bono_a_la_primera": 200,
+  "tiempo_par_s": 95,            // null = sin vela
+  "bono_por_segundo": 10,
+  "mostrar": "barra"             // "barra" (Brote/Estrella) | "solo_sonido" (Semilla)
+}
+```
+
+Señales nuevas: `racha_cambiada(n)`, `a_la_primera(id_pareja)` y `record_superado()`.
+
+### 10.2 Vistazo al repartir
+
+**[PO]** Al repartir, algunas cartas se muestran unos 2 s. La cantidad escala con el tablero (4 de 12,
+8 de 16 y 12 de 20, como en *Memory Master* de *Super Mario 64 DS* y el memorice de *NSMB*). Nicole las
+ve más tiempo y Sofía ve menos cartas.
+
+**[Propuesta]** Cómo funciona:
+
+1. **Reparto**: las cartas salen volando del mazo de Coco a sus lugares, en cascada de 40 ms por
+   carta, con un "flip-flip-flip" de baraja. Coco reparte con la cola-brocha.
+2. **Vistazo**: las cartas elegidas se dan vuelta **juntas** con un destello y la voz corta "¡mira!".
+   Encima del tablero, una **pompa de jabón** se encoge mientras dura el vistazo y revienta al terminar.
+3. **Se tapan en cascada** (60 ms por carta) y empieza la vela del tiempo par.
+4. **Toques durante el vistazo**: la carta hace el pulso suave y nada más. No se puede saltar, para que
+   Nicole no lo pierda por un toque accidental.
+
+| | Maxi · Semilla | Nicole · Brote | Sofía · Estrella |
+|---|---|---|---|
+| ¿Vistazo? | No: sus cartas ya están a la vista | Sí, en cada ronda tapada | Sí |
+| Cuántas cartas | — | `max(4, cartas − 8)`: **4 de 12, 8 de 16, 12 de 20** (la tabla del PO). Se muestran **parejas completas** | `round(cartas / 4)`, **sueltas** (nunca las dos cartas de un mismo par): 6 de 24, 8 de 32, 9 de 36. Con los tableros grandes de Sofía, la fórmula de la tabla mostraría casi todo |
+| Duración | — | **3000 ms** | **2000 ms** |
+
+- **Contrato**: `"vistazo": { "cartas": 8, "ms": 3000, "pares_completos": true }`. `cartas: "auto"` usa
+  la fórmula del perfil, y la ausencia del campo significa sin vistazo.
+- **No es una pista**: no cuesta estrellitas. La regla del 7.2 de la ficha de zonas ("cada vistazo
+  resta 1") se refiere al vistazo **a pedido** de otros motores.
+- **Recalibrar los límites de Sofía**: con vistazo, el simulador debe partir con esas cartas "vistas".
+  Esto baja la mediana de fallos, y `disenador-niveles` reajusta `limite_intentos` y
+  `umbrales_estrellitas`.
+
+### 10.3 Cartas especiales (poderes)
+
+**[PO]** Hay cuatro cartas especiales, presentadas **de a una por zona**:
+
+- comodín arcoíris (Nicole);
+- carta dorada de puntos (Sofía);
+- carta lupa (al formar su pareja ilumina todo el tablero 1 s);
+- carta del Coleccionauta (como la carta Bowser de *Mario Party*: un gag que cambia dos cartas de lugar;
+  solo para Sofía, sin humillar).
+
+**[Propuesta]** Detalle:
+
+| Carta | Cómo es | Qué hace | Game feel | Perfil |
+|---|---|---|---|---|
+| **Comodín arcoíris** (comodín de *Luxor*, como la gota arcoíris del Río) | **Una sola carta**, sin compañera. Su cara tiene franjas arcoíris que giran | Va con **cualquier** carta. Si sale segunda, completa la pareja de la carta de arriba: **la compañera de esa carta se da vuelta sola y vuela a juntarse**, y se forma el par con las tres juntas. Si sale primera, se queda arriba y la próxima carta que se toque se completa igual. **Nunca produce "no es este"**. Cuenta como un eslabón más de la racha | Al darse vuelta, baño arcoíris en Coco y ojos de estrella. La compañera vuela con estela arcoíris (0,5 s) | Nicole (Brote). En equipo, cualquiera si Nicole juega |
+| **Carta dorada** | Una **pareja normal con el dorso dorado y brillante**: Sofía sabe que vale, pero no qué figura es | Al formarla: **+500 y el próximo par vale doble** (además de la racha) | Lluvia de monedas-destello, campana grave y nudito dorado en la cresta | Sofía (Estrella). En equipo, no |
+| **Carta lupa** | Una **pareja normal con una lupa en la cara** (el dorso es común: no se sabe dónde está) | Al formarla, **todas las cartas tapadas se dan vuelta a la vez 1 s** (Brote 1,5 s) y se tapan en cascada | Coco se pone una lupa en el ojo (que se agranda chistoso) y suena "¡tadá!" en arpa | Nicole y Sofía. En equipo, sí |
+| **Carta del Coleccionauta** (la carta Bowser de *Mario Party*) | **Una sola carta**, con la cara del Coleccionauta sonriendo con su monóculo | Al darse vuelta, el Coleccionauta **se asoma por el borde**, dice "¡qué lindas! Me llevo… no, mejor las cambio de lugar" y **cambia dos cartas tapadas de lugar** con un vuelo visible de 0,6 s (prefiere cartas ya vistas, que es lo que hace del gag un reto de atención). La carta se va con él. **No cuenta como fallo**, no corta la racha ni el turno, y si había una carta arriba, sigue arriba | El cambio es lento y a la vista, como las "cartas traviesas". Coco se tapa la boca y se ríe. El Coleccionauta se despide tropezando | Sofía (Estrella), solo en solitario |
+
+**Reglas comunes**:
+
+- **Presentación de a una** (como los poderes del Río): la primera vez que una especial aparece en
+  la ruta de un hermano, al darse vuelta el juego se detiene 1,5 s, la carta se agranda al centro con un
+  brillo, Coco hace el gesto y suena una palabra ("¡Lupa!"). Se puede saltar con un toque. Las veces
+  siguientes no se detiene. Se guarda en `Progreso` qué especiales conoce cada hermano.
+- **Tablero impar**: el comodín y la carta del Coleccionauta son cartas solas. Si el total de cartas
+  queda impar, el lugar sobrante de la grilla lleva un **adorno de Coco** (una gomita) que no se puede
+  tocar y es visiblemente distinto de una carta.
+- **Calendario por zona** [Propuesta, lo ajusta `disenador-niveles`]:
+
+| Zona | Nicole · Brote | Sofía · Estrella |
+|---|---|---|
+| 1 | — (llegan la racha, el vistazo y el récord) | **Dorada** (1 pareja) |
+| 2 | **Comodín** (1) | **Lupa** (1) |
+| 3 | **Lupa** (1) | **Coleccionauta** (1). Con tríos, la lupa y la dorada serían tríos |
+| 4 | Comodín + lupa | Dorada + lupa (las traviesas ya mueven cartas: sin Coleccionauta) |
+| 5 | Comodín + lupa | Dorada + lupa + Coleccionauta |
+
+- **Contrato**:
+  ```jsonc
+  "especiales": [
+    { "tipo": "comodin" },
+    { "tipo": "lupa", "ms": 1500 },
+    { "tipo": "dorada", "bono": 500 },
+    { "tipo": "coleccionauta", "intercambios": 1 }
+  ]
+  ```
+  - La lupa y la dorada **toman una pareja del pool** y la marcan.
+  - El comodín y el Coleccionauta **agregan** una carta.
+  - En niveles con `rondas`, va por ronda.
+  - Señal nueva: `especial_activada(tipo)`.
+- **Recalibrar**: la lupa y el comodín bajan fallos, y el Coleccionauta los sube un poco. Los límites
+  de Sofía se vuelven a simular con las especiales de cada zona.
+
+### 10.4 Camino de colores (*Memoarrr!*)
+
+**[PO]** Es un tablero 5×5 con todas las combinaciones de 5 figuras × 5 colores. Cada carta que se da
+vuelta debe compartir color o figura con la anterior. Es candidato a reto dorado o zona secreta de
+Sofía.
+
+**[Propuesta]** Reglas:
+
+- **Regla nueva del motor** `regla: "camino"`. Usa las mismas cartas, el mismo volteo y el mismo
+  input; cambia solo la validación. Las 25 cartas son únicas y no hay parejas.
+- **La primera carta es libre.** Cada carta siguiente tiene que **compartir figura o color** con la
+  última que se dio vuelta. Si comparte, **se queda boca arriba** y se dibuja un **trazo de glaseado**
+  entre las dos:
+  - del color común, si comparten color;
+  - con estampitas de la figura, si comparten figura.
+- **Si no comparte**: "no es este" con el meneo amistoso. **El camino se desarma**: todas sus cartas
+  se tapan en cascada (400 ms), pero quedan donde estaban, así que Sofía las recuerda. Cuenta 1 fallo.
+- **Meta**: armar un camino de `largo_meta` cartas (propuesta: **12**). También se gana si el camino
+  llega a un punto **sin salida**, cuando ninguna carta tapada comparte nada con la última. Entonces
+  Coco dice "¡no queda por dónde seguir: llegaste al final!".
+- **Puntaje y récord**: el récord es **el camino más largo**. Cada paso suma 100 × racha (el camino
+  es una racha natural), con el tono que sube en escala.
+- **Límite** con derrota-gag (las cartas bailan una conga y se reordenan; Coco se marea) y el
+  "¡otra vez!" de un toque.
+- **Ayudas de Sofía**: `pistas_cuestan_estrellita` revela por 1 s **todas** las cartas que continúan el
+  camino. `regalo_tras_derrotas`: tras 2 derrotas, Coco arma solo los 3 primeros pasos.
+- **Accesibilidad**: 5 colores bien distintos (rojo, amarillo, azul, verde y rosado) y 5 figuras de
+  silueta muy distinta (estrella, corazón, gota, luna y círculo) para que nunca dependa solo del tono.
+- **Ubicación** [Pregunta PO 2]: propongo **reto dorado de Parejas zona 4** de Sofía (hoy solo la cima
+  tiene reto dorado de Parejas). Así la regla nueva llega como premio a las 3 estrellitas y no como
+  obligación.
+- **Contrato**:
+  ```jsonc
+  {
+    "regla": "camino",
+    "figuras": ["estrella", "corazon", "gota", "luna", "circulo"],
+    "colores": ["rojo", "amarillo", "azul", "verde", "rosado"],
+    "disposicion": { "filas": 5, "columnas": 5 },
+    "largo_meta": 12,
+    "limite_intentos": null,
+    "umbrales_estrellitas": null
+  }
+  ```
+  El límite y los umbrales los fija `disenador-niveles` con el simulador: cada carta comparte algo con
+  8 de las otras 24, y la jugadora recuerda ~5.
+- **QA**: verificar que con 5×5 la cuadrícula cabe a ≥ 100 px por carta en 1280×720 (5 filas en
+  ≈ 600 px útiles dan unos 110 px).
+
+### 10.5 Colección de cartas (*Snap Match*)
+
+**[PO]** Cada pareja nueva queda guardada en una colección. **[Propuesta]**:
+
+- **Qué se colecciona**: cada pareja tiene un `id_coleccion`. Si no viene, se usa `figura` + `color`
+  o `id_pareja`; en las banderas, el país. La **primera vez** que un hermano forma esa pareja, entra a
+  su colección.
+- **Durante el juego** (sin pausa):
+  - la figura que vuela a la barra lleva una **estrellita de "¡nueva!"** pegada y suena un "clink" de
+    álbum;
+  - al final de la celebración, después del conteo de destellos, las cartas nuevas **vuelan a una
+    cajita de Coco** contándose ("una, dos, tres"), 0,3 s cada una.
+- **Pantalla de colección** ("La caja de cartas de Coco"):
+  - una carpeta con las cartas de Arcoíris en grilla, ordenadas por familia (figuras, dinos y vehículos,
+    animales, ropa, banderas, sombras y recetas);
+  - las que faltan son **siluetas con un signo de pregunta**, nunca con candado;
+  - **tocar una carta la da vuelta y Coco dice su nombre** ("¡Japón!", "¡Spinosaurio!"). Para las
+    banderas, esto refuerza el pedido de aprender países (memoria del proyecto).
+- **Una colección por hermano**, sin comparar números entre ellos. Maxi también colecciona: para él,
+  mirar sus dinos y oír los nombres es el juego.
+- **Datos y arquitectura**:
+  - catálogo en `datos/colecciones/cartas_arcoiris.json` (`id_coleccion`, dibujo, color, familia y
+    voz);
+  - lo coleccionado se guarda en `Progreso.coleccion.<hermano>`, con un helper genérico de
+    `minijuego_base` (`registrar_coleccionable(id)`): el motor no toca el guardado;
+  - la pantalla es núcleo y lee solo el catálogo: no sabe de Parejas.
+- **En equipo**: cada pareja nueva entra a la colección de **todos los participantes**.
+- **Tono**: el `guionista` cuida que no choque con el arco del Coleccionauta ("los amigos no se
+  coleccionan"). Son cartas que Coco regala para jugar y mostrar, y la pantalla puede tener un botón
+  "mostrarle a un hermano" en el futuro.
+- **Ubicación** [Pregunta PO 3]: propongo la **casita-cupcake de Coco en el mapa del planeta**, un
+  botón de ≥ 96 px. Alternativa: junto al álbum de recuerdos en la selección (riesgo de confundirlo con
+  las fotos de papá).
+
+### 10.6 Riesgos de usabilidad de estas mejoras (para `experto-ux-parvulo`)
+
+1. **El contador de racha y los "+200" pueden tapar cartas**: los números salen y suben **fuera de la
+   grilla**, o sobre el par que se va, nunca sobre una carta tapada.
+2. **¿Nicole lee el récord sin números?** Validar la barra con banderita-cupcake. A los 5 años puede
+   leer números hasta 20, pero no comparar 1.850 con 2.100.
+3. **¿La vela del tiempo par se siente como amenaza?** Si Nicole se apura y se pone ansiosa, se apaga
+   para Brote (`tiempo_par_s: null`) y queda solo la racha.
+4. **El vistazo de 3 s con 8 cartas** puede ser mucho para la memoria de trabajo de Nicole (~3
+   elementos). Mostrar parejas completas ayuda, pero validar si recuerda alguna o se satura.
+5. **Comodín**: confirmar que se entiende que "va con todo" sin explicación larga. La presentación (§10.3)
+   tiene que mostrarlo funcionando una vez.
+6. **Carta del Coleccionauta**: confirmar que a Sofía (que se frustra rápido) le da risa y no rabia. Si
+   le da rabia, se cambia el "cambio de lugar" por "las mira y las devuelve donde estaban" (solo gag).
+7. **Camino de colores**: la regla "comparte color **o** figura" es abstracta. Validar que Coco la
+   explica con una demostración de 3 cartas al inicio y que Sofía la entiende al primer intento.
+8. **Tablero impar con adorno**: confirmar que nadie intenta tocar la gomita creyendo que es una carta.
+9. **Celos**: Nicole y Sofía no deben ver en pantalla puntajes o colecciones de la otra.
+
+### 10.7 Qué debe validar cada rol
+
+- **`dev-godot`**:
+  - los campos `puntaje`, `vistazo`, `especiales`, `regla: "camino"` e `id_coleccion`;
+  - las señales nuevas;
+  - `records` y `coleccion` en `Progreso` (campos opcionales, con versión si hace falta, HE-07);
+  - la pantalla de colección.
+  - Un nivel sin estos campos se juega **exactamente igual que hoy**.
+- **`disenador-niveles`**:
+  - el calendario de especiales y los valores de `tiempo_par_s`;
+  - **la recalibración de `limite_intentos` y `umbrales_estrellitas` de Sofía** con vistazo y
+    especiales;
+  - el nivel del Camino de colores;
+  - el catálogo de colección.
+- **`experto-ux-parvulo`**: los riesgos de §10.6.
+- **`tester-qa`**:
+  - ampliar `qa_test_parejas_zonas.gd`: racha y su corte, "a la primera", vela, récord, cada
+    especial (incluido el comodín con la carta arriba y el tablero impar), el camino (incluido el
+    "sin salida") y el registro de colección una sola vez por pareja;
+  - respaldar `progreso.json` antes.
+- **`guionista`**: palabras cortas de presentación ("¡Lupa!", "¡Comodín!"), la línea del Coleccionauta,
+  "¡récord!", la explicación del camino y los nombres de la colección (hay que estimar el costo del TTS
+  y pedir el OK del PO antes de generarlo).
+
+### 10.8 Preguntas para el PO
+
+1. **Nicole y las estrellitas**: ¿Nicole sigue sin estrellitas, con el récord como reto (propuesta), o
+   se le dan estrellitas por puntaje? Esto toca la equidad con Sofía, cuya moneda propia son las
+   estrellitas.
+2. **Camino de colores**: ¿reto dorado de Parejas en la zona 4 de Sofía (propuesta), zona secreta o
+   estación propia?
+3. **Colección**: ¿en la casita de Coco del mapa del planeta (propuesta) o en la selección, junto al
+   álbum?
+4. **¿Las mejoras llegan a las estaciones ya jugadas?** Al rejugar, sí traen racha, vistazo y
+   especiales. ¿Y el récord parte en cero para todos (propuesta)?
