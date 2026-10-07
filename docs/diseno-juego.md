@@ -316,7 +316,7 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 (**S** = Semilla/Maxi, **B** = Brote/Nicole, **E** = Estrella/Sofía).
 
 #### Planeta Arcoíris
-1. **Lluvia de colores** — caen gotas de colores, hay que tocarlas/arrastrarlas al charco del mismo color. S: tocar cualquier gota hace magia de color. B: emparejar color correcto. E: mezclas (azul+amarillo=verde).
+1. **Lluvia de colores** — caen gotas de colores, hay que tocarlas/arrastrarlas al charco del mismo color. S: tocar cualquier gota hace magia de color. B: emparejar color correcto. E: mezclas (azul+amarillo=verde). *(03-Oct-2026: en rediseño para B y E sobre una mecánica probada no rítmica — ver §5 "Mecánicas probadas y reto real".)* *(06-Oct-2026, decisión del PO: se reemplaza por **«Río de pintura»**, tipo Zuma: Coco dispara gotas con la lengua a un río que avanza hacia un remolino gris, con mezclas para E, poderes, súper y récords. Es el primer juego del planeta. S también lo juega: el mismo río que B, solo que más lento. Roadmap y diseño en `docs/roadmap-rio-de-pintura.md`.)*
 2. **Formas traviesas** — encajar formas en siluetas (tipo tablero de encaje). S: 3 formas grandes con imán generoso. B: 6-8 formas. E: figuras compuestas (una casa hecha de triángulo+cuadrado).
 3. **Pinta con Coco** — lienzo libre para pintar con dedos/mouse; Coco imita los colores usados. Igual para todos (juego de expresión, sin objetivo). Se puede guardar el dibujo. *(14-Sep-2026: desde la zona 2 del mapa del planeta suma "encargos creativos" de Coco —colorear por zonas, espejo, mezcla en paleta, decorar el ala— siempre sin fallo en ningún perfil.)*
 4. **Parejas de Coco** *(cuarto minijuego, decisión del PO 14-Sep-2026; motor `emparejar`)* — encontrar parejas de figuras y colores. S: pares siempre a la vista, imposible perder. B: memoria con cartas tapadas, tiempos generosos y ayuda de Coco. E: memoria real con límite de intentos, estrellitas, correspondencias (mezcla ↔ receta, figura ↔ sombra) y el arcoíris secreto.
@@ -394,6 +394,26 @@ familia). Todo el detalle está en `docs/fichas/album-recuerdos.md`.
 - **Perder nunca frustra** (ver §1 Tono): la derrota es un gag que da risa, reintento inmediato
   con botón gigante y cero progreso perdido.
 - En la zona de padres se podrá **ajustar el perfil de cada niño** manualmente (los niños crecen: en un año Maxi puede pasar a Brote).
+
+### Mecánicas probadas y reto real *(decisión del PO, 03-Oct-2026 — base del desarrollo)*
+
+El playtest del 03-Oct-2026 mostró que la Lluvia de colores (Nicole) y el Taller de pinturas
+(Sofía) eran "demasiado fáciles, repetitivos y lentos desde el primer intento": se les había
+puesto "dificultad de bebé" a los tres. Desde ahora:
+
+- **Todo minijuego nuevo o rediseñado parte de una mecánica probada de un juego popular**
+  (Candy Crush, Tetris, Bubble Shooter, Fruit Ninja, Memorice, Simon, Guitar Hero…), adaptada a
+  los elementos del juego. Su ficha nombra el juego de referencia y **toma la escala por edad de
+  las dificultades que ese juego ya trae**, en vez de inventar y afinar desde cero.
+- **Cada mecánica de referencia se usa en un solo lugar del juego**, donde tenga más sentido
+  temático. El ritmo tipo Guitar Hero/Taiko es de **Sigue el ritmo** (Planeta Melodía); no se
+  repite en otro planeta.
+- **Reto real para Nicole y Sofía**: velocidad de verdad, puntaje, récord personal que batir y
+  algo que dominar. Lo que no se acepta es castigar, humillar o trabar; el desafío sí.
+  **La suavidad máxima ("más grande, más lento") es solo para Maxi.**
+- **Ritmo de juego rápido**: se juega en segundos, sin voces ni pausas entre cada acción; la voz
+  explica al inicio y en pistas, no interrumpe la acción.
+- La métrica de §8 manda: si no piden jugarlo otra vez, el minijuego se rediseña.
 
 ---
 

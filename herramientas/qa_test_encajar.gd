@@ -14,7 +14,7 @@ extends SceneTree
 ## de dificultad, medallas, mini-fiesta entre rondas, avance guardado y RETOMADO a mitad de la serie, y
 ## `completado` solo al final; y (2) CADA FIGURA DEL POOL por separado (nivel temporal de una ronda) con
 ## todas las verificaciones de arriba. Las banderas piden cada franja en su color (`exigir_color`).
-## Respalda y restaura `user://progreso.json`.
+## Respalda y restaura `user://progreso_pruebas.json` (el guardado de pruebas; el real no se toca).
 ##
 ## Uso: godot --headless --path . --script herramientas/qa_test_encajar.gd [-- <filtro> [<filtro figura>]]
 
@@ -30,7 +30,7 @@ const LADO_MINIMO := {"semilla": 96.0, "brote": 52.0, "estrella": 22.0}
 
 const PLANETA_QA := "qa_encajar"
 const CARPETA_TEMPORAL := "user://qa_encajar"
-const GUARDADO := "user://progreso.json"
+const GUARDADO := "user://progreso_pruebas.json"
 const RONDAS_ESPERADAS := {"semilla": 4, "brote": 3, "estrella": 2}
 
 var _fallos := 0

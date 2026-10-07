@@ -19,6 +19,9 @@ signal progreso_actualizado(id_perfil: String)
 signal recuerdos_actualizados
 
 const RUTA_GUARDADO := "user://progreso.json"
+## Guardado aparte para los arneses y capturas de `herramientas/` (decision del PO, 03-Oct-2026):
+## asi una prueba nunca pisa el progreso real de los ninos, aunque el juego este abierto.
+const RUTA_GUARDADO_PRUEBAS := "user://progreso_pruebas.json"
 
 ## Version actual del formato de guardado. Subir este numero + agregar una funcion
 ## `_migrar_v<N>_a_v<N+1>(datos: Dictionary) -> Dictionary` es todo lo que hace falta
@@ -46,22 +49,34 @@ var _datos: Dictionary = {}
 ## recordarlo entre sesiones.
 var perfil_seleccionado: String = ""
 
+## Archivo que se lee y escribe: el real en el juego, el de pruebas al correr con `--script`.
+var ruta_guardado: String = RUTA_GUARDADO
+
 
 func _ready() -> void:
+	if _corre_desde_herramienta():
+		ruta_guardado = RUTA_GUARDADO_PRUEBAS
 	cargar()
+
+
+## Con `godot --script herramientas/...gd` el MainLoop es un SceneTree con script propio;
+## el juego normal nunca le pone script. Asi se reconoce un arnes sin que tenga que avisar.
+func _corre_desde_herramienta() -> bool:
+	var bucle := Engine.get_main_loop()
+	return bucle != null and bucle.get_script() != null
 
 
 ## Carga `user://progreso.json`. Si no existe (primer arranque) o esta corrupto,
 ## crea los 3 perfiles por defecto y guarda de inmediato para dejar el archivo listo.
 func cargar() -> void:
-	if not FileAccess.file_exists(RUTA_GUARDADO):
+	if not FileAccess.file_exists(ruta_guardado):
 		_datos = _crear_datos_por_defecto()
 		guardar()
 		return
 
-	var archivo := FileAccess.open(RUTA_GUARDADO, FileAccess.READ)
+	var archivo := FileAccess.open(ruta_guardado, FileAccess.READ)
 	if archivo == null:
-		push_warning("Progreso.cargar: no se pudo abrir %s, uso datos por defecto" % RUTA_GUARDADO)
+		push_warning("Progreso.cargar: no se pudo abrir %s, uso datos por defecto" % ruta_guardado)
 		_datos = _crear_datos_por_defecto()
 		guardar()
 		return
@@ -71,7 +86,7 @@ func cargar() -> void:
 
 	var resultado: Variant = JSON.parse_string(texto)
 	if typeof(resultado) != TYPE_DICTIONARY:
-		push_warning("Progreso.cargar: JSON invalido en %s, uso datos por defecto" % RUTA_GUARDADO)
+		push_warning("Progreso.cargar: JSON invalido en %s, uso datos por defecto" % ruta_guardado)
 		_datos = _crear_datos_por_defecto()
 		guardar()
 		return
@@ -98,9 +113,9 @@ func cargar() -> void:
 ## preguntar") — no hace falta invocarlo a mano salvo en tests.
 func guardar() -> void:
 	_datos["version"] = VERSION_ACTUAL
-	var archivo := FileAccess.open(RUTA_GUARDADO, FileAccess.WRITE)
+	var archivo := FileAccess.open(ruta_guardado, FileAccess.WRITE)
 	if archivo == null:
-		push_error("Progreso.guardar: no se pudo escribir %s" % RUTA_GUARDADO)
+		push_error("Progreso.guardar: no se pudo escribir %s" % ruta_guardado)
 		return
 	archivo.store_string(JSON.stringify(_datos, "\t"))
 	archivo.close()
@@ -320,6 +335,30 @@ func borrar_estado_parcial(id_perfil: String, planeta_id: String, id_nivel: Stri
 	if parciales.has(id_nivel):
 		parciales.erase(id_nivel)
 		guardar()
+
+
+## Récord (mejor puntaje) de un nivel con puntaje, p. ej. el Río de pintura (docs/roadmap-rio-de-pintura.md
+## §9). Cuenta cualquier intento, ganado o no: el récord es del hermano, nunca se compara con otro. Es un
+## campo opcional del planeta ("records"): guardados viejos no lo traen y no hace falta migrar.
+func obtener_record_nivel(id_perfil: String, planeta_id: String, id_nivel: String) -> int:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		return 0
+	return int(_datos_planeta(id_perfil, planeta_id).get("records", {}).get(id_nivel, 0))
+
+
+## Guarda `puntaje` si supera el récord. Devuelve true si es récord nuevo.
+func registrar_puntaje_nivel(id_perfil: String, planeta_id: String, id_nivel: String, puntaje: int) -> bool:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		push_warning("Progreso.registrar_puntaje_nivel: id_perfil desconocido '%s'" % id_perfil)
+		return false
+	if puntaje <= obtener_record_nivel(id_perfil, planeta_id, id_nivel):
+		return false
+	var datos_planeta := _datos_planeta(id_perfil, planeta_id)
+	if not datos_planeta.has("records"):
+		datos_planeta["records"] = {}
+	datos_planeta["records"][id_nivel] = puntaje
+	guardar()
+	return true
 
 
 ## Mejor puntaje de estrellitas logrado en un nivel (0 si nunca se completo o no puntua). Lo usa el

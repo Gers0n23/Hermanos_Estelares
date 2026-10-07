@@ -86,6 +86,19 @@ variantes reemplazan a las de §1.2 en ese momento: enlazan las dos sorpresas si
 | recuerdos_entrega_zona_01 | Cometa | «¡Y eso no es todo! El viento trajo algo más... ¡una foto de papá!» | sorpresa en dos tiempos, pausa antes de "¡una foto!" |
 | recuerdos_entrega_zona_02 | Cometa | «¡Esperen, esperen! ¡Viene bajando una estrella-recuerdo!» | emocionado, mirando hacia arriba |
 
+### 1.2c Varias fotos seguidas (2.º y 3.er sobre de una misma entrega)
+
+*(Agregado 03-Oct-2026, HE-44 mecánicas #7; borrador de `dev-godot`, revisado por el guionista.)*
+Cuando llegan varias fotos juntas (máximo 3 por entrega), el velo se queda puesto y, desde el
+2.º sobre, Cometa **no** repite la entrada completa de §1.2/§1.2b: dice una de estas líneas cortas
+(1-2 s) y el siguiente sobre aparece enseguida. Es una celebración que va creciendo: ninguna dice
+"falta" ni "apúrate".
+
+| id | Personaje | Línea | Intención |
+|---|---|---|---|
+| recuerdos_otra_01 | Cometa | «¡Y otra más!» | sorpresa feliz que sube; "más" estirado y para arriba |
+| recuerdos_otra_02 | Cometa | «¡Otra fotito! ¡Llueven fotos!» | con risa, travieso, como si le cayeran encima; "llueven" saltarín |
+
 ### 1.3 Relleno cuando la foto todavía no tiene audio de la familia
 
 La ficha (§8) usa "una línea de Cometa genérica en vez del audio" si falta el `.ogg` de la foto.

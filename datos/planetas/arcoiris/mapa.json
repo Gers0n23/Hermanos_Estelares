@@ -21,6 +21,11 @@
     "nota": "HE-40 mecanicas #3 (PROVISIONAL): silueta del ala que se pinta un tercio por zona completada; la pieza llega al completar la zona 3."
   },
   "juegos": {
+    "rio": {
+      "nombre": "Río de pintura",
+      "icono": "rio",
+      "voz": ""
+    },
     "lluvia": {
       "nombre": "Lluvia de colores",
       "icono": "lluvia",
@@ -84,18 +89,13 @@
       "voz_regalo": "voces/arcoiris/mapa/zona_1_regalo.wav",
       "estaciones": [
         {
-          "juego": "lluvia",
-          "escena": "res://escenas/minijuegos/clasificar/motor_clasificar.tscn",
-          "escenas": {
-            "sofia": "res://escenas/minijuegos/mezclar/motor_mezclar.tscn"
-          },
-          "iconos": {
-            "sofia": "taller"
-          },
+          "juego": "rio",
+          "nota": "PO 06-Oct-2026: el Río de pintura (tipo Zuma) reemplaza a la Lluvia/Taller como primer juego, para los tres. Mismos id_nivel que antes (no se pierde avance). Zonas 2-5 siguen con la Lluvia hasta tener sus ríos (roadmap H5).",
+          "escena": "res://escenas/minijuegos/rio/motor_rio.tscn",
           "niveles": {
-            "maxi": "res://datos/niveles/arcoiris/zona1_claro/lluvia_semilla.json",
-            "nicole": "res://datos/niveles/arcoiris/zona1_claro/lluvia_brote.json",
-            "sofia": "res://datos/niveles/arcoiris/zona1_claro/mezcla_estrella.json"
+            "maxi": "res://datos/niveles/arcoiris/zona1_claro/rio_semilla.json",
+            "nicole": "res://datos/niveles/arcoiris/zona1_claro/rio_brote.json",
+            "sofia": "res://datos/niveles/arcoiris/zona1_claro/rio_estrella.json"
           }
         },
         {

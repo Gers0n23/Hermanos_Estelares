@@ -1,0 +1,12 @@
+{
+  "id": "arcoiris_z1_espiral",
+  "nota": "Zona 1 · Claro del Trébol: entrada desde abajo a la izquierda y espiral elíptica hacia el remolino (el río del mockup aprobado por el PO 06-Oct-2026). docs/roadmap-rio-de-pintura.md §4.4.",
+  "tipo": "espiral",
+  "centro": [640, 372],
+  "entrada": [160, 800],
+  "radio_inicio": 300,
+  "radio_fin": 150,
+  "angulo_inicio": 1.0,
+  "angulo_fin": 4.0,
+  "escala": [1.6, 0.95]
+}

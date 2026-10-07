@@ -78,18 +78,18 @@
           "voz": "voces/arcoiris/emparejar/colores/rosado.wav"
         },
         {
-          "id_pareja": "color_naranjo",
+          "id_pareja": "color_naranja",
           "elemento_a": {
             "figura": "mancha",
             "color": "#FF9F4A",
-            "id": "color_naranjo_a"
+            "id": "color_naranja_a"
           },
           "elemento_b": {
             "figura": "gatito",
             "color": "#FF9F4A",
-            "id": "color_naranjo_b"
+            "id": "color_naranja_b"
           },
-          "voz": "voces/arcoiris/emparejar/colores/naranjo.wav"
+          "voz": "voces/arcoiris/emparejar/colores/naranja.wav"
         },
         {
           "id_pareja": "color_rojo",
@@ -192,18 +192,18 @@
           "voz": "voces/arcoiris/emparejar/colores/rosado.wav"
         },
         {
-          "id_pareja": "color_naranjo",
+          "id_pareja": "color_naranja",
           "elemento_a": {
             "figura": "mancha",
             "color": "#FF9F4A",
-            "id": "color_naranjo_a"
+            "id": "color_naranja_a"
           },
           "elemento_b": {
             "figura": "gatito",
             "color": "#FF9F4A",
-            "id": "color_naranjo_b"
+            "id": "color_naranja_b"
           },
-          "voz": "voces/arcoiris/emparejar/colores/naranjo.wav"
+          "voz": "voces/arcoiris/emparejar/colores/naranja.wav"
         },
         {
           "id_pareja": "color_rojo",

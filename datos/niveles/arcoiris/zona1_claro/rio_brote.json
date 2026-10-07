@@ -1,0 +1,16 @@
+{
+  "id_nivel": "arcoiris_z1_lluvia_brote",
+  "nota": "Río de pintura, Nicole (valores del mockup aprobado; el cuarto color es el rosado, su favorito). Reutiliza el id_nivel de la Lluvia de la zona 1 a propósito, para no perder avance. PROVISIONAL hasta la curva de disenador-niveles (roadmap §10).",
+  "perfil": "brote",
+  "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
+  "gotas": 36,
+  "colores": ["rojo", "amarillo", "azul", "rosa"],
+  "radio": 26,
+  "velocidad": 26,
+  "subida": 0.35,
+  "entrada_rapida_hasta": 0.28,
+  "mezclas": false,
+  "guia": "completa",
+  "tiempo_par": 70,
+  "lineas_voz": {}
+}

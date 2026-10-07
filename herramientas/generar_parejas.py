@@ -81,7 +81,7 @@ FIGURAS_NICOLE = [par('corazon_magico', 'corazon', '#F26CA8', especial=True, fij
 COLORES = [  # color <-> cosa de ese color (Nicole, zona 4)
     ('amarillo', '#FFCB3D', el('jirafa'), '¡Amarillo, como la jirafa!'),
     ('rosado', '#F7A8D0', el('pony', '#F7A8D0'), '¡Rosado, como el pony!'),
-    ('naranjo', '#FF9F4A', el('gatito', '#FF9F4A'), '¡Naranjo, como el gatito!'),
+    ('naranja', '#FF9F4A', el('gatito', '#FF9F4A'), '¡Naranja, como el gatito!'),
     ('rojo', '#E8423F', el('corazon', '#E8423F'), '¡Rojo, como el corazón!'),
     ('lila', '#B48CE8', el('flor', '#B48CE8'), '¡Lila, como la flor!'),
     ('azul', '#4A8BE0', el('gota', '#4A8BE0'), '¡Azul, como la gota de agua!'),

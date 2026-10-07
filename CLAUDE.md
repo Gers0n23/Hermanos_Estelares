@@ -38,10 +38,11 @@ El desarrollo se gestiona con un tablero Kanban en [`docs/TABLERO.md`](docs/TABL
 ## Reglas de oro al desarrollar
 
 1. El diseño personalizado con los niños (Fase 0 del tablero) manda: nada se implementa si contradice sus fichas y el GDD actualizado con sus gustos.
-2. Nada que castigue, apure o frustre a un niño de 2-8 años (GDD §6). Ante la duda, más grande, más lento, más celebración.
-3. Un minijuego nunca toca el núcleo; el núcleo nunca conoce minijuegos concretos.
-4. Verifica ejecutando la escena afectada antes de dar por hecha una tarjeta (el DoD lo exige).
-5. Playtest con los niños al cerrar cada fase de contenido — su reacción reordena el backlog.
+2. Nada que castigue, humille o trabe a un niño (GDD §6). La suavidad máxima ("más grande, más lento") es solo para Maxi; Nicole y Sofía necesitan **reto real** —velocidad, puntaje, récords— acorde a su edad, no "dificultad de bebé" (playtest 03-Oct-2026).
+3. Todo minijuego parte de una **mecánica probada de un juego popular**, adaptada a nuestros elementos, y su escala por edad sale de las dificultades de ese juego (GDD §5 "Mecánicas probadas y reto real"). Cada mecánica de referencia vive en un solo lugar (el ritmo tipo Guitar Hero es del Planeta Melodía).
+4. Un minijuego nunca toca el núcleo; el núcleo nunca conoce minijuegos concretos.
+5. Verifica ejecutando la escena afectada antes de dar por hecha una tarjeta (el DoD lo exige).
+6. Playtest con los niños al cerrar cada fase de contenido — su reacción reordena el backlog.
 
 ## Próximos pasos
 

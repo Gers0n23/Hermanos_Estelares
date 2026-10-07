@@ -7,14 +7,14 @@ extends SceneTree
 ## vuelven al mapa del planeta; completar TODAS las estaciones jugables abre la zona siguiente
 ## (decision del PO 27-Sep-2026) y devuelve el color; el mapa se dibuja con el paisaje de dulces; la zona secreta se revela; Cometa lleva a la siguiente
 ## estacion pendiente; F4 abre todo; la flecha vuelve al Mapa Estelar.
-## Respalda y restaura `user://progreso.json` para no pisar el progreso real de los ninos.
+## Respalda y restaura `user://progreso_pruebas.json`, el guardado de pruebas (el real de los ninos no se toca).
 ##
 ## Uso: godot --headless --path . --script herramientas/qa_test_mapa_planeta.gd
 
 const MAPA := "res://escenas/nucleo/mapa_estelar.tscn"
 const ARCOIRIS := "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"
 const VIAJE := "res://escenas/nucleo/viaje_estelar.tscn"
-const GUARDADO := "user://progreso.json"
+const GUARDADO := "user://progreso_pruebas.json"
 
 var _fallos := 0
 var _respaldo = null

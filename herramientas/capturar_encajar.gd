@@ -3,7 +3,7 @@ extends SceneTree
 ## Pantallazos de "Formas traviesas" y del mapa del Planeta Arcoiris en ventana real (no headless),
 ## para revision visual del PO / experto-ux-parvulo. Incluye un ARRASTRE REAL con `push_input`
 ## (presionar, mover, soltar), igual que un dedo o el mouse.
-## Respalda y restaura `user://progreso.json`.
+## Respalda y restaura `user://progreso_pruebas.json` (el guardado de pruebas; el real no se toca).
 ##
 ## Rondas (PO 27-Sep-2026): ademas captura la mini-fiesta entre rondas con sus medallas y, figura por
 ## figura, banderas y monumentos del pool (nivel temporal de una ronda), para revisar que se reconozcan.
@@ -15,7 +15,7 @@ const ARCOIRIS := "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"
 const Geo := preload("res://scripts/motores/encajar/geometria_formas.gd")
 const ZONAS := ["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islotes", "zona5_cima"]
 const HERMANOS := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
-const GUARDADO := "user://progreso.json"
+const GUARDADO := "user://progreso_pruebas.json"
 ## Figuras del pool que se capturan una por una: [zona, perfil, id].
 const FIGURAS := [
 	["zona3_chupetines", "semilla", "bandera_chile"], ["zona1_claro", "semilla", "bandera_japon"],

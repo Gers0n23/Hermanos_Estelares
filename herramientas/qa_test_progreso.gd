@@ -3,8 +3,9 @@ extends SceneTree
 ## Arnes de QA headless para el autoload `Progreso` (HE-07, mismo patron que
 ## `qa_test_titulo.gd`/`qa_test_emparejar.gd`). Corre contra el autoload real (ya
 ## cargado por el motor via `project.godot` al arrancar el SceneTree), y contra
-## `user://progreso.json` real de este proyecto — hace backup del archivo si ya
-## existia y lo restaura al final para no pisar progreso real de otra sesion.
+## guardado de pruebas `user://progreso_pruebas.json` (Progreso lo elige solo al correr con
+## `--script`; el `progreso.json` real de los ninos no se toca) — hace backup del archivo si ya
+## existia y lo restaura al final.
 ##
 ## Cubre: (1) creacion de los 3 perfiles por defecto en el primer arranque, (2)
 ## mutaciones (destellos, nivel completado, pieza de nave, volumen) + guardado
@@ -14,8 +15,8 @@ extends SceneTree
 ##
 ## Uso: godot --headless --path . --script herramientas/qa_test_progreso.gd
 
-const RUTA := "user://progreso.json"
-const RUTA_BACKUP := "user://progreso_backup_qa.json"
+const RUTA := "user://progreso_pruebas.json"
+const RUTA_BACKUP := "user://progreso_pruebas_backup_qa.json"
 
 var _fallas := 0
 
@@ -33,6 +34,7 @@ func _initialize() -> void:
 	# Los autoloads (Progreso, Audio) ya corrieron su _ready() antes de _initialize()
 	# de este SceneTree script (mismo orden documentado para Audio en qa_test_titulo.gd).
 	_progreso = get_root().get_node("Progreso")
+	_assert(_progreso.ruta_guardado == RUTA, "con --script, Progreso usa el guardado de pruebas (%s), nunca el real" % _progreso.ruta_guardado)
 	_hacer_backup_si_existe()
 
 	_probar_defaults_primer_arranque()
@@ -62,9 +64,9 @@ func _hacer_backup_si_existe() -> void:
 		var destino := FileAccess.open(RUTA_BACKUP, FileAccess.WRITE)
 		destino.store_string(texto)
 		destino.close()
-		print("-- Backup de progreso.json existente guardado en progreso_backup_qa.json --")
+		print("-- Backup de progreso_pruebas.json existente guardado en progreso_pruebas_backup_qa.json --")
 	else:
-		print("-- No habia progreso.json previo, no hace falta backup --")
+		print("-- No habia progreso_pruebas.json previo, no hace falta backup --")
 
 
 func _restaurar_backup() -> void:
@@ -76,13 +78,13 @@ func _restaurar_backup() -> void:
 		destino.store_string(texto)
 		destino.close()
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(RUTA_BACKUP))
-		print("-- progreso.json original restaurado, backup eliminado --")
+		print("-- progreso_pruebas.json original restaurado, backup eliminado --")
 	else:
 		# No habia archivo original: se borra el que genero el test para dejar
 		# el user:// limpio como estaba.
 		if FileAccess.file_exists(RUTA):
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(RUTA))
-		print("-- No habia backup (no existia archivo original), progreso.json de prueba eliminado --")
+		print("-- No habia backup (no existia archivo original), progreso_pruebas.json eliminado --")
 
 
 ## --- 1) Sin archivo -> se crean los 3 perfiles por defecto (semilla/brote/estrella). ---
@@ -99,7 +101,7 @@ func _probar_defaults_primer_arranque() -> void:
 	_assert(_progreso.obtener_perfil_dificultad("nicole") == "brote", "Nicole es perfil brote")
 	_assert(_progreso.obtener_perfil_dificultad("sofia") == "estrella", "Sofia es perfil estrella")
 	_assert(_progreso.obtener_destellos_totales("maxi") == 0, "Maxi arranca con 0 destellos")
-	_assert(FileAccess.file_exists(RUTA), "el archivo user://progreso.json quedo creado en disco")
+	_assert(FileAccess.file_exists(RUTA), "el archivo user://progreso_pruebas.json quedo creado en disco")
 
 
 ## --- 2) Mutaciones + guardado automatico, verificado releyendo el archivo. ---

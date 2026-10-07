@@ -1,0 +1,16 @@
+{
+  "id_nivel": "arcoiris_z1_lluvia_semilla",
+  "nota": "Río de pintura, Maxi (PO 06-Oct-2026: el mismo juego que Nicole, solo más lento). Reutiliza el id_nivel de la Lluvia de la zona 1 a propósito, para no perder avance (mismo criterio que el Taller de Sofía). PROVISIONAL hasta la curva de disenador-niveles (roadmap §10).",
+  "perfil": "semilla",
+  "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
+  "gotas": 36,
+  "colores": ["rojo", "amarillo", "azul", "rosa"],
+  "radio": 26,
+  "velocidad": 13,
+  "subida": 0.35,
+  "entrada_rapida_hasta": 0.28,
+  "mezclas": false,
+  "guia": "completa",
+  "tiempo_par": 110,
+  "lineas_voz": {}
+}

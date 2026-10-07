@@ -49,12 +49,15 @@ func _crear_reproductor(bus: String) -> AudioStreamPlayer:
 
 ## Reproduce un efecto corto (toques, aciertos, transiciones de UI). Usa un pool de
 ## reproductores para que varios sfx puedan sonar superpuestos sin cortarse.
-func reproducir_sfx(ruta: String) -> void:
+## `tono` cambia la altura del efecto (1.0 = original); p. ej. el reventón del Río de pintura sube un
+## semitono por combo, como en Zuma.
+func reproducir_sfx(ruta: String, tono: float = 1.0) -> void:
 	if ruta == "" or not ResourceLoader.exists(ruta):
 		push_warning("Audio.reproducir_sfx: no existe el archivo %s" % ruta)
 		return
 	var reproductor := _siguiente_reproductor_sfx_libre()
 	reproductor.stream = load(ruta)
+	reproductor.pitch_scale = tono
 	reproductor.play()
 
 

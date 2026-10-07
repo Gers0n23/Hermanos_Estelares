@@ -1,0 +1,16 @@
+{
+  "id_nivel": "arcoiris_z1_lluvia_estrella",
+  "nota": "Río de pintura, Sofía (valores del mockup aprobado): 6 colores, sin guía y con mezclas (Coco solo escupe primarios; rojo + azul = violeta). Reutiliza el id_nivel de la Lluvia/Taller de la zona 1 a propósito, para no perder avance. PROVISIONAL hasta la curva de disenador-niveles (roadmap §10).",
+  "perfil": "estrella",
+  "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
+  "gotas": 60,
+  "colores": ["rojo", "amarillo", "azul", "verde", "naranja", "violeta"],
+  "radio": 22,
+  "velocidad": 46,
+  "subida": 0.6,
+  "entrada_rapida_hasta": 0.28,
+  "mezclas": true,
+  "guia": "no",
+  "tiempo_par": 80,
+  "lineas_voz": {}
+}

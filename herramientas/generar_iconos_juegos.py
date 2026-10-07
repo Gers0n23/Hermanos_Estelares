@@ -4,7 +4,7 @@ Reemplazan a los iconos planos dibujados con primitivas en mapa_planeta.gd: mism
 juego (contorno azul noche #2B3350, volumen con degradado, brillo, sombra suave y caritas kawaii),
 sin texto (GDD §6 regla 3). Godot importa el SVG directo.
 
-Salida: assets/sprites/ui/iconos_juegos/<icono>.svg (lluvia, taller, formas, parejas, pinta).
+Salida: assets/sprites/ui/iconos_juegos/<icono>.svg (rio, lluvia, taller, formas, parejas, pinta).
 Uso: python herramientas/generar_iconos_juegos.py
 """
 from pathlib import Path
@@ -185,9 +185,32 @@ def pinta() -> str:
     return svg(cuerpo, ["madera", "rojo", "amarillo", "verde", "azul", "violeta", "naranja", "rosado"])
 
 
+def rio() -> str:
+    """Río de pintura (PO 06-Oct-2026): cauce de galleta en espiral con gotas que van al remolino gris."""
+    import math
+    puntos = []
+    for k in range(0, 181):
+        t = math.pi * 0.9 + k / 180 * math.pi * 2.6
+        r = 92 - 58 * k / 180
+        puntos.append((128 + r * 1.12 * math.cos(t), 132 + r * 0.9 * math.sin(t)))
+    d = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in puntos)
+    cauce = (f'<path d="{d}" fill="none" stroke="{TINTA}" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>'
+             f'<path d="{d}" fill="none" stroke="#E9C58F" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>'
+             f'<path d="{d}" fill="none" stroke="#FFF6E8" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>')
+    cx, cy = puntos[-1]
+    remolino = (f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="20" fill="#7C7890" stroke="{TINTA}" stroke-width="6"/>'
+                f'<path d="M{cx - 10:.1f} {cy:.1f} A10 10 0 1 1 {cx + 4:.1f} {cy + 8:.1f}" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>')
+    gotas = ""
+    for indice, color in [(8, "rojo"), (34, "amarillo"), (60, "azul"), (86, "rosado"), (112, "verde")]:
+        x, y = puntos[indice]
+        gotas += gota(x, y, 17, color, con_cara=False)
+    cuerpo = sombra(128, 236, 84) + cauce + remolino + gotas + chispa(222, 46, 11, "#FFE38A") + chispa(34, 214, 9)
+    return svg(cuerpo, ["rojo", "amarillo", "azul", "rosado", "verde", "crema"])
+
+
 def main() -> None:
     SALIDA.mkdir(parents=True, exist_ok=True)
-    for nombre, generador in {"lluvia": lluvia, "taller": taller, "formas": formas, "parejas": parejas, "pinta": pinta}.items():
+    for nombre, generador in {"rio": rio, "lluvia": lluvia, "taller": taller, "formas": formas, "parejas": parejas, "pinta": pinta}.items():
         ruta = SALIDA / f"{nombre}.svg"
         ruta.write_text(generador(), encoding="utf-8")
         print("icono:", ruta.relative_to(RAIZ))

@@ -9,11 +9,11 @@ extends SceneTree
 ##  4. Fallback: sin foto/voz real => placeholder; con archivo copiado (sin importar) => se usa.
 ##  5. Desbloqueo por eventos genericos, idempotencia, reglas personal/familiar, marco dorado.
 ##  6. Pantalla del album, entrega (sobre-estrella), mapa del planeta y burbuja del viaje.
-## Respalda y restaura `user://progreso.json`.
+## Respalda y restaura `user://progreso_pruebas.json` (el guardado de pruebas; el real no se toca).
 ##
 ## Uso: godot --headless --path . --script herramientas/qa_test_recuerdos.gd
 
-const GUARDADO := "user://progreso.json"
+const GUARDADO := "user://progreso_pruebas.json"
 const ALBUM := "res://escenas/nucleo/album_recuerdos.tscn"
 const SELECCION := "res://escenas/nucleo/seleccion_personaje.tscn"
 const ARCOIRIS := "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"
