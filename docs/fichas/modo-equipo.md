@@ -1084,7 +1084,8 @@ define en la tabla de abajo** (UX HE-66, B1.6):
   - **Río**: el Coleccionauta llega a la orilla y **aspira las gotas** que quedan con su mochila-torre,
     que se atora, estornuda y las devuelve al cauce.
   - **Formas**: **aspira las piezas sueltas** de la bandeja, y salen estornudadas de vuelta, girando como
-    trompos.
+    trompos. **Caen en el estado del perfil del turno siguiente** (m2): derechas si le toca a Maxi o a
+    Nicole, y giradas solo si le toca a Sofía.
   - **Parejas**: aspira las cartas (§5.5).
 - **Botón "¡otra vez!" de ≥ 160 × 160 px** (m4). Al reintentar:
   - **todo lo logrado en la ronda se conserva**: gotas reventadas, piezas encajadas y parejas formadas;
@@ -1092,14 +1093,26 @@ define en la tabla de abajo** (UX HE-66, B1.6):
   
   Siempre se termina ganando.
 - **Las rondas ganadas nunca se pierden**: perder la ronda 3 no devuelve el rojo ni el amarillo.
-- **Cometa cierra el gag con un logro común**, como "¡igual le sacamos el rojo!" (B3.3).
+- **Cometa cierra el gag con un logro común sobre lo que se conservó en esa ronda** (m1), como "¡igual
+  reventamos un montón de gotas!", "¡ya pusimos 5 piezas!" o "¡igual juntamos 6 parejas!". No sirve
+  "¡igual le sacamos el rojo!", porque en la ronda 1 todavía no hay ningún color.
 
 ### 14.6 Si abandonan la batalla a la mitad [Propuesta + GDD §6.8]
 
 - **Siempre se puede salir** con el botón casa (≥ 96 px), en cualquier momento.
 - **Lo que se guarda**: las **rondas ganadas** (`Progreso`, §14.9) y si el epílogo se completó.
-- **Lo que no se guarda**: el avance dentro de una ronda sin terminar. Las rondas duran 4 a 6 min, así
-  que perderlo no duele.
+- **También se guarda el avance de la ronda en curso (UX HE-66, M4)**: la salida más probable es
+  accidental (Maxi toca la casa o se acaba el tiempo de tablet).
+  - Se guarda en `equipo.batallas.<id>.parcial`:
+    - Río: las gotas que quedan y su orden;
+    - Formas: los huecos llenos;
+    - Parejas: los pares formados;
+    - epílogo: las partes pintadas.
+  - Se guarda **al terminar cada turno**, no en cada toque.
+  - Al volver, el Coleccionauta parte en la galleta 0, que es lo generoso.
+  - El motor lo recibe a través de `batalla.gd` con `restaurar_parcial_equipo(estado)` y lo entrega con
+    `obtener_parcial_equipo()` (§14.15). El núcleo no sabe qué juego es.
+  - **No se agrega confirmación para salir**, porque sería un menú (GDD §6.4).
 - **Al volver**:
   - el hito de la batalla en el mapa muestra la mochila-torre con los pisos que le quedan (sin números);
   - al tocarlo, Coco dice "¡seguimos donde quedamos!" y se va **directo a la ronda pendiente**, sin
@@ -1131,6 +1144,17 @@ define en la tabla de abajo** (UX HE-66, B1.6):
   Después de la batalla, el planeta sigue jugable entero.
 - **[PO]**: se abre con **el primer hermano que recibe el ala**.
 
+**La batalla no condiciona nada (UX HE-66, M7)**. Es una regla de capítulos: la batalla pide a los tres
+juntos, que es una condición social, y entonces no puede trabar a nadie.
+
+1. **El viaje al planeta 2 depende solo de la pieza** (la zona 3 de cada hermano), nunca de la batalla.
+2. **El gancho canónico del planeta 2 sigue en la video-llamada de la escena del ala**, que cada hermano
+   ve por su cuenta. La video-llamada del cierre de la batalla es un **extra familiar** (papá ve la foto
+   de los tres), no el único cierre del capítulo.
+3. Hasta que se gane, **el hito de la batalla es una invitación, no un pendiente**: no tiene signos de
+   alerta, no parpadea y su voz suena como máximo una vez por visita al mapa.
+4. **El ala no se gana en la batalla** (nota para HE-17).
+
 **El hito en el mapa**:
 
 - En el **Claro del Trébol** (zona 1, abierta para todos), junto a la nave estacionada de los
@@ -1150,6 +1174,13 @@ define en la tabla de abajo** (UX HE-66, B1.6):
    esperamos! La batalla es de los tres", y se puede volver al mapa sin perder nada.
    - **[PO]**: la batalla se juega **solo con los tres hermanos**. No hay opción de jugarla con dos
      (`minimo_hermanos: 3`, fijo).
+   - **Qué significa "los tres" (m8)**: juegan **los tres retratos**. El juego no puede verificar
+     quién está físicamente, así que `minimo_hermanos` se refiere solo a los retratos. Si Maxi se duerme
+     a la mitad, un hermano mayor juega su turno guiado (§4.3), sin cambiar la decisión del PO.
+   - **Arranque de Maxi solo (m4)**: nada impide que Maxi toque los tres retratos y entre solo. Si en el
+     turno de un hermano mayor nadie abre la puerta después de los 2 recordatorios (m5 de HE-58), Coco
+     dice "¡esperemos a Nicole!", y **la casa se agranda un 10 % y respira**. Salir no cuesta nada
+     (M4).
 
 ### 14.8 El premio [PO: "¡Juntos!"; Propuesta: lo demás]
 
