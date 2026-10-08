@@ -223,6 +223,16 @@
 
 ## REGISTRO DE AVANCES
 
+- **[07-Oct-2026]** HE-66 / HE-67 / HE-68 / HE-69 / HE-60 — **Se cierra el diseño de la batalla final de Arcoíris (HE-66 ✅). El código de HE-60 está listo, pero la tarjeta sigue bloqueada por las voces y la prueba en tablet.**
+  - **Batalla final de Arcoíris**:
+    - **HE-66 pasa a ✅ Hecho.** `modo-equipo.md` v6.1 está conciliada con el guion: resbalón, guirnalda de lucecitas `meta_turno`, nuevas claves y riesgos 13-15. La validación UX trae N8-N13. Decisiones del PO: el besito de Coco no rompe el turno perfecto; la ronda 1 arranca sola; después de un turno perfecto el Coleccionauta se resbala y no avanza.
+    - **HE-67 pasa a 🔄.** El guion `voces-batalla-arcoiris.md` está completo: 114 líneas nuevas (78 TTS, 33 que graba papá y 3 opcionales de los niños). El guion de parejas en equipo pasa a la v3. Falta `--estimar` y el OK del PO sobre el costo.
+    - **HE-68 pasa a 🔄.** El storyboard `docs/cinematicas/batalla_arcoiris.md` está en disco; falta la validación UX.
+    - **Calibración v4**: el Río tiene `resbalon_tras_racha` y se gana al primer intento el 87,2 % de las veces. Formas da 100 %, Parejas 91 % y la batalla sin estornudos ≈79 %. `mapa.json` ya resuelve `batalla.voz_hito`.
+    - **HE-69** sigue ⬜. Su condición de entrada es N8-N10, y los valores "PENDIENTE" de `derrota_gag_equipo` se tratan como clave ausente.
+  - **HE-60, Parejas con reto real: sigue 🔄.** UX y QA aprobaron con cambios y Dev corrigió todos los hallazgos de código, entre ellos el guardado al ganar con `asegurar_victoria`. Se re-verificó con `qa_test_parejas_reto` (0 fallos, guardado real intacto) y se recalibró a Sofía. No cierra todavía: falta la prueba en tablet, las 20 voces TTS de reto y 4 pendientes de diseño. Antes del playtest, el PO limpia `especiales_conocidos` de Sofía y se revisan los umbrales de Nicole en la z1 (3400/3800).
+  - **Acuerdo de trabajo nuevo**: los arneses se corren por partes (ver MARCO DE TRABAJO).
+  - WIP de Dev sin cambios: 3/2 por excepción. **Avance: 23/93** (antes 22/93). Lo reportaron el PO y el coordinador; el SM comprobó en disco que existen los documentos.
 - **[06-Oct-2026]** HE-58 / HE-60 / HE-66 / HE-69 / HE-70 / HE-17 — **Cierre de HE-58 y nuevas decisiones del PO sobre la batalla final de Arcoíris.**
   - **HE-58 pasa a ✅ Hecho.** La re-auditoría UX la aprueba: en la Parte 1 de `docs/validaciones/2026-10-06_ux-HE-66-batalla-arcoiris.md`, `experto-ux-parvulo` verifica B1-B3 y M1-M10 en las fichas. Quedan dos pendientes que no impiden el cierre: el vistazo M6, que el PO ya confirmó, y la línea `te_toca`, ya corregida en el guion v2 ("Toca tu carita", verificado por el SM). El guion v2 tiene 170 líneas, 135 de ellas TTS, y necesita el OK del PO sobre el costo antes de generar audio.
   - **HE-60 pasa a 🔄 En curso** con `dev-godot`, que ya la implementa. Es una **excepción de WIP autorizada por el PO**: el WIP de Dev queda en **3/2** (HE-02, HE-10 y HE-60) y se normaliza cuando el PO cierre HE-10 o HE-02. Además, el PO acepta las cantidades del vistazo de UX M6: Nicole ve 1 o 2 pares según el tablero, y en equipo se ven como máximo 3.
