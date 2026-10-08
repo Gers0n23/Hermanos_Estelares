@@ -75,7 +75,13 @@ func _voces_existen(voces: Dictionary) -> Array:
 	var faltan: Array = []
 	for clave in voces:
 		var valor = voces[clave]
+		if valor is Dictionary:
+			valor = valor.values()
 		for ruta in (valor if valor is Array else [valor]):
+			# HE-60: las voces del reto (racha, record, vela, vistazo) aun no se generan (HE-67); el
+			# motor cae a la voz generica si faltan. Las cuenta como PEND qa_test_parejas_zonas.gd.
+			if str(ruta).contains("/emparejar/reto/"):
+				continue
 			if not ResourceLoader.exists("res://assets/audio/" + str(ruta)):
 				faltan.append(ruta)
 	return faltan
@@ -487,6 +493,10 @@ func _probar_parejas(ruta: String) -> void:
 	motor.carta_intercambiada.connect(func(_a, _b) -> void: resultado["intercambios"] += 1)
 	get_root().add_child(motor)
 	await _esperar(1.0)
+	# HE-60: vistazo al repartir; el tablero no acepta jugadas hasta que termina.
+	var t_vistazo := Time.get_ticks_msec()
+	while motor._en_vistazo and Time.get_ticks_msec() - t_vistazo < 15000:
+		await process_frame
 	var nivel: Dictionary = motor.nivel
 	var cartas: Array = motor._cartas
 	var tam: int = motor._tamano_grupo

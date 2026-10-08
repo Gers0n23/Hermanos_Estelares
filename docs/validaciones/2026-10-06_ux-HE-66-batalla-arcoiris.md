@@ -501,3 +501,290 @@ nada se puede perder.
    - si Maxi siente suyo el reventón del Río (B3);
    - si alguien dice "nos robó lo que ganamos" (M3);
    - que no se vea ningún número en las rondas (M5.5 y M8.5).
+
+---
+
+## Re-auditoría HE-66
+
+- **Auditor**: `experto-ux-parvulo`
+- **Fecha**: 07-Oct-2026
+- **Objeto**: `docs/fichas/modo-equipo.md` v4 (06-Oct-2026), §14 completo (14.1-14.15) y los cambios
+  relacionados en §4.1, §5.3, §11, §12 y §13.
+- **Contra qué**: los hallazgos de la Parte 2 de este documento, GDD §6, `docs/perfil-jugadores.md` y
+  los motores reales (`scripts/motores/rio/logica_rio.gd`, `motor_rio.gd`).
+- **Corrección del conteo**: la auditoría anterior tiene **3 bloqueantes, 9 mayores (M1 a M9) y 9
+  menores (m1 a m9)**. Cualquier referencia a "8 mayores" (en resúmenes o en el tablero) está mal: son
+  nueve.
+
+## Veredicto: APROBADA CON CAMBIOS (0 bloqueantes)
+
+Los 3 bloqueantes y los 9 mayores están incorporados en la ficha, completos y sin desvirtuarlos. El §14
+es ahora una especificación sólida: el Río mide gotas y no fallos, Formas tiene tope por turno, el turno
+de Maxi nunca exige más que su ruta, la batalla dura lo que aguanta Maxi y nada condiciona el capítulo.
+
+Las correcciones introdujeron **dos mayores nuevos**: una contradicción aritmética entre M1.1 (8 piezas)
+y B2.3 (≥ 2 turnos por hermano), y un hueco del Río (el reventón "siempre" de Maxi no está garantizado
+por la lógica real). También introdujeron **un mayor de layout** (Formas queda a 14 px de la casa) y
+cuatro menores. **Ninguno es bloqueante.** Se corrigen en la ficha, o en la calibración de
+`disenador-niveles`, antes de que HE-69 implemente las rondas 1 y 2.
+
+### Verificación punto por punto
+
+| Hallazgo | ¿Resuelto? | Dónde quedó en `modo-equipo.md` |
+|---|---|---|
+| **B1** Río: turno en gotas, sin fallo | **Sí** | §14.3, regla común (l. 982-991), con la frase corregida "validada para Parejas" (B1.6). Tabla, fila Ronda 1 (l. 1010): 3 gotas por turno, visibles en la mano de Coco, disparo neutro con "plop", sin segunda oportunidad, cadena de Sofía = 2. Carga con pareja (l. 1018-1020). Datos `gotas_por_turno`, `sin_fallo`, `carga_con_pareja` (l. 1247-1249). El rival avanza en el pase por la regla común (l. 985-986). QA (l. 1324) |
+| **B2** Formas: tope por turno y ≥ 2 turnos | **Sí** (ver N1) | Tabla, fila Ronda 2 (l. 1011): fallo = hueco equivocado; vacío = no es fallo (`"nada"`); tope 2 para Nicole y 3 para Sofía. "Turno perfecto" en celebración (l. 1015-1017). Regla ≥ 2 turnos (l. 1021-1025). Datos `aciertos_max_turno` (l. 1254). Gestor (l. 1511). QA (l. 1323) |
+| **B3** Maxi: nunca más que su ruta | **Sí** (ver N2) | Regla general (l. 993-994). Formas: `toque_lleva_a_casa`, `iman_tolerancia_px: 5000`, `sin_error`, pieza ≥ 110 px y las otras inertes (l. 1011, 1257-1258). Río: intercambio apagado, toque sobre Coco dispara, halo previo, lengua al dedo, "¡justo ahí!" a < 150 px (l. 1010, 1250). QA (l. 1325) |
+| **M1** Duración ≤ 15 min | **Sí** | §14.3 (l. 1044-1059): metas, 24 gotas, 8 piezas, 8 pares 4×4, río que se detiene en el pase y tope del 70 %, pausas en el mapa de batalla que no avanzan solas, y el criterio para el playtest. Cinemáticas con topes (§14.10, l. 1331-1336 y 1350-1359). Maxi llamado al epílogo (l. 1032-1033) |
+| **M2** Turno de Maxi que se resuelve solo a los 20 s | **Sí** | §14.3 (l. 995-1001), con la jugada automática de cada ronda. `semilla_auto_s: 20` (l. 1259, 1510). Fila Ronda 3 (l. 1012) |
+| **M3** El robo solo en la escena | **Sí** | §14.2 (l. 952-965): el mapa nunca pierde color, colores contentos, "¡están guardados ahí!", sorbete, sin bicho y el respaldo para el playtest. §14.10 punto 2 (l. 1341-1342). §14.14 (l. 1433). QA (l. 1321) |
+| **M4** Parcial de la ronda en curso | **Sí** (ver N6) | §14.6 (l. 1112-1123), incluido el epílogo. Guardado `parcial` (l. 1284-1287) y API `guardar/obtener/borrar_parcial_batalla` (l. 1299-1301). Motores con `obtener/restaurar_parcial_equipo` (l. 1497-1499). Sin confirmación al salir. QA (l. 1318) |
+| **M5** Layout y un solo indicador | **Sí** (ver N3) | §14.15, layout (l. 1437-1451): zona común `Rect2(0, 110, 1280, 490)`, `batalla_espiral.json` con entrada por la izquierda, zonas de Formas. Mochila-torre en la espalda como único indicador (§14.4, l. 1064-1067). Sin HUD del motor (l. 1452-1455). Avance en la cinta de la mesa |
+| **M6** Cometa repite | **Sí** | §4.1 (l. 156), unificado también fuera de la batalla. §5.3 (l. 310). §14.15 (l. 1441, 1456-1458). No queda ninguna mención a "tocar a Coco para repetir" |
+| **M7** La batalla no condiciona nada | **Sí** | §14.7 (l. 1155-1164): viaje solo por la pieza, gancho canónico en la escena del ala, hito-invitación sin alerta y "el ala no se gana en la batalla". §14.10 punto 6 (l. 1357-1358). QA (l. 1322) |
+| **M8** Trabajo de motor | **Sí** (ver N5) | §14.15, "Trabajo de motor que falta" (l. 1460-1512): `aplicar_perfil_turno`, perfil del turno en `obtener_perfil_dificultad()`, turno cerrado en estado estable, pausa real, todo lo individual apagado, parcial, jugada automática y QA sin dígitos (también en l. 1319) |
+| **M9** Epílogo sin puerta, 3 partes y "¡todos juntos!" | **Sí** | §14.3 (l. 1026-1033). Datos `confirmar_turno: false` y `rival: null` (l. 1244). `lienzo_libre` con muestras ≥ 96 px (l. 1507-1508). Modo sin puerta del gestor (l. 1512) |
+| **m1-m9** | **Sí**, salvo un residuo (N4) | Tabla "Para Dev: menores de HE-66" (l. 1527-1539). m5 también en §4.1 (l. 158) y §13 (l. 914) |
+
+### Hallazgos nuevos introducidos por las correcciones
+
+#### Mayores
+
+**N1. Formas con 8 piezas no alcanza para "cada hermano ≥ 2 turnos" (choque entre M1.1 y B2.3).**
+
+- **Dónde**: §14.3, l. 1023 ("un ciclo encaja hasta 7 piezas") y l. 1049 ("Formas: 8 piezas").
+- **Problema**: con el tope {1, 2, 3} y el orden M → N → M → S, una partida sin fallos se juega así: M1,
+  N2, M1, S3 (7 piezas) y M1 (8). **Nicole y Sofía juegan un solo turno cada una**, y es exactamente el
+  "¿y yo cuándo?" que B2 quería evitar. Nicole casi no falla en Formas, así que este es el caso típico, no
+  el extremo. La ficha delega la solución ("si no alcanza, se suben las piezas o se baja el tope"), pero
+  el número que entrega a `disenador-niveles` ya la incumple. El error de origen es mío: propuse las dos
+  cifras en la auditoría anterior sin cruzarlas.
+- **Corrección**: el mínimo para que cada uno tenga 2 turnos sin fallos es **2 ciclos menos el último
+  turno de Sofía, más al menos 1 pieza para ella**. Con el tope {1, 2, 3}, son **12 piezas**
+  (7 + 1 + 2 + 1 + 1). Mi recomendación es **Formas = 12 piezas manteniendo el tope de Sofía en 3**: es
+  su racha de retroceso y su reto real (Sofía necesita reto, no "dificultad de bebé"). Encajar es rápido,
+  así que se mantiene la meta de ≤ 5 min por ronda. Si el playtest dice que se alarga, la alternativa es
+  {1, 2, 2} con 11 piezas, sabiendo que en Formas Sofía pierde el retroceso. `disenador-niveles` hace la
+  misma cuenta para el Río y para Parejas (8 pares) con el simulador, y la escribe en la ficha de nivel.
+
+**N2. En el Río, el "siempre revienta" de Maxi no está garantizado: la lógica real necesita 3 gotas.**
+
+- **Dónde**: §14.3, fila Ronda 1, turno de Maxi (l. 1010) y carga con pareja (l. 1018-1020).
+- **Problema**: `logica_rio.gd`, `_reventar_en()`, solo revienta tramos de **3 o más** (`if n < 3:
+  return 0`). Para que la única gota de Maxi reviente, en el cauce tiene que existir un tramo de **2**
+  del mismo color. La regla `carga_con_pareja` solo garantiza **1** gota en el cauce. Al final de la
+  ronda, cuando quedan gotas sueltas, puede no haber ningún tramo de 2, y entonces el turno de Maxi no
+  aporta. Eso rompe R5 [PO] ("su turno siempre aporta") y el B3 que esta misma ficha declara resuelto. Si
+  no se escribe, Dev lo va a resolver de cualquier forma.
+- **Corrección** (escribirla en §14.3 y en `aplicar_perfil_turno` del Río): en el turno de Maxi, Coco
+  carga el color del **tramo más largo** del cauce y el halo va sobre ese tramo. **Si no hay ningún tramo
+  de 2 o más, la bala de Maxi revienta con su tramo aunque mida 1** (umbral Semilla = 2, solo para su
+  bala y solo en la batalla). Así revientan 2 gotas: es su reventón, chico pero real. QA agrega el caso
+  "cauce sin tramos de 2, turno de Maxi → revienta".
+
+**N3. Formas queda a 14 px de la casa y a 18 px de la barra: rompe la regla de 24 px que la misma ficha
+fijó.**
+
+- **Dónde**: §14.15, l. 1451 y §14.9, l. 1255-1256 (`zona_figuras: [150, 118, 700, 474]` y
+  `zona_bandeja: [880, 118, 360, 474]`), contra l. 1442 ("cualquier elemento tocable del motor queda a
+  24 px o más de Cometa y de la casa").
+- **Problema**: las cifras son mías (M5.3) y no respetan el m5 que pedí en la misma auditoría. La
+  bandeja (x 880-1240) queda debajo de la casa (x 1172-1272, que termina en y 104), con su borde superior
+  en y 118: **14 px**. Justo ahí Maxi toca la pieza con halo en su turno, y tocar la casa por accidente es
+  la salida más probable (M4). Abajo, las dos zonas terminan en y 592 y las ventanitas de porra
+  (tocables, ≥ 96 px) empiezan en y 610: **18 px**. Con el parcial de M4 no se pierde nada, por eso no es
+  bloqueante, pero sí es una fricción evitable cada vez.
+- **Corrección**: `zona_figuras: [150, 128, 700, 456]` y `zona_bandeja: [880, 128, 360, 456]` (y 128-584:
+  24 px arriba y 26 px abajo). Con eso, la regla de "pieza de Maxi con lado corto ≥ 110 px" sigue
+  cabiendo. Además, que QA mida la separación en el Río (el disparo cubre toda la zona: ningún punto del
+  cauce ni de la reserva de Coco a menos de 24 px de la casa).
+
+#### Menores
+
+- **N4. Residuo de m1 en el encargo al guionista.** El §14.11 (l. 1380) todavía pide "¡igual le sacamos
+  el rojo!", la línea que m1 descartó y que el §14.5 (l. 1104-1106) prohíbe. Si el `guionista` trabaja
+  desde el §14.11, se graba la línea mala. **Corrección**: reemplazarla por "un logro común sobre lo
+  conservado en la ronda (gotas, piezas o parejas), ver §14.5", igual que en §14.15 (l. 1524).
+- **N5. Las "firmas exactas" del `GestorTurnos` (§11.4) no se actualizaron.** El §11.4 (l. 773-802) dice
+  que el motor "solo" llama `notificar_acierto()` y `terminar_turno()`. Pero el §14.15 suma
+  `semilla_auto_s`, `aciertos_max_turno`, el modo sin puerta, la jugada automática del motor,
+  `aplicar_perfil_turno` y el parcial. Dev implementa desde las firmas exactas. **Corrección**: agregar al
+  §11.4 la señal o callback de la jugada automática (por ejemplo, `signal jugada_automatica_pedida()`),
+  quién corta el turno al llegar al tope (el gestor, después de que el motor confirme el estado estable)
+  y el parámetro del modo sin puerta. También hay que ajustar el texto del "Contrato con el motor".
+- **N6. No se dice con quién se retoma una ronda guardada.** El §14.6 restaura el parcial, pero no dice
+  qué turno abre. **Corrección**: al retomar, **empieza Maxi** (coherente con el §4.2, "la partida siempre
+  empieza con Maxi"): arranca con un acierto y una celebración, y nadie discute "me tocaba a mí". Además,
+  el §13 m3 (l. 906) dice "en equipo no hay guardado parcial". Hay que precisar **"fuera de la batalla"**,
+  para que Dev no active el parcial en el modo equipo suelto.
+- **N7. Dos voces por intro de ronda contra "una frase de 4 s o menos".** El §14.11 pide "una
+  presentación por ronda" del Coleccionauta **y** "la intro corta de cada ronda" de Coco, y el §14.10 fija
+  intros de una frase (≤ 4 s). Son dos frases. **Corrección**: la presentación del Coleccionauta es un gag
+  sin palabras (o de una sola palabra, ≤ 1,5 s) dentro de los 4 s, o la frase de Coco la absorbe. Dentro
+  de la ronda, tocar a Cometa repite la regla.
+
+### Puede HE-66 pasar a Hecho
+
+**Sí, desde UX, porque no queda ningún bloqueante.** Las correcciones de la auditoría anterior están
+todas en la ficha. Para que HE-66 no se cierre con deuda escondida, propongo estas condiciones:
+
+1. **N1, N2 y N3 son condición de entrada de HE-69 para las rondas 1 y 2.** `disenador-mecanicas` los
+   corrige en el §14 (N2 y N3, son cifras y una regla). `disenador-niveles` cierra N1 al calibrar. Se
+   pueden incorporar sin otra auditoría completa: alcanza con que UX verifique esos tres puntos.
+2. N4 va al `guionista` (HE-67) antes de grabar. N5 y N6 van a `disenador-mecanicas`. N7 va a HE-67 y
+   HE-68.
+3. Sigue igual el foco de la auditoría del build (Parte 2, "Para cerrar HE-66", punto 5). Suma esto: en
+   qué turno se aburre Sofía en Formas (N1) y si el reventón de Maxi al final del Río ocurre siempre (N2).
+
+---
+
+## Verificación N2/N3/N6 (07-Oct-2026)
+
+- **Auditor**: `experto-ux-parvulo`
+- **Fecha**: 07-Oct-2026
+- **Objeto**:
+  - `docs/fichas/modo-equipo.md` v6 (decisiones del PO del 07-Oct: tope de pares 1/2/3, retroceso por
+    "turno perfecto" y tableros 4×6 con Maxi). `disenador-mecanicas` puede estar cerrando el §9 y el §10
+    en paralelo: esta verificación vale para el texto que leí hoy.
+  - `docs/guiones/voces-batalla-arcoiris.md` y `docs/cinematicas/batalla_arcoiris.md`.
+  - Datos `datos/niveles/arcoiris/batalla/{rio,formas,parejas}_equipo.json`.
+- **Nota**: los números de línea de la re-auditoría ya no coinciden con la v6. Abajo cito por sección.
+
+### Estado de cada hallazgo
+
+| Hallazgo | Estado | Evidencia |
+|---|---|---|
+| **N2** Reventón de Maxi en el Río | **Resuelto** | §14.3, regla "Reventón de Maxi en el Río", en 5 puntos: (1) objetivo = tramo visible más largo, desempate por el más cercano a la cabeza, recordado por `id` de gota y halo que no salta; (2) Coco carga el color exacto del tramo; (3) inserción dirigida al tramo objetivo; (4) umbral 2 **solo para su bala y solo en la batalla**, con retrocesos y cadenas en umbral 3; (5) cambio de `LogicaRio` por parámetro (`umbral`), sin que la lógica sepa de perfiles, y jugada automática por el mismo camino. Está en el trabajo de motor del §14.15 y en QA, con 6 casos y la contraprueba "Nicole, Sofía y el Río en solitario no cambian". Es mejor que lo que pedí: resuelve el halo que salta y la bala que cruza otra gota |
+| **N3** Formas a 24 px | **Resuelto** | §14.9 y §14.15: `zona_figuras: [150, 128, 700, 456]` y `zona_bandeja: [880, 128, 360, 456]` (y 128-584), con la explicación de por qué. **Los datos ya están corregidos** (`batalla/formas_equipo.json`, l. 12-13). QA mide las separaciones de 24 px, también en el Río |
+| **N6** Con quién se retoma | **Resuelto** | §14.6: "al retomar, empieza Maxi", con motivos y la alternativa descartada; en el epílogo, "¡Maxi, ven a pintar!". §11.4: `empezar_retomando()` (rival en 0, racha en 0, primer turno siempre de Maxi con su puerta). §13 m3: "en equipo **fuera de la batalla** no hay guardado parcial" y "Dev no activa el parcial en el modo equipo suelto". El guion (§2.1, `nucleo_batalla_retomar` + `le_toca_maxi_0X`) y el storyboard (§10, "siempre empieza Maxi") coinciden. Queda un desfase de momento en el guion (ver N11.d) |
+
+**Los tres quedan cerrados.** Para HE-69, N1 depende ahora solo de la calibración de
+`disenador-niveles`: la ficha marca "Formas: 8 piezas" como cifra provisional y propone 12.
+
+### Evaluación UX del tope de pares y del retroceso por "turno perfecto" (decisiones del PO, 07-Oct)
+
+**¿Se entiende que el turno termina en fiesta y no en fallo?** El diseño del pase lo hace bien:
+
+- llegar al tope nunca dispara voz ni animación de fallo;
+- Cometa dice "¡turno perfecto!", el hermano hace su gesto, la barra aplaude y el Coleccionauta tropieza
+  hacia atrás (paso 0b del §4.3);
+- las cartas solo hacen el pulso;
+- el tope se alcanza al **formar** un par, así que nunca queda una carta a medio dar vuelta.
+
+Además:
+
+- **Equidad**: Nicole (2) y Sofía (3) tienen cada una su meta y las dos pueden hacer retroceder al rival.
+  Corrige un problema real: con tope 2 y racha de 3, Nicole nunca podía frenarlo.
+- **"El besito de Coco no rompe el turno perfecto"**: **UX respalda esta lectura** ("sin que un fallo
+  termine el turno"). Es la consecuencia directa de B2 de HE-58: si el primer fallo de Nicole no deja
+  rastro visible, tampoco puede dejar rastro en la regla. Recomiendo que el PO la confirme así.
+- **Sacar a Maxi del retroceso** (y el umbral de semilla siempre en 1): correcto, R5.
+- **Que en el Río no haya tope**: correcto. Las 3 gotas ya son su "turno perfecto", y cortar el turno
+  dejaría gotas sin tirar en la mano de Coco.
+- **4×6 con Maxi**: con el tablero `Rect2(40, 128, 1200, 472)` y 4 filas, las cartas miden ≈ 110 px
+  (≥ 96, GDD §6.1). En su turno, Maxi solo toca las cartas con halo. Es aceptable.
+
+Pero hay tres condiciones para que esto **se entienda** de verdad, y hoy no están cumplidas:
+
+#### Mayores nuevos
+
+**N8. Nadie explica el tope por voz, y las frases de la batalla lo contradicen.**
+
+- **Dónde**: guion §6, `arcoiris_batalla_parejas_intro` («¡Por turnos! Si hay pareja, sigues jugando.») y
+  `nucleo_equipo_parejas_repetir` («…Si son pareja, sigues jugando. Si no, le toca al siguiente.»). En
+  Formas pasa lo mismo: `formas_intro` y su `repetir` no nombran el tope. El cierre "con tope" de
+  `intro_equipo_trucos.equipo` sigue `PENDIENTE` (§8, Pendiente 1), y además en la batalla no suena,
+  porque la intro N7 lo reemplaza.
+- **Problema**: la regla que los niños escuchan ("si hay pareja, sigues") es **falsa** justo en el
+  momento clave. Sofía forma su tercera pareja, sabe dónde está otra y el turno se corta. Si nadie le
+  explicó que 3 es la meta, el corte se lee como "me quitaron el turno" aunque después suene
+  "¡turno perfecto!". Es el riesgo 6 del §9 ("¡pero yo sabía otra!"), y hoy está diseñado para pasar.
+  Viola GDD §6.2: toda regla se explica por voz.
+- **Corrección** (`guionista` en HE-67, `disenador-mecanicas` en el §14.11):
+  1. La `repetir` de Cometa en Formas y en Parejas de la batalla suma la meta: "…y si prendes todas tus
+     lucecitas, ¡turno perfecto!".
+  2. **Presentación única por familia**: el primer turno perfecto de la batalla lleva una variante de
+     Cometa que dice qué pasó. Por ejemplo: "¡Turno perfecto! ¡Prendiste todas tus luces y el
+     Coleccionauta se resbaló!". Se guarda en `cinematicas_vistas` o en `especial_conocido`, por familia.
+  3. La intro de Parejas de la batalla no puede decir "sigues jugando" a secas. Por ejemplo: "¡Por turnos!
+     Si hay pareja, sigues… ¡hasta prender tus luces!". Se mantiene en ≤ 4 s (N7).
+
+**N9. La meta del turno no tiene lugar en la pantalla de la batalla.**
+
+- **Dónde**: §5.2 ("en los turnos con tope, la cresta de Coco muestra tantos nuditos apagados como el
+  tope") y §14.15 punto 10. Pero el layout de equipo (§4.1) y el de batalla (§14.15) **no ubican a Coco**:
+  el tablero de Parejas ocupa `Rect2(40, 128, 1200, 472)`, todo el ancho, donde en solitario está Coco
+  (x 30-210).
+- **Problema**: sin un lugar definido, Dev va a dibujar la cresta encima de las cartas o no la va a
+  dibujar. Sin ese indicador, el niño **no puede anticipar** el final del turno, y el corte se vive como
+  sorpresa. La anticipación es lo que convierte "se acabó" en "¡lo logré!".
+- **Corrección** (`disenador-mecanicas`):
+  1. Fijar un `Rect2` para la "meta del turno" en la batalla y en Parejas en equipo. Propuesta: 2 o 3
+     **lucecitas** de ≥ 32 px, no tocables, centradas sobre el borde superior del marco del tablero (que
+     ya se tiñe del color de quien juega). Se encienden en arcoíris con cada acierto, se apagan en cada
+     pase y no se guardan.
+  2. No van bajo los retratos: así se respeta R2, porque no queda ninguna marca por hermano para comparar.
+  3. Con tope − 1, **la última lucecita respira**, para que el niño sepa "una más y es perfecto".
+  4. En el turno de Maxi no se muestran (su turno es guiado: sin meta y sin presión).
+  5. El mismo indicador sirve en Formas.
+
+**N10. El "efecto neto cero" deja como última imagen al rival avanzando.**
+
+- **Dónde**: §4.3, "Después de un turno perfecto (paso 0b) el salto del paso 2 ocurre igual", y riesgo 7
+  del §9.
+- **Problema**: el Coleccionauta retrocede en 0b y, 1-2 s después, salta hacia adelante en el paso 2. A
+  los 5 años manda **lo último que se vio** (efecto de recencia): "lo hicimos resbalar… y avanzó igual",
+  o sea, "no sirvió". Además contradice la frase que van a escuchar en la intro ("hace retroceder al
+  Coleccionauta"). La ficha lo deja para el playtest, pero el riesgo es previsible y la alternativa es
+  barata.
+- **Corrección** (decisión del PO, con cifras de `disenador-niveles`):
+  1. **Recomendado**: después de un turno perfecto, en el paso 2 el Coleccionauta **intenta saltar y se
+     resbala**, sin avanzar. El retroceso de 0b se mantiene. El neto queda en −1 galleta, la última
+     imagen es el rival sentado en el suelo y la frase "lo hace retroceder" es literal. Como hace la
+     batalla más fácil, `disenador-niveles` recalibra `pasos_rival` con el simulador (probablemente
+     5 → 4 en "los tres") para conservar la meta de ~8 de cada 10 partidas ganadas.
+  2. **Si el PO prefiere no tocar la calibración**: la alternativa de la propia ficha (sin retroceso y
+     sin avance: "intenta saltar y se resbala") con el lenguaje cambiado a "¡lo frenaste!" en la intro,
+     en la `repetir` y en `rival_retrocede`. Lo que no puede quedar es "retrocede" y que se vea avanzar.
+
+#### Menores nuevos
+
+- **N11. El guion de la batalla quedó en la v5 y choca con la v6** (`guionista`, antes de pedir el costo
+  del TTS):
+  - a. §5.3 (fila `arcoiris_batalla_formas_retrocede_celebra`) y §10 punto 2 todavía dicen que «¡Tres
+    piezas seguidas!» **reemplaza** a `turno_perfecto`. La ficha v6 la da de baja: con el turno perfecto
+    de Nicole (2 piezas) sería falsa. **No generarla.**
+  - b. §6 reutiliza `pares_juntados_1..7` "(8 pares, 4×4)", pero la ronda de Parejas de la batalla es de
+    **12 pares en 4×6** (`batalla/parejas_equipo.json`). Hacen falta `pares_juntados_1..11`.
+  - c. §6 reutiliza "el retroceso" de Parejas en equipo: hay que marcar que
+    `arcoiris_emparejar_equipo_retrocede_celebra` («¡Tres parejas seguidas!») **no suena** en la batalla,
+    porque ahí siempre hay tope (§14.15).
+  - d. §2.1 dispara `nucleo_batalla_retomar` "al tocar el hito". La ficha v6 (§14.6) lo pone al tocar
+    "¡Despegar!" en la pantalla corta de "¡todos a la nave!", que ahora sí se repite. Hay que alinear el
+    guion con la ficha y con el storyboard §10.
+- **N12. En Parejas 4×6, la última fila queda a 10 px de las ventanitas de porra.** El tablero termina en
+  y 600 y la barra de retratos empieza en y 610. N3 pidió 24 px en Formas. En Parejas el riesgo es menor:
+  tocar una ventanita solo hace aplaudir y no cambia el tablero, y el retrato de quien juega no es
+  tocable. **Corrección**: dejarlo **aceptado de forma explícita** en el §4.1 ("excepción a los 24 px
+  hacia la barra: el toque erróneo es inocuo"), para no perder el ≈ 110 px de las cartas de Maxi. La
+  otra opción es el tablero en y 128-586, con cartas de ≈ 106 px, que siguen siendo ≥ 96 pero quedan bajo
+  la regla de 110 del §5.3.
+- **N13. Cartas a la vista en el pase de un turno perfecto.** Cuando el turno termina con fallo, las dos
+  cartas quedan 1,5 s a la vista (paso 1). Con un turno perfecto no hay cartas que mostrar, y eso está
+  bien. Lo que falta: si Sofía toca una carta durante 0b ("¡yo sabía otra!"), recibe solo el pulso.
+  **Corrección**: en 0b, el pulso suma un "¡guárdala para tu próximo turno!" de Coco, una vez por
+  partida. Convierte el reclamo en plan y responde directamente al riesgo 6 del §9.
+
+### Veredicto de la verificación
+
+- **N2, N3 y N6: resueltos.** Su condición de entrada a HE-69 queda cumplida. N1 sigue en manos de la
+  calibración de `disenador-niveles` (Formas, 12 piezas propuestas).
+- **Tope y turno perfecto: aprobados en su principio** (fiesta, sin fallo, equidad Nicole/Sofía, Maxi
+  fuera), **con 3 mayores nuevos (N8, N9 y N10) y 3 menores (N11, N12 y N13). Ninguno es bloqueante.**
+- **N8, N9 y N10 son condición de entrada de HE-69 para las rondas 2 y 3** (Formas y Parejas), porque
+  sin ellos el tope se vive como un corte arbitrario. N8 va a `guionista` y `disenador-mecanicas`, N9 a
+  `disenador-mecanicas`, y N10 al PO con `disenador-niveles`. N11 va a HE-67 antes de estimar el TTS.
+  N12 y N13 van a `disenador-mecanicas`.
+- **Para el playtest** (se suma a lo anterior): mirar la cara de Sofía cuando llega al tope (¿orgullo o
+  "¡pero yo sabía otra!"?) y qué dicen los niños cuando el Coleccionauta se resbala (¿"¡lo frenamos!" o
+  "¡avanzó igual!"?).

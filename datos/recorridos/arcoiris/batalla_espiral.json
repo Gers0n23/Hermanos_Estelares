@@ -1,0 +1,12 @@
+{
+  "id": "arcoiris_batalla_espiral",
+  "nota": "Batalla de Arcoiris, ronda 1 (disenador-niveles 07-Oct-2026). Parametros de docs/fichas/modo-equipo.md §14.15 (M5.2): centro (640, 355), radio 230 -> 120, escala [2.0, 0.9], entrada desde la izquierda en y ~560. Mismo esquema que z1_espiral.json. Supuesto de convencion (el de z1): x = cx + r*escala_x*cos(a), y = cy + r*escala_y*sin(a), con y hacia abajo, y el angulo CRECE en el sentido del avance (horario en pantalla). Con angulo_inicio = pi el cauce empieza en el borde izquierdo (~180, 355) y sube; la entrada (-60, 560) llega en diagonal sin giro brusco. Barrido 3,2 rad, termina a la derecha del centro (~880, 355): Coco queda al centro. Largo estimado ~1.150 px (entrada ~315 + espiral ~840); el tope del 70 % (tope_avance del nivel) deja la cabeza en ~800 px, lejos del remolino. Extremos estimados del cauce con gota r22: y 175-582, x 158-906, todo dentro de y 112-598 y a > 24 px de la casa (1172, 8, 100, 96). QA lo verifica con captura (M5.2/N3). Si la convencion real del motor es la contraria, Dev invierte el sentido conservando: entrada por la izquierda abajo, sin cruzar la pista (y < 110) ni la barra (y > 600).",
+  "tipo": "espiral",
+  "centro": [640, 355],
+  "entrada": [-60, 560],
+  "radio_inicio": 230,
+  "radio_fin": 120,
+  "angulo_inicio": 3.14,
+  "angulo_fin": 6.34,
+  "escala": [2.0, 0.9]
+}

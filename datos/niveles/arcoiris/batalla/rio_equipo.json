@@ -1,0 +1,84 @@
+{
+  "id_nivel": "arcoiris_batalla_rio_equipo",
+  "motor": "rio",
+  "modo_juego": "equipo",
+  "planeta": "arcoiris",
+  "zona": "batalla",
+  "tema": "ronda 1 de la Batalla de Arcoiris: rescatar el ROJO. El Coleccionauta solto un rio de gotas desde su mochila-torre",
+  "nota": "disenador-niveles 07-Oct-2026 (HE-66/HE-69), v2 tras la corrida del simulador. docs/fichas/modo-equipo.md §14.3 ronda 1, §14.9 y §14.15; correccion N2 de la re-auditoria UX. 20 gotas (no 24: con 24 el simulador dio p80 5,3 min y 57 % de victorias con 6 pasos), 4 colores, velocidad de Maxi (13 px/s), sin mezclas (el rio es comun: Nicole no mezcla). Por turno: Maxi 1 gota que SIEMPRE revienta (N2: umbral 2 solo para su bala y solo en la batalla), Nicole y Sofia 3 gotas. Simulado con herramientas/simular_equipo.py (07-Oct, 20 gotas, racha de 3): 86 % ganada al primer intento; ~11 turnos (Maxi 6, Nicole 3, Sofia 2-3), p50 ~3,5 min y p80 ~4,4 min. pasos_rival 7 = ronda de bienvenida: ~85-90 % ganada al primer intento; aqui los ninos aprenden que el Coleccionauta avanza en los pases y que 3 reventones lo hacen tropezar (primer nivel = victoria facil que ensena sin explicar). Momento memorable: el primer reventon rojo salpica las gafas-lupa del Coleccionauta, que queda viendo todo rojo un segundo (voz gafas_rojas; solo la primera vez por ronda). Calculo: docs/fichas/calibracion-batalla-arcoiris-y-parejas-equipo.md. PROVISIONAL.",
+  "recorrido": "res://datos/recorridos/arcoiris/batalla_espiral.json",
+  "gotas": 20,
+  "colores": ["rojo", "amarillo", "azul", "rosa"],
+  "radio": 22,
+  "velocidad": 13,
+  "subida": 0.35,
+  "entrada_rapida_hasta": 0.28,
+  "mezclas": false,
+  "guia": "completa",
+  "guia_por_perfil": { "semilla": "completa", "brote": "completa", "estrella": "no" },
+  "tiempo_par": null,
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "maxi_mueve_rival": false,
+    "racha_retrocede_rival": 3,
+    "resbalon_tras_racha": true,
+    "cadena_vale_aciertos": 2,
+    "semilla_auto_s": 20,
+    "gotas_por_turno": { "semilla": 1, "brote": 3, "estrella": 3 },
+    "sin_fallo": true,
+    "carga_con_pareja": true,
+    "carga_semilla": "tramo_mas_largo",
+    "umbral_reventon_semilla": 2,
+    "intercambio_semilla": false,
+    "justo_ahi_px": 150,
+    "tope_avance": 0.7,
+    "rio_se_detiene_en_pase": true,
+    "composiciones": {
+      "maxi+nicole+sofia": { "pasos_rival": 7 }
+    }
+  },
+  "lineas_voz": {
+    "intro_ronda": "PENDIENTE",
+    "maxi_toca_donde_quieras": "PENDIENTE",
+    "justo_ahi": "PENDIENTE",
+    "maxi_regalito": "PENDIENTE",
+    "gafas_rojas": "PENDIENTE",
+    "derrota_gag_equipo": "PENDIENTE",
+    "logro_comun": "PENDIENTE",
+    "le_toca": {
+      "maxi": ["voces/nucleo/equipo/le_toca_maxi_01.wav", "voces/nucleo/equipo/le_toca_maxi_02.wav", "voces/nucleo/equipo/le_toca_maxi_03.wav"],
+      "nicole": ["voces/nucleo/equipo/le_toca_nicole_01.wav", "voces/nucleo/equipo/le_toca_nicole_02.wav", "voces/nucleo/equipo/le_toca_nicole_03.wav"],
+      "sofia": ["voces/nucleo/equipo/le_toca_sofia_01.wav", "voces/nucleo/equipo/le_toca_sofia_02.wav", "voces/nucleo/equipo/le_toca_sofia_03.wav"]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": ["voces/nucleo/equipo/animo_maxi_01.wav", "voces/nucleo/equipo/animo_maxi_02.wav"],
+      "nicole": ["voces/nucleo/equipo/animo_nicole_01.wav", "voces/nucleo/equipo/animo_nicole_02.wav"],
+      "sofia": ["voces/nucleo/equipo/animo_sofia_01.wav", "voces/nucleo/equipo/animo_sofia_02.wav"]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav", "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav", "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "rival_embobado": ["voces/nucleo/equipo/coleccionauta/embobado_01.wav", "voces/nucleo/equipo/coleccionauta/embobado_02.wav", "voces/nucleo/equipo/coleccionauta/embobado_03.wav"],
+    "rival_retrocede": ["voces/nucleo/equipo/coleccionauta/retrocede_01.wav", "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"],
+    "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav",
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav"
+  }
+}

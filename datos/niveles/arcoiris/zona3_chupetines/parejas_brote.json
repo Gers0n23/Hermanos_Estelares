@@ -33,7 +33,35 @@
       "voces/arcoiris/emparejar/brote/ronda_superada_02.wav",
       "voces/arcoiris/emparejar/brote/ronda_superada_03.wav"
     ],
-    "victoria_final": "voces/arcoiris/emparejar/brote/victoria_rondas_01.wav"
+    "victoria_final": "voces/arcoiris/emparejar/brote/victoria_rondas_01.wav",
+    "racha": {
+      "2": "voces/arcoiris/emparejar/reto/racha_2.wav",
+      "3": "voces/arcoiris/emparejar/reto/racha_3.wav",
+      "4": "voces/arcoiris/emparejar/reto/racha_4.wav",
+      "5": "voces/arcoiris/emparejar/reto/racha_5.wav",
+      "sigue": "voces/arcoiris/emparejar/reto/racha_sigue.wav"
+    },
+    "a_la_primera": [
+      "voces/arcoiris/emparejar/reto/a_la_primera_01.wav",
+      "voces/arcoiris/emparejar/reto/a_la_primera_02.wav"
+    ],
+    "record_pasa": "voces/arcoiris/emparejar/reto/record_pasa.wav",
+    "record_nuevo": [
+      "voces/arcoiris/emparejar/reto/record_nuevo_01.wav",
+      "voces/arcoiris/emparejar/reto/record_nuevo_02.wav"
+    ],
+    "primer_record": "voces/arcoiris/emparejar/reto/primer_record.wav",
+    "vistazo": "voces/arcoiris/emparejar/reto/vistazo_mira.wav",
+    "vistazo_presenta": "voces/arcoiris/emparejar/reto/vistazo_presenta.wav",
+    "vela_presenta": "voces/arcoiris/emparejar/reto/vela_presenta.wav",
+    "vela_encendida": "voces/arcoiris/emparejar/reto/vela_encendida.wav",
+    "vela_dormida": "voces/arcoiris/emparejar/reto/vela_dormida.wav",
+    "estrellitas_brote": {
+      "1": "voces/arcoiris/emparejar/reto/estrellitas_brote_1.wav",
+      "2": "voces/arcoiris/emparejar/reto/estrellitas_brote_2.wav",
+      "3": "voces/arcoiris/emparejar/reto/estrellitas_brote_3.wav"
+    },
+    "otra_estrellita": "voces/arcoiris/emparejar/reto/otra_estrellita.wav"
   },
   "rondas": [
     {
@@ -442,5 +470,24 @@
         }
       ]
     }
-  ]
+  ],
+  "umbrales_puntaje": {
+    "dos": 3000,
+    "tres": 3600
+  },
+  "vistazo": {
+    "cartas": "auto",
+    "ms": 3000,
+    "pares_completos": true
+  },
+  "puntaje": {
+    "por_par": 100,
+    "racha_tope": 5,
+    "bono_a_la_primera": 200,
+    "tiempo_par_s": 95,
+    "vela_desde_primera": false,
+    "bono_por_segundo": 10,
+    "mostrar": "barra"
+  },
+  "calibracion_reto": "HE-60 PROVISIONAL: tiempo_par_s y umbrales_puntaje del simulador de herramientas/agregar_reto_parejas.py; los afina disenador-niveles"
 }

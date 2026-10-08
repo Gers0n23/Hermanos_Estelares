@@ -1485,6 +1485,8 @@ func _celebrar_victoria() -> void:
 	if _terminado:
 		return
 	_terminado = true
+	# Salir durante el mural o el dato final no pierde la victoria (GDD §6 regla 8, QA HE-60 m8).
+	asegurar_victoria(_calcular_destellos(), _calcular_estrellitas())
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
 	var espera := 1.2

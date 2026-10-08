@@ -1,0 +1,61 @@
+{
+  "id_nivel": "arcoiris_batalla_pinta_mochila_equipo",
+  "motor": "lienzo_libre",
+  "modo_juego": "equipo",
+  "planeta": "arcoiris",
+  "zona": "batalla",
+  "tema": "epilogo de la Batalla de Arcoiris: le regalamos colores a la mochila-torre gris y vacia del Coleccionauta",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "nota": "disenador-niveles 07-Oct-2026 (HE-66/HE-69). docs/fichas/modo-equipo.md §14.3 (Epilogo) y M9: no se pierde, sin puerta ni pista (rival null, confirmar_turno false). 3 partes grandes, una por hermano en orden Maxi -> Nicole -> Sofia (Maxi abre: 'Maxi, ven a pintar!'), y el cierre 'todos juntos!': la tapa se rellena con una franja del color de turno de cada hermano, tocando cada uno su ventanita, de a uno (nunca simultaneo, GDD §6.4). Un toque rellena una parte entera en los tres perfiles (encargo colorear_zonas + rellenar_con_toque): Maxi puede tocar directo la mochila y usa el color que Coco tiene en la cola (azul, su color de turno) o una muestra si la toca antes; Nicole y Sofia eligen de la paleta (muestras >= 96 px; por eso solo 6 colores, con el rosa de Nicole y el turquesa de Sofia). Duracion estimada ~45 s. Momento memorable: al terminar, la mochila-torre pintada estornuda una lluvia de confeti de los colores que eligieron (no colores robados: regalados). La parte de Maxi es la mas grande (piso de abajo): la celebracion mas larga es una donde Maxi brilla. La lamina usa el espacio 824 x 530 de los demas niveles de Pinta. PROVISIONAL: revisar con herramientas/capturar_lienzo.gd.",
+  "encargo": "colorear_zonas",
+  "sin_fallo": true,
+  "coco_imita_color": true,
+  "guardar_dibujo": false,
+  "puntua_estrellitas": false,
+  "voces_colores": "voces/arcoiris/pinta/colores/%s.wav",
+  "paleta": ["rojo", "amarillo", "azul", "verde", "rosa", "turquesa"],
+  "tamano_muestra_min_px": 96,
+  "herramientas": ["balde"],
+  "herramienta_inicial": "balde",
+  "rellenar_con_toque": true,
+  "color_inicial_por_perfil": { "semilla": "azul" },
+  "modelo": false,
+  "equipo": {
+    "rival": null,
+    "confirmar_turno": false,
+    "orden_fijo": ["maxi", "nicole", "sofia"],
+    "partes_por_turno": 1,
+    "parte_por_hermano": { "maxi": "piso_1", "nicole": "piso_2", "sofia": "piso_3" },
+    "cierre_todos_juntos": {
+      "region": "tapa",
+      "franjas": 3,
+      "color_por_hermano": { "maxi": "#3E77CC", "nicole": "#E8589C", "sofia": "#2FB3AD" },
+      "toque_en": "ventanita_barra"
+    },
+    "semilla_auto_s": 20
+  },
+  "laminas": [
+    {
+      "id": "mochila_torre",
+      "tipo": "zonas",
+      "regiones": [
+        { "id": "fondo", "forma": "rect", "rect": [0, 0, 824, 530], "redondeo": 0, "fija": true, "inicial": "#FFF3D6" },
+        { "id": "sombra", "forma": "elipse", "centro": [412, 496], "radios": [190, 18], "fija": true, "inicial": "#E3D9C6" },
+        { "id": "piso_1", "forma": "rect", "rect": [252, 330, 320, 150], "redondeo": 24, "inicial": "#C9CCD6" },
+        { "id": "piso_2", "forma": "rect", "rect": [272, 206, 280, 116], "redondeo": 22, "inicial": "#C9CCD6" },
+        { "id": "piso_3", "forma": "rect", "rect": [292, 108, 240, 90], "redondeo": 20, "inicial": "#C9CCD6" },
+        { "id": "tapa", "forma": "elipse", "centro": [412, 70], "radios": [130, 36], "inicial": "#C9CCD6" }
+      ],
+      "detalles": []
+    }
+  ],
+  "lineas_voz": {
+    "intro_epilogo": "PENDIENTE",
+    "maxi_ven_a_pintar": "PENDIENTE",
+    "ahora_hermano": { "nicole": "PENDIENTE", "sofia": "PENDIENTE" },
+    "todos_juntos": "PENDIENTE",
+    "mochila_estornuda_confeti": "PENDIENTE",
+    "victoria_final": "PENDIENTE"
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "id_nivel": "arcoiris_z4_parejas_equipo",
+  "motor": "emparejar",
+  "modo_juego": "equipo",
+  "regla": "parejas",
+  "planeta": "arcoiris",
+  "zona": "zona4_islotes",
+  "tema": "mazo mixto de los tres + banderas del mundo (Chile, Japon, Corea del Sur, Francia); lupa y comodin arcoiris",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "nota": "disenador-niveles 07-Oct-2026 (HE-59). Contrato: docs/fichas/modo-equipo.md §8. Zona 4 = entra el COMODIN (solo si Nicole esta en el equipo, motor §10.3; en el turno de Maxi esta inerte, M10). filas x columnas YA cuenta la carta comodin y la gomita del tablero impar (m8): maxi+nicole 8 pares + comodin = 17 cartas + 1 gomita = 3x6; nicole+sofia 11 + comodin + gomita = 4x6; los tres 11 + comodin + gomita = 4x6 (4x6 con Maxi aprobado por el PO 07-Oct-2026; las cartas siguen >= 110 px porque manda el alto). maxi+nicole y los tres llevan pares_max_turno {semilla 1, brote 2, estrella 3} (aprobado por el PO 07-Oct-2026, modo-equipo.md §5.2 y §8; el rival retrocede por turno perfecto; ver la ficha de calibracion §9). maxi+sofia no tiene comodin: 10 pares exactos en 4x5. Vistazo sube a 3 pares (tableros de 18-24 cartas). Calibracion: docs/fichas/calibracion-batalla-arcoiris-y-parejas-equipo.md. PROVISIONAL.",
+  "oculto": true,
+  "modo": "identico",
+  "tiempo_volteo_ms": 1500,
+  "pool": [
+    { "id_pareja": "trex", "gustos": ["maxi"], "elemento_a": { "figura": "trex", "id": "trex_a" }, "elemento_b": { "figura": "trex", "id": "trex_b" } },
+    { "id_pareja": "spinosaurio", "gustos": ["maxi"], "elemento_a": { "figura": "spinosaurio", "id": "spinosaurio_a" }, "elemento_b": { "figura": "spinosaurio", "id": "spinosaurio_b" } },
+    { "id_pareja": "carnotauro", "gustos": ["maxi"], "elemento_a": { "figura": "carnotauro", "id": "carnotauro_a" }, "elemento_b": { "figura": "carnotauro", "id": "carnotauro_b" } },
+    { "id_pareja": "auto", "gustos": ["maxi"], "elemento_a": { "figura": "auto", "id": "auto_a" }, "elemento_b": { "figura": "auto", "id": "auto_b" } },
+    { "id_pareja": "bus", "gustos": ["maxi"], "elemento_a": { "figura": "bus", "id": "bus_a" }, "elemento_b": { "figura": "bus", "id": "bus_b" } },
+    { "id_pareja": "bomberos", "gustos": ["maxi"], "elemento_a": { "figura": "bomberos", "id": "bomberos_a" }, "elemento_b": { "figura": "bomberos", "id": "bomberos_b" } },
+    { "id_pareja": "cohete", "gustos": ["maxi"], "elemento_a": { "figura": "cohete", "id": "cohete_a" }, "elemento_b": { "figura": "cohete", "id": "cohete_b" } },
+    { "id_pareja": "jirafa", "gustos": ["nicole"], "elemento_a": { "figura": "jirafa", "id": "jirafa_a" }, "elemento_b": { "figura": "jirafa", "id": "jirafa_b" } },
+    { "id_pareja": "pony_rosa", "gustos": ["nicole", "sofia"], "elemento_a": { "figura": "pony", "color": "#F7A8D0", "id": "pony_rosa_a" }, "elemento_b": { "figura": "pony", "color": "#F7A8D0", "id": "pony_rosa_b" } },
+    { "id_pareja": "corona", "gustos": ["nicole"], "elemento_a": { "figura": "corona", "id": "corona_a" }, "elemento_b": { "figura": "corona", "id": "corona_b" } },
+    { "id_pareja": "vestido_rosa", "gustos": ["nicole"], "elemento_a": { "figura": "vestido", "color": "#F26CA8", "id": "vestido_rosa_a" }, "elemento_b": { "figura": "vestido", "color": "#F26CA8", "id": "vestido_rosa_b" } },
+    { "id_pareja": "perrito_crema", "gustos": ["sofia"], "elemento_a": { "figura": "perrito", "color": "#F2E6D0", "id": "perrito_crema_a" }, "elemento_b": { "figura": "perrito", "color": "#F2E6D0", "id": "perrito_crema_b" } },
+    { "id_pareja": "gerbo_cafe", "gustos": ["sofia"], "elemento_a": { "figura": "gerbo", "color": "#C9A27A", "id": "gerbo_cafe_a" }, "elemento_b": { "figura": "gerbo", "color": "#C9A27A", "id": "gerbo_cafe_b" } },
+    { "id_pareja": "pony_celeste", "gustos": ["sofia"], "elemento_a": { "figura": "pony", "color": "#6FD6E8", "id": "pony_celeste_a" }, "elemento_b": { "figura": "pony", "color": "#6FD6E8", "id": "pony_celeste_b" } },
+    { "id_pareja": "bandera_chile", "fijo": true, "voz": "voces/arcoiris/emparejar/paises/chile.wav", "elemento_a": { "figura": "bandera_chile", "id": "bandera_chile_a" }, "elemento_b": { "figura": "bandera_chile", "id": "bandera_chile_b" } },
+    { "id_pareja": "bandera_japon", "voz": "voces/arcoiris/emparejar/paises/japon.wav", "elemento_a": { "figura": "bandera_japon", "id": "bandera_japon_a" }, "elemento_b": { "figura": "bandera_japon", "id": "bandera_japon_b" } },
+    { "id_pareja": "bandera_corea_sur", "voz": "voces/arcoiris/emparejar/paises/corea_sur.wav", "elemento_a": { "figura": "bandera_corea_sur", "id": "bandera_corea_sur_a" }, "elemento_b": { "figura": "bandera_corea_sur", "id": "bandera_corea_sur_b" } },
+    { "id_pareja": "bandera_francia", "voz": "voces/arcoiris/emparejar/paises/francia.wav", "elemento_a": { "figura": "bandera_francia", "id": "bandera_francia_a" }, "elemento_b": { "figura": "bandera_francia", "id": "bandera_francia_b" } }
+  ],
+  "especiales": [ { "tipo": "lupa", "ms": 1500 }, { "tipo": "comodin" } ],
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "ms_volteo_equipo": 1500,
+    "pares_turno_semilla": 1,
+    "segunda_oportunidad_brote": true,
+    "ayuda_brote_tras_turnos_sin_par": 2,
+    "maxi_mueve_rival": false,
+    "racha_retrocede_rival": 3,
+    "semilla_auto_s": 20,
+    "vistazo": { "pares": 3, "ms": 3000 },
+    "composiciones": {
+      "maxi+nicole":       { "filas": 3, "columnas": 6, "cantidad": 8,  "pasos_rival": 7,
+                             "pares_max_turno": { "semilla": 1, "brote": 2 } },
+      "maxi+sofia":        { "filas": 4, "columnas": 5, "cantidad": 10, "pasos_rival": 6 },
+      "nicole+sofia":      { "filas": 4, "columnas": 6, "cantidad": 11, "pasos_rival": 8 },
+      "maxi+nicole+sofia": { "filas": 4, "columnas": 6, "cantidad": 11, "pasos_rival": 5,
+                             "pares_max_turno": { "semilla": 1, "brote": 2, "estrella": 3 } }
+    }
+  },
+  "lineas_voz": {
+    "especiales": {
+      "lupa": { "presenta": "voces/arcoiris/emparejar/especiales/lupa_presenta.wav", "palabra": "voces/arcoiris/emparejar/especiales/lupa.wav" },
+      "comodin": { "presenta": "voces/arcoiris/emparejar/especiales/comodin_presenta.wav", "palabra": "voces/arcoiris/emparejar/especiales/comodin.wav" }
+    },
+    "intro_equipo": ["voces/arcoiris/emparejar/equipo/intro.wav", "voces/arcoiris/emparejar/equipo/intro_ayudan.wav"],
+    "rival_entra": "voces/arcoiris/emparejar/equipo/coleccionauta_entra.wav",
+    "coco_juntemos": "voces/arcoiris/emparejar/equipo/coco_juntemos.wav",
+    "intro_equipo_trucos_apertura": "voces/arcoiris/emparejar/equipo/intro_trucos.wav",
+    "intro_equipo_trucos": {
+      "maxi": "voces/arcoiris/emparejar/equipo/intro_trucos_maxi.wav",
+      "nicole": "voces/arcoiris/emparejar/equipo/intro_trucos_nicole.wav",
+      "sofia": "voces/arcoiris/emparejar/equipo/intro_trucos_sofia.wav",
+      "equipo": "PENDIENTE"
+    },
+    "vistazo": "voces/arcoiris/emparejar/equipo/vistazo.wav",
+    "le_toca": {
+      "maxi": ["voces/nucleo/equipo/le_toca_maxi_01.wav", "voces/nucleo/equipo/le_toca_maxi_02.wav", "voces/nucleo/equipo/le_toca_maxi_03.wav"],
+      "nicole": ["voces/nucleo/equipo/le_toca_nicole_01.wav", "voces/nucleo/equipo/le_toca_nicole_02.wav", "voces/nucleo/equipo/le_toca_nicole_03.wav"],
+      "sofia": ["voces/nucleo/equipo/le_toca_sofia_01.wav", "voces/nucleo/equipo/le_toca_sofia_02.wav", "voces/nucleo/equipo/le_toca_sofia_03.wav"]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "porras_fin_maxi": "voces/arcoiris/emparejar/equipo/porras_fin_maxi.wav",
+    "maxi_brillan": ["voces/arcoiris/emparejar/equipo/maxi_brillan_01.wav", "voces/arcoiris/emparejar/equipo/maxi_brillan_02.wav"],
+    "maxi_aqui": "voces/arcoiris/emparejar/equipo/maxi_aqui.wav",
+    "maxi_par": "voces/arcoiris/emparejar/equipo/maxi_par.wav",
+    "maxi_lupa": "voces/arcoiris/emparejar/equipo/maxi_lupa.wav",
+    "maxi_regalito": "PENDIENTE",
+    "acierto_equipo": [
+      "voces/arcoiris/emparejar/equipo/acierto_01.wav", "voces/arcoiris/emparejar/equipo/acierto_02.wav",
+      "voces/arcoiris/emparejar/equipo/acierto_03.wav", "voces/arcoiris/emparejar/equipo/acierto_04.wav"
+    ],
+    "fallo_equipo": [
+      "voces/arcoiris/emparejar/equipo/fallo_01.wav", "voces/arcoiris/emparejar/equipo/fallo_02.wav",
+      "voces/arcoiris/emparejar/equipo/fallo_03.wav", "voces/arcoiris/emparejar/equipo/fallo_04.wav"
+    ],
+    "segunda_oportunidad": "voces/arcoiris/emparejar/equipo/nicole_otra.wav",
+    "brote_ayuda": "voces/arcoiris/emparejar/equipo/brote_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": ["voces/nucleo/equipo/animo_maxi_01.wav", "voces/nucleo/equipo/animo_maxi_02.wav"],
+      "nicole": ["voces/nucleo/equipo/animo_nicole_01.wav", "voces/nucleo/equipo/animo_nicole_02.wav"],
+      "sofia": ["voces/nucleo/equipo/animo_sofia_01.wav", "voces/nucleo/equipo/animo_sofia_02.wav"]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav", "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav", "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "rival_par": ["voces/nucleo/equipo/coleccionauta/par_01.wav", "voces/nucleo/equipo/coleccionauta/par_02.wav", "voces/nucleo/equipo/coleccionauta/par_03.wav"],
+    "rival_embobado": ["voces/nucleo/equipo/coleccionauta/embobado_01.wav", "voces/nucleo/equipo/coleccionauta/embobado_02.wav", "voces/nucleo/equipo/coleccionauta/embobado_03.wav"],
+    "rival_retrocede": ["voces/nucleo/equipo/coleccionauta/retrocede_01.wav", "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"],
+    "rival_retrocede_celebra": "voces/arcoiris/emparejar/equipo/retrocede_celebra.wav",
+    "rival_aplaude": ["voces/nucleo/equipo/coleccionauta/aplaude_01.wav", "voces/nucleo/equipo/coleccionauta/aplaude_02.wav"],
+    "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav",
+    "derrota_gag_equipo": [
+      "voces/arcoiris/emparejar/equipo/coleccionauta_aspira.wav",
+      "voces/arcoiris/emparejar/equipo/coleccionauta_estornuda.wav",
+      "voces/arcoiris/emparejar/equipo/coleccionauta_cansado.wav",
+      "voces/arcoiris/emparejar/equipo/coco_otra_vez.wav"
+    ],
+    "pares_juntados": {
+      "1": "voces/nucleo/equipo/pares_juntados_1.wav", "2": "voces/nucleo/equipo/pares_juntados_2.wav",
+      "3": "voces/nucleo/equipo/pares_juntados_3.wav", "4": "voces/nucleo/equipo/pares_juntados_4.wav",
+      "5": "voces/nucleo/equipo/pares_juntados_5.wav", "6": "voces/nucleo/equipo/pares_juntados_6.wav",
+      "7": "voces/nucleo/equipo/pares_juntados_7.wav", "8": "voces/nucleo/equipo/pares_juntados_8.wav",
+      "9": "voces/nucleo/equipo/pares_juntados_9.wav", "10": "voces/nucleo/equipo/pares_juntados_10.wav",
+      "11": "voces/nucleo/equipo/pares_juntados_11.wav", "12": "voces/nucleo/equipo/pares_juntados_12.wav"
+    },
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav",
+    "victoria_equipo": "voces/arcoiris/emparejar/equipo/coco_victoria.wav",
+    "fiesta": {
+      "al_frente": "voces/nucleo/equipo/al_frente.wav",
+      "gesto": { "maxi": "voces/nucleo/equipo/fiesta_maxi.wav", "nicole": "voces/nucleo/equipo/fiesta_nicole.wav", "sofia": "voces/nucleo/equipo/fiesta_sofia.wav" },
+      "choca": "voces/nucleo/equipo/choca.wav",
+      "equipo_estelar": "voces/nucleo/equipo/equipo_estelar.wav",
+      "destellos": "voces/nucleo/equipo/destellos.wav",
+      "estrellita": "voces/nucleo/equipo/estrellita.wav"
+    },
+    "record_equipo": "voces/arcoiris/emparejar/equipo/record.wav",
+    "primer_record_equipo": "voces/arcoiris/emparejar/equipo/primer_record.wav"
+  }
+}

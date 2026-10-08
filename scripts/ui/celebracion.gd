@@ -46,8 +46,12 @@ const OPACIDAD_FONDO := 0.7
 ## "maxi" | "nicole" | "sofia" (otro id -> rebote generico con su sprite o el de Cometa).
 @export var id_personaje: String = "sofia"
 @export var destellos: int = 0
-## 0 = no se muestran estrellitas (Semilla/Brote o motor sin puntaje).
+## 0 = no se muestran estrellitas (Semilla, Brote sin puntaje o motor sin puntaje).
 @export_range(0, 3) var estrellitas: int = 0
+## Brote (ficha motor-emparejar §10.1.1): nunca se muestran huecos vacios. Solo aparecen las ganadas, una
+## por una (0,4 s), cada una cayendo y girando desde arriba, con su campanita una nota mas aguda. La
+## primera es "la estrella de terminar": misma animacion y tamano que las demas.
+@export var estrellitas_sin_huecos := false
 @export var segundos_boton_continuar: float = 2.2
 ## 0 = espera siempre el toque del boton.
 @export var segundos_auto_continuar: float = 8.0
@@ -190,7 +194,17 @@ func _construir() -> void:
 	_etiqueta_conteo.modulate.a = 0.0
 	_raiz.add_child(_etiqueta_conteo)
 
-	if estrellitas > 0:
+	if estrellitas > 0 and estrellitas_sin_huecos:
+		# Brote: solo las ganadas, centradas; nacen invisibles y caen girando de a una (§10.1.1).
+		for i in estrellitas:
+			var slot := Figura.new()
+			slot.radio = 44.0
+			slot.color = DORADO
+			slot.position = _centro_conteo + Vector2((i - (estrellitas - 1) / 2.0) * 110.0, 160)
+			slot.scale = Vector2.ZERO
+			_raiz.add_child(slot)
+			_slots_estrellitas.append(slot)
+	elif estrellitas > 0:
 		for i in 3:
 			var slot := Figura.new()
 			slot.radio = 44.0
@@ -313,7 +327,7 @@ func _iniciar_conteo() -> void:
 	var t := create_tween().set_parallel(true)
 	t.tween_property(_estrella_conteo, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	t.tween_property(_etiqueta_conteo, "modulate:a", 1.0, 0.2)
-	for slot in _slots_estrellitas:
+	for slot in _slots_estrellitas if not estrellitas_sin_huecos else []:
 		t.tween_property(slot, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	var duracion := clampf(0.6 + destellos * 0.012, 0.8, 1.8)
 	var t2 := create_tween()
@@ -352,7 +366,7 @@ func _sello_sin_destellos() -> void:
 	var t := create_tween().set_parallel(true)
 	t.tween_property(_estrella_conteo, "scale", Vector2.ONE * 1.35, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	t.tween_property(_estrella_conteo, "rotation", TAU, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	for slot in _slots_estrellitas:
+	for slot in _slots_estrellitas if not estrellitas_sin_huecos else []:
 		t.tween_property(slot, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_sfx(SFX_TINTINEO)
 	_estallido_estrellitas(_estrella_conteo.position, 12, [])
@@ -362,6 +376,9 @@ func _sello_sin_destellos() -> void:
 
 func _llenar_estrellita(indice: int) -> void:
 	var slot := _slots_estrellitas[indice]
+	if estrellitas_sin_huecos:
+		_caer_estrellita(slot, indice)
+		return
 	slot.color = DORADO
 	slot.color_contorno = COLOR_CONTORNO
 	slot.queue_redraw()
@@ -370,6 +387,21 @@ func _llenar_estrellita(indice: int) -> void:
 	t.tween_property(slot, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_estallido_estrellitas(slot.position, 6, [])
 	_sfx(SFX_ESTRELLITA)
+
+
+## Brote: la estrellita cae girando desde arriba hasta su lugar (todas iguales: la 1 es "la estrella de
+## terminar", no una version chica) y suena su campanita, cada una una nota mas aguda.
+func _caer_estrellita(slot: Figura, indice: int) -> void:
+	var destino := slot.position
+	slot.position = destino - Vector2(0, 260)
+	slot.rotation = -TAU
+	slot.scale = Vector2.ONE * 1.2
+	var t := slot.create_tween().set_parallel(true)
+	t.tween_property(slot, "position", destino, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.tween_property(slot, "rotation", 0.0, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.chain().tween_property(slot, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.chain().tween_callback(_estallido_estrellitas.bind(destino, 6, []))
+	_sfx(SFX_ESTRELLITA, pow(2.0, indice * 4.0 / 12.0))
 
 
 func _mostrar_boton_continuar() -> void:
@@ -583,10 +615,10 @@ func _despues(segundos: float, accion: Callable) -> void:
 	t.tween_callback(accion)
 
 
-func _sfx(ruta: String) -> void:
+func _sfx(ruta: String, tono := 1.0) -> void:
 	var audio := get_node_or_null("/root/Audio")
 	if audio != null:
-		audio.reproducir_sfx(ruta)
+		audio.reproducir_sfx(ruta, tono)
 
 
 static func _ease_out_back(x: float) -> float:

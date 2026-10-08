@@ -1146,6 +1146,11 @@ func _dibujar_tarjeta(control: Control, j: int) -> void:
 			for k in 3:
 				var color := DORADO if k < int(estacion["estrellitas"]) else Color(COLOR_CONTORNO, 0.18)
 				Figura.dibujar(control, "estrella", color, abajo + Vector2((k - 1) * 34.0, 0), 15.0, false)
+		elif estacion["perfil_nivel"] == "brote" and int(estacion["estrellitas"]) > 0:
+			# Nicole (HE-60, ficha motor-emparejar §10.1.1): solo las estrellitas ganadas, sin huecos vacios.
+			var ganadas := int(estacion["estrellitas"])
+			for k in ganadas:
+				Figura.dibujar(control, "estrella", DORADO, abajo + Vector2((k - (ganadas - 1) / 2.0) * 34.0, 0), 15.0, false)
 		else:
 			_dibujar_triangulo_jugar(control, abajo, 16.0)
 	elif estacion["jugable"]:

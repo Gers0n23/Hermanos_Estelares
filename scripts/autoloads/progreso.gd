@@ -53,7 +53,9 @@ var perfil_seleccionado: String = ""
 var ruta_guardado: String = RUTA_GUARDADO
 
 
-func _ready() -> void:
+## En `_init` y no en `_ready` (06-Oct-2026): con `--script`, el `_initialize()` del arnés corre ANTES
+## del `_ready()` de los autoloads, y alcanzaba a guardar con la ruta por defecto (la real).
+func _init() -> void:
 	if _corre_desde_herramienta():
 		ruta_guardado = RUTA_GUARDADO_PRUEBAS
 	cargar()
@@ -62,9 +64,9 @@ func _ready() -> void:
 ## Con `godot --script herramientas/...gd` el MainLoop es un SceneTree con script propio;
 ## el juego normal nunca le pone script. Asi se reconoce un arnes sin que tenga que avisar.
 ##
-## Ojo (06-Oct-2026): cuando corre este `_ready()`, Godot 4.7 todavía no le asignó el script al
-## SceneTree, así que esa revisión sola daba false y los arneses escribían el guardado REAL. Por eso
-## primero se mira la línea de comandos (`--script` / `-s`), que existe desde el arranque.
+## Ojo (06-Oct-2026): al crear los autoloads, Godot 4.7 todavía no le asignó el script al SceneTree,
+## así que esa revisión sola daba false y los arneses escribían el guardado REAL. Por eso primero se
+## mira la línea de comandos (`--script` / `-s`), que existe desde el arranque.
 func _corre_desde_herramienta() -> bool:
 	for arg in OS.get_cmdline_args():
 		if arg == "--script" or arg == "-s":
@@ -373,6 +375,29 @@ func registrar_puntaje_nivel(id_perfil: String, planeta_id: String, id_nivel: St
 func obtener_estrellitas_nivel(id_perfil: String, planeta_id: String, id_nivel: String) -> int:
 	var niveles: Dictionary = _datos_planeta(id_perfil, planeta_id).get("niveles", {})
 	return int(niveles.get(id_nivel, {}).get("estrellitas", 0))
+
+
+## Presentaciones de una sola vez por hermano: cartas especiales, vistazo, vela... (ficha motor-emparejar
+## §10.3, firmas de docs/fichas/modo-equipo.md §11.5). Campo opcional del perfil ("especiales_conocidos"):
+## se crea al primer uso y guardados viejos no lo necesitan, asi que no sube la version (HE-60). La
+## migracion v3 de HE-59 solo lo agrega vacio donde falte.
+func especial_conocido(id_perfil: String, tipo: String) -> bool:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		return false
+	return tipo in _datos["perfiles"][id_perfil].get("especiales_conocidos", [])
+
+
+func marcar_especial_conocido(id_perfil: String, tipo: String) -> void:
+	if not _datos.get("perfiles", {}).has(id_perfil):
+		push_warning("Progreso.marcar_especial_conocido: id_perfil desconocido '%s'" % id_perfil)
+		return
+	var perfil: Dictionary = _datos["perfiles"][id_perfil]
+	if not perfil.get("especiales_conocidos", null) is Array:
+		perfil["especiales_conocidos"] = []
+	if tipo in perfil["especiales_conocidos"]:
+		return
+	perfil["especiales_conocidos"].append(tipo)
+	guardar()
 
 
 ## Marca que el hermano ya recibio la pieza de nave de ese planeta (escena de

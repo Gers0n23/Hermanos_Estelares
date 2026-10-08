@@ -232,6 +232,21 @@ func revelar_momento(segundos: float) -> void:
 	_mostrar(not _oculto)
 
 
+## Vistazo al repartir (ficha §10.2): la carta se muestra sin halo de ayuda (no es una pista)...
+func destapar_vistazo() -> void:
+	if esta_acertada:
+		return
+	_estado = "normal"
+	_mostrar(true)
+
+
+## ...y se vuelve a tapar, salvo que ya este acertada o seleccionada.
+func tapar_vistazo() -> void:
+	if esta_acertada or _estado != "normal":
+		return
+	_mostrar(not _oculto)
+
+
 ## Entrada escalonada al armar el tablero (solo visual).
 func aparecer(retraso: float) -> void:
 	modulate.a = 0.0

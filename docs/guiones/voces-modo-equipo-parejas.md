@@ -31,7 +31,9 @@
 - **Id estable**: la convención del proyecto. `nucleo_` + ruta sin `voces/nucleo/` ni extensión;
   `arcoiris_` + ruta sin `voces/arcoiris/` ni extensión. Ej.: `voces/nucleo/equipo/le_toca_maxi_01.wav`
   → `nucleo_equipo_le_toca_maxi_01`.
-- **Estado**: las 170 líneas son **nuevas** y están **pendientes de audio**.
+- **Estado**: las 173 líneas son **nuevas** y están **pendientes de audio**.
+- **Revisión v3 (07-Oct-2026, desde HE-67)**: cierres de la intro de trucos con y sin tope, `intro_tope`
+  y `intro_trucos_sofia` reescrita (ficha `modo-equipo.md` §8, pendientes 1 y 2; UX HE-66 N8). Ver §3.1.
 
 ## Decisiones de tono de este guion
 
@@ -173,8 +175,11 @@ siguientes usan `intro` + `intro_ayudan`.
 | arcoiris_emparejar_equipo_intro_trucos | Coco | «¡Cada uno juega con su propio truco!» | cómplice, de secreto | Primera partida de esa combinación (apertura) | `voces/arcoiris/emparejar/equipo/intro_trucos.wav` | TTS |
 | arcoiris_emparejar_equipo_intro_trucos_maxi | Coco | «Maxi tiene cartas que brillan.» | mágica, lenta | Fragmento si juega Maxi (clave `intro_equipo_trucos.maxi`) | `voces/arcoiris/emparejar/equipo/intro_trucos_maxi.wav` | TTS |
 | arcoiris_emparejar_equipo_intro_trucos_nicole | Coco | «Nicole tiene un besito mío: ¡una oportunidad extra!» | tierna; sopla un besito | Fragmento si juega Nicole | `voces/arcoiris/emparejar/equipo/intro_trucos_nicole.wav` | TTS |
-| arcoiris_emparejar_equipo_intro_trucos_sofia | Coco | «Sofía, con tres parejas seguidas, ¡hace retroceder al Coleccionauta!» | entusiasta, de hazaña | Fragmento si juega Sofía | `voces/arcoiris/emparejar/equipo/intro_trucos_sofia.wav` | TTS |
-| arcoiris_emparejar_equipo_intro | Coco | «¡Jugamos todos juntos! Si encuentras una pareja, sigues jugando. Si no, le toca al siguiente.» | clara, alegre; pausa entre las dos reglas | Inicio de la partida (después de los trucos, si los hubo) | `voces/arcoiris/emparejar/equipo/intro.wav` | TTS |
+| arcoiris_emparejar_equipo_intro_trucos_sofia | Coco | «Sofía juega como en la mesa de verdad: ¡como los grandes!» | admirada, de rango y no de desventaja | **[v3]** Fragmento si juega Sofía. **Texto reescrito** (ficha §8, pendiente 2): el retroceso es del equipo, no su truco. Nunca tuvo audio | `voces/arcoiris/emparejar/equipo/intro_trucos_sofia.wav` | TTS |
+| arcoiris_emparejar_equipo_intro_trucos_equipo | Coco | «¡Y quien prenda todas sus lucecitas, hace resbalar al Coleccionauta!» | entusiasta, de hazaña de todos | **[v3]** Cierre de los trucos **con tope** ("los tres" y `maxi+nicole`; clave `intro_equipo_trucos.equipo`, ficha §8, pendiente 1). Sin contar pares: sirve igual a Nicole y a Sofía | `voces/arcoiris/emparejar/equipo/intro_trucos_equipo.wav` | TTS |
+| arcoiris_emparejar_equipo_intro_trucos_equipo_racha | Coco | «¡Y quien haga tres parejas seguidas, hace retroceder al Coleccionauta!» | ídem | **[v3]** Cierre de los trucos **sin tope** (`maxi+sofia`, `nicole+sofia`; clave `intro_equipo_trucos.equipo_racha`) | `voces/arcoiris/emparejar/equipo/intro_trucos_equipo_racha.wav` | TTS |
+| arcoiris_emparejar_equipo_intro | Coco | «¡Jugamos todos juntos! Si encuentras una pareja, sigues jugando. Si no, le toca al siguiente.» | clara, alegre; pausa entre las dos reglas | Inicio de la partida (después de los trucos, si los hubo). **[v3] Solo en composiciones sin tope** (UX HE-66 N8) | `voces/arcoiris/emparejar/equipo/intro.wav` | TTS |
+| arcoiris_emparejar_equipo_intro_tope | Coco | «¡Jugamos todos juntos! Si hay pareja, sigues... ¡hasta prender tus lucecitas!» | clara, alegre; "lucecitas" mirando la guirnalda | **[v3, N8]** Lo mismo que `intro`, en las composiciones **con tope** (clave propuesta `intro_equipo_tope`) | `voces/arcoiris/emparejar/equipo/intro_tope.wav` | TTS |
 | arcoiris_emparejar_equipo_intro_ayudan | Coco | «¡Y los que miran, ayudan a recordar!» | cómplice, mirando a los del puf | Justo después de `intro` | `voces/arcoiris/emparejar/equipo/intro_ayudan.wav` | TTS |
 | arcoiris_emparejar_equipo_vistazo | Coco | «¡Mírenlas bien, equipo!» | entusiasta, en plural | Vistazo al repartir en equipo | `voces/arcoiris/emparejar/equipo/vistazo.wav` | TTS |
 
@@ -491,16 +496,18 @@ solitario.
 |---|---|---|---|---|---|
 | §1 Selección y mapa | 2 | 12 | — | 3 | 17 |
 | §2 Pase de turno | — | 17 | — | — | 17 |
-| §3 Parejas en equipo | 23 | — | — | 6 | 29 |
+| §3 Parejas en equipo | 26 | — | — | 6 | 32 |
 | §4 Rival y derrota | 3 | 13 | 19 | — | 35 |
 | §5 Fiesta | 3 | 5 | — | 3 | 11 |
 | §6 Racha, récord, vela, vistazo, estrellitas | 20 | — | — | — | 20 |
 | §7 Especiales | 9 | — | 4 | — | 13 |
 | §8 Camino de colores | 14 | 1 | — | — | 15 |
 | §9 Colección | 13 | — | — | — | 13 |
-| **Total** | **87** | **48** | **23** | **12** | **170** |
+| **Total** | **90** | **48** | **23** | **12** | **173** |
 
-- **TTS (Coco y Cometa)**: 135 líneas, todas cortas (las más largas son las 12 de `pares_juntados`).
+- **[v3, 07-Oct-2026, HE-67]** +3 de Coco en §3.1 (`intro_trucos_equipo`, `intro_trucos_equipo_racha`,
+  `intro_tope`) y `intro_trucos_sofia` con texto nuevo (sin cambiar el conteo).
+- **TTS (Coco y Cometa)**: 138 líneas, todas cortas (las más largas son las 12 de `pares_juntados`).
   Antes de generar: `--estimar` y OK del PO sobre el costo.
 - **Grabación casera**: 23 del Coleccionauta (papá) y 12 opcionales de los niños.
 - **Fuera de este guion**: las voces de la Batalla final de Arcoíris (HE-67) y los nombres de las cartas

@@ -468,12 +468,17 @@ tiene solo 3 de sus colores de vuelta.
 
 | Motor | z1 | z2 | z3 | z4 | z5 | Reto dorado |
 |---|---|---|---|---|---|---|
-| `emparejar` (tres / dos) | 10 / 16 | 9 / 15 | 17 / 42 | 15 / 24 | 21 / 32 | 27 / 42 |
+| `emparejar` (tres / dos) | **9 / 14** | **7 / 13** | **16 / 41** | **14 / 22** | **19 / 31** | **26 / 41** |
 | `encajar` monumento (límite · tres) | **14** · 7 | 12 · 6 | 12 · 6 | 14 · 7 | 16 · 8 | marco sin límite |
 | `encajar` bandera (límite · tres) | 8 · 3 | 9 · 3 | 9 · 3 | 10 · 4 | México 10 · 4, EE.UU. 14 · 5 | — |
 | `mezclar` (tres / dos) | 2 / 5 | **3 / 6** | **3 / 7** | **4 / 8** | **5 / 10** | — |
 
 En `encajar`, `dos` = el límite de la ronda y vale la peor ronda.
+
+**`emparejar`, recalibrado el 07-Oct-2026 (HE-60, QA M3)** por el vistazo al repartir. En `emparejar`,
+`dos` = `limite_intentos`. Antes (HE-40): 10 / 16, 9 / 15, 17 / 42, 15 / 24, 21 / 32 y 27 / 42. Con
+vistazo, las 3★ quedan en 22-34 %, salvo z2, que queda en 60 % (observación para el PO). Detalle en
+`calibracion-batalla-arcoiris-y-parejas-equipo.md` §11.
 
 ### 7.3 Economía de destellos
 

@@ -17,7 +17,9 @@ extends Node2D
 ##   espera a que termine y recien ahi emite `completado`.
 ## - Registro en `Progreso` al completar (solo si el contenedor fijo `planeta_id`), en un
 ##   unico lugar: los motores no tocan el guardado. Se guarda ANTES de mostrar la celebracion
-##   (auditoria UX HE-10, B1): cerrar la app durante la fiesta nunca pierde el nivel ganado.
+##   (auditoria UX HE-10, B1): cerrar la app durante la fiesta nunca pierde el nivel ganado. Desde
+##   QA HE-60 B1 el motor llama `asegurar_victoria()` en el instante de ganar, asi tampoco se pierde
+##   en la pausa (confeti, voz del ultimo par, record) previa a la celebracion.
 ## - Salida segura: senal `salir_solicitado` (GDD §6 regla 8). El motor nunca navega.
 ##
 ## El nucleo del juego nunca conoce mecanicas concretas: solo instancia la escena del
@@ -133,13 +135,24 @@ func reproducir_voz(ruta: String) -> void:
 		audio.reproducir_voz(ruta_final)
 
 
-func reproducir_sfx(ruta: String) -> void:
+## `tono` cambia la altura del efecto (1.0 = original): p. ej. el "ding" de una racha sube un semitono por
+## eslabon, como el reventon del Rio de pintura.
+func reproducir_sfx(ruta: String, tono: float = 1.0, volumen_db: float = 0.0) -> void:
 	var ruta_final := resolver_ruta_audio(ruta)
 	if ruta_final == "":
 		return
 	var audio := get_node_or_null("/root/Audio")
 	if audio != null:
-		audio.reproducir_sfx(ruta_final)
+		audio.reproducir_sfx(ruta_final, tono, volumen_db)
+
+
+## Salir siempre es seguro (GDD §6 regla 8; QA HE-60 B1 y m8): el motor la llama EN EL INSTANTE en que
+## el nino gana (ultimo par, ultima pieza, ultimo mural...), antes de cualquier animacion, voz de record o
+## pausa previa a `celebrar()`. Guarda destellos, estrellitas y la estacion completada; si despues el nino
+## toca "salir" y el motor se libera durante la fiesta, no se pierde nada. `celebrar()` ya no vuelve a
+## guardar (es una sola vez por nivel cargado). Los motores solo pasan sus numeros: no tocan el guardado.
+func asegurar_victoria(destellos: int, estrellitas: int = 0) -> void:
+	_registrar_una_vez(_destellos_finales(destellos), _estrellitas_visibles(estrellitas))
 
 
 ## Celebracion final comun a todos los motores (GDD §6 regla 9). Monta la escena de
@@ -160,6 +173,8 @@ func celebrar(destellos: int, estrellitas: int = 0, linea_voz: String = "") -> v
 	celebracion.id_personaje = obtener_id_personaje()
 	celebracion.destellos = destellos
 	celebracion.estrellitas = estrellitas_visibles
+	# Brote (ficha motor-emparejar §10.1.1): nunca huecos vacios, solo las estrellitas ganadas.
+	celebracion.estrellitas_sin_huecos = obtener_perfil_dificultad() == "brote"
 	celebracion.segundos_auto_continuar = _segundos_auto_continuar_con_voz(linea_voz)
 	add_child(celebracion)
 	reproducir_voz(linea_voz)
@@ -178,13 +193,16 @@ func _destellos_finales(destellos: int) -> int:
 
 
 ## Estrellitas solo en niveles Estrella jugados por quien tiene ese perfil (M4): un hermano
-## menor que prueba un nivel de Sofia no ve huecos de estrella vacios.
+## menor que prueba un nivel de Sofia no ve huecos de estrella vacios. Desde HE-60 (ficha
+## motor-emparejar §10.1.1) tambien un nivel Brote jugado por quien tiene ese perfil, si el nivel
+## puntua por puntaje (`umbrales_puntaje`); ahi la estrellita minima es 1 ("la estrella de terminar").
 func _estrellitas_visibles(estrellitas: int) -> int:
-	if obtener_perfil_dificultad() != "estrella":
-		return 0
-	if obtener_id_personaje() != PERSONAJE_POR_PERFIL["estrella"]:
-		return 0
-	return clampi(estrellitas, 0, 3)
+	var perfil := obtener_perfil_dificultad()
+	if perfil == "estrella" and obtener_id_personaje() == PERSONAJE_POR_PERFIL["estrella"]:
+		return clampi(estrellitas, 0, 3)
+	if perfil == "brote" and nivel.has("umbrales_puntaje") and obtener_id_personaje() == PERSONAJE_POR_PERFIL["brote"]:
+		return clampi(estrellitas, 1, 3)
+	return 0
 
 
 ## Nunca auto-continua antes de que termine la voz de cierre (+ margen). 0 se respeta (espera toque).
@@ -252,3 +270,43 @@ func borrar_estado_parcial() -> void:
 	var progreso := get_node_or_null("/root/Progreso")
 	if progreso != null and planeta_id != "" and id_perfil != "":
 		progreso.borrar_estado_parcial(id_perfil, planeta_id, _id_nivel_actual())
+
+
+## Record (mejor puntaje, "mas es mejor") de este nivel para este hermano: 0 = todavia no hay. Sin
+## `planeta_id` (motor en prueba) no hay record guardado. Los motores no tocan el guardado.
+func obtener_record() -> int:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso == null or planeta_id == "" or id_perfil == "":
+		return 0
+	return progreso.obtener_record_nivel(id_perfil, planeta_id, _id_nivel_actual())
+
+
+## Guarda `puntaje` si supera el record. Devuelve true si es record nuevo (y quedo guardado).
+func registrar_record(puntaje: int) -> bool:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso == null or planeta_id == "" or id_perfil == "":
+		return false
+	return progreso.registrar_puntaje_nivel(id_perfil, planeta_id, _id_nivel_actual(), puntaje)
+
+
+## Mejores estrellitas ya ganadas en este nivel (0 si nunca se completo o no hay guardado).
+func obtener_estrellitas_previas() -> int:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso == null or planeta_id == "" or id_perfil == "":
+		return 0
+	return progreso.obtener_estrellitas_nivel(id_perfil, planeta_id, _id_nivel_actual())
+
+
+## Presentaciones de una sola vez por hermano ("vistazo", "vela", "lupa"...). Sin guardado (motor en
+## prueba) nunca se dan por vistas, asi la presentacion se puede revisar siempre.
+func presentacion_vista(tipo: String) -> bool:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso == null or id_perfil == "" or planeta_id == "":
+		return false
+	return progreso.especial_conocido(id_perfil, tipo)
+
+
+func marcar_presentacion_vista(tipo: String) -> void:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and id_perfil != "" and planeta_id != "":
+		progreso.marcar_especial_conocido(id_perfil, tipo)

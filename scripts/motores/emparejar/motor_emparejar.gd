@@ -29,15 +29,46 @@ extends "res://scripts/base/minijuego_base.gd"
 ## Otros campos nuevos: `cartas_bailan` (N cartas a la vista cambian de lugar despacito tras cada
 ## acierto), `voz` por pareja (p. ej. "¡Chile!" o "¡S de sol!", en vez del acierto generico),
 ## `escala` y `voz_toque` por elemento, y los dibujos/banderas de `dibujos_emparejar.gd`.
+##
+## RETO REAL (HE-60, ficha §10.1, §10.1.1 y §10.2; PO 06-Oct-2026). Todo opcional y por datos: un nivel
+## sin `puntaje` ni `vistazo` se juega exactamente como antes.
+## - `puntaje.mostrar: "barra"` (Nicole y Sofia): racha x1-x5 con contador junto a Coco y nuditos en su
+##   cresta, "¡a la primera!" (+200), "+N" que suben desde el par, barra de puntaje con banderita-cupcake
+##   del record propio, vela del tiempo par (cupcake) y record personal al terminar.
+## - `puntaje.mostrar: "solo_sonido"` (Maxi): solo la cresta y el "ding" que sube de tono. Sin numeros,
+##   sin barra, sin vela ni record (GDD §6, regla de oro 2).
+## - `vistazo`: al repartir, algunas cartas se muestran juntas un ratito (Nicole parejas completas,
+##   Sofia cartas sueltas) en cada ronda tapada. No es una pista: no cuesta nada.
+## - `umbrales_puntaje` (Nicole): 1-3 estrellitas por puntaje base (sin el bono de la vela).
+## Las voces de reto aun no estan grabadas (HE-67): si falta una, suena la generica de siempre.
+## Correcciones de las auditorias HE-60 (07-Oct-2026, UX y QA):
+## - QA B1: la estacion, los destellos, las estrellitas y el record se guardan en el instante del ultimo par
+##   (`asegurar_victoria` del contrato base), antes de la vela, el trofeo y la fiesta: salir es seguro.
+## - QA M1: una presentacion de una sola vez ("vistazo", "vela") solo se marca si su voz existe y sono.
+## - UX B1: sin las voces `vela_presenta` y `vela_dormida` no hay vela (una regla que no se puede explicar
+##   por voz no se muestra).
+## - UX M2: el vistazo siempre espera a que Coco calle y siempre dice "¡mira!".
+## - UX M3: la vela recien se enciende despues de las voces de presentacion y de la consigna, y se pausa
+##   mientras Coco o Cometa repiten una instruccion pedida, con el globo de la pista abierto y con la app
+##   en segundo plano.
 
 signal par_acertado(id_pareja: String)
 signal intento_fallido()
 signal nivel_fallado()
 signal carta_intercambiada(a: CartaEmparejar, b: CartaEmparejar)
+## Reto real (HE-60, ficha §10.9). `n` = pares seguidos sin "no es este" (0 = se corto).
+signal racha_cambiada(n: int)
+signal a_la_primera(id_pareja: String)
+## La barra de puntaje paso la banderita del record propio (durante la partida, sin pausar).
+signal record_superado()
 ## B4 (auditoria UX 18-Jul-2026): la senal de salida `salir_solicitado()` vive desde HE-10
 ## en el contrato base (`minijuego_base.gd`), comun a todos los motores.
 
 const PistaConCosto := preload("res://scripts/ui/pista_con_costo.gd")
+const BarraRecord := preload("res://scripts/ui/barra_record.gd")
+const RachaCresta := preload("res://scripts/ui/racha_cresta.gd")
+const VelaCupcake := preload("res://scripts/ui/vela_cupcake.gd")
+const Cupcake := preload("res://scripts/ui/dibujo_cupcake.gd")
 const CARTA_ESCENA: PackedScene = preload("res://escenas/minijuegos/emparejar/carta_emparejar.tscn")
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 const Icono := preload("res://scripts/motores/emparejar/icono_emparejar.gd")
@@ -63,9 +94,31 @@ const SFX_PAR := "sfx/ui/confirmar.ogg"
 const SFX_NO_ES_ESTE := "sfx/ui/no_es_este.ogg"
 const SFX_TOQUE := "sfx/ui/toque.ogg"
 const SFX_GAG := "sfx/ui/abrir.ogg"
+## UX HE-60 m2: sonidos propios suaves (nunca un tono grave tipo "wah-wah").
+const SFX_PUF := "sfx/ui/puf.ogg"
+const SFX_FIUU := "sfx/ui/fiuu.ogg"
+const SFX_BLUP := "sfx/ui/blup.ogg"
+## UX HE-60 m1: los toques durante el vistazo suenan bajito, con enfriamiento por carta.
+const VOLUMEN_TOQUE_VISTAZO_DB := -12.0
+const ENFRIAMIENTO_TOQUE_VISTAZO_MS := 150
 const COLOR_CONTORNO := Color("#2B3350")
 const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
+## Reto real (HE-60): lugares fuera del tablero (ZONA_TABLERO va de x 250 a 1130). La barra del record a
+## la derecha, bajo el medidor de estrellitas de la pista de Sofia y sobre Cometa; la vela bajo el boton de salir; el contador de racha
+## sobre Coco.
+const RECT_BARRA_RECORD := Rect2(1168, 172, 84, 396)
+const RECT_VELA := Vector2(28, 126)
+const RECT_CONTADOR_RACHA := Rect2(30, 222, 180, 92)
+const SEGUNDOS_CASCADA_REPARTO := 0.035
+const SEGUNDOS_CASCADA_TAPAR := 0.06
+## Primera vez que un hermano ve el vistazo: se espera la intro (max) y se alarga un poco para la voz.
+const SEGUNDOS_ESPERA_INTRO := 6.0
+const SEGUNDOS_EXTRA_PRESENTACION := 1.5
+## Tope de espera a que Coco termine una presentacion antes de encender la vela (UX M3).
+const SEGUNDOS_ESPERA_PRESENTACION := 12.0
+## UX m5: el trebol de "¡a la primera!" aterriza junto al contador xN (no sobre la vela).
+const DESTINO_TREBOL := Vector2(120, 330)
 
 @onready var _tablero: Control = %tablero
 @onready var _mesa: Panel = %mesa
@@ -131,6 +184,39 @@ var _en_movimiento := {}
 var _voces_par := {}
 var _marcadores: Array = []
 
+## Reto real (HE-60). `_reto` = bloque `puntaje` del nivel (vacio = sin reto: como antes).
+var _reto: Dictionary = {}
+var _con_barra := false  ## "barra": numeros, record y vela (Nicole/Sofia); si no, solo sonido y cresta
+var _racha := 0
+var _puntaje_base := 0  ## pares x racha + "a la primera" (las estrellitas de Nicole salen de aqui)
+var _bono_vela := 0
+var _record_previo := 0
+var _pares_station := 0  ## pares de toda la estacion (todas las rondas), para la barra y los umbrales
+## Cartas que ya estuvieron boca arriba alguna vez (vistazo, ayuda o toque): "a la primera" exige que
+## todas las del par se den vuelta por primera vez en la misma jugada.
+var _ya_vistas := {}
+var _jugada_virgen := true
+var _en_vistazo := false
+var _vela_activa := false
+var _vela_corriendo := false
+var _vela_restante := 0.0
+var _vela_total := 0.0
+var _barra_record: Control
+var _cresta: Control
+var _vela: Control
+var _contador_racha: Label
+var _pompa: Control
+var _trofeo: Control
+## QA B1: el tablero final ya se gano (todo guardado); la vela ya no se enciende.
+var _tablero_terminado := false
+var _record_nuevo := false
+## UX M3: pausas de la vela.
+var _pausa_por_ayuda := false
+var _app_en_pausa := false
+var _ultimo_toque_vistazo := {}
+## SOLO arneses QA: muestra la vela aunque falten sus voces (UX B1). En el juego siempre es false.
+var vela_sin_voz_en_pruebas := false
+
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
 var _salto_anfitriona := 0.0
@@ -159,9 +245,11 @@ func _ready() -> void:
 	_construir_marcadores_ronda()
 	_construir_tablero()
 	_construir_progreso()
+	_preparar_reto()
 	_boton_pista.visible = bool(nivel.get("pistas_cuestan_estrellita", false))
 	_reproducir_voz("intro", _linea("intro"))
 	_actualizar_depuracion()
+	_arrancar_tablero()
 
 
 func _process(delta: float) -> void:
@@ -170,6 +258,16 @@ func _process(delta: float) -> void:
 	var hablando: bool = audio != null and audio.esta_hablando()
 	var bamboleo := absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0
 	_anfitriona.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
+	_avanzar_vela(delta, hablando)
+
+
+## UX M3: con la app en segundo plano (tablet) la vela no se consume.
+func _notification(que: int) -> void:
+	match que:
+		NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_APPLICATION_PAUSED:
+			_app_en_pausa = true
+		NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_APPLICATION_RESUMED:
+			_app_en_pausa = false
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -256,6 +354,8 @@ func _grupos_del_nivel() -> Array:
 func _construir_tablero() -> void:
 	var elementos: Array = []
 	_voces_par.clear()
+	_ya_vistas.clear()
+	_jugada_virgen = true
 	for grupo: Dictionary in _grupos_del_nivel():
 		if str(grupo.get("voz", "")) != "":
 			_voces_par[str(grupo.get("id_grupo", ""))] = str(grupo["voz"])
@@ -309,6 +409,15 @@ func _construir_progreso() -> void:
 func _al_tocar_carta(carta: CartaEmparejar) -> void:
 	if carta.esta_acertada or _en_gag or _en_transicion:
 		return
+	if _en_vistazo:
+		# El vistazo no se puede saltar (ficha §10.2 punto 4): el toque solo hace el pulso suave y un
+		# toquecito bajito (UX m1, GDD §6.5), con enfriamiento por carta para que un manotazo no haga rafaga.
+		carta.pulso_espera()
+		var ahora := Time.get_ticks_msec()
+		if ahora - int(_ultimo_toque_vistazo.get(carta, -ENFRIAMIENTO_TOQUE_VISTAZO_MS)) >= ENFRIAMIENTO_TOQUE_VISTAZO_MS:
+			_ultimo_toque_vistazo[carta] = ahora
+			reproducir_sfx(SFX_TOQUE, 1.0, VOLUMEN_TOQUE_VISTAZO_DB)
+		return
 
 	if _procesando and _oculto and _visible_minimo > 0.0:
 		var falta := _visible_minimo - (Time.get_ticks_msec() / 1000.0 - _no_es_este_desde)
@@ -339,6 +448,11 @@ func _al_tocar_carta(carta: CartaEmparejar) -> void:
 		carta.deseleccionar(_oculto)
 		return
 
+	if _seleccionadas.is_empty():
+		_jugada_virgen = true
+	if _ya_vistas.has(carta) or not _oculto:
+		_jugada_virgen = false
+	_ya_vistas[carta] = true
 	carta.seleccionar()
 	reproducir_sfx(SFX_VOLTEAR)
 	if carta.voz_toque != "":
@@ -363,13 +477,15 @@ func _resolver_par() -> void:
 		_pares_acertados += 1
 		for carta in grupo:
 			carta.marcar_acertada()
-		reproducir_sfx(SFX_PAR)
+		var primera := _jugada_virgen and _oculto
+		_jugada_virgen = false
+		_sumar_acierto_reto(grupo, primera)
 		par_acertado.emit(a.id_pareja)
 		_celebrar_grupo(grupo)
 		if _pares_acertados >= _pares_totales:
 			_terminar_tablero(a)
 		else:
-			_reproducir_voz_acierto(a)
+			_reproducir_voz_acierto(a, primera)
 			if _intercambios > 0:
 				_despues(0.75, _intercambiar_cartas.bind(_intercambios))
 			elif _bailes > 0:
@@ -380,8 +496,10 @@ func _resolver_par() -> void:
 	if _limite_intentos != null:
 		_intentos_usados += 1
 	_fallos_seguidos += 1
+	_jugada_virgen = false
 	intento_fallido.emit()
 	reproducir_sfx(SFX_NO_ES_ESTE)
+	_cortar_racha()
 	_reproducir_voz("no_es_este", _linea_al_azar("no_es_este"))
 	for carta in grupo:
 		carta.animar_no_es_este()
@@ -440,6 +558,7 @@ func _dar_ayuda(con_voz := true, preferido := "") -> void:
 	var claves := pendientes.keys()
 	var elegido = preferido if pendientes.has(preferido) else claves[randi() % claves.size()]
 	for carta in pendientes[elegido]:
+		_ya_vistas[carta] = true
 		carta.revelar_momento(SEGUNDOS_AYUDA)
 	_reaccion_anfitriona("salta")
 	if con_voz:
@@ -670,7 +789,7 @@ func _arcoiris_especial() -> void:
 	tween.tween_callback(arco.queue_free)
 
 
-func _reproducir_voz_acierto(carta: CartaEmparejar) -> void:
+func _reproducir_voz_acierto(carta: CartaEmparejar, primera := false) -> void:
 	# Pareja con nombre propio ("¡Chile!", "¡S de sol!"): se dice su nombre.
 	if _voces_par.has(carta.id_pareja):
 		_reproducir_voz("par", _voces_par[carta.id_pareja])
@@ -679,7 +798,35 @@ func _reproducir_voz_acierto(carta: CartaEmparejar) -> void:
 	if carta.especial and _linea("acierto_especial") != "":
 		_reproducir_voz("acierto_especial", _linea("acierto_especial"))
 		return
+	# Reto (HE-60): "¡a la primera!" y, desde la racha x2, la voz de racha REEMPLAZA a acierto_par
+	# (guion §6: no suenan las dos). Si la linea aun no esta grabada, suena la generica.
+	if _con_barra:
+		if primera and _voz_existe(_linea_al_azar("a_la_primera")):
+			_reproducir_voz("a_la_primera", _ultima_linea)
+			return
+		var voz_racha := _linea_racha()
+		if voz_racha != "" and _voz_existe(voz_racha):
+			_reproducir_voz("racha", voz_racha)
+			return
 	_reproducir_voz("acierto_par", _linea_al_azar("acierto_par"))
+
+
+## Voz de la racha actual: x2..x5 por numero, y "sigue" estando en el tope.
+func _linea_racha() -> String:
+	if _racha < 2:
+		return ""
+	var voces = (nivel if _conf.is_empty() else _conf).get("lineas_voz", {}).get("racha", {})
+	if not voces is Dictionary:
+		return ""
+	var tope := int(_reto.get("racha_tope", 5))
+	if _racha > tope:
+		return str(voces.get("sigue", voces.get(str(tope), "")))
+	return str(voces.get(str(_racha), ""))
+
+
+func _voz_existe(ruta: String) -> bool:
+	var final := resolver_ruta_audio(ruta)
+	return final != "" and ResourceLoader.exists(final)
 
 
 func _linea(clave: String) -> String:
@@ -714,6 +861,8 @@ func _reproducir_voz(clave: String, ruta: String) -> void:
 func _al_tocar_cometa() -> void:
 	reproducir_sfx(SFX_TOQUE)
 	_reproducir_voz("pista", _linea("pista"))
+	# UX M3: pedir ayuda no cuesta tiempo; la vela espera a que termine la instruccion.
+	_pausa_por_ayuda = true
 
 
 ## Tocar a Coco: da un saltito y vuelve a explicar el juego.
@@ -729,6 +878,7 @@ func _al_tocar_anfitriona(event: InputEvent) -> void:
 		_reproducir_voz("intro_ronda", _linea("intro_ronda"))
 	else:
 		_reproducir_voz("intro", _linea("intro"))
+	_pausa_por_ayuda = true
 
 
 func _reaccion_anfitriona(tipo: String) -> void:
@@ -828,23 +978,43 @@ func _celebrar_victoria(ultima: CartaEmparejar = null) -> void:
 	# Confeti y bailecito de Coco mientras la ultima figura vuela a su ranura; despues, la
 	# celebracion final reutilizable (HE-10). `celebrar()` emite `completado` al terminar.
 	_en_transicion = _hay_rondas()
+	_tablero_terminado = true
+	_vela_corriendo = false
+	# QA B1 (GDD §6 regla 8): TODO queda guardado en este instante, antes de la vela, el record y la
+	# fiesta. La vela se cobra ya (lo que quede encendido); lo que viene despues es solo animacion.
+	var destellos := _calcular_destellos()
+	var estrellitas := _calcular_estrellitas()
+	_bono_vela = _calcular_bono_vela()
+	asegurar_victoria(destellos, estrellitas)
+	var total := _puntaje_base + _bono_vela
+	_record_nuevo = _con_barra and total > 0 and registrar_record(total)
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
 	_encender_marcador(_ronda)
-	var destellos := _calcular_destellos()
 	var espera := 0.9
 	if ultima != null and _voces_par.has(ultima.id_pareja):
 		# La ultima pareja tambien dice su nombre ("¡Japon!") antes de la fiesta final.
 		_reproducir_voz("par", _voces_par[ultima.id_pareja])
 		espera = 1.6
 	await get_tree().create_timer(espera).timeout
-	celebrar(destellos, _calcular_estrellitas(), _linea("victoria_final"))
+	if not is_inside_tree():
+		return
+	# Reto (HE-60): la vela encendida se vuelve puntos y se registra el record ANTES de la fiesta.
+	await _cobrar_vela()
+	if not is_inside_tree():
+		return
+	await _cerrar_record()
+	if not is_inside_tree():
+		return
+	_guardar_trofeo()
+	celebrar(destellos, estrellitas, _linea_celebracion(estrellitas))
 
 
 ## Mini-fiesta entre rondas: confeti, Coco baila, se enciende la estrella de la ronda, las cartas
 ## se despiden y llega el tablero nuevo con su consigna.
 func _fin_de_ronda(ultima: CartaEmparejar) -> void:
 	_en_transicion = true
+	_vela_corriendo = false
 	_pares_previos += _pares_totales
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
@@ -896,6 +1066,7 @@ func _iniciar_ronda() -> void:
 	_reproducir_voz("intro_ronda", _linea("intro_ronda"))
 	_en_transicion = false
 	_actualizar_depuracion()
+	_arrancar_tablero()
 
 
 func _esperar_voz(maximo: float) -> void:
@@ -961,6 +1132,8 @@ func _encender_marcador(indice: int) -> void:
 ## con la mitad o mas de los intentos sobrantes -> 3; si no -> 2. Tras una derrota-gag -> 1. Ganar
 ## siempre da al menos 1. `celebrar()` solo las muestra en niveles Estrella.
 func _calcular_estrellitas() -> int:
+	if obtener_perfil_dificultad() == "brote" and nivel.has("umbrales_puntaje"):
+		return _estrellitas_por_puntaje()
 	var base := 3
 	if _derrota_disparada:
 		base = 1
@@ -995,12 +1168,17 @@ func _actualizar_depuracion() -> void:
 	if not _panel_depuracion.visible:
 		return
 	var limite := "sin limite" if _limite_intentos == null else str(_limite_intentos)
+	var reto := ""
+	if not _reto.is_empty():
+		reto = "
+racha: %d · puntaje base: %d (+%d vela) · record previo: %d%s" % [_racha, _puntaje_base,
+			_bono_vela, _record_previo, " · vela %.0f s" % _vela_restante if _vela_activa else ""]
 	var ayuda := "no" if _ayuda_tras_fallos == 0 else "tras %d fallos seguidos" % _ayuda_tras_fallos
 	var ronda := "" if not _hay_rondas() else " · ronda %d de %d" % [_ronda + 1, _rondas.size()]
-	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s%s\nperfil: %s · juega: %s\npares: %d de %d\nfallos que cuentan: %d / %s\nfallos seguidos: %d · ayuda: %s\nderrota-gag ya ocurrio: %s\nsi termina ahora: %d destellos, %d estrellitas" % [
+	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s%s\nperfil: %s · juega: %s\npares: %d de %d\nfallos que cuentan: %d / %s\nfallos seguidos: %d · ayuda: %s\nderrota-gag ya ocurrio: %s\nsi termina ahora: %d destellos, %d estrellitas%s" % [
 		nivel.get("id_nivel", "?"), ronda, obtener_perfil_dificultad(), obtener_id_personaje(),
 		_pares_acertados, _pares_totales, _intentos_usados, limite, _fallos_seguidos, ayuda,
-		"si" if _derrota_disparada else "no", _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas())]
+		"si" if _derrota_disparada else "no", _calcular_destellos(), _estrellitas_visibles(_calcular_estrellitas()), reto]
 
 
 func _estilizar_interfaz() -> void:
@@ -1079,3 +1257,510 @@ func _dibujar_flecha(icono: Control) -> void:
 		puntos.append(c + p * k)
 	icono.draw_colored_polygon(puntos, TURQUESA)
 	Figura.contornear(icono, puntos, 5.0 * k)
+
+
+# ---------------------------------------------------------------------------
+# Reto real (HE-60, ficha motor-emparejar §10.1, §10.1.1 y §10.2)
+# ---------------------------------------------------------------------------
+
+## Lee el bloque `puntaje` y arma lo que se ve: cresta (todos), y en "barra" el contador de racha, la
+## barra con la banderita del record propio y la vela (si corresponde). Sin `puntaje`, nada cambia.
+func _preparar_reto() -> void:
+	_pares_station = _contar_pares_estacion()
+	var reto = nivel.get("puntaje", null)
+	_reto = reto if reto is Dictionary else {}
+	if _reto.is_empty():
+		return
+	_con_barra = str(_reto.get("mostrar", "solo_sonido")) == "barra" and obtener_perfil_dificultad() != "semilla"
+	_cresta = RachaCresta.new()
+	_cresta.tope = int(_reto.get("racha_tope", 5))
+	_cresta.mostrar_apagados = obtener_perfil_dificultad() != "semilla"
+	_anfitriona.add_child(_cresta)
+	if not _con_barra:
+		return
+	_record_previo = obtener_record()
+	# Vela del tiempo par (UX M7): Sofia desde la primera partida; Nicole solo si ya tiene record en
+	# esta estacion. `tiempo_par_s: null` (Nicole en la zona 1) = sin vela. UX B1: sin las voces que la
+	# presentan y que acompanan su "puf", tampoco hay vela.
+	var tiempo_par = _reto.get("tiempo_par_s", null)
+	_vela_activa = tiempo_par != null and float(tiempo_par) > 0.0 \
+		and (bool(_reto.get("vela_desde_primera", false)) or _record_previo > 0) \
+		and _vela_explicable()
+	var padre: Control = _boton_salir.get_parent()
+	_barra_record = BarraRecord.new()
+	padre.add_child(_barra_record)
+	padre.move_child(_barra_record, _efectos.get_index())
+	_barra_record.position = RECT_BARRA_RECORD.position
+	_barra_record.size = RECT_BARRA_RECORD.size
+	# UX M1: el alto se fija una sola vez aca (incluye el bono realista de la vela) y no cambia mas.
+	_barra_record.preparar(_record_previo, _tope_barra())
+	_barra_record.record_pasado.connect(_al_pasar_record)
+	_barra_record.tocada.connect(_al_tocar_adorno)
+
+	_contador_racha = Label.new()
+	_contador_racha.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_contador_racha.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_contador_racha.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	if ResourceLoader.exists(RUTA_FUENTE):
+		_contador_racha.add_theme_font_override("font", load(RUTA_FUENTE))
+	_contador_racha.add_theme_font_size_override("font_size", 64)
+	_contador_racha.add_theme_color_override("font_color", DORADO)
+	_contador_racha.add_theme_color_override("font_outline_color", COLOR_CONTORNO)
+	_contador_racha.add_theme_constant_override("outline_size", 14)
+	padre.add_child(_contador_racha)
+	padre.move_child(_contador_racha, _efectos.get_index())
+	_contador_racha.position = RECT_CONTADOR_RACHA.position
+	_contador_racha.size = RECT_CONTADOR_RACHA.size
+	_contador_racha.pivot_offset = RECT_CONTADOR_RACHA.size / 2.0
+	_contador_racha.hide()
+
+	if _vela_activa:
+		_vela_total = float(tiempo_par)
+		_vela_restante = _vela_total
+		_vela = VelaCupcake.new()
+		# UX m3: para Sofia la vela es parte del reto y se tiene que leer de un vistazo.
+		_vela.cera_larga = obtener_perfil_dificultad() == "estrella"
+		padre.add_child(_vela)
+		padre.move_child(_vela, _efectos.get_index())
+		_vela.position = RECT_VELA
+		_vela.tocada.connect(_al_tocar_adorno)
+
+
+## UX B1: la vela solo se muestra si Coco puede presentarla y acompanar su "puf" con voz.
+func _vela_explicable() -> bool:
+	if vela_sin_voz_en_pruebas:
+		return true
+	return _voz_existe(_linea("vela_presenta")) and _voz_existe(_linea("vela_dormida"))
+
+
+## UX m4: tocar la vela o la barra solo las menea con un "ding" suave (sin voz ni efecto en el juego).
+func _al_tocar_adorno() -> void:
+	reproducir_sfx(SFX_TOQUE, 1.5, -6.0)
+
+
+func _contar_pares_estacion() -> int:
+	if _rondas.is_empty():
+		return _pares_totales
+	var total := 0
+	for ronda: Dictionary in _rondas:
+		total += (ronda.get("grupos", ronda.get("pares", nivel.get("pares", []))) as Array).size()
+	return total
+
+
+## Alto sugerido de la barra: algo mas que el umbral de 3 estrellitas (Nicole) o ~x3 por par, mas el bono
+## realista de la vela si la hay (mitad del tiempo par, UX M1). La barra usa max(record x 1.3, esto).
+func _tope_barra() -> float:
+	var base := float(_pares_station * int(_reto.get("por_par", 100)) * 3)
+	var umbrales = nivel.get("umbrales_puntaje", null)
+	if umbrales is Dictionary and umbrales.has("tres"):
+		base = float(umbrales["tres"]) * 1.15
+	if _vela_activa:
+		base += float(_reto.get("tiempo_par_s", 0.0)) * float(_reto.get("bono_por_segundo", 10)) * 0.5
+	return base
+
+
+## Cada tablero nuevo (inicio o ronda): vistazo si toca y despues corre la vela.
+func _arrancar_tablero() -> void:
+	var ronda := _ronda
+	if _hay_vistazo():
+		await _hacer_vistazo()
+		if not is_inside_tree() or ronda != _ronda:
+			return
+	if ronda == 0:
+		# §10.1.1 punto 4: al volver a una estacion con 1 o 2 estrellitas, la pista de "otra estrellita".
+		if obtener_perfil_dificultad() == "brote" and _estrellitas_visibles(1) > 0:
+			var previas := obtener_estrellitas_previas()
+			if previas == 1 or previas == 2:
+				await _voz_cuando_calle("otra_estrellita", _linea("otra_estrellita"))
+				if not is_inside_tree():
+					return
+		# QA M1: la presentacion solo se gasta si su voz existe y sono.
+		var presenta := _linea("vela_presenta")
+		if _vela_activa and not presentacion_vista("vela") and _voz_existe(presenta):
+			await _voz_cuando_calle("vela_presenta", presenta)
+			if not is_inside_tree():
+				return
+			marcar_presentacion_vista("vela")
+	# UX M3: la vela recien se enciende cuando Coco termino de presentar y de dar la consigna.
+	if _vela_activa:
+		await _esperar_voz(SEGUNDOS_ESPERA_PRESENTACION)
+		if not is_inside_tree() or ronda != _ronda:
+			return
+	_encender_vela()
+
+
+func _hay_vistazo() -> bool:
+	return _oculto and _conf.get("vistazo", null) is Dictionary and obtener_perfil_dificultad() != "semilla"
+
+
+## Vistazo al repartir (§10.2): las elegidas se dan vuelta juntas con "¡mira!", una pompa se encoge
+## mientras dura y revienta; despues se tapan en cascada. No se puede saltar ni cuesta nada.
+func _hacer_vistazo() -> void:
+	_en_vistazo = true
+	var conf: Dictionary = _conf["vistazo"]
+	var elegidas := _cartas_vistazo(conf)
+	await get_tree().create_timer(0.15 + _cartas.size() * SEGUNDOS_CASCADA_REPARTO + 0.45).timeout
+	if not is_inside_tree():
+		return
+	var segundos := float(conf.get("ms", 2000)) / 1000.0
+	# UX M2: SIEMPRE se espera a que Coco termine (intro o consigna de la ronda): nadie memoriza cartas
+	# mientras escucha una instruccion.
+	await _esperar_voz(SEGUNDOS_ESPERA_INTRO)
+	if not is_inside_tree():
+		return
+	var presenta := _linea("vistazo_presenta")
+	if not presentacion_vista("vistazo") and _voz_existe(presenta):
+		# Primera vez de este hermano: Coco lo cuenta como un secreto (en lugar de "¡mira!"). QA M1: solo
+		# se da por presentado si la voz existe y sono.
+		_reproducir_voz("vistazo_presenta", presenta)
+		marcar_presentacion_vista("vistazo")
+		segundos += SEGUNDOS_EXTRA_PRESENTACION
+	else:
+		# UX M2: siempre "¡mira!" justo antes de dar vuelta las cartas.
+		_reproducir_voz("vistazo", _linea("vistazo"))
+	reproducir_sfx(SFX_VOLTEAR, 1.2)
+	for carta: CartaEmparejar in elegidas:
+		_ya_vistas[carta] = true
+		carta.destapar_vistazo()
+		_estallido(carta.global_position + carta.size / 2.0, 5, [Color.WHITE, DORADO], 0.5)
+	_mostrar_pompa(segundos)
+	await get_tree().create_timer(segundos).timeout
+	if not is_inside_tree():
+		return
+	for carta: CartaEmparejar in elegidas:
+		if is_instance_valid(carta):
+			carta.tapar_vistazo()
+		await get_tree().create_timer(SEGUNDOS_CASCADA_TAPAR).timeout
+		if not is_inside_tree():
+			return
+	reproducir_sfx(SFX_TAPAR)
+	await get_tree().create_timer(0.2).timeout
+	_en_vistazo = false
+
+
+## Cuales se muestran (M6, aceptado por el PO): parejas completas (Nicole: 1 par con <= 10 cartas, 2 con
+## 12-16) o cartas sueltas sin repetir grupo (Sofia: round(cartas/4)). `cartas` numerico pisa el "auto".
+func _cartas_vistazo(conf: Dictionary) -> Array:
+	var cantidad = conf.get("cartas", "auto")
+	var auto: bool = not (cantidad is float or cantidad is int)
+	var por_grupo := {}
+	for carta in _cartas:
+		if not carta.esta_acertada:
+			if not por_grupo.has(carta.id_pareja):
+				por_grupo[carta.id_pareja] = []
+			por_grupo[carta.id_pareja].append(carta)
+	var ids := por_grupo.keys()
+	ids.shuffle()
+	var elegidas: Array = []
+	if bool(conf.get("pares_completos", obtener_perfil_dificultad() == "brote")):
+		var grupos := (1 if _cartas.size() <= 10 else 2) if auto else maxi(1, int(cantidad) / _tamano_grupo)
+		for id in ids.slice(0, grupos):
+			elegidas.append_array(por_grupo[id])
+	else:
+		var sueltas := roundi(_cartas.size() / 4.0) if auto else int(cantidad)
+		for id in ids.slice(0, sueltas):
+			var grupo: Array = por_grupo[id]
+			elegidas.append(grupo[randi() % grupo.size()])
+	return elegidas
+
+
+## Pompa de jabon sobre el tablero que se encoge mientras dura el vistazo y revienta al final.
+func _mostrar_pompa(segundos: float) -> void:
+	if _pompa != null and is_instance_valid(_pompa):
+		_pompa.queue_free()
+	var pompa := Control.new()
+	_pompa = pompa
+	pompa.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_efectos.add_child(pompa)
+	# QA m4: mas grande y con contorno oscuro para que se vea sobre la barra de marcadores (es la senal
+	# de "esto dura poco"). Nace sobre el borde de arriba de la mesa, sin tapar cartas.
+	var centro := _mesa.position + Vector2(_mesa.size.x / 2.0, 2.0)
+	var estado := {"radio": 46.0}
+	pompa.draw.connect(func() -> void:
+		var r: float = estado["radio"]
+		pompa.draw_circle(centro, r, Color(0.75, 0.95, 1.0, 0.6))
+		pompa.draw_arc(centro, r + 2.0, 0, TAU, 48, Color(COLOR_CONTORNO, 0.55), 3.0, true)
+		pompa.draw_arc(centro, r, 0, TAU, 48, Color(1, 1, 1, 0.95), 4.0, true)
+		pompa.draw_arc(centro, r * 0.7, -2.4, -1.4, 12, Color(1, 1, 1, 0.95), 4.0, true)
+		pompa.draw_circle(centro + Vector2(r * 0.35, -r * 0.4), maxf(2.0, r * 0.12), Color(1, 1, 1, 0.9)))
+	var tween := pompa.create_tween()
+	tween.tween_method(func(valor: float) -> void:
+		estado["radio"] = valor
+		pompa.queue_redraw()
+	, 46.0, 14.0, segundos)
+	tween.tween_callback(func() -> void:
+		_estallido(centro, 6, [Color.WHITE, Color("#BDEFFF")], 0.45)
+		pompa.queue_free())
+
+
+## Pareja formada con reto: racha, "ding" un semitono mas agudo por eslabon, cresta y (en barra) puntos.
+func _sumar_acierto_reto(grupo: Array, primera: bool) -> void:
+	if _reto.is_empty():
+		reproducir_sfx(SFX_PAR)
+		return
+	_racha += 1
+	var tope := int(_reto.get("racha_tope", 5))
+	var multiplicador := mini(_racha, tope)
+	reproducir_sfx(SFX_PAR, pow(2.0, (multiplicador - 1) / 12.0))
+	_cresta.fijar(multiplicador)
+	racha_cambiada.emit(_racha)
+	if not _con_barra:
+		return
+	# m10: los numeros nacen SOBRE las cartas del par (ya destapadas), nunca entre ellas: si el par esta
+	# lejos, el punto medio cae sobre cartas tapadas.
+	var ultima: CartaEmparejar = grupo.back()
+	var primera_carta: CartaEmparejar = grupo[0]
+	var puntos := int(_reto.get("por_par", 100)) * multiplicador
+	_puntaje_base += puntos
+	_flotar_puntos("+%d" % puntos, ultima.global_position + ultima.size * Vector2(0.5, 0.42), ultima.color_figura)
+	if primera:
+		var bono := int(_reto.get("bono_a_la_primera", 200))
+		_puntaje_base += bono
+		_sello_a_la_primera(grupo, primera_carta.global_position + primera_carta.size * Vector2(0.5, 0.42), bono)
+		a_la_primera.emit(str((grupo[0] as CartaEmparejar).id_pareja))
+	_actualizar_contador_racha()
+	if _barra_record.fijar_puntaje(_puntaje_base + _bono_vela):
+		reproducir_sfx(SFX_BLUP, 1.0 + 0.05 * mini(_racha, 5))
+
+
+## Un "no es este" corta la racha: los nuditos se apagan de a uno con un "fiuu" suave. Nunca resta puntos.
+func _cortar_racha() -> void:
+	if _reto.is_empty() or _racha == 0:
+		return
+	_racha = 0
+	racha_cambiada.emit(0)
+	_cresta.apagar_de_a_uno()
+	# UX m2: "fiuu" suave propio, nunca grave. UX m7: en Semilla (Maxi) los nuditos se apagan en silencio.
+	if obtener_perfil_dificultad() != "semilla":
+		reproducir_sfx(SFX_FIUU)
+	if _contador_racha != null and _contador_racha.visible:
+		var tween := _contador_racha.create_tween()
+		tween.tween_property(_contador_racha, "modulate:a", 0.0, 0.3)
+		tween.tween_callback(_contador_racha.hide)
+
+
+func _actualizar_contador_racha() -> void:
+	if _contador_racha == null:
+		return
+	if _racha < 2:
+		_contador_racha.hide()
+		return
+	_contador_racha.text = "×%d" % mini(_racha, int(_reto.get("racha_tope", 5)))
+	_contador_racha.show()
+	_contador_racha.modulate.a = 1.0
+	_contador_racha.scale = Vector2.ONE * 1.45
+	_contador_racha.create_tween().tween_property(_contador_racha, "scale", Vector2.ONE, 0.3) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+## Numeros que suben flotando 0,6 s desde el par que se va (m10: nunca sobre una carta tapada).
+func _flotar_puntos(texto: String, centro: Vector2, color: Color, tamano := 44) -> void:
+	var etiqueta := Label.new()
+	etiqueta.text = texto
+	etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	etiqueta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if ResourceLoader.exists(RUTA_FUENTE):
+		etiqueta.add_theme_font_override("font", load(RUTA_FUENTE))
+	etiqueta.add_theme_font_size_override("font_size", tamano)
+	# Crema con borde del color de la carta: se lee sobre cualquier dibujo o fondo.
+	etiqueta.add_theme_color_override("font_color", Color("#FFF8EE"))
+	etiqueta.add_theme_color_override("font_outline_color", color.darkened(0.45))
+	etiqueta.add_theme_constant_override("outline_size", 14)
+	_efectos.add_child(etiqueta)
+	etiqueta.size = Vector2(200, tamano * 1.4)
+	etiqueta.global_position = centro - etiqueta.size / 2.0
+	var tween := etiqueta.create_tween().set_parallel(true)
+	tween.tween_property(etiqueta, "position:y", etiqueta.position.y - 36.0, 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(etiqueta, "modulate:a", 0.0, 0.25).set_delay(0.45)
+	tween.chain().tween_callback(etiqueta.queue_free)
+
+
+## "¡A la primera!": aro dorado en cada carta del par, campanita doble y un trebol dorado que vuela al
+## costado. UX m5: ya no hay estela entre las cartas (cruzaba cartas tapadas); el aro no sale de la carta.
+func _sello_a_la_primera(grupo: Array, origen: Vector2, bono: int) -> void:
+	for carta: CartaEmparejar in grupo:
+		_estallido(carta.global_position + carta.size / 2.0, 6, [DORADO, Color("#FFF3B0")], 0.8)
+		_aro_dorado(carta)
+	reproducir_sfx(SFX_PAR, 1.5)
+	_despues(0.13, func() -> void: reproducir_sfx(SFX_PAR, 1.78))
+	_flotar_puntos("+%d" % bono, origen, DORADO, 36)
+	var trebol := Control.new()
+	trebol.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trebol.size = Vector2(72, 72)
+	trebol.pivot_offset = trebol.size / 2.0
+	_efectos.add_child(trebol)
+	trebol.draw.connect(func() -> void: Cupcake.trebol(trebol, trebol.size / 2.0, 30.0))
+	trebol.global_position = origen - trebol.size / 2.0
+	trebol.scale = Vector2.ZERO
+	var destino := DESTINO_TREBOL - trebol.size / 2.0
+	var tween := trebol.create_tween()
+	tween.tween_property(trebol, "scale", Vector2.ONE * 1.3, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(trebol, "position", destino, 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(trebol, "scale", Vector2.ONE * 0.8, 0.6)
+	tween.parallel().tween_property(trebol, "rotation", TAU, 0.6)
+	tween.tween_property(trebol, "modulate:a", 0.0, 0.3).set_delay(0.3)
+	tween.tween_callback(trebol.queue_free)
+
+
+## La barra paso la banderita: salta (lo hace la barra), confeti chico y "¡record!". No se pausa.
+func _al_pasar_record() -> void:
+	record_superado.emit()
+	_estallido(_barra_record.punto_banderita(), 10, Figura.COLORES_ARCOIRIS, 0.7)
+	reproducir_sfx(SFX_PAR, 1.6)
+	_despues(0.6, func() -> void: _reproducir_voz("record_pasa", _linea("record_pasa")))
+
+
+func _encender_vela() -> void:
+	if _vela_activa and _vela != null and _vela_restante > 0.0 and not _tablero_terminado and not _en_transicion:
+		_vela_corriendo = true
+
+
+## La vela se consume solo mientras se juega (no en el vistazo, la mini-fiesta ni el gag). Sin tic-tac,
+## sin parpadeo ni aceleracion (M7). Al acabarse: "puf" suave y Coco dice algo positivo; nada mas.
+## UX M3: tampoco corre mientras Coco o Cometa repiten una instruccion que el nino pidio, con el globo de
+## la pista abierto ni con la app en segundo plano.
+func _avanzar_vela(delta: float, hablando := false) -> void:
+	if not _vela_corriendo or _en_transicion or _en_vistazo or _en_gag or _app_en_pausa:
+		return
+	if _pausa_por_ayuda:
+		if hablando:
+			return
+		_pausa_por_ayuda = false
+	if _pista_costo != null and _pista_costo.globo_abierto():
+		return
+	_vela_restante = maxf(0.0, _vela_restante - delta)
+	_vela.fraccion = _vela_restante / maxf(0.001, _vela_total)
+	if _vela_restante <= 0.0:
+		_vela_corriendo = false
+		_vela.dormir()
+		reproducir_sfx(SFX_PUF)
+		_voz_cuando_calle("vela_dormida", _linea("vela_dormida"), 2.5)
+
+
+## Bono de la vela que sigue encendida al terminar (0 si no hay vela o ya se durmio).
+func _calcular_bono_vela() -> int:
+	if not _vela_activa or _vela == null or _vela_restante <= 0.0:
+		return 0
+	return ceili(_vela_restante) * int(_reto.get("bono_por_segundo", 10))
+
+
+## Fin de la estacion con la vela encendida: sus segundos se vuelven puntos con tintineo. El bono ya se
+## calculo y guardo en `_celebrar_victoria` (QA B1); esto es solo la animacion.
+func _cobrar_vela() -> void:
+	if _bono_vela <= 0 or _vela == null:
+		return
+	var segundos := ceili(_vela_restante)
+	_reproducir_voz("vela_encendida", _linea("vela_encendida"))
+	var centro := _vela.global_position + _vela.size / 2.0
+	var pasos := clampi(segundos, 1, 8)
+	for i in pasos:
+		reproducir_sfx(SFX_TOQUE, pow(2.0, i * 2.0 / 12.0))
+		_barra_record.fijar_puntaje(_puntaje_base + int(_bono_vela * (i + 1) / float(pasos)))
+		_estallido(centro, 3, [DORADO], 0.4)
+		await get_tree().create_timer(0.09).timeout
+		if not is_inside_tree():
+			return
+	_flotar_puntos("+%d" % _bono_vela, centro + Vector2(70, 0), DORADO, 36)
+	await get_tree().create_timer(0.6).timeout
+
+
+## Record personal al terminar (§10.1): ya quedo guardado en el instante del ultimo par (QA B1). Sin record
+## previo, la banderita se clava ("¡tu primer record!", m6); si se supero, Coco muestra el trofeo-cupcake.
+## Nunca el de otro.
+func _cerrar_record() -> void:
+	if not _record_nuevo:
+		return
+	if _record_previo <= 0:
+		_barra_record.plantar_banderita()
+		_estallido(_barra_record.punto_banderita(), 10, Figura.COLORES_ARCOIRIS, 0.7)
+		_reproducir_voz("primer_record", _linea("primer_record"))
+	else:
+		_mostrar_trofeo()
+		_reproducir_voz("record_nuevo", _linea_al_azar("record_nuevo"))
+	await get_tree().create_timer(1.2).timeout
+	if is_inside_tree():
+		await _esperar_voz(3.5)
+
+
+## QA m3: Coco SOSTIENE el trofeo delante del cuerpo (hijo de su sprite, asi salta y baila con ella) y no
+## tapa la cresta ni el tablero. Se guarda antes de la celebracion para que no quede detras.
+func _mostrar_trofeo() -> void:
+	var trofeo := Control.new()
+	_trofeo = trofeo
+	trofeo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trofeo.size = Vector2(130, 150)
+	trofeo.pivot_offset = Vector2(65, 150)
+	_anfitriona.add_child(trofeo)
+	trofeo.draw.connect(func() -> void: Cupcake.trofeo(trofeo, Vector2(65, 146), 110.0))
+	# Pie del trofeo a la altura de la panza de Coco, centrado un poco a su derecha (su mano).
+	trofeo.position = Vector2(_anfitriona.size.x / 2.0 - 65 + 18, _anfitriona.size.y * 0.92 - 150)
+	trofeo.scale = Vector2.ZERO
+	trofeo.create_tween().tween_property(trofeo, "scale", Vector2.ONE * 0.8, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_estallido(trofeo.global_position + Vector2(65, 100), 12, Figura.COLORES_ARCOIRIS)
+	_reaccion_anfitriona("salta")
+
+
+func _guardar_trofeo() -> void:
+	if _trofeo == null or not is_instance_valid(_trofeo):
+		return
+	var trofeo := _trofeo
+	_trofeo = null
+	var tween := trofeo.create_tween()
+	tween.tween_property(trofeo, "modulate:a", 0.0, 0.25)
+	tween.tween_callback(trofeo.queue_free)
+
+
+## UX m5: aro dorado que late DENTRO de la carta del par (no cruza ni tapa cartas vecinas).
+func _aro_dorado(carta: CartaEmparejar) -> void:
+	var aro := Control.new()
+	aro.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_efectos.add_child(aro)
+	aro.size = carta.size
+	aro.global_position = carta.global_position
+	var estado := {"t": 0.0}
+	aro.draw.connect(func() -> void:
+		var t: float = estado["t"]
+		var lado: float = aro.size.x
+		var r := lado * (0.3 + 0.16 * t)
+		aro.draw_arc(aro.size / 2.0, r, 0, TAU, 40, Color(DORADO, 0.95 * (1.0 - t)), maxf(3.0, lado * 0.05), true))
+	var tween := aro.create_tween()
+	tween.tween_method(func(valor: float) -> void:
+		estado["t"] = valor
+		aro.queue_redraw()
+	, 0.0, 1.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(aro.queue_free)
+
+
+## Estrellitas de Nicole (§10.1.1): por puntaje BASE (sin la vela). Terminar ya da 1.
+func _estrellitas_por_puntaje() -> int:
+	var umbrales = nivel.get("umbrales_puntaje", {})
+	if not umbrales is Dictionary:
+		umbrales = {}
+	var dos := int(umbrales.get("dos", 150 * _pares_station))
+	var tres := int(umbrales.get("tres", 230 * _pares_station))
+	if _puntaje_base >= tres:
+		return 3
+	if _puntaje_base >= dos:
+		return 2
+	return 1
+
+
+## Voz de la fiesta final: Nicole con estrellitas por puntaje oye la de su logro (nunca lo que falto).
+func _linea_celebracion(estrellitas: int) -> String:
+	var visibles := _estrellitas_visibles(estrellitas)
+	if obtener_perfil_dificultad() == "brote" and visibles > 0:
+		var voces = nivel.get("lineas_voz", {}).get("estrellitas_brote", {})
+		if voces is Dictionary:
+			var ruta := str(voces.get(str(visibles), ""))
+			if _voz_existe(ruta):
+				return ruta
+	return _linea("victoria_final")
+
+
+## Voz que espera a que Coco termine de hablar (presentaciones de una sola vez, pistas), sin pisar otra.
+func _voz_cuando_calle(clave: String, ruta: String, maximo := SEGUNDOS_ESPERA_INTRO) -> void:
+	if ruta == "":
+		return
+	await _esperar_voz(maximo)
+	if is_inside_tree():
+		_reproducir_voz(clave, ruta)

@@ -1,0 +1,86 @@
+{
+  "id": "arcoiris_batalla_final",
+  "planeta_id": "arcoiris",
+  "nota": "disenador-niveles 07-Oct-2026 (HE-66/HE-69/HE-59). Esquema de docs/fichas/modo-equipo.md §14.9 (campos obligatorios: id, planeta_id, minimo_hermanos, destellos_por_hermano, recuerdo_momento, cinematica_*, rondas[id, color, escena, nivel], epilogo). Se agregan campos INFORMATIVOS que batalla.gd puede ignorar: 'motor' y 'resumen' por ronda, 'duracion' y 'premio'. La FUENTE DE VERDAD de cantidades, topes y pasos_rival es el nivel de cada ronda; tester-qa verifica que el resumen coincida. Calculo de tiempos y supuestos: docs/fichas/calibracion-batalla-arcoiris-y-parejas-equipo.md. Simulado con herramientas/simular_equipo.py el 07-Oct-2026 (default = turno perfecto): Rio 86 %, Formas 100 %, Parejas 89 % ganadas al primer intento. Simulador v3 (07-Oct, con resbalon tras turno perfecto y resbalon_tras_racha en el Rio): Rio 87 %, Formas 100 %, Parejas 91 %; batalla sin ningun estornudo ~79 %. Provisional hasta el playtest con los ninos.",
+  "minimo_hermanos": 3,
+  "orden": "maxi_intercalado",
+  "destellos_por_hermano": 100,
+  "nota_destellos": "[Propuesta, aceptada por ahora por el PO] 100 por hermano, una sola vez (= una estacion, economia HE-40 §7.3). Las rondas sueltas dan 0 (destellos_fijos = 0).",
+  "recuerdo_momento": { "tipo": "batalla", "planeta": "arcoiris" },
+  "desbloquea": { "modo_equipo": true, "nota": "Progreso.modo_equipo_desbloqueado() = hay una batalla ganada; la seleccion muestra 'Juntos!' con su presentacion unica (§3.1, M5.2)." },
+  "cinematica_entrada": "entrada",
+  "cinematica_antes_epilogo": "antes_epilogo",
+  "cinematica_cierre": ["cierre_a", "cierre_b"],
+  "pausa_entre_rondas": true,
+  "retomar_empieza": "maxi",
+  "rondas": [
+    {
+      "id": "rio",
+      "color": "rojo",
+      "motor": "rio",
+      "escena": "res://escenas/minijuegos/rio/motor_rio.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/rio_equipo.json",
+      "resumen": {
+        "cantidad": "20 gotas, 4 colores (rojo, amarillo, azul, rosa), 13 px/s, tope de avance 70 %",
+        "por_turno": { "semilla": "1 gota que siempre revienta", "brote": "3 gotas", "estrella": "3 gotas" },
+        "pasos_rival": 7,
+        "ganar_al_primer_intento_estimado": 0.87,
+        "fuente": "simulado 07-Oct con herramientas/simular_equipo.py v3 (20 gotas, racha de 3, 7 pasos): sin resbalon tras racha 85,3 % -> con resbalon_tras_racha 87,2 % (regla de calibracion-batalla-arcoiris-y-parejas-equipo.md §12.1: true)",
+        "turnos_tipicos": "~11 (Maxi 6, Nicole 3, Sofia 2-3)",
+        "minutos": { "tipico": 3.5, "p80": 4.4 }
+      }
+    },
+    {
+      "id": "formas",
+      "color": "amarillo",
+      "motor": "encajar",
+      "escena": "res://escenas/minijuegos/encajar/motor_encajar.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/formas_equipo.json",
+      "resumen": {
+        "cantidad": "12 piezas: la nave de juguete del living (N1 de la re-auditoria UX: 8 no alcanzaba para 2 turnos por hermano)",
+        "por_turno": { "semilla": "tope 1 (pieza con halo, toque la lleva)", "brote": "tope 2, segunda oportunidad", "estrella": "tope 3, piezas giradas, pasa con el primer fallo" },
+        "zona_figuras": [150, 128, 700, 456],
+        "zona_bandeja": [880, 128, 360, 456],
+        "pasos_rival": 5,
+        "ganar_al_primer_intento_estimado": 1.0,
+        "fuente": "simulado 07-Oct con turno perfecto (default): gana 100 %, >= 2 turnos cada hermano 100 %",
+        "turnos_tipicos": "8 (Maxi 4, Nicole 2, Sofia 2)",
+        "minutos": { "tipico": 2.8, "p80": 3.1 }
+      }
+    },
+    {
+      "id": "parejas",
+      "color": "azul",
+      "motor": "emparejar",
+      "escena": "res://escenas/minijuegos/emparejar/motor_emparejar.tscn",
+      "nivel": "res://datos/niveles/arcoiris/batalla/parejas_equipo.json",
+      "resumen": {
+        "cantidad": "12 pares en 4x6, vistazo 3 pares en 3 s, lupa del Coleccionauta. tope de pares por turno {1, 2, 3} APROBADO por el PO 07-Oct-2026; retrocede el rival con el turno perfecto",
+        "por_turno": { "semilla": "1 par con halo", "brote": "hasta 2 pares, segunda oportunidad", "estrella": "hasta 3 pares, pasa con el primer fallo" },
+        "pasos_rival": 5,
+        "ganar_al_primer_intento_estimado": 0.91,
+        "fuente": "simulado 07-Oct con tope {1, 2, 3}, turno perfecto y resbalon tras turno perfecto (v6.1, default del simulador): gana 91 % (89 % sin resbalon); sin tope Sofia jugaba 1 turno",
+        "turnos_tipicos": "~11 (Maxi 6, Nicole 3, Sofia 2)",
+        "minutos": { "tipico": 3.3, "p80": 4.0 }
+      }
+    }
+  ],
+  "epilogo": {
+    "motor": "lienzo_libre",
+    "escena": "res://escenas/minijuegos/lienzo_libre/motor_lienzo_libre.tscn",
+    "nivel": "res://datos/niveles/arcoiris/batalla/pinta_mochila_equipo.json",
+    "resumen": { "cantidad": "3 partes (una por hermano) + cierre 'todos juntos!' en la tapa", "se_puede_perder": false, "minutos": { "tipico": 0.75 } }
+  },
+  "duracion": {
+    "meta_min": { "total": 15, "por_ronda": 5 },
+    "estimado_min": { "tipico": 12.1, "p80": 14.0, "p80_con_una_derrota": 15.0 },
+    "nota_duracion": "v2 07-Oct: con rondas mas largas, el p80 con una derrota queda justo en el tope de 15 min. La pausa entre rondas (jugarla en dos sesiones es el caso normal) absorbe el exceso. Si el playtest muestra cansancio, la primera palanca es el Rio (18 gotas).",
+    "supuestos": "pase real de tablet 8-12 s (10 s promedio, M1 de UX HE-66); turnos de Maxi ~4-5 s; ritual de fin de turno de Maxi 1,2 s; cinematica de entrada <= 12 s, interludios 4 s, antes del epilogo <= 5 s, cierre A <= 20 s + B ~30 s. Jugar en dos sesiones (pausa entre rondas) es el caso normal."
+  },
+  "premio": {
+    "destellos_por_hermano": 100,
+    "foto_familiar": "momento 'batalla' del album familiar (los tres juntos); la elige y graba el PO, fuera del repo",
+    "desbloqueo": "boton 'Juntos!' en la seleccion",
+    "pieza_nave": false
+  }
+}

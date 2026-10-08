@@ -255,6 +255,9 @@ def pares_identicos(lista):
 
 
 def generar_parejas():
+    # limite_intentos y umbrales_estrellitas: valores recalibrados con el vistazo (HE-60 QA M3,
+    # disenador-niveles 07-Oct-2026, herramientas/calibrar_parejas_sofia.py). Tras regenerar, correr solo
+    # agregar_reto_parejas.py; NO volver a correr calibrar_parejas_sofia.py --escribir (correria dos veces).
     colores = [("estrella", "#FFCB3D"), ("estrella_rosa", "#F26CA8"), ("corazon", "#F26CA8"), ("corazon_azul", "#4A8BE0"),
                ("circulo", "#4A8BE0"), ("triangulo", "#7DD87A"), ("cuadrado", "#FF9F4A"), ("luna", "#B48CE8"),
                ("gota", "#45C6C0"), ("rombo", "#FF6B6B"), ("flor", "#FFB25B")]
@@ -265,7 +268,7 @@ def generar_parejas():
                 ("gerbo_dorado", "#F2C98E"), ("gerbo_cafe", "#C9A27A"),
                 ("pony_rosado", "#F7A8D0"), ("pony_lila", "#B48CE8"), ("pony_celeste", "#6FD6E8")]
     escribir(NIVELES / "zona1_claro" / "parejas_estrella.json", nivel_parejas(
-        "zona1_claro", "", disposicion={"filas": 4, "columnas": 6}, limite_intentos=16, umbrales_estrellitas={"tres": 10, "dos": 16}, pares=pares_identicos(mascotas),
+        "zona1_claro", "", disposicion={"filas": 4, "columnas": 6}, limite_intentos=14, umbrales_estrellitas={"tres": 9, "dos": 14}, pares=pares_identicos(mascotas),
         lineas_voz=voces_parejas(1, "pista_01.wav")))
 
     rojo, amarillo, azul, blanco, negro = "#FF4B4B", "#FFD23D", "#3F7FE0", "#FFFFFF", "#2B3350"
@@ -275,21 +278,21 @@ def generar_parejas():
                ("gris", "#A7A9B4", [negro, blanco]), ("lila", "#D2B8F0", ["#9B6BD9", blanco]),
                ("crema", "#FFF0A8", [amarillo, blanco]), ("verde_claro", "#C4F0B8", ["#4CC25A", blanco])]
     escribir(NIVELES / "zona2_charcos" / "parejas_estrella.json", nivel_parejas(
-        "zona2_charcos", "", modo="correspondencia", disposicion={"filas": 4, "columnas": 5}, limite_intentos=15, umbrales_estrellitas={"tres": 9, "dos": 15},
+        "zona2_charcos", "", modo="correspondencia", disposicion={"filas": 4, "columnas": 5}, limite_intentos=13, umbrales_estrellitas={"tres": 7, "dos": 13},
         pares=[par(n, {"figura": "gota", "color": c}, {"estilo": "receta", "receta": r}) for n, c, r in recetas],
         lineas_voz=voces_parejas(2, "pista_z2.wav")))
 
     trios = [("estrella", "#FFCB3D"), ("corazon", "#F26CA8"), ("circulo", "#4A8BE0"), ("triangulo", "#7DD87A"),
              ("luna", "#B48CE8"), ("gota", "#45C6C0"), ("flor", "#FF9F4A")]
     escribir(NIVELES / "zona3_chupetines" / "parejas_estrella.json", nivel_parejas(
-        "zona3_chupetines", "", modo="trios", tamano_grupo=3, disposicion={"filas": 3, "columnas": 7}, limite_intentos=42, umbrales_estrellitas={"tres": 17, "dos": 42},
+        "zona3_chupetines", "", modo="trios", tamano_grupo=3, disposicion={"filas": 3, "columnas": 7}, limite_intentos=41, umbrales_estrellitas={"tres": 16, "dos": 41},
         tiempo_volteo_ms=1000,
         grupos=[{"id_grupo": n, "elementos": [{"id": f"{n}_{k}", "figura": n, "color": c} for k in range(3)]} for n, c in trios],
         lineas_voz=voces_parejas(3, "pista_z3.wav")))
 
     catorce = colores + [("rombo_verde", "#7DD87A"), ("luna_amarilla", "#FFCB3D")]
     escribir(NIVELES / "zona4_islotes" / "parejas_estrella.json", nivel_parejas(
-        "zona4_islotes", "", modo="traviesas", disposicion={"filas": 4, "columnas": 7}, limite_intentos=24, umbrales_estrellitas={"tres": 15, "dos": 24},
+        "zona4_islotes", "", modo="traviesas", disposicion={"filas": 4, "columnas": 7}, limite_intentos=22, umbrales_estrellitas={"tres": 14, "dos": 22},
         intercambios_tras_acierto=2, pares=pares_identicos(catorce[:13]), lineas_voz=voces_parejas(4, "pista_z4.wav")))
 
     sombras = [
@@ -324,11 +327,11 @@ def generar_parejas():
         return salida
 
     escribir(NIVELES / "zona5_cima" / "parejas_estrella.json", nivel_parejas(
-        "zona5_cima", "", modo="sombras", disposicion={"filas": 4, "columnas": 8}, limite_intentos=32, umbrales_estrellitas={"tres": 21, "dos": 32},
+        "zona5_cima", "", modo="sombras", disposicion={"filas": 4, "columnas": 8}, limite_intentos=31, umbrales_estrellitas={"tres": 19, "dos": 31},
         tiempo_volteo_ms=800, intercambios_tras_acierto=1, pares=pares_sombra(sombras[:16]),
         lineas_voz=voces_parejas(5, "pista_z5.wav")))
     escribir(NIVELES / "zona5_cima" / "parejas_estrella_dorado.json", nivel_parejas(
-        "zona5_cima", "_dorado", modo="sombras", disposicion={"filas": 4, "columnas": 9}, limite_intentos=42, umbrales_estrellitas={"tres": 27, "dos": 42},
+        "zona5_cima", "_dorado", modo="sombras", disposicion={"filas": 4, "columnas": 9}, limite_intentos=41, umbrales_estrellitas={"tres": 26, "dos": 41},
         tiempo_volteo_ms=800, intercambios_tras_acierto=2, regalo_tras_derrotas=False, pares=pares_sombra([s for s in sombras if s[0] != "flor"]),
         lineas_voz=voces_parejas(5, "pista_z5.wav", intro="intro_dorado.wav", victoria_final="victoria_dorado_01.wav")))
 

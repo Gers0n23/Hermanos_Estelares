@@ -7,6 +7,18 @@
   "nota": "Decision del PO 27-Sep-2026: la zona siguiente (y la secreta) se abre al completar TODAS las estaciones jugables de la zona anterior; los retos dorados son opcionales y no cuentan.",
   "destellos_por_estacion": 100,
   "destellos_reto_dorado": 0,
+  "destellos_equipo_por_hermano": 50,
+  "nota_equipo": "PO 06-Oct-2026 (modo-equipo.md §7.1, §11.2): 50 destellos por hermano la primera vez que gana cada nivel de equipo; no marca estaciones individuales. Solo las estaciones con nivel_equipo despiertan en modo equipo (v1: las 5 de Parejas). disenador-niveles 07-Oct-2026.",
+  "batalla": {
+    "id": "arcoiris_batalla_final",
+    "datos": "res://datos/batallas/arcoiris_final.json",
+    "escena": "res://escenas/nucleo/batalla.tscn",
+    "aparece_tras_zona": 3,
+    "condicion": "primer_hermano",
+    "posicion": [260, 380],
+    "voz_hito": ["voces/arcoiris/batalla/hito_01.wav", "voces/arcoiris/batalla/hito_02.wav"],
+    "nota_voz_hito": "variantes al azar sin repetir la anterior, como maximo una vez por visita al mapa (docs/guiones/voces-batalla-arcoiris.md §2 y §10.1: arcoiris_batalla_hito_01/_02, Coleccionauta, grabacion casera de papa). Al TOCAR el hito suena nucleo_batalla_hito (Cometa, voces/nucleo/batalla/hito.wav), que es otra clave."
+  },
   "nota_destellos": "PROVISIONAL (disenador-niveles HE-40 §2.3, 28-Sep-2026): cada estacion da 100 destellos la primera vez, igual para los tres hermanos; los retos dorados dan 0 (su premio es cosmetico). Las aperturas cuentan estaciones, nunca destellos.",
   "pieza_nave": {
     "zonas": [
@@ -114,7 +126,8 @@
             "maxi": "res://datos/niveles/arcoiris/zona1_claro/parejas_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona1_claro/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona1_claro/parejas_estrella.json"
-          }
+          },
+          "nivel_equipo": "res://datos/niveles/arcoiris/zona1_claro/parejas_equipo.json"
         },
         {
           "juego": "pinta",
@@ -175,7 +188,8 @@
             "maxi": "res://datos/niveles/arcoiris/zona2_charcos/parejas_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona2_charcos/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona2_charcos/parejas_estrella.json"
-          }
+          },
+          "nivel_equipo": "res://datos/niveles/arcoiris/zona2_charcos/parejas_equipo.json"
         },
         {
           "juego": "pinta",
@@ -236,7 +250,8 @@
             "maxi": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_estrella.json"
-          }
+          },
+          "nivel_equipo": "res://datos/niveles/arcoiris/zona3_chupetines/parejas_equipo.json"
         },
         {
           "juego": "pinta",
@@ -298,7 +313,8 @@
             "maxi": "res://datos/niveles/arcoiris/zona4_islotes/parejas_semilla.json",
             "nicole": "res://datos/niveles/arcoiris/zona4_islotes/parejas_brote.json",
             "sofia": "res://datos/niveles/arcoiris/zona4_islotes/parejas_estrella.json"
-          }
+          },
+          "nivel_equipo": "res://datos/niveles/arcoiris/zona4_islotes/parejas_equipo.json"
         },
         {
           "juego": "pinta",
@@ -365,7 +381,8 @@
           },
           "niveles_dorados": {
             "sofia": "res://datos/niveles/arcoiris/zona5_cima/parejas_estrella_dorado.json"
-          }
+          },
+          "nivel_equipo": "res://datos/niveles/arcoiris/zona5_cima/parejas_equipo.json"
         },
         {
           "juego": "pinta",

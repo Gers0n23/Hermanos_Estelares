@@ -294,6 +294,8 @@ func _al_terminar(gano: bool) -> void:
 	partida_terminada.emit(gano, logica.puntos)
 	if gano:
 		_estrellas = LogicaRio.estrellas_por_tiempo(logica.tiempo, _tiempo_par)
+		# Salir durante el resumen no pierde la victoria (GDD §6 regla 8, QA HE-60 m8).
+		asegurar_victoria(10 + _estrellas * 5, _estrellas)
 		_fase = "resumen"
 		reproducir_sfx(SFX_GANA)
 		_confeti.position = recorrido.centro

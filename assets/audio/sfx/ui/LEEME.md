@@ -16,6 +16,9 @@ que el código nunca referencie nombres genéricos `click_001.ogg`.
 | `soltar.ogg` | Soltar un elemento arrastrado en su lugar | `drop_002.ogg` |
 | `no_es_este.ogg` | Feedback amistoso de "todavía no" (NUNCA un buzzer de error — GDD §6, ficha `docs/fichas/motor-emparejar.md` §6) | `error_002.ogg` |
 | `zona_dormida.ogg` | "Todavía no" del mapa (zona dormida, estación que llega pronto): campanitas de sueño mi-sol-mi (UX HE-40 R16) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `puf.ogg` | Soplido suave: la vela del tiempo par de Parejas "se va a dormir" (UX HE-60 m2; nunca grave ni de error) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `fiuu.ogg` | Silbidito agudo y muy suave: se corta la racha de Parejas (UX HE-60 m2; sin sonido de error) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `blup.ogg` | Burbuja alegre: la barra del récord rebalsa (UX HE-60 M1) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
 
 Este set es intencionalmente pequeño (un archivo por categoría) para no bloquear el
 resto del núcleo; se puede ampliar variando con `_002`, `_003`, etc. del mismo pack

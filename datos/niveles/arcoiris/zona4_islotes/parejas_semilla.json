@@ -283,5 +283,9 @@
         }
       ]
     }
-  ]
+  ],
+  "puntaje": {
+    "racha_tope": 5,
+    "mostrar": "solo_sonido"
+  }
 }

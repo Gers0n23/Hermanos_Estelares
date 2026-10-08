@@ -234,6 +234,20 @@ Notas del contrato:
 Las sombras con trampa se modelan con 8 % de confusión y las traviesas con 50 % de olvido de cada
 carta movida. La idea es afinar los límites con el playtest.
 
+**Recalibración con el vistazo (07-Oct-2026, HE-60, QA M3)**. El vistazo de §10.2 baja los fallos.
+`herramientas/calibrar_parejas_sofia.py` midió cuánto corre el p25 y el p80 de fallos, y ese corrimiento se
+restó a los valores de HE-40 (`dos` = límite). Están aplicados en los JSON. El detalle está en
+`calibracion-batalla-arcoiris-y-parejas-equipo.md` §11.
+
+| Nivel | Fallos con vistazo: p25 / p50 / p80 | Límite (antes → ahora) | `tres` (antes → ahora) | 3★ / derrota con vistazo |
+|---|---|---|---|---|
+| 12 pares | 9 / 11 / 14 | 16 → **14** | 10 → **9** | 34 % / 18 % |
+| 10 recetas | 5 / 7 / 9 | 15 → **13** | 9 → **7** | 60 % / 2 % (fácil: propuesta 10 · 5 al PO) |
+| 7 tríos | 17 / 23 / 32 | 42 → **41** | 17 → **16** | 22 % / 8 % |
+| 14 traviesas | 14 / 17 / 21 | 24 → **22** | 15 → **14** | 30 % / 15 % |
+| 16 sombras | 19 / 23 / 29 | 32 → **31** | 21 → **19** | 28 % / 11 % |
+| 18 sombras (dorado) | 26 / 31 / 38 | 42 → **41** | 27 → **26** | 30 % / 10 % |
+
 ---
 
 ## 6. Diseño del fallo
@@ -327,7 +341,7 @@ carta movida. La idea es afinar los límites con el playtest.
 
 ## Implementación dev-godot 28-Sep-2026 (validaciones HE-40, PROVISIONAL)
 
-- §7: `umbrales_estrellitas {tres, dos}` en fallos (z1 10/16, z2 9/15, z3 17/42, z4 15/24, z5 21/32, dorado 27/42). Sin el campo, la regla vieja.
+- §7: `umbrales_estrellitas {tres, dos}` en fallos (z1 10/16, z2 9/15, z3 17/42, z4 15/24, z5 21/32, dorado 27/42). Sin el campo, la regla vieja. **Reemplazados el 07-Oct-2026 por la recalibración con vistazo (§5): z1 9/14, z2 7/13, z3 16/41, z4 14/22, z5 19/31, dorado 26/41.**
 - Pista con costo: medidor + globo de confirmación (`scripts/ui/pista_con_costo.gd`); si ya hay una carta arriba, la pista revela su compañera.
 - `visible_minimo_ms` (Brote 600 por defecto): un toque durante el "no es este" queda en espera (la carta pulsa) y se aplica al cumplirse el mínimo.
 
@@ -790,3 +804,49 @@ tocan este motor (m6, m8, m9 y m10) ya están integrados en §10.1, §10.3 y §1
     (`modo-equipo.md` §11.5);
   - el récord en solitario usa el `registrar_puntaje_nivel` que ya existe (más es mejor);
   - las estrellitas de Nicole usan el `marcar_nivel_completado` de siempre.
+
+### 10.10 Implementación `dev-godot` (07-Oct-2026, HE-60)
+
+Implementado en `scripts/motores/emparejar/motor_emparejar.gd` (§10.1, §10.1.1 y §10.2; las especiales,
+el Camino y la colección quedan para HE-61/62/63). Decisiones de implementación que la ficha no fijaba:
+
+- **La racha sigue entre rondas** (la mini-fiesta no la corta) y el `tiempo_par_s` es **de toda la
+  estación** (suma de rondas), igual que el simulador de `herramientas/agregar_reto_parejas.py`.
+- **La vela solo se consume jugando**: se detiene durante el vistazo, la mini-fiesta entre rondas y la
+  derrota-gag de Sofía.
+- **"¡A la primera!"** solo en tableros tapados: todas las cartas del par se dan vuelta por primera vez en
+  esa jugada (las del vistazo y las de la ayuda de Coco ya cuentan como vistas).
+- **Vistazo**: siempre espera a que Coco termine de hablar (intro o consigna de ronda, máx. 6 s) y siempre
+  dice "¡mira!" justo antes de dar vuelta las cartas (UX M2). La primera vez de cada hermano, si existe
+  `vistazo_presenta`, la dice en lugar de "¡mira!" y el vistazo dura 1,5 s más. Con `cartas: "auto"`, las
+  sueltas de Sofía son `round(cartas/4)` sin repetir grupo. Tocar una carta durante el vistazo hace el
+  pulso y un toquecito bajito (−12 dB, 150 ms de enfriamiento por carta, UX m1).
+- **Voces de reto faltantes (HE-67)**: si no existe el wav de `racha_N` o `a_la_primera`, suena el
+  `acierto_par` de siempre; para Nicole, si falta `estrellitas_brote_N`, suena `victoria_final`.
+- **Récord**: se guarda puntaje base + bono de la vela, antes de la fiesta. Sin `planeta_id` (motor en
+  prueba) no se guarda récord ni se marcan presentaciones.
+- **Lugares (1280×720)**: barra de récord `Rect2(1168, 172, 84, 396)` (bajo el medidor de la pista de
+  Sofía), vela en (28, 126) bajo el botón de salir, contador "×N" en `Rect2(30, 222, 180, 92)` sobre
+  Coco y nuditos en su cresta. Los "+N" nacen sobre la carta ya destapada del par (m10).
+- **QA**: `herramientas/qa_test_parejas_reto.gd` (los 3 perfiles, solo guardado de pruebas).
+
+Correcciones tras las auditorías UX y QA del 07-Oct-2026 (`docs/validaciones/2026-10-07_*-HE-60-*.md`):
+
+- **Salir siempre es seguro (QA B1)**: en el instante del último par se guardan estación, destellos,
+  estrellitas y récord (incluido el bono de la vela que queda) con `asegurar_victoria()` del contrato base.
+  La vela que se cobra, el trofeo y las voces de récord son solo animación. Los demás motores (Río,
+  Mezclar, Encajar, Clasificar) llaman lo mismo al ganar: se cerró la ventana de ~0,9 s para todos.
+- **Presentaciones de una sola vez (QA M1)**: "vistazo" y "vela" solo se marcan si su voz existe y sonó.
+- **Sin voces de la vela no hay vela (UX B1)**: hacen falta `vela_presenta` y `vela_dormida`; si falta una,
+  el nivel se juega como con `tiempo_par_s: null`. Los arneses la fuerzan con `vela_sin_voz_en_pruebas`.
+- **La vela recién se enciende** después de `otra_estrellita`, `vela_presenta` y la consigna (UX M3), y
+  se pausa también mientras Coco o Cometa repiten una instrucción pedida, con el globo de la pista abierto
+  y con la app en segundo plano.
+- **Barra de récord (UX M1)**: el alto se fija una vez (`max(récord × 1,3, sugerido)`; el sugerido suma
+  `tiempo_par_s × bono_por_segundo × 0,5` si hay vela). Si el puntaje lo pasa, la barra rebalsa con
+  burbujas arcoíris y un "blup"; la banderita nunca se mueve.
+- **Menores**: "puf" y "fiuu" propios y suaves (`sfx/ui/puf.ogg`, `fiuu.ogg`, sintetizados); Maxi no ve
+  huecos grises en la cresta y su corte de racha es silencioso; la vela de Sofía tiene ~28 px de cera
+  sobre un cupcake más chico; la vela y la barra se menean con un "ding" al tocarlas; "¡a la primera!"
+  es un aro dorado dentro de cada carta (sin estela) y el trébol aterriza en (120, 330); Coco sostiene el
+  trofeo delante del cuerpo y lo guarda antes de la celebración; la pompa del vistazo es más grande.

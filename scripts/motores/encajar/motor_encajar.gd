@@ -2252,6 +2252,8 @@ func _celebrar_victoria(voz_figura: String) -> void:
 	for pieza in _piezas:
 		pieza.bloqueada = true
 		pieza.cancelar_arrastre()
+	# Salir mientras se nombra la figura no pierde la victoria (GDD §6 regla 8, QA HE-60 m8).
+	asegurar_victoria(_calcular_destellos(), _calcular_estrellitas())
 	var espera := 0.9
 	if voz_figura != "":
 		_reproducir_voz("figura_completa", voz_figura)

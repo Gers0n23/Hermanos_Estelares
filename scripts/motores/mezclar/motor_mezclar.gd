@@ -768,6 +768,8 @@ func _celebrar_victoria() -> void:
 	if _fase == "fin":
 		return
 	_fase = "fin"
+	# Salir durante el baile previo no pierde la victoria (GDD §6 regla 8, QA HE-60 m8).
+	asegurar_victoria(_calcular_destellos(), _calcular_estrellitas())
 	_confeti.restart()
 	_reaccion_anfitriona("baila")
 	await get_tree().create_timer(0.8).timeout

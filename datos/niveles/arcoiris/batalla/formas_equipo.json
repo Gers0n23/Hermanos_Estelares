@@ -1,0 +1,131 @@
+{
+  "id_nivel": "arcoiris_batalla_formas_equipo",
+  "motor": "encajar",
+  "modo_juego": "equipo",
+  "planeta": "arcoiris",
+  "zona": "batalla",
+  "tema": "ronda 2 de la Batalla de Arcoiris: rescatar el AMARILLO armando juntos la nave de juguete del living",
+  "anfitrion_id": "coco",
+  "fondo_id": "planeta_arcoiris",
+  "nota": "disenador-niveles 07-Oct-2026 (HE-66/HE-69). docs/fichas/modo-equipo.md §14.3 ronda 2, §14.9 y §14.15; correcciones N1 y N3 de la re-auditoria UX. 12 PIEZAS (no 8) con tope {1, 2, 3}: es el minimo para que cada hermano juegue 2 turnos (M1 N2 M1 S3 | M1 N2 M1 S1+ = 7 + 5); se mantiene el tope 3 de Sofia porque es su reto real y su racha de retroceso. SIMULADO (herramientas/simular_equipo.py, 3.000 partidas, 07-Oct): Maxi 4, Nicole 2, Sofia 2 turnos; cada hermano >= 2 turnos en el 100 %; p50 2,8 min y p80 3,1 min; pasos_rival 5 = 100 % ganada al primer intento con el retroceso por turno perfecto (aprobado por el PO 07-Oct-2026; con racha de 3 daba 95 %) (se deja asi: es la ronda del medio y el Rio y Parejas ya ponen la tension). La figura: la NAVE DE JUGUETE de los hermanos, de perfil (cohete para Maxi, colores de los tres) con TRES VENTANITAS con los colores de turno de cada hermano. Momento memorable: al encajar la ultima pieza, las caritas de Maxi, Nicole y Sofia se asoman por sus ventanitas y la nave da un saltito: es el mismo icono del boton 'Juntos!' que ganaran al final (lo siembra sin decirlo). Las 5 piezas mas grandes (lado corto >= 110 px) son las de Maxi en orden: cuerpo delantero, cuerpo trasero, nariz, aleta de arriba, aleta de abajo; con 4-5 turnos suyos siempre le queda una pieza grande. Las piezas con capa 1 (ventanitas, franja, estrella) van sobre el cuerpo: si el motor exige que la base este puesta, las de capa 1 se ofrecen en la bandeja solo cuando su base ya esta (Maxi pone el cuerpo en sus 2 primeros turnos). Coordenadas relativas al centro de zona_figuras, como en los niveles de Formas; Sofia las ve giradas al empezar su turno. Calculo: docs/fichas/calibracion-batalla-arcoiris-y-parejas-equipo.md. PROVISIONAL: revisar con captura (herramientas/capturar_encajar.gd).",
+  "modo": "arma_figura",
+  "zona_figuras": [150, 128, 700, 456],
+  "zona_bandeja": [880, 128, 360, 456],
+  "caras": false,
+  "modelo_mini": true,
+  "bandeja_escala_real": true,
+  "piezas_en_bandeja": 4,
+  "limite_intentos": null,
+  "rondas": 1,
+  "capas_perfil": {
+    "semilla": {
+      "sin_error": true,
+      "toque_lleva_a_casa": true,
+      "iman_tolerancia_px": 5000,
+      "objetivo_guiado": "pieza_mas_grande",
+      "lado_minimo_bandeja": 110,
+      "otras_piezas_inertes": true,
+      "guia_color": true,
+      "rotacion_por_toque": false,
+      "enderezar_al_empezar": true
+    },
+    "brote": {
+      "sin_error": false,
+      "toque_lleva_a_casa": false,
+      "iman_tolerancia_px": 110,
+      "guia_color": true,
+      "rotacion_por_toque": false,
+      "enderezar_al_empezar": true
+    },
+    "estrella": {
+      "sin_error": false,
+      "toque_lleva_a_casa": false,
+      "iman_tolerancia_px": 70,
+      "guia_color": false,
+      "rotacion_por_toque": true,
+      "girar_al_azar_al_empezar": true,
+      "paso_rotacion": 90,
+      "giro_cuenta_fallo": false
+    }
+  },
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "maxi_mueve_rival": false,
+    "racha_retrocede_rival": 3,
+    "semilla_auto_s": 20,
+    "aciertos_max_turno": { "semilla": 1, "brote": 2, "estrella": 3 },
+    "segunda_oportunidad_brote": true,
+    "soltar_en_vacio_es_fallo": false,
+    "composiciones": {
+      "maxi+nicole+sofia": { "pasos_rival": 5 }
+    }
+  },
+  "figuras": [
+    {
+      "id": "nave_de_juguete",
+      "voz_completa": "PENDIENTE",
+      "dificultad": 12,
+      "fija": true,
+      "config": { "exigir_color": true },
+      "piezas": [
+        { "id": "cuerpo_delantero", "forma": "rectangulo", "ancho": 170.0, "alto": 180.0, "color": "#FFCB3D", "x": 60.0, "y": 0.0 },
+        { "id": "cuerpo_trasero", "forma": "rectangulo", "ancho": 150.0, "alto": 180.0, "color": "#FFCB3D", "x": -100.0, "y": 0.0 },
+        { "id": "nariz", "forma": "triangulo", "ancho": 180.0, "alto": 140.0, "color": "#FF6B6B", "rotacion": 90, "x": 215.0, "y": 0.0 },
+        { "id": "aleta_arriba", "forma": "triangulo_rect", "ancho": 115.0, "alto": 115.0, "color": "#4A8BE0", "x": -117.5, "y": -147.5 },
+        { "id": "aleta_abajo", "forma": "triangulo_rect", "ancho": 115.0, "alto": 115.0, "color": "#4A8BE0", "rotacion": 90, "x": -117.5, "y": 147.5 },
+        { "id": "propulsor", "forma": "rectangulo", "ancho": 60.0, "alto": 120.0, "color": "#B48CE8", "x": -205.0, "y": 0.0 },
+        { "id": "llama", "forma": "triangulo", "ancho": 120.0, "alto": 70.0, "color": "#FF9F4A", "rotacion": 270, "x": -270.0, "y": 0.0 },
+        { "id": "ventanita_maxi", "forma": "circulo", "ancho": 76.0, "alto": 76.0, "color": "#3E77CC", "capa": 1, "x": -110.0, "y": -20.0 },
+        { "id": "ventanita_nicole", "forma": "circulo", "ancho": 76.0, "alto": 76.0, "color": "#E8589C", "capa": 1, "x": -15.0, "y": -20.0 },
+        { "id": "ventanita_sofia", "forma": "circulo", "ancho": 76.0, "alto": 76.0, "color": "#2FB3AD", "capa": 1, "x": 80.0, "y": -20.0 },
+        { "id": "franja", "forma": "rectangulo", "ancho": 320.0, "alto": 26.0, "color": "#FF6B6B", "capa": 1, "x": -15.0, "y": 55.0 },
+        { "id": "estrella_nariz", "forma": "estrella", "ancho": 56.0, "alto": 56.0, "color": "#FFFFFF", "capa": 1, "x": 200.0, "y": 0.0 }
+      ]
+    }
+  ],
+  "lineas_voz": {
+    "intro_ronda": "PENDIENTE",
+    "maxi_pieza_que_brilla": "PENDIENTE",
+    "turno_perfecto": ["voces/nucleo/equipo/turno_perfecto_01.wav", "voces/nucleo/equipo/turno_perfecto_02.wav"],
+    "maxi_regalito": "PENDIENTE",
+    "caritas_ventanitas": "PENDIENTE",
+    "derrota_gag_equipo": "PENDIENTE",
+    "logro_comun": "PENDIENTE",
+    "segunda_oportunidad": "voces/arcoiris/emparejar/equipo/nicole_otra.wav",
+    "le_toca": {
+      "maxi": ["voces/nucleo/equipo/le_toca_maxi_01.wav", "voces/nucleo/equipo/le_toca_maxi_02.wav", "voces/nucleo/equipo/le_toca_maxi_03.wav"],
+      "nicole": ["voces/nucleo/equipo/le_toca_nicole_01.wav", "voces/nucleo/equipo/le_toca_nicole_02.wav", "voces/nucleo/equipo/le_toca_nicole_03.wav"],
+      "sofia": ["voces/nucleo/equipo/le_toca_sofia_01.wav", "voces/nucleo/equipo/le_toca_sofia_02.wav", "voces/nucleo/equipo/le_toca_sofia_03.wav"]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": ["voces/nucleo/equipo/animo_maxi_01.wav", "voces/nucleo/equipo/animo_maxi_02.wav"],
+      "nicole": ["voces/nucleo/equipo/animo_nicole_01.wav", "voces/nucleo/equipo/animo_nicole_02.wav"],
+      "sofia": ["voces/nucleo/equipo/animo_sofia_01.wav", "voces/nucleo/equipo/animo_sofia_02.wav"]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav", "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav", "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "rival_embobado": ["voces/nucleo/equipo/coleccionauta/embobado_01.wav", "voces/nucleo/equipo/coleccionauta/embobado_02.wav", "voces/nucleo/equipo/coleccionauta/embobado_03.wav"],
+    "rival_retrocede": ["voces/nucleo/equipo/coleccionauta/retrocede_01.wav", "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"],
+    "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav",
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav"
+  }
+}

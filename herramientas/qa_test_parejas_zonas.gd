@@ -109,8 +109,14 @@ func _validar_voces(nivel: Dictionary) -> void:
 			juntar.call(par.get("voz", ""))
 			for clave in ["elemento_a", "elemento_b"]:
 				juntar.call(par[clave].get("voz_toque", ""))
-	var faltan := rutas.filter(func(r): return not ResourceLoader.exists("res://assets/audio/" + r))
-	_check(faltan.is_empty(), "%d voces del nivel existen %s" % [rutas.size(), "" if faltan.is_empty() else str(faltan)])
+	# HE-60: las voces del reto (racha, record, vela, vistazo, estrellitas) estan en el guion pero aun no
+	# se generan (HE-67, requiere OK de costo del PO); el motor cae a la voz generica si faltan.
+	var reto := rutas.filter(func(r): return str(r).contains("/emparejar/reto/"))
+	var faltan := rutas.filter(func(r): return not str(r).contains("/emparejar/reto/") and not ResourceLoader.exists("res://assets/audio/" + r))
+	_check(faltan.is_empty(), "%d voces del nivel existen %s" % [rutas.size() - reto.size(), "" if faltan.is_empty() else str(faltan)])
+	var reto_faltan := reto.filter(func(r): return not ResourceLoader.exists("res://assets/audio/" + r))
+	if not reto_faltan.is_empty():
+		print("  PEND  %d voces de reto (HE-67) aun sin grabar" % reto_faltan.size())
 	for i in nivel["rondas"].size():
 		if i > 0:
 			_check(str(nivel["rondas"][i].get("lineas_voz", {}).get("intro_ronda", "")) != "", "la ronda %d trae su consigna por voz" % (i + 1))
@@ -159,6 +165,10 @@ func _jugar(ruta: String, perfil: String, nivel: Dictionary) -> void:
 		while (motor._ronda != i or motor._en_transicion) and Time.get_ticks_msec() - t0 < 12000:
 			await process_frame
 		await _esperar(0.7)
+		# HE-60: el vistazo al repartir (rondas tapadas de Nicole) bloquea el tablero unos segundos.
+		var t_vistazo := Time.get_ticks_msec()
+		while motor._en_vistazo and Time.get_ticks_msec() - t_vistazo < 15000:
+			await process_frame
 		var cartas: Array = motor._cartas
 		var oculto := bool(ronda.get("oculto", nivel.get("oculto", false)))
 		_check(motor._ronda == i and cartas.size() == cantidad * 2, "ronda %d: tablero con %d cartas (hay %d)" % [i + 1, cantidad * 2, cartas.size()])
