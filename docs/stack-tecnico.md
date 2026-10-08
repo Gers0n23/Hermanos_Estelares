@@ -136,8 +136,8 @@ Pivote de rotación en cada articulación (tecla `V` en el editor sobre el punto
 ## 6. Control de versiones y builds
 
 - **Git**: `.gitignore` estándar Godot (`.godot/`, exports). Los SVG fuente y PNG exportados **sí** se versionan (proyecto personal, tamaño manejable).
-- **Exports**: Windows Desktop (desarrollo y PC de casa) y Android APK (tablet — requiere plantillas de export + JDK/SDK Android; se configura recién en Fase 5 para no pagar esa complejidad antes de tiempo).
-- Sin CI por ahora: el "pipeline de release" es papá instalando el APK en la tablet.
+- **Exports**: Windows Desktop (desarrollo y PC de casa) y Android APK. **Betas Android adelantadas (07-Oct-2026, pedido del PO)** para ir probando en el teléfono a medida que se trabaja: preset `Android` en `export_presets.cfg` (arm64, debug, paquete `com.cordero.hermanosestelares`, sin build Gradle) y `herramientas/beta_android.ps1`, que exporta headless (sin Android Studio), numera la versión `0.1-beta.<commits>+<sha>` e instala con `adb install -r` por USB o depuración inalámbrica (`-Wifi IP:PUERTO`). Misma firma debug en cada beta → se actualiza encima y **conserva el guardado**. Requisitos en el PC: plantillas Android de Godot 4.7.1 en `%APPDATA%\Godot\export_templates\4.7.1.stable\`, SDK de Android (`%LOCALAPPDATA%\Android\Sdk`) y un JDK (`JAVA_HOME`). El APK firmado para release (tablet de los niños) sigue para la Fase 5.
+- Sin CI por ahora: el "pipeline de release" es papá corriendo `herramientas/beta_android.ps1` con el teléfono conectado.
 
 ## 7. Decisiones registradas
 
