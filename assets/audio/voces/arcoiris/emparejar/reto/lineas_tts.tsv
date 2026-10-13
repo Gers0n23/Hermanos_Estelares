@@ -1,0 +1,23 @@
+# Voces del reto de Parejas en solitario (HE-60; guion voces-modo-equipo-parejas.md §6 y §6.1). Todas de Coco.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. Generar: python herramientas/generar_voces_fal.py --lista <este archivo> [--estimar]
+# personaje: coco
+voces/arcoiris/emparejar/reto/racha_2.wav	¡Dos seguidas!
+voces/arcoiris/emparejar/reto/racha_3.wav	¡Tres seguidas! ¡Ojos de estrella!
+voces/arcoiris/emparejar/reto/racha_4.wav	¡Cuatro! ¡No te para nadie!
+voces/arcoiris/emparejar/reto/racha_5.wav	¡Racha arcoíris! ¡Al máximo!
+voces/arcoiris/emparejar/reto/racha_sigue.wav	¡Y sigue la racha!
+voces/arcoiris/emparejar/reto/a_la_primera_01.wav	¡A la primera! ¡Qué suerte!
+voces/arcoiris/emparejar/reto/a_la_primera_02.wav	¡Sin buscar y a la primera! ¡Trébol de la suerte!
+voces/arcoiris/emparejar/reto/record_pasa.wav	¡Récord!
+voces/arcoiris/emparejar/reto/record_nuevo_01.wav	¡Nuevo récord! ¡Le ganaste a tu propio récord!
+voces/arcoiris/emparejar/reto/record_nuevo_02.wav	¡Nuevo récord! Este trofeo-cupcake es tuyo.
+voces/arcoiris/emparejar/reto/primer_record.wav	¡Tu primer récord! Aquí queda tu banderita.
+voces/arcoiris/emparejar/reto/vela_presenta.wav	¿Ves la velita? Si terminas antes de que se apague, ¡puntos extra!
+voces/arcoiris/emparejar/reto/vela_encendida.wav	¡La velita sigue encendida! ¡Puntos de regalo!
+voces/arcoiris/emparejar/reto/vela_dormida.wav	Shhh... la velita se quedó dormida. ¡Tú sigue, que cada pareja suma!
+voces/arcoiris/emparejar/reto/vistazo_mira.wav	¡Mira!
+voces/arcoiris/emparejar/reto/vistazo_presenta.wav	Al repartir, te muestro unas cartas un ratito. ¡Míralas bien!
+voces/arcoiris/emparejar/reto/estrellitas_brote_1.wav	¡Terminaste! ¡Una estrella brillante para ti!
+voces/arcoiris/emparejar/reto/estrellitas_brote_2.wav	¡Dos estrellas! ¡Qué memoria!
+voces/arcoiris/emparejar/reto/estrellitas_brote_3.wav	¡Tres estrellas! ¡Memoria arcoíris!
+voces/arcoiris/emparejar/reto/otra_estrellita.wav	¡Con una racha larga sale otra estrellita!

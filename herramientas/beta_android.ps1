@@ -26,6 +26,16 @@ if (-not $env:JAVA_HOME) {
     $java = Get-ChildItem "C:\Program Files\Zulu", "C:\Program Files\Java", "C:\Program Files\Eclipse Adoptium" -Filter java.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($java) { $env:JAVA_HOME = Split-Path -Parent (Split-Path -Parent $java.FullName) }
 }
+# Godot no usa JAVA_HOME: exige la ruta del JDK en su configuracion del editor
+$ajustes = Get-ChildItem (Join-Path $env:APPDATA "Godot") -Filter "editor_settings-4*.tres" | Sort-Object Name | Select-Object -Last 1
+if ($ajustes -and $env:JAVA_HOME) {
+    $texto = [IO.File]::ReadAllText($ajustes.FullName)
+    if ($texto -match '(?m)^export/android/java_sdk_path = ""') {
+        $ruta = $env:JAVA_HOME -replace '\\', '/'
+        [IO.File]::WriteAllText($ajustes.FullName, ($texto -replace '(?m)^export/android/java_sdk_path = ""', "export/android/java_sdk_path = `"$ruta`""))
+        Write-Host "JDK configurado en Godot: $ruta"
+    }
+}
 
 # Numero de version a partir del historial de git
 $n = (git -C $raiz rev-list --count HEAD).Trim()
@@ -40,7 +50,10 @@ New-Item -ItemType Directory -Force (Split-Path -Parent $apk) | Out-Null
 try {
     [IO.File]::WriteAllText($presets, $parchado)
     Write-Host "Exportando $version ..."
-    & $godot --headless --path $raiz --export-debug "Android" $apk 2>&1 | Where-Object { $_ -match "ERROR|error|savepack|Export" } | ForEach-Object { Write-Host "  $_" }
+    # Godot escribe avisos por stderr; en PowerShell 5.1 eso no debe cortar el script
+    $ErrorActionPreference = "Continue"
+    & $godot --headless --path $raiz --export-debug "Android" $apk 2>&1 | ForEach-Object { "$_" } | Where-Object { $_ -match "ERROR|savepack|export" } | ForEach-Object { Write-Host "  $_" }
+    $ErrorActionPreference = "Stop"
 } finally {
     [IO.File]::WriteAllText($presets, $original)
 }
@@ -51,6 +64,16 @@ $mb = [math]::Round((Get-Item $apk).Length / 1MB, 1)
 Write-Host "APK listo: $apk ($mb MB)"
 if ($SoloExportar) { return }
 
+# adb tambien avisa por stderr; de aqui en adelante se revisa $LASTEXITCODE
+$ErrorActionPreference = "Continue"
+# start-server con Start-Process: si el daemon hereda el pipe, el script queda esperando para siempre
+Start-Process -FilePath $adb -ArgumentList "start-server" -NoNewWindow -Wait
+if (-not $Wifi) {
+    # Telefono ya vinculado por depuracion inalambrica: se busca en la red (mDNS)
+    Start-Sleep -Seconds 3
+    $red = & $adb mdns services | Select-String "_adb-tls-connect\._tcp\s+(\S+)" | Select-Object -First 1
+    if ($red -and -not (& $adb devices | Select-String "\tdevice$")) { $Wifi = $red.Matches[0].Groups[1].Value }
+}
 if ($Wifi) { & $adb connect $Wifi | Write-Host }
 $dispositivos = & $adb devices | Select-String "\tdevice$"
 if (-not $dispositivos) {
@@ -58,8 +81,10 @@ if (-not $dispositivos) {
     Write-Host "El APK quedo en exports/ por si prefieres instalarlo a mano."
     exit 1
 }
-Write-Host "Instalando en el telefono ..."
-& $adb install -r -d $apk
+# Por wifi el mismo telefono puede aparecer dos veces (IP y nombre mDNS): se usa uno solo
+$serial = if ($Wifi) { $Wifi } else { ($dispositivos[0].Line -split "\t")[0] }
+Write-Host "Instalando en el telefono ($serial) ..."
+& $adb -s $serial install --no-incremental -r -d $apk
 if ($LASTEXITCODE -ne 0) { throw "adb install fallo." }
-& $adb shell monkey -p $paquete -c android.intent.category.LAUNCHER 1 | Out-Null
+& $adb -s $serial shell monkey -p $paquete -c android.intent.category.LAUNCHER 1 | Out-Null
 Write-Host "Listo: $version instalada y abierta en el telefono."

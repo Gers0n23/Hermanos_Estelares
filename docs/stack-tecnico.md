@@ -12,7 +12,7 @@
 | Motor | **Godot 4.x** (última estable 4.4+/4.5) | Gratuito, 2D excelente, exporta a Windows y Android, editor liviano |
 | Lenguaje | **GDScript** | Sintaxis simple, integración total con el editor, más que suficiente para este alcance |
 | Renderer | **Mobile** (Vulkan mobile) | Táctil-primero; rinde bien en tablet y PC |
-| Resolución base | 1280×720, stretch `canvas_items` + aspect `expand` | Se adapta a cualquier tablet/monitor sin deformar |
+| Resolución base | 1280×720, stretch `canvas_items` + aspect `keep` | Se centra en cualquier tablet/teléfono sin deformar; en pantallas más anchas que 16:9 quedan franjas oscuras simétricas (las pantallas usan coordenadas fijas 1280×720; `expand` dejaba todo el sobrante a la derecha — cambio del 08-Oct-2026) |
 | Entrada | Unificada táctil+mouse (`emulate_mouse_from_touch` y viceversa) | Un solo código de input para tablet y PC |
 
 **Estado**: Godot **4.7.1 stable instalado** vía winget el 18-Jul-2026 (versión estándar, no .NET). Ejecutable de consola: `C:\Users\gcordero\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.1-stable_win64_console.exe` (misma ruta configurada como `GODOT_PATH` en `.mcp.json`). Proyecto base (`project.godot`) creado en la raíz con la config de esta tabla; verificado ejecutando en headless y en ventana (Vulkan Forward Mobile) sin errores.

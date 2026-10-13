@@ -86,6 +86,14 @@
     suena después de "¡le toca a…!" y solo con la cola libre en ≤ 1 s, con la puerta cerrada y sin
     `guardala_proximo_turno` en ese pase. Reemplaza el "sin voz del rival" de la primera redacción
     (§4.3, §8, §11.4, riesgo 14).
+- **v7, 12-Oct-2026**: **[PO]** 4ª etapa de jefe de la batalla, **la Torre de la Colección** (Angry
+  Birds, motor nuevo `lanzar`, ficha `docs/fichas/motor-lanzar.md`). Parejas deja de ser la ronda final,
+  el epílogo va después de la Torre y **se anula M7** (el ala se instala tras la batalla y de ahí sale
+  el viaje al planeta 2). Resumen y lista de lo que cambia en el **§14.16**; el resto del §14 no se
+  reescribió.
+- **v7.1, 13-Oct-2026**: decisiones del PO sobre la Torre (física solo en `lanzar`; ala instalada como
+  estado familiar, con llave de padres; caída en el charco; 4 gags del guion) y conciliación con
+  `docs/guiones/cierre-arcoiris.md` y `docs/cinematicas/cierre_arcoiris.md`. Solo cambia el §14.16.
 - **Referencias**:
   - GDD §1 (tono y derrota-gag), §3 (modo misión familiar), §5 ("Mecánicas probadas y reto real"), §6
     (UX obligatoria) y §8 (alcance negativo);
@@ -2458,3 +2466,89 @@ diseño, y sus correcciones están incorporadas:
 | m7 | El aspirado suena a sorbete (≤ 1,5 s); solo se agrisa la franja del arcoíris; la mochila-torre no parece un bicho; papá se ríe en el teaser | §14.2, §14.10 |
 | m8 | `minimo_hermanos` se refiere a los retratos | §14.7 |
 | m9 | `condicion: "primer_hermano"` (coincide con la decisión del PO) | §14.7, §14.9 |
+
+### 14.16 Etapa final: la Torre de la Colección (decisiones del PO 12 y 13-Oct-2026)
+
+> **[PO, 12-Oct-2026]** Se agrega una **4ª etapa de jefe** con la mecánica de **Angry Birds**. El diseño
+> completo está en **`docs/fichas/motor-lanzar.md` v2** (motor nuevo `lanzar`), conciliado con el guion
+> `docs/guiones/cierre-arcoiris.md` y el storyboard `docs/cinematicas/cierre_arcoiris.md`. Aquí solo se
+> resumen las decisiones y lo que cambia del §14. El resto del §14 sigue vigente. **Sin auditar por UX.**
+>
+> **[PO, 13-Oct-2026]**:
+>
+> - física 2D **aceptada** como excepción al GDD §8, **solo para `lanzar`** (torre congelada entre
+>   tiros y determinista);
+> - el ala instalada es **estado familiar** (un ala + la batalla ganada → la nave queda lista para
+>   todos; llave en la zona de padres);
+> - la caída es en un **charco de pintura**, con lunares y la mochila gris en alto (sin tobogán ni
+>   malvaviscos);
+> - **4 derrotas-gag** del guion.
+
+**Decisiones**:
+
+- **Estructura**:
+  - Río → Formas → Parejas siguen siendo **las 3 rondas de "recuperar los colores"**;
+  - después viene la **Torre de la Colección**;
+  - después, el epílogo de pintar la mochila.
+  
+  **Parejas deja de ser la ronda final**: reemplaza la decisión 10 del §12 ("la última es Parejas en
+  equipo") y la marca "3 (final) [PO]" de la tabla del §14.3.
+- **La mecánica**:
+  - el Coleccionauta apila su colección en una torre tambaleante y se sienta arriba;
+  - los hermanos lanzan, por turnos, los **globos de pintura** que carga Coco con la **resortera de
+    regaliz**;
+  - cuando pierde todo su agarre, la torre se viene abajo (anticipación y caída **animadas**, del
+    storyboard): **cae sentado en un charco de pintura**, queda pintado de lunares y con la mochila **gris
+    y limpia** en alto, porque solo quiso salvarla.
+- **Turnos**: 1 disparo por hermano, `maxi_intercalado`, con puerta y pase. **Sin pista de galletas**:
+  el reloj es **la canasta de ~10 globos** del equipo (modo "sin pista" del `GestorTurnos`, motor-lanzar
+  §13.2). Cada tiro que no bota nada agranda el charco al pie de la torre.
+- **Por perfil**:
+  - **Maxi**: toca o arrastra donde quiera, y su globo siempre rompe un punto débil;
+  - **Nicole**: arrastra con la línea de trayectoria completa; si un tiro derriba 2 o más, el
+    Coleccionauta se resbala;
+  - **Sofía**: sin línea (solo el arranque del arco), con puntos débiles chicos y globos especiales a
+    elección (triple y pesado); si derriba 3 o más, doble resbalón.
+- **Dificultad [PO]**: se gana al **1er intento ~30-40 %** y en **≤ 3 intentos ≥ 95 %** (demostrado con
+  el simulador, no forzado). Las ayudas del guion:
+  - +2 globos del equipo tras la 1ª derrota;
+  - el **globo gigante** que Coco infla tras la 2ª derrota: es el primer globo de cada intento desde el
+    3º, **lo tira Maxi** y quita como mínimo 12 de agarre, pero no gana solo;
+  - desde la 3ª derrota, Coco ofrece descansar.
+  
+  Las ayudas y el conteo se guardan al retomar. Al reintentar, la torre **conserva parte del daño**: las
+  piezas que no se rearman quedan en el suelo, y las manchas y el charco no se borran.
+- **Derrotas-gag**: **4** (guion T.7): el baile con la pintura rosada, el calcetín de sombrero, "¡ningún
+  globo me alcan…!" y el chicle. Las derrotas 1-3 usan los gags 1-3; desde la 4ª, rotan sin repetir el
+  anterior. Se calibra extendiendo `herramientas/simular_equipo.py` (`--torre`) con distribuciones
+  medidas por un arnés de física (motor-lanzar §15).
+- **Estrellitas de equipo (1-3, por globos sobrantes) y récord familiar**: **solo en la revancha**, que
+  rejuega **solo la Torre** (nunca la batalla completa), cuando la partida ya está hecha, desde el hito
+  del Claro. Nunca hay comparación entre hermanos.
+
+**Lo que cambia del §14**:
+
+| Dónde | Antes | Ahora |
+|---|---|---|
+| §14.1, §14.3 (rondas) | 3 rondas + epílogo; Parejas, la final | 3 rondas de colores + **la Torre (jefe)** + epílogo. Orden: interludio azul → pausa en el mapa de batalla → presentación T.1 (≤ 12 s) → Torre → anticipación y caída (motor) → fiesta y "antes del epílogo" (charco). La Torre no recupera un color: no hay interludio de estornudo. `arcoiris_final.json` suma una 4ª entrada en `rondas` con `"id": "torre"`, `"jefe": true`, `"color": null`, `"presentacion"`, `"revancha": true` y `"voz_pausa"` (motor-lanzar §13.3) |
+| §14.3, regla común "Solo se usan motores que ya existen" | `rio`, `encajar`, `lienzo_libre`, `emparejar` | Se suma el motor **`lanzar`**, usado **solo** en las batallas contra el Coleccionauta (regla de una mecánica por lugar) |
+| §14.3, "El reloj de la ronda es la pista de galletas" | Única forma de perder | En la Torre, el reloj es **la canasta de globos**; la derrota llega igual en el pase, con el retrato del siguiente al centro (`terminar_turno_sin_recursos()`) |
+| §14.5 (si pierden) | Gags de aspirar y estornudar | En la Torre, los **4 gags del guion** y el rearmado parcial (motor-lanzar §10) |
+| §14.4 (mapa de batalla) | 3 hitos | **4 hitos**; el de la Torre, el último y más grande |
+| §14.3, "Duración" y §14.13 riesgo 1 | Meta de ≤ 15 min en total | La batalla pasa a **≈ 18-20 min**. La Torre dura **5-7 min** (típica ≈ 5,8) y la precede la pausa "¿vamos ahora o descansamos?" (`pausa_entre_rondas`). **Jugarla en dos sesiones o más es el caso normal**; la meta de ≤ 5 min por ronda de color no cambia |
+| §14.6 (parcial) | Río, Formas, Parejas, epílogo | También la Torre: torre exacta, charco, intento, ayudas ganadas, conteo de gags y globos (mínimo 4); empieza Maxi. "Descansar" tras un gag guarda el intento nuevo (motor-lanzar §12) |
+| §14.7, **"La batalla no condiciona nada (UX HE-66, M7)"** | Puntos 1-4 | **ANULADO por cambio del PO (12 y 13-Oct-2026)**: la batalla **sí condiciona el viaje al planeta 2**, pero **como estado familiar**. Con **un** hermano con el ala (zona 3) y la batalla ganada, la ceremonia de preparativos (bloque 2 del storyboard) instala el ala y **la nave queda lista para todos**: cualquier hermano puede viajar, aunque todavía no tenga su ala, y completar Arcoíris después. **Llave en la zona de padres** para instalar el ala sin la batalla. M7.4 sigue valiendo ("el ala no se gana en la batalla"); M7.1 y M7.2 dejan de valer; M7.3 (el hito sin alarmas) se mantiene como tono. Datos y API: `equipo.partidas.<planeta>` (`pasos`, `hecha`, `ceremonia`, `forzada`), `equipo.rumbos`, `mapa.json` → `"viaje_siguiente_requiere": {"partida": "arcoiris"}` y `batalla.tras_ganar` (motor-lanzar §13.4). Riesgo R10 para UX |
+| §14.7, el hito del Claro | La mochila-torre gris | Tres estados: batalla no ganada → la mochila gris; ganada y partida pendiente → **hito de partida** (la nave con el mapa, storyboard §7.1); partida hecha → la mochila pintada con **"la Torre otra vez"** (revancha) |
+| §14.8 (premio), fila "No hay pieza de la nave" | La pieza ya llegó con el ala | **Ceremonia de preparativos** (escena `partida_arcoiris.tscn` del storyboard): los tres instalan el ala y despegan al planeta 2. Sigue sin entregarse una pieza nueva (`premio.pieza_nave: false`); se suma `premio.instala_pieza: true`. La video-llamada pasa a la partida (storyboard §10) |
+| §14.9 (arnés de QA), "la batalla no condiciona el viaje al planeta 2 (M7)" | Verificar que no condiciona | **Invertido**: sin la partida hecha no se viaja; con la partida hecha viaja cualquier hermano (también el que no tiene el ala); la llave de padres permite viajar sin la batalla (motor-lanzar §20) |
+| §14.10 y §14.11 | — | La Torre y el cierre están en `docs/guiones/cierre-arcoiris.md` y `docs/cinematicas/cierre_arcoiris.md`. Lo que falta, en motor-lanzar §18 |
+| §11.4 `GestorTurnos` | `rival: null` solo con `confirmar_turno: false` | Se admite `rival: null` + `confirmar_turno: true` (modo **sin pista**), más `terminar_turno_sin_recursos()` y `reiniciar_rival(forzar_id)`; en la base, los virtuales `ancla_rival_motor()`, `variante_derrota()` y `saltar_momento(id)`, las señales `momento_saltable_iniciado/terminado` y la revancha. Firmas en motor-lanzar §13.2. (La "ronda de ventanitas" de la v1 se retira) |
+| §11.5 / §14.9 `Progreso` | — | `equipo.batallas.<id>.revanchas.<id_ronda>` = `{estrellitas, record}`, más `equipo.partidas` y `equipo.rumbos` (estado familiar), con su API (motor-lanzar §13.3-13.4). Sin subir versión |
+| §14.12 (HE-39) | — | La Torre puede volver como última ronda de HE-39 (decisión abierta 4 de motor-lanzar) |
+| §14.14 (estado) | — | Filas nuevas: "4ª etapa de jefe: la Torre de la Colección (Angry Birds); anula M7" → **[PO, 12-Oct-2026]**; "física solo en `lanzar`; ala = estado familiar + llave de padres; caída en el charco; 4 gags del guion" → **[PO, 13-Oct-2026]** |
+
+**Pendiente**:
+
+- `scrum-master` registra en el GDD §8 la excepción de la física (decisión del PO, 13-Oct-2026);
+- el PO responde las decisiones que siguen abiertas en motor-lanzar §21 (globos al retomar, destellos de
+  la revancha, el gigante siempre de Maxi, HE-39, orden de turnos y revancha con dos).
