@@ -62,6 +62,7 @@ voces/arcoiris/pinta/comun/conectado_01.wav	¡Los conectaste!
 voces/arcoiris/pinta/comun/conectado_02.wav	¡Unidos! ¡Qué buena idea!
 voces/arcoiris/pinta/comun/dino_camina_01.wav	¡Jajaja! ¡Los dinos se fueron de paseo!
 voces/arcoiris/pinta/comun/dino_camina_02.wav	¡Miren! ¡Los dinosaurios caminan!
+voces/arcoiris/pinta/comun/grupo_amigos.wav	¡Amigos!
 voces/arcoiris/pinta/comun/grupo_colores.wav	¡Colores!
 voces/arcoiris/pinta/comun/grupo_cosas.wav	¡Cosas que se mueven!
 voces/arcoiris/pinta/comun/grupo_decorados.wav	¡Decorados!
@@ -70,8 +71,11 @@ voces/arcoiris/pinta/comun/grupo_trajes.wav	¡Trajes!
 voces/arcoiris/pinta/comun/hoja_lista.wav	¡Lo lograste todo! Muéstrame tu dibujo.
 voces/arcoiris/pinta/comun/lamina_completa_01.wav	¡Lo pintaste todo! ¿Me lo muestras? Toca mi carita.
 voces/arcoiris/pinta/comun/lamina_completa_02.wav	¡Terminado! ¡Muéstramelo!
+voces/arcoiris/pinta/comun/reiniciar.wav	¡Fuuush! ¡Hoja nueva, limpiecita!
+voces/arcoiris/pinta/comun/reiniciar_mantener.wav	Para empezar de nuevo, deja el dedo apretado en la escoba.
 voces/arcoiris/pinta/comun/reto_cumplido_01.wav	¡Reto cumplido! ¡Qué artista!
 voces/arcoiris/pinta/comun/reto_cumplido_02.wav	¡Lo lograste! Un reto menos.
+voces/arcoiris/pinta/comun/sol_quema.wav	¡Uy, qué calor! El sol vive en el cielo.
 voces/arcoiris/pinta/comun/uso_pincel_estrella.wav	¡Estrellitas! ¡Qué brillo!
 voces/arcoiris/pinta/comun/uso_sello_auto.wav	¡Brum, brum! ¡Un autito!
 voces/arcoiris/pinta/comun/uso_sello_dino.wav	¡Un dinosaurio! ¡Grrr!
@@ -262,7 +266,10 @@ voces/arcoiris/pinta/stickers/carroza.wav	¡Una carroza mágica!
 voces/arcoiris/pinta/stickers/casa.wav	¡Una casita!
 voces/arcoiris/pinta/stickers/casa_valpo.wav	¡Una casita de colores de Valparaíso!
 voces/arcoiris/pinta/stickers/castillo.wav	¡Un castillo!
+voces/arcoiris/pinta/stickers/coco.wav	¡Coco, la camaleona!
 voces/arcoiris/pinta/stickers/cohete.wav	¡Un cohete! ¡Tres, dos, uno, despegue!
+voces/arcoiris/pinta/stickers/coleccionauta.wav	¡El Coleccionauta! Jiji.
+voces/arcoiris/pinta/stickers/cometa.wav	¡Cometa, nuestro amigo del espacio!
 voces/arcoiris/pinta/stickers/copihue.wav	¡El copihue, la flor nacional de Chile!
 voces/arcoiris/pinta/stickers/corazon.wav	¡Un corazón!
 voces/arcoiris/pinta/stickers/corona.wav	¡Una corona de princesa!
@@ -283,14 +290,17 @@ voces/arcoiris/pinta/stickers/lechuza.wav	¡Una lechuza! ¡Uh, uh!
 voces/arcoiris/pinta/stickers/libro.wav	¡Un libro de hechizos!
 voces/arcoiris/pinta/stickers/luna.wav	¡La luna!
 voces/arcoiris/pinta/stickers/manzana.wav	¡Una manzana!
+voces/arcoiris/pinta/stickers/maxi.wav	¡Maxi, el explorador valiente!
 voces/arcoiris/pinta/stickers/microfono.wav	¡Un micrófono! ¡A cantar!
 voces/arcoiris/pinta/stickers/moai.wav	¡Un moái de Rapa Nui, la Isla de Pascua!
 voces/arcoiris/pinta/stickers/montana.wav	¡Las Torres del Paine, en la Patagonia!
+voces/arcoiris/pinta/stickers/nicole.wav	¡Nicole, la artista!
 voces/arcoiris/pinta/stickers/nota.wav	¡Una nota musical!
 voces/arcoiris/pinta/stickers/nube.wav	¡Una nube!
 voces/arcoiris/pinta/stickers/nube_lluvia.wav	¡Una nube de lluvia!
 voces/arcoiris/pinta/stickers/ovillo.wav	¡Un ovillo de lana!
 voces/arcoiris/pinta/stickers/palmera.wav	¡Una palmera!
+voces/arcoiris/pinta/stickers/papa.wav	¡Papá!
 voces/arcoiris/pinta/stickers/parlante.wav	¡Un parlante! ¡Súbele!
 voces/arcoiris/pinta/stickers/pastel.wav	¡Un pastel de cumpleaños!
 voces/arcoiris/pinta/stickers/pelota.wav	¡Una pelota!
@@ -300,9 +310,11 @@ voces/arcoiris/pinta/stickers/planeta.wav	¡Un planeta con anillos!
 voces/arcoiris/pinta/stickers/pony_amigo.wav	¡Un pony!
 voces/arcoiris/pinta/stickers/regalo.wav	¡Un regalo!
 voces/arcoiris/pinta/stickers/roca.wav	¡Una roca!
+voces/arcoiris/pinta/stickers/sofia.wav	¡Sofía, la capitana!
 voces/arcoiris/pinta/stickers/sol.wav	¡El sol!
 voces/arcoiris/pinta/stickers/sombrero_mago.wav	¡Un sombrero de mago!
 voces/arcoiris/pinta/stickers/spinosaurio.wav	¡Un espinosaurio, con su vela en la espalda!
+voces/arcoiris/pinta/stickers/toby.wav	¡Toby, el perrito astronauta!
 voces/arcoiris/pinta/stickers/tren.wav	¡Un tren! ¡Chu, chu!
 voces/arcoiris/pinta/stickers/trex.wav	¡Un tiranosaurio rex! ¡Grrr!
 voces/arcoiris/pinta/stickers/unicornio.wav	¡Un unicornio!

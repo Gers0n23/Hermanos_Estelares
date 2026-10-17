@@ -19,6 +19,11 @@ que el código nunca referencie nombres genéricos `click_001.ogg`.
 | `puf.ogg` | Soplido suave: la vela del tiempo par de Parejas "se va a dormir" (UX HE-60 m2; nunca grave ni de error) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
 | `fiuu.ogg` | Silbidito agudo y muy suave: se corta la racha de Parejas (UX HE-60 m2; sin sonido de error) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
 | `blup.ogg` | Burbuja alegre: la barra del récord rebalsa (UX HE-60 M1) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `polvo.ogg` | "¡Puff!" de aterrizaje en el lienzo: golpecito blando + soplido de polvo (ficha motor-lienzo-libre §10.1) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `polvo_boing.ogg` | Aterrizaje gracioso de Maxi: "boing" de resorte + polvo (§10.1) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `chisporroteo.ogg` | El sol se quema fuera del cielo: chispitas suaves (§10.2; nunca de error) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `rebobinar.ogg` | Deshacer en el lienzo: "bwip" que sube (§10.3) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
+| `fuuush.ogg` | La escoba barre la hoja al reiniciar (§10.4) | Original, sintetizado con `herramientas/componer_sfx_ui.py` |
 
 Este set es intencionalmente pequeño (un archivo por categoría) para no bloquear el
 resto del núcleo; se puede ampliar variando con `_002`, `_003`, etc. del mismo pack

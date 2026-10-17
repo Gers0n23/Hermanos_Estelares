@@ -73,6 +73,20 @@ const SFX_ELEGIR := "sfx/ui/seleccionar.ogg"
 const SFX_SELLO := "sfx/ui/soltar.ogg"
 const SFX_RELLENO := "sfx/ui/confirmar.ogg"
 const SFX_MOSTRAR := "sfx/ui/abrir.ogg"
+## Fisica, sol, deshacer y reiniciar (ficha §10): SFX originales de `componer_sfx_ui.py`.
+const SFX_POLVO := "sfx/ui/polvo.ogg"
+const SFX_POLVO_MAXI := "sfx/ui/polvo_boing.ogg"
+const SFX_CAIDA := "sfx/ui/fiuu.ogg"
+const SFX_CHISPORROTEO := "sfx/ui/chisporroteo.ogg"
+const SFX_REBOBINAR := "sfx/ui/rebobinar.ogg"
+const SFX_FUUSH := "sfx/ui/fuuush.ogg"
+const SFX_PUF := "sfx/ui/puf.ogg"
+const SFX_HOP := "sfx/ui/blup.ogg"
+## Reiniciar la hoja: mantener presionada la escoba este tiempo (anti-accidente infantil).
+const SEGUNDOS_REINICIAR := 1.2
+## Botones "deshacer" y "reiniciar", arriba, a la derecha de la tarjeta de inspiracion.
+const X_EDICION := 340.0
+const Y_EDICION := 14.0
 const COLOR_CONTORNO := Color("#2B3350")
 const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
@@ -115,6 +129,26 @@ var _entradas_color: Array = []  ## [{"color", "id", "numero"}] de la hoja (aunq
 var _botones_herramienta: Array = []  ## [{"boton", "id"}] del popup abierto
 var _boton_ver_todo: Button
 var _fuente: Font
+
+## Deshacer y reiniciar (ficha §10.3-10.4).
+var _boton_deshacer: Button
+var _boton_reiniciar: Button
+var _anillo_reiniciar: Control
+## Segundos que lleva presionada la escoba (-1 = suelta).
+var _reinicio_t := -1.0
+var _barriendo := false
+var _ms_ultimo_sol := -100000
+var _ms_pista_reiniciar := -100000
+
+## Coco como burbujita (ficha §11.4): solo aparece cuando habla o celebra.
+const CENTRO_BURBUJA := Vector2(1190, 302)
+const RADIO_BURBUJA := 70.0
+const MARGEN_BURBUJA := 0.7
+var _burbuja_coco: Control
+var _cuerpo_coco: Control
+var _coco_hasta := 0.0
+var _coco_saliendo := false
+var _tween_burbuja: Tween
 
 ## Inspiracion (tarjeta chica y grande).
 var _inspiracion: Button
@@ -196,10 +230,7 @@ func _ready() -> void:
 	_construir_interfaz()
 	_boton_cometa.pressed.connect(_al_tocar_cometa)
 	_boton_salir.pressed.connect(func() -> void: salir_solicitado.emit())
-	_anfitriona.mouse_filter = Control.MOUSE_FILTER_STOP
-	_anfitriona.gui_input.connect(_al_tocar_anfitriona)
-	_anfitriona.pivot_offset = Vector2(_anfitriona.size.x / 2.0, _anfitriona.size.y)
-	_base_anfitriona = _anfitriona.position
+	_armar_burbuja_coco()
 	if nivel.is_empty():
 		push_error("motor_lienzo_libre: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
@@ -213,7 +244,16 @@ func _process(delta: float) -> void:
 	var audio := get_node_or_null("/root/Audio")
 	var hablando: bool = audio != null and audio.esta_hablando()
 	var bamboleo := absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0
-	_anfitriona.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
+	_burbuja_coco.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
+	# Ficha §11.4: la burbujita de Coco se va sola cuando termino de hablar (mas un margen).
+	if _burbuja_coco.visible and not _coco_saliendo and not hablando and not _mostrando and _tiempo > _coco_hasta:
+		_ocultar_coco()
+	if _reinicio_t >= 0.0:
+		_reinicio_t += delta
+		_anillo_reiniciar.queue_redraw()
+		if _reinicio_t >= SEGUNDOS_REINICIAR:
+			_reinicio_t = -1.0
+			reiniciar_lienzo()
 	if _terminado or _mostrando or eligiendo_tema or _indice_hoja < 0:
 		return
 	_tiempo_hoja += delta
@@ -366,6 +406,8 @@ func _empezar_hoja(indice: int) -> void:
 	_indice_hoja = indice
 	var hoja: Dictionary = _hojas[indice]
 	if hoja.has("tema") and (hoja["tema"] as Dictionary).is_empty():
+		_boton_deshacer.hide()
+		_boton_reiniciar.hide()
 		_mostrar_selector()
 		return
 	_cfg = hoja["cfg"]
@@ -402,6 +444,10 @@ func _empezar_hoja(indice: int) -> void:
 	lienzo.cierre_distancia = 150.0 if _perfil == "semilla" else 60.0
 	lienzo.cierre_largo = 500.0 if _perfil == "semilla" else 280.0
 	lienzo.auto_subir = _perfil == "semilla"
+	# Ficha §11.1-11.2: caminos mas finos (Maxi algo mas anchos) y, con la herramienta de camino, el dedo
+	# quieto sobre uno lo borra (Maxi necesita mas tiempo: menos borrados por accidente).
+	lienzo.ancho_caminos = Lienzo.ANCHO_CAMINO_SEMILLA if _perfil == "semilla" else Lienzo.ANCHO_CAMINO
+	lienzo.segundos_borrar_camino = 1.5 if _perfil == "semilla" else Lienzo.SEGUNDOS_BORRAR_CAMINO
 	lienzo.avisar_completa = not lienzo.stickers_objeto
 	_nombrados.clear()
 	_conectados = 0
@@ -438,6 +484,9 @@ func _empezar_hoja(indice: int) -> void:
 	_preparar_pedidos()
 	_preparar_mezcla()
 	_preparar_objetivos()
+	# La hoja quedo armada: esa es la foto a la que vuelve "reiniciar" (y el historial empieza vacio).
+	lienzo.fijar_inicio()
+	_colocar_botones_edicion()
 
 	_segundos_recordar = float(_cfg.get("segundos_recordar_mostrar", 0.0))
 	_recordado = false
@@ -493,6 +542,9 @@ func _preparar_escena(tema: Dictionary) -> void:
 	var caminos: Array = tema.get("caminos", [])
 	if not caminos.is_empty():
 		lienzo.tipo_camino = str(caminos[0])
+	# Fisica (§10): gravedad si hay cielo y no es espacio; Maxi cae mas lento y con mas "¡puff!".
+	lienzo.caida_suave = _perfil == "semilla"
+	lienzo.preparar_fisica(tema)
 
 
 # ---------------------------------------------------------------------------
@@ -530,6 +582,14 @@ func _construir_interfaz() -> void:
 		_sfx_suave(SFX_ELEGIR))
 	lienzo.combinacion.connect(_al_combinar)
 	lienzo.zoom_cambiado.connect(_al_cambiar_zoom)
+	lienzo.caida_iniciada.connect(_al_empezar_caida)
+	lienzo.aterrizo.connect(_al_aterrizar)
+	lienzo.sol_quemo.connect(_al_quemar_sol)
+	lienzo.historial_cambiado.connect(_al_cambiar_historial)
+	lienzo.montado.connect(_al_montar)
+	lienzo.camino_borrado.connect(func(_c: Dictionary) -> void:
+		reproducir_sfx(SFX_PUF)
+		_revisar_objetivos())
 
 	_puntos_hojas = Control.new()
 	_puntos_hojas.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -585,6 +645,26 @@ func _construir_interfaz() -> void:
 	_dock = Control.new()
 	_dock.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_ui.add_child(_dock)
+
+	# Deshacer (flecha curva) y reiniciar (escoba que se mantiene presionada), sin texto (§10.3-10.4).
+	_boton_deshacer = Button.new()
+	_boton_deshacer.focus_mode = Control.FOCUS_NONE
+	_boton_deshacer.tooltip_text = "deshacer"
+	_boton_deshacer.custom_minimum_size = Vector2(64, 64)
+	_ui.add_child(_boton_deshacer)
+	_estilizar_boton(_boton_deshacer, Color("#FFF8EE"))
+	_boton_deshacer.set_meta("dibujo", _icono(_boton_deshacer, _dibujar_icono_deshacer))
+	_boton_deshacer.pressed.connect(deshacer)
+	_boton_reiniciar = Button.new()
+	_boton_reiniciar.focus_mode = Control.FOCUS_NONE
+	_boton_reiniciar.tooltip_text = "reiniciar"
+	_boton_reiniciar.custom_minimum_size = Vector2(64, 64)
+	_ui.add_child(_boton_reiniciar)
+	_estilizar_boton(_boton_reiniciar, Color("#FFF8EE"), false)
+	_icono(_boton_reiniciar, _dibujar_icono_reiniciar)
+	_anillo_reiniciar = _icono(_boton_reiniciar, _dibujar_anillo_reiniciar)
+	_boton_reiniciar.button_down.connect(_empezar_a_mantener)
+	_boton_reiniciar.button_up.connect(_soltar_reiniciar)
 
 	_inspiracion = Button.new()
 	_inspiracion.focus_mode = Control.FOCUS_NONE
@@ -735,6 +815,21 @@ func _construir_grupos() -> void:
 		decorados = []
 		for id in decos:
 			decorados.append("sello_" + str(id))
+	# Ficha §11.3: los personajes ("amigos") en todas las escenas con tema; el que juega va primero.
+	var amigos: Array = []
+	if not tema.is_empty():
+		for id in _cfg.get("amigos", []):
+			if Stickers.tiene(str(id)):
+				amigos.append("sello_" + str(id))
+		var propio := "sello_" + obtener_id_personaje()
+		if amigos.has(propio):
+			amigos.erase(propio)
+			amigos.push_front(propio)
+	if not amigos.is_empty():
+		if _perfil == "semilla":
+			cosas.append_array(amigos)
+		else:
+			_grupos["amigos"] = amigos
 	if _perfil == "semilla" and not cosas.is_empty():
 		# Maxi: menos grupos. Sus decorados (el huevo) van junto a los vivos y el camino.
 		cosas = cosas + decorados
@@ -784,7 +879,7 @@ func _construir_dock() -> void:
 	var lado := _lado_boton()
 	var sep := 10.0 if _perfil == "semilla" else 8.0
 	var y := DOCK_Y
-	for grupo in ["colores", "pinceles", "cosas", "decorados", "trajes", "lupa"]:
+	for grupo in ["colores", "pinceles", "cosas", "decorados", "amigos", "trajes", "lupa"]:
 		if not _grupos.has(grupo):
 			continue
 		var boton := Button.new()
@@ -807,7 +902,8 @@ func _construir_dock() -> void:
 	_boton_ver_todo.tooltip_text = "ver_todo"
 	_boton_ver_todo.custom_minimum_size = Vector2(64, 64)
 	_dock.add_child(_boton_ver_todo)
-	_boton_ver_todo.position = Vector2(DOCK_X + (96.0 - lado) / 2.0, y)
+	# "Ver todo" va a la derecha de la lupa (el ultimo boton): con el grupo de amigos, abajo no cabe.
+	_boton_ver_todo.position = Vector2(DOCK_X + (96.0 - lado) / 2.0 + lado + sep, y - lado - sep) if not _dock_botones.is_empty() else Vector2(DOCK_X, y)
 	_boton_ver_todo.size = Vector2(lado, lado)
 	_boton_ver_todo.set_meta("grupo", "ver_todo")
 	_estilizar_boton(_boton_ver_todo, Color("#CFF5F1"))
@@ -885,9 +981,12 @@ func abrir_popup(grupo: String) -> void:
 		var vivos: Array = []
 		var lugares: Array = []
 		var caminos: Array = []
+		var amigos: Array = []
 		for id in _grupos.get(grupo, []):
 			var clave := str(id)
-			if clave.begins_with("camino_"):
+			if Stickers.es_personaje(clave.trim_prefix("sello_")):
+				amigos.append(clave)
+			elif clave.begins_with("camino_"):
 				caminos.append(clave)
 			elif lienzo.clase_de(clave.trim_prefix("sello_")) == "lugar":
 				lugares.append(clave)
@@ -896,6 +995,8 @@ func abrir_popup(grupo: String) -> void:
 		for lista in [vivos, lugares, caminos]:
 			if not lista.is_empty():
 				filas.append(lista)
+		for i in range(0, amigos.size(), 6):
+			filas.append(amigos.slice(i, i + 6))
 	else:
 		var items: Array = _grupos.get(grupo, [])
 		for i in range(0, items.size(), 6):
@@ -1711,6 +1812,8 @@ func _accion_sticker(accion: String) -> void:
 		_ocultar_barra()
 		return
 	_sfx_suave(SFX_ELEGIR)
+	# Editar un sticker tambien se puede deshacer (por delegacion, ficha §10.3).
+	lienzo.empezar_paso()
 	match accion:
 		"achicar":
 			sticker.escala = maxf(0.5, sticker.escala / 1.25)
@@ -1722,8 +1825,10 @@ func _accion_sticker(accion: String) -> void:
 			sticker.espejo = not sticker.espejo
 		"borrar":
 			lienzo.borrar_sticker(sticker)
+			lienzo.cerrar_paso()
 			_ocultar_barra()
 			return
+	lienzo.cerrar_paso()
 	sticker.saltar()
 	_mostrar_barra(sticker)
 	_revisar_objetivos()
@@ -1947,6 +2052,11 @@ func _registrar_evento(tipo: String, datos: Dictionary) -> void:
 			"combinacion":
 				if str(datos["resultado"]) == str(o.get("resultado", "")):
 					registro["ok"] = true
+			"montar":
+				# Objetivo OPCIONAL (§11.9): "sube a alguien a un pony" ({jinete?, montura?}).
+				if (str(o.get("jinete", "")) == "" or str(datos["jinete"]) == str(o.get("jinete", ""))) \
+						and _coincide(str(datos["montura"]), str(o.get("montura", ""))):
+					registro["ok"] = true
 			"orden":
 				if _coincide(str(datos["viajero"]), str(o.get("viajero", ""))):
 					var historial: Array = _historial_viajes.get(datos["instancia"], [])
@@ -2004,7 +2114,7 @@ func _medir(objetivo: Dictionary) -> int:
 			if herramienta == "purpurina":
 				return int(registro.get("lluvias", 0))
 			return int(lienzo.usos.get(herramienta, 0))
-		"combinacion":
+		"combinacion", "montar":
 			return 1 if bool(registro.get("ok", false)) else 0
 		"pintar_zona":
 			return _medir_pintar_zona(o)
@@ -2720,6 +2830,10 @@ func mostrar_a_coco() -> String:
 	_mostrando = true
 	_cerrar_popup()
 	_cerrar_inspiracion()
+	mostrar_coco(6.0)
+	_reinicio_t = -1.0
+	_boton_deshacer.hide()
+	_boton_reiniciar.hide()
 	lienzo.bloqueado = true
 	lienzo.terminar_trazo()
 	_voz_diferida_id += 1
@@ -2975,6 +3089,8 @@ func _reproducir_voz(clave: String, ruta: String) -> void:
 	if ruta != "":
 		print("[voz:%s] %s" % [clave, ruta])
 		reproducir_voz(ruta)
+		# Coco aparece en su burbujita solo mientras habla (§11.4).
+		mostrar_coco(_duracion_voz(ruta))
 
 
 func _voz_diferida(clave: String, ruta: String, segundos: float) -> void:
@@ -3036,26 +3152,28 @@ func _al_tocar_anfitriona(event: InputEvent) -> void:
 
 
 func _reaccion_anfitriona(tipo: String) -> void:
+	# Las celebraciones (tambien el salto de Maxi al caer un sticker) traen a Coco en su burbujita.
+	mostrar_coco(2.2 if tipo == "baila" else 0.9)
 	if _tween_anfitriona != null and _tween_anfitriona.is_valid():
 		_tween_anfitriona.kill()
-	_anfitriona.rotation = 0.0
-	_anfitriona.scale = Vector2.ONE
+	_cuerpo_coco.rotation = 0.0
+	_cuerpo_coco.scale = Vector2.ONE
 	_salto_anfitriona = 0.0
 	var tween := create_tween()
 	_tween_anfitriona = tween
 	match tipo:
 		"salta":
-			tween.tween_property(_anfitriona, "scale", Vector2(1.08, 0.9), 0.08)
-			tween.tween_property(self, "_salto_anfitriona", 40.0, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-			tween.parallel().tween_property(_anfitriona, "scale", Vector2(0.94, 1.08), 0.18)
+			tween.tween_property(_cuerpo_coco, "scale", Vector2(1.08, 0.9), 0.08)
+			tween.tween_property(self, "_salto_anfitriona", 28.0, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tween.parallel().tween_property(_cuerpo_coco, "scale", Vector2(0.94, 1.08), 0.18)
 			tween.tween_property(self, "_salto_anfitriona", 0.0, 0.3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-			tween.parallel().tween_property(_anfitriona, "scale", Vector2.ONE, 0.3)
+			tween.parallel().tween_property(_cuerpo_coco, "scale", Vector2.ONE, 0.3)
 		"baila":
 			for i in 6:
-				tween.tween_property(self, "_salto_anfitriona", 32.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-				tween.parallel().tween_property(_anfitriona, "rotation", deg_to_rad(-9.0 if i % 2 == 0 else 9.0), 0.16)
+				tween.tween_property(self, "_salto_anfitriona", 24.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				tween.parallel().tween_property(_cuerpo_coco, "rotation", deg_to_rad(-12.0 if i % 2 == 0 else 12.0), 0.16)
 				tween.tween_property(self, "_salto_anfitriona", 0.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-			tween.tween_property(_anfitriona, "rotation", 0.0, 0.12)
+			tween.tween_property(_cuerpo_coco, "rotation", 0.0, 0.12)
 
 
 func _rebote(control: Control, veces := 1) -> void:
@@ -3076,6 +3194,290 @@ func _actualizar_depuracion() -> void:
 	_panel_depuracion.text = "DEPURACION (F3)\nnivel: %s\nperfil: %s · juega: %s\nencargo: %s · hoja %d de %d\nherramienta: %s · zoom %.1f\nobjetivos pendientes: %s\nsi muestra ahora: %d destellos" % [
 		nivel.get("id_nivel", "?"), _perfil, obtener_id_personaje(), _encargo, _indice_hoja + 1, _hojas.size(),
 		lienzo.herramienta, lienzo.zoom, ", ".join(pendientes) if not pendientes.is_empty() else "ninguno", calcular_destellos()]
+
+
+# ---------------------------------------------------------------------------
+# Fisica, sol, deshacer y reiniciar (ficha §10)
+# ---------------------------------------------------------------------------
+
+## Coco deja de ocupar un lugar fijo del lienzo (ficha §11.4): vive en una BURBUJITA redonda con su cara
+## (el mismo TextureRect, con su cresta que imita colores, recortado por un circulo) a la derecha, debajo
+## de las tarjetas de objetivos y arriba de "mostrar a Coco" (no tapa el objetivo que narra). Aparece
+## con un "pop" cuando habla o celebra y se va sola al terminar. Tocarla mientras esta da la pista;
+## si no esta, tocar la tarjeta del objetivo repite su voz (o Cometa repite la instruccion).
+func _armar_burbuja_coco() -> void:
+	var lado := Vector2.ONE * RADIO_BURBUJA * 2.0
+	_burbuja_coco = Control.new()
+	_burbuja_coco.mouse_filter = Control.MOUSE_FILTER_STOP
+	_burbuja_coco.tooltip_text = _anfitriona.tooltip_text
+	_ui.add_child(_burbuja_coco)
+	_ui.move_child(_burbuja_coco, _anfitriona.get_index())
+	_burbuja_coco.size = lado
+	_burbuja_coco.position = CENTRO_BURBUJA - lado / 2.0
+	_burbuja_coco.pivot_offset = lado / 2.0
+	_base_anfitriona = _burbuja_coco.position
+	_burbuja_coco.gui_input.connect(_al_tocar_anfitriona)
+	_cuerpo_coco = Control.new()
+	_cuerpo_coco.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_burbuja_coco.add_child(_cuerpo_coco)
+	_cuerpo_coco.size = lado
+	_cuerpo_coco.pivot_offset = Vector2(lado.x / 2.0, lado.y)
+	_cuerpo_coco.draw.connect(func() -> void:
+		# Sombra y colita de globo de dialogo (apunta hacia el lienzo).
+		var c := lado / 2.0
+		_cuerpo_coco.draw_circle(c + Vector2(0, 5), RADIO_BURBUJA, Color(COLOR_CONTORNO, 0.25))
+		var cola := PackedVector2Array([c + Vector2(-RADIO_BURBUJA * 0.55, RADIO_BURBUJA * 0.55), c + Vector2(-RADIO_BURBUJA * 1.2, RADIO_BURBUJA * 1.05),
+			c + Vector2(-RADIO_BURBUJA * 0.15, RADIO_BURBUJA * 0.85)])
+		_cuerpo_coco.draw_colored_polygon(cola, Color("#FFF3FA"))
+		var borde := cola.duplicate()
+		borde.append(cola[0])
+		_cuerpo_coco.draw_polyline(borde, COLOR_CONTORNO, 4.0, true))
+	var mascara := Control.new()
+	mascara.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mascara.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	_cuerpo_coco.add_child(mascara)
+	mascara.size = lado
+	mascara.draw.connect(func() -> void: mascara.draw_circle(lado / 2.0, RADIO_BURBUJA, Color("#FFF3FA")))
+	# La cabeza de coco_base.png (293x459) ocupa ~(30..264, 0..230): se centra en el circulo.
+	_anfitriona.reparent(mascara, false)
+	_anfitriona.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	_anfitriona.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_anfitriona.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_anfitriona.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var tam := _anfitriona.texture.get_size() if _anfitriona.texture != null else Vector2(293, 459)
+	var escala := RADIO_BURBUJA * 2.0 / 228.0
+	_anfitriona.size = tam * escala
+	_anfitriona.position = lado / 2.0 - Vector2(147, 112) * escala
+	_anfitriona.rotation = 0.0
+	_anfitriona.scale = Vector2.ONE
+	var aro := Control.new()
+	aro.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cuerpo_coco.add_child(aro)
+	aro.size = lado
+	aro.draw.connect(func() -> void:
+		aro.draw_arc(lado / 2.0, RADIO_BURBUJA - 2.0, 0.0, TAU, 48, COLOR_CONTORNO, 5.0, true)
+		aro.draw_arc(lado / 2.0, RADIO_BURBUJA - 10.0, -2.6, -1.9, 10, Color(1, 1, 1, 0.8), 5.0, true))
+	_burbuja_coco.hide()
+
+
+## Coco aparece (o se queda) en su burbujita al menos `segundos` mas el margen. Publica para QA.
+func mostrar_coco(segundos: float) -> void:
+	_coco_hasta = maxf(_coco_hasta, _tiempo + segundos + MARGEN_BURBUJA)
+	if _burbuja_coco.visible and not _coco_saliendo:
+		return
+	_coco_saliendo = false
+	if _tween_burbuja != null and _tween_burbuja.is_valid():
+		_tween_burbuja.kill()
+	_burbuja_coco.show()
+	_ui.move_child(_burbuja_coco, -1)
+	_ui.move_child(_efectos, -1)
+	_burbuja_coco.scale = Vector2(0.2, 0.2)
+	_tween_burbuja = _burbuja_coco.create_tween()
+	_tween_burbuja.tween_property(_burbuja_coco, "scale", Vector2.ONE, 0.24).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _ocultar_coco() -> void:
+	_coco_saliendo = true
+	if _tween_burbuja != null and _tween_burbuja.is_valid():
+		_tween_burbuja.kill()
+	_tween_burbuja = _burbuja_coco.create_tween()
+	_tween_burbuja.tween_property(_burbuja_coco, "scale", Vector2(0.15, 0.15), 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	_tween_burbuja.tween_callback(func() -> void:
+		_burbuja_coco.hide()
+		_coco_saliendo = false)
+
+
+func coco_visible() -> bool:
+	return _burbuja_coco.visible and not _coco_saliendo
+
+
+## Un personaje se subio a un animal o vehiculo: "¡hop!" y destellitos (§11.9).
+func _al_montar(jinete: StickerVivo, montura: StickerVivo) -> void:
+	reproducir_sfx(SFX_HOP, 1.3)
+	_estallido(lienzo.a_pantalla(jinete.centro()), 8, [DORADO, Color.WHITE, Color("#FF7EB6")], 0.8)
+	_registrar_evento("montar", {"jinete": jinete.id, "montura": montura.id})
+	_revisar_objetivos()
+
+
+## Maxi oye un silbidito al empezar a caer (gracioso, no de error).
+func _al_empezar_caida(_sticker: StickerVivo) -> void:
+	if _perfil == "semilla":
+		reproducir_sfx(SFX_CAIDA, 0.75)
+
+
+## "¡Puff!" al aterrizar. Maxi: boing mas gracioso, estrellitas y Coco salta.
+func _al_aterrizar(sticker: StickerVivo, grande: bool) -> void:
+	_sfx_suave(SFX_POLVO_MAXI if grande else SFX_POLVO)
+	if grande:
+		var base := sticker.centro() + Vector2(0, sticker.lado * sticker.escala * 0.43)
+		_estallido(lienzo.a_pantalla(base), 8, [Color("#F6EBD8"), Color.WHITE, DORADO], 0.9)
+		_reaccion_anfitriona("salta")
+	_revisar_objetivos()
+
+
+## El sol se quemo las manos fuera del cielo: chisporroteo y "¡uy, qué calor!" (sin repetir seguido).
+func _al_quemar_sol(_sol: StickerVivo, _cuantos: int) -> void:
+	reproducir_sfx(SFX_CHISPORROTEO)
+	_reaccion_anfitriona("salta")
+	var ahora := Time.get_ticks_msec()
+	if ahora - _ms_ultimo_sol > 4000:
+		_ms_ultimo_sol = ahora
+		_reproducir_voz("sol_quema", _linea("sol_quema"))
+
+
+func _colocar_botones_edicion() -> void:
+	var lado := _lado_boton()
+	var y := Y_EDICION + (100.0 - lado) / 2.0
+	for i in 2:
+		var boton: Button = [_boton_deshacer, _boton_reiniciar][i]
+		boton.position = Vector2(X_EDICION + i * (lado + 28.0), y)
+		boton.size = Vector2(lado, lado)
+		boton.pivot_offset = boton.size / 2.0
+		boton.scale = Vector2.ONE
+		boton.show()
+	_reinicio_t = -1.0
+	_barriendo = false
+	_al_cambiar_historial(lienzo.pasos_para_deshacer())
+
+
+## Con historial vacio la flecha se ve apagada (sigue respondiendo al toque con un saltito).
+func _al_cambiar_historial(pasos: int) -> void:
+	if _boton_deshacer == null:
+		return
+	_boton_deshacer.modulate = Color.WHITE if pasos > 0 else Color(1, 1, 1, 0.45)
+	(_boton_deshacer.get_meta("dibujo") as Control).queue_redraw()
+
+
+## Deshace la ultima accion (trazo, sticker puesto o movido, camino...). No quita objetivos cumplidos
+## ni destellos. Publica para QA.
+func deshacer() -> bool:
+	if _mostrando or _terminado or _barriendo or lienzo.bloqueado:
+		return false
+	_cerrar_popup()
+	_ocultar_barra()
+	if not lienzo.deshacer():
+		_sfx_suave(SFX_TOQUE)
+		return false
+	_sfx_suave(SFX_REBOBINAR)
+	_estallido(_boton_deshacer.global_position + _boton_deshacer.size / 2.0, 6, [Color("#FF9A2E"), Color.WHITE], 0.6)
+	_revisar_objetivos()
+	return true
+
+
+func _empezar_a_mantener() -> void:
+	if _mostrando or _terminado or _barriendo:
+		return
+	_cerrar_popup()
+	_ocultar_barra()
+	_reinicio_t = 0.0
+	_sfx_suave(SFX_TOQUE)
+	_anillo_reiniciar.queue_redraw()
+
+
+## Se solto antes de tiempo: el anillo se vacia y Coco explica (una vez cada tanto) que hay que dejar
+## el dedo apretado.
+func _soltar_reiniciar() -> void:
+	if _reinicio_t < 0.0:
+		return
+	var corto := _reinicio_t < SEGUNDOS_REINICIAR
+	_reinicio_t = -1.0
+	_anillo_reiniciar.queue_redraw()
+	if corto:
+		_rebote(_boton_reiniciar)
+		var ahora := Time.get_ticks_msec()
+		if ahora - _ms_pista_reiniciar > 8000:
+			_ms_pista_reiniciar = ahora
+			_reproducir_voz("reiniciar_mantener", _linea("reiniciar_mantener"))
+
+
+## Reinicia la hoja con un "¡fuuush!" de escoba: borra pintura, stickers y caminos y vuelve a los
+## iniciales; vacia el historial; los objetivos cumplidos y los destellos se quedan. Publica para QA
+## (`animado` = false lo hace al instante).
+func reiniciar_lienzo(animado := true) -> void:
+	if _mostrando or _terminado or _barriendo:
+		return
+	_cerrar_popup()
+	_ocultar_barra()
+	if not animado:
+		lienzo.reiniciar()
+		_revisar_objetivos()
+		return
+	_barriendo = true
+	lienzo.bloqueado = true
+	reproducir_sfx(SFX_FUUSH)
+	var escoba := Control.new()
+	escoba.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	escoba.size = Vector2(220, 220)
+	escoba.pivot_offset = Vector2(110, 200)
+	escoba.draw.connect(_dibujar_escoba_grande.bind(escoba))
+	_efectos.add_child(escoba)
+	escoba.position = Vector2(-240, 420)
+	escoba.rotation = -0.35
+	var tween := escoba.create_tween()
+	tween.tween_property(escoba, "position:x", 560.0, 0.32).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(escoba, "rotation", 0.35, 0.32)
+	tween.tween_callback(func() -> void:
+		lienzo.reiniciar()
+		_revisar_objetivos()
+		for i in 5:
+			_estallido(Vector2(200 + i * 220, 520 + (i % 2) * 60), 5, [Color("#F6EBD8"), Color.WHITE, Color("#FFE38A")], 0.9))
+	tween.tween_property(escoba, "position:x", 1380.0, 0.36).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(escoba, "rotation", -0.35, 0.36)
+	tween.tween_callback(func() -> void:
+		escoba.queue_free()
+		_barriendo = false
+		if not _mostrando:
+			lienzo.bloqueado = false
+		_reaccion_anfitriona("salta")
+		_reproducir_voz("reiniciar", _linea("reiniciar")))
+
+
+func _dibujar_icono_deshacer(icono: Control) -> void:
+	var c := icono.size / 2.0
+	var k := icono.size.x / 96.0
+	var radio := 22.0 * k
+	var centro := c + Vector2(4, 6) * k
+	# Arco de la flecha (de la derecha, por arriba, hacia la izquierda) y su punta.
+	icono.draw_arc(centro, radio, PI * 1.05, TAU * 1.0 + PI * 0.25, 24, COLOR_CONTORNO, 15.0 * k, true)
+	icono.draw_arc(centro, radio, PI * 1.05, TAU * 1.0 + PI * 0.25, 24, Color("#FF9A2E"), 8.0 * k, true)
+	var punta := centro + Vector2.from_angle(PI * 1.05) * radio
+	var cabeza := PackedVector2Array([punta + Vector2(-16, -2) * k, punta + Vector2(10, -6) * k, punta + Vector2(-2, 18) * k])
+	icono.draw_colored_polygon(cabeza, Color("#FF9A2E"))
+	cabeza.append(cabeza[0])
+	icono.draw_polyline(cabeza, COLOR_CONTORNO, 4.0 * k, true)
+
+
+func _dibujar_icono_reiniciar(icono: Control) -> void:
+	_dibujar_escoba(icono, icono.size / 2.0 + Vector2(2, 4) * icono.size.x / 96.0, icono.size.x / 96.0 * 0.8)
+
+
+## Anillo que se llena mientras se mantiene presionada la escoba.
+func _dibujar_anillo_reiniciar(icono: Control) -> void:
+	if _reinicio_t < 0.0:
+		return
+	var c := icono.size / 2.0
+	var r := icono.size.x / 2.0 - 4.0
+	var k := clampf(_reinicio_t / SEGUNDOS_REINICIAR, 0.0, 1.0)
+	icono.draw_arc(c, r, 0.0, TAU, 40, Color(COLOR_CONTORNO, 0.25), 10.0, true)
+	icono.draw_arc(c, r, -PI / 2.0, -PI / 2.0 + TAU * k, 40, Color("#45C6C0"), 10.0, true)
+
+
+func _dibujar_escoba_grande(control: Control) -> void:
+	_dibujar_escoba(control, Vector2(110, 110), 2.4)
+
+
+## Escoba de peluche: palo de madera, atadura violeta y paja dorada.
+func _dibujar_escoba(l: Control, c: Vector2, k: float) -> void:
+	l.draw_line(c + Vector2(18, -40) * k, c + Vector2(-2, 8) * k, COLOR_CONTORNO, 11.0 * k, true)
+	l.draw_line(c + Vector2(18, -40) * k, c + Vector2(-2, 8) * k, Color("#B07A55"), 6.0 * k, true)
+	var paja := PackedVector2Array([c + Vector2(-10, 4) * k, c + Vector2(8, 10) * k, c + Vector2(6, 40) * k, c + Vector2(-30, 34) * k])
+	l.draw_colored_polygon(paja, Color("#FFCB3D"))
+	var contorno := paja.duplicate()
+	contorno.append(paja[0])
+	l.draw_polyline(contorno, COLOR_CONTORNO, 4.0 * k, true)
+	for t in [0.3, 0.55, 0.8]:
+		l.draw_line(c + Vector2(-10, 4).lerp(Vector2(8, 10), t) * k, c + Vector2(-30, 34).lerp(Vector2(6, 40), t) * k, Color("#D9A21E"), 2.5 * k, true)
+	l.draw_line(c + Vector2(-11, 3) * k, c + Vector2(9, 9) * k, Color("#9357D6"), 6.0 * k, true)
 
 
 # ---------------------------------------------------------------------------
@@ -3257,7 +3659,7 @@ func _dibujar_icono_camino(icono: Control, tipo: String, c: Vector2, k: float) -
 	for i in 17:
 		var t := i / 16.0
 		puntos.append(c + Vector2(-32.0 + 64.0 * t, 14.0 - 24.0 * sin(t * PI)) * k)
-	Lienzo.dibujar_camino(icono, puntos, tipo, 0.5 * k)
+	Lienzo.dibujar_camino(icono, puntos, tipo, 0.5 * k, 1.0)
 
 
 ## Pictograma del objetivo y su progreso ("3/5") o una estrella al cumplirlo.

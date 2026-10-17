@@ -46,6 +46,7 @@ func _initialize() -> void:
 			await _probar_nivel(ruta, HERMANOS[perfil])
 	if filtro == "" or EQUIPO.contains(filtro):
 		await _probar_nivel(EQUIPO, "maxi")
+	await _probar_fisica_suelta()
 	await _probar_mezclas()
 	_borrar(CARPETA_QA)
 	Engine.time_scale = 1.0
@@ -154,6 +155,8 @@ func _probar_nivel(ruta: String, hermano: String) -> void:
 			if not o["hecho"]:
 				pendientes.append("%s %d/%d" % [o["datos"].get("tipo", "?"), o["actual"], o["meta"]])
 		_check(pendientes.is_empty(), "todos los objetivos cumplidos%s" % ("" if pendientes.is_empty() else " — faltan: %s" % str(pendientes)))
+		if not lienzo.stickers_objeto:
+			await _probar_deshacer_simple(motor)
 		await _esperar_que(func() -> bool: return motor.boton_mostrar.visible, 4.0)
 		_check(motor.boton_mostrar.visible, "objetivos cumplidos DESBLOQUEAN la hoja: aparece 'mostrar a Coco'")
 		var png: String = motor.mostrar_a_coco()
@@ -299,6 +302,7 @@ func _jugar_escena(motor, perfil: String, escena: String) -> void:
 	for id in tema.get("decorados", []):
 		clases_ok = clases_ok and lienzo.clase_de(str(id)) == "decorado" and Stickers.tiene(str(id))
 	_check(clases_ok, "clases de stickers (vivo, lugar, decorado) y todos en el catalogo")
+	await _probar_burbuja(motor)
 	_check((motor._grupos.get("cosas", []) as Array).any(func(i) -> bool: return str(i).begins_with("camino_")), "los caminos estan en 'Cosas que se mueven'")
 	match escena:
 		"parque_dinos":
@@ -309,6 +313,15 @@ func _jugar_escena(motor, perfil: String, escena: String) -> void:
 			await _escena_ciudad(motor)
 		_:
 			_check(false, "escena sin guion de QA: %s" % escena)
+	# Ficha §10: fisica, sol, deshacer y reiniciar (con todos los objetivos ya cumplidos: no se pierden).
+	await _probar_fisica(motor, perfil, escena)
+	if (tema.get("decorados", []) as Array).has("sol"):
+		await _probar_sol(motor)
+	await _probar_caminos_s11(motor, perfil)
+	await _probar_amigos(motor, perfil)
+	await _probar_jinetes(motor, perfil)
+	await _probar_deshacer(motor, perfil)
+	await _probar_reiniciar(motor, escena)
 	if perfil != "semilla":
 		await _probar_zoom(motor)
 	await _probar_dos_dedos(motor)
@@ -318,8 +331,13 @@ func _jugar_escena(motor, perfil: String, escena: String) -> void:
 
 func _poner(motor, id: String, p: Vector2):
 	motor._elegir_herramienta("sello_" + id, false)
+	var antes: Array = motor.lienzo.stickers()
 	motor.lienzo.empezar_trazo(p)
 	motor.lienzo.terminar_trazo()
+	# El nuevo (no el ultimo hijo: un jinete que se sube pasa al frente).
+	for s in motor.lienzo.stickers():
+		if not antes.has(s):
+			return s
 	return motor.lienzo.stickers().back()
 
 
@@ -468,6 +486,550 @@ func _escena_ciudad(motor) -> void:
 	_check(await _esperar_que(func() -> bool: return _cumplido(motor, 11), 16.0), "obj 12 orden: casa -> castillo -> rio en un viaje")
 	for i in [6, 7, 8]:
 		_check(_cumplido(motor, i), "obj %d combinacion cumplido (aunque estuviera en la cola)" % (i + 1))
+
+
+# ---------------------------------------------------------------------------
+# Ficha §10: fisica (pesa / vuela), sol fuera del cielo, deshacer y reiniciar
+# ---------------------------------------------------------------------------
+
+## Primer punto de la lista sin stickers ni lugares encima.
+func _libre(lienzo, candidatos: Array) -> Vector2:
+	for p: Vector2 in candidatos:
+		if lienzo.sticker_en(p) == null and lienzo.lugar_en(p, 30.0) == null:
+			return p
+	return candidatos[0]
+
+
+func _puntos_cielo(lienzo) -> Array:
+	var y: float = lienzo.cielo.position.y + 45.0
+	return [Vector2(560, y), Vector2(640, y), Vector2(720, y), Vector2(480, y), Vector2(820, y), Vector2(400, y), Vector2(900, y)]
+
+
+func _puntos_suelo() -> Array:
+	return [Vector2(560, 690), Vector2(760, 680), Vector2(880, 690), Vector2(470, 690), Vector2(330, 690), Vector2(980, 690)]
+
+
+func _esperar_aterrizaje(lienzo, sticker) -> bool:
+	return await _esperar_que(func() -> bool: return is_instance_valid(sticker) and not lienzo.esta_cayendo(sticker), 6.0)
+
+
+func _probar_fisica(motor, perfil: String, escena: String) -> void:
+	var lienzo = motor.lienzo
+	var cielo_esperado: float = {"parque_dinos": 440.0, "granja_ponys": 300.0, "ciudad_ponys": 290.0}.get(escena, -1.0)
+	_check(lienzo.gravedad and is_equal_approx(lienzo.cielo.end.y, cielo_esperado), "§10.1 gravedad activa: cielo hasta y=%d" % lienzo.cielo.end.y)
+	_check(lienzo.caida_suave == (perfil == "semilla"), "caida mas lenta solo para Maxi")
+	# Objetivos y combinaciones del cielo: lo que se pide en el cielo vuela (nunca se vuelve imposible).
+	var del_cielo: Array = []
+	for o: Dictionary in motor._objetivos:
+		if str(o["datos"].get("en_zona", "")) == "cielo":
+			del_cielo.append(str(o["datos"].get("sticker", "")))
+	for c: Dictionary in motor._cfg.get("combinaciones", []):
+		if str(c.get("en", "")) == "cielo":
+			del_cielo.append_array(c.get("ingredientes", []))
+	var pesan := del_cielo.filter(func(id) -> bool: return lienzo.fisica_de(str(id)) == "pesa")
+	_check(pesan.is_empty(), "lo que se pide en el cielo vuela (%s)%s" % [", ".join(PackedStringArray(del_cielo)), "" if pesan.is_empty() else " — PESAN: %s" % str(pesan)])
+	# Un sticker que pesa, puesto en el cielo, cae con aceleracion y aterriza fuera del cielo con "¡puff!".
+	var id: String = {"parque_dinos": "huevo", "granja_ponys": "pony_amigo", "ciudad_ponys": "casa"}.get(escena, "arbol")
+	var aterrizajes: Array = []
+	var al_aterrizar := func(s, grande: bool) -> void: aterrizajes.append([s, grande, lienzo.efectos_activos()])
+	lienzo.aterrizo.connect(al_aterrizar)
+	var punto := _libre(lienzo, _puntos_cielo(lienzo))
+	var cosa = _poner(motor, id, punto)
+	_check(cosa.id == id and lienzo.esta_cayendo(cosa), "%s soltado en el cielo empieza a caer" % id)
+	var y0: float = cosa.centro().y
+	lienzo._mover_caidas(0.05)
+	var y1: float = cosa.centro().y
+	lienzo._mover_caidas(0.05)
+	var y2: float = cosa.centro().y
+	_check(y2 - y1 > (y1 - y0) * 1.5, "la caida acelera (%.1f px y luego %.1f px)" % [y1 - y0, y2 - y1])
+	_check(await _esperar_aterrizaje(lienzo, cosa), "aterriza")
+	var base: Vector2 = cosa.centro() + Vector2(0, cosa.lado * cosa.escala * 0.43)
+	_check(is_instance_valid(cosa) and lienzo.stickers().has(cosa) and cosa.centro().y > y0 + 40.0, "nunca desaparece: %s bajo de y=%d a y=%d" % [id, y0, cosa.centro().y])
+	_check(not lienzo._soltar(cosa) and (not lienzo.cielo.has_point(base) or lienzo._es_superficie(base - Vector2(0, 4), cosa)), "queda apoyado en el suelo (base y=%d)" % base.y)
+	_check(aterrizajes.size() == 1 and aterrizajes[0][1] == (perfil == "semilla"), "señal de aterrizaje ('¡puff!' %s)" % ("grande para Maxi" if perfil == "semilla" else "normal"))
+	_check(not aterrizajes.is_empty() and int(aterrizajes[0][2]) > 0, "nubecita de polvo al aterrizar")
+	lienzo.aterrizo.disconnect(al_aterrizar)
+	# Se puede atrapar en el aire: arrastrarlo al cielo lo deja caer otra vez al soltar.
+	var antes_arrastre: Vector2 = cosa.centro()
+	var pasos_antes: int = lienzo.pasos_para_deshacer()
+	_arrastrar(motor, cosa, _libre(lienzo, _puntos_cielo(lienzo)))
+	_check(lienzo.esta_cayendo(cosa), "arrastrado al cielo, vuelve a caer")
+	await _esperar_aterrizaje(lienzo, cosa)
+	_check(lienzo.pasos_para_deshacer() == mini(pasos_antes + 1, lienzo.MAX_PASOS), "arrastrar + caer es UN solo paso del historial")
+	motor.deshacer()
+	_check(cosa.centro().distance_to(antes_arrastre) < 1.0, "deshacer el soltar lo devuelve a donde estaba antes de agarrarlo (no al cielo)")
+	# Lo que vuela se queda donde se suelta.
+	var nube = _poner(motor, "estrella", _libre(lienzo, _puntos_cielo(lienzo)))
+	var donde: Vector2 = nube.centro()
+	await _esperar(0.2)
+	_check(not lienzo.esta_cayendo(nube) and nube.centro().distance_to(donde) < 1.0 and lienzo.en_zona(nube.centro(), "cielo"), "la estrella (vuela) se queda en el cielo")
+
+
+## §10.2: el sol fuera del cielo tizna lo cercano (temporal), pone cara de "¡ups!" y vuelve al cielo.
+func _probar_sol(motor) -> void:
+	var lienzo = motor.lienzo
+	var centro := _libre(lienzo, [Vector2(700, 600), Vector2(560, 640), Vector2(860, 640), Vector2(420, 640)])
+	var vecinos: Array = [_poner(motor, "arbol", centro + Vector2(-90, 10)), _poner(motor, "flor", centro + Vector2(95, 20))]
+	lienzo._process(0.016)
+	var pintura: int = lienzo.pixeles_pintados()
+	var quemas: Array = []
+	var al_quemar := func(_s, n: int) -> void: quemas.append(n)
+	lienzo.sol_quemo.connect(al_quemar)
+	var sol = _poner(motor, "sol", centro)
+	_check(quemas.size() == 1 and quemas[0] >= 2, "sol fuera del cielo: tizna %d stickers cercanos" % (quemas[0] if not quemas.is_empty() else 0))
+	_check(vecinos.all(func(v) -> bool: return lienzo.esta_tiznado(v)) and sol.expresion == "ups", "los vecinos quedan tiznados y el sol pone cara de '¡ups!'")
+	_check(await _esperar_que(func() -> bool: return not sol.has_meta("volando"), 5.0), "el sol vuela de vuelta")
+	_check(lienzo.en_zona(sol.centro(), "cielo") and lienzo.cielo.has_point(sol.centro()) and sol.expresion == "", "el sol termina en el cielo (y=%d), con su cara de siempre" % sol.centro().y)
+	_check(await _esperar_que(func() -> bool: return vecinos.all(func(v) -> bool: return not lienzo.esta_tiznado(v)), 6.0), "a los ~3 s los tiznados se sacuden")
+	_check(vecinos.all(func(v) -> bool: return is_instance_valid(v) and v.self_modulate.is_equal_approx(Color.WHITE)), "y vuelven a su color: nada se destruye")
+	lienzo._process(0.016)
+	_check(lienzo.pixeles_pintados() == pintura, "la pintura hecha a mano no se quema")
+	lienzo.sol_quemo.disconnect(al_quemar)
+	# De vuelta en el cielo sigue combinando: sol + nube de lluvia = arcoiris.
+	var arcoiris: int = lienzo.contar_stickers("arcoiris")
+	var lluvia = lienzo.poner_sticker("nube_lluvia", Vector2(sol.centro().x, lienzo.cielo.end.y - 30.0))
+	_arrastrar(motor, lluvia, sol.centro() + Vector2(40, 0))
+	_check(lienzo.contar_stickers("arcoiris") == arcoiris + 1, "el sol que volvio al cielo sigue haciendo arcoiris con la nube de lluvia")
+
+
+## §10.3: deshacer cada tipo de accion, el limite de 20 pasos, y que los objetivos no se pierdan.
+func _probar_deshacer(motor, _perfil: String) -> void:
+	var lienzo = motor.lienzo
+	var hechos: int = motor._objetivos.filter(func(o) -> bool: return o["hecho"]).size()
+	var destellos: int = motor.calcular_destellos()
+	_check(lienzo.pasos_para_deshacer() > 0 and lienzo.pasos_para_deshacer() <= lienzo.MAX_PASOS, "historial con %d pasos (tope %d)" % [lienzo.pasos_para_deshacer(), lienzo.MAX_PASOS])
+	_check(minf(motor._boton_deshacer.size.x, motor._boton_deshacer.size.y) >= motor._lado_boton() and motor._boton_deshacer.visible and motor._boton_reiniciar.visible, "botones deshacer y reiniciar de %d px" % motor._boton_deshacer.size.x)
+	# Pincel.
+	motor._elegir_herramienta("pincel", false)
+	lienzo._process(0.016)
+	var pixeles: int = lienzo.pixeles_pintados()
+	var a := _libre(lienzo, _puntos_suelo())
+	_trazo(lienzo, a, a + Vector2(80, -30), 12)
+	lienzo._process(0.016)
+	var con_trazo: int = lienzo.pixeles_pintados()
+	motor.deshacer()
+	_check(con_trazo > pixeles and lienzo.pixeles_pintados() == pixeles, "deshacer un trazo de pincel (%d -> %d -> %d px)" % [pixeles, con_trazo, lienzo.pixeles_pintados()])
+	# Balde (el parque de Maxi tiene el fondo fijo y no tiene balde: ahi no aplica).
+	if not lienzo.regiones_rellenables().is_empty():
+		motor._elegir_herramienta("balde", false)
+		var punto_balde := Vector2(640, 20)
+		for i in lienzo.regiones_rellenables():
+			var p = _punto_de(lienzo.lamina, i)
+			if p != null and lienzo.sticker_en(p) == null and lienzo.lugar_en(p, 0.0) == null:
+				punto_balde = p
+				break
+		var indice: int = Laminas.region_en(lienzo.lamina, punto_balde)
+		var color_antes: Color = lienzo.region_color(indice)
+		lienzo.color_actual = Color("#9357D6") if not color_antes.is_equal_approx(Color("#9357D6")) else Color("#FF6B6B")
+		lienzo.empezar_trazo(punto_balde)
+		lienzo.terminar_trazo()
+		var pintado: bool = not lienzo.region_color(indice).is_equal_approx(color_antes)
+		motor.deshacer()
+		_check(pintado and lienzo.region_color(indice).is_equal_approx(color_antes), "deshacer el balde devuelve el color de la zona")
+	# Sticker puesto.
+	var cuantos: int = lienzo.stickers().size()
+	var flor = _poner(motor, "flor", _libre(lienzo, _puntos_suelo()))
+	motor.deshacer()
+	await process_frame
+	_check(lienzo.stickers().size() == cuantos and (not is_instance_valid(flor) or flor.is_queued_for_deletion()), "deshacer un sticker puesto lo quita")
+	# Sticker movido.
+	var movible = lienzo.stickers().filter(func(s) -> bool: return not lienzo.esta_viajando(s) and not s.has_meta("magico") 		and not lienzo.cielo.has_point(s.centro()) and lienzo.sticker_en(s.centro()) == s)[0]
+	var desde: Vector2 = movible.centro()
+	_arrastrar(motor, movible, _libre(lienzo, _puntos_suelo()))
+	var se_movio: bool = movible.centro().distance_to(desde) > 20.0
+	motor.deshacer()
+	_check(se_movio and is_instance_valid(movible) and movible.centro().distance_to(desde) < 1.0, "deshacer un sticker movido lo devuelve (el mismo, no una copia)")
+	# Camino con un viajero: al deshacer el camino, el viajero se baja.
+	var vivo_id: String = motor._hojas[motor._indice_hoja]["tema"].get("vivos", ["pony_amigo"])[0]
+	var viajero = _poner(motor, vivo_id, _libre(lienzo, [Vector2(200, 700), Vector2(140, 700), Vector2(1000, 700)]))
+	await _esperar_aterrizaje(lienzo, viajero)
+	# Maxi (R2) salta solo al sendero que ya hay: se baja antes de trazar el camino nuevo.
+	lienzo._detener_fisica(viajero)
+	lienzo._bajar(viajero)
+	viajero.remove_meta("saltando")
+	viajero.poner_en(Vector2(200, 700))
+	var caminos: int = lienzo.caminos.size()
+	var camino := _camino(motor, "sendero", [Vector2(300, 700), Vector2(600, 705), Vector2(900, 700)])
+	if not lienzo.esta_viajando(viajero):
+		viajero.poner_en(Vector2(600, 705))
+		lienzo.intentar_subir(viajero)
+	_check(not camino.is_empty() and lienzo.esta_viajando(viajero), "un %s viaja por el camino nuevo" % vivo_id)
+	motor.deshacer()
+	_check(lienzo.caminos.size() == caminos and not lienzo.esta_viajando(viajero) and is_instance_valid(viajero), "deshacer el camino: se va y su viajero se baja")
+	# Limite: 25 trazos -> solo se recuerdan 20; se deshacen todos y el boton queda apagado.
+	motor._elegir_herramienta("pincel", false)
+	for i in 25:
+		var p := Vector2(150 + (i % 5) * 40, 600 + (i / 5) * 18)
+		_trazo(lienzo, p, p + Vector2(20, 0), 3)
+	_check(lienzo.pasos_para_deshacer() == lienzo.MAX_PASOS, "el historial recuerda %d pasos como maximo" % lienzo.MAX_PASOS)
+	var deshechos := 0
+	while motor.deshacer():
+		deshechos += 1
+	_check(deshechos == lienzo.MAX_PASOS and lienzo.pasos_para_deshacer() == 0 and motor._boton_deshacer.modulate.a < 0.6, "%d deshacer seguidos; con historial vacio el boton se ve apagado" % deshechos)
+	motor._revisar_objetivos()
+	await process_frame
+	var hechos_despues: int = motor._objetivos.filter(func(o) -> bool: return o["hecho"]).size()
+	_check(hechos_despues == hechos and motor.calcular_destellos() >= destellos and motor.boton_mostrar.visible, "deshacer NO quita objetivos cumplidos (%d) ni destellos (%d -> %d)" % [hechos_despues, destellos, motor.calcular_destellos()])
+
+
+## §10.4: reiniciar con la escoba mantenida 1,2 s: vuelve a la hoja inicial y conserva lo ganado.
+func _probar_reiniciar(motor, escena: String) -> void:
+	var lienzo = motor.lienzo
+	var inicial: int = (lienzo._inicio["nodos"] as Array).size()
+	var caminos_iniciales: int = (lienzo._inicio["caminos"] as Array).size()
+	var hechos: int = motor._objetivos.filter(func(o) -> bool: return o["hecho"]).size()
+	var destellos: int = motor.calcular_destellos()
+	motor._elegir_herramienta("pincel", false)
+	_trazo(lienzo, Vector2(300, 640), Vector2(700, 660), 20)
+	_poner(motor, "flor", _libre(lienzo, _puntos_suelo()))
+	var antes: int = lienzo.stickers().size()
+	# Un toque corto no borra nada (anti-accidente).
+	motor._empezar_a_mantener()
+	await _esperar(0.15)
+	motor._soltar_reiniciar()
+	_check(lienzo.stickers().size() == antes and motor._reinicio_t < 0.0, "un toque corto en la escoba no borra nada")
+	motor._empezar_a_mantener()
+	_check(await _esperar_que(func() -> bool: return motor._barriendo, 3.0), "mantener %.1f s barre la hoja ('¡fuuush!')" % motor.SEGUNDOS_REINICIAR)
+	_check(await _esperar_que(func() -> bool: return not motor._barriendo, 3.0), "la escoba termina de barrer")
+	motor._soltar_reiniciar()
+	await process_frame
+	lienzo._process(0.016)
+	_check(lienzo.stickers().size() == inicial and lienzo.caminos.size() == caminos_iniciales and lienzo.pixeles_pintados() == 0,
+		"hoja como al empezar: %d stickers y %d caminos iniciales, sin pintura" % [lienzo.stickers().size(), lienzo.caminos.size()])
+	if escena == "granja_ponys":
+		_check(lienzo.lugar_por_id("granero") != null, "el granero que venia puesto sigue ahi")
+	if escena == "ciudad_ponys":
+		var rio: int = lienzo.region_por_id("rio")
+		_check(lienzo.region_color(rio).is_equal_approx(lienzo._inicio["colores"][rio]) and not lienzo.region_color(rio).is_equal_approx(Colores.color("turquesa")), "el rio pintado de turquesa vuelve a su color inicial")
+	_check(lienzo.pasos_para_deshacer() == 0 and not lienzo.bloqueado, "reiniciar vacia el historial y se puede seguir pintando")
+	var hechos_despues: int = motor._objetivos.filter(func(o) -> bool: return o["hecho"]).size()
+	_check(hechos_despues == hechos and motor.calcular_destellos() >= destellos and motor.boton_mostrar.visible, "reiniciar conserva objetivos cumplidos (%d) y destellos (%d -> %d)" % [hechos_despues, destellos, motor.calcular_destellos()])
+
+
+func _estado_hoja(lienzo) -> String:
+	lienzo._process(0.016)
+	var colores: PackedStringArray = []
+	for region: Dictionary in lienzo.lamina.get("regiones", []):
+		colores.append((region["color"] as Color).to_html())
+	return "%d|%d|%d|%d|%s" % [hash(lienzo._pintura.get_data()), lienzo.cantidad_sellos_vivos(), lienzo.celdas_pintadas(), lienzo._celdas.values().hash(), ",".join(colores)]
+
+
+## Zonas 2-5: el ultimo trazo con la herramienta de la hoja (pincel, balde, sellos, mosaico) se deshace.
+func _probar_deshacer_simple(motor) -> void:
+	var lienzo = motor.lienzo
+	# Un color distinto al actual, para que el trazo cambie algo aunque la hoja ya este pintada.
+	for k in motor._entradas_color.size():
+		if not (motor._entradas_color[k]["color"] as Color).is_equal_approx(lienzo.color_actual) and motor._encargo != "mezcla_paleta":
+			motor.elegir_color(k)
+			break
+	var antes := _estado_hoja(lienzo)
+	var centro: Vector2 = lienzo.area_segura.get_center()
+	_trazo(lienzo, centro - Vector2(120, 20), centro + Vector2(120, 40), 24)
+	var con_trazo := _estado_hoja(lienzo)
+	if con_trazo == antes:
+		print("   (deshacer: el trazo con '%s' no cambio nada en esta hoja; encargo %s, relleno %s, zoom %s, bloqueado %s)" % [lienzo.herramienta, motor._encargo, lienzo.rellenar_con_toque, lienzo.zoom, lienzo.bloqueado])
+		return
+	var ok: bool = motor.deshacer()
+	_check(ok and _estado_hoja(lienzo) == antes, "deshacer el ultimo trazo con '%s'" % lienzo.herramienta)
+	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# Ficha §11: borrar caminos, caminos finos, personajes ("amigos") y Coco como burbujita
+# ---------------------------------------------------------------------------
+
+func _trazo_quieto(lienzo, punto: Vector2, segundos: float) -> void:
+	lienzo.empezar_trazo(punto)
+	var t := 0.0
+	while t < segundos:
+		lienzo._process(0.1)
+		t += 0.1
+
+
+## §11.1 y §11.2: caminos mas finos (tocables igual) y borrarlos enteros con la goma o el dedo quieto.
+func _probar_caminos_s11(motor, perfil: String) -> void:
+	var lienzo = motor.lienzo
+	var esperado: float = lienzo.ANCHO_CAMINO_SEMILLA if perfil == "semilla" else lienzo.ANCHO_CAMINO
+	_check(is_equal_approx(lienzo.ancho_caminos, esperado) and esperado < 1.0, "§11.2 caminos mas finos: ancho %.2f del v1 (Maxi algo mas anchos)" % esperado)
+	var y := 700.0
+	var camino := _camino(motor, "sendero", [Vector2(100, y), Vector2(265, y + 4), Vector2(430, y)])
+	_check(not camino.is_empty() and is_equal_approx(float(camino["ancho"]), esperado), "el camino nuevo guarda su ancho")
+	var dibujado := 32.0 * esperado / 2.0 + 2.5
+	_check(lienzo.camino_en(Vector2(265, y + 4 - dibujado - 8.0)) == camino, "se toca con el dedo aunque el dibujo sea fino (%.0f px fuera del dibujo)" % 8.0)
+	# Pintar encima con el pincel NO lo borra (anti-accidente).
+	motor._elegir_herramienta("pincel", false)
+	_trazo(lienzo, Vector2(250, y - 40), Vector2(280, y + 15), 10)
+	_check(lienzo.caminos.has(camino), "pintar encima de un camino no lo borra")
+	# Dedo quieto con la herramienta de camino: poco tiempo no borra; si se mueve, traza otro.
+	motor._elegir_herramienta("camino_sendero", false)
+	_trazo_quieto(lienzo, Vector2(265, y + 4), lienzo.segundos_borrar_camino * 0.4)
+	lienzo.terminar_trazo()
+	_check(lienzo.caminos.has(camino), "un toque corto con la herramienta de camino no lo borra")
+	# Un viajero arriba (un amigo), y el dedo quieto el tiempo completo lo borra entero.
+	var amigo: String = "sello_" + motor.obtener_id_personaje()
+	var viajero = _poner(motor, amigo.trim_prefix("sello_"), Vector2(120, 690))
+	lienzo._detener_fisica(viajero)
+	lienzo._bajar(viajero)
+	viajero.remove_meta("saltando")
+	viajero.poner_en(Vector2(200, y + 3))
+	lienzo.intentar_subir(viajero)
+	_check(lienzo.esta_viajando(viajero), "un personaje (%s) viaja por el camino" % viajero.id)
+	motor._elegir_herramienta("camino_sendero", false)
+	var cuantos: int = lienzo.caminos.size()
+	var borrados := {"n": 0}
+	var al_borrar := func(_c) -> void: borrados["n"] += 1
+	lienzo.camino_borrado.connect(al_borrar)
+	_trazo_quieto(lienzo, Vector2(265, y + 4), lienzo.segundos_borrar_camino + 0.2)
+	lienzo.continuar_trazo(Vector2(330, y - 60))
+	lienzo.terminar_trazo()
+	_check(not lienzo.caminos.has(camino) and lienzo.caminos.size() == cuantos - 1 and borrados["n"] == 1,
+		"dedo quieto %.1f s sobre el camino: se borra ENTERO y no se traza otro" % lienzo.segundos_borrar_camino)
+	_check(is_instance_valid(viajero) and not lienzo.esta_viajando(viajero) and lienzo.efectos_activos() > 0, "su viajero se baja y queda una fila de '¡puff!'")
+	motor.deshacer()
+	_check(lienzo.caminos.has(camino), "borrar un camino se deshace")
+	# Goma: pasarla por encima borra el camino entero (Nicole y Sofia la tienen; Maxi, no).
+	if (motor._grupos.get("pinceles", []) as Array).has("goma"):
+		motor._elegir_herramienta("goma", false)
+		var desde := _libre(lienzo, [Vector2(330, y - 50), Vector2(380, y - 50), Vector2(300, y - 70)])
+		_trazo(lienzo, desde, Vector2(desde.x + 10, y + 15), 8)
+		_check(not lienzo.caminos.has(camino) and borrados["n"] == 2, "la goma borra el camino que toca, entero")
+		motor.deshacer()
+		_check(lienzo.caminos.has(camino), "deshacer devuelve el camino borrado con la goma")
+	lienzo.camino_borrado.disconnect(al_borrar)
+
+
+## §11.3: los personajes como stickers "amigos".
+func _probar_amigos(motor, perfil: String) -> void:
+	var lienzo = motor.lienzo
+	var amigos: Array = Stickers.AMIGOS
+	var vuelan := ["cometa", "coleccionauta"]
+	var bien := amigos.all(func(id) -> bool:
+		return Stickers.tiene(id) and Stickers.es_personaje(id) and lienzo.clase_de(id) == "vivo" \
+			and Stickers.fisica(id) == ("vuela" if id in vuelan else "pesa") and _existe_voz("voces/arcoiris/pinta/stickers/%s.wav" % id))
+	_check(bien, "§11.3 %d amigos: vivos, con arte, nombre por voz; vuelan Cometa y el Coleccionauta" % amigos.size())
+	var propio: String = "sello_" + motor.obtener_id_personaje()
+	if perfil == "semilla":
+		var cosas: Array = motor._grupos.get("cosas", [])
+		_check(motor._dock_botones.size() <= 3 and amigos.all(func(id) -> bool: return cosas.has("sello_" + id)), "Maxi: los amigos van en 'Cosas' (sigue con 3 botones en el dock)")
+		motor.abrir_popup("cosas")
+		var dentro := Rect2(Vector2.ZERO, Vector2(1280, 720)).encloses(Rect2(motor._popup.position, motor._popup.size))
+		_check(dentro, "el popup de cosas de Maxi, con su fila de amigos, cabe en pantalla")
+		motor._cerrar_popup()
+	else:
+		var grupo: Array = motor._grupos.get("amigos", [])
+		_check(grupo.size() == amigos.size() and str(grupo[0]) == propio, "grupo 'amigos' en el dock, con %s primero" % propio.trim_prefix("sello_"))
+		var abajo := 0.0
+		for entrada: Dictionary in motor._dock_botones:
+			abajo = maxf(abajo, entrada["boton"].position.y + entrada["boton"].size.y)
+		var ver: Button = motor._boton_ver_todo
+		_check(abajo <= 712.0 and ver.position.y + ver.size.y <= 712.0 and ver.position.x + ver.size.x < 260.0, "el dock con amigos cabe (abajo y=%d) y 'ver todo' va al lado de la lupa" % abajo)
+	# Un amigo puesto en el cielo: los que pesan caen, Cometa flota.
+	var hermano = _poner(motor, propio.trim_prefix("sello_"), _libre(lienzo, _puntos_cielo(lienzo)))
+	var cometa = _poner(motor, "cometa", _libre(lienzo, _puntos_cielo(lienzo)))
+	var maxi_al_camino: bool = perfil == "semilla" and (hermano.has_meta("saltando") or lienzo.esta_viajando(hermano))
+	_check((lienzo.esta_cayendo(hermano) or maxi_al_camino) and not lienzo.esta_cayendo(cometa),
+		"%s %s; Cometa se queda flotando" % [hermano.id, "salta al camino (R2 de Maxi)" if maxi_al_camino else "cae del cielo"])
+	await _esperar_aterrizaje(lienzo, hermano)
+	# El PNG del dibujo incluye el arte de los personajes (tambien girado).
+	var imagen: Image = Stickers.imagen("papa", Color.WHITE, 96, 0.5, true)
+	var opacos := 0
+	for yy in range(0, 96, 4):
+		for xx in range(0, 96, 4):
+			if imagen.get_pixel(xx, yy).a > 0.5:
+				opacos += 1
+	_check(imagen.get_size() == Vector2i(96, 96) and opacos > 40, "el arte de papa se rasteriza para el PNG (girado y espejado)")
+
+
+## §11.4: Coco aparece en su burbujita solo cuando habla o celebra, sin tapar los objetivos.
+func _probar_burbuja(motor) -> void:
+	var burbuja: Control = motor._burbuja_coco
+	_check(motor._anfitriona.get_parent().get_parent().get_parent() == burbuja, "Coco vive dentro de la burbujita (su cresta sigue imitando colores)")
+	motor._burbuja_coco.hide()
+	motor._coco_hasta = 0.0
+	motor.tocar_objetivo(motor._indices_activos()[0])
+	_check(motor.coco_visible(), "tocar la tarjeta del objetivo repite su voz y trae a Coco")
+	var rect_burbuja := Rect2(burbuja.global_position, burbuja.size)
+	var tapa := false
+	for objetivo: Dictionary in motor._objetivos:
+		var chip = objetivo["chip"]
+		if chip != null and is_instance_valid(chip) and chip.visible and Rect2(chip.global_position, chip.size).intersects(rect_burbuja):
+			tapa = true
+	_check(not tapa and not rect_burbuja.intersects(Rect2(motor.boton_mostrar.position, motor.boton_mostrar.size)), "la burbuja no tapa las tarjetas de objetivo ni 'mostrar a Coco'")
+	# Sin voces en curso ni pistas pendientes, la burbuja debe irse sola.
+	motor._voz_diferida_id += 1
+	motor._pausa_pista = 60.0
+	var audio := get_root().get_node_or_null("Audio")
+	if audio != null:
+		audio.detener_voz()
+	motor._coco_hasta = motor._tiempo - 1.0
+	_check(await _esperar_que(func() -> bool: return not burbuja.visible, 8.0), "terminada la voz, la burbuja se va sola (no ocupa lugar)")
+	motor._reaccion_anfitriona("salta")
+	_check(motor.coco_visible(), "una celebracion (el salto de Coco) tambien la trae")
+	var toque := InputEventMouseButton.new()
+	toque.button_index = MOUSE_BUTTON_LEFT
+	toque.pressed = true
+	motor.lienzo.mostrar_fantasma({}, 0.0)
+	motor._al_tocar_anfitriona(toque)
+	_check(not motor.lienzo.fantasma_activo().is_empty() or motor._objetivos_listos, "tocar la burbuja da la pista (como tocar a Coco)")
+	motor.lienzo.mostrar_fantasma({}, 0.0)
+	motor._reiniciar_pistas()
+	motor._pausa_pista = 0.0
+	# Los toques de prueba cuentan como "manos" de pista: que no armen la valvula de Maxi.
+	motor._valvula_lista = false
+	for objetivo: Dictionary in motor._objetivos:
+		objetivo["manos"] = 0
+
+
+## §11.9 jinetes: montar, moverse juntos, caer juntos, desmontar, deshacer y vehiculo con dos asientos.
+func _base_de(s) -> Vector2:
+	return s.centro() + Vector2(0, s.lado * s.escala * 0.43)
+
+
+func _cabeza_jinete(lienzo, s) -> Vector2:
+	var alto: float = s.lado * s.escala * s.achique * 0.9 * Stickers.RECORTE_SENTADO
+	return _base_de(s) - Vector2(0, alto * 0.75)
+
+
+func _sin_camino_cerca(lienzo, d: Vector2) -> bool:
+	for camino: Dictionary in lienzo.caminos:
+		if float(lienzo._mas_cercano(camino, d)[1]) < 110.0:
+			return false
+	return true
+
+
+func _probar_jinetes(motor, perfil: String) -> void:
+	var lienzo = motor.lienzo
+	var montables := ["pony_amigo", "unicornio", "trex", "spinosaurio", "jirafa", "carrito", "bus", "bomberos", "tren"]
+	_check(montables.all(func(id) -> bool: return Stickers.es_montable(id)) and Stickers.AMIGOS.all(func(id) -> bool: return Stickers.es_jinete(id)),
+		"§11.9 montables (animales grandes y vehiculos) y jinetes (los amigos)")
+	var hermano: String = motor.obtener_id_personaje()
+	# Objetivo OPCIONAL "sube a alguien a un pony" (no esta en las escenas obligatorias).
+	var opcional := {"datos": {"tipo": "montar", "montura": "pony_amigo"}, "actual": 0, "meta": 1, "hecho": true, "chip": null, "registro": {},
+		"ya": false, "mostrado": true, "manos": 0}
+	motor._objetivos.append(opcional)
+	var p := _libre(lienzo, [Vector2(760, 690), Vector2(900, 690), Vector2(620, 690), Vector2(1000, 690), Vector2(480, 690)])
+	var pony = lienzo.poner_sticker("pony_amigo", p)
+	var jinete = lienzo.poner_sticker(hermano, Vector2(p.x, 520) if not lienzo.gravedad else Vector2(p.x, lienzo.cielo.end.y + 140))
+	var pasos: int = lienzo.pasos_para_deshacer()
+	var montados := {"n": 0}
+	var al_montar := func(_j, _m) -> void: montados["n"] += 1
+	lienzo.montado.connect(al_montar)
+	_arrastrar(motor, jinete, pony.centro() + Vector2(0, -15))
+	lienzo._process(0.016)
+	_check(lienzo.montura_de(jinete) == pony and jinete.sentado and montados["n"] == 1, "montar: %s soltado sobre el pony se sube (sentado, con '¡hop!')" % hermano)
+	_check(_base_de(jinete).distance_to(lienzo._punto_asiento(pony, 0)) < 2.0, "queda en el asiento del lomo")
+	_check(lienzo.pasos_para_deshacer() == mini(pasos + 1, lienzo.MAX_PASOS), "montar es un paso del historial")
+	_check(bool(opcional["registro"].get("ok", false)), "objetivo opcional 'sube a alguien a un pony' se registra")
+	motor._objetivos.erase(opcional)
+	# Mover juntos: arrastrar el pony se lleva al jinete.
+	# Lejos de los caminos (si no, el pony se sube a pasear, que tambien esta bien).
+	var destino := p + Vector2(0, -150)
+	for d: Vector2 in [p + Vector2(-170, -60), p + Vector2(170, -60), p + Vector2(0, -150), p + Vector2(-300, -100)]:
+		if lienzo.sticker_en(d) == null and lienzo.camino_en(d).is_empty() and _sin_camino_cerca(lienzo, d):
+			destino = d
+			break
+	_arrastrar(motor, pony, destino)
+	lienzo._process(0.016)
+	# (Si quedo junto a un camino, el pony se sube a pasear con su jinete: tambien es "juntos".)
+	_check(pony.centro().distance_to(p) > 50.0 and lienzo.montura_de(jinete) == pony and _base_de(jinete).distance_to(lienzo._punto_asiento(pony, 0)) < 2.0,
+		"mover juntos: arrastrar el pony se lleva al jinete%s" % (" (y pasean por el camino)" if lienzo.esta_viajando(pony) else ""))
+	# Deshacer: primero el movimiento (siguen juntos), despues el montaje (se baja).
+	motor.deshacer()
+	lienzo._process(0.016)
+	_check(pony.centro().distance_to(p) < 1.0 and lienzo.montura_de(jinete) == pony, "deshacer el movimiento: vuelven juntos")
+	motor.deshacer()
+	lienzo._process(0.016)
+	_check(not lienzo.esta_montado(jinete) and not jinete.sentado and is_instance_valid(jinete), "deshacer el montaje: el jinete se baja")
+	# Montar de nuevo y desmontar arrastrando al jinete.
+	_arrastrar(motor, jinete, pony.centro() + Vector2(0, -15))
+	lienzo._process(0.016)
+	var cabeza := _cabeza_jinete(lienzo, jinete)
+	lienzo.empezar_trazo(cabeza)
+	for k in range(1, 13):
+		lienzo.continuar_trazo(cabeza.lerp(cabeza + Vector2(-220, 10), k / 12.0))
+	lienzo.terminar_trazo()
+	lienzo._process(0.016)
+	_check(lienzo.montura_de(jinete) != pony and lienzo.jinetes_de(pony).is_empty() and pony.centro().distance_to(p) < 1.0, "desmontar: arrastrar al jinete fuera lo baja (el pony se queda)")
+	if lienzo.esta_montado(jinete):
+		lienzo.desmontar(jinete)
+	# Un segundo jinete en un pony ocupado se queda al lado.
+	_arrastrar(motor, jinete, pony.centro() + Vector2(0, -15))
+	var otro = lienzo.poner_sticker("papa", Vector2(p.x - 260, 600))
+	_arrastrar(motor, otro, pony.centro() + Vector2(10, -15))
+	lienzo._process(0.016)
+	_check(lienzo.montura_de(jinete) == pony and not lienzo.esta_montado(otro), "un jinete por pony: el segundo se queda al lado")
+	otro.poner_en(Vector2(p.x, 470))
+	# Caer juntos: el pony con su jinete, soltado en el cielo, cae y aterrizan juntos.
+	if lienzo.gravedad:
+		_arrastrar(motor, pony, _libre(lienzo, _puntos_cielo(lienzo)))
+		lienzo._mover_caidas(0.05)
+		lienzo._seguir_monturas()
+		var cayendo: bool = lienzo.esta_cayendo(pony)
+		var junto: bool = _base_de(jinete).distance_to(lienzo._punto_asiento(pony, 0)) < 2.0
+		await _esperar_aterrizaje(lienzo, pony)
+		lienzo._process(0.016)
+		_check(cayendo and junto and lienzo.montura_de(jinete) == pony and is_instance_valid(jinete) and not lienzo.cielo.has_point(_base_de(pony)) \
+			and _base_de(jinete).distance_to(lienzo._punto_asiento(pony, 0)) < 2.0, "caer juntos: el pony cae con su jinete y aterrizan juntos")
+	# Vehiculo: dos asientos arriba (techo).
+	var q := _libre(lienzo, [Vector2(420, 690), Vector2(1000, 690), Vector2(300, 690), Vector2(900, 650)])
+	var bus = lienzo.poner_sticker("bus", q)
+	_arrastrar(motor, otro, bus.centro() + Vector2(-10, -20))
+	var tercero = lienzo.poner_sticker("coco", Vector2(q.x + 200, 520))
+	_arrastrar(motor, tercero, bus.centro() + Vector2(15, -20))
+	lienzo._process(0.016)
+	var arriba: bool = _base_de(otro).y < bus.centro().y - bus.lado * 0.15 and _base_de(tercero).y < bus.centro().y - bus.lado * 0.15
+	_check(lienzo.jinetes_de(bus).size() == 2 and arriba and otro.sentado and tercero.sentado, "vehiculo: dos jinetes sentados arriba del bus")
+	# Goma sobre el jinete: se va solo el jinete; deshacer lo devuelve montado.
+	motor._elegir_herramienta("goma", false)
+	lienzo.empezar_trazo(_cabeza_jinete(lienzo, tercero))
+	lienzo.terminar_trazo()
+	await process_frame
+	_check(is_instance_valid(bus) and not bus.is_queued_for_deletion() and lienzo.jinetes_de(bus).size() == 1, "goma sobre la pareja: borra lo que se toco (el jinete)")
+	motor.deshacer()
+	lienzo._process(0.016)
+	_check(lienzo.jinetes_de(bus).size() == 2, "deshacer la goma: el jinete vuelve a su asiento")
+	lienzo.montado.disconnect(al_montar)
+
+
+## Fisica sin motor: clasificacion pesa/vuela, cielo deducido del fondo, escenas sin cielo y espacio.
+func _probar_fisica_suelta() -> void:
+	print("-- fisica del lienzo (pesa / vuela, espacio, sin cielo) --")
+	var pesan := ["trex", "spinosaurio", "carnotauro", "dino_bebe", "pony_amigo", "unicornio", "casa", "castillo", "granero", "arbol", "palmera", "jirafa", "gatito", "perrito", "tren", "moai"]
+	var vuelan := ["nube", "nube_lluvia", "estrella", "sol", "luna", "globo", "arcoiris", "cohete", "planeta", "lechuza", "escoba", "pajaro", "cometa", "constelacion"]
+	_check(pesan.all(func(id) -> bool: return Stickers.fisica(id) == "pesa"), "pesan: %s" % ", ".join(PackedStringArray(pesan)))
+	_check(vuelan.all(func(id) -> bool: return Stickers.fisica(id) == "vuela"), "vuelan: %s" % ", ".join(PackedStringArray(vuelan)))
+	var lienzo = load("res://scripts/motores/lienzo_libre/lienzo.gd").new()
+	get_root().add_child(lienzo)
+	lienzo.stickers_objeto = true
+	lienzo.encuadrar(Vector2(1280, 720))
+	var con_cielo := {"tipo": "zonas", "tamano": [1280, 720], "regiones": [
+		{"id": "cielo", "forma": "rect", "rect": [0, 0, 1280, 720]}, {"id": "sol", "forma": "circulo", "centro": [200, 120], "radio": 60},
+		{"id": "pasto", "forma": "rect", "rect": [0, 420, 1280, 300]}]}
+	lienzo.poner_lamina(con_cielo)
+	lienzo.preparar_fisica({"id": "parque"})
+	_check(lienzo.gravedad and is_equal_approx(lienzo.cielo.end.y, 420.0), "sin zona `cielo`, el cielo se deduce del fondo (hasta el pasto, y=420)")
+	var trex = lienzo.poner_sticker("trex", Vector2(640, 100))
+	_check(lienzo._soltar(trex), "con cielo, el T-rex cae")
+	lienzo._caidas.clear()
+	var estrella = lienzo.poner_sticker("estrella", Vector2(700, 100))
+	_check(not lienzo._soltar(estrella), "la estrella flota en el cielo (`poner estrella en_zona cielo` sigue siendo posible)")
+	lienzo.preparar_fisica({"id": "mision_espacial"})
+	_check(not lienzo.gravedad and not lienzo._soltar(trex), "espacio (por id): sin gravedad, todo flota")
+	lienzo.preparar_fisica({"id": "otra", "gravedad": false})
+	_check(not lienzo.gravedad, "espacio (por `gravedad: false` en el tema): sin gravedad")
+	lienzo.zonas = {"espacio": [0, 0, 1280, 420]}
+	lienzo.preparar_fisica({"id": "luna"})
+	_check(not lienzo.gravedad, "espacio (zona `espacio`): sin gravedad")
+	lienzo.limpiar()
+	lienzo.encuadrar(Vector2(1280, 720))
+	lienzo.poner_lamina({"tipo": "zonas", "tamano": [1280, 720], "regiones": [{"id": "pared", "forma": "rect", "rect": [0, 0, 1280, 720]}]})
+	lienzo.preparar_fisica({"id": "fiesta"})
+	var pony = lienzo.poner_sticker("pony_amigo", Vector2(640, 80))
+	_check(not lienzo.gravedad and not lienzo._soltar(pony), "escena sin cielo: no hay gravedad")
+	var sol = lienzo.poner_sticker("sol", Vector2(640, 600))
+	_check(not lienzo._soltar(sol) and not sol.has_meta("volando"), "escena sin cielo: el sol no se quema en ningun lado")
+	lienzo.queue_free()
+	await process_frame
 
 
 ## Lupa 1x/2x y rueda: con zoom, el pincel y los stickers nuevos conservan su tamano en pantalla.

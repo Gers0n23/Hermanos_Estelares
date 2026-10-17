@@ -52,11 +52,48 @@ const CATALOGO := {
 	"arcoiris": ["f", "#FFFFFF"], "destello": ["p", "#FFCB3D"],
 	# Lienzo v2 (17-Oct-2026): escenas piloto (establo junto al rio, parque de dinos)
 	"nube_lluvia": ["p", "#B8C7E0"], "dino_bebe": ["p", "#9BE38F"], "lago": ["p", "#6FC3F0"], "rio": ["p", "#5AB4F0"],
+	# Lienzo v2, segunda tanda (ficha §11.3): los PERSONAJES como stickers "amigos", con su arte ("t").
+	"maxi": ["t", "#FFFFFF"], "nicole": ["t", "#FFFFFF"], "sofia": ["t", "#FFFFFF"], "papa": ["t", "#FFFFFF"],
+	"coco": ["t", "#FFFFFF"], "cometa": ["t", "#FFFFFF"], "coleccionauta": ["t", "#FFFFFF"], "toby": ["t", "#FFFFFF"],
 }
+## Arte de los personajes-sticker. Hermanos, Coco y Cometa: retratos oficiales (`renderizar_retratos.py`).
+## Papa, el Coleccionauta y Toby: recortes PROVISIONALES de sus anclas (`extraer_base.py`), hasta que
+## `disenador-personajes` entregue su arte de juego. Los anfitriones sin arte (Octavio, Profesor Plumas,
+## Lila, Mimi) quedan pendientes.
+const PERSONAJES := {
+	"maxi": "res://assets/sprites/personajes/maxi_base.png",
+	"nicole": "res://assets/sprites/personajes/nicole_base.png",
+	"sofia": "res://assets/sprites/personajes/sofia_base.png",
+	"papa": "res://assets/sprites/personajes/papa_provisional.png",
+	"coco": "res://assets/sprites/personajes/coco_base.png",
+	"cometa": "res://assets/sprites/personajes/cometa_base.png",
+	"coleccionauta": "res://assets/sprites/personajes/coleccionauta_provisional.png",
+	"toby": "res://assets/sprites/personajes/toby_provisional.png",
+}
+## Los personajes se ponen mas grandes que un sticker comun (son altos y delgados).
+const ESCALA_PERSONAJE := 1.35
+## Orden de los amigos en el dock (el hermano que juega va primero, ver el motor).
+const AMIGOS := ["maxi", "nicole", "sofia", "papa", "cometa", "coco", "toby", "coleccionauta"]
+## JINETES Y MONTABLES (pedido del PO, ficha §11.9): un personaje soltado sobre un animal grande o un
+## vehiculo se sube y va SENTADO (se ve de la cintura para arriba, con la cadera en el asiento). Asientos
+## en unidades del radio del dibujo (r = lado * 0.45) desde el centro del montable, mirando a la derecha:
+## sobre el lomo en los animales y arriba (techo) en los vehiculos. Bus, bomberos y tren llevan dos.
+const MONTABLES := {
+	"pony_amigo": [Vector2(-0.22, 0.02)], "unicornio": [Vector2(-0.22, 0.02)], "jirafa": [Vector2(-0.3, 0.02)],
+	"trex": [Vector2(-0.22, -0.06)], "spinosaurio": [Vector2(-0.22, -0.1)], "carnotauro": [Vector2(-0.22, -0.06)],
+	"carrito": [Vector2(-0.02, -0.46)], "bus": [Vector2(-0.45, -0.58), Vector2(0.3, -0.58)],
+	"bomberos": [Vector2(-0.5, -0.4), Vector2(0.05, -0.4)], "tren": [Vector2(-0.45, -0.8), Vector2(0.45, -0.28)],
+	"carroza": [Vector2(0.0, -0.56)],
+}
+## Parte del personaje que se ve sentado (desde arriba) y su tamano sobre el montable.
+const RECORTE_SENTADO := 0.66
+const ACHIQUE_JINETE := 0.75
+## Imagen recortada (sin el margen transparente) de cada personaje: {id: {"imagen", "textura"}}.
+static var _arte := {}
 const ALIAS := {"carrito": "auto", "pony_amigo": "pony"}
 ## Stickers que caminan o ruedan: al tocarlos avanzan un poco en vez de solo saltar.
 const ANDAN := ["trex", "spinosaurio", "carnotauro", "carrito", "bus", "bomberos", "tren", "pony_amigo", "unicornio",
-	"jirafa", "gatito", "perrito", "gerbo", "pinguino", "carroza", "dino_bebe"]
+	"jirafa", "gatito", "perrito", "gerbo", "pinguino", "carroza", "dino_bebe", "maxi", "nicole", "sofia", "papa", "coco", "toby"]
 ## Hacia donde "avanza" cada dibujo, en radianes (0 = derecha). El cohete apunta hacia arriba y
 ## la escoba vuela en diagonal: el viajero se gira para avanzar en la direccion del camino.
 const DIRECCION := {"cohete": -PI / 2.0, "escoba": -0.8}
@@ -68,11 +105,24 @@ const ROTAN := ["carrito", "bus", "bomberos", "tren", "carroza", "cohete", "esco
 ## se pega a el y alli llega un viajero; el resto es `decorado` (solo visual, participa en
 ## combinaciones). Una escena puede reasignarlas con sus listas `vivos`, `lugares` y `decorados`. La
 ## cuarta clase, `camino`, son los tipos del trazo (sendero, camino, rieles, cerca, arcoiris...).
-const VIVOS := ["cohete", "escoba", "lechuza"]
+const VIVOS := ["cohete", "escoba", "lechuza", "cometa", "coleccionauta"]
 const LUGARES := ["granero", "casa", "castillo", "volcan", "planeta", "montana", "casa_valpo", "moai", "cactus",
 	"bandera_meta", "pastel", "caldero", "lago", "rio"]
 ## Los lugares se ponen mas grandes que los vivos (un establo no mide lo mismo que un pony).
 const ESCALA_LUGAR := 1.5
+## FISICA (pedido del PO, 17-Oct-2026, ficha motor-lienzo-libre.md §10.1), ortogonal a la clase: un
+## sticker "pesa" (si se suelta en el cielo, cae con gravedad y hace "¡puff!") o "vuela" (se queda
+## donde se suelta). Todo lo que no esta en VUELAN pesa. Ids futuros del catalogo (pajaro, cometa,
+## constelacion...) ya van en la lista para que nazcan voladores. Una escena puede cambiarlo con sus
+## listas `pesan` y `vuelan`.
+const VUELAN := ["nube", "nube_lluvia", "estrella", "sol", "luna", "globo", "arcoiris", "cohete", "planeta",
+	"lechuza", "escoba", "destello", "corazon", "nota", "varita", "foco",
+	"pajaro", "cometa", "constelacion", "constelacion_dino", "libro_volador", "estrella_fugaz", "fuegos_artificiales",
+	"coleccionauta"]
+
+
+static func fisica(id: String) -> String:
+	return "vuela" if id in VUELAN else "pesa"
 
 
 static func tiene(id: String) -> bool:
@@ -101,6 +151,8 @@ static func dibujar(l, id: String, color: Color, c: Vector2, r: float) -> void:
 		return
 	var t := maxf(2.5, r * 0.075)
 	match str(CATALOGO[id][0]):
+		"t":
+			_dibujar_personaje(l, id, c, r)
 		"d":
 			D.dibujar(l, ALIAS.get(id, id), color, c, r, true, false)
 		"f":
@@ -158,10 +210,112 @@ static func dibujar(l, id: String, color: Color, c: Vector2, r: float) -> void:
 
 
 ## Imagen del sticker (para el PNG): `lado` px, girado `giro` radianes y espejado si `espejo`.
-static func imagen(id: String, color: Color, lado: int, giro := 0.0, espejo := false) -> Image:
+static func imagen(id: String, color: Color, lado: int, giro := 0.0, espejo := false, sentado := false) -> Image:
+	if PERSONAJES.has(id):
+		return _imagen_personaje(id, maxi(8, lado), giro, espejo, RECORTE_SENTADO if sentado else 1.0)
 	var g := Grabador.new()
 	dibujar(g, id, color, Vector2.ZERO, Grabador.RADIO)
 	return g.rasterizar(maxi(8, lado), giro, espejo)
+
+
+# --- Personajes (arte de textura) ----------------------------------------------------------------
+
+static func es_personaje(id: String) -> bool:
+	return PERSONAJES.has(id)
+
+
+## Jinetes: los personajes (amigos y cualquier humanoide con arte de personaje).
+static func es_jinete(id: String) -> bool:
+	return PERSONAJES.has(id)
+
+
+static func es_montable(id: String) -> bool:
+	return MONTABLES.has(id)
+
+
+static func asientos(id: String) -> Array:
+	return MONTABLES.get(id, [])
+
+
+static func _arte_de(id: String) -> Dictionary:
+	if _arte.has(id):
+		return _arte[id]
+	var datos := {}
+	var textura := load(str(PERSONAJES[id])) as Texture2D
+	if textura != null:
+		var imagen := textura.get_image()
+		if imagen != null and not imagen.is_empty():
+			if imagen.is_compressed():
+				imagen.decompress()
+			imagen.convert(Image.FORMAT_RGBA8)
+			imagen = imagen.get_region(imagen.get_used_rect())
+			datos = {"imagen": imagen, "textura": ImageTexture.create_from_image(imagen)}
+		else:
+			datos = {"imagen": null, "textura": textura}
+	_arte[id] = datos
+	return datos
+
+
+## Rect del personaje dentro del sticker: cabe en el cuadro de radio `r` con los pies en la base.
+static func _rect_personaje(tam: Vector2, c: Vector2, r: float) -> Rect2:
+	var escala := minf(r * 1.9 / tam.x, r * 2.05 / tam.y)
+	var medida := tam * escala
+	return Rect2(Vector2(c.x - medida.x / 2.0, c.y + r * 0.955 - medida.y), medida)
+
+
+## En pantalla (CanvasItem) se dibuja la textura; el Grabador (vectorial) no sabe de texturas: el
+## PNG del dibujo usa `_imagen_personaje`.
+static func _dibujar_personaje(l, id: String, c: Vector2, r: float, recorte := 1.0) -> void:
+	if not (l is CanvasItem):
+		return
+	var arte := _arte_de(id)
+	var textura: Texture2D = arte.get("textura", null)
+	if textura == null:
+		return
+	var rect := _rect_personaje(textura.get_size(), c, r)
+	if recorte >= 1.0:
+		l.draw_texture_rect(textura, rect, false)
+		return
+	# Sentado: solo de la cintura para arriba, con la cadera donde iban los pies (el asiento).
+	var fuente := Rect2(Vector2.ZERO, Vector2(textura.get_size().x, textura.get_size().y * recorte))
+	var destino := Rect2(Vector2(rect.position.x, rect.end.y - rect.size.y * recorte), Vector2(rect.size.x, rect.size.y * recorte))
+	l.draw_texture_rect_region(textura, destino, fuente)
+
+
+## Personaje sentado, para el lienzo (`sticker_vivo`).
+static func dibujar_sentado(l, id: String, c: Vector2, r: float) -> void:
+	_dibujar_personaje(l, id, c, r, RECORTE_SENTADO)
+
+
+static func _imagen_personaje(id: String, lado: int, giro: float, espejo: bool, recorte := 1.0) -> Image:
+	var lienzo := Image.create(lado, lado, false, Image.FORMAT_RGBA8)
+	var arte := _arte_de(id)
+	var fuente: Image = arte.get("imagen", null)
+	if fuente == null:
+		return lienzo
+	var rect := _rect_personaje(Vector2(fuente.get_size()), Vector2(lado, lado) / 2.0, lado * 0.45)
+	if recorte < 1.0:
+		fuente = fuente.get_region(Rect2i(0, 0, fuente.get_width(), maxi(1, roundi(fuente.get_height() * recorte))))
+		rect = Rect2(Vector2(rect.position.x, rect.end.y - rect.size.y * recorte), Vector2(rect.size.x, rect.size.y * recorte))
+	var escalada := fuente.duplicate() as Image
+	escalada.resize(maxi(1, roundi(rect.size.x)), maxi(1, roundi(rect.size.y)), Image.INTERPOLATE_BILINEAR)
+	if espejo:
+		escalada.flip_x()
+	lienzo.blend_rect(escalada, Rect2i(Vector2i.ZERO, escalada.get_size()), Vector2i(rect.position.round()))
+	if absf(giro) < 0.01:
+		return lienzo
+	# Girado (Sofia gira stickers de a 30 grados): muestreo inverso alrededor del centro.
+	var girada := Image.create(lado, lado, false, Image.FORMAT_RGBA8)
+	var centro := Vector2(lado, lado) / 2.0
+	var cos_g := cos(-giro)
+	var sin_g := sin(-giro)
+	for y in lado:
+		for x in lado:
+			var d := Vector2(x + 0.5, y + 0.5) - centro
+			var origen := centro + Vector2(d.x * cos_g - d.y * sin_g, d.x * sin_g + d.y * cos_g)
+			if origen.x >= 0.0 and origen.y >= 0.0 and origen.x < lado and origen.y < lado:
+				girada.set_pixel(x, y, lienzo.get_pixel(int(origen.x), int(origen.y)))
+	return girada
 
 
 # --- Ayudas ----------------------------------------------------------------------------------

@@ -456,3 +456,407 @@ Si el contenedor fija `destellos_fijos` (100 por estación, HE-40 §2.3), manda 
   - tener que arrastrar para soltar sobre un lugar;
   - el tamaño de los imanes.
 - Playtest con los tres.
+
+## 10. Física, sol, deshacer y reiniciar (17-Oct-2026)
+
+Pedido directo del PO después de que los niños jugaron el lienzo v2 (les fascinó). El PO aprobó el
+diseño; los detalles menores se decidieron por delegación (§10.8). Vale para todas las hojas con tema;
+deshacer y reiniciar valen también para las láminas, el mosaico y las simetrías de las zonas 2-5.
+
+### 10.1 Gravedad: los que pesan caen con "¡puff!"
+
+- **Física por sticker** (`Stickers.fisica(id)`), aparte de la clase vivo/lugar/camino/decorado:
+  `pesa` o `vuela`. Todo lo que no está en `Stickers.VUELAN` pesa. Una escena puede cambiarlo con sus
+  listas `pesan` y `vuelan`.
+
+  | Física | Stickers |
+  |---|---|
+  | `vuela` | nube, nube_lluvia, estrella, sol, luna, globo, arcoiris, cohete, planeta, lechuza, escoba, destello, corazón, nota, varita, foco. Ya previstos para el catálogo: pájaro, cometa, constelación, constelacion_dino, libro_volador, estrella_fugaz, fuegos_artificiales |
+  | `pesa` | Todo lo demás: dinos (trex, spinosaurio, carnotauro, dino_bebe), huevo, pony, unicornio, jirafa, gatito, perrito, gerbo, pingüino, vehículos (auto, bus, bomberos, tren, carroza), casa, casa_valpo, castillo, granero, volcán, montaña, moai, cactus, palmera, árbol, flor, copihue, roca, cono, bandera_meta, bandera_chile, fuego, manzana, pastel, regalo, ovillo, caldero, libro, sombrero, corona, vestido, zapato, micrófono, parlante, hueso, pelota, lago, río |
+
+- **Cielo**: la zona `cielo` del tema (`zonas`). Si falta, se deduce del fondo: va desde arriba hasta
+  donde empiezan las regiones que tocan el borde de abajo (el pasto). `parque_dinos` ahora declara
+  `"zonas": {"cielo": [0, 0, 1280, 440]}` (catálogo §2.1). Sus regiones `cielo` ocupan toda la hoja,
+  así que antes `en_zona cielo` valía en cualquier parte.
+- **Cuándo cae**: al soltar un sticker que pesa (nuevo o arrastrado) con la **base** (los pies:
+  centro + 0,43 × lado) dentro del cielo. Antes se intenta subir a un camino: un vivo soltado sobre un
+  camino en el cielo (puente arcoíris) se sube y no cae. En Maxi, si ya hay un camino, el vivo nuevo
+  salta a él (R2).
+- **Dónde aterriza**: en la primera superficie bajo sus pies. Puede ser una región de suelo (las que
+  bajan más que el cielo: colinas, pasto, pradera, río, volcán) o un lugar (castillo, casa, granero,
+  volcán de fondo). Si no hay ninguna, aterriza en el borde de abajo del cielo. Si ya está apoyado
+  (sobre la colina o sobre el volcán), no cae.
+- **Cómo cae**: con aceleración (2600 px/s²; Maxi, 1500, más lento) y estirado. Al llegar se aplasta,
+  da un rebote chico y se acomoda (squash & stretch con pivote en la base, en `sticker_vivo.deformar`).
+  Suelta una nubecita de polvo y suena "¡puff!" (`polvo.ogg`). **Nunca desaparece.**
+- **Maxi**: suena un silbidito al empezar a caer y un "boing" al aterrizar (`polvo_boing.ogg`). Su
+  polvo es más grande, salen estrellitas y Coco salta.
+- **Después de aterrizar** sigue como cualquier sticker soltado: intenta subirse a un camino (y en
+  Maxi, R2), se revisan las combinaciones y se miden los objetivos (`poner`, `en_zona`...).
+- **Se puede atrapar en el aire**: si se agarra mientras cae, se mueve. Si se suelta ahí mismo, sigue
+  cayendo.
+- **Sin gravedad**: una escena sin cielo (la fiesta de gatitos, el concierto) o del espacio. Es espacio
+  si el tema trae `"gravedad": false`, si su id dice "espacio" o "espacial" (`espacio`,
+  `mision_espacial`) o si tiene una zona o región `espacio`. Allí todo flota. El vaivén suave quedó
+  como opcional y no se hizo.
+- **Objetivos del cielo** (revisión de las 15 escenas del catálogo):
+  - Todo lo que se pide en el cielo vuela: `poner estrella en_zona cielo` (mision_espacial), C01
+    sol + nube de lluvia, C06 tres estrellas (espacio) y C10 estrella + castillo (la estrella se lleva
+    al castillo).
+  - Las escenas espaciales no tienen gravedad.
+  - Los sellos `sello_estrella en_zona cielo` de las zonas 2-5 son estampados de pintura, no stickers
+    con física.
+  - Los vivos que viajan por caminos no sienten la gravedad: un puente arcoíris por el cielo funciona.
+  - `qa_test_lienzo` verifica en cada piloto que nada de lo que se pide en el cielo pese.
+  - **Riesgos para portar el catálogo**:
+    - `bomberos`, `poner fuego en_zona casa`: el fuego pesa. Si el techo de la casa queda dentro de la
+      zona `cielo`, el fuego soltado arriba aterriza sobre la casa, pero su centro puede quedar fuera
+      del radio de la casa. Hay que dejar el techo fuera del cielo o declarar `"vuelan": ["fuego"]`
+      en la escena.
+    - `tren_chile`: la zona `cielo` no debe incluir la franja de la cordillera.
+
+### 10.2 El sol solo vive en el cielo
+
+- Aplica en escenas con cielo que no son espacio. Si el sol se suelta con el **centro** fuera del cielo:
+  - Los stickers a ≤ 180 px quedan **tiznados**: tinte oscuro (`self_modulate`), temblorcito y humito.
+  - Salen chispitas y suena un chisporroteo (`chisporroteo.ogg`).
+  - El sol pone cara de "¡ups!" (ojos redondos, boca en "o" y una gotita).
+  - Coco dice "¡Uy, qué calor! El sol vive en el cielo." (`comun/sol_quema`, a lo más una vez cada
+    4 s) y salta.
+  - El sol tiembla y vuelve volando en arco, dando una vuelta (1,1 s). Llega a un punto libre del cielo
+    dentro del área sin botones, lejos de los otros stickers y cerca de donde estaba.
+- **Opción A del PO, tiznado temporal**: a los 3 s cada tiznado se sacude, suelta un polvito y vuelve a
+  su color. Nada se destruye y la pintura hecha a mano no se quema (solo se tiznan stickers).
+- El sol que vuelve al cielo **sigue combinando**: al llegar se revisan las combinaciones
+  (sol + nube de lluvia = arcoíris).
+- Se puede atrapar al sol mientras vuela.
+
+### 10.3 Deshacer ("ir atrás")
+
+- **Botón**: flecha curva naranja hacia atrás, sin texto, del tamaño del dock (Maxi 100 px; Nicole y
+  Sofía 84 px). Va arriba, a la derecha de la tarjeta de inspiración, en x = 340.
+- **Qué deshace**: la última acción. Cuenta como acción un trazo de pincel o goma, el balde, un sello o
+  sticker puesto, un sticker movido, un camino trazado y, por delegación, editar un sticker con la
+  barra (achicar, agrandar, girar, espejo, borrar).
+- **Cómo**: antes de cada acción se guarda una **foto** del estado:
+  - los stickers (el mismo nodo y sus propiedades);
+  - los sellos vivos;
+  - los caminos y sus puntas;
+  - los viajes en curso;
+  - los colores de las regiones;
+  - las celdas del mosaico;
+  - la pintura, solo si la acción pintó. Se guarda comprimida con ZSTD: ~15 KB y ~1 ms.
+
+  Al deshacer se **reusan los nodos que siguen vivos**, así los objetivos y los viajes los reconocen.
+  Los que se fueron (consumidos por una combinación, borrados) se recrean con un "pop". Lo agregado
+  después de la foto se va en silencio.
+- Una acción que no cambió nada (un toque suelto sobre un sticker) no gasta un paso.
+- Dos dedos no dejan paso: el trazo ya se deshizo.
+- **Límite**: 20 pasos.
+- **Caída**: la caída no es un paso aparte. Deshacer el soltar devuelve el sticker a donde estaba
+  **antes de que lo agarraran**, no al cielo. También corta las caídas, los vuelos del sol, los
+  tiznados y los saltitos en curso.
+- **Caminos con viajeros**: al deshacer un camino, sus viajeros se bajan (quedan los viajes de la foto).
+- **No deshace objetivos ni destellos (GDD §6)**: viven en el motor y nunca se descumplen. Un color
+  usado sigue contando para los destellos.
+- Con el historial vacío el botón se ve apagado (45 % de opacidad). Igual responde al toque con un
+  saltito y un "toc".
+
+### 10.4 Reiniciar la hoja
+
+- **Botón**: escoba de peluche, del mismo tamaño, a la derecha del de deshacer (con 28 px de
+  separación).
+- **Anti-accidente**: hay que **mantenerlo presionado 1,2 s**. Mientras tanto, un anillo turquesa se
+  va llenando alrededor del botón. En el proyecto no había un patrón de confirmación; este es el nuevo.
+  Si se suelta antes, el anillo se vacía, el botón rebota y Coco explica "Para empezar de nuevo, deja
+  el dedo apretado en la escoba." (`comun/reiniciar_mantener`, a lo más una vez cada 8 s).
+- **Al cumplirse**:
+  - Una escoba gigante barre la pantalla de izquierda a derecha ("¡fuuush!", `fuuush.ogg`) y suelta
+    nubecitas de polvo.
+  - A mitad del barrido la hoja vuelve a como empezó: sin pintura ni stickers ni caminos puestos, con
+    los colores, los lugares de fondo, los stickers puestos (el granero) y los caminos iniciales.
+  - Coco dice "¡Fuuush! ¡Hoja nueva, limpiecita!" (`comun/reiniciar`).
+- La foto de inicio se toma al terminar de preparar la hoja (`lienzo.fijar_inicio()`).
+- El reinicio vacía el historial. **Los objetivos cumplidos y los destellos se mantienen**, y "mostrar
+  a Coco" sigue visible si ya estaba.
+- Los dos botones se esconden al mostrar el dibujo a Coco y en el selector de temas.
+
+### 10.5 Archivos
+
+- **Código**:
+  - `stickers.gd`: `VUELAN` y `fisica()`.
+  - `sticker_vivo.gd`: `deformar`, `temblor`, `expresion` ("ups") y `detener()`.
+  - `lienzo.gd`: física, sol, efectos de polvo y humo en una capa del mundo, historial y reinicio.
+  - `motor_lienzo_libre.gd`: botones, mantener presionado, escoba, SFX y voces.
+- **Generador**: `generar_pinta.py`, con el cielo de `parque_dinos` y 3 voces nuevas en los 15 niveles.
+- **SFX originales** (`componer_sfx_ui.py`): `polvo`, `polvo_boing`, `chisporroteo`, `rebobinar` y
+  `fuuush`. La caída de Maxi reutiliza `fiuu`.
+- **Voces provisionales** con el TTS gratuito de Windows (sin costo): `comun/sol_quema`,
+  `comun/reiniciar_mantener` y `comun/reiniciar`.
+
+### 10.6 Verificación (17-Oct-2026, Godot 4.7.1)
+
+- **`qa_test_lienzo.gd`**: suite completa (15 rutas + epílogo), **854 OK / 0 fallos**. Casos nuevos:
+  - **Clasificación** pesa/vuela.
+  - **Cielo**: el de cada piloto (440, 300 y 290), y el deducido del fondo cuando falta la zona.
+  - **Gravedad**: sin cielo no hay; en el espacio tampoco (por id, por `gravedad: false` o por zona
+    `espacio`).
+  - **Caída**: lo que pesa, puesto en el cielo, cae con aceleración, aterriza apoyado, no desaparece,
+    emite el "¡puff!" (grande en Maxi) y deja polvo. Arrastrarlo al cielo lo hace caer otra vez, y
+    arrastrar + caer es un solo paso.
+  - **Lo que vuela** se queda, y lo que se pide en el cielo no pesa.
+  - **Sol**: tizna ≥ 2 vecinos, pone cara de "¡ups!" y vuelve al cielo. A los 3 s los vecinos se
+    limpian, la pintura no cambia y después hace arcoíris con la nube de lluvia.
+  - **Deshacer**: pincel, balde, sticker puesto, sticker movido (el mismo nodo), camino con viajero, el
+    límite de 20, el botón apagado, y que no se pierden objetivos ni destellos. En las zonas 2-5 se
+    deshace el último trazo de cada hoja (láminas, mosaico, sellos de Maxi, dedo mágico, simetrías).
+  - **Reiniciar**: un toque corto no borra; mantener barre; la hoja vuelve a los stickers y caminos
+    iniciales sin pintura (granero puesto, río a su color); el historial queda vacío; objetivos y
+    destellos se conservan.
+- **`capturar_lienzo_tema.gd`**: corrido en ventana para los tres pilotos. Las capturas nuevas son
+  caída, "¡puff!", tiznado, sol volviendo, limpios, anillo de la escoba, barrido y hoja reiniciada.
+  Sin errores en consola.
+- **`qa_test_voces.gd`**: las voces de pinta pasan. Las 20 fallas que reporta son de
+  `emparejar/reto` (anteriores a esta tarjeta).
+- **Guardado real**: se respaldó antes de correr nada. md5 `ff55e2f4abf17f25618fa7ee446b11b0`, intacto
+  al final.
+
+### 10.7 Pendientes
+
+- **Playtest con los tres**:
+  - ¿Maxi entiende el "mantener presionado" o necesita que Coco lo muestre con la mano fantasma?
+  - ¿El tiznado de 3 s se lee como chiste y no como castigo?
+- **Auditoría UX**: tamaño y lugar de los botones nuevos; Nicole y Sofía tienen la escoba a 28 px de
+  la flecha.
+- **Voces y arte**: voces oficiales de Coco para las 3 líneas (con `--estimar` y el OK del PO) y SFX
+  finales si los provisionales no convencen.
+- **Optativos**: vaivén suave en el espacio; humito propio del "¡uy!" del sol.
+- **Port del catálogo**: revisar los riesgos de §10.1 en `bomberos` y `tren_chile`.
+
+### 10.8 Decisiones por delegación
+
+- Clasificación pesa/vuela de los ids dudosos:
+  - **Vuelan**: varita (mágica), foco (cuelga del techo), nota, destello, corazón, cohete y planeta.
+  - **Pesan**: fuego, manzana y el resto de los objetos de mano.
+- La caída se decide por la base del sticker. El sol, en cambio, se decide por su centro.
+- Se aterriza en la primera superficie (región de suelo o lugar). Si no hay, en el borde del cielo.
+- Gravedad 2600 px/s². En Maxi es 1500, con polvo 1,45 veces más grande, "boing", estrellitas y Coco
+  que salta.
+- Espacio: por `gravedad: false`, por un id con "espacio"/"espacial" o por una zona o región `espacio`.
+  Sin zona `cielo`, el cielo se deduce del fondo.
+- Sol: tiznado a ≤ 180 px, 3 s, vuelo de 1,1 s a un punto libre del área sin botones.
+- Deshacer:
+  - con fotos, no con comandos;
+  - 20 pasos, con la pintura comprimida en ZSTD;
+  - la edición con la barra también se deshace;
+  - un toque que no cambia nada no gasta un paso;
+  - el botón apagado se ve al 45 % y sigue respondiendo con un saltito.
+- Reiniciar:
+  - mantener 1,2 s con un anillo, porque no había un patrón previo;
+  - escoba que barre;
+  - Coco explica si se suelta antes;
+  - se conservan los colores usados (destellos) y los usos de herramientas.
+- Ubicación de los botones: arriba, a la derecha de la tarjeta de inspiración (x = 340 y 340 + lado +
+  28). Es la única franja libre que no tapa el área de las láminas, el dock, los objetivos ni a Coco.
+
+## 11. Segunda tanda: borrar caminos, caminos finos, personajes y Coco en burbujita (17-Oct-2026)
+
+Pedido del PO después de otra sesión de juego de los niños. Los detalles menores se decidieron por
+delegación (§11.7).
+
+### 11.1 Borrar un camino
+
+- Se borra **entero**, nunca a medias, con una fila de "¡puff!" a lo largo y `puf.ogg`. Sus viajeros
+  se bajan donde están; uno que pesa y estaba en un puente sobre el cielo cae (física §10.1). Queda en
+  el historial de deshacer y se puede deshacer. Los objetivos ya cumplidos (`conectar`...) no se pierden.
+- **Con la goma** (Nicole y Sofía): pasarla sobre un camino lo borra. Sirve tanto un toque como un
+  arrastre.
+- **Con el dedo quieto** (todos, y es la forma de Maxi, que no tiene goma):
+  - Con la herramienta de camino elegida, mantener el dedo quieto sobre un camino 1,2 s (Maxi 1,5 s) lo
+    borra.
+  - Desde los 0,2 s el camino tiembla y se aclara, como aviso.
+  - Si el dedo se mueve más de 14 px, se cancela y se traza un camino nuevo, como siempre.
+  - Después del borrado, ese mismo trazo no traza ni pinta.
+- **Anti-accidente**: pintar encima con el pincel nunca borra un camino. El borrado solo pasa con la
+  goma o con el gesto quieto de la herramienta de camino: con esa herramienta, un dedo quieto no dibuja
+  nada.
+
+### 11.2 Caminos más finos y planos
+
+- Todos los caminos se dibujan con un factor de ancho (`a`) sobre su sección v1: **0,55** para Nicole y
+  Sofía y **0,7** para Maxi. El sendero pasa de 40 px a ~22 px (Maxi ~27 px).
+- Se ven planos, desde arriba: borde fino (2,5 px por lado) y sin volumen. Los adornos mantienen su
+  separación a lo largo del camino y tienen un tamaño mínimo (piedritas, durmientes y rieles, luces,
+  estrellas, tablas de la cerca), así cada tipo se sigue reconociendo.
+- Cada camino guarda su `ancho`, así que deshacer y el PNG lo respetan. Los iconos del dock siguen con
+  ancho 1,0 para que se lean en chico.
+- **Lo táctil no cambia**: R1 (imán), R2 (subirse) y R5 (cerrar) usan las mismas distancias de antes.
+  La zona para tocar un camino (borrar) es su mitad dibujada + 10 px, como mínimo 22 px de pantalla.
+
+### 11.3 Los personajes como stickers ("amigos")
+
+| Id | Arte | Física |
+|---|---|---|
+| `maxi`, `nicole`, `sofia` | Retratos oficiales (`*_base.png`) | pesa |
+| `papa` | **Provisional**: recorte de `anclas/papa_referencia.png` | pesa |
+| `coco` | `coco_base.png` | pesa (camaleona) |
+| `toby` (anfitrión de Animalia) | **Provisional**: recorte de `anclas/toby_referencia.png` | pesa (perrito) |
+| `cometa` | `cometa_base.png` | vuela (flota y rebota, GDD §2) |
+| `coleccionauta` | **Provisional**: recorte de `anclas/coleccionauta_referencia.png` | vuela |
+
+- **Clase `vivo`**: pasean por los caminos y llegan a lugares. Al tocarlos dan unos pasitos (los que
+  pesan) y nombran su voz (`stickers/<id>`).
+- **Dibujo**: con su textura, recortada del margen transparente y con los pies en la base. Son 1,35
+  veces más grandes que un sticker común (son altos y delgados). En el PNG se rasterizan aparte
+  (espejo y giro incluidos), porque el `Grabador` es vectorial.
+- **Dónde**: `amigos` está en el **nivel** (`generar_pinta.py`), así que vale para todas las escenas
+  con tema.
+  - **Nicole y Sofía**: grupo propio "Amigos" en el dock. Su icono es la cara del hermano que juega,
+    que va primero en la lista. Coco nombra el grupo la primera vez ("¡Amigos!").
+  - **Maxi**: mantiene 3 botones en el dock. Sus amigos van en "Cosas", en filas propias.
+  - Con 6 grupos el dock llega a y = 672. "Ver todo", que antes iba debajo, ahora va **a la derecha de
+    la lupa**.
+- **Recortes provisionales**: `herramientas/extraer_base.py` sobre la vista frontal de cada ancla. Al
+  Coleccionauta se le tomó el fondo solo del costado derecho, porque la mano que saluda en la vista
+  vecina ensuciaba el gris. Quedaron en `assets/sprites/personajes/*_provisional.png`.
+- **Pendientes para `disenador-personajes`**: el arte de juego de papá, el Coleccionauta y Toby, y el
+  arte de los anfitriones que todavía no tienen: Pulpo DJ Octavio, Búho Profesor Plumas, Dragoncita
+  Lila y Nube Mimi.
+
+### 11.4 Coco como burbujita
+
+- Coco ya no ocupa un lugar fijo. Vive en una **burbujita redonda** con su cara y una colita de globo
+  de diálogo. Es el mismo `TextureRect`, con su **cresta que sigue imitando colores**, recortado en
+  círculo con `clip_children`.
+- **Posición**: centro (1190, 302) y radio 70. Queda en la columna derecha, debajo de las tarjetas de
+  objetivos y arriba de "mostrar a Coco": no tapa el objetivo que narra (el arnés lo verifica).
+- **Cuándo aparece**: con un "pop" cada vez que Coco habla (`_reproducir_voz`) o celebra
+  (`_reaccion_anfitriona`: saltos, baile, el salto de Maxi al caer un sticker). Se queda mientras dura
+  la voz más 0,7 s y se va sola encogiéndose. El resto del tiempo **no ocupa espacio**.
+- Al mostrar el dibujo, Coco se queda en su burbuja mientras celebra.
+- **Tocar a Coco**: mientras la burbuja está visible, tocarla da la pista fantasma, como antes. Cuando
+  no está, la forma equivalente es **tocar la tarjeta del objetivo actual, que repite su voz y muestra
+  la pista** (ya existía, §9.4). Cometa también repite la instrucción.
+- El lienzo de Pinta no tiene un tutorial aparte. "Mostrar a Coco" es un botón propio y no dependía de
+  Coco visible.
+
+### 11.5 Voces nuevas
+
+Provisionales, con el TTS gratuito de Windows:
+- `comun/grupo_amigos`;
+- `stickers/maxi`, `nicole`, `sofia`, `papa`, `cometa`, `coco`, `toby` y `coleccionauta` (por ejemplo,
+  "¡Toby, el perrito astronauta!").
+
+### 11.6 Verificación (17-Oct-2026)
+
+- **`qa_test_lienzo.gd`**, suite completa (ver el resultado en el resumen de la entrega). Casos nuevos:
+  - **Grosor**: por perfil, y el camino lo guarda.
+  - **Tocar un camino**: se puede 8 px fuera del dibujo.
+  - **No se borra**: al pintar encima con el pincel, ni con un toque corto de la herramienta de camino.
+  - **Dedo quieto**: borra el camino entero sin trazar otro, con un amigo de viajero que se baja y una
+    fila de "¡puff!". Se deshace.
+  - **Goma**: borra el camino entero y se deshace.
+  - **Amigos**: son vivos, tienen voz y la física correcta. Nicole y Sofía tienen su grupo con su
+    personaje primero, el dock cabe y "ver todo" va al lado de la lupa. Maxi mantiene 3 botones y su
+    popup cabe.
+  - **Amigos en el cielo**: el hermano cae (o, en Maxi, salta al camino por R2) y Cometa flota. El PNG
+    rasteriza el arte de papá girado y espejado.
+  - **Burbuja de Coco**: aparece al tocar el objetivo, no tapa tarjetas ni "mostrar", se va sola sin
+    voz, vuelve con una celebración y, al tocarla, da la pista.
+- **`capturar_lienzo_tema.gd`** en ventana, con capturas nuevas: popup de amigos, amigos en la escena,
+  aviso de borrar camino, camino borrado, Coco oculto y Coco hablando. Sin errores en consola.
+
+### 11.7 Decisiones por delegación
+
+- **Borrar un camino**:
+  - con la goma, o con el dedo quieto con la herramienta de camino: 1,2 s, y 1,5 s para Maxi;
+  - siempre entero;
+  - los viajeros se bajan, y los que pesan caen si estaban en el cielo;
+  - los caminos iniciales también se pueden borrar (reiniciar los devuelve).
+- **Ancho de los caminos**: 0,55 (0,7 para Maxi). Los adornos tienen un mínimo de 0,6-0,75 y la cerca
+  conserva su altura. Las distancias táctiles no cambian.
+- **Personajes**:
+  - Física: pesan los hermanos, papá, Coco y Toby; vuelan Cometa y el Coleccionauta (pedido del
+    coordinador; el arte del Coleccionauta tiene pantuflas, pero en el cuento recorre la galaxia).
+  - Escala 1,35.
+  - El hermano que juega va primero en la lista.
+  - En Maxi van dentro de "Cosas".
+  - Arte provisional recortado de las anclas.
+  - Las voces de nombre llevan un apodo según el rol del GDD §2 (explorador, artista, capitana).
+- **Burbuja de Coco**:
+  - radio 70 y centro (1190, 302), con 0,7 s de margen;
+  - sin sonido de "pop", para no saturar con cada voz;
+  - aparece también en las celebraciones;
+  - cuando no está, la consigna se repite tocando la tarjeta del objetivo.
+
+### 11.9 Jinetes: subir personajes a animales y vehículos
+
+Pedido textual del PO: "si uno de los personajes lo combino con otro, se deben fusionar, por ejemplo
+debo poder subir a sofia o maxi a un poni o a un dinosaurio; si los subo a un auto o camion deben quedar
+sentados arriba". La spec la decidió el coordinador por delegación y aquí se registra.
+
+- **Jinetes**: todos los personajes con arte (`Stickers.es_jinete`), es decir, el grupo de amigos.
+  Un anfitrión nuevo que entre a `PERSONAJES` ya es jinete.
+- **Montables** (`Stickers.MONTABLES`), con sus asientos en unidades de r (= lado × 0,45) desde el
+  centro:
+  - **En el lomo**: pony, unicornio, jirafa, T-rex, espinosaurio y carnotauro.
+  - **Arriba, en el techo**: auto, bus (2 asientos), camión de bomberos (2), tren (cabina y caldera) y
+    carroza.
+- **Sentado**: el jinete se ve de la cintura para arriba (66 % superior del arte), con la cadera en el
+  asiento, a 0,75 de su tamaño. Así se lee "sentado" tanto en el lomo como en el techo.
+- **Cómo se monta**:
+  - Basta soltar el jinete encima o cerca de un montable con asiento libre, o soltar el montable junto
+    a un jinete libre (la fusión funciona en los dos sentidos). La zona de snap es el radio del
+    montable, ×1,5 en Maxi.
+  - Al subirse, el jinete se acomoda en el asiento con un squash, salen destellitos y suena "¡hop!"
+    (`blup.ogg` a tono 1,3).
+  - También se sube si cae del cielo sobre un montable, o si se pone nuevo encima de uno.
+- **Juntos**:
+  - Cada cuadro el jinete se acomoda en su asiento (`_seguir_monturas`): sigue la posición, el espejo,
+    el giro y el saltito del montable.
+  - Por eso va con él cuando el montable pasea por un camino, cuando se arrastra y cuando cae por la
+    gravedad. Caen y aterrizan juntos y el "¡puff!" no le hace nada raro al jinete.
+  - Un jinete montado no se sube solo a caminos ni cae por su cuenta.
+- **Un jinete por montable**: el segundo se queda al lado, como antes. Los vehículos grandes tienen
+  dos asientos.
+- **Bajarse**: arrastrar al jinete lo baja; si se suelta ahí mismo, vuelve a subir. Arrastrar el
+  montable se lleva al jinete.
+  - **Toques**: el jinete sentado solo se agarra por la parte que asoma (centro 0,75 de su alto sobre el
+    asiento, radio ≥ 30 px). Tocar el lomo o el centro agarra al montable.
+- **Goma**: borra lo que se tocó. Si se borra el montable, el jinete se baja y, si quedó en el aire,
+  cae.
+- **Montable que se transforma** (pony + varita = unicornio): el jinete se sube al unicornio nuevo.
+- **Deshacer y reiniciar**: cada montaje es un paso del historial; la foto guarda las parejas. Deshacer
+  baja o vuelve a subir al jinete, y reiniciar vuelve a la hoja sin parejas.
+- **Sol**: el tiznado alcanza a la pareja completa.
+- **Objetivos**: no cambian. `poner X en_zona` sigue contando al montable aunque lleve jinete.
+- **Objetivo opcional nuevo** `montar {jinete?, montura?}` ("sube a alguien a un pony"): no está en
+  ninguna escena obligatoria. El motor lo registra con el evento `montar`.
+- **PNG**: el jinete sentado se rasteriza recortado y achicado alrededor de su base.
+- **Verificación**: `qa_test_lienzo` cubre los casos nuevos en los tres pilotos:
+  - clasificación de montables y jinetes;
+  - montar, con su paso del historial y el objetivo opcional;
+  - mover juntos (arrastre y paseo por el camino);
+  - deshacer el movimiento y deshacer el montaje;
+  - desmontar;
+  - un solo jinete por pony;
+  - caer juntos desde el cielo;
+  - bus con dos jinetes sentados arriba;
+  - goma sobre el jinete y su deshacer.
+
+  Capturas en ventana `*_22_jinetes` (hermano sobre pony, dino, auto y bus, con papá en el segundo
+  asiento) y `*_23_jinete_se_mueve` (pony arrastrado o paseando con su jinete).
+- **Pendiente**: ajustar los asientos con arte final (HE-13) y que la UX audite si Maxi entiende el
+  "soltar encima".
+
+### 11.10 Pendientes
+
+- **Arte para `disenador-personajes`**: arte de juego de papá, el Coleccionauta y Toby, y el arte de
+  los anfitriones Octavio, Plumas, Lila y Mimi (para sumarlos a `AMIGOS`).
+- **Voces oficiales** de las 9 líneas nuevas: con `--estimar` y el OK del PO.
+- **Auditoría UX**:
+  - ¿Maxi descubre el "dedo quieto" para borrar caminos, o hace falta que Coco lo muestre con la mano
+    fantasma?
+  - ¿8 amigos son demasiados para Maxi en "Cosas"?
+  - ¿Se entiende la burbuja de Coco sin su cuerpo?
+- **Playtest con los tres**.

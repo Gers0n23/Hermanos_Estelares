@@ -1,0 +1,711 @@
+{
+  "version": 1,
+  "descartadas": [],
+  "temas": {
+    "katseye": {
+      "hermanos": [
+        "nicole",
+        "sofia"
+      ],
+      "imagenes": [
+        {
+          "archivo": "sprites/favoritos/katseye/katseye_katseye_cosmopolitan_january_2025_4.webp",
+          "personaje": "KATSEYE",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Cosmopolitan_January_2025_%284%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/katseye_katseye_gnarly_group_concept_photo_5.webp",
+          "personaje": "KATSEYE",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Gnarly_group_concept_photo_5.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/katseye_katseye_sis_soft_is_strong_group_concept_photo_8.webp",
+          "personaje": "KATSEYE",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_SIS_%28Soft_Is_Strong%29_group_concept_photo_8.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/sophia_katseye_sophia_hootie_frutti_concept_photo_2.webp",
+          "personaje": "Sophia (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/KATSEYE_Sophia_Hootie_Frutti_concept_photo_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/sophia_kasteye_sophia_allure_june_2026_1.webp",
+          "personaje": "Sophia (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKASTEYE_Sophia_Allure_June_2026_%281%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/sophia_katseye_sophia_los_angeles_times_september_2024_.webp",
+          "personaje": "Sophia (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Sophia_Los_Angeles_Times_September_2024_%283%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/lara_katseye_lara_hootie_frutti_concept_photo_2.webp",
+          "personaje": "Lara (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/KATSEYE_Lara_Hootie_Frutti_concept_photo_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/lara_kasteye_lara_allure_june_2026_1.webp",
+          "personaje": "Lara (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKASTEYE_Lara_Allure_June_2026_%281%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/lara_katseye_lara_monster_high_fright_song_concept_ph.webp",
+          "personaje": "Lara (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Lara_Monster_High_Fright_Song_concept_photo.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/lara_katseye_lara_teen_vogue_june_2025_4.webp",
+          "personaje": "Lara (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Lara_Teen_Vogue_%28June_2025%29_%284%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/megan_katseye_megan_hootie_frutti_concept_photo_2.webp",
+          "personaje": "Megan (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/KATSEYE_Megan_Hootie_Frutti_concept_photo_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/megan_kasteye_megan_allure_june_2026_1.webp",
+          "personaje": "Megan (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKASTEYE_Megan_Allure_June_2026_%281%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/megan_katseye_megan_matrix_february_2026_1.webp",
+          "personaje": "Megan (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Megan_Matrix_February_2026_%281%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/yoonchae_katseye_yoonchae_hootie_frutti_concept_photo_2.webp",
+          "personaje": "Yoonchae (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/KATSEYE_Yoonchae_Hootie_Frutti_concept_photo_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/yoonchae_katseye_yoonchae_cosmopolitan_january_2025.webp",
+          "personaje": "Yoonchae (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Yoonchae_Cosmopolitan_January_2025.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/yoonchae_katseye_yoonchae_matrix_february_2026_2.webp",
+          "personaje": "Yoonchae (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Yoonchae_Matrix_February_2026_%282%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/yoonchae_katseye_yoonchae_teen_vogue_june_2025_3.webp",
+          "personaje": "Yoonchae (KATSEYE)",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Yoonchae_Teen_Vogue_%28June_2025%29_%283%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/daniela_katseye_daniela_hootie_frutti_concept_photo_2.webp",
+          "personaje": "Daniela",
+          "fuente": "https://kpop.fandom.com/wiki/KATSEYE_Daniela_Hootie_Frutti_concept_photo_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/daniela_katseye_daniela_beautiful_chaos_concept_photo_9.webp",
+          "personaje": "Daniela",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Daniela_Beautiful_Chaos_concept_photo_9.png"
+        },
+        {
+          "archivo": "sprites/favoritos/katseye/daniela_katseye_daniela_ssense_june_2025_2.webp",
+          "personaje": "Daniela",
+          "fuente": "https://kpop.fandom.com/wiki/File%3AKATSEYE_Daniela_SSENSE_June_2025_%282%29.png"
+        }
+      ]
+    },
+    "guerreras_kpop": {
+      "hermanos": [
+        "nicole",
+        "sofia"
+      ],
+      "imagenes": [
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/rumi_rumi_portrait.webp",
+          "personaje": "Rumi",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Rumi_Portrait.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/rumi_amithompson_rumi.webp",
+          "personaje": "Rumi",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAmithompson_rumi.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/rumi_rumi_1249.webp",
+          "personaje": "Rumi",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ARumi_1249.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/rumi_rumi_shirtdesign.webp",
+          "personaje": "Rumi",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ARumi_shirtdesign.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/mira_mira_portrait.webp",
+          "personaje": "Mira",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Mira_Portrait.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/mira_abby_mira_and_romance_saw_jinu_s_sacrifice.webp",
+          "personaje": "Mira",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby%2C_Mira_and_Romance_saw_Jinu%27s_sacrifice.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/mira_mira_idolawards_render.webp",
+          "personaje": "Mira",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AMira_IdolAwards_Render.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/zoey_zoey_portrait.webp",
+          "personaje": "Zoey",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Zoey_Portrait.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/zoey_casual_outfit_zoey.webp",
+          "personaje": "Zoey",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ACasual_Outfit_Zoey.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/zoey_zoey_concept3.webp",
+          "personaje": "Zoey",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AZoey_concept3.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/zoey_zoeydefendingfans3.webp",
+          "personaje": "Zoey",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AZoeydefendingfans3.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/huntr_end_of_what_it_sounds_like_2.webp",
+          "personaje": "HUNTRIX",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/End_of_What_It_Sounds_Like_2.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/huntr_huntrix_golden_2.webp",
+          "personaje": "HUNTRIX",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AHuntrix_Golden_2.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/huntr_huntrix_casual_1.webp",
+          "personaje": "HUNTRIX",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AHuntrix_casual_1.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/huntr_huntrix_hanbok_design_6.webp",
+          "personaje": "HUNTRIX",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AHuntrix_hanbok_design_6.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/jinu_jinu_official_render.webp",
+          "personaje": "Jinu",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Jinu_Official_Render.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/jinu_abby_jinu_and_baby_performing_soda_pop.webp",
+          "personaje": "Jinu",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby%2C_Jinu_and_Baby_performing_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/jinu_jinu_s_demon_patterns_and_eye_peaking_out.webp",
+          "personaje": "Jinu",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AJinu%27s_demon_patterns_and_eye_peaking_out.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/jinu_jinu_in_rumi_s_eyesight_at_the_sauna.webp",
+          "personaje": "Jinu",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AJinu_in_Rumi%27s_eyesight_at_the_sauna.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/derpy_concept_art_of_derpy_and_jinu.webp",
+          "personaje": "Derpy and Sussie",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AConcept_Art_of_Derpy_and_Jinu.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/derpy_derpy_tiger_and_sussie_magpie_pet_collar_netflix.webp",
+          "personaje": "Derpy and Sussie",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ADerpy_Tiger_and_Sussie_Magpie_Pet_Collar_-_Netflix_Shop.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/celine_celine_concept_and_model.webp",
+          "personaje": "Celine",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ACeline-concept-and-model.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/celine_celine_18.webp",
+          "personaje": "Celine",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ACeline_18.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/celine_celine_4.webp",
+          "personaje": "Celine",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ACeline_4.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/abby_abby_s_demon_patterns_appear_on_his_arm.webp",
+          "personaje": "Abby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby%27s_demon_patterns_appear_on_his_arm.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/abby_abby_and_mystery_closeup.webp",
+          "personaje": "Abby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby_and_Mystery_closeup.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/abby_demon_abby.webp",
+          "personaje": "Abby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ADemon_Abby.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/abby_human_jinu_behind_romance_and_abby.webp",
+          "personaje": "Abby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AHuman_Jinu_behind_Romance_and_Abby.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/baby_abby_jinu_and_baby_performing_soda_pop.webp",
+          "personaje": "Baby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby%2C_Jinu_and_Baby_performing_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/baby_baby_saja_takes_the_lead_of_soda_pop.webp",
+          "personaje": "Baby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ABaby_Saja_takes_the_lead_of_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/baby_baby_throws_away_the_flowers.webp",
+          "personaje": "Baby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ABaby_throws_away_the_flowers.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/baby_mystery_and_baby_singing_soda_pop.webp",
+          "personaje": "Baby Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AMystery_and_Baby_singing_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/mystery_abby_mystery_and_baby_singing_soda_pop.webp",
+          "personaje": "Mystery Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AAbby%2C_Mystery_and_Baby_singing_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/mystery_demon_abby_and_mystery.webp",
+          "personaje": "Mystery Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ADemon_Abby_and_Mystery.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/romance_romance_saja_official_render.webp",
+          "personaje": "Romance Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Romance_Saja_Official_Render.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/romance_jinu_and_romance_performing_soda_pop.webp",
+          "personaje": "Romance Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3AJinu_and_Romance_performing_Soda_Pop.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/romance_romance_and_abby_sit_with_mira.webp",
+          "personaje": "Romance Saja",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ARomance_and_Abby_sit_with_Mira.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/bobby_bobby_portrait.webp",
+          "personaje": "Bobby",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/Bobby_portrait.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/bobby_bobby_alone.webp",
+          "personaje": "Bobby",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ABobby%2C_Alone.png"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/bobby_bobby_at_fan_signing_5.webp",
+          "personaje": "Bobby",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ABobby_At_Fan_Signing_5.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/guerreras_kpop/bobby_bobby_right_before_the_concert.webp",
+          "personaje": "Bobby",
+          "fuente": "https://kpop-demon-hunters.fandom.com/wiki/File%3ABobby_Right_Before_The_Concert.png"
+        }
+      ]
+    },
+    "sonic": {
+      "hermanos": [
+        "maxi"
+      ],
+      "imagenes": [
+        {
+          "archivo": "sprites/favoritos/sonic/sonic_ab2_sonic.webp",
+          "personaje": "Sonic the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAB2_Sonic.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/sonic_classic_sonic_sketch.webp",
+          "personaje": "Sonic the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AClassic-Sonic-Sketch.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/sonic_gee_pillow_face_sonic.webp",
+          "personaje": "Sonic the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AGEE_pillow_face_Sonic.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/tails_srctails.webp",
+          "personaje": "Miles \"Tails\" Prower",
+          "fuente": "https://sonic.fandom.com/wiki/SRCTails.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/tails_frontierstailschaosisland.webp",
+          "personaje": "Miles \"Tails\" Prower",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AFrontiersTailsChaosIsland.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/tails_mechpilottailsrender.webp",
+          "personaje": "Miles \"Tails\" Prower",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AMechPilotTailsRender.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/tails_portrait_tails_worried.webp",
+          "personaje": "Miles \"Tails\" Prower",
+          "fuente": "https://sonic.fandom.com/wiki/File%3APortrait_tails_worried.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/knuckles_srcknuckles.webp",
+          "personaje": "Knuckles the Echidna",
+          "fuente": "https://sonic.fandom.com/wiki/SRCKnuckles.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/knuckles_agh_gh_ghost_knuckles.webp",
+          "personaje": "Knuckles the Echidna",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAGh-Gh-Ghost%3F%28Knuckles%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/knuckles_knuckles_the_echidna_first_3d_model_mr_makino_ii.webp",
+          "personaje": "Knuckles the Echidna",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AKnuckles-the-Echidna-First-3D-Model-Mr.-Makino-II.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/knuckles_knuckles_35.webp",
+          "personaje": "Knuckles the Echidna",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AKnuckles_35.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/knuckles_knuckles_in_the_emerald_room.webp",
+          "personaje": "Knuckles the Echidna",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AKnuckles_in_the_Emerald_Room.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/amy_amy.webp",
+          "personaje": "Amy Rose",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAMY.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/amy_amy_2.webp",
+          "personaje": "Amy Rose",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAmy_2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/amy_amy_rose_sadx.webp",
+          "personaje": "Amy Rose",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAmy_rose_SADX.PNG"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/shadow_srcshadow.webp",
+          "personaje": "Shadow the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/SRCShadow.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/shadow_abfshadowrender.webp",
+          "personaje": "Shadow the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AABFShadowRender.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/shadow_bgshadowconductorcar2.webp",
+          "personaje": "Shadow the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ABGShadowConductorCar2.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/shadow_cg_shadow_size.webp",
+          "personaje": "Shadow the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ACG_shadow_size.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/shadow_darkbeginningsshadowandmariaartwork.webp",
+          "personaje": "Shadow the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ADarkBeginningsShadowandMariaArtwork.jpeg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/cream_srcwcream.webp",
+          "personaje": "Cream the Rabbit",
+          "fuente": "https://sonic.fandom.com/wiki/SRCWCream.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/cream_airtrick_cream.webp",
+          "personaje": "Cream the Rabbit",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAirTrick%28Cream%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/cream_m_s2020_cream_model.webp",
+          "personaje": "Cream the Rabbit",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AM%26S2020_Cream_Model.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/cream_sega_shop_cream_pin_august.webp",
+          "personaje": "Cream the Rabbit",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASega_Shop_Cream_Pin_August.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/eggman_asr_eggman.webp",
+          "personaje": "Doctor Eggman",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AASR_Eggman.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/eggman_dreggmanriders.webp",
+          "personaje": "Doctor Eggman",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ADreggmanriders.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/eggman_eggman_has_4_emeralds_sonic_adventure.webp",
+          "personaje": "Doctor Eggman",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AEggman_has_4_Emeralds_%28Sonic_Adventure%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/eggman_jakks_2_5in_eggman.webp",
+          "personaje": "Doctor Eggman",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AJakks_2.5in_Eggman.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/silver_srcwsilver.webp",
+          "personaje": "Silver the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/SRCWSilver.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/silver_sfsb_silver.webp",
+          "personaje": "Silver the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASFSB_Silver.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/silver_sonicolympics2020_promojp_silverhurdle.webp",
+          "personaje": "Silver the Hedgehog",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASonicOlympics2020_PromoJP_SilverHurdle.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/big_sonicblitzbigrender.webp",
+          "personaje": "Big the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/SonicBlitzBigRender.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/big_bigwin.webp",
+          "personaje": "Big the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ABigWin%21.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/big_sadx_big_1024.webp",
+          "personaje": "Big the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASadx_big_1024.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/blaze_srcwblaze.webp",
+          "personaje": "Blaze the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/SRCWBlaze.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/blaze_after_chasing_blaze.webp",
+          "personaje": "Blaze the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAfter_chasing_Blaze.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/blaze_silvblazecreamgen.webp",
+          "personaje": "Blaze the Cat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASilvBlazeCreamGen.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/rouge_srcwrouge.webp",
+          "personaje": "Rouge the Bat",
+          "fuente": "https://sonic.fandom.com/wiki/SRCWRouge.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/rouge_airtrick_rouge.webp",
+          "personaje": "Rouge the Bat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AAirTrick%28Rouge%29.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/rouge_netflix_profile_picture_prime_rouge.webp",
+          "personaje": "Rouge the Bat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ANetflix_Profile_Picture_Prime-Rouge.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/rouge_rougeslayy3d.webp",
+          "personaje": "Rouge the Bat",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ARougeSlayy3D.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/chao_team_sonic_racing_chao.webp",
+          "personaje": "Chao",
+          "fuente": "https://sonic.fandom.com/wiki/Team_Sonic_Racing_Chao.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/chao_chao_normal.webp",
+          "personaje": "Chao",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AChao_normal.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/chao_sonic2chao02.webp",
+          "personaje": "Chao",
+          "fuente": "https://sonic.fandom.com/wiki/File%3ASonic2Chao02.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/metal_srcmetalsonic.webp",
+          "personaje": "Metal Sonic",
+          "fuente": "https://sonic.fandom.com/wiki/SRCMetalSonic.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/metal_metal_sonic.webp",
+          "personaje": "Metal Sonic",
+          "fuente": "https://sonic.fandom.com/wiki/File%3AMetal_sonic.png"
+        },
+        {
+          "archivo": "sprites/favoritos/sonic/super_sfsbsupersonic.webp",
+          "personaje": "Super Sonic",
+          "fuente": "https://sonic.fandom.com/wiki/SFSBSuperSonic.png"
+        }
+      ]
+    },
+    "tayo": {
+      "hermanos": [
+        "maxi"
+      ],
+      "imagenes": [
+        {
+          "archivo": "sprites/favoritos/tayo/tayo_tayo_clear.webp",
+          "personaje": "Tayo",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/Tayo_clear.png"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/tayo_tayo_2008_pilot.webp",
+          "personaje": "Tayo",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_2008_Pilot.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/tayo_tayo_hd.webp",
+          "personaje": "Tayo",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_HD.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/tayo_tayo_main_character.webp",
+          "personaje": "Tayo",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_main_character.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/rogi_detective_rogi.webp",
+          "personaje": "Rogi",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ADetective_rogi.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/rogi_ttlb_evil_rogi_2.webp",
+          "personaje": "Rogi",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATTLB_Evil_Rogi_2.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/lani_tayo_the_little_bus_lani.webp",
+          "personaje": "Lani",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_The_Little_Bus_Lani.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/citu_1379914128_tayo_the_little_bus_cito_citu.webp",
+          "personaje": "Citu",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3A1379914128_Tayo_The_Little_Bus_Cito_Citu.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/citu_angry_citu_cito_bus_tayo_the_little_bus_2.webp",
+          "personaje": "Citu",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AAngry_Citu_Cito_Bus_Tayo_The_Little_Bus_2.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/hana_angryhana.webp",
+          "personaje": "Hana",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AAngryHana.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/hana_pororo_and_hana_in_hanas_toy_show.webp",
+          "personaje": "Hana",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3APORORO_AND_HANA_IN_HANAS_TOY_SHOW.webp"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/frank_frank_tayo.webp",
+          "personaje": "Frank",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/Frank_tayo.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/frank_ttlb_evil_frank_1.webp",
+          "personaje": "Frank",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATTLB_Evil_Frank_1.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/heart_.webp",
+          "personaje": "Heart",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/%D0%A5%D0%B0%D1%80%D1%82.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/heart_heart.webp",
+          "personaje": "Heart",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AHeart.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/heart_heart_clear.webp",
+          "personaje": "Heart",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AHeart_clear.png"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/heart_tayo_s3_01_the_new_friend_heart_youtube_ed47_640.webp",
+          "personaje": "Heart",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo-s3-01-the-new-friend-heart-youtube-ed47-640x360-00021.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/alice_alice_png.webp",
+          "personaje": "Alice",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AAlice.png.png"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/alice_alice_png_png.webp",
+          "personaje": "Alice",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AAlice.png.png.png"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/alice_alice_and_frank_png.webp",
+          "personaje": "Alice",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3AAlice_and_frank.png.png"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/big_.webp",
+          "personaje": "Big",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/%D0%91%D0%B8%D0%BA.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/big_tayo_the_little_bus_big.webp",
+          "personaje": "Big",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_the_Little_Bus_big.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/bong_bong_bong_crying.webp",
+          "personaje": "Bong Bong",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ABong_Bong_Crying.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/cargo_tayo_the_little_bus_cargo.webp",
+          "personaje": "Cargo",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/Tayo_the_Little_Bus_Cargo.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/duri_.webp",
+          "personaje": "Duri",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/%D0%94%D1%83%D1%80%D0%B8.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/air_.webp",
+          "personaje": "Air",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/%D0%AD%D0%B8%D1%80.jpg"
+        },
+        {
+          "archivo": "sprites/favoritos/tayo/air_tayo_the_little_bus_air.webp",
+          "personaje": "Air",
+          "fuente": "https://tayothelittlebus.fandom.com/wiki/File%3ATayo_the_little_bus_air.jpg"
+        }
+      ]
+    }
+  }
+}

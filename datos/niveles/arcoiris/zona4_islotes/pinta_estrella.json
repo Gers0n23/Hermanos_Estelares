@@ -982,6 +982,7 @@
     "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
     "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
     "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
+    "grupo_amigos": "voces/arcoiris/pinta/comun/grupo_amigos.wav",
     "uso_purpurina": "voces/arcoiris/pinta/estrella/uso_purpurina.wav",
     "uso_purpurina_lluvia": "voces/arcoiris/pinta/estrella/uso_purpurina_lluvia.wav",
     "uso_sello_pony": "voces/arcoiris/pinta/estrella/uso_pony.wav",
@@ -990,7 +991,10 @@
     "intro": "voces/arcoiris/pinta/estrella/intro_mandala.wav",
     "siguiente": [
       "voces/arcoiris/pinta/estrella/siguiente_mandala.wav"
-    ]
+    ],
+    "sol_quema": "voces/arcoiris/pinta/comun/sol_quema.wav",
+    "reiniciar_mantener": "voces/arcoiris/pinta/comun/reiniciar_mantener.wav",
+    "reiniciar": "voces/arcoiris/pinta/comun/reiniciar.wav"
   },
   "objetivos": [
     {

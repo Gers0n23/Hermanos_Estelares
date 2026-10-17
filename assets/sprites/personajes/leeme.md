@@ -15,6 +15,10 @@ dibujados. Todos estos PNG se generan con
   `assets/anclas/cometa_referencia.png` (`herramientas/extraer_base.py`), en
   `assets/generadas/cometa_recortes/`. Lienzo 480×560.
 - Si cambian las piezas de un rig, volver a correr el script.
+- `papa_provisional.png`, `coleccionauta_provisional.png`, `toby_provisional.png` (17-Oct-2026): recortes
+  PROVISIONALES de la vista frontal de sus anclas (`herramientas/extraer_base.py`) para usarlos como
+  stickers "amigos" del lienzo de Pinta (ficha motor-lienzo-libre §11.3). Se reemplazan cuando
+  `disenador-personajes` entregue su arte de juego.
 - `herramientas/exportar_sprites.gd` ya **no** toca esta carpeta (los SVG de
   `assets/fuentes_svg/personajes/` quedan como historia).
 

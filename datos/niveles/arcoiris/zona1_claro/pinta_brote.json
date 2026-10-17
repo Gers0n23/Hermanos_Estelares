@@ -844,6 +844,16 @@
       "voz": "voces/arcoiris/pinta/combinaciones/jardin.wav"
     }
   ],
+  "amigos": [
+    "maxi",
+    "nicole",
+    "sofia",
+    "papa",
+    "cometa",
+    "coco",
+    "toby",
+    "coleccionauta"
+  ],
   "lineas_voz": {
     "mostrar": [
       "voces/arcoiris/pinta/brote/mostrar_01.wav",
@@ -879,6 +889,7 @@
     "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
     "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
     "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
+    "grupo_amigos": "voces/arcoiris/pinta/comun/grupo_amigos.wav",
     "uso_pincel_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
     "uso_sello_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
     "igualita": [
@@ -888,6 +899,9 @@
       "voces/arcoiris/pinta/comun/conectado_01.wav",
       "voces/arcoiris/pinta/comun/conectado_02.wav"
     ],
-    "elige_tema": "voces/arcoiris/pinta/brote/elige_tema.wav"
+    "elige_tema": "voces/arcoiris/pinta/brote/elige_tema.wav",
+    "sol_quema": "voces/arcoiris/pinta/comun/sol_quema.wav",
+    "reiniciar_mantener": "voces/arcoiris/pinta/comun/reiniciar_mantener.wav",
+    "reiniciar": "voces/arcoiris/pinta/comun/reiniciar.wav"
   }
 }

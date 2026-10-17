@@ -45,6 +45,7 @@ func _initialize() -> void:
 	_probar_municion()
 	_probar_batalla()
 	_probar_varios()
+	_probar_rondas()
 	for hermano in NIVELES:
 		_simular(hermano)
 	for hermano in NIVELES:
@@ -71,8 +72,11 @@ func _seccion(nombre: String) -> void:
 		print("\n## " + nombre)
 
 
+## Los niveles traen `rondas: 3`; las pruebas de reglas parten de un río único (las rondas van en `_probar_rondas`).
 func _nivel(ruta: String) -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string(ruta))
+	var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ruta))
+	nivel.erase("rondas")
+	return nivel
 
 
 func _logica(ruta: String, semilla := 7) -> LogicaRio:
@@ -875,7 +879,9 @@ func _probar_escena(hermano: String) -> void:
 
 	# Ganar: se vacía el río -> "¡Río limpio!" -> celebración -> completado.
 	await create_timer(0.2).timeout
-	motor.logica.gotas.clear()
+	for ronda in motor.logica.rondas:
+		motor.logica.gotas.clear()
+		await create_timer(0.3).timeout
 	t = 0.0
 	while resultado["destellos"] == -1 and t < 20.0:
 		await create_timer(0.2).timeout
@@ -884,3 +890,44 @@ func _probar_escena(hermano: String) -> void:
 	_chequear(resultado["terminadas"] == 2, "%s: se informó el fin de las 2 partidas (perdida y ganada)" % hermano)
 	motor.queue_free()
 	await create_timer(0.1).timeout
+
+
+## Rondas y empuje (pedido del PO, 17-Oct-2026): 3 rondas por nivel, cada una más rápida, y sin esperas
+## cuando el río queda sin gotas a la vista.
+func _probar_rondas() -> void:
+	_seccion("Rondas y empuje")
+	for hermano in NIVELES:
+		var nivel: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(NIVELES[hermano]))
+		_chequear(int(nivel.get("rondas", 1)) == 3, "%s: el nivel pide 3 rondas" % hermano)
+		var logica := _logica_de(nivel)
+		var rondas_vistas: Array = []
+		logica.ronda_nueva.connect(func(r: int, _n: int) -> void: rondas_vistas.append(r))
+		var velocidades: Array = []
+		var gano := [false]
+		logica.termino.connect(func(g: bool) -> void: gano[0] = g)
+		for r in 3:
+			_armar(logica, ["rojo", "rojo", "rojo"], 0.5)
+			logica.entrando = false
+			velocidades.append(logica.velocidad_actual())
+			_chequear(logica.ronda == r + 1, "%s: estamos en la ronda %d" % [hermano, r + 1])
+			logica.gotas.clear()
+			logica.avanzar(0.05)
+		_chequear(rondas_vistas == [2, 3] and gano[0] and logica.estado == "gano", "%s: vaciar 3 veces gana (rondas %s)" % [hermano, rondas_vistas])
+		_chequear(velocidades[1] > velocidades[0] and velocidades[2] > velocidades[1], "%s: cada ronda es más rápida (%s)" % [hermano, velocidades])
+		# Reintento: vuelve a la ronda en que se perdió, con sus puntos.
+		var l2 := _logica_de(nivel)
+		_armar(l2, ["rojo", "rojo", "rojo"], 0.5)
+		l2.gotas.clear()
+		l2.avanzar(0.05)
+		_chequear(l2.ronda == 2 and l2.gotas.size() == l2.total_real, "%s: al vaciar la ronda 1 llega un río nuevo completo" % hermano)
+		l2.puntos += 55
+		l2.reiniciar(true)
+		_chequear(l2.ronda == 2 and l2.estado == "jugando", "%s: reintentar vuelve a la ronda 2" % hermano)
+		l2.reiniciar()
+		_chequear(l2.ronda == 1 and l2.puntos == 0, "%s: reiniciar de cero vuelve a la ronda 1" % hermano)
+		# Empuje: cabeza casi sin asomar -> rápido; con gotas a la vista, ritmo normal.
+		var l3 := _logica_de(nivel)
+		_armar(l3, ["rojo", "azul", "amarillo"], 0.02)
+		_chequear(is_equal_approx(l3.velocidad_actual(), LogicaRio.VEL_ENTRADA), "%s: sin gotas a la vista la cola empuja rápido" % hermano)
+		_armar(l3, ["rojo", "azul", "amarillo"], 0.5)
+		_chequear(l3.velocidad_actual() < LogicaRio.VEL_ENTRADA, "%s: con gotas a la vista el ritmo es el normal" % hermano)

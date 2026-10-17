@@ -35,6 +35,7 @@ signal arcoiris_pego(posicion: Vector2, color: String)
 signal servida_evaporada(color: String)
 signal empezo_a_tragar()
 signal termino(gano: bool)
+signal ronda_nueva(ronda: int, rondas: int)
 
 const PRIMARIOS := ["rojo", "amarillo", "azul"]
 const ARCOIRIS := "arcoiris"
@@ -55,6 +56,11 @@ const VEL_TRAGAR := 900.0
 const SEGUNDOS_TRAGAR := 2.0
 const VEL_BALA := 1150.0
 const SEGUNDOS_SUBIDA := 90.0
+## Si el río queda casi sin gotas a la vista (cabeza antes de este `s`), la cola las empuja rápido
+## hasta aquí: nadie espera a que lleguen las gotas de atrás (pedido del PO, 17-Oct-2026).
+const EMPUJE_HASTA := 300.0
+## Cuánto sube la velocidad en cada ronda siguiente (0,15 = +15 % por ronda).
+const SUBIDA_POR_RONDA := 0.15
 const PUNTOS_POR_GOTA := 10
 const RADIO_BATIDORA := 56.0
 const SEGUNDOS_CAFE := 1.2
@@ -87,6 +93,8 @@ var arcoiris_multiplicador := 2.5
 var gotas_cabeza := 12
 var peso_cabeza := 3.0
 var peso_componente := 0.6
+var rondas := 1  ## rondas por nivel (el JSON puede pedir 3); con 1 se comporta como la v2
+var subida_ronda := SUBIDA_POR_RONDA
 
 # Estado
 var gotas: Array = []  ## {"s", "color", "id", "ot" (seg. de vuelo de inserción), "origen" (Vector2)}
@@ -97,7 +105,11 @@ var pendientes: Array = []  ## lo que vuelve después de servir o de un rebote (
 var puntos := 0
 var cadena := 0
 var combo := 0
-var tiempo := 0.0
+var tiempo := 0.0  ## total de la partida (todas las rondas)
+var ronda := 1
+var t_ronda := 0.0  ## segundos de la ronda actual (la subida de velocidad parte de cero en cada ronda)
+var _puntos_ronda := 0
+var _tiempo_ronda := 0.0
 var estado := "jugando"  ## jugando | tragando | gano | perdio
 var entrando := true
 var espera := 0.0
@@ -130,6 +142,11 @@ func configurar(nivel: Dictionary, recorrido_rio: RecorridoRio, semilla: int = -
 		rng.randomize()
 	radio = float(nivel.get("radio", radio))
 	total = int(nivel.get("gotas", total))
+	# Con varias rondas, cada una lleva una fracción de las gotas del nivel (3 ríos enteros serían eternos).
+	rondas = maxi(1, int(nivel.get("rondas", 1)))
+	subida_ronda = float(nivel.get("subida_por_ronda", SUBIDA_POR_RONDA))
+	if rondas > 1:
+		total = maxi(18, roundi(total * float(nivel.get("fraccion_ronda", 0.6))))
 	colores = Array(nivel.get("colores", colores))
 	velocidad = float(nivel.get("velocidad", velocidad))
 	subida = float(nivel.get("subida", subida))
@@ -168,24 +185,20 @@ func tiene_batidora() -> bool:
 	return batidora_espacios > 0
 
 
-func reiniciar() -> void:
-	gotas.clear()
-	balas.clear()
-	pendientes.clear()
-	_atraidas.clear()
-	_tiempo_atraccion.clear()
-	var d := diametro()
-	var lista := generar_rio()
-	for i in lista.size():
-		gotas.append(_nueva_gota(-i * d, lista[i]))
-	total_real = gotas.size()
-	puntos = 0
+## `conservar_ronda`: el reintento tras perder vuelve a empezar la ronda en que se perdió, no la partida.
+func reiniciar(conservar_ronda := false) -> void:
+	_llenar_rio()
+	ronda = ronda if conservar_ronda else 1
+	puntos = _puntos_ronda if conservar_ronda else 0
+	tiempo = _tiempo_ronda if conservar_ronda else 0.0
+	t_ronda = 0.0
+	_puntos_ronda = puntos
+	_tiempo_ronda = tiempo
 	cadena = 0
 	combo = 0
 	mayor_cadena = 0
 	mayor_combo = 0
 	disparos = 0
-	tiempo = 0.0
 	estado = "jugando"
 	entrando = true
 	espera = 0.0
@@ -197,6 +210,42 @@ func reiniciar() -> void:
 	_desde_arcoiris = 0
 	actual = municion()
 	siguiente = municion()
+
+
+## Río nuevo (inicio, reintento o ronda siguiente): todas las gotas esperan en la nube.
+func _llenar_rio() -> void:
+	gotas.clear()
+	balas.clear()
+	pendientes.clear()
+	_atraidas.clear()
+	_tiempo_atraccion.clear()
+	var d := diametro()
+	var lista := generar_rio()
+	for i in lista.size():
+		gotas.append(_nueva_gota(-i * d, lista[i]))
+	total_real = gotas.size()
+
+
+## Ganó la ronda: si quedan, llega un río nuevo más rápido; si era la última, gana. Conserva puntos y
+## la munición de Coco (la justa se reordena para el río nuevo).
+func _terminar_ronda() -> void:
+	if ronda >= rondas:
+		estado = "gano"
+		termino.emit(true)
+		return
+	ronda += 1
+	_llenar_rio()
+	t_ronda = 0.0
+	_puntos_ronda = puntos
+	_tiempo_ronda = tiempo
+	cadena = 0
+	combo = 0
+	entrando = true
+	espera = 0.0
+	batidora.clear()
+	cafe_t = 0.0
+	_ordenar_municion()
+	ronda_nueva.emit(ronda, rondas)
 
 
 func _nueva_gota(s: float, color: String) -> Dictionary:
@@ -677,7 +726,11 @@ func velocidad_actual() -> float:
 		return _vel_tragar
 	if entrando:
 		return VEL_ENTRADA
-	return velocidad * (1.0 + subida * minf(1.0, tiempo / SEGUNDOS_SUBIDA))
+	# Empuje: sin gotas a la vista, la cola avanza rápido hasta que asoma la cabeza (sin esperas).
+	if not gotas.is_empty() and gotas[0]["s"] < EMPUJE_HASTA:
+		return VEL_ENTRADA
+	var por_ronda := 1.0 + subida_ronda * (ronda - 1)
+	return velocidad * por_ronda * (1.0 + subida * minf(1.0, t_ronda / SEGUNDOS_SUBIDA))
 
 
 func avanzar(dt: float) -> void:
@@ -691,6 +744,7 @@ func avanzar(dt: float) -> void:
 			batidora_se_vacio.emit()
 	if estado == "jugando":
 		tiempo += dt
+		t_ronda += dt
 	if estado in ["jugando", "tragando"]:
 		if estado == "jugando":
 			_retroceder(dt)
@@ -709,8 +763,7 @@ func avanzar(dt: float) -> void:
 				g["ot"] -= dt
 		if estado == "jugando":
 			if gotas.is_empty():
-				estado = "gano"
-				termino.emit(true)
+				_terminar_ronda()
 			elif gotas[0]["s"] >= recorrido.largo:
 				estado = "tragando"
 				var cola: float = gotas[gotas.size() - 1]["s"]

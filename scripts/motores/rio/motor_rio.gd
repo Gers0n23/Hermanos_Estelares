@@ -149,6 +149,7 @@ func _ready() -> void:
 	logica.servida_evaporada.connect(_al_evaporar)
 	logica.empezo_a_tragar.connect(_al_empezar_a_tragar)
 	logica.termino.connect(_al_terminar)
+	logica.ronda_nueva.connect(_al_ronda_nueva)
 	var progreso := get_node_or_null("/root/Progreso")
 	if progreso != null and progreso.has_method("menos_movimiento"):
 		_menos_movimiento = bool(progreso.menos_movimiento())
@@ -165,6 +166,8 @@ func _configurar_desde_nivel() -> void:
 	_guia_largo = float(nivel.get("guia_largo", 1280.0))
 	_tiempo_par = float(nivel.get("tiempo_par", 70.0))
 	logica.configurar(nivel, recorrido, _semilla)
+	# `tiempo_par` del JSON es para un río entero; con rondas cada una lleva una fracción de las gotas.
+	_tiempo_par *= logica.rondas * float(nivel.get("fraccion_ronda", 0.6)) if logica.rondas > 1 else 1.0
 	match logica.batidora_pistas:
 		"siempre":
 			_pistas = logica.tiene_batidora()
@@ -198,7 +201,7 @@ func reintentar() -> void:
 	_vuelos.clear()
 	_record_nuevo = false
 	_fase = "jugando"
-	logica.reiniciar()
+	logica.reiniciar(true)  # vuelve a empezar la ronda en que perdió, no toda la partida
 	_tinte = Color.WHITE
 
 
@@ -432,6 +435,14 @@ func _al_evaporar(color_id: String) -> void:
 	for k in 12:
 		var a := randf() * TAU
 		_particulas.append({"pos": c, "vel": Vector2.from_angle(a) * randf_range(60.0, 180.0), "r": randf_range(3.0, 6.0), "color": color_id, "vida": 0.5, "sube": true})
+
+
+## Río limpio pero quedan rondas: llega un río nuevo, un poco más rápido (sin texto obligatorio: es un adorno).
+func _al_ronda_nueva(ronda: int, rondas: int) -> void:
+	_anillos.append({"pos": recorrido.centro, "t": 0.0, "dur": 0.6, "color": Color(DORADO), "r0": 30.0, "r1": 220.0})
+	_texto_flotante(recorrido.centro + Vector2(0, -170), "¡Ronda %d de %d!" % [ronda, rondas], Color("#FF8A3D"), 2.0, 52)
+	_salto = 1.0
+	reproducir_sfx(SFX_GANA)
 
 
 func _al_empezar_a_tragar() -> void:

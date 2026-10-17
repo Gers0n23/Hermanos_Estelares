@@ -345,6 +345,14 @@
           "region": "lago"
         }
       ],
+      "zonas": {
+        "cielo": [
+          0,
+          0,
+          1280,
+          440
+        ]
+      },
       "herramientas": [
         "pincel"
       ],
@@ -537,6 +545,16 @@
       "voz": "voces/arcoiris/pinta/combinaciones/jardin.wav"
     }
   ],
+  "amigos": [
+    "maxi",
+    "nicole",
+    "sofia",
+    "papa",
+    "cometa",
+    "coco",
+    "toby",
+    "coleccionauta"
+  ],
   "lineas_voz": {
     "mostrar": [
       "voces/arcoiris/pinta/semilla/mostrar_01.wav",
@@ -572,6 +590,7 @@
     "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
     "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
     "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
+    "grupo_amigos": "voces/arcoiris/pinta/comun/grupo_amigos.wav",
     "muestramelo": [
       "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
       "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
@@ -589,6 +608,9 @@
     "conectado": [
       "voces/arcoiris/pinta/comun/conectado_01.wav",
       "voces/arcoiris/pinta/comun/conectado_02.wav"
-    ]
+    ],
+    "sol_quema": "voces/arcoiris/pinta/comun/sol_quema.wav",
+    "reiniciar_mantener": "voces/arcoiris/pinta/comun/reiniciar_mantener.wav",
+    "reiniciar": "voces/arcoiris/pinta/comun/reiniciar.wav"
   }
 }

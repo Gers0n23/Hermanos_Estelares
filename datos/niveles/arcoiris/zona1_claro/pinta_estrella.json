@@ -908,6 +908,16 @@
       "voz": "voces/arcoiris/pinta/combinaciones/jardin.wav"
     }
   ],
+  "amigos": [
+    "maxi",
+    "nicole",
+    "sofia",
+    "papa",
+    "cometa",
+    "coco",
+    "toby",
+    "coleccionauta"
+  ],
   "lineas_voz": {
     "mostrar": [
       "voces/arcoiris/pinta/estrella/mostrar_01.wav",
@@ -943,6 +953,7 @@
     "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
     "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
     "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
+    "grupo_amigos": "voces/arcoiris/pinta/comun/grupo_amigos.wav",
     "uso_purpurina": "voces/arcoiris/pinta/estrella/uso_purpurina.wav",
     "uso_purpurina_lluvia": "voces/arcoiris/pinta/estrella/uso_purpurina_lluvia.wav",
     "uso_sello_pony": "voces/arcoiris/pinta/estrella/uso_pony.wav",
@@ -959,6 +970,9 @@
     ],
     "retos_todos": [
       "voces/arcoiris/pinta/estrella/retos_todos.wav"
-    ]
+    ],
+    "sol_quema": "voces/arcoiris/pinta/comun/sol_quema.wav",
+    "reiniciar_mantener": "voces/arcoiris/pinta/comun/reiniciar_mantener.wav",
+    "reiniciar": "voces/arcoiris/pinta/comun/reiniciar.wav"
   }
 }

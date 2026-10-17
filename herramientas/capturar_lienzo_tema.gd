@@ -111,6 +111,8 @@ func _capturar(perfil: String) -> void:
 	motor.pista_fantasma()
 	await _esperar(0.6)
 	await _foto("%s_4_pista_fantasma" % perfil)
+	lienzo.mostrar_fantasma({}, 0.0)
+	await _capturar_fisica(motor, perfil)
 	if perfil != "semilla":
 		motor.abrir_popup("colores")
 		await _esperar(0.3)
@@ -124,3 +126,87 @@ func _capturar(perfil: String) -> void:
 	lienzo.componer().save_png(_carpeta.path_join("%s_7_png_guardado.png" % perfil))
 	motor.queue_free()
 	await _esperar(0.3)
+
+
+## Ficha §10: caida con "¡puff!", sol fuera del cielo (tiznado y vuelta), botones deshacer/reiniciar.
+func _capturar_fisica(motor, perfil: String) -> void:
+	var lienzo = motor.lienzo
+	# Ficha §11: amigos, borrar un camino con el dedo quieto y Coco en su burbujita.
+	motor.abrir_popup("cosas" if perfil == "semilla" else "amigos")
+	await _esperar(0.4)
+	await _foto("%s_16_popup_amigos" % perfil)
+	motor._cerrar_popup()
+	_poner(motor, motor.obtener_id_personaje(), Vector2(560, 680))
+	_poner(motor, "papa", Vector2(470, 690))
+	_poner(motor, "cometa", Vector2(820, 110))
+	_poner(motor, "coleccionauta", Vector2(1000, 120))
+	await _esperar(1.2)
+	await _foto("%s_17_amigos_en_escena" % perfil)
+	# §11.9 jinetes: un hermano sobre un pony, un dino, un auto y un bus (dos asientos).
+	var hermano: String = motor.obtener_id_personaje()
+	var monturas: Array = []
+	for dato in [["pony_amigo", 560.0], ["trex", 720.0], ["carrito", 880.0], ["bus", 1040.0]]:
+		var montura = lienzo.poner_sticker(dato[0], Vector2(dato[1], 650))
+		monturas.append(montura)
+		var jinete = lienzo.poner_sticker(hermano, Vector2(dato[1], 470))
+		_arrastrar(lienzo, jinete, montura.centro() + Vector2(0, -20))
+	_arrastrar(lienzo, lienzo.poner_sticker("papa", Vector2(1100, 470)), monturas[3].centro() + Vector2(20, -20))
+	await _esperar(0.8)
+	await _foto("%s_22_jinetes" % perfil)
+	_arrastrar(lienzo, monturas[0], Vector2(420, 420))
+	await _esperar(0.5)
+	await _foto("%s_23_jinete_se_mueve" % perfil)
+	_trazar(motor, "sendero", [Vector2(100, 700), Vector2(265, 704), Vector2(430, 700)])
+	await _esperar(0.3)
+	motor._elegir_herramienta("camino_sendero", false)
+	lienzo.empezar_trazo(Vector2(265, 704))
+	await _esperar(lienzo.segundos_borrar_camino * 0.8)
+	await _foto("%s_18_borrar_camino_aviso" % perfil)
+	await _esperar(lienzo.segundos_borrar_camino * 0.3)
+	await _esperar(0.05)
+	await _foto("%s_19_camino_borrado" % perfil)
+	lienzo.terminar_trazo()
+	motor._voz_diferida_id += 1
+	motor._pausa_pista = 60.0
+	var audio := get_root().get_node_or_null("Audio")
+	if audio != null:
+		audio.detener_voz()
+	motor._coco_hasta = 0.0
+	while motor._burbuja_coco.visible:
+		await process_frame
+	await _foto("%s_20_coco_oculto" % perfil)
+	motor.tocar_objetivo(motor._indices_activos()[0] if not motor._indices_activos().is_empty() else 0)
+	await _esperar(0.4)
+	await _foto("%s_21_coco_habla" % perfil)
+	var id: String = {"semilla": "huevo", "brote": "pony_amigo", "estrella": "casa"}[perfil]
+	var cosa = _poner(motor, id, Vector2(640, lienzo.cielo.position.y + 50.0))
+	await _esperar(0.12 if perfil == "estrella" else 0.22)
+	await _foto("%s_8_cae" % perfil)
+	while lienzo.esta_cayendo(cosa):
+		await process_frame
+	await _esperar(0.06)
+	await _foto("%s_9_puff" % perfil)
+	await _esperar(0.8)
+	if perfil != "semilla":
+		var centro := Vector2(760, 630)
+		_poner(motor, "arbol", centro + Vector2(-95, 0))
+		_poner(motor, "flor", centro + Vector2(95, 20))
+		_poner(motor, "sol", centro)
+		await _esperar(0.3)
+		await _foto("%s_10_tiznado" % perfil)
+		await _esperar(0.55)
+		await _foto("%s_11_sol_vuelve" % perfil)
+		await _esperar(3.4)
+		await _foto("%s_12_limpios" % perfil)
+	motor._empezar_a_mantener()
+	await _esperar(0.7)
+	await _foto("%s_13_escoba_anillo" % perfil)
+	while not motor._barriendo:
+		await process_frame
+	await _esperar(0.25)
+	await _foto("%s_14_fuuush" % perfil)
+	motor._soltar_reiniciar()
+	while motor._barriendo:
+		await process_frame
+	await _esperar(0.3)
+	await _foto("%s_15_hoja_reiniciada" % perfil)

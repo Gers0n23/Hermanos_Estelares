@@ -67,6 +67,7 @@
     "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
     "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
     "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
+    "grupo_amigos": "voces/arcoiris/pinta/comun/grupo_amigos.wav",
     "muestramelo": [
       "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
       "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
@@ -85,7 +86,10 @@
     "siguiente": [
       "voces/arcoiris/pinta/semilla/siguiente_dedo.wav"
     ],
-    "uso_arcoiris": "voces/arcoiris/pinta/semilla/uso_arcoiris.wav"
+    "uso_arcoiris": "voces/arcoiris/pinta/semilla/uso_arcoiris.wav",
+    "sol_quema": "voces/arcoiris/pinta/comun/sol_quema.wav",
+    "reiniciar_mantener": "voces/arcoiris/pinta/comun/reiniciar_mantener.wav",
+    "reiniciar": "voces/arcoiris/pinta/comun/reiniciar.wav"
   },
   "objetivos": [
     {

@@ -41,6 +41,18 @@ signal lamina_completa()
 signal nota(altura: float)
 signal purpurina_quieta(posicion: Vector2)
 signal color_ciclado(color: Color)
+## Fisica (ficha §10): un sticker que pesa empieza a caer / aterriza ("¡puff!"); `grande` en Maxi.
+signal caida_iniciada(sticker: Control)
+signal aterrizo(sticker: Control, grande: bool)
+## El sol soltado fuera del cielo tizno a `cuantos` stickers y vuela de vuelta; despues llega al cielo.
+signal sol_quemo(sol: Control, cuantos: int)
+signal sol_en_el_cielo(sol: Control)
+## Deshacer: cuantos pasos quedan en el historial (0 = boton apagado).
+signal historial_cambiado(pasos: int)
+## Un camino se borro entero (goma o dedo quieto con la herramienta de camino), ficha §11.1.
+signal camino_borrado(camino: Dictionary)
+## Un personaje se subio a un animal o vehiculo (ficha §11.9).
+signal montado(jinete: Control, montura: Control)
 
 const Raster := preload("res://scripts/motores/lienzo_libre/rasterizador.gd")
 const Laminas := preload("res://scripts/motores/lienzo_libre/laminas.gd")
@@ -66,6 +78,22 @@ const ZOOM_MAX := 3.0
 const SIN_VIAJEROS := ["guirnalda", "cerca"]
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const DORADO := Color("#FFCB3D")
+## Fisica (ficha §10): aceleracion de la caida en px/s² (Maxi, mas lenta) y tope de velocidad.
+const GRAVEDAD := 2600.0
+const GRAVEDAD_SEMILLA := 1500.0
+const VELOCIDAD_MAX_CAIDA := 2400.0
+## Sol fuera del cielo: radio del tiznado (px del mundo), segundos que dura y del vuelo de vuelta.
+const RADIO_TIZNE := 180.0
+const SEGUNDOS_TIZNE := 3.0
+const SEGUNDOS_VUELO_SOL := 1.1
+const COLOR_TIZNE := Color(0.42, 0.37, 0.35)
+## Deshacer: pasos que se recuerdan.
+const MAX_PASOS := 20
+## Ficha §11.2: grosor de los caminos (factor del ancho de su seccion; antes 1.0). Maxi, algo mas anchos.
+const ANCHO_CAMINO := 0.55
+const ANCHO_CAMINO_SEMILLA := 0.7
+## Ficha §11.1: con la herramienta de camino, el dedo quieto este tiempo sobre un camino lo borra.
+const SEGUNDOS_BORRAR_CAMINO := 1.2
 
 var tamano := Vector2i(1280, 720)
 var papel := Color("#FFF8EE")
@@ -84,6 +112,15 @@ var stickers_objeto := false
 var sticker_con_color_actual := false
 ## Tipo del camino que se traza con la herramienta "camino_<tipo>" (o el `conector` heredado).
 var tipo_camino := "sendero"
+## Grosor de los caminos nuevos (ANCHO_CAMINO o ANCHO_CAMINO_SEMILLA) y segundos del dedo quieto para
+## borrar uno con la herramienta de camino.
+var ancho_caminos := ANCHO_CAMINO
+var segundos_borrar_camino := SEGUNDOS_BORRAR_CAMINO
+var _camino_tenido: Dictionary = {}
+var _tenido_t := 0.0
+var _tenido_inicio := Vector2.ZERO
+## Jinetes montados: [{"jinete", "montura", "asiento"}] (ficha §11.9).
+var _jinetes: Array = []
 var conector: Dictionary = {}
 var avisar_completa := true
 ## R2: distancia (px de pantalla) a la que un vivo soltado se sube a un camino.
@@ -131,10 +168,34 @@ var guia: Dictionary = {}
 var _escala_lamina := 1.0
 var _desfase_lamina := Vector2.ZERO
 
+## FISICA (ficha §10): con cielo y sin ser espacio hay gravedad; `cielo` es el rect de la zona.
+var gravedad := false
+var cielo := Rect2()
+## Maxi: caida mas lenta y "¡puff!" mas grande.
+var caida_suave := false
+## Fisica por id que fija el tema (`pesan` / `vuelan`); si falta, `Stickers.fisica`.
+var fisicas: Dictionary = {}
+var _suelos: Array = []  ## poligonos de las regiones de suelo (donde se aterriza)
+var _caidas: Array = []  ## [{"nodo", "v", "y_final", "auto"}]
+var _polvos: Array = []  ## nubecitas de polvo, humo y chispas: [{"pos", "tipo", "t", "dur", "tam", "partes"}]
+var _capa_efectos: Control
+
+## DESHACER (ficha §10.3): pila de fotos del estado ANTES de cada accion; `_inicio` es la hoja recien
+## preparada (para reiniciar).
+var _historial: Array = []
+var _paso_abierto: Dictionary = {}
+var _firma_paso := ""
+var _pintura_tocada := false
+var _inicio: Dictionary = {}
+
 var _pintura: Image
 var _respaldo: Image
 var _textura: ImageTexture
-var _sucio := false
+var _sucio := false:
+	set(valor):
+		_sucio = valor
+		if valor:
+			_pintura_tocada = true
 var _brochas := {}
 var _calcomanias := {}
 var _capa_sellos: Control
@@ -182,6 +243,7 @@ func _ready() -> void:
 		_fuente = load(RUTA_FUENTE)
 	_capa_caminos = _capa(_dibujar_caminos)
 	_capa_sellos = _capa(Callable())
+	_capa_efectos = _capa(_dibujar_efectos)
 	_capa_guias = _capa(_dibujar_guias)
 	_capa_fantasma = _capa(_dibujar_fantasma)
 	limpiar()
@@ -201,6 +263,24 @@ func _process(delta: float) -> void:
 	_tiempo += delta
 	if not _viajes.is_empty():
 		_mover_viajeros(delta)
+	if not _caidas.is_empty():
+		_mover_caidas(delta)
+	if not _jinetes.is_empty():
+		_seguir_monturas()
+	if _presionado and not _camino_tenido.is_empty():
+		_tenido_t += delta
+		_capa_caminos.queue_redraw()
+		if _tenido_t >= segundos_borrar_camino:
+			var camino := _camino_tenido
+			_camino_tenido = {}
+			_camino_actual = PackedVector2Array()
+			borrar_camino(camino)
+	if not _polvos.is_empty():
+		for polvo: Dictionary in _polvos.duplicate():
+			polvo["t"] = float(polvo["t"]) + delta
+			if float(polvo["t"]) >= float(polvo["dur"]):
+				_polvos.erase(polvo)
+		_capa_efectos.queue_redraw()
 	if _sucio:
 		_sucio = false
 		_textura.update(_pintura)
@@ -252,8 +332,20 @@ func limpiar() -> void:
 	combinaciones = []
 	zonas = {}
 	clases = {}
+	gravedad = false
+	cielo = Rect2()
+	fisicas = {}
+	_suelos = []
+	_caidas.clear()
+	_polvos.clear()
+	_jinetes.clear()
+	_historial.clear()
+	_paso_abierto = {}
+	_inicio = {}
+	historial_cambiado.emit(0)
 	ver_todo()
 	queue_redraw()
+	_capa_efectos.queue_redraw()
 	_capa_guias.queue_redraw()
 	_capa_caminos.queue_redraw()
 	_capa_fantasma.queue_redraw()
@@ -462,21 +554,35 @@ func empezar_trazo(punto: Vector2) -> void:
 	_trazo_max_y = punto.y
 	usos[herramienta] = int(usos.get(herramienta, 0)) + 1
 	# Respaldo de la pintura: si llega un segundo dedo, el trazo se deshace (dos dedos nunca pintan).
+	# Tambien es la pintura "de antes" del paso que se guarda para deshacer.
 	_respaldo.copy_from(_pintura)
+	empezar_paso()
 	if stickers_objeto and mosaico.is_empty():
 		var tocado: StickerVivo = sticker_en(punto) if not herramienta.begins_with("camino_") and herramienta != "conector" else null
 		if tocado != null and herramienta not in ["goma", "balde"]:
+			# Se puede atrapar en el aire a un sticker que cae o al sol que vuelve al cielo.
+			_detener_fisica(tocado)
+			# Agarrar al jinete lo baja del montable (§11.9); si se suelta ahi mismo, vuelve a subir.
+			if esta_montado(tocado):
+				desmontar(tocado)
+				tocado.set_meta("era_jinete", true)
 			_arrastre = tocado
 			_arrastre_desfase = tocado.centro() - punto
 			_arrastre_recorrido = 0.0
 			_arrastre_inicio = tocado.centro()
 			_bajar(tocado)
-			_capa_sellos.move_child(tocado, -1)
+			_al_frente(tocado)
 		toque_iniciado.emit()
 		if herramienta.begins_with("camino_") or herramienta == "conector":
 			_camino_actual = PackedVector2Array([punto])
+			# Dedo quieto sobre un camino: lo borra (§11.1). Si el dedo se mueve, traza uno nuevo.
+			_camino_tenido = camino_en(punto)
+			_tenido_t = 0.0
+			_tenido_inicio = punto
 			_capa_caminos.queue_redraw()
 			return
+		if tocado == null and herramienta == "goma":
+			_borrar_caminos_en(punto)
 		if tocado != null:
 			if herramienta == "goma":
 				borrar_sticker(tocado)
@@ -517,6 +623,13 @@ func continuar_trazo(punto: Vector2) -> void:
 			_arrastre.poner_en((punto + _arrastre_desfase).clamp(Vector2.ZERO, Vector2(tamano)))
 		_ultimo = punto
 		return
+	if stickers_objeto and _camino_actual.is_empty() and (herramienta.begins_with("camino_") or herramienta == "conector"):
+		# El dedo quieto ya borro un camino: este trazo no pinta ni traza.
+		_ultimo = punto
+		return
+	if not _camino_tenido.is_empty() and punto.distance_to(_tenido_inicio) * zoom > TOLERANCIA_TOQUE:
+		_camino_tenido = {}
+		_capa_caminos.queue_redraw()
 	if not _camino_actual.is_empty():
 		if _camino_actual[_camino_actual.size() - 1].distance_to(punto) >= 6.0 / zoom:
 			_camino_actual.append(punto.clamp(Vector2.ZERO, Vector2(tamano)))
@@ -538,6 +651,11 @@ func continuar_trazo(punto: Vector2) -> void:
 			_poner_sello(herramienta.trim_prefix("sello_"), punto)
 		_ultimo = punto
 		return
+	if herramienta == "goma" and stickers_objeto:
+		# La goma borra los caminos que toca, enteros (§11.1).
+		var tramos := maxi(1, ceili(distancia * zoom / 10.0))
+		for k in range(1, tramos + 1):
+			_borrar_caminos_en(_ultimo.lerp(punto, float(k) / tramos))
 	if herramienta != "goma":
 		recorrido_pintado += distancia
 		_trazo_min_y = minf(_trazo_min_y, punto.y)
@@ -565,6 +683,7 @@ func terminar_trazo() -> void:
 	if not _presionado:
 		return
 	_presionado = false
+	_camino_tenido = {}
 	_puestos_trazo.clear()
 	if _arrastre != null:
 		var sticker := _arrastre
@@ -572,8 +691,10 @@ func terminar_trazo() -> void:
 		if is_instance_valid(sticker):
 			if _arrastre_recorrido < TOLERANCIA_TOQUE:
 				sticker_tocado.emit(sticker)
-				if sticker.clase == "vivo":
-					intentar_subir(sticker)
+				var subio := (sticker.has_meta("era_jinete") and _intentar_montar(sticker)) or (sticker.clase == "vivo" and intentar_subir(sticker))
+				# Atrapado en el aire y soltado ahi mismo: sigue cayendo.
+				if not subio and sticker.has_meta("atrapado"):
+					_soltar(sticker)
 			else:
 				if sticker.clase == "lugar":
 					# Un lugar movido se despega de sus caminos (no quedan puntas colgando en el aire).
@@ -583,10 +704,18 @@ func terminar_trazo() -> void:
 						if camino["hasta"] == sticker:
 							camino["hasta"] = null
 				sticker_cambiado.emit()
-				intentar_subir(sticker)
-				_revisar_combinaciones(sticker)
+				# Fisica (§10): si no se subio a un camino y quedo en el cielo, cae (o el sol vuelve
+				# volando); las combinaciones se revisan al aterrizar.
+				if _intentar_montar(sticker):
+					pass
+				elif intentar_subir(sticker) or not _soltar(sticker):
+					_revisar_combinaciones(sticker)
+			if is_instance_valid(sticker):
+				sticker.remove_meta("atrapado")
+				sticker.remove_meta("era_jinete")
 	if not _camino_actual.is_empty():
 		_cerrar_camino()
+	cerrar_paso()
 
 
 ## Llega un segundo dedo: deshace lo que hizo el primero en este trazo (pintura, stickers puestos,
@@ -595,6 +724,7 @@ func cancelar_trazo() -> void:
 	if not _presionado:
 		return
 	_presionado = false
+	_camino_tenido = {}
 	_pintura.copy_from(_respaldo)
 	_sucio = true
 	for sticker in _puestos_trazo:
@@ -603,9 +733,17 @@ func cancelar_trazo() -> void:
 	_puestos_trazo.clear()
 	if _arrastre != null and is_instance_valid(_arrastre):
 		_arrastre.poner_en(_arrastre_inicio)
+		if _arrastre.has_meta("atrapado"):
+			_arrastre.remove_meta("atrapado")
+			_soltar(_arrastre)
+		if _arrastre.has_meta("era_jinete"):
+			_arrastre.remove_meta("era_jinete")
+			_intentar_montar(_arrastre)
 	_arrastre = null
 	_camino_actual = PackedVector2Array()
 	_capa_caminos.queue_redraw()
+	# Lo que hizo el primer dedo ya se deshizo: no queda como paso del historial.
+	_paso_abierto = {}
 
 
 func _paso_trazo() -> float:
@@ -711,8 +849,15 @@ func _poner_sello(tipo: String, punto: Vector2) -> void:
 		_puestos_trazo.append(sticker)
 		sello_puesto.emit(tipo, punto)
 		color_usado.emit(sticker.color)
-		if sticker.clase == "vivo" and not intentar_subir(sticker) and auto_subir:
+		if _intentar_montar(sticker):
+			pass
+		elif sticker.clase == "vivo" and intentar_subir(sticker):
+			pass
+		elif sticker.clase == "vivo" and auto_subir and _hay_camino_con_viajeros():
 			_saltar_al_camino(sticker)
+		elif _soltar(sticker, true):
+			# Cae (o el sol vuelve al cielo): las combinaciones se revisan al aterrizar.
+			return
 		_revisar_combinaciones(sticker)
 		return
 	var imagen := _calcomania(tipo, color_actual, maxi(16, int(_lado_mundo())))
@@ -808,6 +953,9 @@ func poner_sticker(id: String, punto: Vector2, escala_extra := 1.0) -> StickerVi
 	var color := color_actual if sticker_con_color_actual else Stickers.color_por_defecto(id)
 	sticker.clase = clase_de(id)
 	var lado := _lado_mundo() * (Stickers.ESCALA_LUGAR if sticker.clase == "lugar" else 1.0) * escala_extra
+	# Los personajes son altos y delgados: se ponen mas grandes para que se vean (y se toquen) como un pony.
+	if Stickers.es_personaje(id):
+		lado *= Stickers.ESCALA_PERSONAJE
 	sticker.preparar(id, color, lado)
 	_capa_sellos.add_child(sticker)
 	sticker.poner_en(punto)
@@ -904,7 +1052,15 @@ func sticker_en(punto: Vector2) -> StickerVivo:
 	var lista := stickers()
 	for i in range(lista.size() - 1, -1, -1):
 		var sticker: StickerVivo = lista[i]
-		if punto.distance_to(sticker.centro()) <= sticker.radio_toque(zoom):
+		var centro := sticker.centro()
+		var radio := sticker.radio_toque(zoom)
+		if sticker.sentado:
+			# El jinete sentado se ve mas chico: se toca solo en lo que se ve de el.
+			var alto := sticker.lado * sticker.escala * sticker.achique * 0.9 * Stickers.RECORTE_SENTADO
+			# Solo lo que asoma sobre el asiento: tocar el lomo o el centro del montable agarra al montable.
+			centro = centro + Vector2(0.0, _alto_base(sticker) - alto * 0.75)
+			radio = maxf(30.0 / maxf(zoom, 0.01), alto * 0.45)
+		if punto.distance_to(centro) <= radio:
 			return sticker
 	return null
 
@@ -939,6 +1095,11 @@ func borrar_sticker(sticker: StickerVivo) -> void:
 	if seleccionado == sticker:
 		seleccionado = null
 	_bajar(sticker)
+	# Goma sobre la pareja: se va lo que se toco; si era el montable, sus jinetes se bajan.
+	desmontar(sticker)
+	for jinete in jinetes_de(sticker):
+		desmontar(jinete)
+		_soltar(jinete)
 	for camino: Dictionary in caminos:
 		if camino["desde"] == sticker:
 			camino["desde"] = null
@@ -997,13 +1158,13 @@ func _hornear_sticker(sticker: StickerVivo) -> void:
 
 
 func _imagen_sticker(sticker: StickerVivo) -> Image:
-	var lado := maxi(8, roundi(sticker.lado * sticker.escala))
+	var lado := maxi(8, roundi(sticker.lado * sticker.escala * sticker.achique))
 	var giro := snappedf(wrapf(sticker.rotation, -PI, PI), 0.01)
-	var clave := "%s_%s_%d_%.2f_%s" % [sticker.id, (sticker.color as Color).to_html(), lado, giro, sticker.espejo]
+	var clave := "%s_%s_%d_%.2f_%s_%s" % [sticker.id, (sticker.color as Color).to_html(), lado, giro, sticker.espejo, sticker.sentado]
 	if not _cache_stickers.has(clave):
 		if _cache_stickers.size() > 240:
 			_cache_stickers.clear()
-		_cache_stickers[clave] = Stickers.imagen(sticker.id, sticker.color, lado, giro, sticker.espejo)
+		_cache_stickers[clave] = Stickers.imagen(sticker.id, sticker.color, lado, giro, sticker.espejo, sticker.sentado)
 	return _cache_stickers[clave]
 
 
@@ -1115,6 +1276,788 @@ func _animar_magico(nodo: StickerVivo, respira := true) -> void:
 
 
 # ---------------------------------------------------------------------------
+# Fisica: los que pesan caen con "¡puff!" (ficha §10.1)
+# ---------------------------------------------------------------------------
+
+## Configura la gravedad de la hoja con tema. Hay gravedad si la escena tiene CIELO y no es espacio:
+## - el cielo es la zona `cielo` del tema; si falta, se deduce de la region `cielo` del fondo: llega
+##   hasta donde empiezan las regiones de suelo (las que tocan el borde de abajo);
+## - es espacio si el tema trae `"gravedad": false`, si su id dice "espacio"/"espacial" o si tiene
+##   una zona o region `espacio` (alli todo flota);
+## - las regiones de suelo (las que bajan mas que el cielo) son donde se aterriza.
+func preparar_fisica(tema: Dictionary) -> void:
+	fisicas = {}
+	for id in tema.get("pesan", []):
+		fisicas[str(id)] = "pesa"
+	for id in tema.get("vuelan", []):
+		fisicas[str(id)] = "vuela"
+	cielo = Rect2()
+	_suelos = []
+	if zonas.has("cielo"):
+		var r: Array = zonas["cielo"]
+		cielo = Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
+	elif region_por_id("cielo") >= 0:
+		var borde := float(tamano.y)
+		for region: Dictionary in lamina["regiones"]:
+			var caja := _caja_de(region["poligono"])
+			if str(region.get("id", "")) != "cielo" and caja.end.y >= tamano.y - 4.0:
+				borde = minf(borde, caja.position.y)
+		if borde < tamano.y - 4.0:
+			cielo = Rect2(0.0, 0.0, float(tamano.x), borde)
+	var espacio := false
+	if tema.has("gravedad"):
+		espacio = not bool(tema["gravedad"])
+	else:
+		var id_tema := str(tema.get("id", ""))
+		espacio = id_tema.contains("espacio") or id_tema.contains("espacial") or zonas.has("espacio") or region_por_id("espacio") >= 0
+	gravedad = not espacio and cielo.has_area()
+	if gravedad:
+		for region: Dictionary in lamina.get("regiones", []):
+			if str(region.get("id", "")) != "cielo" and _caja_de(region["poligono"]).end.y > cielo.end.y + 1.0:
+				_suelos.append(region["poligono"])
+
+
+static func _caja_de(poligono: PackedVector2Array) -> Rect2:
+	if poligono.is_empty():
+		return Rect2()
+	var caja := Rect2(poligono[0], Vector2.ZERO)
+	for p in poligono:
+		caja = caja.expand(p)
+	return caja
+
+
+func fisica_de(id: String) -> String:
+	return str(fisicas.get(id, Stickers.fisica(id)))
+
+
+## ¿El punto esta en el cielo (con gravedad activa)?
+func en_cielo(punto: Vector2) -> bool:
+	return gravedad and cielo.has_point(punto)
+
+
+func esta_cayendo(sticker: Control) -> bool:
+	for caida: Dictionary in _caidas:
+		if caida["nodo"] == sticker:
+			return true
+	return false
+
+
+## Distancia del centro a la "base" (los pies) del dibujo.
+static func _alto_base(sticker: StickerVivo) -> float:
+	return sticker.lado * sticker.escala * 0.43
+
+
+## Se solto un sticker (nuevo o arrastrado): el sol fuera del cielo se quema y vuelve volando; uno que
+## pesa con la base en el cielo cae. Devuelve true si quedo "ocupado" (cayendo o volando): quien llama
+## no revisa combinaciones (se revisan al terminar). `auto`: R2 de Maxi al aterrizar.
+func _soltar(sticker: StickerVivo, auto := false) -> bool:
+	if not gravedad or not is_instance_valid(sticker) or sticker.fijo or sticker.has_meta("magico") \
+			or sticker.has_meta("saltando") or esta_viajando(sticker) or esta_montado(sticker):
+		return false
+	if sticker.id == "sol":
+		if cielo.has_point(sticker.centro()):
+			return false
+		_sol_fuera_del_cielo(sticker)
+		return true
+	if fisica_de(sticker.id) != "pesa":
+		return false
+	return _caer(sticker, auto)
+
+
+## Busca donde aterriza (la primera superficie bajo sus pies: una region de suelo o un lugar; si no
+## hay, el borde de abajo del cielo) y lo deja cayendo. Si ya esta apoyado, no cae.
+func _caer(sticker: StickerVivo, auto := false) -> bool:
+	var base := sticker.centro() + Vector2(0.0, _alto_base(sticker))
+	if not cielo.has_point(base):
+		return false
+	var y := base.y
+	var suelo := -1.0
+	while y <= float(tamano.y) - 4.0:
+		if _es_superficie(Vector2(base.x, y), sticker):
+			suelo = y
+			break
+		y += 4.0
+	if suelo < 0.0:
+		suelo = minf(cielo.end.y + 6.0, float(tamano.y) - 4.0)
+	elif suelo > base.y + 3.0:
+		suelo += 6.0  # se "planta" un poquito en el pasto
+	if suelo - base.y < 3.0:
+		return false
+	_caidas.append({"nodo": sticker, "v": 0.0, "y_final": sticker.centro().y + suelo - base.y, "auto": auto})
+	sticker.deformar = Vector2(0.9, 1.12)
+	caida_iniciada.emit(sticker)
+	return true
+
+
+func _es_superficie(p: Vector2, propio: StickerVivo) -> bool:
+	for poligono: PackedVector2Array in _suelos:
+		if Geometry2D.is_point_in_polygon(p, poligono):
+			return true
+	for lugar: StickerVivo in lugares():
+		if lugar == propio:
+			continue
+		if lugar.fijo:
+			if lugar.has_meta("poligono") and Geometry2D.is_point_in_polygon(p, lugar.get_meta("poligono")):
+				return true
+		elif p.distance_to(lugar.centro()) <= lugar.radio_toque(zoom) * 0.7:
+			return true
+	return false
+
+
+## Caida con aceleracion (no lineal), estirandose; al llegar, aterriza.
+func _mover_caidas(delta: float) -> void:
+	var g := GRAVEDAD_SEMILLA if caida_suave else GRAVEDAD
+	for caida: Dictionary in _caidas.duplicate():
+		var nodo = caida["nodo"]
+		if not is_instance_valid(nodo) or nodo.is_queued_for_deletion() or nodo == _arrastre:
+			_caidas.erase(caida)
+			continue
+		caida["v"] = minf(float(caida["v"]) + g * delta, VELOCIDAD_MAX_CAIDA)
+		var p: Vector2 = nodo.centro()
+		p.y += float(caida["v"]) * delta
+		if p.y >= float(caida["y_final"]):
+			p.y = float(caida["y_final"])
+			nodo.poner_en(p)
+			_caidas.erase(caida)
+			_aterrizar(nodo, bool(caida["auto"]))
+		else:
+			nodo.poner_en(p)
+
+
+## "¡Puff!": aplastado, rebote chico, estirado y quieto; nubecita de polvo. Despues sigue como
+## cualquier sticker soltado: caminos, combinaciones y objetivos.
+func _aterrizar(nodo: StickerVivo, auto: bool) -> void:
+	var grande := caida_suave
+	var tween := nodo.create_tween()
+	nodo.set_meta("tween_fisica", tween)
+	tween.tween_property(nodo, "deformar", Vector2(1.32, 0.68) if grande else Vector2(1.22, 0.78), 0.07).set_ease(Tween.EASE_OUT)
+	tween.tween_property(nodo, "deformar", Vector2(0.9, 1.12), 0.1)
+	tween.parallel().tween_property(nodo, "rebote", nodo.lado * (0.24 if grande else 0.14), 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(nodo, "rebote", 0.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(nodo, "deformar", Vector2.ONE, 0.16)
+	tween.tween_property(nodo, "deformar", Vector2(1.08, 0.94), 0.05)
+	tween.tween_property(nodo, "deformar", Vector2.ONE, 0.08)
+	_agregar_polvo(nodo.centro() + Vector2(0.0, _alto_base(nodo)), "polvo", nodo.lado * nodo.escala, grande)
+	aterrizo.emit(nodo, grande)
+	if _intentar_montar(nodo):
+		pass
+	elif nodo.clase == "vivo" and not intentar_subir(nodo) and auto and auto_subir and _hay_camino_con_viajeros():
+		_saltar_al_camino(nodo)
+	_revisar_combinaciones(nodo)
+	sticker_cambiado.emit()
+
+
+## Detiene la fisica de un sticker (lo atrapan en el aire, salta a un camino o se deshace un paso).
+func _detener_fisica(nodo: StickerVivo) -> void:
+	for caida: Dictionary in _caidas.duplicate():
+		if caida["nodo"] == nodo:
+			_caidas.erase(caida)
+			nodo.set_meta("atrapado", true)
+	if nodo.has_meta("volando"):
+		_matar_tween(nodo, "tween_vuelo")
+		nodo.remove_meta("volando")
+		nodo.rotation = float(nodo.get_meta("giro_vuelo", nodo.rotation))
+		nodo.set_meta("atrapado", true)
+	nodo.expresion = ""
+	nodo.deformar = Vector2.ONE
+
+
+# ---------------------------------------------------------------------------
+# El sol solo vive en el cielo (ficha §10.2)
+# ---------------------------------------------------------------------------
+
+## Sol soltado fuera del cielo: tizna lo cercano (temporal, ~3 s), pone cara de "¡ups!" y vuelve
+## volando en arco a un lugar libre del cielo. Nada se borra y la pintura no se quema.
+func _sol_fuera_del_cielo(sol: StickerVivo) -> void:
+	var cuantos := 0
+	for otro: StickerVivo in stickers():
+		if otro != sol and not otro.has_meta("magico") and otro.centro().distance_to(sol.centro()) <= RADIO_TIZNE:
+			_tiznar(otro)
+			cuantos += 1
+	for par: Dictionary in _jinetes:
+		var uno = par["jinete"]
+		var otro = par["montura"]
+		if is_instance_valid(uno) and is_instance_valid(otro) and esta_tiznado(uno) != esta_tiznado(otro):
+			_tiznar(otro if esta_tiznado(uno) else uno)
+	_agregar_polvo(sol.centro(), "chispas", sol.lado * sol.escala)
+	sol.expresion = "ups"
+	sol.set_meta("volando", true)
+	sol.set_meta("giro_vuelo", sol.rotation)
+	var desde := sol.centro()
+	var destino := _lugar_libre_en_cielo(sol)
+	sol.set_meta("destino_vuelo", destino)
+	var arriba := maxf(cielo.position.y + sol.lado * 0.5, minf(desde.y, destino.y) - 220.0)
+	var control := Vector2((desde.x + destino.x) / 2.0, arriba)
+	var tween := sol.create_tween()
+	sol.set_meta("tween_vuelo", tween)
+	# Susto: tiembla un instante y despues sale volando dando una vuelta.
+	for i in 4:
+		tween.tween_property(sol, "temblor", 6.0 if i % 2 == 0 else -6.0, 0.05)
+	tween.tween_property(sol, "temblor", 0.0, 0.05)
+	var giro := sol.rotation
+	tween.tween_method(func(k: float) -> void:
+		if is_instance_valid(sol):
+			var a := desde.lerp(control, k)
+			sol.poner_en(a.lerp(control.lerp(destino, k), k))
+			sol.rotation = giro + TAU * k, 0.0, 1.0, SEGUNDOS_VUELO_SOL).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_callback(_sol_llego.bind(sol))
+	sol_quemo.emit(sol, cuantos)
+
+
+func _sol_llego(sol: StickerVivo) -> void:
+	if not is_instance_valid(sol):
+		return
+	sol.remove_meta("volando")
+	sol.rotation = float(sol.get_meta("giro_vuelo", 0.0))
+	sol.expresion = ""
+	sol.saltar()
+	sol_en_el_cielo.emit(sol)
+	# De vuelta en el cielo sigue sirviendo para combinar (sol + nube de lluvia = arcoiris).
+	_revisar_combinaciones(sol)
+	sticker_cambiado.emit()
+
+
+## Punto libre del cielo para el sol: dentro del area sin botones si se puede, lejos de los otros
+## stickers y cerca de donde estaba.
+func _lugar_libre_en_cielo(sol: StickerVivo) -> Vector2:
+	var zona := cielo.intersection(area_segura)
+	if zona.size.y < sol.lado * 0.8 or zona.size.x < sol.lado:
+		zona = cielo
+	var margen := sol.lado * 0.5 * sol.escala
+	var mejor := Vector2(zona.get_center().x, zona.position.y + maxf(margen, zona.size.y / 2.0))
+	var mejor_puntaje := -INF
+	var y := zona.position.y + margen
+	var fin_y := maxf(y, zona.end.y - margen)
+	while y <= fin_y + 0.1:
+		var x := zona.position.x + margen
+		while x <= zona.end.x - margen:
+			var p := Vector2(x, y)
+			var lejania := 220.0
+			for otro: StickerVivo in stickers():
+				if otro != sol:
+					lejania = minf(lejania, p.distance_to(otro.centro()))
+			var puntaje := lejania - absf(x - sol.centro().x) * 0.15
+			if puntaje > mejor_puntaje:
+				mejor_puntaje = puntaje
+				mejor = p
+			x += 40.0
+		y += 30.0
+	return mejor
+
+
+## Tiznado temporal (opcion A del PO): oscuro, humito y temblorcito; a los 3 s se sacude, suelta un
+## polvito y vuelve a su color. No castiga: nada se borra.
+func _tiznar(nodo: StickerVivo) -> void:
+	_matar_tween(nodo, "tween_tizne")
+	nodo.set_meta("tiznado", true)
+	var tween := nodo.create_tween()
+	nodo.set_meta("tween_tizne", tween)
+	tween.tween_property(nodo, "self_modulate", COLOR_TIZNE, 0.15)
+	for i in 5:
+		tween.tween_property(nodo, "temblor", 4.0 if i % 2 == 0 else -4.0, 0.05)
+	tween.tween_property(nodo, "temblor", 0.0, 0.05)
+	for i in 3:
+		tween.tween_callback(func() -> void:
+			if is_instance_valid(nodo):
+				_agregar_polvo(nodo.centro() - Vector2(0.0, nodo.lado * nodo.escala * 0.3), "humo", nodo.lado * nodo.escala))
+		tween.tween_interval(SEGUNDOS_TIZNE / 3.0)
+	# Se sacude como un perrito mojado y queda limpio.
+	tween.tween_callback(func() -> void:
+		if is_instance_valid(nodo):
+			_agregar_polvo(nodo.centro(), "polvito", nodo.lado * nodo.escala))
+	for i in 6:
+		tween.tween_property(nodo, "temblor", 7.0 if i % 2 == 0 else -7.0, 0.06)
+	tween.tween_property(nodo, "temblor", 0.0, 0.05)
+	tween.parallel().tween_property(nodo, "self_modulate", Color.WHITE, 0.25)
+	tween.tween_callback(func() -> void:
+		if is_instance_valid(nodo):
+			nodo.remove_meta("tiznado")
+			nodo.saltar())
+
+
+func esta_tiznado(nodo: Control) -> bool:
+	return is_instance_valid(nodo) and nodo.has_meta("tiznado")
+
+
+# ---------------------------------------------------------------------------
+# Efectos dibujados en el mundo: polvo del aterrizaje, humito del tiznado, chispas del sol
+# ---------------------------------------------------------------------------
+
+func _agregar_polvo(pos: Vector2, tipo: String, tam: float, grande := false) -> void:
+	var cantidad: int = {"polvo": 11 if grande else 7, "humo": 3, "polvito": 7, "chispas": 9}.get(tipo, 6)
+	var duracion: float = {"polvo": 0.85 if grande else 0.55, "humo": 1.3, "polvito": 0.5, "chispas": 0.45}.get(tipo, 0.5)
+	var partes: Array = []
+	for i in cantidad:
+		var dir: Vector2
+		match tipo:
+			"polvo":
+				dir = Vector2((-1.0 if i % 2 == 0 else 1.0) * randf_range(0.45, 1.0), -randf_range(0.05, 0.4))
+			"humo":
+				dir = Vector2(randf_range(-0.25, 0.25), -1.0)
+			_:
+				dir = Vector2.from_angle(TAU * i / cantidad + randf_range(-0.25, 0.25))
+		partes.append([dir, randf_range(0.7, 1.15), randf_range(-0.3, 0.3)])
+	_polvos.append({"pos": pos, "tipo": tipo, "t": 0.0, "dur": duracion, "tam": tam * (1.45 if grande else 1.0), "partes": partes})
+	_capa_efectos.queue_redraw()
+
+
+func _dibujar_efectos() -> void:
+	for efecto: Dictionary in _polvos:
+		var k := clampf(float(efecto["t"]) / float(efecto["dur"]), 0.0, 1.0)
+		var sale := 1.0 - (1.0 - k) * (1.0 - k)
+		var alfa := 1.0 - k
+		var tam: float = efecto["tam"]
+		var pos: Vector2 = efecto["pos"]
+		for parte: Array in efecto["partes"]:
+			var dir: Vector2 = parte[0]
+			var vel: float = parte[1]
+			match str(efecto["tipo"]):
+				"polvo":
+					var p := pos + dir * tam * 0.78 * vel * sale
+					var r := tam * (0.1 + 0.13 * sale) * vel
+					_capa_efectos.draw_circle(p, r, Color("#F6EBD8", 0.92 * alfa))
+					_capa_efectos.draw_arc(p, r, 0.0, TAU, 14, Color(COLOR_CONTORNO, 0.3 * alfa), maxf(1.5, tam * 0.02), true)
+				"polvito":
+					var p := pos + dir * tam * 0.55 * vel * sale
+					_capa_efectos.draw_circle(p, tam * 0.06 * vel * (1.0 - k * 0.5), Color("#FFF3B0", alfa))
+				"humo":
+					var p := pos + Vector2(dir.x + float(parte[2]) * sin(k * 6.0), dir.y) * tam * 0.7 * sale
+					_capa_efectos.draw_circle(p, tam * (0.08 + 0.16 * sale) * vel, Color("#7E7A88", 0.55 * alfa))
+				"chispas":
+					var p := pos + dir * tam * 0.75 * vel * sale
+					_capa_efectos.draw_circle(p, tam * 0.05 * vel * (1.0 - k), Color("#FF9A2E", alfa))
+					_capa_efectos.draw_circle(p, tam * 0.025 * vel * (1.0 - k), Color("#FFF3B0", alfa))
+
+
+func efectos_activos() -> int:
+	return _polvos.size()
+
+
+# ---------------------------------------------------------------------------
+# Deshacer y reiniciar (ficha §10.3 y §10.4)
+# ---------------------------------------------------------------------------
+# Cada accion (trazo, balde, sello o sticker puesto, sticker movido, camino trazado, editar un
+# sticker) guarda una FOTO del estado de ANTES: stickers (nodo y propiedades), caminos, viajes, colores
+# de las regiones, celdas del mosaico y, solo si la accion pinto, la pintura comprimida. Deshacer
+# restaura la ultima foto: reusa los nodos que siguen vivos (los objetivos y viajes los reconocen) y
+# recrea los que se fueron. Los objetivos cumplidos y los destellos NO se tocan (viven en el motor y
+# nunca se descumplen).
+
+func empezar_paso() -> void:
+	if not _paso_abierto.is_empty():
+		cerrar_paso()
+	_paso_abierto = _capturar()
+	_firma_paso = _firma()
+	_pintura_tocada = false
+
+
+func cerrar_paso() -> void:
+	if _paso_abierto.is_empty():
+		return
+	var paso := _paso_abierto
+	_paso_abierto = {}
+	if _pintura_tocada:
+		var datos := _respaldo.get_data()
+		paso["pintura"] = datos.compress(FileAccess.COMPRESSION_ZSTD)
+		paso["pintura_bytes"] = datos.size()
+	elif _firma() == _firma_paso:
+		return  # no cambio nada (un toque suelto): no gasta un paso
+	_historial.append(paso)
+	while _historial.size() > MAX_PASOS:
+		_historial.pop_front()
+	historial_cambiado.emit(_historial.size())
+
+
+func pasos_para_deshacer() -> int:
+	return _historial.size()
+
+
+## Deshace la ultima accion. Devuelve false si no habia nada (o hay un dedo pintando).
+func deshacer() -> bool:
+	if _presionado or _historial.is_empty():
+		return false
+	var paso: Dictionary = _historial.pop_back()
+	var pintura: Image = null
+	if paso.has("pintura"):
+		var datos: PackedByteArray = (paso["pintura"] as PackedByteArray).decompress(int(paso["pintura_bytes"]), FileAccess.COMPRESSION_ZSTD)
+		pintura = Image.create_from_data(tamano.x, tamano.y, false, Image.FORMAT_RGBA8, datos)
+	_restaurar(paso, pintura)
+	historial_cambiado.emit(_historial.size())
+	return true
+
+
+## La hoja quedo preparada (fondo, lugares, puestos y caminos iniciales): esa es la foto de reinicio.
+func fijar_inicio() -> void:
+	_inicio = _capturar()
+	_historial.clear()
+	_paso_abierto = {}
+	historial_cambiado.emit(0)
+
+
+## Vuelve la hoja a como empezo: sin pintura, sin los stickers y caminos puestos, con los colores y
+## stickers iniciales. Vacia el historial. Los objetivos cumplidos y los destellos se mantienen.
+func reiniciar() -> void:
+	if _inicio.is_empty():
+		return
+	_presionado = false
+	_paso_abierto = {}
+	_camino_actual = PackedVector2Array()
+	var vacia := Image.create(tamano.x, tamano.y, false, Image.FORMAT_RGBA8)
+	_restaurar(_inicio, vacia)
+	_polvos.clear()
+	_historial.clear()
+	historial_cambiado.emit(0)
+
+
+func _capturar() -> Dictionary:
+	var nodos: Array = []
+	for nodo in _capa_sellos.get_children():
+		if nodo.is_queued_for_deletion():
+			continue
+		if nodo is StickerVivo:
+			if nodo.fijo:
+				continue
+			var centro: Vector2 = nodo.centro()
+			for caida: Dictionary in _caidas:
+				if caida["nodo"] == nodo:
+					centro.y = float(caida["y_final"])
+			var giro: float = nodo.rotation
+			if nodo.has_meta("volando"):
+				centro = nodo.get_meta("destino_vuelo", centro)
+				giro = float(nodo.get_meta("giro_vuelo", giro))
+			nodos.append({"tipo": "sticker", "nodo": nodo, "iid": nodo.get_instance_id(), "id": nodo.id, "clase": nodo.clase,
+				"color": nodo.color, "lado": nodo.lado, "escala": nodo.escala, "giro": giro, "espejo": nodo.espejo, "centro": centro,
+				"puesto": nodo.has_meta("puesto"), "magico": nodo.has_meta("magico")})
+		elif nodo is TextureRect:
+			nodos.append({"tipo": "sello", "nodo": nodo, "iid": nodo.get_instance_id(), "posicion": nodo.position, "flip": nodo.flip_h,
+				"sello": str(nodo.get_meta("tipo", "")), "imagen": nodo.get_meta("imagen")})
+	var foto_caminos: Array = []
+	for camino: Dictionary in caminos:
+		foto_caminos.append({"camino": camino, "desde": camino["desde"], "hasta": camino["hasta"],
+			"desde_iid": _iid(camino["desde"]), "hasta_iid": _iid(camino["hasta"])})
+	var foto_viajes: Array = []
+	for v: Dictionary in _viajes:
+		foto_viajes.append({"v": v.duplicate(), "nodo_iid": _iid(v["nodo"]), "inicio_iid": _iid(v["inicio"]), "ultimo_iid": _iid(v.get("ultimo_lugar", null))})
+	var colores: Array = []
+	for region: Dictionary in lamina.get("regiones", []):
+		colores.append(region["color"])
+	var foto_jinetes: Array = []
+	for par: Dictionary in _jinetes:
+		foto_jinetes.append({"jinete_iid": _iid(par["jinete"]), "montura_iid": _iid(par["montura"]), "asiento": par["asiento"]})
+	return {"nodos": nodos, "caminos": foto_caminos, "viajes": foto_viajes, "colores": colores, "celdas": _celdas.duplicate(),
+		"jinetes": foto_jinetes}
+
+
+static func _iid(nodo) -> int:
+	return nodo.get_instance_id() if nodo != null and is_instance_valid(nodo) else 0
+
+
+## Huella barata del estado (para no guardar pasos que no cambiaron nada).
+func _firma() -> String:
+	var partes: PackedStringArray = []
+	for nodo in _capa_sellos.get_children():
+		if nodo.is_queued_for_deletion() or (nodo is StickerVivo and nodo.fijo):
+			continue
+		if nodo is StickerVivo:
+			partes.append("%d:%s:%s:%s:%.2f:%.2f:%s" % [nodo.get_instance_id(), nodo.id, Vector2i(nodo.centro().round()), (nodo.color as Color).to_html(),
+				nodo.escala, nodo.rotation, nodo.espejo])
+		else:
+			partes.append("%d:%s" % [nodo.get_instance_id(), Vector2i(nodo.position.round())])
+	partes.append("c%d_%d" % [caminos.size(), _numero_camino])
+	for par: Dictionary in _jinetes:
+		partes.append("j%d>%d" % [_iid(par["jinete"]), _iid(par["montura"])])
+	for region: Dictionary in lamina.get("regiones", []):
+		partes.append((region["color"] as Color).to_html())
+	partes.append("m%d_%s" % [_celdas.size(), str(_celdas.values().hash())])
+	return ",".join(partes)
+
+
+func _restaurar(foto: Dictionary, pintura: Image) -> void:
+	_caidas.clear()
+	_arrastre = null
+	seleccionar(null)
+	var vigentes := {}
+	for entrada: Dictionary in foto["nodos"]:
+		var nodo = entrada["nodo"]
+		if is_instance_valid(nodo) and not nodo.is_queued_for_deletion() and nodo.get_parent() == _capa_sellos:
+			vigentes[entrada["iid"]] = nodo
+	# Lo que se agrego despues de la foto se va (en silencio: no es "borrar").
+	for nodo in _capa_sellos.get_children():
+		if nodo.is_queued_for_deletion() or (nodo is StickerVivo and nodo.fijo):
+			continue
+		if not vigentes.has(nodo.get_instance_id()):
+			_capa_sellos.remove_child(nodo)
+			nodo.queue_free()
+	var mapa := {}
+	for entrada: Dictionary in foto["nodos"]:
+		var nodo = vigentes.get(entrada["iid"], null)
+		if entrada["tipo"] == "sello":
+			if nodo == null:
+				nodo = TextureRect.new()
+				nodo.texture = ImageTexture.create_from_image(entrada["imagen"])
+				nodo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				nodo.size = Vector2((entrada["imagen"] as Image).get_size())
+				nodo.pivot_offset = nodo.size / 2.0
+				nodo.set_meta("tipo", entrada["sello"])
+				nodo.set_meta("imagen", entrada["imagen"])
+				_capa_sellos.add_child(nodo)
+			nodo.flip_h = entrada["flip"]
+			nodo.position = entrada["posicion"]
+			nodo.rotation = 0.0
+			nodo.scale = Vector2.ONE
+		else:
+			var nuevo: bool = nodo == null
+			if nuevo:
+				nodo = StickerVivo.new()
+				nodo.clase = entrada["clase"]
+				nodo.preparar(entrada["id"], entrada["color"], entrada["lado"])
+				_capa_sellos.add_child(nodo)
+			_limpiar_estado_fisico(nodo)
+			nodo.color = entrada["color"]
+			nodo.escala = entrada["escala"]
+			nodo.rotation = entrada["giro"]
+			nodo.espejo = entrada["espejo"]
+			nodo.poner_en(entrada["centro"])
+			if entrada["puesto"]:
+				nodo.set_meta("puesto", true)
+			if entrada["magico"]:
+				nodo.set_meta("magico", true)
+			if nuevo:
+				if entrada["magico"]:
+					_animar_magico(nodo, true)
+				else:
+					nodo.aparecer()
+		mapa[entrada["iid"]] = nodo
+		_capa_sellos.move_child(nodo, -1)
+	# Caminos de la foto (los trazados despues se van; sus viajeros se bajan).
+	caminos.clear()
+	for foto_camino: Dictionary in foto["caminos"]:
+		var camino: Dictionary = foto_camino["camino"]
+		camino["desde"] = _resolver(mapa, foto_camino["desde_iid"], foto_camino["desde"])
+		camino["hasta"] = _resolver(mapa, foto_camino["hasta_iid"], foto_camino["hasta"])
+		caminos.append(camino)
+	for v: Dictionary in _viajes:
+		if is_instance_valid(v["nodo"]):
+			v["nodo"].remove_meta("viajando")
+	_viajes.clear()
+	for foto_viaje: Dictionary in foto["viajes"]:
+		var v: Dictionary = (foto_viaje["v"] as Dictionary).duplicate()
+		var nodo = mapa.get(foto_viaje["nodo_iid"], null)
+		if nodo == null or not caminos.has(v["camino"]):
+			continue
+		v["nodo"] = nodo
+		v["inicio"] = _resolver(mapa, foto_viaje["inicio_iid"], v["inicio"])
+		v["ultimo_lugar"] = _resolver(mapa, foto_viaje["ultimo_iid"], v.get("ultimo_lugar", null))
+		_viajes.append(v)
+		nodo.set_meta("viajando", true)
+	# Parejas de la foto (montar y desmontar se deshacen).
+	_jinetes.clear()
+	for par: Dictionary in foto.get("jinetes", []):
+		var jinete = mapa.get(par["jinete_iid"], null)
+		var montura = mapa.get(par["montura_iid"], null)
+		if jinete != null and montura != null:
+			_jinetes.append({"jinete": jinete, "montura": montura, "asiento": par["asiento"]})
+			jinete.sentado = true
+			jinete.achique = Stickers.ACHIQUE_JINETE
+	_seguir_monturas()
+	var regiones: Array = lamina.get("regiones", [])
+	var colores: Array = foto["colores"]
+	if colores.size() == regiones.size():
+		for i in regiones.size():
+			regiones[i]["color"] = colores[i]
+	_celdas = (foto["celdas"] as Dictionary).duplicate()
+	if pintura != null:
+		_pintura.copy_from(pintura)
+		_textura.update(_pintura)
+	queue_redraw()
+	_capa_caminos.queue_redraw()
+	_capa_efectos.queue_redraw()
+	sticker_cambiado.emit()
+
+
+## El nodo que corresponde a un iid de la foto: el restaurado, o el mismo si sigue vivo (lugares de
+## fondo), o null si ya no existe.
+func _resolver(mapa: Dictionary, iid: int, original):
+	if iid == 0:
+		return null
+	if mapa.has(iid):
+		return mapa[iid]
+	if original != null and is_instance_valid(original) and not original.is_queued_for_deletion():
+		return original
+	return null
+
+
+## Corta (y olvida) el tween guardado en la meta `clave`, si hay.
+static func _matar_tween(nodo: Node, clave: String) -> void:
+	if not nodo.has_meta(clave):
+		return
+	var tween = nodo.get_meta(clave)
+	if tween is Tween and tween.is_valid():
+		tween.kill()
+	nodo.remove_meta(clave)
+
+
+func _limpiar_estado_fisico(nodo: StickerVivo) -> void:
+	for clave in ["tween_tizne", "tween_vuelo", "tween_fisica", "tween_salto"]:
+		_matar_tween(nodo, clave)
+	for clave in ["tiznado", "volando", "atrapado", "saltando", "viajando", "giro_vuelo", "destino_vuelo"]:
+		nodo.remove_meta(clave)
+	nodo.detener()
+	nodo.self_modulate = Color.WHITE
+	nodo.modulate = Color.WHITE
+	nodo.temblor = 0.0
+	nodo.deformar = Vector2.ONE
+	nodo.expresion = ""
+	nodo.rebote = 0.0
+	nodo.sentado = false
+	nodo.achique = 1.0
+	nodo.remove_meta("era_jinete")
+
+
+# ---------------------------------------------------------------------------
+# Jinetes: personajes que se suben a animales y vehiculos (ficha §11.9)
+# ---------------------------------------------------------------------------
+
+func montura_de(jinete: Control) -> StickerVivo:
+	for par: Dictionary in _jinetes:
+		if par["jinete"] == jinete:
+			return par["montura"]
+	return null
+
+
+func jinetes_de(montura: Control) -> Array:
+	var lista: Array = []
+	for par: Dictionary in _jinetes:
+		if par["montura"] == montura:
+			lista.append(par["jinete"])
+	return lista
+
+
+func esta_montado(jinete: Control) -> bool:
+	return montura_de(jinete) != null
+
+
+func _asiento_libre(montura: StickerVivo) -> int:
+	var ocupados := {}
+	for par: Dictionary in _jinetes:
+		if par["montura"] == montura:
+			ocupados[int(par["asiento"])] = true
+	var asientos := Stickers.asientos(montura.id)
+	for i in asientos.size():
+		if not ocupados.has(i):
+			return i
+	return -1
+
+
+## Punto del asiento `i` en el mundo (sigue el espejo, el giro y el saltito del montable).
+func _punto_asiento(montura: StickerVivo, i: int) -> Vector2:
+	var asiento: Vector2 = Stickers.asientos(montura.id)[i]
+	var r := montura.lado * montura.escala * 0.45
+	var local := Vector2(asiento.x * (-1.0 if montura.espejo else 1.0), asiento.y) * r
+	return montura.centro() + local.rotated(montura.rotation) - Vector2(0.0, montura.rebote * montura.escala)
+
+
+## Se solto `sticker`: si es un jinete libre cerca de un montable con asiento, se sube; si es un montable,
+## sube al jinete libre mas cercano. Zona de snap: el radio del montable (Maxi, x1,5). True si monto.
+func _intentar_montar(sticker: StickerVivo) -> bool:
+	if not is_instance_valid(sticker) or sticker.fijo or sticker.has_meta("magico"):
+		return false
+	var holgura := 1.5 if auto_subir else 1.0
+	if Stickers.es_jinete(sticker.id) and not esta_montado(sticker) and jinetes_de(sticker).is_empty():
+		var mejor: StickerVivo = null
+		var mejor_d := INF
+		for otro: StickerVivo in stickers():
+			if otro == sticker or not Stickers.es_montable(otro.id) or _asiento_libre(otro) < 0 or otro.has_meta("magico"):
+				continue
+			var d := minf(sticker.centro().distance_to(otro.centro()), (sticker.centro() + Vector2(0, _alto_base(sticker))).distance_to(otro.centro()))
+			if d <= otro.radio_toque(zoom) * holgura and d < mejor_d:
+				mejor = otro
+				mejor_d = d
+		if mejor != null:
+			montar(sticker, mejor)
+			return true
+	elif Stickers.es_montable(sticker.id) and _asiento_libre(sticker) >= 0:
+		var mejor: StickerVivo = null
+		var mejor_d := INF
+		for otro: StickerVivo in stickers():
+			if otro == sticker or not Stickers.es_jinete(otro.id) or esta_montado(otro) or not jinetes_de(otro).is_empty():
+				continue
+			var d := otro.centro().distance_to(sticker.centro())
+			if d <= sticker.radio_toque(zoom) * holgura and d < mejor_d:
+				mejor = otro
+				mejor_d = d
+		if mejor != null:
+			montar(mejor, sticker)
+			return true
+	return false
+
+
+## Sube al jinete al asiento libre: brinquito con squash, destellitos y senal `montado` (el motor pone
+## el "¡hop!"). Desde ahi se mueve con el montable (camino, arrastre y caida).
+func montar(jinete: StickerVivo, montura: StickerVivo, asiento := -1) -> void:
+	if asiento < 0:
+		asiento = _asiento_libre(montura)
+	if asiento < 0:
+		return
+	_detener_fisica(jinete)
+	jinete.remove_meta("atrapado")
+	_bajar(jinete)
+	_jinetes.append({"jinete": jinete, "montura": montura, "asiento": asiento})
+	jinete.sentado = true
+	jinete.achique = Stickers.ACHIQUE_JINETE
+	jinete.rotation = 0.0
+	_seguir_monturas()
+	_capa_sellos.move_child(jinete, -1)
+	var tween := jinete.create_tween()
+	jinete.set_meta("tween_fisica", tween)
+	tween.tween_property(jinete, "deformar", Vector2(1.2, 0.8), 0.07)
+	tween.tween_property(jinete, "deformar", Vector2(0.92, 1.1), 0.1)
+	tween.tween_property(jinete, "deformar", Vector2.ONE, 0.12)
+	_agregar_polvo(_punto_asiento(montura, asiento), "polvito", montura.lado * montura.escala)
+	montado.emit(jinete, montura)
+
+
+func desmontar(jinete: StickerVivo) -> void:
+	for par: Dictionary in _jinetes.duplicate():
+		if par["jinete"] == jinete:
+			_jinetes.erase(par)
+	if is_instance_valid(jinete):
+		jinete.sentado = false
+		jinete.achique = 1.0
+		jinete.rebote = 0.0
+
+
+## Cada cuadro el jinete se acomoda en su asiento: mira hacia donde mira el montable y rebota con el.
+func _seguir_monturas() -> void:
+	for par: Dictionary in _jinetes.duplicate():
+		var jinete = par["jinete"]
+		var montura = par["montura"]
+		if not is_instance_valid(jinete) or jinete.is_queued_for_deletion():
+			_jinetes.erase(par)
+			continue
+		if not is_instance_valid(montura) or montura.is_queued_for_deletion():
+			# El montable se fue (combinacion, goma): el jinete se baja donde esta y, si pesa, cae.
+			# Si el montable se transformo ahi mismo (pony + varita = unicornio), se sube al nuevo.
+			_jinetes.erase(par)
+			desmontar(jinete)
+			if not _intentar_montar(jinete):
+				_soltar(jinete)
+			continue
+		var asiento: Vector2 = _punto_asiento(montura, int(par["asiento"]))
+		jinete.espejo = montura.espejo
+		jinete.poner_en(asiento - Vector2(0.0, _alto_base(jinete)))
+		if jinete.self_modulate != montura.self_modulate and montura.has_meta("tiznado"):
+			jinete.self_modulate = montura.self_modulate
+
+
+## El montable va al frente (arrastre) y sus jinetes, encima de el.
+func _al_frente(nodo: StickerVivo) -> void:
+	_capa_sellos.move_child(nodo, -1)
+	for jinete in jinetes_de(nodo):
+		_capa_sellos.move_child(jinete, -1)
+
+
+# ---------------------------------------------------------------------------
 # Caminos y viajes de los vivos
 # ---------------------------------------------------------------------------
 
@@ -1151,7 +2094,7 @@ func agregar_camino(crudo: PackedVector2Array, tipo: String, avisar := true) -> 
 	if cerrado:
 		puntos.append(puntos[0])
 	var camino := {"puntos": puntos, "tipo": tipo, "desde": desde, "hasta": hasta, "cerrado": cerrado,
-		"largos": _largos(puntos), "k": 1.0 / zoom, "n": _numero_camino}
+		"largos": _largos(puntos), "k": 1.0 / zoom, "n": _numero_camino, "ancho": ancho_caminos}
 	_numero_camino += 1
 	caminos.append(camino)
 	if caminos.size() > MAX_CAMINOS:
@@ -1168,6 +2111,51 @@ func agregar_camino(crudo: PackedVector2Array, tipo: String, avisar := true) -> 
 		if auto_subir and not tipo in SIN_VIAJEROS:
 			_subir_mas_cercano(camino)
 	return camino
+
+
+## El camino bajo `punto` (el mas cercano dentro de su ancho dibujado + un margen de dedo), o {}.
+func camino_en(punto: Vector2) -> Dictionary:
+	var mejor: Dictionary = {}
+	var mejor_d := INF
+	for camino: Dictionary in caminos:
+		var media := 21.0 * float(camino.get("ancho", ANCHO_CAMINO)) * float(camino.get("k", 1.0))
+		var tolerancia := maxf(media + 10.0 / zoom, 22.0 / zoom)
+		var d: float = _mas_cercano(camino, punto)[1]
+		if d <= tolerancia and d < mejor_d:
+			mejor = camino
+			mejor_d = d
+	return mejor
+
+
+func _borrar_caminos_en(punto: Vector2) -> void:
+	var camino := camino_en(punto)
+	if not camino.is_empty():
+		borrar_camino(camino)
+
+
+## Borra un camino ENTERO con una fila de "puff" a lo largo (nunca deja un hueco a medias). Sus viajeros
+## se bajan donde estan. Entra al historial con la accion en curso (§11.1).
+func borrar_camino(camino: Dictionary) -> void:
+	if not caminos.has(camino):
+		return
+	caminos.erase(camino)
+	var bajados: Array = []
+	for v: Dictionary in _viajes.duplicate():
+		if v["camino"] == camino:
+			bajados.append(v["nodo"])
+			_terminar_viaje(v)
+	# Un viajero que iba por un puente en el cielo y pesa, cae (fisica §10.1).
+	for nodo in bajados:
+		if is_instance_valid(nodo):
+			_soltar(nodo)
+	var muestras := a_lo_largo(camino["puntos"], 70.0 / zoom)
+	if muestras.is_empty():
+		muestras = [[camino["puntos"][0], Vector2.RIGHT]]
+	for muestra: Array in muestras:
+		_agregar_polvo(muestra[0], "polvo", 60.0 / zoom)
+	_capa_caminos.queue_redraw()
+	camino_borrado.emit(camino)
+	sticker_cambiado.emit()
 
 
 ## Pega el inicio del camino en `ancla` sin dejar un gancho: descarta los primeros puntos (hasta un
@@ -1188,7 +2176,7 @@ func _subir_mas_cercano(camino: Dictionary) -> void:
 	var mejor: StickerVivo = null
 	var mejor_d := INF
 	for sticker: StickerVivo in stickers():
-		if sticker.clase != "vivo" or esta_viajando(sticker):
+		if sticker.clase != "vivo" or esta_viajando(sticker) or esta_montado(sticker):
 			continue
 		var d: float = _mas_cercano(camino, sticker.centro())[1]
 		if d < mejor_d:
@@ -1196,6 +2184,13 @@ func _subir_mas_cercano(camino: Dictionary) -> void:
 			mejor_d = d
 	if mejor != null:
 		_saltar_a(mejor, camino)
+
+
+func _hay_camino_con_viajeros() -> bool:
+	for camino: Dictionary in caminos:
+		if not str(camino["tipo"]) in SIN_VIAJEROS:
+			return true
+	return false
 
 
 ## Un vivo recien puesto salta al camino (con viajeros) mas cercano.
@@ -1221,8 +2216,10 @@ func _saltar_a(vivo: StickerVivo, camino: Dictionary) -> void:
 	var destino := inicio if vivo.centro().distance_to(inicio) <= vivo.centro().distance_to(fin) else fin
 	if bool(camino["cerrado"]):
 		destino = punto_en(camino, _mas_cercano(camino, vivo.centro())[0])
+	_detener_fisica(vivo)
 	vivo.set_meta("saltando", true)
 	var tween := vivo.create_tween()
+	vivo.set_meta("tween_salto", tween)
 	tween.tween_property(vivo, "position", destino - vivo.size / 2.0, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_callback(func() -> void:
 		if is_instance_valid(vivo):
@@ -1233,7 +2230,7 @@ func _saltar_a(vivo: StickerVivo, camino: Dictionary) -> void:
 ## Un vivo soltado sobre (o cerca de) un camino se sube y lo recorre. Si se suelta sobre un lugar
 ## con caminos, sale por uno de ellos. Devuelve true si se subio.
 func intentar_subir(vivo: StickerVivo) -> bool:
-	if not is_instance_valid(vivo) or vivo.clase != "vivo" or caminos.is_empty():
+	if not is_instance_valid(vivo) or vivo.clase != "vivo" or caminos.is_empty() or esta_montado(vivo):
 		return false
 	if esta_viajando(vivo):
 		return true
@@ -1500,80 +2497,96 @@ static func remuestrear(puntos: PackedVector2Array, paso: float) -> PackedVector
 
 func _dibujar_caminos() -> void:
 	for camino: Dictionary in caminos:
-		dibujar_camino(_capa_caminos, camino["puntos"], camino["tipo"], float(camino.get("k", 1.0)))
-	if _camino_actual.size() >= 2:
+		var puntos: PackedVector2Array = camino["puntos"]
+		var k := float(camino.get("k", 1.0))
+		var ancho := float(camino.get("ancho", ANCHO_CAMINO))
+		var aviso := clampf((_tenido_t - 0.2) / maxf(0.1, segundos_borrar_camino - 0.2), 0.0, 1.0) if camino == _camino_tenido else 0.0
+		if aviso > 0.0:
+			# Aviso de que se va a borrar: tiembla cada vez mas y se aclara.
+			puntos = _trasladar(puntos, Vector2(sin(_tiempo * 45.0) * 4.0 * aviso, 0.0) / zoom)
+			_capa_caminos.draw_polyline(puntos, Color(1, 1, 1, 0.75 * aviso), (34.0 * ancho + 18.0) * k, true)
+		dibujar_camino(_capa_caminos, puntos, camino["tipo"], k, ancho)
+	if _camino_actual.size() >= 2 and _camino_tenido.is_empty():
 		var tipo := herramienta.trim_prefix("camino_") if herramienta.begins_with("camino_") else str(conector.get("tipo", tipo_camino))
-		dibujar_camino(_capa_caminos, _camino_actual, tipo, 1.0 / zoom)
+		dibujar_camino(_capa_caminos, _camino_actual, tipo, 1.0 / zoom, ancho_caminos)
 
 
-## Dibuja un camino (tipo "camino"/"carretera" = pista con linea blanca) sobre cualquier CanvasItem o Grabador (pantalla, PNG e icono de
-## la herramienta, con `k` para achicarlo). Tipos: camino (pista con linea blanca), sendero,
-## rieles, cerca, guirnalda (luces de colores), arcoiris (puente), estelar y destellos.
-static func dibujar_camino(l, puntos: PackedVector2Array, tipo: String, k := 1.0) -> void:
+## Dibuja un camino sobre cualquier CanvasItem o Grabador (pantalla, PNG e icono de la herramienta,
+## con `k` para achicarlo). Tipos: camino (pista con linea blanca), sendero, rieles, cerca, guirnalda
+## (luces de colores), arcoiris (puente), estelar y destellos.
+## Ficha §11.2: `a` es el ANCHO de la seccion (1.0 = el grosor v1). Los caminos son PLANOS, como vistos
+## desde arriba: borde fino (2,5 px por lado), sin volumen de tubo; el largo de los adornos (piedritas,
+## durmientes, luces) no cambia, asi cada tipo se sigue reconociendo.
+static func dibujar_camino(l, puntos: PackedVector2Array, tipo: String, k := 1.0, a := ANCHO_CAMINO) -> void:
 	if puntos.size() < 2:
 		return
+	var adorno := maxf(a, 0.6)
 	match tipo:
 		"sendero":
-			l.draw_polyline(puntos, COLOR_CONTORNO, 40.0 * k, true)
-			l.draw_polyline(puntos, Color("#E8C88F"), 32.0 * k, true)
+			var ancho := 32.0 * a * k
+			l.draw_polyline(puntos, COLOR_CONTORNO, ancho + 5.0 * k, true)
+			l.draw_polyline(puntos, Color("#E8C88F"), ancho, true)
 			var i := 0
 			for muestra: Array in a_lo_largo(puntos, 26.0 * k):
 				var normal := Vector2(-muestra[1].y, muestra[1].x)
-				l.draw_circle(muestra[0] + normal * (7.0 * k if i % 2 == 0 else -7.0 * k), 4.0 * k, Color("#C9A36B"))
+				l.draw_circle(muestra[0] + normal * (ancho * 0.22 if i % 2 == 0 else -ancho * 0.22), 3.0 * adorno * k, Color("#C9A36B"))
 				i += 1
 		"rieles":
 			for muestra: Array in a_lo_largo(puntos, 18.0 * k):
 				var normal := Vector2(-muestra[1].y, muestra[1].x)
-				l.draw_line(muestra[0] - normal * 18.0 * k, muestra[0] + normal * 18.0 * k, Color("#9A6238"), 7.0 * k, true)
+				l.draw_line(muestra[0] - normal * 18.0 * a * k, muestra[0] + normal * 18.0 * a * k, Color("#9A6238"), 7.0 * adorno * k, true)
 			for lado in [-1.0, 1.0]:
-				var riel := desplazar_linea(puntos, lado * 10.0 * k)
-				l.draw_polyline(riel, COLOR_CONTORNO, 7.0 * k, true)
-				l.draw_polyline(riel, Color("#C9D0E0"), 4.0 * k, true)
+				var riel := desplazar_linea(puntos, lado * 10.0 * a * k)
+				l.draw_polyline(riel, COLOR_CONTORNO, 6.0 * adorno * k, true)
+				l.draw_polyline(riel, Color("#C9D0E0"), 3.5 * adorno * k, true)
 		"cerca":
-			for alto in [-20.0, -8.0]:
-				var tabla := _trasladar(puntos, Vector2(0, alto * k))
-				l.draw_polyline(tabla, COLOR_CONTORNO, 10.0 * k, true)
-				l.draw_polyline(tabla, Color("#E6B07A"), 6.0 * k, true)
+			var alto := maxf(a, 0.7)
+			for altura in [-20.0, -8.0]:
+				var tabla := _trasladar(puntos, Vector2(0, altura * alto * k))
+				l.draw_polyline(tabla, COLOR_CONTORNO, 9.0 * alto * k, true)
+				l.draw_polyline(tabla, Color("#E6B07A"), 5.0 * alto * k, true)
 			for muestra: Array in a_lo_largo(puntos, 38.0 * k):
 				var p: Vector2 = muestra[0]
-				l.draw_line(p + Vector2(0, 4) * k, p + Vector2(0, -30) * k, COLOR_CONTORNO, 13.0 * k, true)
-				l.draw_line(p + Vector2(0, 2) * k, p + Vector2(0, -28) * k, Color("#B07A55"), 8.0 * k, true)
+				l.draw_line(p + Vector2(0, 4) * k, p + Vector2(0, -30) * alto * k, COLOR_CONTORNO, 11.0 * alto * k, true)
+				l.draw_line(p + Vector2(0, 2) * k, p + Vector2(0, -28) * alto * k, Color("#B07A55"), 6.5 * alto * k, true)
 		"guirnalda":
 			l.draw_polyline(puntos, COLOR_CONTORNO, 3.0 * k, true)
 			var i := 0
 			for muestra: Array in a_lo_largo(puntos, 28.0 * k):
-				var foco: Vector2 = muestra[0] + Vector2(0, 9) * k
-				l.draw_circle(foco, 9.0 * k, COLOR_CONTORNO)
-				l.draw_circle(foco, 7.0 * k, Figura.COLORES_ARCOIRIS[i % Figura.COLORES_ARCOIRIS.size()])
-				l.draw_circle(foco + Vector2(-2.5, -2.5) * k, 2.2 * k, Color(1, 1, 1, 0.7))
+				var foco: Vector2 = muestra[0] + Vector2(0, 9) * adorno * k
+				l.draw_circle(foco, 9.0 * adorno * k, COLOR_CONTORNO)
+				l.draw_circle(foco, 7.0 * adorno * k, Figura.COLORES_ARCOIRIS[i % Figura.COLORES_ARCOIRIS.size()])
+				l.draw_circle(foco + Vector2(-2.5, -2.5) * adorno * k, 2.2 * adorno * k, Color(1, 1, 1, 0.7))
 				i += 1
 		"arcoiris":
 			var bandas := Figura.COLORES_ARCOIRIS.size()
-			var ancho := 6.0 * k
+			var ancho := 6.0 * a * k
 			for lado in [-1.0, 1.0]:
-				l.draw_polyline(desplazar_linea(puntos, lado * (bandas / 2.0 * ancho + 1.5 * k)), COLOR_CONTORNO, 4.0 * k, true)
+				l.draw_polyline(desplazar_linea(puntos, lado * (bandas / 2.0 * ancho + 1.2 * k)), COLOR_CONTORNO, 3.0 * k, true)
 			for j in bandas:
-				l.draw_polyline(desplazar_linea(puntos, (j - (bandas - 1) / 2.0) * ancho), Figura.COLORES_ARCOIRIS[j], ancho + 1.0 * k, true)
+				l.draw_polyline(desplazar_linea(puntos, (j - (bandas - 1) / 2.0) * ancho), Figura.COLORES_ARCOIRIS[j], ancho + 0.8 * k, true)
 		"estelar", "destellos":
 			var i := 0
+			var tam := maxf(a, 0.75)
 			var muestras := a_lo_largo(puntos, 14.0 * k)
 			for muestra: Array in muestras:
 				if i % 3 == 0:
-					var forma := Figura.poligono("estrella", muestra[0], 10.0 * k)
+					var forma := Figura.poligono("estrella", muestra[0], 10.0 * tam * k)
 					l.draw_colored_polygon(forma, Color("#FFE38A") if tipo == "estelar" or i % 2 == 0 else Color("#FF9FD2"))
-					Figura.contornear(l, forma, 2.5 * k)
+					Figura.contornear(l, forma, 2.0 * k)
 				else:
-					l.draw_circle(muestra[0], 3.5 * k, Color("#FFF3B0") if tipo == "estelar" else Color("#FFD6F0"))
+					l.draw_circle(muestra[0], 3.5 * tam * k, Color("#FFF3B0") if tipo == "estelar" else Color("#FFD6F0"))
 				i += 1
 		_:
-			l.draw_polyline(puntos, COLOR_CONTORNO, 50.0 * k, true)
-			l.draw_polyline(puntos, Color("#8A90A6"), 42.0 * k, true)
+			var ancho := 42.0 * a * k
+			l.draw_polyline(puntos, COLOR_CONTORNO, ancho + 5.0 * k, true)
+			l.draw_polyline(puntos, Color("#8A90A6"), ancho, true)
 			var i := 0
 			for muestra: Array in a_lo_largo(puntos, 17.0 * k):
 				if i % 2 == 0:
 					var p: Vector2 = muestra[0]
 					var dir: Vector2 = muestra[1]
-					l.draw_line(p - dir * 7.0 * k, p + dir * 7.0 * k, Color.WHITE, 5.0 * k, true)
+					l.draw_line(p - dir * 7.0 * k, p + dir * 7.0 * k, Color.WHITE, 4.0 * adorno * k, true)
 				i += 1
 
 
@@ -1917,7 +2930,7 @@ func componer() -> Image:
 	if not caminos.is_empty():
 		var grabador := Grabador.new()
 		for camino: Dictionary in caminos:
-			dibujar_camino(grabador, camino["puntos"], camino["tipo"], float(camino.get("k", 1.0)))
+			dibujar_camino(grabador, camino["puntos"], camino["tipo"], float(camino.get("k", 1.0)), float(camino.get("ancho", ANCHO_CAMINO)))
 		grabador.volcar(imagen)
 	for nodo in _capa_sellos.get_children():
 		if nodo.is_queued_for_deletion():
@@ -1925,7 +2938,11 @@ func componer() -> Image:
 		if nodo is StickerVivo:
 			if nodo.fijo:
 				continue
-			Raster.estampar(imagen, _imagen_sticker(nodo), nodo.centro() + Vector2(0, -nodo.rebote * nodo.escala))
+			var donde: Vector2 = nodo.centro() + Vector2(0, -nodo.rebote * nodo.escala)
+			if nodo.achique != 1.0:
+				# Achicado alrededor de la base (jinete): la base queda donde esta.
+				donde += Vector2(0.0, _alto_base(nodo) * (1.0 - nodo.achique))
+			Raster.estampar(imagen, _imagen_sticker(nodo), donde)
 			continue
 		var sello: Image = nodo.get_meta("imagen")
 		if nodo.flip_h:

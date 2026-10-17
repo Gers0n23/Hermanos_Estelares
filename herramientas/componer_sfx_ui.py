@@ -12,6 +12,11 @@ Genera en assets/audio/sfx/ui/:
   fiuu.ogg           (UX HE-60 m2) silbidito agudo que baja apenas, muy suave: la racha se corta sin
                      sonido de error. Antes, soltar.ogg a pitch 0,75.
   blup.ogg           (UX HE-60 M1) burbuja alegre que sube: la barra del récord rebalsa.
+  polvo.ogg          (lienzo §10.1) "¡puff!" de aterrizaje: golpecito blando y grave + soplido de polvo.
+  polvo_boing.ogg    (lienzo §10.1, Maxi) aterrizaje gracioso: "boing" de resorte que tiembla + polvo.
+  chisporroteo.ogg   (lienzo §10.2) el sol se quema fuera del cielo: chispitas crepitantes, cortas y suaves.
+  rebobinar.ogg      (lienzo §10.3) deshacer: "bwip" que sube rapido, como rebobinar una cinta.
+  fuuush.ogg         (lienzo §10.4) la escoba barre la hoja: soplido que sube y baja.
 
 Uso:  python herramientas/componer_sfx_ui.py            (solo escribe los que faltan)
       python herramientas/componer_sfx_ui.py --forzar   (reescribe todos)
@@ -94,11 +99,96 @@ def sfx_blup() -> np.ndarray:
     return np.sin(fase) * env * 0.4
 
 
+def _soplido(segundos: float, k: float, semilla: int) -> np.ndarray:
+    rng = np.random.default_rng(semilla)
+    n = int(segundos * FS)
+    ruido = rng.standard_normal(n)
+    filtrado = np.zeros(n)
+    for i in range(1, n):
+        filtrado[i] = filtrado[i - 1] + k * (ruido[i] - filtrado[i - 1])
+    return filtrado / np.max(np.abs(filtrado))
+
+
+def sfx_polvo() -> np.ndarray:
+    """Golpecito blando (seno que cae 180 -> 70 Hz) mas un soplido corto de polvo."""
+    n = int(0.45 * FS)
+    t = np.arange(n) / FS
+    f = 70 + 110 * np.exp(-t / 0.03)
+    golpe = np.sin(2 * np.pi * np.cumsum(f) / FS) * np.exp(-t / 0.06)
+    polvo = _soplido(0.45, 0.18, 11) * np.minimum(1.0, t / 0.02) * np.exp(-t / 0.12)
+    pista = 0.9 * golpe + 0.6 * polvo
+    return pista / np.max(np.abs(pista)) * 0.45
+
+
+def sfx_polvo_boing() -> np.ndarray:
+    """Boing de resorte: tono que baja con vibrato ancho que se calma, y polvo al final."""
+    n = int(0.7 * FS)
+    t = np.arange(n) / FS
+    midi = 62 - 10 * (t / t[-1]) + 1.6 * np.sin(2 * np.pi * 11.0 * t) * np.exp(-t / 0.25)
+    f = 440.0 * 2 ** ((midi - 69) / 12)
+    boing = np.sin(2 * np.pi * np.cumsum(f) / FS) * np.minimum(1.0, t / 0.01) * np.exp(-t / 0.22)
+    polvo = np.zeros(n)
+    base = sfx_polvo()
+    polvo[: len(base)] = base[: n]
+    pista = 0.75 * boing + 0.8 * polvo
+    return pista / np.max(np.abs(pista)) * 0.45
+
+
+def sfx_chisporroteo() -> np.ndarray:
+    """Chispitas: clics de ruido muy cortos al azar sobre un siseo suave que se apaga."""
+    rng = np.random.default_rng(5)
+    n = int(0.6 * FS)
+    t = np.arange(n) / FS
+    siseo = rng.standard_normal(n)
+    siseo = np.diff(np.concatenate([[0.0], siseo])) * 0.25 * np.exp(-t / 0.25)
+    clics = np.zeros(n)
+    for _ in range(26):
+        i = int(rng.uniform(0, 0.5) * FS)
+        largo = int(0.004 * FS)
+        clics[i: i + largo] += rng.standard_normal(min(largo, n - i)) * np.exp(-np.arange(min(largo, n - i)) / 40.0) * rng.uniform(0.4, 1.0)
+    pista = siseo + clics
+    cola = int(0.05 * FS)
+    pista[-cola:] *= np.linspace(1, 0, cola)
+    return pista / np.max(np.abs(pista)) * 0.35
+
+
+def sfx_rebobinar() -> np.ndarray:
+    """Bwip: seno que sube una octava muy rapido, con un eco cortito."""
+    n = int(0.22 * FS)
+    t = np.arange(n) / FS
+    midi = 72 + 12 * (t / 0.12).clip(0, 1) ** 0.7
+    f = 440.0 * 2 ** ((midi - 69) / 12)
+    tono = np.sin(2 * np.pi * np.cumsum(f) / FS) * np.minimum(1.0, t / 0.006) * np.exp(-t / 0.07)
+    eco = int(0.06 * FS)
+    tono[eco:] += 0.3 * tono[:-eco].copy()
+    return tono / np.max(np.abs(tono)) * 0.32
+
+
+def sfx_fuuush() -> np.ndarray:
+    """Soplido de escoba: ruido cuyo filtro se abre y se cierra (fuu-uush), 0,7 s."""
+    rng = np.random.default_rng(3)
+    n = int(0.7 * FS)
+    t = np.arange(n) / FS
+    ruido = rng.standard_normal(n)
+    k = 0.04 + 0.3 * np.sin(np.pi * t / t[-1]) ** 2
+    filtrado = np.zeros(n)
+    for i in range(1, n):
+        filtrado[i] = filtrado[i - 1] + k[i] * (ruido[i] - filtrado[i - 1])
+    env = np.sin(np.pi * t / t[-1]) ** 1.5
+    pista = filtrado * env
+    return pista / np.max(np.abs(pista)) * 0.38
+
+
 EFECTOS = {
     "zona_dormida.ogg": sfx_zona_dormida,
     "puf.ogg": sfx_puf,
     "fiuu.ogg": sfx_fiuu,
     "blup.ogg": sfx_blup,
+    "polvo.ogg": sfx_polvo,
+    "polvo_boing.ogg": sfx_polvo_boing,
+    "chisporroteo.ogg": sfx_chisporroteo,
+    "rebobinar.ogg": sfx_rebobinar,
+    "fuuush.ogg": sfx_fuuush,
 }
 
 

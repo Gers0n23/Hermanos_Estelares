@@ -677,7 +677,7 @@ def voces_perfil(perfil):
     comunes["hoja_lista"] = [voz("comun/hoja_lista", "¡Lo lograste todo! Muéstrame tu dibujo.")]
     comunes["ya_hecho"] = [voz("comun/ya_hecho", "¡Eso ya lo habías hecho!")]
     for grupo, texto in [("colores", "¡Colores!"), ("pinceles", "¡Pinceles!"), ("cosas", "¡Cosas que se mueven!"),
-                         ("decorados", "¡Decorados!"), ("trajes", "¡Trajes!")]:
+                         ("decorados", "¡Decorados!"), ("trajes", "¡Trajes!"), ("amigos", "¡Amigos!")]:
         comunes["grupo_" + grupo] = voz("comun/grupo_" + grupo, texto)
     if perfil == "semilla":
         comunes["muestramelo"] = [voz(p + "muestramelo_01", "¿Me muestras tu dibujo? ¡Toca mi carita!"), voz(p + "muestramelo_02", "¡Qué lindo! Toca mi carita para mostrármelo.")]
@@ -1085,6 +1085,8 @@ def escena_parque_dinos():
         "vivos": ["trex", "spinosaurio"], "lugares": [], "decorados": ["huevo"], "caminos": ["sendero"],
         "lugares_fondo": [{"id": "volcan", "ancla": [1020, 520], "radio": 90, "region": "volcan"},
                           {"id": "lago", "ancla": [300, 560], "radio": 90, "region": "lago"}],
+        # Cielo hasta donde empieza el pasto (catalogo §2.1): alli los que pesan caen (ficha §10.1).
+        "zonas": {"cielo": [0, 0, W2, 440]},
         "herramientas": ["pincel"], "herramienta_inicial": "sello_trex", "portada": ["trex", "spinosaurio", "huevo"],
         "al_llegar": {"lago": {"efecto": "agua", "voz": voz("escenas/parque_dinos/llega_lago", "¡Glu, glu! ¡Qué rica el agua!")},
                       "volcan": {"efecto": "", "voz": voz("escenas/parque_dinos/llega_volcan", "¡Grrr!")}},
@@ -1179,6 +1181,21 @@ def escena_ciudad_ponys():
 ESCENAS_V2 = {"semilla": [escena_parque_dinos], "brote": [escena_granja_ponys], "estrella": [escena_ciudad_ponys]}
 
 
+# Ficha motor-lienzo-libre §11.3: los personajes como stickers "amigos", en todas las escenas con tema.
+AMIGOS = ["maxi", "nicole", "sofia", "papa", "cometa", "coco", "toby", "coleccionauta"]
+NOMBRES_AMIGOS = {
+    "maxi": "¡Maxi, el explorador valiente!", "nicole": "¡Nicole, la artista!", "sofia": "¡Sofía, la capitana!",
+    "papa": "¡Papá!", "cometa": "¡Cometa, nuestro amigo del espacio!", "coco": "¡Coco, la camaleona!",
+    "toby": "¡Toby, el perrito astronauta!", "coleccionauta": "¡El Coleccionauta! Jiji.",
+}
+
+
+def amigos_v2():
+    for id_ in AMIGOS:
+        voz("stickers/" + id_, NOMBRES_AMIGOS[id_])
+    return list(AMIGOS)
+
+
 def temas_v2(perfil):
     temas = [f() for f in ESCENAS_V2[perfil]]
     for t in temas:
@@ -1203,6 +1220,12 @@ def nivel(zona_i, perfil, encargo, lineas, **kw):
     d.update(kw)
     voces = voces_perfil(perfil)
     voces.update(lineas)
+    # Ficha motor-lienzo-libre §10: el sol fuera del cielo y la escoba de reiniciar (todas las hojas).
+    voces.update({
+        "sol_quema": voz("comun/sol_quema", "¡Uy, qué calor! El sol vive en el cielo."),
+        "reiniciar_mantener": voz("comun/reiniciar_mantener", "Para empezar de nuevo, deja el dedo apretado en la escoba."),
+        "reiniciar": voz("comun/reiniciar", "¡Fuuush! ¡Hoja nueva, limpiecita!"),
+    })
     d["lineas_voz"] = voces
     return d
 
@@ -1226,11 +1249,13 @@ for _perfil in ("semilla", "brote", "estrella"):
     temas_de(_perfil)  # mantiene registradas las voces v1 (siguen en disco para el port)
 niveles.append(nivel(0, "semilla", "libre", voces_lienzo_tema("semilla"), paleta=PAL_SEM, segundos_recordar_mostrar=90, sellos_vivos=True,
                      temas=temas_v2("semilla"), temas_por_partida=1, opciones_tema=1, al_menos_una="favorito",
-                     voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
+                     voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2(), amigos=amigos_v2()))
 niveles.append(nivel(0, "brote", "libre", voces_lienzo_tema("brote"), paleta=PAL_COMP, color_inicial="rosa", lado_sello=104,
-                     temas=temas_v2("brote"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
+                     temas=temas_v2("brote"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2(),
+                     amigos=amigos_v2()))
 niveles.append(nivel(0, "estrella", "libre", voces_lienzo_tema("estrella"), paleta=PAL_COMP, color_inicial="turquesa", lado_sello=92,
-                     temas=temas_v2("estrella"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
+                     temas=temas_v2("estrella"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2(),
+                     amigos=amigos_v2()))
 # Zona 2
 niveles.append(nivel(1, "semilla", "sellos_escena", {"intro": voz("semilla/intro_sellos", "¡Mira esta pradera! Toca abajo un dinosaurio o un autito, y después toca la pradera para ponerlo."),
                                                       "siguiente": [voz("semilla/siguiente_sellos", "¡Otro lugar para jugar! ¡A poner dinosaurios!")]},
