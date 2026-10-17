@@ -105,7 +105,7 @@ Detalle histórico: ver archivo/TABLERO-historico.md
 | ID | Tarjeta | Estado | Dependencias | Responsable |
 |---|---|---|---|---|
 | HE-01 | Instalar Godot 4.x + `project.godot` base + GodotPrompter y godot-mcp | ✅ Hecho (18-Jul-2026) | — | Dev |
-| HE-02 | Guía de estilo visual (paleta, contorno, tipografía) + SVG idle de los 3 hermanos y de **Cometa** (reemplaza a "Estelita"), con aprobación de los QA junior | 🔄 En curso — implementación verificada por el SM (guía §6 en `docs/guia-estilo-generacion.md`, `cometa_base.svg`, SVG de los hermanos). **No cierra**: falta la aprobación de los QA junior (Maxi, Nicole, Sofía) y del PO | HE-D2 | Dev + PO |
+| HE-02 | Guía de estilo visual (paleta, contorno, tipografía) + SVG idle de los 3 hermanos y de **Cometa** (reemplaza a "Estelita"), con aprobación de los QA junior | 🟡 En revisión del PO, fuera del WIP (17-Oct; no es ✅) — implementación verificada por el SM (guía §6 en `docs/guia-estilo-generacion.md`, `cometa_base.svg`, SVG de los hermanos). **No cierra**: falta la aprobación de los QA junior (Maxi, Nicole, Sofía) y del PO | HE-D2 | Dev + PO |
 | HE-03 | Pipeline de assets SVG→PNG + evaluación de MCP (stack §7) | ✅ Hecho (18-Jul-2026) | HE-01 | Dev |
 | HE-04 | Base de audio: buses, autoload `Audio`, sfx CC0, `guion_voces.md` | ✅ Hecho (19-Jul-2026) | HE-01 | Dev |
 | HE-05 | Pantalla de título animada | ✅ Hecho (06-Ago-2026) | HE-01 | Dev |
