@@ -61,6 +61,7 @@ var espera := 0.0
 var mayor_cadena := 0
 var _vel_tragar := VEL_TRAGAR
 var _sig_id := 0
+var _atraidas: Array = []  ## [id de la punta de adelante, id de la de atrás] de cortes que se están cerrando
 
 
 func diametro() -> float:
@@ -86,6 +87,7 @@ func configurar(nivel: Dictionary, recorrido_rio: RecorridoRio, semilla: int = -
 func reiniciar() -> void:
 	gotas.clear()
 	balas.clear()
+	_atraidas.clear()
 	var previo := ""
 	var repetidas := 0
 	var d := diametro()
@@ -312,7 +314,17 @@ func avanzar(dt: float) -> void:
 
 
 ## Si los extremos de un corte son del mismo color, el tramo de adelante vuelve hasta chocar.
+## El choque se detecta con el mismo margen que `tocan()`: si no, un hueco que queda entre
+## `diametro()` y `diametro() + 2` ya cuenta como "pegado" y las puntas se juntaban sin reventar.
 func _retroceder(dt: float) -> void:
+	# Cortes atraídos el paso anterior que se cerraron por otro lado (la cola los empujó): igual chocan.
+	for par in _atraidas:
+		var i := _indice_de(par[0])
+		if i >= 0 and i + 1 < gotas.size() and gotas[i + 1]["id"] == par[1] and tocan(i):
+			_atraidas.clear()
+			_chocar(i)
+			return
+	_atraidas.clear()
 	var grupos: Array = []
 	var ini := 0
 	for i in gotas.size():
@@ -326,12 +338,29 @@ func _retroceder(dt: float) -> void:
 			continue
 		for k in range(a.x, a.y + 1):
 			gotas[k]["s"] -= VEL_RETROCESO * dt
-		var falta: float = diametro() - (gotas[a.y]["s"] - gotas[b0]["s"])
-		if falta > 0.0:
-			for k in range(a.x, a.y + 1):
-				gotas[k]["s"] += falta
-			_reventar_en(a.y, true)
-			break
+		if tocan(a.y):
+			_chocar(a.y)
+			_atraidas.clear()
+			return
+		_atraidas.append([gotas[a.y]["id"], gotas[b0]["id"]])
+
+
+## Las puntas iguales de un corte (`i` adelante, `i + 1` atrás) quedan justo pegadas y revientan en cadena.
+func _chocar(i: int) -> void:
+	var falta: float = diametro() - (gotas[i]["s"] - gotas[i + 1]["s"])
+	var desde := i
+	while desde > 0 and tocan(desde - 1):
+		desde -= 1
+	for k in range(desde, i + 1):
+		gotas[k]["s"] += falta
+	_reventar_en(i, true)
+
+
+func _indice_de(id: int) -> int:
+	for i in gotas.size():
+		if gotas[i]["id"] == id:
+			return i
+	return -1
 
 
 ## Las que se tocan se empujan hacia adelante, con suavidad (la gota insertada "abre espacio").

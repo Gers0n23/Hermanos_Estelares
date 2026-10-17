@@ -137,6 +137,23 @@ func _probar_reglas() -> void:
 	_chequear(logica.gotas.size() == 2, "después de la cadena quedan solo las 2 amarillas")
 	_chequear(logica.puntos == 30 + 30 * 2, "la cadena multiplica los puntos (%d)" % logica.puntos)
 
+	# Dos grupos rojos que se juntan por retroceso revientan SIEMPRE, caiga donde caiga el hueco
+	# (feedback del PO 17-Oct: a veces chocaban y quedaban pegadas sin reventar).
+	var choques_ok := 0
+	var choques := 0
+	var hueco := 0.0
+	while hueco < 40.0:
+		_armar(logica, ["azul", "rojo", "rojo", "rojo", "rojo", "amarillo", "amarillo"])
+		for k in range(3, 7):
+			logica.gotas[k]["s"] -= hueco + 2.0 * logica.diametro()
+		for k in 120:
+			logica.avanzar(DT)
+		choques += 1
+		if logica.gotas.size() == 3:
+			choques_ok += 1
+		hueco += 0.37
+	_chequear(choques_ok == choques, "dos grupos rojos que chocan por retroceso revientan siempre (%d de %d)" % [choques_ok, choques])
+
 	# Mezcla (Sofía): verde verde [amarillo] azul -> amarillo + azul = verde, revientan 4 verdes.
 	var sofia := _logica(NIVELES["sofia"])
 	_armar(sofia, ["verde", "verde", "azul", "rojo", "naranja"])
