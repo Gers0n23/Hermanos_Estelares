@@ -23,7 +23,7 @@
   - Cadena técnica: `GestorTurnos` ya existe (HE-59); faltan `batalla.gd` y `viaje_siguiente_requiere`.
   - **Riesgo del guardado**: cualquier ejecución del juego sin `--script` migra el `progreso.json` real a v3 (no pierde datos, pero cambia el archivo). Ya se restauró desde respaldo (md5 ff55e2f4abf17f25618fa7ee446b11b0). Respaldo antes de cada prueba.
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
-  - **Río v2**: HE-91 desbloqueada (no depende de R17); HE-94 sigue bloqueada por la decisión "naranja/naranjo" del PO (única pregunta abierta del Río v2).
+  - **Río v2**: HE-91 en curso (no depende de R17); HE-94 sigue bloqueada por la decisión "naranja/naranjo" del PO (única pregunta abierta del Río v2).
   - **Riesgo (Río de la batalla)**: al pasar `rio_equipo.json` a `grupo` y `arcoiris`, el calibrado v1 deja de valer y cambia la duración de la ronda del Río; eso mueve la duración total de la batalla (≈28-30 min) con la que se decide R17 y que HE-80 toma como marco. HE-92 debe re-simularla e informar el delta; si R17 se decide antes, revisar la cifra con el dato nuevo. HE-91 no debe romper el modo equipo (`GestorTurnos`, `cadena_vale_aciertos`).
 - **Avance general**: **26/118 tarjetas ✅** (HE-90 ✅).
 - **Próximos pasos**:
