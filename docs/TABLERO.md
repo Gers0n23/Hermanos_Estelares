@@ -39,6 +39,7 @@
 - **Pendientes del PO**:
   - **decidir R17**: duración de la Torre (A recomendada, B o C);
   - jugar HE-59 y HE-89 en PC (DoD 2) antes de la prueba en tablet;
+  - **Pinta v2 (HE-97)**, preguntas por choques con el GDD: (1) Nicole: el GDD §5 dice un objetivo a la vez; se propone que vea 3 y solo lata el primero; (2) actualizar el GDD §4: Pinta deja de ser "sin evaluar", aunque sigue sin castigo; (3) guardar la hoja a medias (GDD §6.8), porque las hojas duran ~10 min;
   - HE-89: decidir si se mantienen las rondas "a la vista" de Nicole (z1 r1-r2, z4 r1, z5 r1) ahora que el vistazo muestra todas las cartas;
   - revisar HE-10 y aprobar HE-02 con los QA junior, y hacer el playtest de HE-60 (ya no consumen WIP);
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
