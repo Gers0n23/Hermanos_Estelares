@@ -8,7 +8,7 @@
 
 - **Última actualización**: 17-Oct-2026. Nace HE-89 (Parejas: vistazo de todas las cartas, también para Maxi, y tutorial de Coco una sola vez por hermano), ya implementada y verificada en PC: 🟡 En revisión del PO. HE-59 (modo equipo) con código completo y verificado en PC: pasa a 🟡 En revisión del PO. Ficha `motor-lanzar.md` v4 (§25, Torre en 3 etapas) desde la maqueta `docs/maquetas/torre-v2.html` aprobada por el PO; nace HE-88. La Torre (HE-76) espera la decisión del PO sobre su duración (R17).
 - **Fase activa**: **Fase 1 — Núcleo + Capítulo 1 completo**. **Prioridad vigente (decisión del PO del 06-Oct)**: la épica "Juego en equipo y Parejas de Coco con reto real" va antes de lo que falta del camino crítico del capítulo 1. La Fase 0.5 (arte conceptual) sigue abierta en paralelo, sin prioridad.
-- **WIP de Dev**: **0/2**. HE-59 sale del WIP en 🟡, igual que HE-02, HE-10 y HE-60.
+- **WIP de Dev**: **0/2**. HE-59 y HE-89 salen del WIP en 🟡, igual que HE-02, HE-10 y HE-60.
 - **En curso (Dev)**: ninguna. La siguiente es HE-76, que **no entra en curso hasta que el PO decida la duración de la Torre (R17)**.
 - **En revisión del PO (fuera del WIP, no están ✅)**:
   - HE-59: código completo, verificado en PC (`qa_test_gestor_turnos` 133 OK y regresiones en 0 fallos). Falta que el PO juegue en PC, la prueba en tablet, las voces de equipo (`--estimar` y OK del costo) y la auditoría UX/QA (HE-64).
