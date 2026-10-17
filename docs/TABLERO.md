@@ -29,7 +29,7 @@
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
   - antes del playtest de HE-60: limpiar `especiales_conocidos` de Sofía en el guardado real (con el juego cerrado y respaldo);
   - decidir si se graba a los niños en la cuenta regresiva y la fiesta (opcional: los tres o ninguno);
-  - grabaciones caseras: 22 del cierre (19 del Coleccionauta y 3 de papá, incluida `derrota_1_coleccionauta`) y 33 de papá para la batalla;
+  - grabaciones caseras: 21 del cierre (19 del Coleccionauta y 2 de papá) + 1 de papá del guion v4 (`derrota_1_coleccionauta`) y 33 de papá para la batalla;
   - decisiones menores abiertas: "naranjo" o "naranja", monumentos de 16-20 piezas, P8 (alcance de las zonas 4-5), proveedor de video de HE-30 y si el viaje estelar se registra como tarjeta.
 
 Historial completo del estado: ver [archivo/TABLERO-historico.md](archivo/TABLERO-historico.md).
