@@ -27,7 +27,8 @@
   - **Río v2**: HE-91 (implementación) no entra en curso hasta que el PO apruebe la maqueta (HE-90); HE-92 espera la pregunta 1 (zona de entrada de los 2 + 1); HE-94 espera "naranja/naranjo". No dependen de R17.
 - **Avance general**: **25/118 tarjetas ✅** (nacen HE-90 a HE-95).
 - **Próximos pasos**:
-  1. **PO**: decidir R17 (A, B o C); jugar HE-59 y HE-89 en PC.
+  1. **PO**: decidir R17 (A, B o C); jugar HE-59 y HE-89 en PC; probar la maqueta del Río v2 en la tablet (HE-90).
+  1b. Con la maqueta aprobada: HE-91 es candidata al WIP de Dev (no depende de R17); en paralelo, sin WIP: HE-92, HE-93, HE-94 y la parte de ficha de HE-95.
   2. Sin WIP de Dev: arte N2-N21 y de las etapas (HE-74 y HE-75, `disenador-personajes`, incluido el arte definitivo de la UI de equipo); HE-88 tras la decisión R17; HE-89: recalibración de Parejas (`disenador-niveles`) y auditoría UX del globito (`experto-ux-parvulo`); un solo `--estimar` de voces (HE-60, HE-59, HE-67, HE-86 y `vistazo_mira` de HE-89) para el OK del PO; HE-72 (GDD).
   3. `dev-godot`, con la decisión R17 tomada: HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
   4. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79), ahora por etapas (`etapas[]`). De eso depende el gigante A.
