@@ -245,7 +245,7 @@ Detalle histórico: ver archivo/TABLERO-historico.md
 6. **Cuenta regresiva Sofía → Nicole → Maxi, un retrato a la vez**: el retrato de Maxi mide **≥200 px**; recordatorio a los 8 s; salto solo **a los 15 s para Maxi** y a los 20 s para las hermanas; tocar un retrato que no brilla responde sin "bup" ni avance. Voces de los niños opcionales, TTS de respaldo.
 7. **Línea de papá de ~8 s partida en dos.**
 8. **Dato de los marineros: se deja.**
-9. **Globos al retomar el parcial: canasta entera** (la calibración HE-80 debe revisar el riesgo R5, "salir y volver como truco").
+9. **Globos al retomar el parcial: mínimo 5, redondeado a 5/9/13** (ficha v3 §12; reemplaza la "canasta entera"; R5 se observa en el playtest).
 10. **Destellos de la revancha: monto chico** (lo fija `disenador-mecanicas` en HE-80).
 11. **Revancha permitida con dos hermanos, pero sin estrellitas ni récord** (estrellitas y récord familiar solo con los tres; globos calibrados para que cada una juegue ≥2 turnos).
 12. **La Torre en HE-39: se decide tras el playtest** del capítulo 1 (HE-18).
