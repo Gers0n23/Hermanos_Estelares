@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://poc/cinematica_codigo/cinematica_choque_cometa.gd" id="1"]
+
+[node name="cinematica_choque_cometa" type="Node2D"]
+script = ExtResource("1")

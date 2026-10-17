@@ -73,6 +73,8 @@
     "secreta_lejana": "voces/arcoiris/mapa/secreta_lejana.wav",
     "secreta_revelada": "voces/arcoiris/mapa/secreta_revelada.wav",
     "estacion_pronto": "voces/arcoiris/mapa/estacion_pronto.wav",
+    "equipo_llegada": "voces/arcoiris/mapa/equipo_llegada.wav",
+    "estacion_sin_equipo": "voces/arcoiris/mapa/equipo_estacion_pronto.wav",
     "cometa_vamos": "voces/arcoiris/mapa/cometa_vamos.wav",
     "todo_listo": "voces/arcoiris/mapa/todo_listo.wav",
     "dorado_disponible": "voces/arcoiris/mapa/dorado_disponible.wav",

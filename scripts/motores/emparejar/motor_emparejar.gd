@@ -217,6 +217,10 @@ var _ultimo_toque_vistazo := {}
 ## SOLO arneses QA: muestra la vela aunque falten sus voces (UX B1). En el juego siempre es false.
 var vela_sin_voz_en_pruebas := false
 
+## Zona y separacion del tablero: las del solitario o las del modo equipo (§4.1 de modo-equipo.md).
+var _zona_tablero := ZONA_TABLERO
+var _separacion := SEPARACION
+
 var _tiempo := 0.0
 var _base_anfitriona := Vector2.ZERO
 var _salto_anfitriona := 0.0
@@ -239,6 +243,9 @@ func _ready() -> void:
 	if nivel.is_empty():
 		push_error("motor_emparejar: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
+	if es_modo_equipo():
+		_preparar_equipo()
+		return
 	_preparar_rondas()
 	_conf = _config_de_ronda(0)
 	_configurar_desde_nivel()
@@ -259,6 +266,8 @@ func _process(delta: float) -> void:
 	var bamboleo := absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0
 	_anfitriona.position.y = _base_anfitriona.y - _salto_anfitriona - bamboleo
 	_avanzar_vela(delta, hablando)
+	if turnos != null:
+		_procesar_equipo(delta)
 
 
 ## UX M3: con la app en segundo plano (tablet) la vela no se consume.
@@ -370,12 +379,12 @@ func _construir_tablero() -> void:
 
 	var disposicion: Dictionary = _conf.get("disposicion", {})
 	var columnas := maxi(1, int(disposicion.get("columnas", 4)))
-	var filas := ceili(elementos.size() / float(columnas))
+	var filas := maxi(ceili(elementos.size() / float(columnas)), int(disposicion.get("filas", 0)))
 	_lado_carta = minf(LADO_MAXIMO_CARTA, minf(
-		(ZONA_TABLERO.size.x - SEPARACION * (columnas - 1)) / columnas,
-		(ZONA_TABLERO.size.y - SEPARACION * (filas - 1)) / filas))
-	var medida := Vector2(columnas, filas) * _lado_carta + Vector2(columnas - 1, filas - 1) * SEPARACION
-	var origen := ZONA_TABLERO.position + (ZONA_TABLERO.size - medida) / 2.0
+		(_zona_tablero.size.x - _separacion * (columnas - 1)) / columnas,
+		(_zona_tablero.size.y - _separacion * (filas - 1)) / filas))
+	var medida := Vector2(columnas, filas) * _lado_carta + Vector2(columnas - 1, filas - 1) * _separacion
+	var origen := _zona_tablero.position + (_zona_tablero.size - medida) / 2.0
 	_mesa.position = origen - Vector2(22, 22)
 	_mesa.size = medida + Vector2(44, 44)
 
@@ -384,7 +393,7 @@ func _construir_tablero() -> void:
 		var carta: CartaEmparejar = CARTA_ESCENA.instantiate()
 		_tablero.add_child(carta)
 		carta.size = Vector2.ONE * _lado_carta
-		carta.position = origen + Vector2(i % columnas, i / columnas) * (_lado_carta + SEPARACION)
+		carta.position = origen + Vector2(i % columnas, i / columnas) * (_lado_carta + _separacion)
 		carta.configurar(elementos[i], _oculto)
 		carta.halo_idle = halo_idle
 		carta.tocada.connect(_al_tocar_carta)
@@ -407,6 +416,9 @@ func _construir_progreso() -> void:
 
 
 func _al_tocar_carta(carta: CartaEmparejar) -> void:
+	if es_modo_equipo():
+		_al_tocar_carta_equipo(carta)
+		return
 	if carta.esta_acertada or _en_gag or _en_transicion:
 		return
 	if _en_vistazo:
@@ -851,8 +863,9 @@ func _linea_al_azar(clave: String) -> String:
 
 
 func _reproducir_voz(clave: String, ruta: String) -> void:
-	# Traza en consola para los arneses QA + reproduccion real via contrato base (HE-10).
-	if ruta != "":
+	# Traza en consola para los arneses QA + reproduccion real via contrato base (HE-10). Una clave del guion
+	# todavia "PENDIENTE" no suena (la ficha la deja asi hasta que el guionista la escriba).
+	if ruta != "" and ruta != "PENDIENTE":
 		print("[voz:%s] %s" % [clave, ruta])
 		reproducir_voz(ruta)
 
@@ -1764,3 +1777,692 @@ func _voz_cuando_calle(clave: String, ruta: String, maximo := SEGUNDOS_ESPERA_IN
 	await _esperar_voz(maximo)
 	if is_inside_tree():
 		_reproducir_voz(clave, ruta)
+
+
+# ---------------------------------------------------------------------------
+# Modo equipo: Parejas de Coco en equipo (docs/fichas/modo-equipo.md §4, §5 y §8; HE-59)
+# ---------------------------------------------------------------------------
+# El motor solo decide QUE termina un turno y aplica la capa de cada edad (§5.2). Orden, pase, puerta,
+# rival, tope, turno perfecto, resbalon, guirnalda y voces del pase viven en el GestorTurnos (nucleo).
+# - Maxi (semilla): turno guiado; Coco elige una pareja pendiente y sus cartas respiran con halo dorado.
+#   Siempre aporta un par (R5). Una carta sin halo se ve 700 ms y se tapa sola; tras 2 toques fuera del
+#   halo o 6 s sin tocar, las cartas del halo quedan a la vista. A los `semilla_auto_s` sin ningun toque,
+#   la jugada automatica forma el par del halo (M2).
+# - Nicole (brote): el primer "no es este" del turno es el besito de Coco (solo voz, nada en pantalla, B2);
+#   el segundo pasa el turno. Tras 2 turnos seguidos sin par, una carta de una pareja ya vista brilla tenue.
+# - Sofia (estrella): regla de mesa, el "no es este" pasa el turno en el acto.
+# - Sin numeros, racha visible, "¡a la primera!", vela ni record individual (R2, M1): la racha es solo
+#   sonido en arcoiris. Las cartas especiales (lupa, comodin) y la gomita del tablero impar llegan con
+#   HE-61: hoy un nivel de equipo se juega sin ellas.
+
+const ZONA_TABLERO_EQUIPO := Rect2(40, 128, 1200, 472)
+## N12: con 4 filas la separacion es de 10 px para que las cartas midan >= 110 px.
+const SEPARACION_EQUIPO_4_FILAS := 10.0
+const RECT_CASA_EQUIPO := Rect2(1172, 8, 100, 96)
+const SEGUNDOS_CARTA_SIN_HALO := 0.7
+const SEGUNDOS_HALO_A_LA_VISTA := 6.0
+const TOQUES_FUERA_PARA_DESTAPAR := 2
+## "Estable" en Parejas = el par ya volo a la cinta y no queda ninguna carta girando (§11.4).
+const SEGUNDOS_PAR_A_LA_CINTA := 0.9
+const VISTAZO_EQUIPO_MAX_PARES := 3
+
+var _eq: Dictionary = {}
+var _eq_comp: Dictionary = {}
+var _eq_halo: Array[CartaEmparejar] = []
+var _eq_toques_fuera := 0
+var _eq_sin_toque := 0.0
+var _eq_halo_a_la_vista := false
+var _eq_fallos_turno := 0
+var _eq_par_en_turno := false
+## Nicole: turnos seguidos sin par, solo en memoria de esta partida (nunca en el guardado, R2).
+var _eq_turnos_sin_par := {}
+var _eq_racha_sonido := 0
+var _eq_perfecto_0b := false
+## N13: "¡guardala para tu proximo turno!" una sola vez por partida (incluido el reintento).
+var _eq_guardala_dicha := false
+var _eq_tweens_gag: Array[Tween] = []
+var _eq_lugares_gag := {}
+var _eq_gustos := {}
+var _eq_victoria := false
+
+
+func _preparar_equipo() -> void:
+	var bloque = nivel.get("equipo", {})
+	_eq = bloque if bloque is Dictionary else {}
+	_eq_comp = _resolver_composicion()
+	# Layout de equipo (§4.1): Coco no tiene lugar fijo, la cinta de la pista reemplaza la barra de pares,
+	# Cometa vive en la pista y la casa queda arriba a la derecha (>= 96 px).
+	_anfitriona.hide()
+	_boton_cometa.hide()
+	_barra_progreso.hide()
+	_boton_pista.hide()
+	_boton_salir.position = RECT_CASA_EQUIPO.position
+	_boton_salir.size = RECT_CASA_EQUIPO.size
+	_boton_salir.pivot_offset = RECT_CASA_EQUIPO.size / 2.0
+	_conf = _config_equipo()
+	_configurar_desde_nivel()
+	_zona_tablero = ZONA_TABLERO_EQUIPO
+	_separacion = SEPARACION_EQUIPO_4_FILAS if int(_eq_comp.get("filas", 4)) >= 4 else SEPARACION
+	_construir_tablero()
+	var perfiles := {}
+	for id in equipo:
+		perfiles[id] = perfil_de(id)
+	var ui: Control = _boton_salir.get_parent()
+	turnos.configurar(equipo, _config_gestor(), perfiles, ui)
+	# La capa del equipo va bajo los efectos (el par que vuela a la cinta se ve encima de la pista).
+	var capa := ui.get_node_or_null("capa_equipo")
+	if capa != null:
+		ui.move_child(capa, _efectos.get_index())
+	turnos.turno_iniciado.connect(_al_iniciar_turno_equipo)
+	turnos.tope_alcanzado.connect(_al_tope_equipo)
+	turnos.jugada_automatica_pedida.connect(_jugada_automatica_equipo)
+	turnos.turno_cerrado.connect(_al_cerrar_turno_equipo)
+	turnos.entrada_bloqueada_cambio.connect(func(_b: bool) -> void: _actualizar_depuracion())
+	_actualizar_depuracion()
+	_arrancar_equipo()
+
+
+func _clave_equipo() -> String:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null:
+		return progreso.clave_equipo(equipo)
+	var copia := equipo.duplicate()
+	copia.sort()
+	return "+".join(PackedStringArray(copia))
+
+
+## La composicion del equipo (§8). Si no esta, la de mas pares, con aviso: nunca falla en silencio.
+func _resolver_composicion() -> Dictionary:
+	var comps = _eq.get("composiciones", {})
+	if not comps is Dictionary or comps.is_empty():
+		push_warning("motor_emparejar: el nivel de equipo %s no trae composiciones" % ruta_nivel)
+		return {"filas": 4, "columnas": 4, "cantidad": 8, "pasos_rival": 5}
+	var clave := _clave_equipo()
+	if comps.has(clave):
+		return comps[clave]
+	var mejor: Dictionary = {}
+	for k in comps:
+		var c: Dictionary = comps[k]
+		if mejor.is_empty() or int(c.get("cantidad", 0)) > int(mejor.get("cantidad", 0)):
+			mejor = c
+	push_warning("motor_emparejar: composicion '%s' no esta en %s; uso la de mas pares" % [clave, ruta_nivel])
+	return mejor
+
+
+## El nivel de equipo con la composicion aplicada. No usa perfil, rondas, limite_intentos, puntaje ni
+## umbrales (§8): si los trae, se ignoran. Las parejas se sortean del pool; las `fijo` siempre entran.
+func _config_equipo() -> Dictionary:
+	var conf: Dictionary = nivel.duplicate(true)
+	for clave in ["rondas", "puntaje", "limite_intentos", "umbrales_estrellitas", "umbrales_puntaje", "vistazo",
+			"perfil", "pistas_cuestan_estrellita", "intercambios_tras_acierto", "cartas_bailan", "tamano_grupo",
+			"ayuda_tras_fallos", "regalo_tras_derrotas", "grupos"]:
+		conf.erase(clave)
+	var pool: Array = nivel.get("pool", nivel.get("pares", []))
+	var fijos: Array = []
+	var resto: Array = []
+	for par: Dictionary in pool:
+		_eq_gustos[str(par.get("id_pareja", ""))] = par.get("gustos", [])
+		if bool(par.get("fijo", false)):
+			fijos.append(par)
+		else:
+			resto.append(par)
+	resto.shuffle()
+	var cantidad := int(_eq_comp.get("cantidad", pool.size()))
+	var elegidos: Array = fijos.slice(0, cantidad)
+	elegidos.append_array(resto.slice(0, maxi(0, cantidad - elegidos.size())))
+	conf["pares"] = elegidos
+	conf.erase("pool")
+	conf["disposicion"] = {"columnas": int(_eq_comp.get("columnas", 4)), "filas": int(_eq_comp.get("filas", 4))}
+	conf["oculto"] = true
+	# `tiempo_volteo_ms` y `ms_volteo_equipo` deben valer lo mismo; si difieren, manda el de equipo (§8).
+	conf["tiempo_volteo_ms"] = int(_eq.get("ms_volteo_equipo", nivel.get("tiempo_volteo_ms", 1500)))
+	conf["halo_idle"] = false
+	conf["visible_minimo_ms"] = 0
+	return conf
+
+
+## Lo que el gestor necesita, sin saber que es un par: pasos, topes por perfil (siempre con "semilla" =
+## `pares_turno_semilla`, R5), cuantos aciertos hay en total (la cinta), el record y las voces.
+func _config_gestor() -> Dictionary:
+	var config: Dictionary = _eq.duplicate(true)
+	config.erase("composiciones")
+	config["pasos_rival"] = int(_eq_comp.get("pasos_rival", 5))
+	var topes := {}
+	var pares_max = _eq_comp.get("pares_max_turno", {})
+	if pares_max is Dictionary:
+		topes = pares_max.duplicate()
+	var semilla := int(_eq.get("pares_turno_semilla", 1))
+	if topes.has("semilla") and int(topes["semilla"]) != semilla:
+		push_warning("motor_emparejar: pares_max_turno.semilla (%s) difiere de pares_turno_semilla (%d); manda pares_turno_semilla" % [topes["semilla"], semilla])
+	topes["semilla"] = semilla
+	config["aciertos_max_turno"] = topes
+	config["aciertos_totales"] = _pares_totales
+	config["lineas_voz"] = nivel.get("lineas_voz", {})
+	var record := -1
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and planeta_id != "":
+		record = progreso.obtener_record_equipo(planeta_id, _id_nivel_actual(), _clave_equipo())
+	config["record_pasos"] = record
+	return config
+
+
+func _con_tope() -> bool:
+	return _eq_comp.get("pares_max_turno", null) is Dictionary
+
+
+## Reparto -> presentacion de Coco (los trucos la primera vez de cada combinacion) -> vistazo -> 1er turno.
+func _arrancar_equipo() -> void:
+	await get_tree().create_timer(0.15 + _cartas.size() * SEGUNDOS_CASCADA_REPARTO + 0.3).timeout
+	if not is_inside_tree():
+		return
+	await _intro_equipo()
+	if not is_inside_tree():
+		return
+	await _vistazo_equipo()
+	if not is_inside_tree() or _eq_victoria:
+		return
+	turnos.empezar()
+
+
+func _intro_equipo() -> void:
+	var voces: Dictionary = _conf.get("lineas_voz", {})
+	var clave := _clave_equipo()
+	var progreso := get_node_or_null("/root/Progreso")
+	var con_guardado: bool = progreso != null and planeta_id != ""
+	var lineas: Array = []
+	var con_trucos: bool = not con_guardado or not progreso.trucos_presentados(clave)
+	if con_trucos:
+		lineas.append(str(voces.get("intro_equipo_trucos_apertura", "")))
+		var fragmentos = voces.get("intro_equipo_trucos", {})
+		if fragmentos is Dictionary:
+			for id in turnos.orden_unico():
+				lineas.append(str(fragmentos.get(id, "")))
+			lineas.append(str(fragmentos.get("equipo" if _con_tope() else "equipo_racha", "")))
+	# Con tope ninguna voz dice "si hay pareja, sigues jugando" a secas (N8): `intro_equipo_tope` si existe.
+	var intro = voces.get("intro_equipo", [])
+	var secuencia: Array = intro if intro is Array else [intro]
+	if _con_tope() and str(voces.get("intro_equipo_tope", "")) != "":
+		var resto := secuencia.slice(1)
+		secuencia = [voces["intro_equipo_tope"]]
+		secuencia.append_array(resto)
+	lineas.append_array(secuencia)
+	lineas.append(str(voces.get("rival_entra", "")))
+	var sonaron := await _decir_secuencia(lineas)
+	if con_trucos and con_guardado and sonaron > 0 and is_inside_tree():
+		progreso.marcar_trucos_presentados(clave)
+
+
+## Voces en orden, sin pisarse; las que faltan (o estan PENDIENTE) se saltan. Devuelve cuantas sonaron.
+func _decir_secuencia(lineas: Array) -> int:
+	var sonaron := 0
+	for linea in lineas:
+		var ruta := str(linea)
+		if ruta == "" or ruta == "PENDIENTE" or not _voz_existe(ruta):
+			continue
+		await _esperar_voz(6.0)
+		if not is_inside_tree():
+			return sonaron
+		_reproducir_voz("intro_equipo", ruta)
+		sonaron += 1
+	await _esperar_voz(6.0)
+	return sonaron
+
+
+## Vistazo de equipo (§5.4, M6 aceptado): parejas completas, maximo 3 pares, 3 s, "¡mirenlas bien, equipo!".
+func _vistazo_equipo() -> void:
+	var conf = _eq.get("vistazo", null)
+	if not conf is Dictionary:
+		return
+	var pares := clampi(int(conf.get("pares", 2)), 1, VISTAZO_EQUIPO_MAX_PARES)
+	_conf["vistazo"] = {"pares_completos": true, "cartas": pares * 2, "ms": int(conf.get("ms", 3000))}
+	await _hacer_vistazo()
+
+
+func _al_iniciar_turno_equipo(id: String, perfil: String) -> void:
+	_seleccionadas.clear()
+	_eq_fallos_turno = 0
+	_eq_toques_fuera = 0
+	_eq_sin_toque = 0.0
+	_eq_halo_a_la_vista = false
+	_eq_par_en_turno = false
+	_eq_racha_sonido = 0
+	_eq_perfecto_0b = false
+	_limpiar_halos()
+	_pintar_marco_mesa(turnos.color_de(id))
+	match perfil:
+		"semilla":
+			_elegir_halo_semilla(id)
+			_reproducir_voz("maxi_brillan", _linea_al_azar("maxi_brillan"))
+		"brote":
+			var sin_par := int(_eq_turnos_sin_par.get(id, 0))
+			var tras := int(_eq.get("ayuda_brote_tras_turnos_sin_par", 0))
+			if tras > 0 and sin_par >= tras:
+				if _ayuda_tenue_brote():
+					_reproducir_voz("brote_ayuda", _linea("brote_ayuda"))
+	_actualizar_depuracion()
+
+
+## El marco del tablero (la mesa) se tine del color de quien juega (m1).
+func _pintar_marco_mesa(color: Color) -> void:
+	var caja = _mesa.get_theme_stylebox("panel")
+	if caja is StyleBoxFlat:
+		var nueva: StyleBoxFlat = caja.duplicate()
+		nueva.border_color = color
+		nueva.set_border_width_all(6)
+		_mesa.add_theme_stylebox_override("panel", nueva)
+
+
+func _limpiar_halos() -> void:
+	for carta in _cartas:
+		carta.halo_idle = false
+		carta.halo_fuerte = false
+		carta.halo_tenue = false
+		carta.halo_vivo = false
+	_eq_halo.clear()
+
+
+## Coco elige la pareja del halo (§5.2): 1) nadie la vio y es de sus gustos; 2) nadie la vio; 3) cualquiera
+## pendiente. Nunca una carta sola (comodin).
+func _elegir_halo_semilla(id: String) -> void:
+	var grupos := _grupos_pendientes()
+	if grupos.is_empty():
+		return
+	var claves: Array = grupos.keys()
+	claves.shuffle()
+	var elegido = null
+	for criterio in [0, 1, 2]:
+		for clave in claves:
+			var cartas: Array = grupos[clave]
+			if cartas.size() < 2:
+				continue
+			var nadie_la_vio := cartas.all(func(c: CartaEmparejar) -> bool: return not _ya_vistas.has(c))
+			var gusta: bool = id in _eq_gustos.get(clave, [])
+			if (criterio == 0 and nadie_la_vio and gusta) or (criterio == 1 and nadie_la_vio) or criterio == 2:
+				elegido = clave
+				break
+		if elegido != null:
+			break
+	if elegido == null:
+		return
+	for carta: CartaEmparejar in grupos[elegido]:
+		carta.halo_idle = true
+		carta.halo_vivo = true
+		_eq_halo.append(carta)
+
+
+func _grupos_pendientes() -> Dictionary:
+	var grupos := {}
+	for carta in _cartas:
+		if carta.esta_acertada:
+			continue
+		if not grupos.has(carta.id_pareja):
+			grupos[carta.id_pareja] = []
+		grupos[carta.id_pareja].append(carta)
+	return grupos
+
+
+## Nicole tras 2 turnos sin par: una carta de una pareja YA VISTA brilla tenue al empezar su turno.
+func _ayuda_tenue_brote() -> bool:
+	var grupos := _grupos_pendientes()
+	var claves: Array = grupos.keys()
+	claves.shuffle()
+	for clave in claves:
+		for carta: CartaEmparejar in grupos[clave]:
+			if _ya_vistas.has(carta):
+				carta.halo_idle = true
+				carta.halo_tenue = true
+				return true
+	return false
+
+
+func _al_tocar_carta_equipo(carta: CartaEmparejar) -> void:
+	if carta.esta_acertada or _eq_victoria:
+		return
+	var bloqueada: bool = turnos == null or turnos.entrada_bloqueada() or not turnos.turno_activo() \
+		or _en_vistazo or en_derrota_equipo()
+	if bloqueada:
+		# B1.4: en todo el pase la carta responde con el pulso en < 100 ms, pero no se da vuelta.
+		if _eq_perfecto_0b:
+			_guino_0b(carta)
+		else:
+			carta.pulso_espera()
+		reproducir_sfx(SFX_TOQUE, 1.0, VOLUMEN_TOQUE_VISTAZO_DB)
+		return
+	_eq_sin_toque = 0.0
+	if _procesando:
+		# El besito de Nicole: tocar otra carta tapa al tiro el par que seguia a la vista.
+		_terminar_no_es_este(carta)
+	if turnos.perfil_actual() == "semilla":
+		_toque_semilla(carta)
+		return
+	if _seleccionadas.has(carta):
+		carta.pulso_espera()
+		return
+	if _seleccionadas.is_empty():
+		_jugada_virgen = true
+	_ya_vistas[carta] = true
+	carta.seleccionar()
+	reproducir_sfx(SFX_VOLTEAR)
+	_seleccionadas.append(carta)
+	if _seleccionadas.size() == _tamano_grupo or carta.id_pareja != _seleccionadas[0].id_pareja:
+		_resolver_par_equipo()
+
+
+## Turno guiado de Maxi (§5.2). Las cartas del halo se dan vuelta; una sin halo se ve un ratito y se tapa
+## sola (su turno no termina) y las del halo saltan para llamarlo.
+func _toque_semilla(carta: CartaEmparejar) -> void:
+	if carta in _eq_halo:
+		if _seleccionadas.has(carta):
+			carta.pulso_espera()
+			return
+		_ya_vistas[carta] = true
+		carta.seleccionar()
+		reproducir_sfx(SFX_VOLTEAR)
+		_seleccionadas.append(carta)
+		for otra in _eq_halo:
+			if otra != carta:
+				otra.halo_fuerte = true
+		var halos_elegidos := _seleccionadas.filter(func(c: CartaEmparejar) -> bool: return c in _eq_halo)
+		if halos_elegidos.size() >= _eq_halo.size():
+			_seleccionadas.clear()
+			var grupo: Array[CartaEmparejar] = []
+			grupo.assign(_eq_halo)
+			_par_equipo(grupo)
+		return
+	if carta.mostrando:
+		carta.pulso_espera()
+		return
+	# Carta normal: se da vuelta 700 ms, Coco dice que es (si la pareja tiene voz) y se tapa sola.
+	_ya_vistas[carta] = true
+	carta.seleccionar()
+	reproducir_sfx(SFX_VOLTEAR)
+	if _voces_par.has(carta.id_pareja):
+		_reproducir_voz("maxi_que_es", _voces_par[carta.id_pareja])
+	_despues(SEGUNDOS_CARTA_SIN_HALO, func() -> void:
+		if is_instance_valid(carta) and not carta.esta_acertada and not _seleccionadas.has(carta):
+			carta.deseleccionar(true))
+	for otra in _eq_halo:
+		otra.saltito()
+	_eq_toques_fuera += 1
+	if _eq_toques_fuera >= TOQUES_FUERA_PARA_DESTAPAR:
+		_halo_a_la_vista()
+
+
+## Tras 2 toques fuera del halo o 6 s sin tocar: las dos cartas del halo se quedan a la vista.
+func _halo_a_la_vista() -> void:
+	if _eq_halo_a_la_vista:
+		return
+	_eq_halo_a_la_vista = true
+	for carta in _eq_halo:
+		if not _seleccionadas.has(carta):
+			carta.destapar_vistazo()
+		carta.saltito()
+	_reproducir_voz("maxi_aqui", _linea("maxi_aqui"))
+
+
+func _resolver_par_equipo() -> void:
+	var grupo: Array[CartaEmparejar] = _seleccionadas.duplicate()
+	_seleccionadas.clear()
+	var a: CartaEmparejar = grupo[0]
+	var iguales := grupo.size() == _tamano_grupo
+	for carta in grupo:
+		iguales = iguales and carta.id_pareja == a.id_pareja
+	if iguales:
+		_par_equipo(grupo)
+		return
+	# "No es este": halo rosado y meneo amistoso; quienes miran solo dan animo (B2).
+	intento_fallido.emit()
+	reproducir_sfx(SFX_NO_ES_ESTE)
+	_eq_racha_sonido = 0
+	for carta in grupo:
+		carta.animar_no_es_este()
+	turnos.notificar_fallo_suave()
+	_procesando = true
+	_no_es_este_desde = Time.get_ticks_msec() / 1000.0
+	_no_es_este = grupo
+	_id_resolucion += 1
+	var id := _id_resolucion
+	var besito: bool = turnos.perfil_actual() == "brote" and bool(_eq.get("segunda_oportunidad_brote", true)) \
+		and _eq_fallos_turno == 0
+	_eq_fallos_turno += 1
+	if besito:
+		# Segunda oportunidad: SOLO la voz de Coco ("¡uy, otra!"). Nada queda en pantalla para contar.
+		_reproducir_voz("segunda_oportunidad", _linea("segunda_oportunidad"))
+	else:
+		_reproducir_voz("fallo_equipo", _linea_al_azar("fallo_equipo"))
+		turnos.terminar_turno(true)
+	# Las dos cartas quedan a la vista `ms_volteo_equipo` (todo el equipo las ve) y se tapan.
+	await get_tree().create_timer(_tiempo_volteo_ms / 1000.0).timeout
+	if id == _id_resolucion and is_inside_tree():
+		_terminar_no_es_este()
+
+
+## Pareja formada en equipo: micro-celebracion, el par vuela a la cinta y el gestor cuenta el acierto. Si es
+## la ultima, manda la victoria (sin "¡turno perfecto!" ni retroceso).
+func _par_equipo(grupo: Array[CartaEmparejar]) -> void:
+	_pares_acertados += 1
+	_eq_par_en_turno = true
+	var a: CartaEmparejar = grupo[0]
+	var semilla: bool = turnos.perfil_actual() == "semilla"
+	for carta in grupo:
+		carta.halo_idle = false
+		carta.halo_fuerte = false
+		carta.halo_tenue = false
+		carta.halo_vivo = false
+		carta.marcar_acertada()
+	_eq_halo.clear()
+	# M1: la racha en equipo es solo sonido, un semitono mas por par seguido, sin numeros.
+	_eq_racha_sonido += 1
+	reproducir_sfx(SFX_PAR, pow(2.0, (mini(_eq_racha_sonido, 5) - 1) / 12.0))
+	par_acertado.emit(a.id_pareja)
+	_celebrar_grupo(grupo)
+	_volar_a_cinta(grupo)
+	if _pares_acertados >= _pares_totales:
+		_victoria_equipo(a)
+		return
+	if semilla:
+		_reproducir_voz("maxi_par", _linea("maxi_par"))
+	elif _voces_par.has(a.id_pareja):
+		_reproducir_voz("par", _voces_par[a.id_pareja])
+	else:
+		_reproducir_voz("acierto_equipo", _linea_al_azar("acierto_equipo"))
+	turnos.notificar_acierto()
+	_actualizar_depuracion()
+
+
+func _volar_a_cinta(grupo: Array[CartaEmparejar]) -> void:
+	var medio := Vector2.ZERO
+	var voladora: CartaEmparejar = grupo[0]
+	for carta in grupo:
+		medio += carta.global_position + carta.size / 2.0
+		if _puntaje_voladora(carta) > _puntaje_voladora(voladora):
+			voladora = carta
+	medio /= grupo.size()
+	var volador := Icono.new()
+	volador.figura = voladora.figura
+	volador.color = voladora.color_figura
+	volador.alegre = true
+	volador.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var lado := _lado_carta * 0.6
+	volador.size = Vector2.ONE * lado
+	volador.pivot_offset = volador.size / 2.0
+	_efectos.add_child(volador)
+	volador.global_position = medio - volador.size / 2.0
+	var destino: Vector2 = turnos.punto_cinta()
+	var tween := volador.create_tween()
+	tween.tween_property(volador, "scale", Vector2.ONE * 1.2, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(volador, "global_position", destino - volador.size / 2.0, 0.55).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(volador, "scale", Vector2.ONE * 0.3, 0.55)
+	tween.tween_callback(func() -> void:
+		_estallido(destino, 6, [DORADO, voladora.color_figura], 0.5)
+		volador.queue_free())
+
+
+## El gestor llego al tope del turno: se confirma cuando el par ya volo y no queda ninguna carta girando.
+func _al_tope_equipo() -> void:
+	await get_tree().create_timer(SEGUNDOS_PAR_A_LA_CINTA).timeout
+	if is_inside_tree() and not _eq_victoria and turnos != null:
+		turnos.confirmar_turno_estable()
+
+
+## M2: jugada automatica de Maxi (20 s sin tocar nada): forma el par del halo como si lo hubiera tocado.
+func _jugada_automatica_equipo() -> void:
+	if turnos.perfil_actual() != "semilla" or _eq_halo.is_empty() or _eq_victoria:
+		return
+	for carta in _eq_halo.duplicate():
+		if not _seleccionadas.has(carta) and not carta.esta_acertada:
+			_toque_semilla(carta)
+
+
+## Cierre del turno: Nicole lleva la cuenta (solo en memoria) de turnos sin par para su ayuda; con
+## `perfecto`, hasta el proximo turno una carta tocada hace el guino de N13.
+func _al_cerrar_turno_equipo(id: String, perfecto: bool) -> void:
+	_eq_perfecto_0b = perfecto
+	if perfil_de(id) == "brote":
+		_eq_turnos_sin_par[id] = 0 if _eq_par_en_turno else int(_eq_turnos_sin_par.get(id, 0)) + 1
+	_seleccionadas.clear()
+	for carta in _eq_halo:
+		if not carta.esta_acertada and not _no_es_este.has(carta):
+			carta.deseleccionar(true)
+	_limpiar_halos()
+
+
+## N13: carta tocada durante la fiesta del turno perfecto: pulso + guino y, la primera vez en la partida,
+## "¡guardala para tu proximo turno!" (encolada en el gestor: reemplaza esa vez a rival_retrocede).
+func _guino_0b(carta: CartaEmparejar) -> void:
+	carta.guino(carta.global_position + carta.size / 2.0)
+	_estallido(carta.global_position + carta.size / 2.0, 3, [DORADO], 0.4)
+	if _eq_guardala_dicha:
+		return
+	var ruta := _linea("guardala_proximo_turno")
+	if ruta == "" or ruta == "PENDIENTE" or not _voz_existe(ruta):
+		return
+	_eq_guardala_dicha = true
+	turnos.encolar_voz_0b(ruta)
+
+
+func _procesar_equipo(delta: float) -> void:
+	if turnos == null or not turnos.turno_activo() or turnos.entrada_bloqueada():
+		return
+	if turnos.perfil_actual() == "semilla" and not _eq_halo_a_la_vista and not _eq_halo.is_empty():
+		_eq_sin_toque += delta
+		if _eq_sin_toque >= SEGUNDOS_HALO_A_LA_VISTA:
+			_halo_a_la_vista()
+
+
+## Victoria del equipo (§5.6): se guarda en el instante del ultimo par (QA HE-60 B1), el rival aplaude y
+## despues la fiesta multihermano. El record es "menos pasos es mejor" (§7.2).
+func _victoria_equipo(ultima: CartaEmparejar) -> void:
+	_eq_victoria = true
+	_tablero_terminado = true
+	var pasos: int = turnos.pasos_usados()
+	turnos.detener()
+	var resultado := asegurar_victoria_equipo(pasos)
+	_confeti.restart()
+	turnos.rival_aplaude()
+	await get_tree().create_timer(1.0).timeout
+	if not is_inside_tree():
+		return
+	if _voces_par.has(ultima.id_pareja):
+		_reproducir_voz("par", _voces_par[ultima.id_pareja])
+		await _esperar_voz(2.5)
+	if bool(resultado.get("record_nuevo", false)):
+		if not bool(resultado.get("primer_record", false)):
+			turnos.pista.saltar_banderita()
+		var clave := "primer_record_equipo" if bool(resultado.get("primer_record", false)) else "record_equipo"
+		await _voz_cuando_calle(clave, _linea(clave), 3.0)
+		await _esperar_voz(3.0)
+	if not is_inside_tree():
+		return
+	celebrar_equipo(pasos, _linea("victoria_equipo"))
+
+
+# --- Derrota-gag en Parejas (virtuales de minijuego_base, §11.4) ---
+
+func _cartas_pendientes() -> Array[CartaEmparejar]:
+	var lista: Array[CartaEmparejar] = []
+	for carta in _cartas:
+		if not carta.esta_acertada:
+			lista.append(carta)
+	return lista
+
+
+func _cortar_tweens_gag() -> void:
+	for tween in _eq_tweens_gag:
+		if tween != null and tween.is_valid():
+			tween.kill()
+	_eq_tweens_gag.clear()
+
+
+## La mochila-torre aspira las cartas que quedan ("¡a mi coleccion!", "sluuurp").
+func gag_derrota_aspirar(destino: Vector2) -> float:
+	_cortar_tweens_gag()
+	_seleccionadas.clear()
+	_procesando = false
+	_id_resolucion += 1
+	_no_es_este.clear()
+	_limpiar_halos()
+	var pendientes := _cartas_pendientes()
+	var lugares: Array = []
+	for carta in pendientes:
+		lugares.append(carta.position)
+	lugares.shuffle()
+	_eq_lugares_gag.clear()
+	for i in pendientes.size():
+		var carta := pendientes[i]
+		_eq_lugares_gag[carta] = lugares[i]
+		carta.reiniciar(true)
+		carta.disabled = true
+		var tween := carta.create_tween().set_parallel(true)
+		tween.tween_property(carta, "global_position", destino - carta.size / 2.0, 0.7).set_delay(i * 0.02) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		tween.tween_property(carta, "scale", Vector2.ONE * 0.15, 0.7).set_delay(i * 0.02)
+		tween.tween_property(carta, "rotation", TAU, 0.7).set_delay(i * 0.02)
+		tween.chain().tween_callback(carta.hide)
+		_eq_tweens_gag.append(tween)
+	return 0.9
+
+
+## Las devuelve estornudadas, tapadas y revueltas: lo ya formado nunca se toca.
+func gag_derrota_devolver(_perfil_siguiente: String) -> float:
+	_cortar_tweens_gag()
+	var i := 0
+	for carta: CartaEmparejar in _eq_lugares_gag:
+		carta.show()
+		var tween := carta.create_tween().set_parallel(true)
+		tween.tween_property(carta, "position", _eq_lugares_gag[carta], 0.6).set_delay(i * 0.02) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(carta, "scale", Vector2.ONE, 0.6).set_delay(i * 0.02)
+		tween.tween_property(carta, "rotation", 0.0, 0.6).set_delay(i * 0.02)
+		_eq_tweens_gag.append(tween)
+		i += 1
+	reproducir_sfx(SFX_TAPAR)
+	return 0.8
+
+
+func gag_derrota_terminar_ya(_perfil_siguiente: String) -> void:
+	_cortar_tweens_gag()
+	for carta: CartaEmparejar in _eq_lugares_gag:
+		carta.show()
+		carta.position = _eq_lugares_gag[carta]
+		carta.scale = Vector2.ONE
+		carta.rotation = 0.0
+
+
+## Reintento (§5.5): las parejas formadas quedan formadas; las pendientes ya vienen revueltas del estornudo
+## y hay un vistazo nuevo antes de abrir la puerta del que estaba al centro.
+func reintentar_equipo() -> void:
+	for carta in _cartas_pendientes():
+		carta.reiniciar(true)
+	_ya_vistas.clear()
+	_eq_lugares_gag.clear()
+	_eq_turnos_sin_par.clear()
+	await _vistazo_equipo()
+
+
+func contar_logro_equipo() -> int:
+	return _pares_acertados
+
+
+func ancla_meta_turno() -> Vector2:
+	return Vector2(_mesa.global_position.x - 16.0, _mesa.global_position.y + _mesa.size.y / 2.0)

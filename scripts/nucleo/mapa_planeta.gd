@@ -34,9 +34,18 @@ extends Node2D
 ## HE-40/HE-44 (28-Sep-2026, PROVISIONAL): el mapa pasa a cada motor `destellos_fijos` (100 por estacion y
 ## 0 en retos dorados, `mapa.json`), la zona "perfecta" (marco dorado) solo mira las estaciones cuyo nivel
 ## puntua estrellitas (Pinta no), y la entrega del album espera la senal `celebracion_zona_terminada`.
+##
+## MODO EQUIPO (HE-59, docs/fichas/modo-equipo.md §3.3 y §11.2): si `Progreso.equipo_activo` trae 2 o 3
+## hermanos, este es "el mapa del equipo": todas las zonas abiertas (incluida la secreta) y a color, sin
+## pintarse por el avance de nadie; solo despiertan las estaciones con `nivel_equipo` (las demas dicen
+## "¡este juego todavia lo estoy preparando para jugar en equipo!"); arriba se ven los retratos del equipo;
+## el motor recibe `equipo`, `id_perfil = ""` y `destellos_fijos = destellos_equipo_por_hermano`; y la
+## flecha vuelve a la seleccion vaciando el equipo. Una partida en equipo no marca ninguna estacion
+## individual ni cambia la apertura de zonas de ninguna ruta, y aqui no se entregan recuerdos.
 
 const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 const RUTA_MAPA_ESTELAR := "res://escenas/nucleo/mapa_estelar.tscn"
+const RUTA_SELECCION := "res://escenas/nucleo/seleccion_personaje.tscn"
 const PREFIJO_AUDIO := "res://assets/audio/"
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const RUTA_COMETA := "res://assets/sprites/personajes/cometa_base.png"
@@ -92,6 +101,9 @@ var planeta_id := ""
 var zonas: Array = []
 var seleccion := 0
 var id_perfil := "maxi"
+## Modo equipo: hermanos que juegan juntos (vacio = mapa de un hermano).
+var equipo: Array[String] = []
+var modo_equipo := false
 
 var _ui: Control
 var _efectos: Control
@@ -137,6 +149,9 @@ func _ready() -> void:
 	var progreso := get_node_or_null("/root/Progreso")
 	if progreso != null and progreso.perfil_seleccionado != "":
 		id_perfil = progreso.perfil_seleccionado
+	if progreso != null and progreso.equipo_activo.size() >= 2:
+		equipo = progreso.equipo_activo.duplicate()
+		modo_equipo = true
 	if not FileAccess.file_exists(ruta_mapa):
 		push_error("mapa_planeta: no existe el mapa %s" % ruta_mapa)
 		return
@@ -153,7 +168,8 @@ func _ready() -> void:
 	seleccion = elegida if elegida >= 0 and elegida < zonas.size() and zonas[elegida]["abierta"] else zona_sugerida()
 	_celebrar_cambios()
 	_mostrar_estaciones()
-	_entregar_recuerdos_zonas()
+	if not modo_equipo:
+		_entregar_recuerdos_zonas()
 
 
 func _process(delta: float) -> void:
@@ -186,6 +202,8 @@ func _unhandled_key_input(evento: InputEvent) -> void:
 
 
 func _clave() -> String:
+	if modo_equipo:
+		return "equipo:%s|%s" % ["+".join(PackedStringArray(equipo)), planeta_id]
 	return "%s|%s" % [id_perfil, planeta_id]
 
 
@@ -194,6 +212,9 @@ func _clave() -> String:
 # ---------------------------------------------------------------------------
 
 func calcular_estado() -> void:
+	if modo_equipo:
+		_calcular_estado_equipo()
+		return
 	zonas.clear()
 	var progreso := get_node_or_null("/root/Progreso")
 	for datos_zona: Dictionary in mapa.get("zonas", []):
@@ -229,7 +250,7 @@ func calcular_estado() -> void:
 				"dorado_disponible": hay_dorado and (estrellitas >= 3 or dorado_completado or todo_abierto)})
 		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
 			"completa": jugables > 0 and completadas == jugables, "abierta": false,
-			"secreta": bool(datos_zona.get("secreta", false))})
+			"secreta": bool(datos_zona.get("secreta", false)), "a_color": jugables > 0 and completadas == jugables})
 	for i in zonas.size():
 		var zona: Dictionary = zonas[i]
 		if i == 0 or todo_abierto:
@@ -239,6 +260,41 @@ func calcular_estado() -> void:
 		zona["abierta"] = anterior["abierta"] and anterior["completadas"] >= anterior["jugables"]
 	if _paisaje != null:
 		_paisaje.actualizar(zonas)
+
+
+## Mapa del equipo (§3.3): todas las zonas abiertas y a color; solo despiertan las estaciones con
+## `nivel_equipo`; "completada" = ese nivel de equipo ya lo gano cualquier combinacion (estrellita del boton).
+## Nunca mira ni toca el avance individual de nadie.
+func _calcular_estado_equipo() -> void:
+	zonas.clear()
+	var progreso := get_node_or_null("/root/Progreso")
+	for datos_zona: Dictionary in mapa.get("zonas", []):
+		var estaciones: Array = []
+		var jugables := 0
+		var completadas := 0
+		for datos_estacion: Dictionary in datos_zona.get("estaciones", []):
+			var ruta_nivel := str(datos_estacion.get("nivel_equipo", ""))
+			var escena := str(datos_estacion.get("escena", ""))
+			var jugable := ruta_nivel != "" and escena != "" and ResourceLoader.exists(escena) and FileAccess.file_exists(ruta_nivel)
+			var completada := false
+			if jugable and progreso != null:
+				completada = progreso.nivel_equipo_ganado(planeta_id, _id_nivel(ruta_nivel))
+			jugables += 1 if jugable else 0
+			completadas += 1 if completada else 0
+			estaciones.append({"datos": datos_estacion, "juego": str(datos_estacion.get("juego", "")), "jugable": jugable,
+				"completada": completada, "estrellitas": 0, "ruta_nivel": ruta_nivel, "escena": escena,
+				"perfil_nivel": "", "puntua": false, "dorado_ruta": "", "dorado_completado": false,
+				"dorado_disponible": false})
+		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
+			"completa": false, "abierta": true, "secreta": bool(datos_zona.get("secreta", false)), "a_color": true})
+	if _paisaje != null:
+		# El paisaje se pinta segun "completa": en equipo se le pasa una vista con todo a color.
+		var vista: Array = []
+		for zona: Dictionary in zonas:
+			var copia := zona.duplicate()
+			copia["completa"] = true
+			vista.append(copia)
+		_paisaje.actualizar(vista)
 
 
 func _id_nivel(ruta: String) -> String:
@@ -320,6 +376,12 @@ func _celebrar_cambios() -> void:
 	var previo: Variant = _visto.get(_clave(), null)
 	_marcar_visto()
 	var voces: Dictionary = mapa.get("voces", {})
+	if modo_equipo:
+		# El mapa del equipo no celebra zonas (no se pintan por el avance de nadie): solo da la bienvenida.
+		if previo == null:
+			_decir_en_orden([_voz_de(voces.get("equipo_llegada", voces.get("bienvenida", "")))], 0.5)
+		celebracion_zona_terminada.emit()
+		return
 	if previo == null:
 		_decir_en_orden([_voz_de(voces.get("bienvenida", ""))], 0.5)
 		return
@@ -501,16 +563,20 @@ func _construir_ui() -> void:
 	_ui.add_child(_anfitriona)
 	_base_coco = _anfitriona.position
 
-	_boton_salir = _boton(Rect2(20, 16, 96, 96), COLOR_PILDORA, "Volver al mapa estelar")
+	_boton_salir = _boton(Rect2(20, 16, 96, 96), COLOR_PILDORA, "Volver a elegir quien juega" if modo_equipo else "Volver al mapa estelar")
 	var flecha := Control.new()
 	flecha.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_boton_salir.add_child(flecha)
 	flecha.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	flecha.draw.connect(_dibujar_flecha.bind(flecha))
 	_boton_salir.pressed.connect(_volver_al_mapa_estelar)
-	_construir_retrato_hermano()
+	if modo_equipo:
+		_construir_retratos_equipo()
+	else:
+		_construir_retrato_hermano()
 	var pieza: Dictionary = mapa.get("pieza_nave", {})
-	if not (pieza.get("zonas", []) as Array).is_empty():
+	# La pieza de la nave es de cada hermano: en el mapa del equipo no se muestra.
+	if not modo_equipo and not (pieza.get("zonas", []) as Array).is_empty():
 		var pos: Array = pieza.get("posicion", [430, 105])
 		_pieza = _control_dibujo(Rect2(Vector2(float(pos[0]), float(pos[1])) - Vector2(80, 50), Vector2(160, 100)), _dibujar_pieza)
 		_pieza.pivot_offset = _pieza.size / 2.0
@@ -731,6 +797,45 @@ func _boton(rect: Rect2, fondo: Color, ayuda: String) -> Button:
 
 ## Quien juega, arriba a la izquierda, como en el menu de planetas: pildora con el retrato del
 ## hermano en un disco de su color, su nombre y sus destellos.
+## Mapa del equipo: arriba, en vez del retrato de un hermano, los retratos del equipo en su nave (§3.3).
+func _construir_retratos_equipo() -> void:
+	var pildora := Panel.new()
+	pildora.name = "hud_equipo"
+	pildora.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = COLOR_PILDORA
+	fondo.border_color = Color(1, 1, 1, 0.24)
+	fondo.set_border_width_all(3)
+	fondo.set_corner_radius_all(40)
+	pildora.add_theme_stylebox_override("panel", fondo)
+	pildora.position = Vector2(132, 24)
+	pildora.size = Vector2(36 + equipo.size() * 72, 80)
+	_ui.add_child(pildora)
+	var barra_equipo: Script = load("res://scripts/ui/barra_equipo.gd")
+	for i in equipo.size():
+		var id := equipo[i]
+		var color: Color = COLORES_HERMANO.get(id, Color.WHITE)
+		var disco := Control.new()
+		disco.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		disco.position = Vector2(14 + i * 72, 8)
+		disco.size = Vector2(64, 64)
+		disco.draw.connect(func() -> void:
+			disco.draw_circle(disco.size / 2.0, 32.0, Color("#FFF8EE"))
+			disco.draw_arc(disco.size / 2.0, 30.0, 0.0, TAU, 40, color, 5.0, true))
+		pildora.add_child(disco)
+		var retrato := TextureRect.new()
+		retrato.texture = barra_equipo.cara(id)
+		retrato.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		retrato.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		retrato.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		retrato.position = Vector2(6, 6)
+		retrato.size = Vector2(52, 52)
+		var mascara := ShaderMaterial.new()
+		mascara.shader = load("res://assets/shaders/disco_circular.gdshader")
+		retrato.material = mascara
+		disco.add_child(retrato)
+
+
 func _construir_retrato_hermano() -> void:
 	var color: Color = COLORES_HERMANO.get(id_perfil, Color.WHITE)
 	var progreso := get_node_or_null("/root/Progreso")
@@ -991,7 +1096,9 @@ func _tocar_estacion(j: int) -> void:
 	if not estacion["jugable"]:
 		_reproducir_sfx(SFX_NO)
 		_menear(tarjeta)
-		_decir(str(mapa.get("voces", {}).get("estacion_pronto", "")))
+		var voces: Dictionary = mapa.get("voces", {})
+		var clave := "estacion_sin_equipo" if modo_equipo and voces.has("estacion_sin_equipo") else "estacion_pronto"
+		_decir(str(voces.get(clave, "")))
 		return
 	lanzar_estacion(seleccion, j)
 
@@ -1057,9 +1164,14 @@ func lanzar_estacion(i: int, j: int, espera := 0.0, dorado := false) -> void:
 	var motor: Node = escena.instantiate()
 	motor.ruta_nivel = estacion["dorado_ruta"] if dorado else estacion["ruta_nivel"]
 	motor.planeta_id = planeta_id
-	motor.id_perfil = id_perfil
-	# Economia (HE-40 §2.3): monto fijo e igual para los tres; los retos dorados no dan destellos.
+	motor.id_perfil = "" if modo_equipo else id_perfil
+	if modo_equipo and "equipo" in motor:
+		motor.equipo = equipo.duplicate()
+	# Economia (HE-40 §2.3): monto fijo e igual para los tres; los retos dorados no dan destellos. En equipo,
+	# `destellos_equipo_por_hermano` (50, una sola vez por hermano y nivel, §7.1).
 	var clave_destellos := "destellos_reto_dorado" if dorado else "destellos_por_estacion"
+	if modo_equipo:
+		clave_destellos = "destellos_equipo_por_hermano"
 	if mapa.has(clave_destellos) and "destellos_fijos" in motor:
 		motor.destellos_fijos = int(mapa[clave_destellos])
 	var arbol := get_tree()
@@ -1080,6 +1192,13 @@ func _volver_al_mapa_estelar() -> void:
 	# UX R15: F4 nunca queda activo al salir del planeta.
 	todo_abierto = false
 	_reproducir_sfx(SFX_TOQUE)
+	if modo_equipo:
+		# La flecha del mapa del equipo lleva a la seleccion y vacia el equipo (§3.3).
+		var progreso := get_node_or_null("/root/Progreso")
+		if progreso != null:
+			progreso.limpiar_equipo()
+		get_tree().change_scene_to_file(RUTA_SELECCION)
+		return
 	get_tree().change_scene_to_file(RUTA_MAPA_ESTELAR)
 
 
@@ -1217,7 +1336,7 @@ func _dibujar_arcoiris(control: Control) -> void:
 		con_nubes = false
 	var encendidas := {}
 	for zona in zonas:
-		if zona["completa"]:
+		if zona.get("a_color", zona["completa"]):
 			for banda in zona["datos"].get("bandas", []):
 				encendidas[banda] = true
 	for k in BANDAS.size():

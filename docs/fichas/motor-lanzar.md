@@ -40,16 +40,32 @@
 >    15 s, sin error por tocar el retrato equivocado (§13.5).
 >
 > El detalle de cada hallazgo resuelto está en el **changelog v3** al final (§24).
+>
+> **v4 (17-Oct-2026): dificultad por etapas [PO, maqueta `docs/maquetas/torre-v2.html`; lo menor, por
+> delegación]**. El PO pidió que no se pueda ganar «solo con 2 o 3 lanzamientos», jugó la maqueta v2 y
+> la aprobó («ok, comienza ahora sí»). Cambia:
+>
+> 1. **Tres torres seguidas** (E1 "La torre de la colección", E2 "Dos torres y un puente", E3 "La torre
+>    de las cosas raras"), con el agarre reiniciado por etapa.
+> 2. **Regla de balance**: `peso_botable ≥ 1,3 × agarre`, más las reglas G1-G5 contra los atajos.
+> 3. **13 + 4 globos por etapa**: se mantiene la regla ≡ 1 (mód 4).
+> 4. **Piezas especiales** `confeti` y `resorte`.
+> 5. **El rebotón de Nicole**, con su bandeja.
+> 6. **El retiro de los globos**: tocar el suelo cuenta como golpe, con un tope de 420 cuadros.
+>
+> **Todo está en el §25, que manda sobre lo anterior**. Las secciones que cambian llevan la marca **(v4)**.
 
 - **Autor**: `disenador-mecanicas`
 - **Versiones**:
   - **v1** (12-Oct-2026);
   - **v2** (13-Oct-2026): decisiones del PO del 13-Oct y conciliación con el guion y el storyboard;
   - **v3** (17-Oct-2026): resuelve B2, M1-M5, M6, M8-M11 y los menores m1-m10 que caen en la ficha
-    (changelog en §24).
-- **Estado**: **auditada por UX (v2, aprobada con cambios)**; la v3 espera la **re-auditoría corta** de
-  B2, M2-M5 y M10. Las cifras siguen siendo **estimaciones a mano** hasta que corran el arnés de tiros
-  (§15.3) y el simulador (§15.4).
+    (changelog en §24);
+  - **v4** (17-Oct-2026): dificultad por etapas, según la maqueta v2 aprobada por el PO (§25).
+- **Estado**: la v3 está **re-auditada por UX** (aprobada sin bloqueantes). **La v4 espera la auditoría
+  UX** de R17-R22 (§25.11), en especial la duración y la bandeja de Nicole. Las cifras siguen siendo
+  **estimaciones a mano** hasta que corran el arnés de tiros (§15.3) y el simulador (§15.4). La
+  calibración fina es de **HE-80**.
 - **Tarjetas relacionadas**: HE-66 (diseño de la batalla), HE-69 (implementación), HE-17 (pieza/ala),
   HE-39 (prueba final cooperativa).
 - **Fuentes**:
@@ -100,10 +116,12 @@ de pintura.**
 | Lo que hace Angry Birds | Cómo lo usamos |
 |---|---|
 | Resortera: arrastrar hacia atrás, apuntar con el ángulo y la fuerza, soltar | Igual para Nicole y Sofía. Maxi toca o arrastra hacia donde sea, y el tiro sale guiado (§5.3) |
-| Pocos pájaros por nivel: el stock es el reloj | **La canasta de globos del equipo** (9 de base, v3). Es el único reloj de la etapa (§8.2) |
+| Pocos pájaros por nivel: el stock es el reloj | **La canasta de globos del equipo**: **(v4) 13 por etapa** (en la v3 eran 9). Es el único reloj de la etapa (§8.2, §25.4) |
+| (v4) Niveles seguidos de un episodio, cada uno con una estructura nueva | **3 etapas seguidas**, cada una con su torre (§25.2) |
+| (v4) Cajas de TNT que explotan y empujan | **La caja de confeti** (§25.5.1). El **trampolín** es un agregado nuestro (§25.5.2) |
 | Estructuras de materiales con distinta resistencia (vidrio, madera, piedra) | **Caramelo** (frascos, frágil), **cartón** (cajas, medio) y **lata** (latas de galletas, duro) (§6.4) |
 | Cerdos como objetivo; el nivel termina cuando caen todos | **Un solo objetivo visible**: bajar al Coleccionauta. Su **agarre** baja con cada derribo (§6.6) |
-| Pájaros especiales: el azul se divide en 3 con un toque en vuelo; los pesados atraviesan | Sofía elige entre el **globo triple** (toque en vuelo) y el **globo pesado** (atraviesa caramelo) (§5.5) |
+| Pájaros especiales: el azul se divide en 3 con un toque en vuelo; los pesados atraviesan | Sofía elige entre el **globo triple** (toque en vuelo) y el **globo pesado** (atraviesa caramelo) (§5.5). **(v4)** Nicole elige entre el normal y el **rebotón** (§25.6.1) |
 | La línea de puntos del tiro anterior queda dibujada para corregir | Nicole y Sofía ven el **rastro de su tiro anterior** (§5.4) |
 | Estrellas por pájaros sobrantes; los primeros niveles muestran la trayectoria y los avanzados no | Estrellitas por globos sobrantes, **solo en la revancha** (§11). Guía completa para Nicole y solo el arranque del arco para Sofía |
 | Derrota sin castigo y reintento inmediato | Derrota-gag que da risa, "¡otra vez!" y ayudas escalonadas (§10) |
@@ -138,7 +156,8 @@ Coleccionauta. La torre es su "firma" (§17).
 condiciones de esta ficha:
 
 - la torre está congelada entre tiros;
-- el asentamiento dura como máximo 3,5 s;
+- el asentamiento dura como máximo 3,5 s (**v4**: se cuenta desde que se retira el último globo, y el
+  globo vive como máximo 7 s, §25.7);
 - hay ≤ 40 cuerpos, sin uniones;
 - el resultado es determinista en la misma build y el mismo dispositivo;
 - la caída final es animada.
@@ -189,7 +208,10 @@ Usa el layout común de las rondas de batalla (`modo-equipo.md` §14.15), **sin 
 | Coco | **v3**: pies en **(85, 584)**, dibujo ≈ 90 × 130 (x 40-130, y 454-584), **fuera del área de agarre** (su esquina más cercana, (130, 454), queda a 132 px de la bolsa) | Carga los globos y reacciona. Para cargar, **estira el brazo** hasta la bolsa (solo animación; el brazo no es tocable) |
 | Resortera | Base en (260, 584); **bolsa en reposo en (260, 430)** | — |
 | **Área de agarre** (Nicole y Sofía) | Círculo de **radio 120 px** centrado en la bolsa (x 140-380, y 310-550). **Dentro del círculo manda siempre la resortera** sobre cualquier otro tocable (prioridad de toques, §5.1) | Empezar el arrastre aquí |
+| **Área de agarre de Sofía (v4)** | **Radio 80 px** (como la maqueta v2); Nicole sigue con 120 (§25.6.4) | — |
 | Bandeja de Sofía ("globos de experta") | 3 globos de **104 × 104 px**, separados 16 px, en `Rect2(410, 480, 344, 104)` | Solo en su turno (§5.5) |
+| **Bandeja de Nicole (v4)** | 2 globos (normal y rebotón) de **104 × 104 px**, separados 16 px, en `Rect2(410, 480, 224, 104)` | Solo en su turno (§25.6.4) |
+| **Torre (v4)** | Una por etapa (E1, E2, E3), todas sobre la misma galleta y con las mismas medidas máximas de la fila siguiente (§25.2) | — |
 | Torre | Galleta-plataforma en x 800-1180, **centro x 990, sobre el suelo en y 584**. Cima del trono en y ≥ 150 (torre de ≤ 434 px) y cabeza del Coleccionauta en y ≥ 120 | — |
 | **Charco** | Elipse por código centrada en **(990, 580)**: de 120 × 24 px al empezar hasta **520 × 60 px** como máximo (y 550-610) | Crece (§6.9). La barra se dibuja encima |
 | Barra del equipo | `Rect2(0, 610, 1280, 110)` | Retratos y ventanitas de porra |
@@ -318,6 +340,9 @@ En su turno **no hay bandeja** y **no existe el fallo** (`fallo_0X` nunca suena 
 
 ### 5.5 Los globos de experta de Sofía y el toque en vuelo
 
+> **(v4)** Nicole también tiene bandeja, con el normal y el **rebotón**. La elección sin texto (sonido
+> por tipo y nombre por voz la 1.ª vez) vale para las dos (§25.6).
+
 - **Al empezar su turno**, la bandeja muestra 3 globos: **normal**, **triple** (tres globitos pegados) y
   **pesado** (con cara de "uf"). Viene cargado el normal.
 - **Tocar uno** lo pasa a la resortera (pop en < 50 ms, vuela en 0,2 s). Se puede cambiar **antes de
@@ -343,6 +368,8 @@ En su turno **no hay bandeja** y **no existe el fallo** (`fallo_0X` nunca suena 
 | La canasta o sus globos | Los globos se mecen y chocan ("cuic") | No |
 | El charco | "Plip" y una ondita en el charco | No |
 | Coco | Salta y señala la resortera | No |
+| **Una caja de confeti (v4)** | Tiembla con "tic-tic" y suelta 3 papelitos. **Nunca explota por el dedo** | No |
+| **Un resorte (v4)** | *Squash* y "boing" | No |
 | Durante el vuelo y el asentamiento | Todo lo de arriba sigue respondiendo; la resortera solo hace "ñic" | No (salvo el toque en vuelo del triple) |
 
 ---
@@ -358,7 +385,10 @@ En su turno **no hay bandeja** y **no existe el fallo** (`fallo_0X` nunca suena 
 - **Bloques**: `RigidBody2D`, rectángulos o cápsulas (frascos), con `contact_monitor = true`,
   `max_contacts_reported = 4`, `linear_damp` 0,6 y `angular_damp` 1,5. Fricción y rebote del material.
 - **Globos**: `RigidBody2D` circular con `continuous_cd = CCD_MODE_CAST_SHAPE`, `linear_damp` 0 y rebote
-  0,15. **Revientan al primer choque** (mancha y desaparecen en 0,1 s), salvo el pesado.
+  0,15 (el rebotón, 0,85).
+  - ~~Revientan al primer choque~~. **(v4)**: dejan mancha en cada contacto y siguen físicos hasta que
+    se retiran: 110 cuadros desde su primer contacto con un bloque **o con el suelo** (el rebotón, 200),
+    o 420 desde el lanzamiento, o al salir por un lado o por abajo (§25.7).
 - **Trono**: un bloque más, de cartón, con `peso_agarre` alto.
 - **El Coleccionauta**: **no es un cuerpo físico**. Es un `Area2D` (círculo de 56 px) pegado al trono
   que detecta los golpes directos. Usa la escena compartida `coleccionauta.tscn` (storyboard §17).
@@ -388,8 +418,9 @@ En su turno **no hay bandeja** y **no existe el fallo** (`fallo_0X` nunca suena 
      superponen ≥ 20 % en horizontal.
 4. **Volver a dormir**: un bloque con `|v| < 8 px/s` y `|ω| < 0,1 rad/s` durante 0,4 s se congela en su
    pose actual.
-5. **Asentamiento con tope**: desde que sale el globo, la física corre como máximo
-   `asentamiento_max_s` (**3,5 s**), y después **todo** se congela.
+5. **Asentamiento con tope**: ~~desde que sale el globo~~ **(v4) desde que se retira el último globo**
+   (§25.7), la física corre como máximo `asentamiento_max_s` (**3,5 s**), y después **todo** se congela.
+   El tiro dura como máximo 10,5 s.
    - **Fin del tiro** = no hay globos en vuelo y todo está dormido.
    - Recién ahí se cuentan los derribos y se cierra el turno. **Excepción**: el derribo final (§6.6),
      que congela todo al instante.
@@ -414,6 +445,8 @@ En su turno **no hay bandeja** y **no existe el fallo** (`fallo_0X` nunca suena 
 | `caramelo` | Frascos con tapa | 1 | 60 | 0,6 | 0,6 | 0,05 | Se destapa con un "pop", sale su objeto del canon y suelta **confeti dulce**. Nunca vidrio filoso |
 | `carton` | Cajas de colección | 3 | 60 | 1,0 | 0,9 | 0,05 | Se abre como una tapa; caen estampillas y calcetines en espiral |
 | `lata` | Latas de galletas | 6 | 60 | 1,6 | 0,7 | 0,1 | Rueda y se abolla ("doing") |
+| **`confeti` (v4)** | Caja sorpresa magenta | 1 | 60 | 0,6 | 0,6 | 0,05 | **Explota**: onda de 150 px que empuja sin dañar y puede encadenar otras (§25.5.1) |
+| **`resorte` (v4)** | Trampolín verde | **Irrompible** | — | 1,5 | 0,9 | **1,1** | No se rompe: "¡boing!" (§25.5.2) |
 
 - **Daño por contacto** = `floor(impulso / impulso_por_punto)`, como máximo 3 por contacto. Los impulsos
   salen de `_integrate_forces`, o de la velocidad relativa por la masa. **Dev elige** cómo.
@@ -435,8 +468,10 @@ objetivo de su tiro se marca roto al impactar, sin importar el impulso.
 
 ### 6.6 El agarre del Coleccionauta: el único contador de la etapa
 
-- **`agarre`** (22 de inicio en la v3, a calibrar) baja con:
-  - el `peso_agarre` de cada bloque botado (caramelo 1, cartón 1-2, lata 2, trono 6);
+- **`agarre`** (22 de inicio en la v3; **(v4) uno por etapa: 24, 20 y 20**, reiniciado al empezar cada
+  etapa, con el tope de la regla de balance, §25.2) baja con:
+  - el `peso_agarre` de cada bloque botado (caramelo 1, cartón 1-2, lata 2, **confeti 1, resorte 1
+    (v4)**, trono 6);
   - los **resbalones** de Nicole y Sofía (§7.2);
   - el **golpe directo** de Nicole o Sofía al Coleccionauta: +1, una vez por tiro;
   - el **mínimo garantizado del gigante** (§10.3).
@@ -452,6 +487,8 @@ objetivo de su tiro se marca roto al impactar, sin importar el impulso.
   - **la torre no se balancea más**: el mecido de los bloques se queda en ±1° (§6.2.2) en todos los
     estados. Lo que crece con el agarre perdido es el bamboleo del rig y el chirrido del trono.
   - La anticipación (§9.2) sí inclina la torre 11°: es animación, con la física ya congelada para siempre.
+- **(v4)** En E1 y E2, el mismo derribo dispara la **caída corta** y la transición a la etapa siguiente
+  (§25.3). Lo que sigue en este punto vale **solo para el derribo de E3**.
 - **Derribo final** (lo que pase primero, **detectado en vivo durante el tiro**):
   1. el agarre llega a 0;
   2. el trono queda botado.
@@ -489,6 +526,8 @@ objetivo de su tiro se marca roto al impactar, sin importar el impulso.
   - Cada crecida hace "chof" y una ondita.
 - **No se borra nunca**: sigue igual en los reintentos y se guarda en el parcial. En la revancha
   empieza chico de nuevo.
+- **(v4)** **Cada etapa empieza con un charco chico**, porque es otra torre. Dentro de la etapa, la regla
+  de arriba sigue igual (§25.3).
 - **En el derribo final**:
   - si mide menos de 360 px, **el salpicón del último globo lo agranda de golpe** hasta 360 (el respaldo
     del storyboard);
@@ -504,7 +543,8 @@ objetivo de su tiro se marca roto al impactar, sin importar el impulso.
 | Estiramiento máximo | — | **220 px** | **200 px** |
 | Guía | Arco calculado | **Completa**, con anillo de impacto e imán de 28 px | **Arranque del arco** (4 puntos) |
 | Rastro del tiro anterior | — | El suyo | El suyo |
-| Globos | Normal (y el **gigante**, desde el 3er intento, §10.3) | Normal | **A elección**: normal, triple o pesado |
+| Globos | Normal (y el **gigante**, desde el 3er intento **de la etapa**, §10.3) | ~~Normal~~ **(v4) A elección: normal o rebotón** (§25.6.1) | **A elección**: normal, triple o pesado |
+| Radio de agarre (v4) | — | 120 px | **80 px** (§25.6.4) |
 | Puntos débiles | Halo dorado grande sobre **uno** de `puntos_debiles.semilla` | Halo **medio** (⌀ ≥ 72 px) | Halo **chico** (⌀ ≈ 40 px, destello cada 3 s) |
 | Resultado mínimo | **Siempre bota algo** | Puede no botar nada (agranda el charco) | Ídem |
 | Su truco | "Globos que siempre dan en el blanco" | **"El resbalón"**: un tiro que bota **2 o más** de peso → **−1** de agarre extra | **"Tiros que valen doble"**: un tiro que bota **3 o más** de peso → **doble resbalón**, **−2** extra. Además elige el globo |
@@ -542,6 +582,10 @@ objetivo de su tiro se marca roto al impactar, sin importar el impulso.
 
 - **1 globo por turno**, orden `maxi_intercalado` (M → N → M → S), **con puerta de turno**, bloqueo de
   400 ms, porras y "¡le toca a…!" (`modo-equipo.md` §4.2-4.3) [PO-base].
+- **(v4) Reparto 13 + 4 por etapa** (§25.4). La base pasa de 9 a **13** y, tras la 1.ª derrota **de la
+  etapa**, a **17**: 13 → Maxi 7, Nicole 3, Sofía 3; 17 → Maxi 9, Nicole 4, Sofía 4. Las reglas de abajo
+  (reinicio en Maxi, N = S, el último es de Maxi, ≡ 1 mód 4) **siguen todas**, ahora también al empezar
+  cada etapa. Las líneas con 9 y 13 son el texto de la v3.
 - **Reparto 9 + 4 (v3, M4)** [PO, por delegación 17-Oct]:
   - **cada intento empieza con Maxi**: el orden se reinicia en M al empezar cada intento
     (`reiniciar_rival("maxi")`), no sigue de largo desde el intento anterior;
@@ -616,6 +660,10 @@ Al terminar el tiro del último globo con el agarre > 0:
 
 **La coreografía, los tiempos y los SFX los manda el storyboard** (`docs/cinematicas/cierre_arcoiris.md`
 §3 y §4). Esta ficha fija **quién la dispara, desde qué estado y qué queda al final**.
+
+> **(v4)** Esta secuencia es **solo la del derribo de E3**. E1 y E2 terminan con la **caída corta**
+> (≈ 5,5 s, momento saltable `caida_etapa`) y una transición de ≤ 4 s con voz. No emiten
+> `derribo_inminente` ni `completado` (§25.3; [CONCILIAR] C1).
 
 1. **Derribo detectado** (§6.6): todo se congela en el cuadro del derribo.
 2. **Anticipación** (storyboard §3, ≈ 4,3 s; **no se salta** y **no se marca vista**):
@@ -724,6 +772,11 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
 
 ### 10.3 Ayudas escalonadas [PO-base, conciliadas con el guion T.6 y T.9]
 
+> **(v4)** Las ayudas y la pausa cuentan las **derrotas de la etapa** y se reinician al pasar de etapa.
+> Los gags cuentan las **derrotas de la Torre** (§25.3). Con la base v4, la tabla queda: 1.ª derrota →
+> **13 + 4 = 17**; 2.ª → 17 con el gigante como primero; 3.ª y siguientes → la pausa. Las cifras 9 y 13
+> de abajo son de la v3.
+
 | Derrota | Lo que dice Coco | El próximo intento trae |
 |---|---|---|
 | 1ª | `ayuda_globos_extra`. **v3**: sin número, «¡Más globos… estaban camuflados en el pasto, como yo!» (guion v4) | **9 + 4 = 13 globos** en la canasta (v3). **Los +4 son del equipo**, no de un hermano: se gastan en el orden de turnos (M N M S M N M S M N M S M → Maxi 7, Nicole 3, Sofía 3). **Se quedan** en todos los intentos siguientes |
@@ -781,6 +834,8 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
   - después, directo a la Torre, **sin presentación T.1** (una vez vista), con la intro corta.
 - **La torre parte nueva**, igual que el charco y la canasta (`globos_base`). Las ayudas (§10.3) también
   rigen en la revancha: nunca se traba.
+- **(v4)** La revancha juega **las 3 etapas**. El récord suma los globos de las tres, y las estrellitas
+  piden "sin perder ninguna etapa" (§25.15).
 - **Al ganar una revancha**:
   - anticipación (no se salta) → caída (se salta, ya vista);
   - **sin** antes del epílogo, epílogo, cierres, parte C ni foto;
@@ -814,8 +869,8 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
 
   | Composición | Orden | Globos (base / tras la 1.ª derrota) | Ayuda 2 |
   |---|---|---|---|
-  | Maxi + una hermana | M H M H… (empieza y termina Maxi) | 9 / 13 → hermana 4 / 6 | El gigante, de Maxi |
-  | Nicole + Sofía | Alternado; **empieza una distinta en cada intento** (intento 1: la que eligió "¡Juntos!" primero; después, la otra) | 8 / 12 → 4 y 4 / 6 y 6 | **+2 globos** (uno para cada una), sin gigante |
+  | Maxi + una hermana | M H M H… (empieza y termina Maxi) | 9 / 13 → hermana 4 / 6. **(v4) 13 / 17 por etapa → hermana 6 / 8** | El gigante, de Maxi |
+  | Nicole + Sofía | Alternado; **empieza una distinta en cada intento** (intento 1: la que eligió "¡Juntos!" primero; después, la otra) | 8 / 12 → 4 y 4 / 6 y 6. **(v4) 12 / 16 por etapa → 6 y 6 / 8 y 8** | **+2 globos** (uno para cada una), sin gigante |
 
   El agarre inicial de cada composición lo fija `disenador-niveles` con el simulador (la meta del 1er
   intento es la misma, 30-40 %).
@@ -831,7 +886,11 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
 
 - **Cuándo**:
   - en `turno_cerrado`, con todo congelado;
-  - **y al terminar cada derrota-gag** (para que "descansar" guarde el intento nuevo con sus ayudas).
+  - **y al terminar cada derrota-gag** (para que "descansar" guarde el intento nuevo con sus ayudas);
+  - **(v4) y al empezar cada etapa**, antes del primer turno, por el mismo camino que tras el gag.
+- **(v4)** El parcial suma `"etapa"` y `"etapas_ganadas"`. La torre, el charco, las manchas, los globos
+  y las ayudas son **de la etapa en curso**; `derrotas` y `ultimo_gag` son de la Torre. Al retomar se
+  vuelve a la etapa guardada, nunca a una ganada (§25.13).
 - **Qué entrega el motor** (`obtener_parcial_equipo()`; el núcleo no lo interpreta):
 
   ```jsonc
@@ -866,6 +925,8 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
   - **v3 (M4)**: como al retomar empieza Maxi, la canasta se **redondea hacia arriba al siguiente valor
     ≡ 1 (mód 4)** (5, 9, 13): así el retomado también termina con Maxi y las hermanas tiran lo mismo. Son
     como mucho 3 globos de regalo, y suena `encontre_globos` solo si se agregó alguno.
+  - **(v4)**: los valores posibles son 5, 9, 13 y 17, **sin superar la canasta llena del intento en
+    curso** (13 o 17) (§25.4).
   - **Por qué no se rellena la canasta entera**: el daño se conserva entero al retomar (al reintentar,
     solo el 30 %). Rellenar haría que salir convenga más que perder.
   - Si salieron en la pausa de una derrota, el intento nuevo ya está guardado con la canasta llena.
@@ -948,7 +1009,10 @@ func estado_derribo() -> Dictionary
 
 - **Secuencia de derrota en modo sin pista**: la del §11.4 de `modo-equipo.md`, **sin** las animaciones
   de `pista_rival`, con destino `ancla_rival_motor()` y la voz de `variante_derrota()`.
-- **Secuencia de victoria**:
+- **(v4) Fin de E1 y E2**: `momento_saltable_iniciado("caida_etapa")` → caída corta →
+  `momento_saltable_terminado("caida_etapa")` → transición → etapa siguiente. **No hay firmas nuevas**:
+  `batalla.gd` lo trata con el mismo código genérico (§25.3).
+- **Secuencia de victoria** (v4: solo en E3):
   1. `derribo_inminente` → anticipación (§9.2);
   2. `momento_saltable_iniciado("caida_torre")` → caída;
   3. `momento_saltable_terminado("caida_torre")` → estado final;
@@ -1199,6 +1263,14 @@ cualquiera** (target ≥ 120 px); al tocarlo, Coco lanza la lengua. Si nadie toc
 - Coordenadas en píxeles de 1280 × 720.
 - `rect` = `[x, y, ancho, alto]`, donde x, y es el **punto medio del borde inferior** del bloque.
 - Lo arma `disenador-niveles`.
+- **(v4)** Los cambios están en el §25.8:
+  - `torre` y `agarre.inicial` pasan a vivir dentro de `etapas[]`;
+  - se suman `confeti`, `resorte`, el rebotón (`rebota`), `retiro_globos`, `balance` y
+    `transicion_etapa`;
+  - `radio_agarre_px` pasa a ser por perfil;
+  - `globos_base` sube a 13.
+  
+  Donde el bloque de abajo dice otra cosa, **manda el §25.8**.
 
 ```jsonc
 {
@@ -1293,7 +1365,7 @@ cualquiera** (target ≥ 120 px); al tocarlo, Coco lanza la lengua. Si nadie toc
   },
 
   "agarre": {
-    "inicial": 22,                                   // v3: con 9 globos, 25 daba ≈ 16 % en el 1er intento (§15.2). Lo fija el simulador
+    "inicial": 22,                                   // v3: con 9 globos, 25 daba ≈ 16 % en el 1er intento (§15.2). (v4) pasa a etapas[].agarre_inicial: 24 / 20 / 20
     "bonus_max_por_tiro": 3,
     "golpe_directo": { "bonus": 1, "perfiles": ["brote", "estrella"] },
     "estados_cara": [0.25, 0.5, 0.75]
@@ -1312,7 +1384,7 @@ cualquiera** (target ≥ 120 px); al tocarlo, Coco lanza la lengua. Si nadie toc
   "acierto_grande_piezas": 3,
 
   "intentos": {
-    "globos_base": 9,                                // v3 (M4): debe ser ≡ 1 (mód 4) con Maxi presente; se valida al cargar
+    "globos_base": 9,                                // v3 (M4): debe ser ≡ 1 (mód 4) con Maxi presente; se valida al cargar. (v4) 13 por etapa (17 tras la 1.ª derrota de la etapa)
     "ayudas": [
       { "desde_derrota": 1, "globos_extra": 4, "voz": "ayuda_intento_1" },
       { "desde_derrota": 2, "globo_gigante": true, "gigante_reemplaza_primero": true, "voz": "ayuda_intento_2" }
@@ -1467,6 +1539,15 @@ cualquiera** (target ≥ 120 px); al tocarlo, Coco lanza la lengua. Si nadie toc
 
 ### 15.1 Metas [PO]
 
+> **(v4)** Con tres etapas, las metas del 1.er intento y de la duración pasan a ser **por etapa** (§25.9):
+>
+> - 1.er intento: E1 60-75 %, E2 45-60 % y E3 30-40 %;
+> - ≤ 3 intentos ≥ 95 % en cada etapa;
+> - **ganar con ≤ 4 tiros ≤ 3 %**;
+> - Torre típica ≤ 15 min.
+>
+> La tabla de abajo es la de la v3 (una sola torre).
+
 | Meta | Valor |
 |---|---|
 | 1er intento | **30-40 %** |
@@ -1598,6 +1679,10 @@ cualquiera** (target ≥ 120 px); al tocarlo, Coco lanza la lengua. Si nadie toc
 
 ## 16. Duración (estimación)
 
+> **(v4)** Con tres etapas, la Torre típica pasa a **≈ 16 min** (p80 ≈ 21). El cierre del storyboard
+> sigue en ≈ 6,1 min. La batalla completa queda en ≈ 28-30 min, en 2-3 sesiones (§25.10). La tabla de
+> abajo es la de la v3.
+
 | Tramo | Minutos |
 |---|---|
 | Pausa (ya tomada) + presentación T.1 (≤ 12 s, solo la 1ª vez) + intro | 0,3 |
@@ -1688,7 +1773,10 @@ storyboard (bloque 1 ≈ 2,7 min y bloque 2 ≈ 5 min, con su propia pausa).
     m10: `arcoiris_despegue_broches_pide_rojo/_amarillo/_azul`;
   - la frase «¡y algunas ya no suben!» queda garantizada por el motor (m2).
 - **Pendiente de conciliar con el guion**: el contexto de `arcoiris_batalla_torre_encontre_globos` dice
-  "canasta en el mínimo (4)"; en la v3 el mínimo al retomar es **5**, redondeado a 5/9/13 (§12).
+  "canasta en el mínimo (4)"; en la v3 el mínimo al retomar es **5**, redondeado a 5/9/13 (§12). **(v4)**:
+  5/9/13/17.
+- **(v4) Faltan 10 voces nuevas y 1 variante** (llegadas a E2 y E3, caídas cortas, presentación del
+  confeti y del resorte, la bandeja de Nicole y los nombres de los 4 globos). La lista está en el §25.14.
 - **Ajustes sugeridos al guion** (no los edito; ver §23.1):
   - "y esas ya no suben" → «¡y algunas ya no suben!» (§23.1, fila 5);
   - sumar la meta del resbalón a `lanzar_repetir`, sin números: «…si botas muchas de un tiro, ¡se
@@ -1729,6 +1817,7 @@ storyboard (bloque 1 ≈ 2,7 min y bloque 2 ≈ 5 min, con su propia pausa).
 | R16 | **v3**: la explicación del tiro alarga el primer turno de las hermanas | ≤ 3 s, se corta al tocar, solo el primer turno de cada sesión | ¿La escuchan o ya están estirando? |
 | R13 | **El gigante siempre es de Maxi**: ¿las mayores lo sienten injusto? | Lo dice el Coleccionauta («¡no es justo! …bueno, sí es justo»); solo sale tras 2 derrotas | Reclamos de "¡yo quería el gigante!" |
 | R14 | La anticipación congela la torre en pleno derrumbe | Es la coreografía del storyboard (el "equilibrio imposible") | ¿Se lee como pausa a propósito o como cuelgue? |
+| R17-R22 | **(v4)**: la duración de ≈ 16 min, la bandeja de Nicole y el radio 80 de Sofía, el resorte que desvía, la onda del confeti, "¡otra torre más!" y la revancha larga | Ver el §25.11 | — |
 
 ---
 
@@ -1866,7 +1955,15 @@ el arnés afectado.
 3. **HE-39**: ¿la Torre vuelve como última ronda?
 4. **Solo si la calibración falla** (no hace falta decidir ahora): si con `gigante.agarre_min` en 16 no se
    llega al ≥ 99 % del 3er intento, o si con `agarre` 18 el 1er intento sigue bajo el 30 %, el reparto
-   9 + 4 o la variante A vuelven al PO con los números del simulador.
+   9 + 4 o la variante A vuelven al PO con los números del simulador. **(v4)**: lo mismo por etapa, con
+   13 + 4 y el agarre mínimo 16.
+5. **(v4) Si la Torre típica pasa de 15 min** después de las palancas 1 y 2 del §25.10: ¿E1 con 9 globos
+   de calentamiento? Cambia la maqueta aprobada, así que lo decide el PO.
+6. **(v4) ¿Pausa entre etapas?** Propuesta: **no**. La transición es de ≤ 4 s, el parcial se guarda al
+   empezar cada etapa y la casa siempre está a la vista. Si el playtest muestra cansancio, se ofrece el
+   mapa de batalla entre E2 y E3.
+7. **(v4) Revancha**: las 3 etapas (propuesta, §25.15) o solo E3. Con las tres dura ≈ 12-16 min y no
+   tiene parcial (R22).
 
 ---
 
@@ -1876,6 +1973,8 @@ el arnés afectado.
 |---|---|---|
 | Auditoría UX de `motor-lanzar.md` v2 y del §14.16 (R1-R14) | `experto-ux-parvulo` | — (hecha el 13-Oct) |
 | **v3**: re-auditoría corta de B2, M2-M5 y M10 sobre la ficha v3 | `experto-ux-parvulo` | Esta v3 + storyboard v4 |
+| **v4**: auditoría UX de R17-R22 (duración, bandeja de Nicole, radio 80, resorte, confeti) y conciliación C1-C6 (§25.13) | `experto-ux-parvulo` + roles de C1-C6 | Esta v4 |
+| **v4**: niveles `etapas[]` (§25.2.3, G1-G5) y calibración por etapa (§25.9) | `disenador-niveles` (HE-80) | Arnés con confeti, resorte y rebotón |
 | Registrar en el GDD §8 la excepción de la física (PO, 13-Oct) y la anulación de M7 | `scrum-master` | — |
 | `GestorTurnos` sin pista + `terminar_turno_sin_recursos()` + `reiniciar_rival(forzar_id)` + virtuales de la base (momentos que se saltan, `variante_derrota`, revancha) | `dev-godot` | Auditoría UX |
 | Motor `lanzar`: física dormida, resortera, perfiles, agarre, charco, gags, gigante, parcial, `derribo_inminente` / `saltar_derribo` | `dev-godot` | Lo anterior |
@@ -1969,3 +2068,598 @@ Fuente: `docs/validaciones/2026-10-13_ux-torre-cierre-arcoiris.md`.
 | **Storyboard v4, cabos 2, 3 y 7** (3.ª pasada) | Confirmado: a los 32 s la cola de Coco gira sola el broche pedido; propuesta: los siguientes, a los 12 s. Confirmado: la ayuda del tanque a los 24 s, un chorro cada 4 s hasta llenar. Corregido: «¡morada de soplar!» | §10.3, §13.5 |
 | **R6, arrastre ajeno** (3.ª pasada) | **No adopto** "solo arrastres que empiecen en la bolsa mientras brilla el retrato": el retrato del turno brilla durante todo el turno, así que no distingue quién arrastra, y reducir el agarre a la bolsa (⌀ 52-104 px) quita el imán de 240 px que UX aprobó para Nicole (R3). Queda para el playtest, con una **palanca de respaldo solo de datos**: radio de agarre de 80 px en el turno de Sofía | §19 (R6) |
 | **Re-auditoría UX 17-Oct** (`2026-10-17_ux-reauditoria-torre-cierre.md`, aprobada sin bloqueantes) | **N1**: clave `cancelar_tiron_sin_pausa` (apagada; gesto < 0,35 s sin pausa → "plop") + registro de gestos en el log del playtest para encenderla solo si aparece un globo robado; conectada a R6. **P1**: R5 pasa a mínimo 5 (5/9/13). Broches siguientes a los 12 s: **aprobado por delegación** | §14, §15.6, §19, §13.5 |
+
+---
+
+## 25. v4 — Dificultad por etapas (17-Oct-2026)
+
+> **Origen [PO]**: el PO jugó la maqueta v1 y preguntó «me gusta el juego pero ¿cómo le agregamos
+> dificultad para que no lo pasen solo con 2 o 3 lanzamientos?». Jugó la maqueta v2
+> (`docs/maquetas/torre-v2.html`, matter-js) y respondió «ok, comienza ahora sí».
+>
+> **Por delegación del PO** se conserva todo lo de la maqueta v2. Lo menor que la maqueta no resuelve, o
+> que resuelve con atajos de prototipo, lo decide esta ficha y lo marca **[delegación]**. La maqueta es
+> la **referencia de la experiencia**: tres torres seguidas, piezas especiales, globos por niña. **No es
+> la referencia de las cifras**: la propia maqueta dice que sus cifras están "sin calibrar".
+>
+> **Lo que manda**: donde esta sección contradice a una anterior, **manda esta**. Las secciones v3 que
+> cambian llevan la marca **(v4)** y remiten aquí.
+
+### 25.1 La idea v4 en una frase
+
+**La Torre ya no es una torre, son tres seguidas.** Cada vez que el Coleccionauta cae al charco, se
+levanta y corre a una torre más rara, y hay que bajarlo otra vez. Las piezas especiales y los globos
+nuevos de Nicole les dan a las hermanas decisiones reales: dónde pegar y con qué.
+
+**Referencia (regla de oro 3)**: es la progresión de un episodio de Angry Birds, donde cada nivel trae
+una estructura nueva y el episodio sube de dificultad por la **forma** de la estructura, no solo por la
+cantidad de piezas.
+
+- La **caja de confeti** es la caja de TNT de Angry Birds.
+- El **rebotón** sale del mismo repertorio de pájaros especiales que el triple y el pesado.
+- El **trampolín (resorte)** es un agregado nuestro: no viene de la referencia. Se vigila en el
+  playtest (R19).
+
+### 25.2 Las tres etapas
+
+#### 25.2.1 Regla de balance (nueva, obligatoria) [delegación]
+
+- **`peso_botable`** = la suma del `peso_agarre` de todas las piezas de la etapa, **sin el trono y sin
+  bonos** (sin resbalones ni golpes directos).
+- **Regla**: **`peso_botable ≥ 1,3 × agarre_inicial`** (`balance.factor_min`: 1,3). Dicho al revés:
+  `agarre_inicial ≤ floor(peso_botable / 1,3)`.
+- **Por qué**: así ninguna etapa obliga a botar **todas** las piezas. Queda margen para piezas que no
+  se pueden alcanzar, para las que se quedan en pie y para el rearmado.
+- **Se valida al cargar** (con `push_error`) y en el simulador.
+- **Si la calibración (HE-80) quiere una etapa más difícil** que lo que permite el tope, **se suman
+  piezas** (sube el `peso_botable`). Subir el agarre por sobre el tope no es una opción.
+
+**Lo que corrige**: la maqueta usa `AGMAX = [0, 24, 30, 36]`.
+
+| Etapa | Agarre de la maqueta | `peso_botable` de la maqueta | Factor | Problema |
+|---|---|---|---|---|
+| E1 | 24 | 30 | 1,25 | Justo, bajo 1,3 |
+| E2 | 30 | 22 | **0,73** | **Desbalanceada.** Ni botando todo se llega: solo se gana si cae el trono |
+| E3 | 36 | 21 | **0,58** | **Desbalanceada** (el caso que detectó el PO) |
+
+Con E2 y E3 así, la única forma de ganar es que **caiga el trono**. Eso premia el atajo de "pegarle a
+lo que sostiene el trono": justo el "lo pasan con 2 o 3 lanzamientos" que el PO quiere evitar.
+
+#### 25.2.2 Reglas de geometría contra los atajos (nuevas) [delegación]
+
+La maqueta tiene tres atajos de prototipo que **no se adoptan**:
+
+- en E1, el trono está sobre un frasco y una caja de confeti;
+- en E2, el trono está sobre los tres frascos del puente, y **el puente flota 30 px** sobre los pilares;
+- **Maxi apunta siempre al frasco o confeti más alto**, que en E1 es el apoyo del trono. Su primer tiro
+  podía tumbar el trono.
+
+| # | Regla | Se valida |
+|---|---|---|
+| G1 | **El trono se apoya solo en lata o cartón** (el puente de E2 es de cartón). Nunca directamente sobre un frasco, una caja de confeti ni un resorte. **La columna que sostiene el trono no lleva frascos ni confeti** | Al cargar, con el grafo de apoyos (§6.2.3) |
+| G2 | **Maxi nunca apunta a los apoyos del trono** (los que el grafo marca como su soporte, directos o en la columna) ni a un resorte (no se rompe, y el turno de Maxi **siempre bota algo**, L4). Su objetivo sale de `puntos_debiles.semilla`, en el orden del nivel, **no "el más alto"** | Al cargar: esos ids no pueden estar en `semilla` ni en `semilla_respaldo` |
+| G3 | **La onda del confeti no empuja al trono** (`confeti.empuja_trono: false`). Los apoyos sí se empujan; si el arnés muestra que eso tumba el trono antes de tiempo, la palanca es `confeti.inmunes: ["apoyos_trono"]` | Arnés (§25.9) |
+| G4 | Sigue la regla v3: **el trono no puede caer con menos de ~60 % del agarre perdido**, ahora **en cada etapa**. El arnés lo mide como `p_trono_cae_temprano` | Arnés |
+| G5 | Ninguna pieza flota: todas apoyan en el grafo (en la maqueta, el puente de E2 flotaba) | Al cargar (ya existía) |
+
+#### 25.2.3 Valores finales de partida por etapa [delegación; la calibración fina es de HE-80]
+
+La **forma** de cada torre es la de la maqueta, y `disenador-niveles` fija los `rect` exactos. Aquí van
+la composición, el peso, el agarre y los globos.
+
+| | **E1 · "La torre de la colección"** | **E2 · "Dos torres y un puente"** | **E3 · "La torre de las cosas raras"** |
+|---|---|---|---|
+| Forma | Ancha y escalonada: 4 latas de base, 3 cajas, una repisa de 6 frascos, 2 tablones y 2 latas arriba | Dos pilares, un puente de cartón y el trono **directo sobre el puente** | Torre central angosta con dos flancos de lata, un trampolín en cada flanco y frascos sueltos en los extremos de la galleta |
+| Cambios contra la maqueta | **+1 caja de cartón** (en la repisa, la ubica `disenador-niveles`). El frasco y el confeti que estaban **bajo el trono** pasan a los extremos de los tablones; el trono queda sobre las 2 latas (G1) | Pilares `[lata, cartón, lata, cartón]` (el frasco de arriba del pilar pasa a ser cartón, G1). El puente apoya de verdad (G5). Centro bajo: `[cartón, frasco, confeti]`. Sobre el puente: **4 frascos, 2 a cada lado del trono** | Centro `[lata, cartón, lata, cartón, lata]`: el confeti sale del centro (G1). Flancos `[lata, lata, resorte, confeti, frasco]`. **+2 frascos de base** en los extremos de la galleta (x ≈ 825 y ≈ 1155) |
+| Piezas (sin trono) | **20**: 6 lata, 6 cartón, 5 caramelo, 3 confeti | **16**: 4 lata, 6 cartón (incluye el puente), 5 caramelo, 1 confeti | **17**: 7 lata, 2 cartón, 4 caramelo, 2 confeti, 2 resorte |
+| `peso_botable` | **32** = 12 + 12 + 5 + 3 | **27** = 8 + (10 + 3 del puente) + 5 + 1 | **26** = 14 + 4 + 4 + 2 + 2 |
+| Trono | 6 | 6 | 6 |
+| **`agarre_inicial`** | **24** (= maqueta) | **20** (maqueta: 30) | **20** (maqueta: 36) |
+| Factor `peso_botable / agarre` | 1,33 | 1,35 | 1,30 |
+| Confeti | 3 | 1 | 2 |
+| Resorte | — | — | 2 |
+| **Globos** | **13**; **17** tras la 1.ª derrota **de esta etapa** | 13 / 17 | 13 / 17 |
+| Gigante | Desde el 3.er intento **de la etapa** | Ídem | Ídem |
+| Dónde está el reto | Aprender la resortera y descubrir el confeti | Elegir: pilares duros (lata) o el centro frágil con confeti; el puente no cae solo | Centro angosto **tapado por los flancos**: hay que abrir un flanco primero. Los resortes desvían los tiros malos. Para Sofía, el pesado (×2 contra la lata) es la llave |
+
+**¿Por qué el agarre de E2 y E3 no es más alto que el de E1?** El agarre no es la dificultad: es la
+cantidad de material que hay que botar. La dificultad de E2 y E3 la ponen:
+
+- **la proporción de material duro**: E1 tiene 12 de 20 piezas de lata o cartón (60 %); E2, 10 de 16
+  (63 %); E3, 9 de 17 más 2 resortes que no se rompen (65 %);
+- **la forma**: en E3, el centro solo se alcanza abriendo un flanco;
+- **los tiros que cuestan cada pieza**.
+
+**Los niños nunca ven el número** (R2): la cara del Coleccionauta se mide como **fracción** del agarre
+de la etapa. Las metas de victoria por etapa (§25.9) son las que fijan la escalera, y HE-80 mueve los
+agarres para cumplirlas, **siempre bajo el tope de balance**.
+
+**Total de la Torre**: 53 piezas y `peso_botable` 85 en las tres etapas. Cada etapa es una torre
+nueva: **≤ 40 cuerpos por etapa** (E1, la más grande: 20 piezas + trono + plataforma + ≤ 3 globos =
+25).
+
+### 25.3 El flujo entre etapas
+
+1. **Derribo de E1 o E2** (agarre 0 o trono botado, detectado en vivo, §6.6): todo se congela.
+2. **Caída corta** (≈ 5,5 s, **coreografía animada, no física**, L9; la monta `director-cinematicas`,
+   [CONCILIAR] C1). Según la maqueta:
+   - tambaleo de 1,5 s;
+   - el Coleccionauta cae sentado en el charco con un ¡splash!;
+   - la mochila en alto, gris y limpia.
+   
+   Es el **momento saltable `caida_etapa`**: desde la 2.ª vez, por familia, se salta con un toque (el
+   mecanismo genérico del §13.2; `batalla.gd` marca `<id_batalla>:caida_etapa`).
+3. **Transición ≤ 4 s, con voz** (C1): él sale del charco, corre (o rebota) hacia la derecha, y la
+   torre nueva **se arma pieza por pieza con "pop"** mientras corre. Suena la línea
+   `etapa_2_llega` o `etapa_3_llega` (§25.14). **No se salta** (es corta y orienta). No hay pausa ni
+   pregunta de "¿seguimos?" (la decisión abierta 6 está en el §21).
+4. **La etapa nueva empieza**:
+   - **se reinicia por etapa**: el agarre (al `agarre_inicial` de la etapa), la torre, el charco
+     (arranca chico, porque es otra torre), la canasta (13), los intentos de la etapa (las ayudas y la
+     pausa cuentan **derrotas de la etapa**) y el gigante;
+   - **sigue de largo**: el **conteo de gags de la Torre** (para que la 2.ª derrota de la tarde tenga
+     el gag 2 aunque ocurra en otra etapa) [delegación], la explicación del tiro ya dada en la sesión
+     (§5.2.1), las primeras veces de `carga` por color, los rastros de tiro (se borran: es otra torre) y
+     las presentaciones "por familia" ya vistas;
+   - **empieza Maxi**: `reiniciar_rival("maxi")`, como en todo intento (§8.1). La puerta se abre para
+     él;
+   - **se guarda el parcial** (§12, v4) antes del primer turno: si se van con la casa, vuelven a esta
+     etapa, nunca a una que ya ganaron.
+5. **Derribo de E3** = **el derribo final de la v3**, sin cambios: `derribo_inminente` → anticipación
+   (no se salta) → caída en el charco (`caida_torre`) → `completado(0)` (§9, §13.2).
+
+**El primer encuentro con cada pieza especial** (por familia, una vez): Coco la señala con un halo
+violeta de 0,8 s y dice su línea (`confeti_presenta` al empezar E1, `resorte_presenta` al empezar E3).
+Va **después** de la llegada y **antes** de la puerta de Maxi, y se corta si alguien toca.
+
+### 25.4 Globos por etapa: 13 + 4 (conciliación con el 9 + 4 de la v3)
+
+- **Reparto v4** [PO, maqueta v2]: **13 por etapa** y **17** desde la 1.ª derrota **de esa etapa**.
+  Los +4 se quedan en los intentos siguientes de la misma etapa. Al pasar de etapa, vuelve a 13.
+- **Se mantiene la regla ≡ 1 (mód 4)** de la v3: 13 = 4 × 3 + 1 y 17 = 4 × 4 + 1. Con
+  `maxi_intercalado` y el reinicio en Maxi:
+  - **13**: M N M S M N M S M N M S M → **Maxi 7, Nicole 3, Sofía 3**;
+  - **17**: … M N M S M → **Maxi 9, Nicole 4, Sofía 4**;
+  - el último globo es siempre el tiro seguro de Maxi, y las hermanas tiran lo mismo en todo intento
+    (R4 sigue mitigado).
+- **Cómo queda el 9 + 4 de la v3**: el **+4 tras la 1.ª derrota** se conserva tal cual. Lo que cambia
+  es la base, que pasa de **9 a 13** porque cada etapa es más corta de botar que la torre única de la
+  v3 y porque la maqueta aprobada usa 13. El 13 de la v3 ("tras la derrota") pasa a ser la **base**, y
+  el nuevo "tras la derrota" es 17.
+- **El gigante**: igual que en la v3, pero **por etapa**. Desde el 3.er intento de una etapa, reemplaza
+  al primer globo de Maxi (la cuenta sigue en 17 y el último sigue siendo de Maxi).
+- **Mínimo 5 al retomar (v3), conservado**: `max(globos_restantes, 5)` redondeado hacia arriba al
+  siguiente ≡ 1 (mód 4) (**5, 9, 13, 17**). **Nunca supera la canasta llena del intento en curso** (13 o
+  17) [delegación]. `encontre_globos` suena solo si se agregó alguno.
+- **La pausa** (`pausa`, v3) se ofrece desde la **3.ª derrota de la misma etapa**.
+
+### 25.5 Piezas especiales
+
+#### 25.5.1 `confeti`: la caja sorpresa (TNT de Angry Birds, en versión cumpleaños)
+
+| Propiedad | Valor |
+|---|---|
+| Qué es | Caja **magenta** con una estrella amarilla y cuadraditos cian: una caja sorpresa de cumpleaños. **Nunca** fuego, humo, mecha ni la palabra "bomba" (L8). Es una fiesta que se abre de golpe |
+| Tamaño | Como un frasco (44 × 56 en la maqueta) |
+| Resistencia | **1** (como el caramelo) |
+| Densidad, fricción, rebote | 0,6 / 0,6 / 0,05 (las del caramelo) |
+| **`peso_agarre`** | **1** [delegación]. Su valor no es ella misma: es el empujón que da. Si valiera más, se volvería el blanco obligado de todos los tiros |
+| Cuándo explota | **Solo cuando se rompe**: daño de un globo, rotura forzada de Maxi o del gigante, o un **choque fuerte de otra pieza** (abajo). Si solo la desplazan, cuenta como botada pero **no** explota. **Tocarla con el dedo nunca la rompe** (§5.6) |
+| La onda | Radio **150 px**. A cada cuerpo con centro a distancia `d < 150` le suma velocidad hacia afuera de **90 + 420 × (1 − d/150) px/s** (90 px/s en el borde y 510 px/s en el centro), más **60 px/s hacia arriba**. Es la fórmula de la maqueta, a 60 Hz. **No hace daño**: empuja. **No empuja al trono** (G3) |
+| Despertar | La onda despierta los cuerpos del radio **y los que se apoyan en ellos** (§6.2.3). En la maqueta despertaba toda la torre; eso no se adopta: la torre sigue durmiendo fuera de la onda |
+| **La cadena** | Una pieza empujada por la onda que **choca contra otra caja de confeti** con impulso ≥ su `impulso_por_punto` la rompe, y esa explota también (`confeti.rompe_por_bloque: true`). Entre dos explosiones encadenadas pasan **≥ 0,1 s**, para que se lea la causa. Tope: `cadena_max` 3 explosiones por tiro |
+| Feedback (< 16 ms desde la rotura) | "¡Pomf!" de confeti (blando, con campanitas; nunca un estallido seco), **un anillo blanco que se expande hasta 150 px en 0,2 s** (muestra el radio de la onda), ≤ 36 partículas (22 de confeti magenta, amarillo y cian, y 14 dulces), la cámara tiembla 0,1 s y el Coleccionauta pone la cara de "¡uy!" |
+| Dónde aparece | **E1: 3. E2: 1. E3: 2** |
+| Maxi | **Puede** ser objetivo de Maxi si `disenador-niveles` la pone en `puntos_debiles.semilla` (la maqueta lo hace), salvo que sea apoyo del trono (G2). Es "el gran ¡pomf!" de Maxi. Se mide que su aporte no pase el 45 % (§15.1) |
+
+#### 25.5.2 `resorte`: el trampolín
+
+| Propiedad | Valor |
+|---|---|
+| Qué es | Trampolín **verde** con un resorte blanco en zigzag |
+| Tamaño | 84 × 20 (maqueta) |
+| Resistencia | **Irrompible** (`irrompible: true`): ningún daño lo rompe, tampoco el pesado ni el gigante |
+| Rebote | **1,1**: devuelve un poco más de lo que recibe. Entre un globo y un resorte **manda el mayor de los dos rebotes**, como en la maqueta. Si el motor de física no admite rebote > 1, Dev aplica la velocidad de salida a mano en el contacto. La velocidad de salida se recorta a `resortera.velocidad_max_px_s` (1300) |
+| Densidad, fricción | 1,5 / 0,9 |
+| **`peso_agarre`** | **1**. Cuenta si se bota por desplazamiento (≥ 40 px), por giro (≥ 35°) o porque sale de la zona (§6.5) |
+| Feedback de un globo que rebota | *Squash* del resorte de 0,15 s (aplasta 40 % y estira), "¡boing!" con el tono según la velocidad y chispas verdes. **Sin daño ni mancha que se quede**: el resorte siempre se ve limpio y verde, para que se lea "esto no se rompe" |
+| Dónde aparece | **Solo en E3: 2**, uno en cada flanco |
+| Para qué sirve | **Para las hermanas**: un tiro bajo y malo rebota hacia afuera, y un tiro alto bien pensado usa el resorte para caer sobre el centro. **Para Maxi**: nunca es su objetivo (G2); si su globo, ya en física, lo toca después del impacto, rebota y no pasa nada más |
+
+### 25.6 Los globos por niña
+
+#### 25.6.1 Nicole · Brote: normal o **rebotón** (v4)
+
+| Propiedad | Normal | **Rebotón** (`rebota`) |
+|---|---|---|
+| Radio, masa | 26 px, 1,0 | 26 px, 1,0 |
+| Rebote | 0,15 | **0,85** |
+| Vida tras el primer contacto (bloque **o suelo**) | 110 cuadros (1,83 s) | **200 cuadros (3,33 s)** |
+| Daño | El del §6.4 en cada contacto | Ídem, **en cada rebote** (cada rebote pierde velocidad y pega menos) |
+| Para qué | El tiro directo | **Rebotar en el suelo y alcanzar lo que queda detrás** de una pieza dura (en E3, el centro detrás del flanco) |
+| Dibujo | Globo liso | Globo con un **zigzag de resorte** en la panza (el mismo signo que el trampolín: "este rebota") |
+
+- **La guía de Nicole no cambia**: va completa hasta el primer choque, con anillo e imán. El rebote
+  posterior **no** se dibuja: lo aprende ella. Ese es su reto real (regla de oro 2).
+- El rastro de su tiro anterior sí muestra el camino real, con rebotes incluidos (§5.4).
+
+#### 25.6.2 Sofía · Estrella: sin cambios
+
+Normal, triple y pesado (§5.5). **No** recibe el rebotón: cada niña tiene su repertorio, y el de Sofía
+ya es el más rico (R7 de la v3, "nada se ve más grande").
+
+#### 25.6.3 Maxi · Semilla: sin cambios
+
+- Tiro guiado que **siempre** da en el punto dorado (§5.3), dedo apretado 1,2 s y automático a los 20 s.
+- **Sin bandeja ni elección**. No se puede frustrar (GDD §6): no existe fallo en su turno, y G2
+  garantiza que su objetivo siempre se rompe.
+- Lo único nuevo para él es que su objetivo **puede ser una caja de confeti** (más fiesta, el mismo
+  gesto).
+
+#### 25.6.4 La bandeja: elegir el globo sin texto
+
+| | Nicole (v4) | Sofía (v3, sin cambios) |
+|---|---|---|
+| Rect | **`Rect2(410, 480, 224, 104)`**: 2 globos de 104 × 104, separados 16 px | `Rect2(410, 480, 344, 104)`: 3 globos |
+| Targets | 104 × 104 px (≥ 96 px, GDD §6). Cada uno a ≥ 24 px del círculo de agarre de su perfil: la esquina (410, 480) queda a 158 px de la bolsa, y el círculo mide 120 | Ídem (radio 80, v4) |
+| Viene cargado | **El normal**, en cada turno (como la maqueta) | El normal |
+
+- **Cómo se elige**: **un toque** sobre el globo. Responde en < 50 ms con un pop, *squash* 0,9 → 1,1 y
+  el sonido propio del tipo:
+  - normal: "pomp";
+  - rebotón: "boing-boing";
+  - triple: "pip-pip-pip";
+  - pesado: "tum".
+- **Lo elegido se ve**: el globo vuela a la resortera en 0,2 s, su casilla queda blanca, con borde
+  violeta de 5 px y en escala 1,08, y las otras quedan al 65 %.
+- **Voz sin texto** (la maqueta escribe el nombre bajo cada globo; **en el juego no hay texto**, GDD §6):
+  - la **1.ª vez por sesión de Torre** que una niña toca cada tipo, Coco dice su nombre corto
+    (`globo_nombre_*`, ≤ 0,8 s, §25.14). Después, solo el sonido;
+  - la **1.ª vez por familia** que aparece la bandeja de Nicole, Coco la presenta
+    (`elige_globo_presenta_nicole`) mientras el rebotón da un saltito en la bandeja.
+  - **La voz nunca bloquea** (§5.1): se puede estirar mientras Coco habla.
+- **Cuándo se puede elegir**: antes de empezar a estirar. Durante el arrastre la bandeja queda al 60 % y
+  no responde (v3).
+- **Elegir no gasta nada.**
+- **Prioridad**: la bandeja está fuera del círculo de agarre, así que no compite con la resortera. Un
+  toque de Maxi en la bandeja durante el turno de una hermana cambia el globo cargado. Es inofensivo (no
+  gasta) y queda como observación en R18.
+- **Radio de agarre de Sofía, 80 px** (v4) [delegación]. La maqueta v2 ya usa 80 px en el turno de Sofía
+  y 120 en el de Nicole. Era la palanca de respaldo de R6 en la v3; **se adopta de inicio** porque se
+  conserva lo de la maqueta: baja el riesgo de globos robados y para Sofía (8 años) es reto acorde.
+  Nicole sigue con 120. UX lo valida (R18).
+
+### 25.7 Retiro de los globos y fin del tiro (v4; corrige el atasco de la v1)
+
+**Problema de la v1**: un globo que rodaba por el suelo sin tocar ningún bloque nunca se retiraba, y el
+tiro no terminaba nunca.
+
+**Regla v4** (la de la maqueta). Un globo **se retira** (revienta con mancha, 8 partículas de su color
+y "plop") apenas pase lo primero de esto:
+
+1. **sale de la pantalla** por un lado (x < −60 o x > 1340) o por abajo (y > 720). Por arriba **no**
+   (v3: el cielo es de los globos, y vuelve);
+2. pasaron **110 cuadros (1,83 s)** desde su **primer contacto**, **sea con un bloque o con el suelo**
+   (**tocar el suelo cuenta como golpe**). El rebotón tiene **200 cuadros (3,33 s)**;
+3. pasaron **420 cuadros (7 s) desde el lanzamiento**, pase lo que pase (tope absoluto).
+
+- **Vale para todos los globos**: normal, rebotón, los 3 del triple (cada uno con su reloj), pesado,
+  gigante y el de Maxi una vez que pasa a física.
+- **Cambia la v3**: los globos **ya no revientan al primer choque** (§6.1, v4). Siguen físicos durante
+  su vida, empujan y pegan otra vez. Así lo jugó el PO.
+- **Charco**: un globo cuyo **primer** contacto fue el suelo suma el medio escalón de "globo al suelo"
+  (§6.9) al retirarse.
+- **Fin del tiro** = no queda ningún globo **y** todo está dormido (§6.2).
+  - **El tope de asentamiento de 3,5 s se cuenta desde que se retira el último globo** (v4; en la v3 se
+    contaba desde el lanzamiento). Así sigue valiendo la condición de la excepción de física (§2: "el
+    asentamiento dura como máximo 3,5 s").
+  - **Peor caso del tiro**: 7 + 3,5 = 10,5 s. El típico, ≈ 4-5 s.
+  - **QA**: ningún tiro pasa de 10,5 s.
+
+### 25.8 Contrato de datos v4 (cambios sobre el §14)
+
+```jsonc
+{
+  "resortera": {
+    "radio_agarre_px": { "brote": 120, "estrella": 80 }          // (v4) era un número (120); la maqueta usa 80 para Sofía
+  },
+  "mundo": {
+    "asentamiento_max_s": 3.5, "asentamiento_desde": "retiro_ultimo_globo"   // (v4)
+  },
+  "retiro_globos": {                                              // (v4) §25.7
+    "vida_tras_contacto_cuadros": { "normal": 110, "rebota": 200, "triple_mini": 110, "pesado": 110, "gigante": 110 },
+    "vida_max_cuadros": 420,
+    "suelo_cuenta_como_contacto": true,
+    "fuera_x": [-60, 1340], "fuera_abajo_y": 720
+  },
+  "proyectiles": {
+    "rebota": { "radio_px": 26, "masa": 1.0, "rebote": 0.85, "multiplicador_dano": 1.0 }   // (v4) Nicole
+  },
+  "materiales": {
+    "confeti": { "resistencia": 1, "impulso_por_punto": 60, "densidad": 0.6, "friccion": 0.6, "rebote": 0.05,
+                 "rotura": "explota", "peso_agarre_sugerido": 1,
+                 "explosion": { "radio_px": 150, "v_borde_px_s": 90, "v_centro_px_s": 510, "v_arriba_px_s": 60,
+                                "empuja_trono": false, "inmunes": [], "despierta": "radio_y_apoyos",
+                                "rompe_por_bloque": true, "retardo_cadena_s": 0.1, "cadena_max": 3 } },
+    "resorte": { "irrompible": true, "densidad": 1.5, "friccion": 0.9, "rebote": 1.1, "rebote_combina": "max",
+                 "rotura": null, "peso_agarre_sugerido": 1 }
+  },
+  "perfiles": {
+    "brote": { "proyectiles": ["normal", "rebota"], "bandeja": [410, 480, 224, 104] }        // (v4)
+  },
+  "balance": { "factor_min": 1.3 },                               // (v4) §25.2.1: push_error si peso_botable < 1,3 × agarre_inicial
+
+  // (v4) "torre" y "agarre.inicial" del §14 pasan a vivir dentro de cada etapa. Lo demás de "agarre"
+  //      (bonus_max_por_tiro, golpe_directo, estados_cara) es común.
+  "etapas": [
+    { "id": "e1", "voz_llegada": null,                            // E1 usa la presentación T.1 y la intro T.2 de siempre
+      "agarre_inicial": 24,
+      "torre": { "plataforma": { /* … */ }, "bloques": [ /* 20 */ ], "trono": { /* … */ },
+                 "puntos_debiles": { /* semilla, semilla_respaldo, gigante_objetivo, brote, estrella */ },
+                 "orden_reparacion": [ /* … */ ] },
+      "presenta_especial": "confeti" },
+    { "id": "e2", "voz_llegada": "etapa_2_llega", "agarre_inicial": 20, "torre": { /* 16 */ } },
+    { "id": "e3", "voz_llegada": "etapa_3_llega", "agarre_inicial": 20, "torre": { /* 17 */ },
+      "presenta_especial": "resorte" }
+  ],
+  "transicion_etapa": { "caida_corta_s": 5.5, "transicion_max_s": 4.0, "momento_saltable": "caida_etapa",
+                        "presenta_especial_halo_s": 0.8 },
+
+  "intentos": {
+    "globos_base": 13,                                            // (v4) por etapa; era 9. Debe ser ≡ 1 (mód 4)
+    "ayudas": [
+      { "desde_derrota": 1, "globos_extra": 4, "voz": "ayuda_intento_1" },                  // 13 → 17
+      { "desde_derrota": 2, "globo_gigante": true, "gigante_reemplaza_primero": true, "voz": "ayuda_intento_2" }
+    ],
+    "derrotas_cuentan_por": "etapa",                              // (v4) ayudas y pausa
+    "gags_cuentan_por": "torre",                                  // (v4) la rotación de gags sigue entre etapas
+    "globos_minimos_al_retomar": 5,
+    "retomar_redondeo": "siguiente_1_mod_4",
+    "retomar_tope": "canasta_llena_del_intento"                   // (v4) 13 o 17
+  },
+
+  "equipo": { "composiciones": {                                  // (v4) solo la revancha usa las de dos
+    "maxi+nicole":  { "globos_base": 13, "globos_extra_1": 4 },   // M H M H… → hermana 6 / 8
+    "maxi+sofia":   { "globos_base": 13, "globos_extra_1": 4 },
+    "nicole+sofia": { "globos_base": 12, "globos_extra_1": 4, "ayuda_2": { "globos_extra": 2 } }   // 6 y 6 / 8 y 8
+  } },
+
+  "lineas_voz": {                                                 // (v4) nuevas, todas "PENDIENTE" (§25.14)
+    "etapa_llegada": { "etapa_2_llega": "PENDIENTE", "etapa_3_llega": "PENDIENTE" },
+    "caida_etapa": ["PENDIENTE", "PENDIENTE"],
+    "presenta_especial": { "confeti": "PENDIENTE", "resorte": "PENDIENTE" },
+    "elige_globo_presenta_nicole": "PENDIENTE",
+    "globo_nombre": { "normal": "PENDIENTE", "rebota": "PENDIENTE", "triple": "PENDIENTE", "pesado": "PENDIENTE" }
+  }
+}
+```
+
+**Validaciones nuevas al cargar** (con `push_error`, sin colgarse):
+
+- `peso_botable ≥ balance.factor_min × agarre_inicial` en cada etapa;
+- G1 (apoyos del trono) y G2 (`semilla` sin apoyos del trono ni resortes) en cada etapa;
+- ≤ 40 cuerpos por etapa;
+- `globos_base` y `globos_base + globos_extra` ≡ 1 (mód 4) con Maxi presente;
+- `perfiles.*.bandeja` sin superponerse al círculo de agarre de su perfil y a ≥ 24 px de él;
+- cada material usado por un bloque existe en `materiales`.
+
+### 25.9 Calibración v4 (metas por etapa; la corre HE-80)
+
+**Las metas v3 de "1er intento 30-40 %" eran para una sola torre.** Con tres etapas en cadena, esas
+metas harían que casi nadie pase las tres al primer intento (0,35³ ≈ 4 %). Pasan a ser **por etapa y
+en escalera** [delegación; HE-80 puede moverlas con datos del arnés y del playtest]:
+
+| Meta | E1 | E2 | E3 |
+|---|---|---|---|
+| Gana en el 1.er intento de la etapa | **60-75 %** | **45-60 %** | **30-40 %** |
+| Gana la etapa en ≤ 3 intentos | ≥ 95 % | ≥ 95 % | ≥ 95 % (3.er intento ≥ 99 %, condición del gigante A) |
+| **Tiros hasta ganar (p50, en el intento ganador)** | ≥ 7 | ≥ 8 | ≥ 9 |
+| **Gana la etapa con ≤ 4 tiros** (la pregunta del PO) | ≤ 3 % | ≤ 3 % | ≤ 3 % |
+| `p_trono_cae_temprano` (el trono cae con < 60 % del agarre perdido) por tiro, banda fresca | ≤ 2 % | ≤ 2 % | ≤ 2 % |
+| Aporte de cada perfil (se mide, nunca se muestra) | 25-45 % | 25-45 % | 25-45 % |
+
+- **Las tres etapas al primer intento**: ≈ 0,67 × 0,52 × 0,35 ≈ **12 %**. Es reto real para el
+  equipo, y nadie se traba: con las ayudas por etapa, cada etapa llega a ≥ 95 % en ≤ 3 intentos.
+- **Estimación a mano para E1** (con las distribuciones de la v3, que eran de otra torre): 13 tiros
+  dan una media ≈ 29 (Maxi 7 × 1,4, Nicole 3 × 2,45 y Sofía 3 × 3,94, con desviación ≈ 6,3). Con
+  agarre 24, eso da ≈ **79 %**, **por encima** de la meta de E1.
+  - Primera palanca para HE-80: **sumar peso** a E1 y subir su agarre a 25 (necesita
+    `peso_botable` ≥ 33). No hay que bajar los globos.
+  - E2 y E3 no se estiman a mano: la forma (pilares, flancos y resortes) cambia demasiado el aporte por
+    tiro, y lo tiene que medir el arnés.
+
+**Cambios al arnés y al simulador (§15.3, §15.4)**:
+
+- **Arnés**: bandas por etapa; el modelo de tirador de Brote elige el rebotón cuando el punto débil está
+  tapado (y si no, el normal), y registra `p_trono_cae_temprano`, las cadenas de confeti (cuántas
+  explosiones por tiro) y los rebotes en el resorte.
+- **Simulador**: `jugar_torre()` recorre E1 → E2 → E3; las ayudas y la pausa se cuentan por etapa y los
+  gags por Torre. Imprime las metas de la tabla por etapa y la duración total.
+
+**Reglas de decisión v4** (se suman a las del §15.5; corren por etapa):
+
+| Si… | Entonces… |
+|---|---|
+| 1.er intento de la etapa < meta | Bajar `agarre_inicial` de esa etapa −1 (mínimo 16) |
+| 1.er intento de la etapa > meta | Subir `agarre_inicial` +1 **solo si** el tope de balance lo permite; si no, **sumar piezas** (+1 o +2 de peso) y después subir el agarre |
+| Gana con ≤ 4 tiros > 3 % | Buscar el atajo: `p_trono_cae_temprano` → G1/G3 (`confeti.inmunes: ["apoyos_trono"]`); cadenas de confeti → `cadena_max` 2 o confeti más lejos del trono. **No** se toca el agarre |
+| Aporte de Maxi > 45 % (por los ¡pomf! del confeti) | Sacar las cajas de confeti de `puntos_debiles.semilla` (quedan para las hermanas) |
+| Nicole < 25 % | Primero el imán y el halo de Brote (v3). Si no alcanza, que el rebotón haga ×1,2 de daño en el 2.º rebote |
+| Duración típica de la Torre > 15 min | Ver §25.10 |
+
+### 25.10 Duración v4 (estimación)
+
+**Supuestos**:
+
+- un tiro con su pase dura ≈ **20,5 s**: los 19,4 s de la v3, más ≈ 0,8 s porque el globo ahora vive
+  después de su primer contacto, más ≈ 0,3 s de media por la bandeja de Nicole;
+- la ruta típica es ganar E1 y E2 al primer intento y E3 al segundo.
+
+| Tramo | Minutos |
+|---|---|
+| Presentación T.1 (solo la 1.ª vez) + intro + `confeti_presenta` | ≈ 0,35 |
+| **E1** (≈ 10 tiros hasta ganar) | ≈ 3,4 |
+| Caída corta + transición a E2 (5,5 + ≤ 4 s) | ≈ 0,16 |
+| **E2** (≈ 11 tiros) | ≈ 3,8 |
+| Caída corta + transición a E3 + `resorte_presenta` | ≈ 0,2 |
+| **E3**: 1.er intento perdido (13 tiros) + gag, ayuda y rearmado + 2.º intento (≈ 10 tiros) | ≈ 4,4 + 0,25 + 3,4 = 8,05 |
+| Anticipación + caída final (v3) | ≈ 0,25 |
+| **Típica de la Torre** | **≈ 16 min** (v3: ≈ 5,8) |
+| p80 | ≈ 21 min |
+| Con las tres etapas al primer intento (≈ 12 %) | ≈ 12 min |
+
+- **El cierre del storyboard v4.1 no cambia**: sigue en ≈ **6,1 min** desde el derribo final, porque
+  arranca en el derribo de E3. **Lo que se alarga es el tramo de juego antes del cierre**: de ≈ 5,8 a
+  ≈ 16 min. Sumadas las dos caídas cortas con sus transiciones, quedan ≈ 22 min desde la entrada a la
+  Torre hasta el Mapa Estelar.
+- **La batalla completa** (Río, Formas, Parejas y la Torre) pasa de ≈ 18-20 a **≈ 28-30 min**, más el
+  cierre. **R9 sube de nivel** (R17): la batalla se juega en **2-3 sesiones**.
+- **Lo que lo hace jugable**:
+  - **cada etapa guarda el parcial al empezar** (§25.3). Salir con la casa en cualquier momento no
+    pierde ninguna etapa ganada, y la batalla puede cortarse naturalmente después de E1 o de E2;
+  - las etapas duran 3-5 min cada una: el tamaño de una ronda de la batalla.
+- **Meta v4** [delegación]: Torre típica **≤ 15 min**, cada etapa ganada al 1.er intento en 3-5 min.
+- **Palancas, en este orden**, si el simulador da una típica > 15 min:
+  1. el pase más corto (puerta por toque en vez de arrastre tras Maxi, §15.5);
+  2. `asentamiento_max_s` 3,0 y vida del normal de 90 cuadros;
+  3. **solo con OK del PO** (cambia la maqueta aprobada): E1 con 9 globos de base (≡ 1 mód 4) como
+     calentamiento.
+
+### 25.11 Riesgos nuevos para `experto-ux-parvulo`
+
+| # | Riesgo | Mitigación | Qué observar |
+|---|---|---|---|
+| R17 | **La Torre dura ≈ 16 min** y Maxi tiene 2 años | Parcial al empezar cada etapa; etapas de 3-5 min; la casa siempre a la vista; palancas del §25.10 | ¿En qué etapa se va Maxi? ¿Vuelven otro día a la etapa donde iban? |
+| R18 | **La bandeja de Nicole** (nueva) y el radio 80 de Sofía | Targets de 104 px, sonido propio por tipo, nombre por voz la 1.ª vez, viene cargado el normal | ¿Nicole elige el rebotón con intención o al azar? ¿Maxi le cambia el globo? ¿Sofía falla el agarre con 80 px? |
+| R19 | **El resorte desvía un tiro** y una niña siente "¡no es justo!" | Se ve limpio y verde, con un "boing" claro; la presentación de Coco en E3; la guía de Nicole muestra el choque con el resorte como impacto | Frases de injusticia en E3 |
+| R20 | **La onda del confeti asusta** (estallido) | Sonido blando de fiesta, anillo blanco, nada de fuego ni humo; el Coleccionauta se ríe | Caras de susto en Maxi la primera vez |
+| R21 | **"¡Otra torre más!"**: frustración de "nunca se acaba" en E2 o E3 | La transición dura ≤ 4 s y es chistosa (él corre y la torre se arma con pops); la línea de llegada de E3 dice que es **la última** | ¿Celebran o se quejan al ver la torre nueva? |
+| R22 | **La revancha completa dura ≈ 12-16 min** y no tiene parcial | Ver la decisión abierta 7 (§21) | ¿Juegan la revancha entera? |
+
+### 25.12 Para `tester-qa` (casos nuevos v4)
+
+- **Balance**:
+  - un nivel con `peso_botable < 1,3 × agarre_inicial` da `push_error` al cargar;
+  - lo mismo un trono apoyado en un frasco, confeti o resorte (G1);
+  - lo mismo un apoyo del trono o un resorte en `semilla` (G2).
+- **Etapas**:
+  - al ganar E1 y E2 se reinician el agarre, la torre, el charco, la canasta (13) y el conteo de
+    derrotas de la etapa, y **no** se reinicia el conteo de gags;
+  - empieza Maxi en cada etapa;
+  - el parcial se guarda antes del primer turno de cada etapa, y al retomar se vuelve a esa etapa;
+  - `caida_etapa` se salta desde la 2.ª vez;
+  - la transición dura ≤ 4 s;
+  - `completado` sale **solo** tras E3.
+- **Globos**:
+  - 13 → M7 N3 S3 y 17 → M9 N4 S4;
+  - el último globo de todo intento es de Maxi;
+  - al retomar, max(restantes, 5) redondeado a 5/9/13/17, sin superar la canasta llena del intento;
+  - el gigante aparece desde el 3.er intento **de la etapa**.
+- **Confeti**:
+  - explota solo al romperse, no al desplazarse ni al tocarlo con el dedo;
+  - empuja dentro de 150 px con la fórmula del §25.5.1 (±5 %) y nunca al trono;
+  - en una cadena, ≥ 0,1 s entre explosiones y ≤ 3 por tiro;
+  - pesa 1;
+  - ≤ 40 partículas por estallido.
+- **Resorte**:
+  - no se rompe con ningún globo (tampoco el pesado ni el gigante);
+  - un globo que lo toca sale con rebote 1,1 y a ≤ 1300 px/s;
+  - pesa 1 si se bota;
+  - nunca es el objetivo de Maxi.
+- **Rebotón**:
+  - solo en la bandeja de Nicole;
+  - rebote 0,85;
+  - se retira 200 cuadros después de su primer contacto (bloque o suelo).
+- **Retiro**:
+  - un globo que solo toca el suelo se retira a los 110 cuadros;
+  - ninguno vive más de 420;
+  - ningún tiro pasa de 10,5 s;
+  - el asentamiento se cuenta desde el retiro del último globo.
+- **Bandeja**:
+  - targets de 104 px;
+  - responde en < 50 ms;
+  - viene el normal cargado;
+  - el nombre por voz suena la 1.ª vez por sesión y por tipo;
+  - no responde durante el arrastre;
+  - **ningún texto en pantalla**.
+- **Arnés**: las metas del §25.9 por etapa, incluido "gana con ≤ 4 tiros ≤ 3 %".
+
+### 25.13 [CONCILIAR]
+
+| # | Para | Qué |
+|---|---|---|
+| C1 | `director-cinematicas` (storyboard `cierre_arcoiris.md`) | **Hacen falta la caída corta de etapa y la transición**, dos veces (E1→E2 y E2→E3): caída corta ≈ 5,5 s (tambaleo 1,5 s, cae sentado al charco con splash y la mochila en alto; momento saltable `caida_etapa` desde la 2.ª vez) + **transición ≤ 4 s con voz** (sale del charco, corre o rebota a la derecha mientras la torre nueva se arma pieza por pieza con pops; `etapa_2_llega` / `etapa_3_llega`). Propuesta, no regla: que en cada caída corta quede **un poco más pintado** (pocos lunares en E1, más en E2) y que el pintado completo de lunares llegue en la caída final. La **anticipación (§3) y la caída del §4 quedan solo para E3**. Ajustar la composición supuesta del §3 a la torre de E3 (angosta, trono en x 990 sobre la columna central). Actualizar en el §18 del storyboard: el cierre sigue en ≈ 6,1 min, pero el tramo previo pasa de ≈ 5,8 a ≈ 16 min |
+| C2 | `director-cinematicas` | Presentación de cada pieza especial (halo de 0,8 s + línea de Coco) entre la llegada y la puerta de Maxi; y la presentación de la bandeja de Nicole |
+| C3 | `disenador-personajes` | **El fondo de la Torre** sigue el estilo del menú de planetas que usa la maqueta: cielo violeta con estrellas, un planeta lejano con anillo, un arcoíris luminoso y el suelo con cristales, **sin pixel art** (la memoria del PO sobre la estética de los mapas). El arte lo especifica `disenador-personajes`, no esta ficha. Además: la caja de confeti, el resorte, el rebotón, los íconos de la bandeja (sin texto: el globo se reconoce por su forma), las torres de E2 y E3, y el Coleccionauta corriendo entre torres |
+| C4 | `guionista` (`cierre-arcoiris.md`) | Las voces nuevas del §25.14. Además: <br>• `ayuda_globos_extra` puede sonar una vez por etapa, así que conviene una 2.ª variante; <br>• el contexto de `encontre_globos` pasa a "canasta de 5, 9, 13 o 17"; <br>• la intro T.2 y `pausa` no deben decir "la torre" como si fuera la única ("¡la torre no se va a ninguna parte!" sigue valiendo); <br>• el conteo de gags sigue entre etapas, así que el chicle puede caer en cualquier etapa; <br>• `ultimo_globo` puede sonar hasta 3 veces por tarde: revisar que no canse |
+| C5 | `modo-equipo.md` (§11.4, §14.6 y §14.16) | **Sin firmas nuevas**: cada etapa usa `reiniciar_rival("maxi")` y el momento saltable genérico `caida_etapa`. Actualizar el resumen de la Torre del §14.16 (3 etapas, 13 / 17 por etapa, el gigante por etapa). El parcial suma `etapa` (abajo). La duración de la batalla del §14 pasa a ≈ 28-30 min. Las composiciones de la revancha con dos pasan a 13 / 17 (con Maxi) y 12 / 16 (`nicole+sofia`) |
+| C6 | `disenador-niveles` (no es conciliación de texto, es la entrega) | Rehacer `torre_equipo.json` con `etapas[]` y los valores del §25.2.3; cumplir G1-G5; recordar los tres atajos de la maqueta (el trono sobre frascos en E1 y E2, el puente flotante y Maxi apuntando "al más alto") |
+
+**Parcial v4** (se suma al §12): `"etapa": 2` y `"etapas_ganadas": ["e1"]`. Todo lo demás del parcial
+(la torre, el charco, las manchas, los globos y las ayudas) es **de la etapa en curso**. `derrotas` y
+`ultimo_gag` siguen siendo de la Torre.
+
+### 25.14 Voces nuevas (solo la lista; no se genera ninguna)
+
+**Antes de cualquier TTS**: `--estimar` y el OK del PO sobre el costo. Textos de ejemplo: los define el
+`guionista`.
+
+| Id sugerido | Quién | Cuándo | Idea (≤ duración) |
+|---|---|---|---|
+| `arcoiris_batalla_torre_etapa_2_llega` | Coleccionauta | Transición E1→E2 | «¡Splash! ¡Pero tengo otra torre... con puente!» (≤ 3,5 s) |
+| `arcoiris_batalla_torre_etapa_3_llega` | Coleccionauta | Transición E2→E3 | «¡Mi última torre, la más rara! ¡Con trampolines!» (≤ 3,5 s; dice "última", R21) |
+| `arcoiris_batalla_torre_caida_etapa_01` / `_02` | Coleccionauta | Al caer al charco en E1 y en E2 (si la transición no lleva toda la frase) | «¡Uy, me mojé!» (≤ 1,5 s) |
+| `arcoiris_batalla_torre_confeti_presenta` | Coco | 1.ª vez por familia, al empezar E1 | «¡Cajas sorpresa! Si se rompen... ¡pomf, fiesta de confeti!» (≤ 3 s) |
+| `arcoiris_batalla_torre_resorte_presenta` | Coco | 1.ª vez por familia, al empezar E3 | «¡Trampolines! No se rompen... ¡pero hacen boing!» (≤ 3 s) |
+| `arcoiris_batalla_torre_elige_globo_presenta_nicole` | Coco | 1.ª vez por familia que Nicole ve su bandeja | «¡Nicole, tienes un rebotón! Rebota en el suelo... ¡y llega atrás!» (≤ 3,5 s) |
+| `arcoiris_batalla_torre_globo_nombre_normal` | Coco | 1.ª vez por sesión que se toca ese tipo | «¡Normal!» (≤ 0,8 s) |
+| `arcoiris_batalla_torre_globo_nombre_rebota` | Coco | Ídem | «¡Rebotón!» (≤ 0,8 s) |
+| `arcoiris_batalla_torre_globo_nombre_triple` | Coco | Ídem | «¡Triple!» (≤ 0,8 s) |
+| `arcoiris_batalla_torre_globo_nombre_pesado` | Coco | Ídem | «¡Pesado!» (≤ 0,8 s) |
+| `arcoiris_batalla_torre_ayuda_globos_extra_02` (sugerida) | Coco | 2.ª ayuda de globos de la tarde (otra etapa) | Variante de la de la v3, sin número |
+
+En total son **10 nuevas** y **1 variante sugerida**. Siguen pendientes las de la v3 (§18.2):
+`elige_globo_presenta` (Sofía), `toca_en_el_aire`, `encontre_globos`, `intro_revancha`,
+`estrellitas_equipo` y `justo_ahi_maxi`.
+
+### 25.15 Revancha v4 [delegación]
+
+- **Se juegan las 3 etapas** (es "la Torre"). Las ayudas son por etapa, como siempre: nunca se traba.
+- **Récord** = los globos usados **en las tres**, sin ayudas.
+- **Estrellitas**:
+  - ★: ganar;
+  - ★★: ganar **sin perder ninguna etapa**;
+  - ★★★: sin perder ninguna etapa y con ≥ `sobrantes_tres` (1) globo sobrante **en cada etapa**.
+  
+  La meta del 15-25 % de 3★ se recalibra en HE-80.
+- **Sin parcial**, como en la v3. Por eso dura ≈ 12-16 min (R22, decisión abierta 7).
+
+### 25.16 Lo que la maqueta simplifica y **no** se adopta (para que nadie lo copie)
+
+| En la maqueta | En la v4 | Por qué |
+|---|---|---|
+| Al perder, la torre se rearma entera, con el charco chico | Rearmado del 30 % y el charco que se queda, **dentro de la etapa** (v3, §10.2 y §6.9) | La memoria visible del avance |
+| Sin globo gigante | Gigante desde el 3.er intento de cada etapa (v3) | La garantía de ≥ 95 % |
+| Gag por `(intento − 1) mód 4` en cada etapa | Conteo de gags de la Torre, con rotación sin repetir (v3, §10.1) | Variedad entre etapas |
+| Maxi apunta al frasco o confeti más alto | La lista `puntos_debiles.semilla`, con G2 | Era un atajo al trono |
+| El trono sobre frascos y confeti (E1, E2) y el puente flotante (E2) | G1 y G5 | Atajos de 1-2 tiros |
+| `AGMAX` 24 / 30 / 36 | 24 / 20 / 20 con la regla de balance | E2 y E3 no se podían ganar botando |
+| La explosión despierta toda la torre | Solo el radio y los apoyos | L3: la torre no se mueve sola |
+| Daño = `floor(v / 4,5)`, solo de globo contra bloque | Daño por impulso (§6.4); el confeti también se rompe por un choque de bloque | Godot, y la cadena |
+| Charco +55 px por tiro neutro | +50 (v3) | Sin motivo para cambiarlo |
+| Textos en burbuja, etiquetas bajo la bandeja, HUD con números | Voz, íconos y la cara del Coleccionauta | GDD §6, R2 |
+| Retratos con letras (N, M, S) y un selector de etapa | No existen en el juego: es depuración | — |
+
+### 25.17 Changelog v4
+
+| Cambio | Secciones |
+|---|---|
+| 3 etapas seguidas con su torre; el agarre se reinicia por etapa; caída corta + transición ≤ 4 s | §25.2, §25.3, §6.6 (v4), §9 (v4) |
+| Regla de balance `peso_botable ≥ 1,3 × agarre`; G1-G5 contra los atajos; agarres 24 / 20 / 20 | §25.2, §14 (v4) |
+| 13 + 4 globos por etapa (≡ 1 mód 4), mínimo 5 al retomar con tope en la canasta del intento | §25.4, §8.1 (v4), §10.3 (v4), §12 (v4) |
+| `confeti` y `resorte` | §25.5, §6.4 (v4) |
+| Rebotón de Nicole, bandeja de Nicole y radio 80 de Sofía | §25.6, §4 (v4), §5.5 (v4), §7 (v4) |
+| Retiro de los globos (suelo = golpe, 110 / 200 / 420 cuadros); asentamiento desde el último retiro | §25.7, §2 (v4), §6.1 (v4), §6.2 (v4) |
+| Metas de calibración por etapa (HE-80) | §25.9, §15.1 (v4) |
+| Duración ≈ 16 min de Torre; R17-R22 | §25.10, §25.11, §16 (v4), §19 (v4) |
+| Revancha de 3 etapas | §25.15, §11 (v4) |

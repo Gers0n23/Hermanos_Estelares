@@ -139,14 +139,15 @@ func _probar_migracion() -> void:
 	archivo.store_string(JSON.stringify(viejo))
 	archivo.close()
 	_progreso.cargar()
-	_check(_progreso.VERSION_ACTUAL == 2, "VERSION_ACTUAL = 2")
-	_check(_progreso._datos.get("version") == 2, "los datos quedan en version 2")
+	# HE-59 (17-Oct-2026): el guardado ya va en v3; la migracion es en cadena (v1 -> v2 -> v3).
+	_check(_progreso.VERSION_ACTUAL >= 2, "VERSION_ACTUAL >= 2 (hoy %d)" % _progreso.VERSION_ACTUAL)
+	_check(_progreso._datos.get("version") == _progreso.VERSION_ACTUAL, "los datos quedan en la version actual")
 	_check(_progreso._datos.get("recuerdos_encontrados") is Dictionary and _progreso._datos["recuerdos_encontrados"].is_empty(), "migracion agrega recuerdos_encontrados vacio")
 	_check(_progreso.obtener_destellos_totales("maxi") == 7 and _progreso.esta_nivel_completado("maxi", "arcoiris", "nivel_x"), "destellos y niveles de Maxi intactos")
 	_check(_progreso.obtener_ubicacion_nave("maxi") == "arcoiris" and is_equal_approx(_progreso.obtener_volumen("maxi", "Musica"), 0.5), "ubicacion de la nave y volumen intactos")
 	_check(_progreso.obtener_ids_perfiles().size() == 3, "se completan los perfiles faltantes")
 	var en_disco: Variant = JSON.parse_string(FileAccess.get_file_as_string(GUARDADO))
-	_check(en_disco is Dictionary and int(en_disco.get("version", 0)) == 2 and en_disco.has("recuerdos_encontrados"), "el archivo en disco quedo en v2")
+	_check(en_disco is Dictionary and int(en_disco.get("version", 0)) == _progreso.VERSION_ACTUAL and en_disco.has("recuerdos_encontrados"), "el archivo en disco quedo en la version actual")
 	# un guardado v2 con recuerdos se conserva tal cual al recargar
 	_progreso.registrar_recuerdo("familia_01", "")
 	_progreso.cargar()

@@ -48,6 +48,13 @@ var disabled := false
 var mostrando := false
 ## Semilla: halo dorado que respira en las cartas pendientes (ficha de motor §5, ayudas Semilla).
 var halo_idle := false
+## Modo equipo (modo-equipo.md §5.2): la companera de la carta con halo que Maxi ya dio vuelta brilla mas
+## fuerte; con `halo_tenue` (ayuda de Nicole) el halo apenas se nota.
+var halo_fuerte := false
+var halo_tenue := false
+## Turno guiado de Maxi en equipo: halo mas vivo y grueso, para encontrarlo en un tablero de 24 cartas
+## (riesgo 8 de modo-equipo.md §9).
+var halo_vivo := false
 ## Retos de Sofia (v3): "" normal | "sombra" (silueta oscura) | "receta" (colores que se mezclan).
 var estilo := ""
 var receta: Array = []
@@ -296,6 +303,25 @@ func pulso_espera() -> void:
 	_reventar_pulso()
 
 
+## N13 (modo equipo): durante la fiesta del turno perfecto la carta tapada se inclina 6 grados hacia el dedo
+## ("aqui estoy") y vuelve. No se da vuelta.
+func guino(punto_global: Vector2) -> void:
+	_reventar_pulso()
+	var lado := -1.0 if punto_global.x < global_position.x + size.x / 2.0 else 1.0
+	_cortar(_tween_cuerpo)
+	_tween_cuerpo = create_tween()
+	_tween_cuerpo.tween_property(_cuerpo, "rotation", deg_to_rad(6.0 * lado), 0.1)
+	_tween_cuerpo.tween_property(_cuerpo, "rotation", 0.0, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+## Turno guiado de Maxi: las cartas con halo dan un saltito para llamarlo.
+func saltito() -> void:
+	_cortar(_tween_cuerpo)
+	_tween_cuerpo = create_tween()
+	_tween_cuerpo.tween_property(_cuerpo, "position:y", -size.y * 0.12, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_tween_cuerpo.tween_property(_cuerpo, "position:y", 0.0, 0.25).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+
+
 func _reventar_pulso() -> void:
 	_cortar(_tween_escala)
 	scale = Vector2(0.92, 0.92)
@@ -338,7 +364,8 @@ func _dibujar() -> void:
 	var radio := s.x * 0.16
 	var halo := _color_halo()
 	if halo.a > 0.0:
-		var anillo := _caja(Color(0, 0, 0, 0), halo, borde * 1.7, radio + borde * 2.0)
+		var grosor := borde * (2.6 if (halo_vivo or halo_fuerte) and halo_idle and not esta_acertada else 1.7)
+		var anillo := _caja(Color(0, 0, 0, 0), halo, grosor, radio + borde * 2.0)
 		anillo.draw_center = false
 		_cuerpo.draw_style_box(anillo, rect.grow(borde * 2.0))
 	var caja := _caja(COLOR_CARA if _cara_visible else COLOR_DORSO, COLOR_CONTORNO, borde, radio)
@@ -472,6 +499,12 @@ func _color_halo() -> Color:
 	if especial and _cara_visible:
 		return Color.from_hsv(fmod(_tiempo * 0.5, 1.0), 0.6, 1.0)
 	if halo_idle and not esta_acertada:
+		if halo_fuerte:
+			return Color(DORADO, 0.75 + 0.25 * sin(_tiempo * 6.0))
+		if halo_tenue:
+			return Color(DORADO, 0.12 + 0.12 * sin(_tiempo * 3.0))
+		if halo_vivo:
+			return Color(DORADO, 0.6 + 0.3 * sin(_tiempo * 4.0))
 		return Color(DORADO, 0.3 + 0.3 * sin(_tiempo * 3.0))
 	return Color(0, 0, 0, 0)
 

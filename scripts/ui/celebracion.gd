@@ -56,6 +56,25 @@ const OPACIDAD_FONDO := 0.7
 ## 0 = espera siempre el toque del boton.
 @export var segundos_auto_continuar: float = 8.0
 
+## FIESTA DEL EQUIPO (docs/fichas/modo-equipo.md §5.6 y §11.3; HE-59). Con 2 o mas ids: todos salen
+## juntos al frente y cada uno hace su gesto canon por turnos (0,8 s, en el orden de los turnos), con el
+## mismo foco, duracion y volumen (R7/m7; el tamano del sprite es el natural de cada uno). Despues el
+## choque de manos al centro, confeti arcoiris y "+N" con el MISMO tamano bajo cada premiado (si nadie
+## cobra, no hay conteo). Sin estrellitas individuales. `estrellita_equipo` = primera victoria del nivel.
+@export var ids_personajes: Array[String] = []
+## Ids que cobran destellos esta vez (`destellos` es el monto por hermano).
+var premiados: Array = []
+var estrellita_equipo := false
+## Rutas res:// ya resueltas: al_frente, gesto{id}, choca, equipo_estelar, destellos, estrellita.
+var voces_fiesta: Dictionary = {}
+
+const SEGUNDOS_GESTO_EQUIPO := 0.8
+var _sprites_equipo: Array[Sprite2D] = []
+var _pies_equipo: Array[Vector2] = []
+var _escalas_equipo: Array[float] = []
+var _gesto_equipo := -1
+var _choque_hecho := false
+
 var _tamano := Vector2(1280, 720)
 var _alto := 420.0
 var _centro_personaje := Vector2.ZERO
@@ -98,14 +117,24 @@ func _ready() -> void:
 	_pos_pies = _centro_personaje + Vector2(0, _alto / 2.0)
 	_centro_conteo = Vector2(_tamano.x * 0.70, _tamano.y * 0.30)
 	_construir()
-	_iniciar()
+	if _es_equipo():
+		_construir_equipo()
+		_iniciar_equipo()
+	else:
+		_iniciar()
+
+
+func _es_equipo() -> bool:
+	return ids_personajes.size() >= 2
 
 
 func _process(delta: float) -> void:
 	if _terminada:
 		return
 	_tiempo += delta
-	if _gesto_activo:
+	if _es_equipo():
+		_procesar_equipo(delta)
+	elif _gesto_activo:
 		_t_gesto += delta
 		_aplicar_gesto()
 		_personaje.position.y -= _salto_mimo
@@ -465,6 +494,205 @@ func _mimo_personaje() -> void:
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	t.tween_method(func(v: float) -> void: _salto_mimo = v, _alto * 0.12, 0.0, 0.24) \
 		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+
+
+# --- Fiesta del equipo (§5.6) ----------------------------------------------------------------
+
+func _construir_equipo() -> void:
+	_personaje.visible = false
+	_estrella_conteo.visible = false
+	_etiqueta_conteo.visible = false
+	var n := ids_personajes.size()
+	var alto := minf(_alto * 0.8, 350.0)
+	_halo.position = Vector2(_tamano.x / 2.0, _tamano.y * 0.5)
+	for i in n:
+		var id := ids_personajes[i]
+		var sprite := Sprite2D.new()
+		sprite.name = "personaje_%s" % id
+		var textura := _textura_de(id)
+		sprite.texture = textura
+		var escala := 1.0
+		if textura != null:
+			sprite.offset = Vector2(0, -textura.get_height() / 2.0)
+			escala = alto / textura.get_height()
+		var pies := Vector2(_tamano.x * (i + 1) / float(n + 1), _tamano.y * 0.74)
+		sprite.position = pies
+		sprite.scale = Vector2.ZERO
+		_raiz.add_child(sprite)
+		_raiz.move_child(sprite, _halo.get_index() + 1)
+		_sprites_equipo.append(sprite)
+		_pies_equipo.append(pies)
+		_escalas_equipo.append(escala)
+
+
+func _textura_de(id: String) -> Texture2D:
+	for variante in ["celebracion", "base"]:
+		var ruta := RUTA_SPRITE % [id, variante]
+		if ResourceLoader.exists(ruta):
+			return load(ruta)
+	return null
+
+
+func _iniciar_equipo() -> void:
+	_sfx(SFX_INICIO)
+	var t := create_tween().set_parallel(true)
+	t.tween_property(_fondo, "color:a", OPACIDAD_FONDO, 0.35)
+	t.tween_property(_halo, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# 2. Todos salen juntos al frente.
+	for i in _sprites_equipo.size():
+		t.tween_property(_sprites_equipo[i], "scale", Vector2.ONE * _escalas_equipo[i], 0.45) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(0.1)
+	_explosion.position = _halo.position
+	_explosion.emitting = true
+	_lluvia.emitting = true
+	_voz(voces_fiesta.get("al_frente", ""))
+	_despues(0.7, func() -> void:
+		_gesto_equipo = 0
+		_t_gesto = 0.0
+		_voz_gesto(0))
+	_despues(3.0, func() -> void: _lluvia.emitting = false)
+
+
+func _procesar_equipo(delta: float) -> void:
+	var n := _sprites_equipo.size()
+	# Quienes esperan su gesto respiran suave.
+	for i in n:
+		if i != _gesto_equipo:
+			var s := _sprites_equipo[i]
+			if s.scale.x > 0.01 and _gesto_equipo >= 0 and _gesto_equipo < n:
+				s.position = _pies_equipo[i]
+				s.rotation = 0.0
+				s.scale = Vector2(_escalas_equipo[i], _escalas_equipo[i] * (1.0 + 0.02 * sin(_tiempo * 4.0 + i)))
+	if _gesto_equipo >= 0 and _gesto_equipo < n:
+		_t_gesto += delta
+		_aplicar_gesto_equipo(_gesto_equipo)
+		if _t_gesto >= SEGUNDOS_GESTO_EQUIPO:
+			_gesto_equipo += 1
+			_t_gesto = 0.0
+			if _gesto_equipo < n:
+				_voz_gesto(_gesto_equipo)
+			else:
+				_choque_de_manos()
+	if not _boton_mostrado and _tiempo >= segundos_boton_continuar:
+		_mostrar_boton_continuar()
+	if segundos_auto_continuar > 0.0 and _tiempo >= segundos_auto_continuar:
+		terminar()
+
+
+## El gesto canon de cada uno (mismo foco y duracion): reutiliza los gestos del solitario sobre su sprite.
+func _aplicar_gesto_equipo(i: int) -> void:
+	var guardado := [_personaje, _pos_pies, _escala_personaje, _alto, id_personaje]
+	_personaje = _sprites_equipo[i]
+	_pos_pies = _pies_equipo[i]
+	_escala_personaje = _escalas_equipo[i]
+	_alto = minf(_alto * 0.8, 350.0)
+	id_personaje = ids_personajes[i]
+	_aplicar_gesto()
+	_personaje = guardado[0]
+	_pos_pies = guardado[1]
+	_escala_personaje = guardado[2]
+	_alto = guardado[3]
+	id_personaje = guardado[4]
+
+
+## Voz del gesto de cada hermano: "o las tres o ninguna" (§8), para que nadie tenga mas voz que otro.
+func _voz_gesto(i: int) -> void:
+	var gestos = voces_fiesta.get("gesto", {})
+	if not gestos is Dictionary:
+		return
+	for id in ids_personajes:
+		var ruta := str(gestos.get(id, ""))
+		if ruta == "" or not ResourceLoader.exists(ruta):
+			return
+	_voz(str(gestos[ids_personajes[i]]))
+
+
+## 3. Choque de manos de todos al centro, confeti y "¡Equipo estelar!". 4. "+N" igual bajo cada premiado.
+func _choque_de_manos() -> void:
+	if _choque_hecho:
+		return
+	_choque_hecho = true
+	var centro := Vector2(_tamano.x / 2.0, _tamano.y * 0.44)
+	for i in _sprites_equipo.size():
+		var s := _sprites_equipo[i]
+		var hacia := _pies_equipo[i].lerp(Vector2(centro.x, _pies_equipo[i].y), 0.25)
+		var t := s.create_tween()
+		t.tween_property(s, "position", hacia - Vector2(0, 40), 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		t.tween_property(s, "position", _pies_equipo[i], 0.3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_explosion.position = centro
+	_explosion.restart()
+	_estallido_estrellitas(centro, 14, PALETA_CONFETI)
+	_sfx(SFX_ESTRELLITA)
+	_voz(voces_fiesta.get("choca", ""))
+	_despues(0.9, func() -> void: _voz_cuando_libre(str(voces_fiesta.get("equipo_estelar", ""))))
+	_despues(0.6, _mostrar_destellos_equipo)
+
+
+func _mostrar_destellos_equipo() -> void:
+	if destellos > 0 and not premiados.is_empty():
+		for i in ids_personajes.size():
+			if ids_personajes[i] not in premiados:
+				continue
+			var etiqueta := Label.new()
+			etiqueta.text = "+%d" % destellos
+			etiqueta.add_theme_font_size_override("font_size", 64)
+			etiqueta.add_theme_color_override("font_color", DORADO_BRILLO)
+			etiqueta.add_theme_color_override("font_outline_color", COLOR_CONTORNO)
+			etiqueta.add_theme_constant_override("outline_size", 16)
+			etiqueta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			etiqueta.size = Vector2(220, 80)
+			etiqueta.position = _pies_equipo[i] + Vector2(-110, 6)
+			etiqueta.pivot_offset = etiqueta.size / 2.0
+			etiqueta.scale = Vector2.ZERO
+			etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_raiz.add_child(etiqueta)
+			etiqueta.create_tween().tween_property(etiqueta, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_sfx(SFX_TINTINEO)
+		# "¡Destellos para todos!" solo si TODOS reciben; si no, solo el tintineo.
+		if premiados.size() == ids_personajes.size():
+			_despues(1.4, func() -> void: _voz_cuando_libre(str(voces_fiesta.get("destellos", ""))))
+	if estrellita_equipo:
+		_despues(0.8, _volar_estrellita_equipo)
+
+
+## 5. Primera victoria de este nivel en equipo: la estrellita de equipo vuela a la nave de la esquina.
+func _volar_estrellita_equipo() -> void:
+	var estrella := Figura.new()
+	estrella.radio = 46.0
+	estrella.color = DORADO
+	estrella.grosor_contorno = 6.0
+	estrella.position = Vector2(_tamano.x / 2.0, _tamano.y * 0.3)
+	estrella.scale = Vector2.ZERO
+	_raiz.add_child(estrella)
+	var t := estrella.create_tween()
+	t.tween_property(estrella, "scale", Vector2.ONE * 1.3, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.tween_property(estrella, "position", Vector2(_tamano.x - 90, 80), 0.7).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	t.parallel().tween_property(estrella, "rotation", TAU, 0.7)
+	t.parallel().tween_property(estrella, "scale", Vector2.ONE * 0.6, 0.7)
+	t.tween_callback(func() -> void: _estallido_estrellitas(estrella.position, 8, []))
+	_sfx(SFX_ESTRELLITA, 1.3)
+	_voz_cuando_libre(str(voces_fiesta.get("estrellita", "")))
+
+
+func _voz(ruta) -> void:
+	var r := str(ruta)
+	if r == "" or not ResourceLoader.exists(r):
+		return
+	var audio := get_node_or_null("/root/Audio")
+	if audio != null:
+		audio.reproducir_voz(r)
+
+
+func _voz_cuando_libre(ruta: String) -> void:
+	if ruta == "" or not ResourceLoader.exists(ruta):
+		return
+	var audio := get_node_or_null("/root/Audio")
+	var espera := 0.0
+	while audio != null and audio.esta_hablando() and espera < 3.0 and is_inside_tree():
+		await get_tree().process_frame
+		espera += get_process_delta_time()
+	if is_inside_tree() and not _terminada:
+		_voz(ruta)
 
 
 # --- Gestos por hermano -------------------------------------------------------------------

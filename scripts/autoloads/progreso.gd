@@ -13,6 +13,10 @@ extends Node
 ## para que agregar planetas/capitulos por actualizacion nunca borre el progreso de
 ## los ninos. v2 (27-Sep-2026, album "Las migas de papa") suma `recuerdos_encontrados` GLOBAL
 ## (no por perfil: el album familiar es de los tres) con `_migrar_v1_a_v2`.
+## v3 (17-Oct-2026, HE-59, docs/fichas/modo-equipo.md §11.5 y §14.9) suma el bloque GLOBAL `equipo`
+## (presentacion del boton "¡Juntos!", intros de trucos, cinematicas vistas por familia, niveles de equipo
+## ganados, records de equipo y batallas) y, por hermano, `equipo_premiado` en cada planeta. Nunca guarda
+## pares, aciertos ni fallos por hermano en equipo (R2 de la ficha).
 
 signal progreso_actualizado(id_perfil: String)
 ## Cambio en los recuerdos encontrados/vistos (el boton del album se re-dibuja con esto).
@@ -26,7 +30,10 @@ const RUTA_GUARDADO_PRUEBAS := "user://progreso_pruebas.json"
 ## Version actual del formato de guardado. Subir este numero + agregar una funcion
 ## `_migrar_v<N>_a_v<N+1>(datos: Dictionary) -> Dictionary` es todo lo que hace falta
 ## para introducir un cambio de esquema sin romper partidas viejas.
-const VERSION_ACTUAL := 2
+const VERSION_ACTUAL := 3
+
+## Ids validos para armar un equipo (modo-equipo.md §11.5): los tres hermanos.
+const IDS_HERMANOS := ["maxi", "nicole", "sofia"]
 
 const PERFILES_DIFICULTAD := ["semilla", "brote", "estrella"]
 
@@ -51,6 +58,13 @@ var perfil_seleccionado: String = ""
 
 ## Archivo que se lee y escribe: el real en el juego, el de pruebas al correr con `--script`.
 var ruta_guardado: String = RUTA_GUARDADO
+
+## Hermanos que juegan juntos ahora (modo-equipo.md §11.5). Vive en memoria, nunca en disco: la seleccion
+## lo vacia al abrirse y lo fija al tocar "¡Despegar!". Vacio = juego en solitario.
+var equipo_activo: Array[String] = []
+## Solo builds de depuracion (F5 en la seleccion): muestra "¡Juntos!" sin haber ganado la batalla, para
+## que el PO pueda revisar el modo equipo antes de que exista la batalla (HE-69). Nunca se guarda.
+var forzar_modo_equipo_depuracion := false
 
 
 ## En `_init` y no en `_ready` (06-Oct-2026): con `--script`, el `_initialize()` del arnés corre ANTES
@@ -138,6 +152,18 @@ func _crear_datos_por_defecto() -> Dictionary:
 		"version": VERSION_ACTUAL,
 		"perfiles": perfiles,
 		"recuerdos_encontrados": {},
+		"equipo": _crear_equipo_por_defecto(),
+	}
+
+
+## Bloque global del modo equipo (modo-equipo.md §11.5 y §14.9). Es de la familia, no de un perfil.
+func _crear_equipo_por_defecto() -> Dictionary:
+	return {
+		"presentado": false,
+		"trucos_presentados": [],
+		"cinematicas_vistas": [],
+		"planetas": {},
+		"batallas": {},
 	}
 
 
@@ -186,6 +212,10 @@ func _migrar_datos(datos: Dictionary) -> Dictionary:
 		datos = _migrar_v1_a_v2(datos)
 		version_datos = 2
 
+	if version_datos == 2:
+		datos = _migrar_v2_a_v3(datos)
+		version_datos = 3
+
 	datos["version"] = VERSION_ACTUAL
 	return datos
 
@@ -196,6 +226,31 @@ func _migrar_v1_a_v2(datos: Dictionary) -> Dictionary:
 	if not datos.get("recuerdos_encontrados", null) is Dictionary:
 		datos["recuerdos_encontrados"] = {}
 	datos["version"] = 2
+	return datos
+
+
+## v2 -> v3: modo equipo (docs/fichas/modo-equipo.md §11.5). Solo AGREGA estructuras vacias: el bloque
+## global `equipo`, `especiales_conocidos` por perfil y `coleccion` / `equipo_premiado` en cada planeta ya
+## visitado. Destellos, niveles, parciales, records y recuerdos quedan intactos.
+func _migrar_v2_a_v3(datos: Dictionary) -> Dictionary:
+	if not datos.get("equipo", null) is Dictionary:
+		datos["equipo"] = _crear_equipo_por_defecto()
+	var perfiles = datos.get("perfiles", {})
+	if perfiles is Dictionary:
+		for perfil in perfiles.values():
+			if not perfil is Dictionary:
+				continue
+			if not perfil.get("especiales_conocidos", null) is Array:
+				perfil["especiales_conocidos"] = []
+			var planetas = perfil.get("planetas", {})
+			if planetas is Dictionary:
+				for planeta in planetas.values():
+					if planeta is Dictionary:
+						if not planeta.get("coleccion", null) is Array:
+							planeta["coleccion"] = []
+						if not planeta.get("equipo_premiado", null) is Array:
+							planeta["equipo_premiado"] = []
+	datos["version"] = 3
 	return datos
 
 
@@ -520,5 +575,232 @@ func marcar_recuerdo_dorado(id_recuerdo: String) -> bool:
 func hay_recuerdos_sin_ver() -> bool:
 	for entrada in _recuerdos().values():
 		if not (entrada as Dictionary).get("visto", false):
+			return true
+	return false
+
+
+# ---------------------------------------------------------------------------
+# Modo equipo (docs/fichas/modo-equipo.md §7, §11.5 y §14.9; HE-59)
+# ---------------------------------------------------------------------------
+# Todo es de la FAMILIA salvo `equipo_premiado`, que es por hermano (quien ya cobro sus destellos de un
+# nivel de equipo). Ningun dato de pares, aciertos o fallos por hermano se guarda (R2).
+
+func _equipo() -> Dictionary:
+	if not _datos.get("equipo", null) is Dictionary:
+		_datos["equipo"] = _crear_equipo_por_defecto()
+	var equipo: Dictionary = _datos["equipo"]
+	# Un guardado v3 hecho antes de que existiera una clave la crea al leer (§11.5).
+	for clave in ["trucos_presentados", "cinematicas_vistas"]:
+		if not equipo.get(clave, null) is Array:
+			equipo[clave] = []
+	for clave in ["planetas", "batallas"]:
+		if not equipo.get(clave, null) is Dictionary:
+			equipo[clave] = {}
+	return equipo
+
+
+func _equipo_planeta(planeta_id: String) -> Dictionary:
+	var planetas: Dictionary = _equipo()["planetas"]
+	if not planetas.get(planeta_id, null) is Dictionary:
+		planetas[planeta_id] = {"ganados": [], "records": {}}
+	var planeta: Dictionary = planetas[planeta_id]
+	if not planeta.get("ganados", null) is Array:
+		planeta["ganados"] = []
+	if not planeta.get("records", null) is Dictionary:
+		planeta["records"] = {}
+	return planeta
+
+
+## Fija quienes juegan juntos (2 o 3 ids validos, sin repetir). Si no es valido, no cambia nada.
+func fijar_equipo(ids: Array[String]) -> void:
+	var limpios: Array[String] = []
+	for id in ids:
+		if id in IDS_HERMANOS and id not in limpios:
+			limpios.append(id)
+	if limpios.size() < 2 or limpios.size() != ids.size():
+		push_warning("Progreso.fijar_equipo: equipo invalido %s (2-3 hermanos, sin repetir)" % [ids])
+		return
+	limpios.sort()
+	equipo_activo = limpios
+	# Lo que el mapa ya usa de un perfil (volumen, musica) toma al menor del equipo (§11.5).
+	perfil_seleccionado = limpios[0]
+
+
+func limpiar_equipo() -> void:
+	equipo_activo = []
+
+
+## Ids ordenados alfabeticamente (coincide con el orden de edad) unidos con "+": "maxi+nicole+sofia".
+func clave_equipo(ids: Array) -> String:
+	var copia: Array = ids.duplicate()
+	copia.sort()
+	return "+".join(PackedStringArray(copia))
+
+
+## Una llamada al ganar un nivel de equipo (§7.1 y §11.5). Paga `destellos_por_hermano` a cada id que aun
+## no lo cobro en ese nivel (sin marcar ninguna estacion individual), agrega el nivel a "ganados" y guarda
+## el record de pasos si es menor (menos es mejor). Guarda una sola vez.
+func registrar_victoria_equipo(planeta_id: String, id_nivel: String, ids: Array[String], destellos_por_hermano: int, pasos_usados: int) -> Dictionary:
+	var premiados: Array[String] = []
+	for id in ids:
+		if not _datos.get("perfiles", {}).has(id):
+			push_warning("Progreso.registrar_victoria_equipo: id_perfil desconocido '%s'" % id)
+			continue
+		var datos_planeta := _datos_planeta(id, planeta_id)
+		if not datos_planeta.get("equipo_premiado", null) is Array:
+			datos_planeta["equipo_premiado"] = []
+		if id_nivel in datos_planeta["equipo_premiado"]:
+			continue
+		datos_planeta["equipo_premiado"].append(id_nivel)
+		premiados.append(id)
+		if destellos_por_hermano > 0:
+			datos_planeta["destellos"] = int(datos_planeta.get("destellos", 0)) + destellos_por_hermano
+			var perfil: Dictionary = _datos["perfiles"][id]
+			perfil["destellos_totales"] = int(perfil.get("destellos_totales", 0)) + destellos_por_hermano
+	var planeta := _equipo_planeta(planeta_id)
+	var primera_victoria_nivel: bool = id_nivel not in planeta["ganados"]
+	if primera_victoria_nivel:
+		planeta["ganados"].append(id_nivel)
+	var clave := clave_equipo(ids)
+	var records: Dictionary = planeta["records"]
+	if not records.get(id_nivel, null) is Dictionary:
+		records[id_nivel] = {}
+	var previo := int(records[id_nivel].get(clave, -1))
+	var primer_record := previo < 0
+	var record_nuevo := primer_record or pasos_usados < previo
+	if record_nuevo:
+		records[id_nivel][clave] = maxi(0, pasos_usados)
+	guardar()
+	for id in premiados:
+		progreso_actualizado.emit(id)
+	return {"premiados": premiados, "record_nuevo": record_nuevo, "primer_record": primer_record,
+		"primera_victoria_nivel": primera_victoria_nivel}
+
+
+## Pasos del rival en el mejor triunfo de esa combinacion en ese nivel. -1 = sin record.
+func obtener_record_equipo(planeta_id: String, id_nivel: String, clave: String) -> int:
+	var records: Dictionary = _equipo_planeta(planeta_id)["records"]
+	var por_nivel = records.get(id_nivel, {})
+	if not por_nivel is Dictionary:
+		return -1
+	return int(por_nivel.get(clave, -1))
+
+
+## Niveles de equipo ganados por cualquier combinacion (0-5 en Arcoiris): estrellitas del boton "¡Juntos!".
+func contar_niveles_equipo_ganados(planeta_id: String) -> int:
+	return (_equipo_planeta(planeta_id)["ganados"] as Array).size()
+
+
+func nivel_equipo_ganado(planeta_id: String, id_nivel: String) -> bool:
+	return id_nivel in _equipo_planeta(planeta_id)["ganados"]
+
+
+func modo_equipo_presentado() -> bool:
+	return bool(_equipo().get("presentado", false))
+
+
+func marcar_modo_equipo_presentado() -> void:
+	if modo_equipo_presentado():
+		return
+	_equipo()["presentado"] = true
+	guardar()
+
+
+func trucos_presentados(clave: String) -> bool:
+	return clave in _equipo()["trucos_presentados"]
+
+
+func marcar_trucos_presentados(clave: String) -> void:
+	if trucos_presentados(clave):
+		return
+	_equipo()["trucos_presentados"].append(clave)
+	guardar()
+
+
+## "Ya vista" es de la FAMILIA (storyboard HE-68): id = "<id_batalla>:<id_animacion>" o "nucleo:<id>".
+## Se marca al TERMINAR la cinematica o la presentacion, no al empezarla.
+func cinematica_vista(id: String) -> bool:
+	return id in _equipo()["cinematicas_vistas"]
+
+
+func marcar_cinematica_vista(id: String) -> void:
+	if id == "" or cinematica_vista(id):
+		return
+	_equipo()["cinematicas_vistas"].append(id)
+	guardar()
+
+
+# --- Batallas (§14.9). La escena de batalla es de HE-69; aqui solo viven sus marcas. ---
+
+func _batalla(id_batalla: String) -> Dictionary:
+	var batallas: Dictionary = _equipo()["batallas"]
+	if not batallas.get(id_batalla, null) is Dictionary:
+		batallas[id_batalla] = {"rondas_ganadas": [], "epilogo": false, "ganada": false, "premiados": [], "parcial": {}}
+	return batallas[id_batalla]
+
+
+func registrar_ronda_batalla(id_batalla: String, id_ronda: String) -> void:
+	var batalla := _batalla(id_batalla)
+	if id_ronda in batalla["rondas_ganadas"]:
+		return
+	batalla["rondas_ganadas"].append(id_ronda)
+	guardar()
+
+
+func obtener_rondas_batalla(id_batalla: String) -> Array:
+	return (_batalla(id_batalla)["rondas_ganadas"] as Array).duplicate()
+
+
+## Marca la batalla ganada, paga `destellos_por_hermano` a quien aun no cobro y devuelve los premiados.
+func registrar_batalla_ganada(id_batalla: String, planeta_id: String, ids: Array[String], destellos_por_hermano: int) -> Array[String]:
+	var batalla := _batalla(id_batalla)
+	batalla["ganada"] = true
+	batalla["parcial"] = {}
+	var premiados: Array[String] = []
+	for id in ids:
+		if id in batalla["premiados"] or not _datos.get("perfiles", {}).has(id):
+			continue
+		batalla["premiados"].append(id)
+		premiados.append(id)
+		if destellos_por_hermano > 0:
+			var datos_planeta := _datos_planeta(id, planeta_id)
+			datos_planeta["destellos"] = int(datos_planeta.get("destellos", 0)) + destellos_por_hermano
+			var perfil: Dictionary = _datos["perfiles"][id]
+			perfil["destellos_totales"] = int(perfil.get("destellos_totales", 0)) + destellos_por_hermano
+	guardar()
+	for id in premiados:
+		progreso_actualizado.emit(id)
+	return premiados
+
+
+func batalla_ganada(id_batalla: String) -> bool:
+	var batalla = _equipo()["batallas"].get(id_batalla, {})
+	return batalla is Dictionary and bool(batalla.get("ganada", false))
+
+
+func guardar_parcial_batalla(id_batalla: String, id_ronda: String, estado: Dictionary) -> void:
+	_batalla(id_batalla)["parcial"] = {"ronda": id_ronda, "estado": estado}
+	guardar()
+
+
+func obtener_parcial_batalla(id_batalla: String) -> Dictionary:
+	var parcial = _batalla(id_batalla).get("parcial", {})
+	return parcial if parcial is Dictionary else {}
+
+
+func borrar_parcial_batalla(id_batalla: String) -> void:
+	var batalla := _batalla(id_batalla)
+	if not (batalla.get("parcial", {}) as Dictionary).is_empty():
+		batalla["parcial"] = {}
+		guardar()
+
+
+## true si hay al menos una batalla ganada: la seleccion muestra "¡Juntos!" (§3.1). En builds de
+## depuracion, F5 en la seleccion lo fuerza en memoria (`forzar_modo_equipo_depuracion`).
+func modo_equipo_desbloqueado() -> bool:
+	if forzar_modo_equipo_depuracion:
+		return true
+	for batalla in _equipo()["batallas"].values():
+		if batalla is Dictionary and bool(batalla.get("ganada", false)):
 			return true
 	return false
