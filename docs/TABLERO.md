@@ -19,11 +19,11 @@
   - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y las de HE-86 (105 + 18 nuevas o regeneradas del guion v4). No se generó audio.
   - Cadena técnica: no existen todavía `GestorTurnos`, `batalla.gd` ni `viaje_siguiente_requiere`. La Torre depende de HE-59 (⬜), que no tiene plaza de WIP.
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
-- **Avance general**: **23/110 tarjetas ✅**.
+- **Avance general**: **25/110 tarjetas ✅**.
 - **Próximos pasos**:
-  1. HE-71: B1 → storyboard v4 (HE-73, `director-cinematicas`); B2 → ficha `motor-lanzar.md` v3 (`disenador-mecanicas`); M1-M11 se incorporan o el PO los acepta; después, re-auditoría corta de UX (B1, B2, M2-M5 y M10).
-  2. Sin WIP de Dev y en paralelo: llevar las 13 decisiones delegadas a los documentos (HE-80 ficha, HE-86 guion, HE-73 storyboard), HE-72 (GDD: excepción de física y decisiones) y arte (HE-74 y HE-75).
-  3. Cuando haya WIP, implementar la Torre en este orden: HE-59 → HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
+  1. Sin WIP de Dev: arte N2-N21 del storyboard v4.1 (HE-74 y HE-75, `disenador-personajes`); un solo `--estimar` de voces (HE-60, HE-67 y HE-86) para el OK del PO; HE-72 (GDD).
+  2. Cuando haya WIP, `dev-godot` implementa en este orden: HE-59 → HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
+  3. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79). De eso depende el gigante A.
 - **Pendientes del PO**:
   - revisar HE-10 y aprobar HE-02 con los QA junior, para normalizar el WIP;
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
