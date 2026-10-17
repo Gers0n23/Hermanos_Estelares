@@ -575,8 +575,8 @@ Resultado de la mezcla (`mezcla_de(contenido)`):
 - La maqueta pisa boca y mano al servir y al rebotar; la v2 usa la cola (§8.3).
 - La maqueta coloca los 2 + 1 reemplazando gotas; la v2 los inserta entre grupos (§5.3).
 - La maqueta usa un sonido de error para el rebote; la v2 pide un "boing" (§10.4).
-- La batalla (`rio_equipo.json`) no trae `grupo` ni `batidora` ni `arcoiris`: debe jugarse exactamente
-  igual que hoy, salvo el arreglo de combo/cadena (§7).
+- La batalla (`rio_equipo.json`) pasa a `grupo` y `arcoiris` por decisión del PO (17-Oct-2026, §18.3),
+  sin `batidora`; además lleva el arreglo de combo/cadena (§7). Hay que re-simularla (`disenador-niveles`).
 
 ---
 
@@ -654,13 +654,18 @@ directos seguidos **no** cuentan como cadena para `cadena_vale_aciertos`.
 
 ## 18. Preguntas abiertas para el PO
 
-1. **[Abierta] Etapa difícil de Sofía**: ¿en qué zona o río entran los colores de 2 + 1 y la batidora de 3?
-   Propuesta: desde la zona 3 (o el río 3 de cada zona, si se aprueban 3 ríos por zona, roadmap §14.1).
+1. **[Resuelta por el PO, 17-Oct-2026] Etapa difícil de Sofía**: los colores de 2 + 1 y la batidora de 3
+   entran **desde la zona 3**.
 2. **[Abierta] "Naranja" o "naranjo"**: sigue pendiente (la lleva `guionista`).
-3. **[Abierta] Río de la batalla**: ¿se queda con el generador v1 (calibrado) o pasa a grupos largos y
-   arcoíris? La propuesta es dejarlo igual hasta que `disenador-niveles` lo re-simule.
-4. **[Abierta, heredada] Maxi y el remolino** (roadmap §14.4): con grupos de 3-4 y arcoíris cada ~14
-   disparos es menos probable que pierda; sigue en pie la opción de que su río se detenga antes.
+3. **[Resuelta por el PO, 17-Oct-2026] Río de la batalla**: **también pasa a grupos largos y gota
+   arcoíris**. `rio_equipo.json` gana `grupo` y `arcoiris`, y `disenador-niveles` lo re-simula (el
+   calibrado v1 deja de valer). Batidora y 2 + 1 en la batalla: no se pidieron; queda sin batidora.
+4. **[Resuelta por el PO, 17-Oct-2026] Maxi y el remolino**: **el río de Maxi no se detiene; Maxi también
+   puede perder**. La suavidad viene de los grupos de 3-4, la velocidad baja y el arcoíris, no de un tope.
+
+La maqueta `docs/maquetas/rio-v2.html` quedó **aprobada por el PO** (17-Oct-2026: "funciona correctamente").
+Su único error de retroceso (dos grupos iguales que chocaban sin reventar) ya está corregido en
+`LogicaRio` (`_chocar()` y `_atraidas`); HE-91 parte de esa lógica, no de la maqueta.
 
 Decisiones tomadas por delegación en esta ficha (se pueden revertir): §5.1 último grupo; §5.3 2 + 1
 entre grupos; §6 rampa de 0,1 s; §7 disparos a la batidora neutros para el combo; §8.2 servida sin
