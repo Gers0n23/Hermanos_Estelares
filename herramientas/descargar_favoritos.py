@@ -294,7 +294,7 @@ def _a_carta(datos: bytes) -> Image.Image | None:
 
 def _descartar(catalogo: dict, rutas: list[str]) -> None:
     for ruta in rutas:
-        ruta = ruta.replace("\\", "/").split("assets/", 1)[-1]
+        ruta = ruta.strip().replace("\\", "/").split("assets/", 1)[-1]
         for entrada in catalogo["temas"].values():
             entrada["imagenes"] = [i for i in entrada["imagenes"] if i["archivo"] != ruta]
         if ruta not in catalogo["descartadas"]:
