@@ -8,9 +8,10 @@
 
 - **Última actualización**: 17-Oct-2026. HE-59 (modo equipo) con código completo y verificado en PC: pasa a 🟡 En revisión del PO. Ficha `motor-lanzar.md` v4 (§25, Torre en 3 etapas) desde la maqueta `docs/maquetas/torre-v2.html` aprobada por el PO; nace HE-88. La Torre (HE-76) espera la decisión del PO sobre su duración (R17).
 - **Fase activa**: **Fase 1 — Núcleo + Capítulo 1 completo**. **Prioridad vigente (decisión del PO del 06-Oct)**: la épica "Juego en equipo y Parejas de Coco con reto real" va antes de lo que falta del camino crítico del capítulo 1. La Fase 0.5 (arte conceptual) sigue abierta en paralelo, sin prioridad.
-- **WIP de Dev**: **1/2** (decisión del PO, 17-Oct: HE-02, HE-10 y HE-60 salen del WIP por estar colgadas; quedan en revisión del PO). Solo HE-59 en curso; queda una plaza libre.
-- **En curso (Dev)**: HE-59 (`dev-godot`), primera de la cadena HE-59 → HE-76 → HE-77 → HE-79 → HE-80.
+- **WIP de Dev**: **0/2**. HE-59 sale del WIP en 🟡, igual que HE-02, HE-10 y HE-60.
+- **En curso (Dev)**: ninguna. La siguiente es HE-76, que **no entra en curso hasta que el PO decida la duración de la Torre (R17)**.
 - **En revisión del PO (fuera del WIP, no están ✅)**:
+  - HE-59: código completo, verificado en PC (`qa_test_gestor_turnos` 133 OK y regresiones en 0 fallos). Falta que el PO juegue en PC, la prueba en tablet, las voces de equipo (`--estimar` y OK del costo) y la auditoría UX/QA (HE-64).
   - HE-02: falta la aprobación de los QA junior y del PO.
   - HE-10: falta la revisión del PO y el playtest (F5 → título → hermano → Arcoíris).
   - HE-60: el código está listo. Faltan las 20 voces TTS de reto (OK del PO sobre el costo), la prueba en tablet y el playtest.
