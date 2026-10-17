@@ -23,7 +23,7 @@
   - Cadena técnica: `GestorTurnos` ya existe (HE-59); faltan `batalla.gd` y `viaje_siguiente_requiere`.
   - **Riesgo del guardado**: cualquier ejecución del juego sin `--script` migra el `progreso.json` real a v3 (no pierde datos, pero cambia el archivo). Ya se restauró desde respaldo (md5 ff55e2f4abf17f25618fa7ee446b11b0). Respaldo antes de cada prueba.
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
-- **Avance general**: **25/111 tarjetas ✅** (nace HE-88).
+- **Avance general**: **25/112 tarjetas ✅** (nace HE-89).
 - **Próximos pasos**:
   1. **PO**: decidir R17 (A, B o C); jugar HE-59 en PC.
   2. Sin WIP de Dev: arte N2-N21 y de las etapas (HE-74 y HE-75, `disenador-personajes`, incluido el arte definitivo de la UI de equipo); HE-88 tras la decisión R17; un solo `--estimar` de voces (HE-60, HE-59, HE-67 y HE-86) para el OK del PO; HE-72 (GDD).
