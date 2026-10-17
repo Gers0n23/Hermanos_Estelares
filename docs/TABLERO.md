@@ -27,8 +27,10 @@
   1. **PO**: decidir R17 (A, B o C); jugar HE-59 en PC.
   2. Sin WIP de Dev: arte N2-N21 y de las etapas (HE-74 y HE-75, `disenador-personajes`, incluido el arte definitivo de la UI de equipo); HE-88 tras la decisión R17; un solo `--estimar` de voces (HE-60, HE-59, HE-67 y HE-86) para el OK del PO; HE-72 (GDD).
   3. `dev-godot`, con la decisión R17 tomada: HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
-  3. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79). De eso depende el gigante A.
+  4. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79), ahora por etapas (`etapas[]`). De eso depende el gigante A.
 - **Pendientes del PO**:
+  - **decidir R17**: duración de la Torre (A recomendada, B o C);
+  - jugar HE-59 en PC (DoD 2) antes de la prueba en tablet;
   - revisar HE-10 y aprobar HE-02 con los QA junior, y hacer el playtest de HE-60 (ya no consumen WIP);
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
   - antes del playtest de HE-60: limpiar `especiales_conocidos` de Sofía en el guardado real (con el juego cerrado y respaldo);
