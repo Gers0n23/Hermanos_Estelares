@@ -17,9 +17,10 @@
   - HE-60: el código está listo. Faltan las 20 voces TTS de reto (OK del PO sobre el costo), la prueba en tablet y el playtest.
 - **Fuera del WIP de Dev**: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS) y HE-68 (storyboard de la batalla; falta la validación UX).
 - **Bloqueos**:
-  - El diseño de la Torre ya no bloquea: la implementación (HE-76 a HE-85) espera plaza de WIP y la cadena HE-59 → HE-76.
-  - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y las de HE-86 (105 + 18 nuevas o regeneradas del guion v4). No se generó audio.
-  - Cadena técnica: no existen todavía `GestorTurnos`, `batalla.gd` ni `viaje_siguiente_requiere`. La Torre depende de HE-59 (🔄 desde el 17-Oct).
+  - **R17, decisión del PO pendiente (bloquea HE-76, HE-80 y HE-88)**: con 3 etapas la Torre pasa de ≈5,8 a ≈16 min (p80 ≈21) y la batalla queda en ≈28-30 min. Opciones: **A** (3 etapas con guardado entre etapas, recomendada), **B** (2 etapas) o **C** (3 etapas más cortas).
+  - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), voces de equipo de HE-59, 78 de HE-67 y las de HE-86 (105 + 18 del guion v4 + 10 nuevas y 1 variante de la v4 de la ficha). No se generó audio.
+  - Cadena técnica: `GestorTurnos` ya existe (HE-59); faltan `batalla.gd` y `viaje_siguiente_requiere`.
+  - **Riesgo del guardado**: cualquier ejecución del juego sin `--script` migra el `progreso.json` real a v3 (no pierde datos, pero cambia el archivo). Ya se restauró desde respaldo (md5 ff55e2f4abf17f25618fa7ee446b11b0). Respaldo antes de cada prueba.
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
 - **Avance general**: **25/110 tarjetas ✅**.
 - **Próximos pasos**:
