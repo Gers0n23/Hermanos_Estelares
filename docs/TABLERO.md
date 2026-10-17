@@ -6,7 +6,7 @@
 
 ## ESTADO ACTUAL
 
-- **Última actualización**: 13-Oct-2026. Se archiva lo antiguo del tablero en [archivo/TABLERO-historico.md](archivo/TABLERO-historico.md). La auditoría UX de la Torre y del cierre de Arcoíris (HE-71, `docs/validaciones/2026-10-13_ux-torre-cierre-arcoiris.md`) sale **aprobada con cambios**: 2 bloqueantes, 11 mayores y 11 menores. **B1**: el storyboard v3 está conciliado con el guion v2, no con el v3 (se resuelve en HE-73, storyboard v4). **B2**: con la resortera, un toque sin arrastre dentro del área de agarre (donde también está Coco) gasta un globo del equipo (se corrige en la ficha `motor-lanzar.md` v3). HE-71 pasa a 🔄 En curso.
+- **Última actualización**: 17-Oct-2026. Diseño de la Torre y del cierre de Arcoíris cerrado: ficha `motor-lanzar.md` v3, `modo-equipo.md` v7.2, guion v4 y storyboard v4.1; re-auditoría UX sin bloqueantes. HE-71 y HE-73 ✅.
 - **Fase activa**: **Fase 1 — Núcleo + Capítulo 1 completo**. **Prioridad vigente (decisión del PO del 06-Oct)**: la épica "Juego en equipo y Parejas de Coco con reto real" va antes de lo que falta del camino crítico del capítulo 1. La Fase 0.5 (arte conceptual) sigue abierta en paralelo, sin prioridad.
 - **WIP de Dev**: **3/2 por excepción autorizada por el PO** (HE-02, HE-10 y HE-60). Se normaliza cuando el PO cierre HE-10 o HE-02. Hasta bajar a 1/2 no entra ninguna tarjeta de Dev.
 - **En curso**:
