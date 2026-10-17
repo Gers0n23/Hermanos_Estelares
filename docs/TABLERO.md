@@ -18,7 +18,7 @@
 - **Bloqueos**:
   - El diseño de la Torre ya no bloquea: la implementación (HE-76 a HE-85) espera plaza de WIP y la cadena HE-59 → HE-76.
   - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y las de HE-86 (105 + 18 nuevas o regeneradas del guion v4). No se generó audio.
-  - Cadena técnica: no existen todavía `GestorTurnos`, `batalla.gd` ni `viaje_siguiente_requiere`. La Torre depende de HE-59 (⬜), que no tiene plaza de WIP.
+  - Cadena técnica: no existen todavía `GestorTurnos`, `batalla.gd` ni `viaje_siguiente_requiere`. La Torre depende de HE-59 (🔄 desde el 17-Oct).
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
 - **Avance general**: **25/110 tarjetas ✅**.
 - **Próximos pasos**:
