@@ -14,6 +14,9 @@
 >   - **Luxor**: gotas comodín y poderes que se activan al reventarlos.
 >   - **Marble Shooter / Marble Legend** (móvil): poderes vistosos, ayudas antes de jugar,
 >     obstáculos y estrellas por nivel.
+> - **v2 (PO, 17-Oct-2026)**: grupos más largos, retroceso visible, gota arcoíris y batidora sobre el
+>   puente, según la maqueta `docs/maquetas/rio-v2.html`. La ficha `docs/fichas/motor-rio.md` manda
+>   sobre §5, §6 y §10 de este documento.
 > - **Estado**: propuesta para validar. Ningún diseñador la ha revisado y nada está en el
 >   tablero. Las tarjetas de §13 las crea `scrum-master` cuando el PO lo apruebe.
 
@@ -178,24 +181,40 @@ puede crear ríos nuevos sin tocar código.
 
 ## 5. Mecánica núcleo (lo del mockup, formalizado)
 
-- **Cadena**:
+> **v2 (PO, 17-Oct-2026)**: la especificación completa está en **`docs/fichas/motor-rio.md`**, que manda
+> sobre esta sección. Lo reemplazado queda tachado o marcado abajo.
+
+- **El río** (la fila de gotas; en Zuma se llama "cadena", pero aquí "cadena" es solo el bono de §9):
   - Entra rápido hasta el 28% del recorrido y después avanza a la velocidad del nivel.
   - La **última gota empuja** a todas las de adelante.
   - Si se corta, la parte de adelante se queda quieta y la de atrás sigue empujando.
+  - **v2**: se arma **por grupos** de tamaño `grupo: [min, max]` por hermano (Maxi 3-4, Nicole 2-3,
+    Sofía 1-3), y dos grupos seguidos nunca son del mismo color. Corrige el error de la v1, que
+    prometía grupos de 1-3 y nunca armaba 3 (ficha §5.1).
 - **Inserción**: la gota disparada entra en el punto de impacto, abre espacio con un empuje
   elástico (0,1 s) y se evalúa: con 3 o más iguales contiguas, revientan.
 - **Retroceso**:
   - Si quedan dos tramos cortados cuyos extremos son del mismo color, el tramo de adelante
-    **retrocede** a 520 px/s, choca y vuelve a evaluar.
+    **retrocede** ~~a 520 px/s~~ (**v2: 420 px/s**), choca y vuelve a evaluar.
   - Eso produce **cadenas** ×2, ×3…, con multiplicador.
-- **Mezcla (solo Sofía, como el mockup)**:
-  - Coco solo escupe primarios.
-  - Si un primario toca a otro primario **distinto** al insertarse, los dos se vuelven el
-    secundario (rojo + azul = morado).
-  - Así se fabrican los verdes, naranjos y morados que pide el río.
-  - Es la palanca de dificultad propia de Sofía, y la que justifica el tema "colores".
+  - **v2**: los extremos brillan y se atraen; al chocar hay "¡clac!", destello y temblor suave. El
+    **combo** (aciertos seguidos) y la **cadena** (retrocesos que revientan) son contadores
+    separados (ficha §6 y §7).
+- ~~**Mezcla (solo Sofía, como el mockup)**: Coco solo escupe primarios; si un primario toca a otro
+  primario distinto al insertarse, los dos se vuelven el secundario.~~ **Reemplazada (PO,
+  17-Oct-2026)**: mezclaba sin querer, con la vecina de adelante y no con la gota apuntada.
+  - **Ya no hay mezcla dentro del río.**
+  - **Batidora sobre un puente** (Nicole y Sofía): se le disparan primarios, los guarda a la vista y
+    el líquido muestra la mezcla en vivo. Una **palanca** sirve 2 disparos del color mezclado. Lo que
+    no sirve rebota de vuelta a Coco. Las gotas pasan escondidas por un túnel bajo el puente (ficha
+    §10).
+  - Nicole: solo verde (~16 % del río), batidora de 2. Sofía: 3 secundarios (~35 %), batidora de 2;
+    en las etapas difíciles, colores de **2 + 1** y batidora de 3, con el **café** como peligro. Maxi
+    no mezcla.
 - **Munición justa** (como en Zuma): Coco solo carga colores que **siguen en el río**. Si un color
   se acaba, deja de salir.
+  - **v2, munición que ayuda**: pesa por los colores presentes, ×3 para las 12 gotas más cerca del
+    remolino y ×0,6 para los ingredientes de los colores mezclados (ficha §8).
 
 ---
 
@@ -209,7 +228,7 @@ Coco hace el gesto. Sin voz larga, y se puede saltar con un toque.
 
 | Poder | Referencia | Qué hace | Cómo se ve | Coco | Desde |
 |---|---|---|---|---|---|
-| **Gota arcoíris** | comodín de Luxor | Munición: encaja con **cualquier** color y revienta el grupo donde cae | gota con franjas que giran | baño arcoíris, ojos de estrella | Z1 (B y E) |
+| **Gota arcoíris** | comodín de Luxor | Munición: encaja con **cualquier** color y revienta el grupo donde cae, **aunque sea de 1 gota**; pasa por encima de la batidora (v2) | gota con franjas que giran | baño arcoíris, ojos de estrella | Z1 (~~B y E~~ **los tres**, v2) |
 | **Destellos voladores** | monedas de Zuma | Un destello cruza la pantalla 4 s; dispararle da puntos extra | estrellita dorada con estela | lo sigue con los ojos | Z1 |
 | **Gota de miel** | Slow de Zuma | El río va a **la mitad de velocidad** 6 s | la miel chorrea sobre el cauce y las gotas ruedan pegajosas | se chupa los dedos | Z2 |
 | **Gota de gelatina** | Reverse de Zuma | El río **retrocede** 3 s | el cauce tiembla y las gotas rebotan hacia atrás como resorte | rebota en su plato | Z2 |
@@ -226,6 +245,10 @@ Coco hace el gesto. Sin voz larga, y se puede saltar con un toque.
 - Los poderes de ayuda (miel, gelatina, helada) salen más cuando la cabeza del río pasa del 60%:
   es el "seguro" de Zuma que mantiene la tensión sin injusticia.
 - **Nicole recibe ayudas más seguido y Sofía más poderes de puntaje.**
+- **Gota arcoíris (v2, PO 17-Oct-2026; ficha `motor-rio.md` §9)**: no cuenta para el tope de
+  especiales del río, porque llega como munición. Sale al azar con probabilidad 1 / `uno_cada` por
+  carga (Maxi 9, Nicole 14, Sofía 20-22), ×2,5 cuando la cabeza pasó el 60 %, y **nunca con menos de 6
+  disparos** desde la anterior. El promedio real entre dos es ≈ 5 + `uno_cada` disparos.
 
 ---
 
@@ -294,19 +317,43 @@ Toma el modelo de los jefes de Zuma's Revenge, que se dañan disparando por los 
 
 ## 10. Escala por edad y por zona
 
-**Base del mockup**:
-- **Maxi** *(PO, 06-Oct-2026: "el mismo juego, pero más lento solamente")*: los parámetros de
-  Nicole zona por zona, con **la velocidad del río a la mitad** (≈13 px/s en la zona 1). Nada
-  más cambia: mismas gotas, colores, guía, poderes y escenarios. Si en el playtest se traba, la
-  primera palanca es bajar más la velocidad, no cambiar la mecánica.
-- **Nicole**: R 26, 36 gotas, 4 colores, 26 px/s, línea de guía.
-- **Sofía**: R 22, 60 gotas, 6 colores, 46 px/s, sin guía, con mezclas.
+> **v2 (PO, 17-Oct-2026)**: la base del mockup queda **reemplazada** por la de la maqueta
+> `docs/maquetas/rio-v2.html` (tabla completa en `docs/fichas/motor-rio.md` §11). Las cifras siguen
+> siendo una propuesta: las calibra `disenador-niveles` con el simulador y el arnés.
+>
+> | Zona 1 (v2) | Maxi · Semilla | Nicole · Brote | Sofía · z1 | Sofía · etapa difícil |
+> |---|---|---|---|---|
+> | Gotas | 50 | 50 | 70 | 80 |
+> | Grupo | 3-4 | 2-3 | 1-3 | 1-3 |
+> | Velocidad (px/s) | 13 | 24 | 42 | 48 |
+> | Colores | rojo, amarillo, azul, rosa | rojo, amarillo, azul, rosa + verde (~16 %) | 3 primarios + verde, naranja, violeta (~35 %) | igual + 5 gotas de 2 + 1 (3 tipos) |
+> | Batidora | no | 2 espacios | 2 espacios | 3 espacios (café) |
+> | Arcoíris (1 / `uno_cada`) | 9 | 14 | 20 | 22 |
+> | Guía | completa | completa | no | no |
+>
+> - **Maxi ya no es "Nicole más lento"**: tiene grupos más largos y no tiene batidora. Reemplaza la
+>   decisión del 06-Oct en esos dos puntos; la idea de fondo se mantiene (mismo juego, más fácil de
+>   leer).
+> - La **"mezcla guiada" de Sofía en la zona 1** (al apuntar se ve qué color saldría) **se reemplaza**
+>   por la batidora con resultado en vivo y recetas que se encienden (ficha §10.7). Nunca se
+>   implementó.
+> - En qué zona o etapa entran los colores de 2 + 1 lo decide `disenador-niveles` (pregunta al PO en la
+>   ficha §18). Las cifras de gotas de las zonas 2-5 de la tabla de abajo **se deben recalibrar** con los
+>   ríos más largos; "mezclas" en esa tabla significa ahora "secundarios en el río + batidora".
 
-La tabla da la curva propuesta, que `disenador-niveles` valida con playtest.
+~~**Base del mockup**~~ (reemplazada por la v2, arriba):
+- ~~**Maxi** *(PO, 06-Oct-2026: "el mismo juego, pero más lento solamente")*: los parámetros de
+  Nicole zona por zona, con la velocidad del río a la mitad (≈13 px/s en la zona 1).~~ La velocidad
+  a la mitad se mantiene; las gotas y los grupos cambian (v2). Si en el playtest se traba, la primera
+  palanca sigue siendo bajar la velocidad, no cambiar la mecánica.
+- ~~**Nicole**: R 26, 36 gotas, 4 colores, 26 px/s, línea de guía.~~
+- ~~**Sofía**: R 22, 60 gotas, 6 colores, 46 px/s, sin guía, con mezclas.~~
+
+La tabla da la curva propuesta (v1), que `disenador-niveles` valida con playtest.
 
 | Zona | Nicole · Brote | Sofía · Estrella |
 |---|---|---|
-| 1 · Claro | 30-36 gotas, 3→4 colores, guía completa; gota arcoíris | 50-60 gotas, 4 colores + mezclas guiadas (al apuntar se ve qué color saldría al mezclar) |
+| 1 · Claro | ~~30-36 gotas, 3→4 colores, guía completa; gota arcoíris~~ **v2: ver arriba** | ~~50-60 gotas, 4 colores + mezclas guiadas (al apuntar se ve qué color saldría al mezclar)~~ **v2: ver arriba** |
 | 2 · Charcos | 40 gotas, 4 colores, túnel corto; miel y gelatina | 60-70, 5 colores, mezclas sin pista; túnel largo |
 | 3 · Chupetines | 45, 4 colores, la guía se acorta a 300 px; salto entre plataformas opcional | 70, 6 colores, salto entre plataformas obligatorio (una vista no alcanza todo el río); chispa y Ojo de camaleón |
 | 4 · Islotes | 2 ríos lentos de 25; helada y brochazo | 2 ríos de 40, más rápidos; **gota de caramelo** (hay que darle 2 veces) |
@@ -360,7 +407,9 @@ frecuencia de ayudas.
   - Es un arreglo de offsets sobre la `Curve2D` (distancia en el recorrido) que se dibuja con
     `MultiMeshInstance2D` o `_draw()`.
   - Así la física del empuje y del retroceso es la del mockup: simple y determinista.
-- **Datos por río**: `datos/niveles/arcoiris/<zona>/rio_<perfil>_<n>.json`. Borrador:
+- **Datos por río**: `datos/niveles/arcoiris/<zona>/rio_<perfil>_<n>.json`. Borrador (v1; **el
+  contrato v2**, con `grupo`, `secundarios`, `terciarios`, `batidora`, `arcoiris` y `municion`, y sin
+  `mezclas`, está en `docs/fichas/motor-rio.md` §13):
   ```json
   {
     "id_nivel": "arcoiris_z1_rio_brote_1",
