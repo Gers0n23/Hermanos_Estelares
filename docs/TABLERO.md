@@ -35,7 +35,6 @@
 - **Pendientes del PO**:
   - **decidir R17**: duración de la Torre (A recomendada, B o C);
   - jugar HE-59 y HE-89 en PC (DoD 2) antes de la prueba en tablet;
-  - **Río v2**: indicar cuándo empieza HE-91 (candidata al WIP de Dev);
   - HE-89: decidir si se mantienen las rondas "a la vista" de Nicole (z1 r1-r2, z4 r1, z5 r1) ahora que el vistazo muestra todas las cartas;
   - revisar HE-10 y aprobar HE-02 con los QA junior, y hacer el playtest de HE-60 (ya no consumen WIP);
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
