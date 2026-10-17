@@ -11,6 +11,7 @@
 - **WIP de Dev**: **0/2**. HE-97, HE-91, HE-59 y HE-89 están fuera del WIP en 🟡, igual que HE-02, HE-10 y HE-60.
 - **En curso (Dev)**: ninguna. La siguiente es HE-76, que **no entra en curso hasta que el PO decida la duración de la Torre (R17)**; HE-70 (contrato de turnos en `rio`/`encajar`) es candidata sin R17.
 - **En revisión del PO (fuera del WIP, no están ✅)**:
+  - HE-97 (Pinta v2): verificado en PC (`qa_test_lienzo` 711 OK / 0 fallos, capturas en ventana revisadas, md5 intacto). Escenas piloto: `parque_dinos` (Maxi), `granja_ponys` (Nicole) y `ciudad_ponys` (Sofía). Falta que el PO juegue en PC y tablet, que responda las 3 preguntas abiertas, la auditoría UX (HE-102) y el playtest.
   - HE-91 (Río v2): verificado en PC (`qa_test_rio` 182 ok, `qa_test_gestor_turnos` 0 fallos; jugador automático 5/5 en los tres hermanos). Falta que el PO juegue en PC y tablet, la auditoría UX HE-95 (palanca hasta y=726, recetas de Sofía z3 rozan el cauce, sin `menos_movimiento()` en `Progreso`), los SFX definitivos y el arte de HE-93.
   - HE-59: código completo, verificado en PC (`qa_test_gestor_turnos` 133 OK y regresiones en 0 fallos). Falta que el PO juegue en PC, la prueba en tablet, las voces de equipo (`--estimar` y OK del costo) y la auditoría UX/QA (HE-64).
   - HE-02: falta la aprobación de los QA junior y del PO.
