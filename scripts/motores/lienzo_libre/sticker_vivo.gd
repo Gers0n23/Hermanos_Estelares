@@ -11,6 +11,11 @@ const Stickers := preload("res://scripts/motores/lienzo_libre/stickers.gd")
 const COLOR_CONTORNO := Color("#2B3350")
 
 var id := "estrella"
+## Lienzo v2: "vivo" (anda por los caminos), "lugar" (destino de caminos y viajeros) o "decorado".
+var clase := "decorado"
+## Lugar fijo del fondo (el rio, el lago): invisible, no se mueve ni se borra; solo es destino.
+var fijo := false
+var radio_fijo := 0.0
 var color := Color.WHITE:
 	set(valor):
 		color = valor
@@ -56,12 +61,17 @@ func poner_en(punto: Vector2) -> void:
 	position = punto - size / 2.0
 
 
-## Radio tocable en px del lienzo (un poco mas generoso que el dibujo: dedos de 2-8 anos).
-func radio_toque() -> float:
-	return maxf(36.0, lado * 0.5 * escala)
+## Radio tocable en px del lienzo (un poco mas generoso que el dibujo: dedos de 2-8 anos). Con zoom,
+## el minimo de 36 px es de PANTALLA: en el mundo se divide por el zoom.
+func radio_toque(zoom := 1.0) -> float:
+	if fijo:
+		return radio_fijo
+	return maxf(36.0 / maxf(zoom, 0.01), lado * 0.5 * escala)
 
 
 func _draw() -> void:
+	if fijo:
+		return
 	var c := size / 2.0 + Vector2(0, -rebote)
 	if seleccionado:
 		var r := lado * 0.52

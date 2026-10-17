@@ -50,17 +50,29 @@ const CATALOGO := {
 	# Figuras de todos
 	"estrella": ["f", "#FFCB3D"], "corazon": ["f", "#FF7EB6"], "luna": ["f", "#FFE38A"], "flor": ["f", "#FF7EB6"],
 	"arcoiris": ["f", "#FFFFFF"], "destello": ["p", "#FFCB3D"],
+	# Lienzo v2 (17-Oct-2026): escenas piloto (establo junto al rio, parque de dinos)
+	"nube_lluvia": ["p", "#B8C7E0"], "dino_bebe": ["p", "#9BE38F"], "lago": ["p", "#6FC3F0"], "rio": ["p", "#5AB4F0"],
 }
 const ALIAS := {"carrito": "auto", "pony_amigo": "pony"}
 ## Stickers que caminan o ruedan: al tocarlos avanzan un poco en vez de solo saltar.
 const ANDAN := ["trex", "spinosaurio", "carnotauro", "carrito", "bus", "bomberos", "tren", "pony_amigo", "unicornio",
-	"jirafa", "gatito", "perrito", "gerbo", "pinguino", "carroza"]
+	"jirafa", "gatito", "perrito", "gerbo", "pinguino", "carroza", "dino_bebe"]
 ## Hacia donde "avanza" cada dibujo, en radianes (0 = derecha). El cohete apunta hacia arriba y
 ## la escoba vuela en diagonal: el viajero se gira para avanzar en la direccion del camino.
 const DIRECCION := {"cohete": -PI / 2.0, "escoba": -0.8}
 ## Viajeros que siguen la curva del camino girando entero (vehiculos y voladores). Los animales
 ## solo se inclinan un poco, para no caminar de costado.
 const ROTAN := ["carrito", "bus", "bomberos", "tren", "carroza", "cohete", "escoba"]
+## Lienzo v2 (17-Oct-2026, docs/fichas/lienzo-escenas-retos.md §1.1): CLASE por defecto de cada
+## sticker. `vivo` anda por los caminos y cuenta para los objetivos; `lugar` es un destino: un camino
+## se pega a el y alli llega un viajero; el resto es `decorado` (solo visual, participa en
+## combinaciones). Una escena puede reasignarlas con sus listas `vivos`, `lugares` y `decorados`. La
+## cuarta clase, `camino`, son los tipos del trazo (sendero, camino, rieles, cerca, arcoiris...).
+const VIVOS := ["cohete", "escoba", "lechuza"]
+const LUGARES := ["granero", "casa", "castillo", "volcan", "planeta", "montana", "casa_valpo", "moai", "cactus",
+	"bandera_meta", "pastel", "caldero", "lago", "rio"]
+## Los lugares se ponen mas grandes que los vivos (un establo no mide lo mismo que un pony).
+const ESCALA_LUGAR := 1.5
 
 
 static func tiene(id: String) -> bool:
@@ -71,8 +83,16 @@ static func color_por_defecto(id: String) -> Color:
 	return Color(str(CATALOGO.get(id, ["", "#FFCB3D"])[1]))
 
 
+static func clase(id: String) -> String:
+	if (id in ANDAN and id != "pinguino") or id in VIVOS:
+		return "vivo"
+	if id in LUGARES:
+		return "lugar"
+	return "decorado"
+
+
 static func es_dino(id: String) -> bool:
-	return id in ["trex", "spinosaurio", "carnotauro"]
+	return id in ["trex", "spinosaurio", "carnotauro", "dino_bebe"]
 
 
 ## Dibuja el sticker `id` centrado en `c` con radio `r` sobre cualquier CanvasItem (o un Grabador).
@@ -130,6 +150,10 @@ static func dibujar(l, id: String, color: Color, c: Vector2, r: float) -> void:
 				"pelota": _pelota(l, color, c, r, t)
 				"bandera_chile": _bandera_chile(l, color, c, r, t)
 				"destello": _destello(l, color, c, r, t)
+				"nube_lluvia": _nube_lluvia(l, color, c, r, t)
+				"dino_bebe": _dino_bebe(l, color, c, r, t)
+				"lago": _lago(l, color, c, r, t)
+				"rio": _rio(l, color, c, r, t)
 				_: push_warning("stickers: falta el dibujo %s" % metodo)
 
 
@@ -629,3 +653,45 @@ static func _destello_forma(centro: Vector2, radio: float) -> PackedVector2Array
 		var k := 1.0 if i % 4 == 0 else (0.22 if i % 2 == 1 else 0.42)
 		puntos.append(centro + Vector2.from_angle(a) * radio * k)
 	return puntos
+
+
+# --- Lienzo v2: escenas piloto ----------------------------------------------------------------
+
+static func _nube_lluvia(l, color: Color, c: Vector2, r: float, t: float) -> void:
+	for i in 4:
+		var x := -0.5 + i * 0.33
+		D._detalle(l, _figura("gota", c, r, Vector2(x, 0.66 + (i % 2) * 0.16), 0.13), Color("#6FC3F0"), t * 0.6)
+	var nube := D._unir([D._el(c, r, Vector2(-0.48, -0.06), 0.36, 0.32), D._el(c, r, Vector2(0.0, -0.3), 0.46, 0.42),
+		D._el(c, r, Vector2(0.48, -0.08), 0.38, 0.34), D._caja(c, r, -0.62, -0.08, 0.62, 0.3, 0.16)])
+	D._pintar(l, nube, color, r, t)
+	# Cara dormilona: ojitos cerrados y boquita en "o".
+	for x in [-0.2, 0.2]:
+		l.draw_arc(c + Vector2(x, -0.06) * r, r * 0.08, 0.2, PI - 0.2, 8, COLOR_CONTORNO, t * 0.7, true)
+	l.draw_circle(c + Vector2(0, 0.1) * r, r * 0.05, COLOR_CONTORNO)
+
+
+static func _lago(l, color: Color, c: Vector2, r: float, t: float) -> void:
+	var agua := D._el(c, r, Vector2(0, 0.2), 0.92, 0.5, 40)
+	D._pintar(l, agua, color, r, t)
+	D._dentro(l, D._el(c, r, Vector2(-0.3, 0.06), 0.3, 0.08), agua, Color(1, 1, 1, 0.55))
+	D._dentro(l, D._el(c, r, Vector2(0.36, 0.36), 0.18, 0.05), agua, Color(1, 1, 1, 0.45))
+	for x in [0.62, 0.74]:
+		_linea(l, c, r, [Vector2(x, 0.1), Vector2(x + 0.04, -0.5)], Color("#2E8B57"), t * 1.2)
+		D._detalle(l, D._el(c, r, Vector2(x + 0.04, -0.5), 0.05, 0.12), Color("#9A6238"), t * 0.5)
+
+
+static func _rio(l, color: Color, c: Vector2, r: float, t: float) -> void:
+	var banda := D._redondear(D._poli(c, r, [Vector2(-0.95, -0.2), Vector2(-0.4, -0.42), Vector2(0.2, -0.2), Vector2(0.95, -0.42),
+		Vector2(0.95, 0.3), Vector2(0.3, 0.52), Vector2(-0.3, 0.3), Vector2(-0.95, 0.52)]), r * 0.12)
+	D._pintar(l, banda, color, r, t)
+	for y in [-0.04, 0.24]:
+		_linea(l, c, r, [Vector2(-0.6, y), Vector2(-0.4, y - 0.08), Vector2(-0.2, y)], Color(1, 1, 1, 0.7), t * 0.8)
+		_linea(l, c, r, [Vector2(0.2, y - 0.04), Vector2(0.4, y - 0.12), Vector2(0.6, y - 0.04)], Color(1, 1, 1, 0.7), t * 0.8)
+
+
+## Dino bebe (C03, huevo + volcan): un T-rex chiquito con un trozo de cascaron en la cabeza.
+static func _dino_bebe(l, color: Color, c: Vector2, r: float, t: float) -> void:
+	D.dibujar(l, "trex", color, c + Vector2(0, 0.12) * r, r * 0.8, true, true)
+	var cascaron := D._poli(c, r, [Vector2(0.1, -0.62), Vector2(0.62, -0.62), Vector2(0.56, -0.8), Vector2(0.46, -0.7),
+		Vector2(0.36, -0.86), Vector2(0.26, -0.7), Vector2(0.16, -0.82)])
+	D._pintar(l, cascaron, Color("#FFF1C9"), r, t * 0.8)

@@ -329,7 +329,14 @@
       ],
       "guardar_como": "ala_nave",
       "imagen_modelo": "res://assets/sprites/nave/nave_estrella.png",
-      "modelo": true
+      "modelo": true,
+      "objetivos": [
+        {
+          "tipo": "encargo",
+          "voz": "voces/arcoiris/pinta/brote/intro_ala.wav",
+          "icono": "encargo"
+        }
+      ]
     },
     {
       "encargo": "viste_coco",
@@ -1023,7 +1030,14 @@
       "guardar_como": "traje_coco",
       "lineas_voz": {
         "intro": "voces/arcoiris/pinta/brote/intro_viste.wav"
-      }
+      },
+      "objetivos": [
+        {
+          "tipo": "encargo",
+          "voz": "voces/arcoiris/pinta/brote/intro_viste.wav",
+          "icono": "encargo"
+        }
+      ]
     }
   ],
   "lineas_voz": {
@@ -1046,6 +1060,21 @@
     ],
     "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
     "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "objetivo_cumplido": [
+      "voces/arcoiris/pinta/brote/objetivo_cumplido_01.wav",
+      "voces/arcoiris/pinta/brote/objetivo_cumplido_02.wav"
+    ],
+    "hoja_lista": [
+      "voces/arcoiris/pinta/comun/hoja_lista.wav"
+    ],
+    "ya_hecho": [
+      "voces/arcoiris/pinta/comun/ya_hecho.wav"
+    ],
+    "grupo_colores": "voces/arcoiris/pinta/comun/grupo_colores.wav",
+    "grupo_pinceles": "voces/arcoiris/pinta/comun/grupo_pinceles.wav",
+    "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
+    "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
+    "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
     "uso_pincel_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
     "uso_sello_corazon": "voces/arcoiris/pinta/brote/uso_corazon.wav",
     "igualita": [

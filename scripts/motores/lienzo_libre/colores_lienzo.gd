@@ -21,6 +21,8 @@ const COLORES := {
 	"negro": Color("#2B2E3F"),
 	"cafe": Color("#9A6238"),
 	"celeste": Color("#8ED3FF"),
+	# Rocas y bosques de las laminas de Chile (estaba en la paleta pero faltaba aqui: salia blanco).
+	"verde_oscuro": Color("#2E8B57"),
 	# Colores que solo salen de mezclar (Sofia) o que nombra Coco.
 	"rosado": Color("#F79AB6"),
 	"lila": Color("#C7A6EC"),

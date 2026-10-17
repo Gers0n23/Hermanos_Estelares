@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Genera los 15 niveles de "Pinta con Coco" (motor lienzo_libre) y el TSV de voces TTS.
 
-Lienzo: 824x530. Uso: python herramientas/generar_pinta.py [raiz_repo]
+Laminas de las zonas 2-5: 824x530 (el motor las encuadra en el lienzo de pantalla completa).
+Lienzo v2 (17-Oct-2026): las escenas de la zona 1 van en 1280x720 (docs/fichas/lienzo-escenas-retos.md).
+Uso: python herramientas/generar_pinta.py [raiz_repo]
 """
 import json, math, os, sys
 
@@ -666,6 +668,17 @@ def voces_perfil(perfil):
         "lamina_completa": [voz("comun/lamina_completa_01", "¡Lo pintaste todo! ¿Me lo muestras? Toca mi carita."), voz("comun/lamina_completa_02", "¡Terminado! ¡Muéstramelo!")],
         "uso_pincel_estrella": V_ESTRELLA, "uso_sello_estrella": V_SELLO_ESTRELLA,
     }
+    # Lienzo v2: cola de objetivos (lienzo-escenas-retos.md §1.6) y nombres de los grupos del dock.
+    comunes["objetivo_cumplido"] = {
+        "semilla": [voz("semilla/objetivo_cumplido_01", "¡Siii!"), voz("semilla/objetivo_cumplido_02", "¡Bien, Maxi!")],
+        "brote": [voz("brote/objetivo_cumplido_01", "¡Listo!"), voz("brote/objetivo_cumplido_02", "¡Bien, Nicole!")],
+        "estrella": [voz("estrella/objetivo_cumplido_01", "¡Hecho!"), voz("estrella/objetivo_cumplido_02", "¡Uno menos!")],
+    }[perfil]
+    comunes["hoja_lista"] = [voz("comun/hoja_lista", "¡Lo lograste todo! Muéstrame tu dibujo.")]
+    comunes["ya_hecho"] = [voz("comun/ya_hecho", "¡Eso ya lo habías hecho!")]
+    for grupo, texto in [("colores", "¡Colores!"), ("pinceles", "¡Pinceles!"), ("cosas", "¡Cosas que se mueven!"),
+                         ("decorados", "¡Decorados!"), ("trajes", "¡Trajes!")]:
+        comunes["grupo_" + grupo] = voz("comun/grupo_" + grupo, texto)
     if perfil == "semilla":
         comunes["muestramelo"] = [voz(p + "muestramelo_01", "¿Me muestras tu dibujo? ¡Toca mi carita!"), voz(p + "muestramelo_02", "¡Qué lindo! Toca mi carita para mostrármelo.")]
         # disenador-niveles HE-40 #11 + guionista 02-Oct-2026: si Maxi sigue pintando ~90 s con el boton ya
@@ -712,6 +725,7 @@ NOMBRES_STICKERS = {
     "gerbo": "¡Un gerbo, chiquitito y curioso!", "hueso": "¡Un hueso para el perrito!", "pelota": "¡Una pelota!",
     "bandera_chile": "¡La bandera de Chile!", "estrella": "¡Una estrella!", "corazon": "¡Un corazón!", "luna": "¡La luna!",
     "flor": "¡Una flor!", "arcoiris": "¡Un arcoíris!", "destello": "¡Un destello!",
+    "nube_lluvia": "¡Una nube de lluvia!", "dino_bebe": "¡Un dino bebé!",
 }
 
 
@@ -954,6 +968,226 @@ def voces_lienzo_tema(perfil):
     return lineas
 
 
+# ---------------------------------------------------------------- lienzo v2: escenas piloto (17-Oct-2026)
+# docs/fichas/lienzo-escenas-retos.md §2.1 (parque_dinos), §3.1 (granja_ponys) y §4.1 (ciudad_ponys), en
+# 1280x720. Los temas v1 de arriba (TEMAS) quedan para portarlos en la segunda pasada del catalogo.
+W2, H2 = 1280, 720
+
+
+def reencuadrar_169(regiones):
+    """Lleva un fondo v1 (824x530) a 16:9 ensanchando cielo y suelo: las posiciones se estiran a lo
+    ancho y lo alto, y los radios usan la escala vertical (no se deforman soles ni lagos)."""
+    sx, sy = W2 / W, H2 / H
+    salida = []
+    for r in regiones:
+        r = json.loads(json.dumps(r))
+        if "puntos" in r:
+            r["puntos"] = [[round(x * sx, 1), round(y * sy, 1)] for x, y in r["puntos"]]
+        if "centro" in r:
+            r["centro"] = [round(r["centro"][0] * sx, 1), round(r["centro"][1] * sy, 1)]
+        if "radio" in r:
+            r["radio"] = round(r["radio"] * sy, 1)
+        if "radios" in r:
+            r["radios"] = [round(r["radios"][0] * sx, 1), round(r["radios"][1] * sy, 1)]
+        if "rect" in r:
+            x, y, w, h = r["rect"]
+            r["rect"] = [round(x * sx, 1), round(y * sy, 1), round(w * sx, 1), round(h * sy, 1)]
+        salida.append(r)
+    return salida
+
+
+def chaikin_abierto(pts, pasadas=3):
+    for _ in range(pasadas):
+        nuevo = [pts[0]]
+        for a, b in zip(pts, pts[1:]):
+            nuevo.append((a[0] * 0.75 + b[0] * 0.25, a[1] * 0.75 + b[1] * 0.25))
+            nuevo.append((a[0] * 0.25 + b[0] * 0.75, a[1] * 0.25 + b[1] * 0.75))
+        nuevo.append(pts[-1])
+        pts = nuevo
+    return pts
+
+
+def loma(id, borde, color):
+    """Loma o suelo de 16:9: se suaviza solo el borde de arriba y se cierra con las esquinas de abajo
+    (con `suave` en el poligono entero, Chaikin redondeaba las esquinas y asomaba el cielo)."""
+    return poly(id, chaikin_abierto(borde) + [(W2 + 4, H2 + 4), (-4, H2 + 4)], color)
+
+
+def fondo_v2(id_tema, regiones, perfil):
+    for region in regiones:
+        region["inicial"] = region.pop("sugerido")
+        if perfil == "semilla":
+            region["fija"] = True
+    return {"id": "fondo_" + id_tema, "tipo": "zonas", "tamano": [W2, H2], "regiones": regiones, "detalles": []}
+
+
+def ovalo(cx, cy, rx, ry, n=24):
+    return [[round(cx + math.cos(math.tau * i / n) * rx), round(cy + math.sin(math.tau * i / n) * ry)] for i in range(n + 1)]
+
+
+def f2_dinos():
+    return [rect("cielo", 0, 0, W2, H2, "#FFE3C4"), circ("sol", 180, 140, 70, "#FF9A2E"),
+            loma("suelo", [(-4, 440), (300, 420), (640, 446), (960, 430), (1284, 444)], "#C9E59A"),
+            poly("volcan", [(820, 560), (960, 200), (1080, 200), (1220, 560)], "#B07A55"),
+            poly("lava", [(962, 204), (1078, 204), (1066, 262), (1044, 232), (1022, 272), (1002, 236), (980, 268)], "#FF6B3D"),
+            eli("lago", 300, 600, 230, 70, "#8ED3FF")]
+
+
+def f2_granja():
+    rio = [(1280, 275), (1150, 360), (1060, 470), (960, 580), (845, 720), (955, 720), (1060, 600), (1160, 490), (1240, 400), (1280, 385)]
+    return [rect("cielo", 0, 0, W2, H2, "#BFE8FF"),
+            loma("colinas", [(-4, 380), (300, 290), (620, 350), (940, 270), (1284, 330)], "#8FD98A"),
+            loma("pasto", [(-4, 470), (400, 440), (800, 470), (1284, 450)], "#5CC95F"),
+            poly("rio", rio, "#6FC3F0")]
+
+
+def f2_ciudad():
+    rio = [(0, 515), (320, 535), (640, 520), (960, 545), (1280, 555), (1280, 645), (960, 635), (640, 610), (320, 625), (0, 605)]
+    return [rect("cielo", 0, 0, W2, H2, "#CFF1FF"),
+            loma("colinas", [(-4, 360), (300, 290), (640, 340), (960, 280), (1284, 330)], "#A8E6A1"),
+            loma("pradera", [(-4, 440), (640, 420), (1284, 440)], "#7ED36F"),
+            poly("rio", rio, "#9FE3DC")]
+
+
+def obj(escena, n, datos, icono, texto):
+    d = dict(datos)
+    d["icono"] = icono
+    d["voz"] = voz("escenas/%s/obj_%02d" % (escena, n), texto)
+    return d
+
+
+def elem(sticker, x, y, escala=1.0):
+    return {"sticker": sticker, "pos": [x, y], "escala": escala}
+
+
+# Combinaciones (lienzo-escenas-retos.md §5): universales, van en el nivel.
+def combinaciones_v2():
+    return [
+        {"id": "C01", "ingredientes": ["sol", "nube_lluvia"], "en": "cielo", "modo": "efecto", "resultado": "arcoiris", "escala": 2.2, "bajo": 110,
+         "voz": voz("combinaciones/arcoiris", "¡Sol con lluvia… arcoíris!")},
+        {"id": "C02", "ingredientes": ["nube", "nube"], "modo": "consume", "resultado": "nube_lluvia",
+         "voz": voz("combinaciones/nube_lluvia", "¡Dos nubes hacen una nube de lluvia!")},
+        {"id": "C03", "ingredientes": ["huevo", "volcan"], "modo": "transforma", "resultado": "dino_bebe",
+         "voz": voz("combinaciones/dino_bebe", "¡Crac! ¡Nació un dino bebé!")},
+        {"id": "C07", "ingredientes": ["pony_amigo", "manzana"], "modo": "consume", "consume": ["manzana"], "resultado": "pony_feliz",
+         "voz": voz("combinaciones/pony_feliz", "¡Ñam! ¡Al pony le encantó!")},
+        {"id": "C15", "ingredientes": ["pony_amigo", "varita"], "modo": "transforma", "resultado": "unicornio",
+         "voz": voz("combinaciones/unicornio", "¡Magia! ¡Ahora es un unicornio!")},
+        {"id": "C30", "ingredientes": ["nube_lluvia", "flor"], "modo": "efecto", "resultado": "jardin",
+         "voz": voz("combinaciones/jardin", "¡La lluvia hizo crecer flores!")},
+    ]
+
+
+def escena_parque_dinos():
+    e = "parque_dinos"
+    return {
+        "id": e, "fondo": fondo_v2(e, f2_dinos(), "semilla"), "etiquetas": ["favorito"],
+        "vivos": ["trex", "spinosaurio"], "lugares": [], "decorados": ["huevo"], "caminos": ["sendero"],
+        "lugares_fondo": [{"id": "volcan", "ancla": [1020, 520], "radio": 90, "region": "volcan"},
+                          {"id": "lago", "ancla": [300, 560], "radio": 90, "region": "lago"}],
+        "herramientas": ["pincel"], "herramienta_inicial": "sello_trex", "portada": ["trex", "spinosaurio", "huevo"],
+        "al_llegar": {"lago": {"efecto": "agua", "voz": voz("escenas/parque_dinos/llega_lago", "¡Glu, glu! ¡Qué rica el agua!")},
+                      "volcan": {"efecto": "", "voz": voz("escenas/parque_dinos/llega_volcan", "¡Grrr!")}},
+        "inspiracion": {"voz": voz("escenas/parque_dinos/inspiracion", "¡Mira! Un parque de dinosaurios. El T-rex camina por el sendero hasta el lago a tomar agüita… ¡y junto al volcán hay un huevo calentito!"),
+                        "elementos": [elem("trex", 520, 470, 1.25), elem("spinosaurio", 700, 500, 1.1), elem("trex", 380, 560, 1.0),
+                                      elem("huevo", 1120, 540, 0.7), elem("dino_bebe", 1070, 545, 0.55)],
+                        "caminos": [{"tipo": "sendero", "puntos": [[1000, 520], [700, 580], [380, 575]]}]},
+        "objetivos": [
+            obj(e, 1, {"tipo": "poner", "sticker": "trex", "n": 2}, "trex", "¡Pon dos T-rex en el pasto!"),
+            obj(e, 2, {"tipo": "conectar", "a": "volcan", "b": "lago", "camino": "sendero"}, ["volcan", "lago"], "¡Haz un caminito del volcán al lago!"),
+            obj(e, 3, {"tipo": "combinacion", "resultado": "dino_bebe"}, ["huevo", "volcan", "dino_bebe"], "¡Lleva el huevo al volcán!"),
+        ],
+        "lineas_voz": {"intro": voz("semilla/tema_parque_dinos", "¡Maxi, hoy dibujamos un parque de dinosaurios! Toca un dino abajo y ponlo en el parque."),
+                       "nombre": voz("temas/nombre_parque_dinos", "¡Parque de dinosaurios!"),
+                       "pista": voz("semilla/pista_tema_v2", "Toca los botones redondos para elegir dinos y el caminito. ¡Toca mi carita si necesitas ayuda!")},
+    }
+
+
+def escena_granja_ponys():
+    e = "granja_ponys"
+    corral = ovalo(400, 610, 150, 70)
+    return {
+        "id": e, "fondo": fondo_v2(e, f2_granja(), "brote"),
+        "vivos": ["pony_amigo"], "lugares": ["granero"],
+        "decorados": ["arbol", "flor", "manzana", "sol", "nube", "nube_lluvia", "corazon"], "caminos": ["sendero", "cerca"],
+        "lugares_fondo": [{"id": "rio", "ancla": [1100, 470], "radio": 60, "region": "rio", "lineal": True}],
+        "puestos": [{"sticker": "granero", "pos": [240, 400], "escala": 1.4}],
+        "zonas": {"cielo": [0, 0, W2, 300]},
+        "herramientas": ["pincel", "pincel_corazon", "pincel_estrella", "balde", "goma"], "herramienta_inicial": "sello_pony_amigo",
+        "portada": ["pony_amigo", "granero", "nube_lluvia"],
+        "al_llegar": {"rio": {"efecto": "agua", "voz": voz("escenas/granja_ponys/llega_rio", "¡Glu, glu! ¡Qué agua tan fresquita!")},
+                      "granero": {"efecto": "corazones", "voz": voz("escenas/granja_ponys/llega_granero", "¡De vuelta al establo!")}},
+        "inspiracion": {"voz": voz("escenas/granja_ponys/inspiracion", "En la granja, los ponys salen del establo y caminan por el sendero a tomar agüita al río. Y cuando llueve con sol… ¡sale un arcoíris!"),
+                        "elementos": [elem("granero", 240, 400, 1.1), elem("granero", 500, 330, 0.8), elem("pony_amigo", 620, 510), elem("pony_amigo", 950, 500),
+                                      elem("nube_lluvia", 760, 120), elem("sol", 980, 110), elem("arcoiris", 870, 190, 2.4),
+                                      elem("pony_amigo", 350, 610, 0.8), elem("pony_amigo", 450, 615, 0.8), elem("manzana", 660, 560, 0.6)],
+                        "caminos": [{"tipo": "sendero", "puntos": [[300, 470], [650, 520], [960, 520]]}, {"tipo": "cerca", "puntos": corral}]},
+        "objetivos": [
+            obj(e, 1, {"tipo": "poner", "sticker": "pony_amigo", "n": 2}, "pony_amigo", "¡Pon dos ponys en la granja!"),
+            obj(e, 2, {"tipo": "conectar", "a": "granero", "b": "rio", "camino": "sendero"}, ["granero", "rio"], "Haz un sendero desde el establo hasta el río."),
+            obj(e, 3, {"tipo": "llegadas", "viajero": "pony_amigo", "desde": "granero", "hasta": "rio", "n": 2}, ["pony_amigo", "rio"], "Que dos ponys vayan del establo a tomar agua al río."),
+            obj(e, 4, {"tipo": "combinacion", "resultado": "arcoiris"}, ["sol", "nube_lluvia", "arcoiris"], "Pon un sol y una nube de lluvia en el cielo… ¿qué aparecerá?"),
+            obj(e, 5, {"tipo": "combinacion", "resultado": "pony_feliz"}, ["pony_amigo", "manzana", "corazon"], "Ese pony tiene hambre: ¡dale una manzana!"),
+            obj(e, 6, {"tipo": "encerrar", "sticker": "pony_amigo", "n": 2, "con": "cerca"}, ["pony_amigo", "camino:cerca"], "Ya es de noche: haz un corral con la cerca alrededor de dos ponys."),
+        ],
+        "lineas_voz": {"intro": voz("brote/tema_granja_ponys_v2", "¡Una granja de ponys! Mira la idea de Coco y cumple las misiones de arriba."),
+                       "nombre": voz("temas/nombre_granja_ponys", "¡Granja de ponys!"),
+                       "pista": voz("brote/pista_tema_v2", "Toca los botones redondos de la izquierda: colores, pinceles y cosas que se mueven. Arriba están tus misiones: tócalas y te las repito.")},
+    }
+
+
+def escena_ciudad_ponys():
+    e = "ciudad_ponys"
+    return {
+        "id": e, "fondo": fondo_v2(e, f2_ciudad(), "estrella"),
+        "vivos": ["pony_amigo", "unicornio"], "lugares": ["casa", "castillo", "granero"],
+        "decorados": ["arbol", "flor", "manzana", "nube", "sol", "varita", "corazon", "estrella", "globo"], "caminos": ["sendero", "arcoiris"],
+        "lugares_fondo": [{"id": "rio", "ancla": [640, 570], "radio": 50, "region": "rio", "lineal": True}],
+        "zonas": {"cielo": [0, 0, W2, 290]},
+        "herramientas": ["pincel", "pincel_grueso", "pincel_estrella", "purpurina", "balde", "goma"], "herramienta_inicial": "sello_casa",
+        "portada": ["pony_amigo", "unicornio", "castillo"],
+        "al_llegar": {"rio": {"efecto": "agua", "voz": voz("escenas/ciudad_ponys/llega_rio", "¡Glu, glu!")},
+                      "castillo": {"efecto": "corazones", "voz": voz("escenas/ciudad_ponys/llega_castillo", "¡A la escuela!")},
+                      "casa": {"efecto": "corazones", "voz": voz("escenas/ciudad_ponys/llega_casa", "¡Hola, vecinos!")},
+                      "granero": {"efecto": "corazones", "voz": voz("escenas/ciudad_ponys/llega_granero", "¡Al establo!")}},
+        "inspiracion": {"voz": voz("escenas/ciudad_ponys/inspiracion", "En la Ciudad de los Ponys, cada pony vive en su casita. Por la mañana van por el sendero a la escuela del castillo, y después al establo y a tomar agua al río. Si llueve con sol, sale un arcoíris… ¡y dicen que una varita convierte a un pony en unicornio!"),
+                        "elementos": [elem("casa", 180, 300, 0.9), elem("casa", 300, 260, 0.9), elem("casa", 420, 300, 0.9), elem("castillo", 980, 260, 1.5),
+                                      elem("pony_amigo", 560, 300), elem("pony_amigo", 760, 300), elem("granero", 640, 430, 0.9), elem("pony_amigo", 700, 560),
+                                      elem("arcoiris", 900, 470, 2.6), elem("nube_lluvia", 780, 140), elem("sol", 1080, 120), elem("unicornio", 1120, 430)],
+                        "caminos": [{"tipo": "sendero", "puntos": [[420, 320], [640, 290], [860, 300]]}, {"tipo": "sendero", "puntos": [[640, 430], [640, 560]]},
+                                    {"tipo": "arcoiris", "puntos": ovalo(1120, 430, 110, 60)}]},
+        "objetivos": [
+            obj(e, 1, {"tipo": "poner", "sticker": "casa", "n": 3}, "casa", "Arma el barrio: pon tres casitas."),
+            obj(e, 2, {"tipo": "poner", "sticker": "pony_amigo", "n": 3}, "pony_amigo", "Ahora, tres ponys vecinos."),
+            obj(e, 3, {"tipo": "conectar", "a": "casa", "b": "castillo", "camino": "sendero"}, ["casa", "castillo"], "Haz el sendero de las casas a la escuela del castillo."),
+            obj(e, 4, {"tipo": "llegadas", "viajero": "pony_amigo", "desde": "casa", "hasta": "castillo", "n": 2}, ["pony_amigo", "castillo"], "Que dos ponys vayan de su casa a la escuela."),
+            obj(e, 5, {"tipo": "conectar", "a": "granero", "b": "rio", "camino": "sendero"}, ["granero", "rio"], "Conecta el establo con el río."),
+            obj(e, 6, {"tipo": "llegadas", "viajero": "pony_amigo", "desde": "granero", "hasta": "rio", "n": 2}, ["pony_amigo", "rio"], "Que dos ponys vayan del establo a tomar agua al río."),
+            obj(e, 7, {"tipo": "combinacion", "resultado": "nube_lluvia"}, ["?", "?", "nube_lluvia"], "Acertijo: ¿cómo se hace una nube de lluvia? Pista: hay que juntar nubes."),
+            obj(e, 8, {"tipo": "combinacion", "resultado": "arcoiris"}, ["?", "?", "arcoiris"], "¿Qué hace falta para que salga un arcoíris en el cielo?"),
+            obj(e, 9, {"tipo": "combinacion", "resultado": "unicornio"}, ["?", "?", "unicornio"], "Dicen que hay magia para convertir un pony en unicornio…"),
+            obj(e, 10, {"tipo": "circuito", "viajero": "unicornio", "vueltas": 2}, ["unicornio", "circuito"], "Que un unicornio dé dos vueltas por un camino redondo."),
+            obj(e, 11, {"tipo": "pintar_zona", "zona": "rio", "color": "turquesa"}, ["rio", "colores"], "Pinta el río de turquesa, como agua mágica."),
+            obj(e, 12, {"tipo": "orden", "viajero": "pony_amigo", "lugares": ["casa", "castillo", "rio"]}, ["pony_amigo", "castillo"], "El gran paseo: que un pony vaya de su casa a la escuela y después al río, sin parar."),
+        ],
+        "lineas_voz": {"intro": voz("estrella/tema_ciudad_ponys_v2", "¡La ciudad de los ponys! Mira la idea de Coco: tienes doce misiones."),
+                       "nombre": voz("temas/nombre_ciudad_ponys", "¡Ciudad de los ponys!"),
+                       "pista": voz("estrella/pista_tema_v2", "Tus misiones están arriba: tócalas y te las repito. Si te trabas, tócame y te doy una pista. Con la lupa puedes acercarte.")},
+    }
+
+
+ESCENAS_V2 = {"semilla": [escena_parque_dinos], "brote": [escena_granja_ponys], "estrella": [escena_ciudad_ponys]}
+
+
+def temas_v2(perfil):
+    temas = [f() for f in ESCENAS_V2[perfil]]
+    for t in temas:
+        for s_ in set(t["vivos"] + t["lugares"] + t["decorados"]):
+            if s_ in NOMBRES_STICKERS:
+                voz("stickers/" + s_, NOMBRES_STICKERS[s_])
+    return temas
+
+
 # ---------------------------------------------------------------- niveles
 ZONAS =["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islotes", "zona5_cima"]
 PATRONES = {"voces_colores": "voces/arcoiris/pinta/colores/%s.wav"}
@@ -986,18 +1220,22 @@ HERR_E = ["pincel", "pincel_grueso", "pincel_estrella", "purpurina", "goma"]
 
 niveles = []
 # Zona 1: lienzo libre CON TEMA (ficha motor-lienzo-libre.md §8, pedido del PO 27-Sep-2026)
-niveles.append(nivel(0, "semilla", "libre", voces_lienzo_tema("semilla"), paleta=PAL_SEM, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True,
-                     temas=temas_de("semilla"), temas_por_partida=2, opciones_tema=1, al_menos_una="favorito",
-                     voces_stickers=PREF_STICKERS))
+# Lienzo v2 (17-Oct-2026): por ahora solo la escena piloto de cada hermano; el resto del catalogo
+# (lienzo-escenas-retos.md) se porta en la segunda pasada. Los temas v1 siguen en TEMAS.
+for _perfil in ("semilla", "brote", "estrella"):
+    temas_de(_perfil)  # mantiene registradas las voces v1 (siguen en disco para el port)
+niveles.append(nivel(0, "semilla", "libre", voces_lienzo_tema("semilla"), paleta=PAL_SEM, segundos_recordar_mostrar=90, sellos_vivos=True,
+                     temas=temas_v2("semilla"), temas_por_partida=1, opciones_tema=1, al_menos_una="favorito",
+                     voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
 niveles.append(nivel(0, "brote", "libre", voces_lienzo_tema("brote"), paleta=PAL_COMP, color_inicial="rosa", lado_sello=104,
-                     temas=temas_de("brote"), temas_por_partida=3, opciones_tema=2, voces_stickers=PREF_STICKERS))
+                     temas=temas_v2("brote"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
 niveles.append(nivel(0, "estrella", "libre", voces_lienzo_tema("estrella"), paleta=PAL_COMP, color_inicial="turquesa", lado_sello=92,
-                     temas=temas_de("estrella"), temas_por_partida=3, opciones_tema=3, voces_stickers=PREF_STICKERS))
+                     temas=temas_v2("estrella"), temas_por_partida=1, opciones_tema=1, voces_stickers=PREF_STICKERS, combinaciones=combinaciones_v2()))
 # Zona 2
 niveles.append(nivel(1, "semilla", "sellos_escena", {"intro": voz("semilla/intro_sellos", "¡Mira esta pradera! Toca abajo un dinosaurio o un autito, y después toca la pradera para ponerlo."),
                                                       "siguiente": [voz("semilla/siguiente_sellos", "¡Otro lugar para jugar! ¡A poner dinosaurios!")]},
                      paleta=PAL_SEM, herramientas=["sello_dino", "sello_auto", "sello_estrella", "pincel"], herramienta_inicial="sello_dino",
-                     laminas=[pradera(), valle_dinos()], laminas_por_partida=2, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True))
+                     laminas=[pradera(), valle_dinos()], laminas_por_partida=2, segundos_recordar_mostrar=90, sellos_vivos=True))
 niveles.append(nivel(1, "brote", "colorear_zonas", {"intro": voz("brote/intro_zonas", "¡A colorear! Elige un color y toca una parte del dibujo para rellenarla. Arriba tienes un modelito, por si lo quieres copiar."),
                                                      "siguiente": [voz("brote/siguiente_01", "¡Otra lámina! ¿Qué será?"), voz("brote/siguiente_02", "¡Aquí viene otro dibujo!")]},
                      paleta=PAL_COMP, herramientas=["balde", "pincel", "pincel_corazon", "pincel_estrella"], herramienta_inicial="balde", modelo=True,
@@ -1008,7 +1246,7 @@ niveles.append(nivel(1, "estrella", "colorear_codigo", {"intro": voz("estrella/i
 # Zona 3
 niveles.append(nivel(2, "semilla", "pinta_coco", {"intro": voz("semilla/intro_pinta_coco", "¡Píntame, Maxi! Elige un color y toca mi cuerpito. ¡Voy a cambiar de color!"),
                                                    "siguiente": [voz("semilla/siguiente_amigo", "¡Ahora pinta a mi amigo!")]},
-                     paleta=PAL_SEM, herramientas=[], rellenar_con_toque=True, tinte_coco=True, segundos_mostrar=45, segundos_recordar_mostrar=90,
+                     paleta=PAL_SEM, herramientas=[], rellenar_con_toque=True, tinte_coco=True, segundos_recordar_mostrar=90,
                      laminas=[coco(), dino_amigo(), auto_amigo()], primera_fija=True, laminas_por_partida=2))
 niveles.append(nivel(2, "brote", "coco_pide", {"intro": voz("brote/intro_coco_pide", "¡Juguemos! Yo te pido un color y tú pintas algo con ese color. ¡Escucha bien!"),
                                                 "siguiente": [voz("brote/siguiente_coco_pide", "¡Otro dibujo! Escucha qué color te pido.")],
@@ -1031,7 +1269,7 @@ niveles.append(nivel(2, "estrella", "mezcla_paleta", {"intro": voz("estrella/int
 niveles.append(nivel(3, "semilla", "dedo_magico", {"intro": voz("semilla/intro_dedo_magico", "¡Dedo mágico! Pasa tu dedo por la hoja y escucha la música del arcoíris."),
                                                     "siguiente": [voz("semilla/siguiente_dedo", "¡Otra hoja mágica! ¡Pinta y escucha!")],
                                                     "uso_arcoiris": voz("semilla/uso_arcoiris", "¡Un arcoíris que canta!")},
-                     paleta=[], herramientas=[], herramienta_inicial="arcoiris", notas=True, radio_pincel=30, segundos_mostrar=45, segundos_recordar_mostrar=90,
+                     paleta=[], herramientas=[], herramienta_inicial="arcoiris", notas=True, radio_pincel=30, segundos_recordar_mostrar=90,
                      laminas=[{"id": "noche", "tipo": "papel", "papel": "#232851"}, {"id": "rosa", "tipo": "papel", "papel": "#FFE3F1"}], laminas_por_partida=2))
 niveles.append(nivel(3, "brote", "espejo", {"intro": voz("brote/intro_espejo", "¡Espejo mágico! Pinta en un lado y mira cómo aparece en el otro. Puedes seguir el dibujito, o inventar el tuyo."),
                                              "siguiente": [voz("brote/siguiente_espejo", "¡Otro espejo mágico!")]},
@@ -1045,7 +1283,7 @@ niveles.append(nivel(3, "estrella", "mandala", {"intro": voz("estrella/intro_man
 NAVE = "res://assets/sprites/nave/nave_estrella.png"
 niveles.append(nivel(4, "semilla", "decora_ala", {"intro": voz("semilla/intro_ala", "¡Esta es el ala de tu nave! Elige un color y toca el ala para pintarla.")},
                      paleta=PAL_SEM, herramientas=["balde", "sello_dino", "sello_auto", "sello_estrella"], herramienta_inicial="balde",
-                     laminas=[ala()], guardar_como="ala_nave", imagen_modelo=NAVE, modelo=True, segundos_mostrar=45, segundos_recordar_mostrar=90, sellos_vivos=True))
+                     laminas=[ala()], guardar_como="ala_nave", imagen_modelo=NAVE, modelo=True, segundos_recordar_mostrar=90, sellos_vivos=True))
 niveles.append(nivel(4, "brote", "decora_ala", {"intro": voz("brote/intro_ala", "¡Decora el ala de la nave, Nicole! Rellena con el balde o pinta con tus pinceles.")},
                      paleta=PAL_COMP, color_inicial="rosa", etapas=[
                          {"encargo": "decora_ala", "herramientas": ["balde", "pincel", "pincel_corazon", "sello_corazon", "sello_estrella"], "herramienta_inicial": "balde",
@@ -1056,6 +1294,18 @@ niveles.append(nivel(4, "brote", "decora_ala", {"intro": voz("brote/intro_ala", 
 niveles.append(nivel(4, "estrella", "decora_ala", {"intro": voz("estrella/intro_ala", "¡Decora el ala de la nave! Tienes brillos, lunas, estrellas y tu insignia de pony.")},
                      paleta=PAL_COMP, color_inicial="turquesa", herramientas=["balde", "pincel", "sello_destello", "sello_estrella", "sello_luna", "sello_pony", "purpurina"],
                      herramienta_inicial="balde", laminas=[ala()], guardar_como="ala_nave", imagen_modelo=NAVE, modelo=True))
+
+# Lienzo v2: en las zonas 2-5 el objetivo base es el propio encargo (lienzo-escenas-retos.md §7.1).
+# Los objetivos extra de §7.2-7.4 llegan en la segunda pasada del catalogo.
+for n in niveles:
+    if "temas" in n:
+        continue
+    if "etapas" in n:
+        for etapa in n["etapas"]:
+            intro = etapa.get("lineas_voz", {}).get("intro", n["lineas_voz"].get("intro"))
+            etapa["objetivos"] = [{"tipo": "encargo", "voz": intro, "icono": "encargo"}]
+    else:
+        n["objetivos"] = [{"tipo": "encargo", "voz": n["lineas_voz"].get("intro"), "icono": "encargo"}]
 
 for n in niveles:
     escribir(n)

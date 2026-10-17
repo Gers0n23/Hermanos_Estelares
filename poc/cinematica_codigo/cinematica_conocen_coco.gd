@@ -1079,7 +1079,7 @@ func _chorro_arcoiris(duracion: float) -> void:
 	var boca := POS_COLEC + MOCHILA * 0.55
 	var tex := _textura_radial(Color.WHITE)
 	var tw := _tw()
-	for i in 70:
+	for i in 120:
 		tw.tween_callback(func() -> void:
 			var banda := randi() % COLORES.size()
 			var r := lerpf(ARCO_RADIOS.y, ARCO_RADIOS.x, (banda + randf()) / COLORES.size())
@@ -1088,14 +1088,14 @@ func _chorro_arcoiris(duracion: float) -> void:
 			var punto := Sprite2D.new()
 			punto.texture = tex
 			punto.modulate = COLORES[banda]
-			punto.scale = Vector2.ONE * randf_range(0.22, 0.34)
+			punto.scale = Vector2.ONE * randf_range(0.3, 0.46)
 			capa_chorro.add_child(punto)
 			var curva := desde.lerp(boca, 0.5) + Vector2(0, -120)
 			var tp := _tw()
 			tp.tween_method(_viajar_punto.bind(punto, desde, curva, boca), 0.0, 1.0, 0.75) \
 				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 			tp.tween_callback(punto.queue_free))
-		tw.tween_interval(duracion / 70.0)
+		tw.tween_interval(duracion / 120.0)
 	# La mochila se va inflando (todo el cuerpo: la mochila no está separada en el arte).
 	_tw().tween_property(colec.raiz, "scale", Vector2(0.6, 0.58), duracion).set_trans(Tween.TRANS_SINE)
 

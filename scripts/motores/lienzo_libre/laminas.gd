@@ -136,6 +136,38 @@ static func preparar(datos: Dictionary) -> Dictionary:
 	return lamina
 
 
+## Lienzo v2 (17-Oct-2026): encuadra una lamina YA PREPARADA (824x530) en el lienzo de pantalla
+## completa con una escala uniforme y un desfase. Mueve los poligonos y los detalles (centro, radio,
+## puntos y grosor); la lamina sigue siendo vectorial.
+static func encuadrar(lamina: Dictionary, escala: float, desfase: Vector2) -> Dictionary:
+	if escala == 1.0 and desfase == Vector2.ZERO:
+		return lamina
+	for region: Dictionary in lamina.get("regiones", []):
+		var puntos := PackedVector2Array()
+		for p in region["poligono"]:
+			puntos.append(desfase + p * escala)
+		region["poligono"] = puntos
+	var detalles: Array = []
+	for original: Dictionary in lamina.get("detalles", []):
+		var detalle := original.duplicate(true)
+		if detalle.has("centro"):
+			var c := desfase + vec(detalle["centro"]) * escala
+			detalle["centro"] = [c.x, c.y]
+		if detalle.has("radio"):
+			detalle["radio"] = float(detalle["radio"]) * escala
+		if detalle.has("grosor"):
+			detalle["grosor"] = float(detalle["grosor"]) * escala
+		if detalle.has("puntos"):
+			var lista: Array = []
+			for p in detalle["puntos"]:
+				var q := desfase + vec(p) * escala
+				lista.append([q.x, q.y])
+			detalle["puntos"] = lista
+		detalles.append(detalle)
+	lamina["detalles"] = detalles
+	return lamina
+
+
 ## Region rellenable que esta bajo `punto` (la de mas arriba), o -1.
 static func region_en(lamina: Dictionary, punto: Vector2) -> int:
 	var regiones: Array = lamina.get("regiones", [])

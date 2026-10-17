@@ -47,10 +47,10 @@ mouse_filter = 2
 [node name="anfitriona" type="TextureRect" parent="capa_ui/ui"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 30.0
-offset_top = 420.0
-offset_right = 210.0
-offset_bottom = 703.0
+offset_left = 1114.0
+offset_top = 196.0
+offset_right = 1266.0
+offset_bottom = 434.0
 tooltip_text = "Coco: toca para escuchar de nuevo"
 texture = ExtResource("3_coco")
 expand_mode = 1

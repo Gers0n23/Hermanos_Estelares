@@ -18,7 +18,6 @@
   "herramienta_inicial": "arcoiris",
   "notas": true,
   "radio_pincel": 30,
-  "segundos_mostrar": 45,
   "segundos_recordar_mostrar": 90,
   "laminas": [
     {
@@ -53,6 +52,21 @@
     ],
     "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
     "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "objetivo_cumplido": [
+      "voces/arcoiris/pinta/semilla/objetivo_cumplido_01.wav",
+      "voces/arcoiris/pinta/semilla/objetivo_cumplido_02.wav"
+    ],
+    "hoja_lista": [
+      "voces/arcoiris/pinta/comun/hoja_lista.wav"
+    ],
+    "ya_hecho": [
+      "voces/arcoiris/pinta/comun/ya_hecho.wav"
+    ],
+    "grupo_colores": "voces/arcoiris/pinta/comun/grupo_colores.wav",
+    "grupo_pinceles": "voces/arcoiris/pinta/comun/grupo_pinceles.wav",
+    "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
+    "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
+    "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
     "muestramelo": [
       "voces/arcoiris/pinta/semilla/muestramelo_01.wav",
       "voces/arcoiris/pinta/semilla/muestramelo_02.wav"
@@ -72,5 +86,12 @@
       "voces/arcoiris/pinta/semilla/siguiente_dedo.wav"
     ],
     "uso_arcoiris": "voces/arcoiris/pinta/semilla/uso_arcoiris.wav"
-  }
+  },
+  "objetivos": [
+    {
+      "tipo": "encargo",
+      "voz": "voces/arcoiris/pinta/semilla/intro_dedo_magico.wav",
+      "icono": "encargo"
+    }
+  ]
 }

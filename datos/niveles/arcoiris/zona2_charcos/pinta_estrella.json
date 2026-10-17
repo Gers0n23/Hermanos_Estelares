@@ -535,6 +535,21 @@
     ],
     "uso_pincel_estrella": "voces/arcoiris/pinta/comun/uso_pincel_estrella.wav",
     "uso_sello_estrella": "voces/arcoiris/pinta/comun/uso_sello_estrella.wav",
+    "objetivo_cumplido": [
+      "voces/arcoiris/pinta/estrella/objetivo_cumplido_01.wav",
+      "voces/arcoiris/pinta/estrella/objetivo_cumplido_02.wav"
+    ],
+    "hoja_lista": [
+      "voces/arcoiris/pinta/comun/hoja_lista.wav"
+    ],
+    "ya_hecho": [
+      "voces/arcoiris/pinta/comun/ya_hecho.wav"
+    ],
+    "grupo_colores": "voces/arcoiris/pinta/comun/grupo_colores.wav",
+    "grupo_pinceles": "voces/arcoiris/pinta/comun/grupo_pinceles.wav",
+    "grupo_cosas": "voces/arcoiris/pinta/comun/grupo_cosas.wav",
+    "grupo_decorados": "voces/arcoiris/pinta/comun/grupo_decorados.wav",
+    "grupo_trajes": "voces/arcoiris/pinta/comun/grupo_trajes.wav",
     "uso_purpurina": "voces/arcoiris/pinta/estrella/uso_purpurina.wav",
     "uso_purpurina_lluvia": "voces/arcoiris/pinta/estrella/uso_purpurina_lluvia.wav",
     "uso_sello_pony": "voces/arcoiris/pinta/estrella/uso_pony.wav",
@@ -545,5 +560,12 @@
       "voces/arcoiris/pinta/estrella/siguiente_codigo_01.wav",
       "voces/arcoiris/pinta/estrella/siguiente_codigo_02.wav"
     ]
-  }
+  },
+  "objetivos": [
+    {
+      "tipo": "encargo",
+      "voz": "voces/arcoiris/pinta/estrella/intro_codigo.wav",
+      "icono": "encargo"
+    }
+  ]
 }
