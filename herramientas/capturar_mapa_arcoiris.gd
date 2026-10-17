@@ -35,6 +35,15 @@ func _initialize() -> void:
 		var ruta := salida.path_join("mapa_arcoiris_%s.png" % momento[0])
 		get_root().get_texture().get_image().save_png(ruta)
 		print("captura -> %s" % ruta)
+		# Tambien la burbuja de estaciones abierta sobre la zona en curso (y la 1, que abre hacia arriba).
+		for zona in ([mapa.seleccion, 0] if momento[0] == "2_mitad" else [mapa.seleccion]):
+			mapa._abrir_burbuja(zona)
+			await _esperar(1.2)
+			await RenderingServer.frame_post_draw
+			ruta = salida.path_join("mapa_arcoiris_%s_burbuja_z%d.png" % [momento[0], zona + 1])
+			get_root().get_texture().get_image().save_png(ruta)
+			print("captura -> %s" % ruta)
+			mapa._cerrar_burbuja(false)
 	quit()
 
 

@@ -3,6 +3,7 @@
   "nombre": "Planeta Arcoíris",
   "fondo": "res://assets/anclas/planeta_arcoiris_referencia.png",
   "paisaje": "res://scripts/planetas/arcoiris/paisaje_arcoiris.gd",
+  "nota_paisaje": "PO 17-Oct-2026 (maqueta aprobada): el mapa se ve desde el suelo del planeta. Cada posicion de zona es el centro de su caja de 180 px; la pieza del ala va en la pildora derecha del HUD.",
   "anfitrion": "res://assets/sprites/personajes/coco_base.png",
   "nota": "Decision del PO 27-Sep-2026: la zona siguiente (y la secreta) se abre al completar TODAS las estaciones jugables de la zona anterior; los retos dorados son opcionales y no cuentan.",
   "destellos_por_estacion": 100,
@@ -27,8 +28,8 @@
       3
     ],
     "posicion": [
-      420,
-      92
+      1170,
+      64
     ],
     "nota": "HE-40 mecanicas #3 (PROVISIONAL): silueta del ala que se pinta un tercio por zona completada; la pieza llega al completar la zona 3."
   },
@@ -92,8 +93,8 @@
         "rojo"
       ],
       "posicion": [
-        185,
-        330
+        350,
+        552
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_1_llegada.wav",
@@ -148,8 +149,8 @@
         "amarillo"
       ],
       "posicion": [
-        395,
-        240
+        520,
+        332
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_2_llegada.wav",
@@ -210,8 +211,8 @@
         "azul"
       ],
       "posicion": [
-        640,
-        345
+        700,
+        496
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_3_llegada.wav",
@@ -273,8 +274,8 @@
         "naranja"
       ],
       "posicion": [
-        870,
-        250
+        930,
+        200
       ],
       "secreta": false,
       "voz_llegada": "voces/arcoiris/mapa/zona_4_llegada.wav",
@@ -336,8 +337,8 @@
         "brillo"
       ],
       "posicion": [
-        1085,
-        215
+        1150,
+        260
       ],
       "secreta": true,
       "voz_llegada": "voces/arcoiris/mapa/zona_5_llegada.wav",

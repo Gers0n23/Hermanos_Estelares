@@ -22,6 +22,11 @@ extends Node2D
 ## ilustrado y cada zona como su hito (ver `scripts/planetas/arcoiris/paisaje_arcoiris.gd`); si no,
 ## se usa la imagen `fondo` con zonas redondas.
 ##
+## Estaciones (PO 17-Oct-2026, maqueta aprobada): ya no hay un panel fijo abajo que tape el mundo.
+## Al tocar una zona, el mundo se oscurece y de la zona nace una burbuja con sus juegos como esferas
+## (lenguaje del menu de planetas); se cierra tocando afuera o la X. La zona que toca jugar late con
+## un halo dorado.
+##
 ## UX (GDD §6): todo narrado por voz, objetivos >=96 px, sin texto obligatorio (los nombres son un
 ## extra para Sofia). Tocar a Cometa lleva directo a la siguiente estacion pendiente (riesgo 5 de la
 ## ficha: Maxi no tiene que navegar). F4 (solo builds de depuracion del PO) abre todas las zonas.
@@ -45,9 +50,16 @@ const COLOR_CONTORNO := Color("#2B3350")
 const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
 const RADIO_ZONA := 62.0
-const LADO_TARJETA := 196.0
+const LADO_ZONA := 180.0
+## Cada juego es una esfera de 132 px (GDD §6.1: >= 96 px) con sus estrellitas debajo.
+const LADO_ORBE := 132.0
+const PASO_ORBES := 145.0
 const RUTA_ICONOS := "res://assets/sprites/ui/iconos_juegos/%s.svg"
-const PANEL_ESTACIONES := Rect2(236, 470, 894, 236)
+## Burbuja de estaciones: nace de la zona tocada, debajo de ella o (si no cabe) encima.
+const TAMANO_BURBUJA := Vector2(620, 272)
+const COLOR_BURBUJA := Color("#3A2178")
+## Pildoras oscuras translucidas del menu de planetas (nombres, HUD).
+const COLOR_PILDORA := Color(0.17, 0.09, 0.36, 0.64)
 const COLOR_DORMIDA := Color("#B9B4C9")
 const BANDAS := ["rojo", "naranja", "amarillo", "verde", "azul", "violeta"]
 const COLOR_BANDA := {
@@ -88,8 +100,18 @@ var _arcoiris: Control
 ## Silueta de la pieza de la nave que se pinta por zona completada (`pieza_nave` en el mapa).
 var _pieza: Control
 var _nodos_zona: Array = []
+## Esferas de las estaciones de la zona elegida (dentro de la burbuja).
 var _tarjetas: Array = []
 var _titulo_zona: Label
+var _modal: Control
+var _velo: ColorRect
+var _burbuja: Control
+var _boton_cerrar: Button
+var _modal_abierto := false
+## Hacia donde apunta la cola de la burbuja: x en la burbuja y si la burbuja esta debajo de la zona.
+var _cola := Vector2.ZERO
+var _cola_arriba := true
+var _base_cometa := Vector2.ZERO
 var _anfitriona: TextureRect
 var _boton_cometa: Button
 var _boton_salir: Button
@@ -140,6 +162,8 @@ func _process(delta: float) -> void:
 	var hablando: bool = audio != null and audio.esta_hablando()
 	if _anfitriona != null:
 		_anfitriona.position.y = _base_coco.y - _salto_coco - (absf(sin(_tiempo * 9.0)) * 5.0 if hablando else 0.0)
+	if _boton_cometa != null:
+		_boton_cometa.position.y = _base_cometa.y - 3.5 * (1.0 - cos(_tiempo * TAU / 3.0))
 	for nodo in _nodos_zona:
 		nodo.queue_redraw()
 	for tarjeta in _tarjetas:
@@ -443,61 +467,140 @@ func _construir_ui() -> void:
 		_construir_fondo()
 
 	_camino = _control_dibujo(Rect2(0, 0, 1280, 720), _dibujar_camino)
-	_arcoiris = _control_dibujo(Rect2(440, 6, 400, 160), _dibujar_arcoiris)
+	if _paisaje != null and _paisaje.has_method("capa_arcoiris"):
+		# El arcoiris grande va en el cielo del paisaje, detras de las nubes y las colinas.
+		_arcoiris = _control_dibujo(Rect2(0, 0, 1280, 720), _dibujar_arcoiris)
+		_arcoiris.reparent(_paisaje.capa_arcoiris(), false)
+	else:
+		_arcoiris = _control_dibujo(Rect2(440, 6, 400, 160), _dibujar_arcoiris)
+
+	for i in zonas.size():
+		var centro := _centro_zona(i)
+		var nodo := _control_dibujo(Rect2(centro - Vector2.ONE * LADO_ZONA / 2.0, Vector2.ONE * LADO_ZONA), _dibujar_zona.bind(i))
+		nodo.mouse_filter = Control.MOUSE_FILTER_STOP
+		nodo.pivot_offset = nodo.size / 2.0
+		nodo.gui_input.connect(_al_tocar.bind(_tocar_zona.bind(i)))
+		nodo.tooltip_text = str(zonas[i]["datos"].get("nombre", ""))
+		_nodos_zona.append(nodo)
+		var etiqueta := _pildora(str(zonas[i]["datos"].get("nombre", "")), 22)
+		etiqueta.name = "etiqueta_zona_%d" % i
+		etiqueta.set_meta("pie", centro + Vector2(0, LADO_ZONA / 2.0 + 6.0))
+		nodo.set_meta("etiqueta", etiqueta)
+
+	var ruta_coco := str(mapa.get("anfitrion", ""))
+	_anfitriona = TextureRect.new()
+	if ResourceLoader.exists(ruta_coco):
+		_anfitriona.texture = load(ruta_coco)
+	_anfitriona.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_anfitriona.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_anfitriona.position = Vector2(34, 452)
+	_anfitriona.size = Vector2(172, 256)
+	_anfitriona.pivot_offset = Vector2(86, 256)
+	_anfitriona.tooltip_text = "Coco: toca para escuchar de nuevo"
+	_anfitriona.gui_input.connect(_al_tocar.bind(_tocar_coco))
+	_ui.add_child(_anfitriona)
+	_base_coco = _anfitriona.position
+
+	_boton_salir = _boton(Rect2(20, 16, 96, 96), COLOR_PILDORA, "Volver al mapa estelar")
+	var flecha := Control.new()
+	flecha.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boton_salir.add_child(flecha)
+	flecha.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	flecha.draw.connect(_dibujar_flecha.bind(flecha))
+	_boton_salir.pressed.connect(_volver_al_mapa_estelar)
+	_construir_retrato_hermano()
 	var pieza: Dictionary = mapa.get("pieza_nave", {})
 	if not (pieza.get("zonas", []) as Array).is_empty():
 		var pos: Array = pieza.get("posicion", [430, 105])
 		_pieza = _control_dibujo(Rect2(Vector2(float(pos[0]), float(pos[1])) - Vector2(80, 50), Vector2(160, 100)), _dibujar_pieza)
 		_pieza.pivot_offset = _pieza.size / 2.0
 
-	for i in zonas.size():
-		var posicion: Array = zonas[i]["datos"].get("posicion", [200 + i * 220, 300])
-		var centro := Vector2(float(posicion[0]), float(posicion[1]))
-		var nodo := _control_dibujo(Rect2(centro - Vector2.ONE * 80.0, Vector2.ONE * 160.0), _dibujar_zona.bind(i))
-		nodo.mouse_filter = Control.MOUSE_FILTER_STOP
-		nodo.pivot_offset = nodo.size / 2.0
-		nodo.gui_input.connect(_al_tocar.bind(_tocar_zona.bind(i)))
-		nodo.tooltip_text = str(zonas[i]["datos"].get("nombre", ""))
-		_nodos_zona.append(nodo)
-		var etiqueta := _etiqueta(str(zonas[i]["datos"].get("nombre", "")), 21)
-		etiqueta.position = centro + Vector2(-120, RADIO_ZONA + 10.0)
-		etiqueta.size = Vector2(240, 34)
-		etiqueta.name = "etiqueta_zona_%d" % i
-		nodo.set_meta("etiqueta", etiqueta)
+	# Cometa flota sin disco, como en el menu de planetas.
+	_boton_cometa = _boton(Rect2(1110, 556, 150, 160), Color.TRANSPARENT, "Cometa: vamos al siguiente juego")
+	for estado in ["normal", "hover", "pressed", "disabled"]:
+		_boton_cometa.add_theme_stylebox_override(estado, StyleBoxEmpty.new())
+	var retrato_cometa := TextureRect.new()
+	if ResourceLoader.exists(RUTA_COMETA):
+		retrato_cometa.texture = load(RUTA_COMETA)
+	retrato_cometa.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	retrato_cometa.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	retrato_cometa.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boton_cometa.add_child(retrato_cometa)
+	retrato_cometa.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_boton_cometa.pressed.connect(_tocar_cometa)
+	_base_cometa = _boton_cometa.position
 
-	var panel := Panel.new()
-	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.position = PANEL_ESTACIONES.position
-	panel.size = PANEL_ESTACIONES.size
-	var estilo := StyleBoxFlat.new()
-	estilo.bg_color = Color(0.23, 0.16, 0.42, 0.5)
-	estilo.border_color = Color(1, 1, 1, 0.45)
-	estilo.set_border_width_all(3)
-	estilo.set_corner_radius_all(44)
-	panel.add_theme_stylebox_override("panel", estilo)
-	_ui.add_child(panel)
-	_titulo_zona = _etiqueta("", 24)
-	_titulo_zona.position = PANEL_ESTACIONES.position + Vector2(0, -2)
-	_titulo_zona.size = Vector2(PANEL_ESTACIONES.size.x, 30)
-	_titulo_zona.visible = false
+	_construir_burbuja()
+	_efectos = Control.new()
+	_efectos.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ui.add_child(_efectos)
+	_efectos.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-	var total := LADO_TARJETA * 4.0 + 18.0 * 3.0
+
+## Capa modal de las estaciones: velo que oscurece el mundo (tocarlo cierra), la burbuja con su
+## cola hacia la zona, el nombre de la zona, la X (96 px) y una esfera por estacion.
+func _construir_burbuja() -> void:
+	_modal = Control.new()
+	_modal.name = "burbuja_estaciones"
+	_modal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ui.add_child(_modal)
+	_modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_modal.hide()
+	_velo = ColorRect.new()
+	_velo.color = Color(0.16, 0.07, 0.32, 0.5)
+	_velo.mouse_filter = Control.MOUSE_FILTER_STOP
+	_modal.add_child(_velo)
+	_velo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_velo.gui_input.connect(_al_tocar.bind(_cerrar_burbuja))
+	_burbuja = Control.new()
+	_burbuja.mouse_filter = Control.MOUSE_FILTER_STOP
+	_burbuja.size = TAMANO_BURBUJA
+	_burbuja.draw.connect(_dibujar_burbuja)
+	_modal.add_child(_burbuja)
+	_titulo_zona = Label.new()
+	_titulo_zona.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if ResourceLoader.exists(RUTA_FUENTE):
+		_titulo_zona.add_theme_font_override("font", load(RUTA_FUENTE))
+	_titulo_zona.add_theme_font_size_override("font_size", 30)
+	_titulo_zona.add_theme_color_override("font_color", Color.WHITE)
+	_titulo_zona.add_theme_color_override("font_shadow_color", Color(0.12, 0.03, 0.24, 0.45))
+	_titulo_zona.add_theme_constant_override("shadow_offset_y", 3)
+	_titulo_zona.position = Vector2(32, 12)
+	_titulo_zona.size = Vector2(470, 44)
+	_burbuja.add_child(_titulo_zona)
+	_boton_cerrar = Button.new()
+	_boton_cerrar.focus_mode = Control.FOCUS_NONE
+	_boton_cerrar.tooltip_text = "Cerrar"
+	_boton_cerrar.position = Vector2(TAMANO_BURBUJA.x - 100, -4)
+	_boton_cerrar.size = Vector2(96, 96)
+	for estado in ["normal", "hover", "pressed"]:
+		_boton_cerrar.add_theme_stylebox_override(estado, StyleBoxEmpty.new())
+	_boton_cerrar.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	_boton_cerrar.draw.connect(func() -> void:
+		var c := _boton_cerrar.size / 2.0
+		_boton_cerrar.draw_circle(c, 29.0, Color(1, 1, 1, 0.16))
+		_boton_cerrar.draw_arc(c, 29.0, 0.0, TAU, 40, Color(1, 1, 1, 0.45), 2.5, true)
+		for lado in [-1.0, 1.0]:
+			_boton_cerrar.draw_line(c + Vector2(-8, -8 * lado), c + Vector2(8, 8 * lado), Color.WHITE, 5.0, true))
+	_boton_cerrar.pressed.connect(_cerrar_burbuja)
+	_burbuja.add_child(_boton_cerrar)
+
 	for j in 4:
-		var origen := Vector2(PANEL_ESTACIONES.position.x + (PANEL_ESTACIONES.size.x - total) / 2.0 + j * (LADO_TARJETA + 18.0), PANEL_ESTACIONES.position.y + 20.0)
-		var tarjeta := _control_dibujo(Rect2(origen, Vector2.ONE * LADO_TARJETA), _dibujar_tarjeta.bind(j))
+		var tarjeta := Control.new()
 		tarjeta.mouse_filter = Control.MOUSE_FILTER_STOP
+		tarjeta.size = Vector2.ONE * LADO_ORBE
 		tarjeta.pivot_offset = tarjeta.size / 2.0
+		tarjeta.draw.connect(_dibujar_tarjeta.bind(tarjeta, j))
 		tarjeta.gui_input.connect(_al_tocar.bind(_tocar_estacion.bind(j)))
+		_modal.add_child(tarjeta)
 		_tarjetas.append(tarjeta)
-		# Boton del reto dorado en la esquina de la tarjeta (>= 96 px, GDD §6.1).
+		# Boton del reto dorado: corona sobre la esfera (>= 96 px, GDD §6.1).
 		var dorado := Button.new()
 		dorado.focus_mode = Control.FOCUS_NONE
 		dorado.tooltip_text = "Reto dorado"
 		dorado.custom_minimum_size = Vector2(96, 96)
 		tarjeta.add_child(dorado)
-		# Centrado sobre el borde superior: no tapa la estrella de completada ni invade la tarjeta
-		# vecina (UX HE-40 R7).
-		dorado.position = Vector2(LADO_TARJETA / 2.0 - 48.0, -56.0)
+		dorado.position = Vector2(LADO_ORBE / 2.0 - 48.0, -74.0)
 		dorado.size = Vector2(96, 96)
 		dorado.pivot_offset = dorado.size / 2.0
 		for estado in ["normal", "hover", "pressed"]:
@@ -531,49 +634,6 @@ func _construir_ui() -> void:
 		dorado.hide()
 		tarjeta.set_meta("dorado", dorado)
 
-	var ruta_coco := str(mapa.get("anfitrion", ""))
-	_anfitriona = TextureRect.new()
-	if ResourceLoader.exists(ruta_coco):
-		_anfitriona.texture = load(ruta_coco)
-	_anfitriona.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_anfitriona.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_anfitriona.position = Vector2(34, 452)
-	_anfitriona.size = Vector2(172, 256)
-	_anfitriona.pivot_offset = Vector2(86, 256)
-	_anfitriona.tooltip_text = "Coco: toca para escuchar de nuevo"
-	_anfitriona.gui_input.connect(_al_tocar.bind(_tocar_coco))
-	_ui.add_child(_anfitriona)
-	_base_coco = _anfitriona.position
-
-	_boton_salir = _boton(Rect2(20, 16, 96, 96), Color("#FFF8EE"), "Volver al mapa estelar")
-	var flecha := Control.new()
-	flecha.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_boton_salir.add_child(flecha)
-	flecha.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	flecha.draw.connect(_dibujar_flecha.bind(flecha))
-	_boton_salir.pressed.connect(_volver_al_mapa_estelar)
-
-	_boton_cometa = _boton(Rect2(1144, 584, 116, 116), Color("#CFF5F1"), "Cometa: vamos al siguiente juego")
-	var retrato_cometa := TextureRect.new()
-	if ResourceLoader.exists(RUTA_COMETA):
-		retrato_cometa.texture = load(RUTA_COMETA)
-	retrato_cometa.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	retrato_cometa.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	retrato_cometa.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_boton_cometa.add_child(retrato_cometa)
-	retrato_cometa.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	retrato_cometa.offset_left = 12
-	retrato_cometa.offset_top = 8
-	retrato_cometa.offset_right = -12
-	retrato_cometa.offset_bottom = -6
-	_boton_cometa.pressed.connect(_tocar_cometa)
-
-	_construir_retrato_hermano()
-	_efectos = Control.new()
-	_efectos.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_ui.add_child(_efectos)
-	_efectos.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-
 
 func _construir_fondo() -> void:
 	var capa_fondo := CanvasLayer.new()
@@ -605,7 +665,9 @@ func _control_dibujo(rect: Rect2, dibujo: Callable) -> Control:
 	return control
 
 
-func _etiqueta(texto: String, tamano: int) -> Label:
+## Nombre en una pildora oscura translucida, como los planetas del Mapa Estelar (Sofia lee; los
+## chicos se guian por la voz).
+func _pildora(texto: String, tamano: int) -> Label:
 	var etiqueta := Label.new()
 	etiqueta.text = texto
 	etiqueta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -613,13 +675,33 @@ func _etiqueta(texto: String, tamano: int) -> Label:
 	if ResourceLoader.exists(RUTA_FUENTE):
 		etiqueta.add_theme_font_override("font", load(RUTA_FUENTE))
 	etiqueta.add_theme_font_size_override("font_size", tamano)
-	etiqueta.add_theme_color_override("font_color", Color("#FFF8EE"))
-	etiqueta.add_theme_color_override("font_outline_color", COLOR_CONTORNO)
-	etiqueta.add_theme_constant_override("outline_size", 8)
+	etiqueta.add_theme_color_override("font_color", Color.WHITE)
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = COLOR_PILDORA
+	fondo.border_color = Color(1, 1, 1, 0.2)
+	fondo.set_border_width_all(2)
+	fondo.set_corner_radius_all(22)
+	fondo.content_margin_left = 18
+	fondo.content_margin_right = 18
+	fondo.content_margin_top = 1
+	fondo.content_margin_bottom = 3
+	fondo.shadow_color = Color(0.24, 0.08, 0.35, 0.2)
+	fondo.shadow_size = 6
+	fondo.shadow_offset = Vector2(0, 4)
+	etiqueta.add_theme_stylebox_override("normal", fondo)
 	_ui.add_child(etiqueta)
 	return etiqueta
 
 
+## Ubica la pildora centrada bajo `pie` (su ancho cambia con el texto).
+func _centrar_pildora(etiqueta: Label) -> void:
+	etiqueta.reset_size()
+	var pie: Vector2 = etiqueta.get_meta("pie", etiqueta.position)
+	etiqueta.position = pie - Vector2(etiqueta.size.x / 2.0, 0)
+
+
+## Boton redondo. Con fondo translucido toma el estilo del HUD del menu de planetas (borde blanco
+## suave); con fondo opaco, el del juego (contorno azul noche).
 func _boton(rect: Rect2, fondo: Color, ayuda: String) -> Button:
 	var boton := Button.new()
 	boton.position = rect.position
@@ -627,13 +709,14 @@ func _boton(rect: Rect2, fondo: Color, ayuda: String) -> Button:
 	boton.custom_minimum_size = rect.size
 	boton.focus_mode = Control.FOCUS_NONE
 	boton.tooltip_text = ayuda
+	var translucido := fondo.a < 1.0
 	for estado in ["normal", "hover", "pressed", "disabled"]:
 		var caja := StyleBoxFlat.new()
 		caja.bg_color = fondo.darkened(0.12) if estado == "pressed" else fondo
-		caja.border_color = COLOR_CONTORNO
-		caja.set_border_width_all(5)
+		caja.border_color = Color(1, 1, 1, 0.3) if translucido else COLOR_CONTORNO
+		caja.set_border_width_all(3 if translucido else 5)
 		caja.set_corner_radius_all(64)
-		caja.shadow_color = Color(COLOR_CONTORNO, 0.3)
+		caja.shadow_color = Color(COLOR_CONTORNO, 0.18 if translucido else 0.3)
 		caja.shadow_offset = Vector2(0, 5)
 		caja.shadow_size = 2
 		boton.add_theme_stylebox_override(estado, caja)
@@ -646,12 +729,35 @@ func _boton(rect: Rect2, fondo: Color, ayuda: String) -> Button:
 	return boton
 
 
-## Quien juega, arriba a la derecha: retrato del hermano en un disco de su color.
+## Quien juega, arriba a la izquierda, como en el menu de planetas: pildora con el retrato del
+## hermano en un disco de su color, su nombre y sus destellos.
 func _construir_retrato_hermano() -> void:
 	var color: Color = COLORES_HERMANO.get(id_perfil, Color.WHITE)
-	var disco := _control_dibujo(Rect2(1170, 16, 92, 92), func(control: Control) -> void:
-		control.draw_circle(control.size / 2.0, 44.0, Color("#FFF8EE"))
-		control.draw_arc(control.size / 2.0, 42.0, 0.0, TAU, 40, color, 7.0, true))
+	var progreso := get_node_or_null("/root/Progreso")
+	var nombre := id_perfil.capitalize()
+	var destellos := ""
+	if progreso != null:
+		nombre = str(progreso.obtener_perfil(id_perfil).get("nombre", nombre))
+		destellos = str(progreso.obtener_destellos_totales(id_perfil))
+	var pildora := Panel.new()
+	pildora.name = "hud_hermano"
+	pildora.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = COLOR_PILDORA
+	fondo.border_color = Color(1, 1, 1, 0.24)
+	fondo.set_border_width_all(3)
+	fondo.set_corner_radius_all(40)
+	pildora.add_theme_stylebox_override("panel", fondo)
+	pildora.position = Vector2(132, 24)
+	_ui.add_child(pildora)
+	var disco := Control.new()
+	disco.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	disco.position = Vector2(8, 8)
+	disco.size = Vector2(64, 64)
+	disco.draw.connect(func() -> void:
+		disco.draw_circle(disco.size / 2.0, 32.0, Color("#FFF8EE"))
+		disco.draw_arc(disco.size / 2.0, 30.0, 0.0, TAU, 40, color, 5.0, true))
+	pildora.add_child(disco)
 	var retrato := TextureRect.new()
 	var ruta: String = RETRATOS_HERMANO.get(id_perfil, "")
 	if ruta != "" and ResourceLoader.exists(ruta):
@@ -662,13 +768,43 @@ func _construir_retrato_hermano() -> void:
 	retrato.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	retrato.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	retrato.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	retrato.position = Vector2(10, 10)
-	retrato.size = Vector2(72, 72)
+	retrato.position = Vector2(6, 6)
+	retrato.size = Vector2(52, 52)
 	var mascara := ShaderMaterial.new()
 	mascara.shader = load("res://assets/shaders/disco_circular.gdshader")
 	retrato.material = mascara
 	retrato.clip_contents = true
 	disco.add_child(retrato)
+	var x := 86.0
+	var texto_nombre := _texto_hud(nombre, 32, Color.WHITE)
+	pildora.add_child(texto_nombre)
+	texto_nombre.position = Vector2(x, 10)
+	x += texto_nombre.size.x + 22.0
+	if destellos != "":
+		var estrella := Control.new()
+		estrella.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		estrella.position = Vector2(x, 22)
+		estrella.size = Vector2(34, 34)
+		estrella.draw.connect(func() -> void:
+			estrella.draw_colored_polygon(Figura.poligono("estrella", estrella.size / 2.0, 16.0), DORADO))
+		pildora.add_child(estrella)
+		var texto_destellos := _texto_hud(destellos, 30, DORADO)
+		pildora.add_child(texto_destellos)
+		texto_destellos.position = Vector2(x + 42.0, 11)
+		x += 42.0 + texto_destellos.size.x
+	pildora.size = Vector2(x + 24.0, 80)
+
+
+func _texto_hud(texto: String, tamano: int, color: Color) -> Label:
+	var etiqueta := Label.new()
+	etiqueta.text = texto
+	etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if ResourceLoader.exists(RUTA_FUENTE):
+		etiqueta.add_theme_font_override("font", load(RUTA_FUENTE))
+	etiqueta.add_theme_font_size_override("font_size", tamano)
+	etiqueta.add_theme_color_override("font_color", color)
+	etiqueta.reset_size()
+	return etiqueta
 
 
 func _refrescar() -> void:
@@ -684,16 +820,142 @@ func _refrescar() -> void:
 func _mostrar_estaciones() -> void:
 	_zona_elegida[_clave()] = seleccion
 	_siguiente = siguiente_estacion()
+	var estaciones: Array = zonas[seleccion]["estaciones"]
+	_ubicar_burbuja()
 	for j in _tarjetas.size():
-		var estaciones: Array = zonas[seleccion]["estaciones"]
 		_tarjetas[j].visible = j < estaciones.size()
 		_tarjetas[j].queue_redraw()
 		var dorado: Button = _tarjetas[j].get_meta("dorado")
 		dorado.visible = j < estaciones.size() and zonas[seleccion]["abierta"] and estaciones[j]["dorado_disponible"]
 	for i in _nodos_zona.size():
 		var etiqueta: Label = _nodos_zona[i].get_meta("etiqueta")
-		etiqueta.visible = not zonas[i]["secreta"] or zonas[i]["abierta"]
+		var escondida: bool = zonas[i]["secreta"] and not zonas[i]["abierta"]
+		if _paisaje != null:
+			# La Cima se ve dormida a lo lejos, sin decir su nombre: un adelanto, nunca un muro.
+			etiqueta.text = "???" if escondida else str(zonas[i]["datos"].get("nombre", ""))
+			etiqueta.visible = true
+		else:
+			etiqueta.visible = not escondida
 		etiqueta.modulate.a = 1.0 if zonas[i]["abierta"] else 0.6
+		_centrar_pildora(etiqueta)
+
+
+# ---------------------------------------------------------------------------
+# Burbuja de estaciones (nace de la zona tocada)
+# ---------------------------------------------------------------------------
+
+## Posicion de la burbuja y de las esferas para la zona elegida: debajo de la zona si cabe, si no
+## encima; la cola apunta a la zona. Las esferas quedan en su lugar aunque la burbuja este cerrada.
+func _ubicar_burbuja() -> void:
+	var centro := _centro_zona(seleccion)
+	var izquierda := clampf(centro.x - TAMANO_BURBUJA.x / 2.0, 24.0, 1280.0 - 24.0 - TAMANO_BURBUJA.x)
+	_cola_arriba = centro.y + LADO_ZONA / 2.0 + 4.0 + TAMANO_BURBUJA.y <= 716.0
+	var arriba := centro.y + LADO_ZONA / 2.0 + 4.0 if _cola_arriba else centro.y - LADO_ZONA / 2.0 - 22.0 - TAMANO_BURBUJA.y
+	arriba = clampf(arriba, 16.0, 720.0 - 16.0 - TAMANO_BURBUJA.y)
+	_burbuja.position = Vector2(izquierda, arriba)
+	_cola = Vector2(clampf(centro.x - izquierda, 60.0, TAMANO_BURBUJA.x - 60.0), 0.0 if _cola_arriba else TAMANO_BURBUJA.y)
+	_burbuja.pivot_offset = _cola
+	_titulo_zona.text = str(zonas[seleccion]["datos"].get("nombre", ""))
+	var cantidad := mini(_tarjetas.size(), (zonas[seleccion]["estaciones"] as Array).size())
+	var primera := izquierda + TAMANO_BURBUJA.x / 2.0 - (cantidad - 1) * PASO_ORBES / 2.0
+	for j in _tarjetas.size():
+		var tarjeta: Control = _tarjetas[j]
+		var lugar := Vector2(primera + j * PASO_ORBES, arriba + 130.0) - tarjeta.size / 2.0
+		tarjeta.set_meta("lugar", lugar)
+		if not _modal_abierto:
+			tarjeta.position = lugar
+	_burbuja.queue_redraw()
+
+
+func _abrir_burbuja(i: int) -> void:
+	_cerrar_burbuja(false)
+	seleccion = i
+	_mostrar_estaciones()
+	_modal_abierto = true
+	_modal.show()
+	_modal.modulate.a = 1.0
+	_velo.modulate.a = 0.0
+	_velo.create_tween().tween_property(_velo, "modulate:a", 1.0, 0.25)
+	# La zona elegida queda sobre el velo, un poco mas grande.
+	var nodo: Control = _nodos_zona[i]
+	nodo.z_index = 1
+	nodo.create_tween().tween_property(nodo, "scale", Vector2.ONE * 1.12, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_burbuja.scale = Vector2.ONE * 0.15
+	_burbuja.modulate.a = 0.0
+	var pop := _burbuja.create_tween().set_parallel(true)
+	pop.tween_property(_burbuja, "scale", Vector2.ONE, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	pop.tween_property(_burbuja, "modulate:a", 1.0, 0.2)
+	# Las esferas salen de la zona, una tras otra.
+	var origen := _centro_zona(i) - Vector2.ONE * LADO_ORBE / 2.0
+	for j in _tarjetas.size():
+		var tarjeta: Control = _tarjetas[j]
+		var lugar: Vector2 = tarjeta.get_meta("lugar", tarjeta.position)
+		tarjeta.position = origen
+		tarjeta.scale = Vector2.ONE * 0.15
+		tarjeta.modulate.a = 0.0
+		var sale := tarjeta.create_tween().set_parallel(true)
+		var espera := 0.12 + j * 0.07
+		sale.tween_property(tarjeta, "position", lugar, 0.5).set_delay(espera).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		sale.tween_property(tarjeta, "scale", Vector2.ONE, 0.5).set_delay(espera).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		sale.tween_property(tarjeta, "modulate:a", 1.0, 0.2).set_delay(espera)
+
+
+func _cerrar_burbuja(con_sonido := true) -> void:
+	if not _modal_abierto:
+		return
+	_modal_abierto = false
+	if con_sonido:
+		_reproducir_sfx(SFX_TOQUE)
+	for nodo: Control in _nodos_zona:
+		if nodo.z_index != 0:
+			nodo.z_index = 0
+			nodo.create_tween().tween_property(nodo, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	for tarjeta: Control in _tarjetas:
+		tarjeta.position = tarjeta.get_meta("lugar", tarjeta.position)
+		tarjeta.scale = Vector2.ONE
+		tarjeta.modulate.a = 1.0
+	if con_sonido:
+		var tween := _modal.create_tween()
+		tween.tween_property(_modal, "modulate:a", 0.0, 0.18)
+		tween.tween_callback(func() -> void:
+			if not _modal_abierto:
+				_modal.hide())
+	else:
+		_modal.hide()
+	for nodo in _nodos_zona:
+		nodo.queue_redraw()
+
+
+## Burbuja oscura con borde suave (como las pildoras del menu) y una cola que apunta a la zona.
+func _dibujar_burbuja() -> void:
+	var caja := StyleBoxFlat.new()
+	caja.bg_color = COLOR_BURBUJA
+	caja.border_color = Color(1, 1, 1, 0.3)
+	caja.set_border_width_all(3)
+	caja.set_corner_radius_all(46)
+	caja.anti_aliasing = true
+	caja.shadow_color = Color(0.12, 0.02, 0.24, 0.4)
+	caja.shadow_size = 24
+	caja.shadow_offset = Vector2(0, 14)
+	_burbuja.draw_style_box(caja, Rect2(Vector2.ZERO, TAMANO_BURBUJA))
+	var sentido := -1.0 if _cola_arriba else 1.0
+	var borde := Vector2(_cola.x, _cola.y)
+	var punta := borde + Vector2(0, 24.0 * sentido)
+	var izquierda := borde + Vector2(-26, -1.5 * sentido)
+	var derecha := borde + Vector2(26, -1.5 * sentido)
+	_burbuja.draw_colored_polygon(PackedVector2Array([izquierda, punta, derecha]), COLOR_BURBUJA)
+	_burbuja.draw_polyline(PackedVector2Array([izquierda + Vector2(0, 1.5 * sentido), punta, derecha + Vector2(0, 1.5 * sentido)]), Color(1, 1, 1, 0.3), 3.0, true)
+	# Halo suave alrededor, como el anillo de la burbuja de la maqueta.
+	var halo := StyleBoxFlat.new()
+	halo.draw_center = false
+	halo.border_color = Color(1, 0.84, 0.94, 0.08)
+	halo.set_border_width_all(10)
+	halo.set_corner_radius_all(56)
+	halo.expand_margin_left = 10
+	halo.expand_margin_right = 10
+	halo.expand_margin_top = 10
+	halo.expand_margin_bottom = 10
+	_burbuja.draw_style_box(halo, Rect2(Vector2.ZERO, TAMANO_BURBUJA))
 
 
 # ---------------------------------------------------------------------------
@@ -717,10 +979,7 @@ func _tocar_zona(i: int) -> void:
 		_decir(_voz_de(voces.get("secreta_lejana" if zonas[i]["secreta"] else "zona_dormida", "")))
 		return
 	_reproducir_sfx(SFX_ELEGIR)
-	_rebotar(nodo)
-	seleccion = i
-	_mostrar_estaciones()
-	_camino.queue_redraw()
+	_abrir_burbuja(i)
 	_decir(str(zonas[i]["datos"].get("voz_llegada", "")))
 
 
@@ -755,8 +1014,8 @@ func _tocar_cometa() -> void:
 	if destino[0] < 0:
 		_decir(str(voces.get("todo_listo", "")))
 		return
-	seleccion = destino[0]
-	_mostrar_estaciones()
+	# La burbuja de esa zona se abre y la esfera que sigue late antes de lanzarse.
+	_abrir_burbuja(destino[0])
 	_decir(str(voces.get("cometa_vamos", "")))
 	lanzar_estacion(destino[0], destino[1], 1.4)
 
@@ -946,6 +1205,16 @@ func _dibujar_arcoiris(control: Control) -> void:
 	var base := Vector2(200, 150)
 	var ancho := 17.0
 	var exterior := 136.0
+	var apagada := Color(1, 1, 1, 0.22)
+	var con_nubes := true
+	if _paisaje != null and _paisaje.has_method("geometria_arcoiris"):
+		# Arcoiris grande del cielo del paisaje: sin contorno ni nubes con carita.
+		var geometria: Dictionary = _paisaje.geometria_arcoiris()
+		base = geometria.get("centro", base)
+		ancho = float(geometria.get("ancho", ancho))
+		exterior = float(geometria.get("radio", exterior))
+		apagada = geometria.get("apagada", apagada)
+		con_nubes = false
 	var encendidas := {}
 	for zona in zonas:
 		if zona["completa"]:
@@ -954,7 +1223,7 @@ func _dibujar_arcoiris(control: Control) -> void:
 	for k in BANDAS.size():
 		var banda: String = BANDAS[k]
 		var radio := exterior - ancho * (k + 0.5)
-		control.draw_arc(base, radio, PI, TAU, 48, Color(1, 1, 1, 0.22), ancho, true)
+		control.draw_arc(base, radio, PI, TAU, 96, apagada, ancho, true)
 		if encendidas.has(banda):
 			var avance := 1.0
 			if _avance_bandas.has(banda):
@@ -962,16 +1231,25 @@ func _dibujar_arcoiris(control: Control) -> void:
 				avance = _avance_bandas[banda]
 				if avance >= 1.0:
 					_avance_bandas.erase(banda)
-			control.draw_arc(base, radio, PI, PI + PI * avance, 48, COLOR_BANDA[banda], ancho + 1.0, true)
-	control.draw_arc(base, exterior, PI, TAU, 48, COLOR_CONTORNO, 4.0, true)
-	control.draw_arc(base, exterior - ancho * BANDAS.size(), PI, TAU, 48, COLOR_CONTORNO, 4.0, true)
-	var medio := exterior - ancho * BANDAS.size() * 0.5
-	for lado in [-1.0, 1.0]:
-		var c := base + Vector2(lado * medio, -4.0)
-		for desfase in [Vector2(-26, 4), Vector2(0, -8), Vector2(26, 4)]:
-			control.draw_circle(c + desfase, 22.0, Color.WHITE)
-		Figura.dibujar_cara(control, c + Vector2(0, -2), 34.0, encendidas.size() >= BANDAS.size())
+			control.draw_arc(base, radio, PI, PI + PI * avance, 96, COLOR_BANDA[banda], ancho + 1.0, true)
+	if con_nubes:
+		control.draw_arc(base, exterior, PI, TAU, 48, COLOR_CONTORNO, 4.0, true)
+		control.draw_arc(base, exterior - ancho * BANDAS.size(), PI, TAU, 48, COLOR_CONTORNO, 4.0, true)
+		var medio := exterior - ancho * BANDAS.size() * 0.5
+		for lado in [-1.0, 1.0]:
+			var c := base + Vector2(lado * medio, -4.0)
+			for desfase in [Vector2(-26, 4), Vector2(0, -8), Vector2(26, 4)]:
+				control.draw_circle(c + desfase, 22.0, Color.WHITE)
+			Figura.dibujar_cara(control, c + Vector2(0, -2), 34.0, encendidas.size() >= BANDAS.size())
 	if encendidas.has("brillo"):
+		if not con_nubes:
+			# Arcoiris del cielo completo: chispitas blancas que titilan sobre las bandas.
+			for k in 9:
+				var angulo := PI + PI * (k + 0.5) / 9.0
+				var punto := base + Vector2.from_angle(angulo) * (exterior - ancho * (1.0 + (k % 3) * 2.0))
+				var luz := 0.5 + 0.5 * sin(_tiempo * 3.0 + k * 1.7)
+				control.draw_colored_polygon(Figura.poligono("estrella", punto, 5.0 + 4.0 * luz), Color(1, 1, 1, 0.4 + 0.6 * luz))
+			return
 		for k in 5:
 			var angulo := PI + PI * (k + 0.5) / 5.0
 			var punto := base + Vector2.from_angle(angulo) * (exterior + 12.0 + sin(_tiempo * 4.0 + k) * 4.0)
@@ -980,48 +1258,43 @@ func _dibujar_arcoiris(control: Control) -> void:
 
 ## Pieza de la nave (disenador-mecanicas HE-40 #3): silueta que se pinta un tramo por cada zona de
 ## `pieza_nave.zonas` completada, con el color de esa zona. Solo visual: no cambia ninguna regla.
+## Va en una pildora del HUD, como en el menu de planetas.
 func _dibujar_pieza(control: Control) -> void:
 	var numeros: Array = mapa.get("pieza_nave", {}).get("zonas", [])
 	var c := control.size / 2.0
 	var ala := PackedVector2Array()
 	# La misma ala que Maxi decora en Pinta z5 (`generar_pinta.py` ala(), escalada), para que la reconozca.
 	for p in [Vector2(-70, 28), Vector2(-43, -15), Vector2(70, -24), Vector2(56, 18)]:
-		ala.append(c + p)
-	ala = Geometry2D.offset_polygon(ala, 6.0, Geometry2D.JOIN_ROUND)[0]
+		ala.append(c + p * 0.82)
+	ala = Geometry2D.offset_polygon(ala, 5.0, Geometry2D.JOIN_ROUND)[0]
 	var listas := 0
-	# Placa clarita detras, para que la silueta se lea sobre el paisaje.
 	var placa := StyleBoxFlat.new()
-	placa.bg_color = Color(1, 1, 1, 0.75)
-	placa.set_corner_radius_all(30)
-	placa.border_color = Color(COLOR_CONTORNO, 0.25)
+	placa.bg_color = COLOR_PILDORA
+	placa.set_corner_radius_all(40)
+	placa.border_color = Color(1, 1, 1, 0.24)
 	placa.set_border_width_all(3)
-	control.draw_style_box(placa, Rect2(Vector2(2, 2), control.size - Vector2(4, 4)))
+	control.draw_style_box(placa, Rect2(Vector2(0, 10), Vector2(control.size.x, 80)))
 	control.draw_colored_polygon(ala, Color("#E4E0EE"))
 	for k in numeros.size():
 		var i := int(numeros[k]) - 1
 		if i < 0 or i >= zonas.size() or not zonas[i]["completa"]:
 			continue
 		listas += 1
-		var x0 := c.x - 72.0 + 144.0 * k / numeros.size()
-		var franja := PackedVector2Array([Vector2(x0, 0), Vector2(x0 + 144.0 / numeros.size(), 0),
-			Vector2(x0 + 144.0 / numeros.size(), control.size.y), Vector2(x0, control.size.y)])
+		var x0 := c.x - 60.0 + 120.0 * k / numeros.size()
+		var franja := PackedVector2Array([Vector2(x0, 0), Vector2(x0 + 120.0 / numeros.size(), 0),
+			Vector2(x0 + 120.0 / numeros.size(), control.size.y), Vector2(x0, control.size.y)])
 		for parte in Geometry2D.intersect_polygons(ala, franja):
 			control.draw_colored_polygon(parte, _color_zona(i))
 	var cerrada := ala.duplicate()
 	cerrada.append(ala[0])
-	control.draw_polyline(cerrada, COLOR_CONTORNO, 4.0, true)
+	control.draw_polyline(cerrada, Color.WHITE, 3.0, true)
 	# Tramos que faltan: lineas punteadas, como un "para pintar".
 	for k in range(1, numeros.size()):
-		var x := c.x - 72.0 + 144.0 * k / numeros.size()
-		control.draw_dashed_line(Vector2(x, c.y - 34), Vector2(x, c.y + 30), Color(COLOR_CONTORNO, 0.45), 2.0, 6.0)
-	for luz in [[Vector2(-60, 22), Color("#FF6B6B")], [Vector2(62, -18), Color("#7DD87A")]]:
-		control.draw_circle(c + luz[0], 7.5, COLOR_CONTORNO)
-		control.draw_circle(c + luz[0], 5.0, luz[1])
+		var x := c.x - 60.0 + 120.0 * k / numeros.size()
+		control.draw_dashed_line(Vector2(x, c.y - 26), Vector2(x, c.y + 24), Color(COLOR_CONTORNO, 0.45), 2.0, 6.0)
 	if listas == numeros.size():
-		# Ala lista: la estrella de la pieza de Pinta, blanca con contorno para que se vea sobre cualquier color.
-		var estrella := Figura.poligono("estrella", c + Vector2(4, 0), 20.0)
-		control.draw_colored_polygon(estrella, Color.WHITE)
-		Figura.contornear(control, estrella, 3.0)
+		# Ala lista: la estrella de la pieza de Pinta, blanca para que se vea sobre cualquier color.
+		control.draw_colored_polygon(Figura.poligono("estrella", c + Vector2(4, 0), 17.0), Color.WHITE)
 
 
 func _color_zona(i: int) -> Color:
@@ -1032,6 +1305,22 @@ func _color_zona(i: int) -> Color:
 func _dibujar_zona(control: Control, i: int) -> void:
 	var zona: Dictionary = zonas[i]
 	var centro := control.size / 2.0
+	if _paisaje != null:
+		# La zona que toca jugar late con un halo dorado (como el planeta actual del menu).
+		if not _modal_abierto and i == _siguiente[0]:
+			var pulso := 0.5 + 0.5 * sin(_tiempo * TAU / 1.8)
+			var radio := 118.0 * (0.9 + 0.18 * pulso)
+			for k in 8:
+				var t := k / 8.0
+				control.draw_circle(centro, radio * (1.0 - t * 0.85), Color(1.0, 0.92, 0.6, (0.08 + 0.06 * pulso) * (0.6 + t)))
+		var cara: Dictionary = _paisaje.dibujar_hito(control, i, zona, centro, _tiempo)
+		if cara.has("cara"):
+			if zona["abierta"]:
+				Figura.dibujar_cara(control, cara["cara"], cara["escala"], zona["completa"])
+			else:
+				_dibujar_cara_dormida(control, cara["cara"], cara["escala"])
+		_dibujar_marcas_zona(control, zona, centro)
+		return
 	if zona["secreta"] and not zona["abierta"]:
 		# Resplandor lejano en la cima: una promesa, nunca un candado.
 		var pulso := 0.5 + 0.5 * sin(_tiempo * 2.2)
@@ -1043,15 +1332,6 @@ func _dibujar_zona(control: Control, i: int) -> void:
 		var color_hermano: Color = COLORES_HERMANO.get(id_perfil, Color.WHITE)
 		control.draw_circle(centro, RADIO_ZONA + 13.0, Color(color_hermano, 0.28 + 0.14 * sin(_tiempo * 3.0)))
 		control.draw_arc(centro, RADIO_ZONA + 10.0, 0.0, TAU, 48, color_hermano, 6.0, true)
-	if _paisaje != null:
-		var cara: Dictionary = _paisaje.dibujar_hito(control, i, zona, centro, _tiempo)
-		if cara.has("cara"):
-			if zona["abierta"]:
-				Figura.dibujar_cara(control, cara["cara"], cara["escala"], zona["completa"])
-			else:
-				_dibujar_cara_dormida(control, cara["cara"], cara["escala"])
-		_dibujar_marcas_zona(control, zona, centro)
-		return
 	var color := COLOR_DORMIDA
 	if zona["completa"]:
 		color = _color_zona(i)
@@ -1069,13 +1349,19 @@ func _dibujar_zona(control: Control, i: int) -> void:
 	_dibujar_marcas_zona(control, zona, centro)
 
 
-## Estrellitas de zona completa y un puntito por estacion (estrella si ya se jugo).
+## Estrellitas de zona completa. Sin paisaje, ademas un puntito por estacion (estrella si ya se
+## jugo); con paisaje ese detalle vive en la burbuja de la zona.
 func _dibujar_marcas_zona(control: Control, zona: Dictionary, centro: Vector2) -> void:
 	if zona["completa"]:
+		if _paisaje != null:
+			for k in 3:
+				var punto := centro + Vector2((k - 1) * 38.0, -90.0 + absf(k - 1) * 14.0)
+				Figura.dibujar(control, "estrella", DORADO, punto, (15.0 if k == 1 else 12.0) + 1.5 * sin(_tiempo * 3.0 + k), true, true)
+			return
 		for k in 3:
 			var punto := centro + Vector2.from_angle(-PI * 0.8 + k * PI * 0.3) * (RADIO_ZONA + 4.0)
 			Figura.dibujar(control, "estrella", DORADO, punto, 12.0 + 2.0 * sin(_tiempo * 3.0 + k), false)
-	if zona["abierta"]:
+	if zona["abierta"] and _paisaje == null:
 		var estaciones: Array = zona["estaciones"]
 		for j in estaciones.size():
 			var punto := centro + Vector2.from_angle(PI / 2.0 + (j - (estaciones.size() - 1) / 2.0) * 0.42) * (RADIO_ZONA - 2.0)
@@ -1102,49 +1388,31 @@ func _dibujar_cara_dormida(lienzo: CanvasItem, centro: Vector2, escala: float) -
 		lienzo.draw_polyline(PackedVector2Array([o + Vector2(-s, -s), o + Vector2(s, -s), o + Vector2(-s, s), o + Vector2(s, s)]), Color("#FFF8EE"), grosor * 1.2, true)
 
 
+## Esfera de una estacion: el icono del juego (esfera de color con su dibujo), un anillo dorado que
+## late si es el juego que sigue, y debajo sus estrellitas o el boton de jugar.
 func _dibujar_tarjeta(control: Control, j: int) -> void:
 	var estaciones: Array = zonas[seleccion]["estaciones"]
 	if j >= estaciones.size():
 		return
 	var estacion: Dictionary = estaciones[j]
 	var lado := control.size
+	var centro := lado / 2.0
+	var radio := lado.x / 2.0
 	var es_siguiente: bool = _siguiente[0] == seleccion and _siguiente[1] == j
-	var caja := StyleBoxFlat.new()
-	caja.set_corner_radius_all(36)
-	caja.anti_aliasing = true
-	if estacion["jugable"]:
-		caja.bg_color = Color("#FFF3C4") if estacion["completada"] else Color("#FFF8EE")
-		caja.border_color = COLOR_CONTORNO
-		caja.set_border_width_all(5)
-		caja.shadow_color = Color(COLOR_CONTORNO, 0.35)
-		caja.shadow_offset = Vector2(0, 6)
-		caja.shadow_size = 3
-	else:
-		caja.bg_color = Color(1, 1, 1, 0.26)
-		caja.border_color = Color(1, 1, 1, 0.5)
-		caja.set_border_width_all(4)
-	control.draw_style_box(caja, Rect2(Vector2.ZERO, lado))
+	control.draw_circle(centro + Vector2(0, 10), radio * 0.96, Color(0.1, 0.02, 0.22, 0.35))
 	if es_siguiente:
-		var brillo := StyleBoxFlat.new()
-		brillo.draw_center = false
-		brillo.set_corner_radius_all(40)
-		brillo.border_color = Color(DORADO, 0.55 + 0.45 * sin(_tiempo * 4.0))
-		brillo.set_border_width_all(8)
-		brillo.expand_margin_left = 6
-		brillo.expand_margin_right = 6
-		brillo.expand_margin_top = 6
-		brillo.expand_margin_bottom = 6
-		control.draw_style_box(brillo, Rect2(Vector2.ZERO, lado))
-	var centro_icono := Vector2(lado.x / 2.0, lado.y * 0.43)
+		var pulso := 0.5 + 0.5 * sin(_tiempo * TAU / 1.4)
+		for k in 4:
+			control.draw_circle(centro, radio + 8.0 + pulso * 16.0 - k * 5.0, Color(DORADO, 0.06 + k * 0.03))
+		control.draw_arc(centro, radio + 3.0 + pulso * 3.5, 0.0, TAU, 64, Color(DORADO, 0.75 + 0.15 * pulso), 6.0 + pulso * 3.0, true)
 	# Icono por hermano opcional (`iconos`: {id_perfil: icono}), como `escenas`.
 	var icono := str(estacion["datos"].get("iconos", {}).get(id_perfil, estacion["juego"]))
-	_dibujar_icono(control, icono, centro_icono, 56.0, estacion["jugable"])
-	var abajo := Vector2(lado.x / 2.0, lado.y - 30.0)
+	_dibujar_icono(control, icono, centro, radio, estacion["jugable"])
+	var abajo := Vector2(centro.x, lado.y + 26.0)
 	if estacion["completada"]:
-		Figura.dibujar(control, "estrella", DORADO, Vector2(lado.x - 30.0, 30.0), 24.0, true, true)
 		if estacion["perfil_nivel"] == "estrella":
 			for k in 3:
-				var color := DORADO if k < int(estacion["estrellitas"]) else Color(COLOR_CONTORNO, 0.18)
+				var color := DORADO if k < int(estacion["estrellitas"]) else Color(1, 1, 1, 0.22)
 				Figura.dibujar(control, "estrella", color, abajo + Vector2((k - 1) * 34.0, 0), 15.0, false)
 		elif estacion["perfil_nivel"] == "brote" and int(estacion["estrellitas"]) > 0:
 			# Nicole (HE-60, ficha motor-emparejar §10.1.1): solo las estrellitas ganadas, sin huecos vacios.
@@ -1152,34 +1420,42 @@ func _dibujar_tarjeta(control: Control, j: int) -> void:
 			for k in ganadas:
 				Figura.dibujar(control, "estrella", DORADO, abajo + Vector2((k - (ganadas - 1) / 2.0) * 34.0, 0), 15.0, false)
 		else:
-			_dibujar_triangulo_jugar(control, abajo, 16.0)
+			# Maxi (y Pinta): una estrella de "ya lo jugaste".
+			Figura.dibujar(control, "estrella", DORADO, abajo, 16.0, false)
 	elif estacion["jugable"]:
-		_dibujar_triangulo_jugar(control, abajo, 18.0)
+		_dibujar_triangulo_jugar(control, abajo, 16.0)
 	else:
 		for k in 3:
 			control.draw_circle(abajo + Vector2((k - 1) * 22.0, 0), 6.0, Color(1, 1, 1, 0.6))
 
 
+## Boton de jugar: pildora turquesa con triangulo blanco.
 func _dibujar_triangulo_jugar(control: Control, centro: Vector2, radio: float) -> void:
-	control.draw_circle(centro, radio * 1.35, TURQUESA)
-	control.draw_arc(centro, radio * 1.35, 0.0, TAU, 28, COLOR_CONTORNO, 3.5, true)
-	var puntos := PackedVector2Array([centro + Vector2(-radio * 0.45, -radio * 0.7), centro + Vector2(radio * 0.75, 0), centro + Vector2(-radio * 0.45, radio * 0.7)])
-	control.draw_colored_polygon(puntos, Color("#FFF8EE"))
+	var caja := StyleBoxFlat.new()
+	caja.bg_color = TURQUESA
+	caja.set_corner_radius_all(int(radio))
+	caja.shadow_color = Color("#2B8F8A")
+	caja.shadow_offset = Vector2(0, 3)
+	caja.shadow_size = 1
+	control.draw_style_box(caja, Rect2(centro - Vector2(radio * 1.45, radio), Vector2(radio * 2.9, radio * 2.0)))
+	var puntos := PackedVector2Array([centro + Vector2(-radio * 0.4, -radio * 0.55), centro + Vector2(radio * 0.6, 0), centro + Vector2(-radio * 0.4, radio * 0.55)])
+	control.draw_colored_polygon(puntos, Color.WHITE)
 
 
-## Iconos universales de cada minijuego (sin texto, GDD §6 regla 3).
-## Primero el arte SVG (assets/sprites/ui/iconos_juegos/<icono>.svg, herramientas/generar_iconos_juegos.py);
-## si falta, el dibujo por codigo de respaldo.
+## Iconos universales de cada minijuego (sin texto, GDD §6 regla 3): esferas de color con el dibujo
+## del juego (assets/sprites/ui/iconos_juegos/<icono>.svg, herramientas/generar_iconos_juegos.py).
+## Si falta el arte, un dibujo por codigo de respaldo. `radio` es el de la esfera.
 func _dibujar_icono(control: Control, juego: String, centro: Vector2, radio: float, activo: bool) -> void:
 	if not _texturas_icono.has(juego):
 		var ruta := RUTA_ICONOS % juego
 		_texturas_icono[juego] = load(ruta) if ResourceLoader.exists(ruta) else null
 	var textura: Texture2D = _texturas_icono[juego]
 	if textura != null:
-		var lado := radio * 2.35
 		var modulado := Color.WHITE if activo else Color(0.72, 0.7, 0.82, 0.55)
-		control.draw_texture_rect(textura, Rect2(centro - Vector2(lado, lado) / 2.0, Vector2(lado, lado)), false, modulado)
+		control.draw_texture_rect(textura, Rect2(centro - Vector2.ONE * radio, Vector2.ONE * radio * 2.0), false, modulado)
 		return
+	control.draw_circle(centro, radio, Color("#FFF8EE") if activo else Color(1, 1, 1, 0.3))
+	radio *= 0.62
 	var tono := func(color: Color) -> Color: return color if activo else Color(color.lerp(Color("#9A96AD"), 0.75), 0.7)
 	match juego:
 		"lluvia":
@@ -1215,11 +1491,11 @@ func _dibujar_icono(control: Control, juego: String, centro: Vector2, radio: flo
 			Figura.dibujar(control, "estrella", tono.call(DORADO), centro, radio * 0.8, activo)
 
 
+## Flecha de volver: chevron blanco, como el boton atras del menu de planetas.
 func _dibujar_flecha(icono: Control) -> void:
 	var c := icono.size / 2.0
 	var k := icono.size.x / 96.0
-	var puntos := PackedVector2Array()
-	for p in [Vector2(-26, 0), Vector2(2, -26), Vector2(2, -12), Vector2(26, -12), Vector2(26, 12), Vector2(2, 12), Vector2(2, 26)]:
-		puntos.append(c + p * k)
-	icono.draw_colored_polygon(puntos, TURQUESA)
-	Figura.contornear(icono, puntos, 5.0 * k)
+	var puntos := PackedVector2Array([c + Vector2(6, -16) * k, c + Vector2(-10, 0) * k, c + Vector2(6, 16) * k])
+	icono.draw_polyline(puntos, Color.WHITE, 7.0 * k, true)
+	for p in puntos:
+		icono.draw_circle(p, 3.5 * k, Color.WHITE)

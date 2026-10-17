@@ -8,12 +8,13 @@
 
 - **Última actualización**: 17-Oct-2026. Diseño de la Torre y del cierre de Arcoíris cerrado: ficha `motor-lanzar.md` v3, `modo-equipo.md` v7.2, guion v4 y storyboard v4.1; re-auditoría UX sin bloqueantes. HE-71 y HE-73 ✅.
 - **Fase activa**: **Fase 1 — Núcleo + Capítulo 1 completo**. **Prioridad vigente (decisión del PO del 06-Oct)**: la épica "Juego en equipo y Parejas de Coco con reto real" va antes de lo que falta del camino crítico del capítulo 1. La Fase 0.5 (arte conceptual) sigue abierta en paralelo, sin prioridad.
-- **WIP de Dev**: **3/2 por excepción autorizada por el PO** (HE-02, HE-10 y HE-60). Se normaliza cuando el PO cierre HE-10 o HE-02. Hasta bajar a 1/2 no entra ninguna tarjeta de Dev.
-- **En curso**:
-  - HE-02: solo falta la aprobación de los QA junior y del PO.
-  - HE-10: solo falta la revisión del PO y el playtest (F5 → título → hermano → Arcoíris).
-  - HE-60: el código está listo. Para cerrarla faltan las 20 voces TTS de reto (OK del PO sobre el costo) y la prueba en tablet.
-  - Fuera del WIP de Dev: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS) y HE-68 (storyboard de la batalla; falta la validación UX).
+- **WIP de Dev**: **1/2** (decisión del PO, 17-Oct: HE-02, HE-10 y HE-60 salen del WIP por estar colgadas; quedan en revisión del PO). Solo HE-59 en curso; queda una plaza libre.
+- **En curso (Dev)**: HE-59 (`dev-godot`), primera de la cadena HE-59 → HE-76 → HE-77 → HE-79 → HE-80.
+- **En revisión del PO (fuera del WIP, no están ✅)**:
+  - HE-02: falta la aprobación de los QA junior y del PO.
+  - HE-10: falta la revisión del PO y el playtest (F5 → título → hermano → Arcoíris).
+  - HE-60: el código está listo. Faltan las 20 voces TTS de reto (OK del PO sobre el costo), la prueba en tablet y el playtest.
+- **Fuera del WIP de Dev**: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS) y HE-68 (storyboard de la batalla; falta la validación UX).
 - **Bloqueos**:
   - El diseño de la Torre ya no bloquea: la implementación (HE-76 a HE-85) espera plaza de WIP y la cadena HE-59 → HE-76.
   - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y las de HE-86 (105 + 18 nuevas o regeneradas del guion v4). No se generó audio.
