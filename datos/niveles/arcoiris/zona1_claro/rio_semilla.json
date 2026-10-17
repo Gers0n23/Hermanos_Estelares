@@ -1,16 +1,37 @@
 {
   "id_nivel": "arcoiris_z1_lluvia_semilla",
-  "nota": "Río de pintura, Maxi (PO 06-Oct-2026: el mismo juego que Nicole, solo más lento). Reutiliza el id_nivel de la Lluvia de la zona 1 a propósito, para no perder avance (mismo criterio que el Taller de Sofía). PROVISIONAL hasta la curva de disenador-niveles (roadmap §10).",
+  "nota": "Rio de pintura, Maxi. Reutiliza el id_nivel de la Lluvia de la zona 1 a proposito, para no perder avance. Grupos de 3-4 (cualquier disparo del color correcto junto a un grupo lo revienta), sin batidora, puente ni tunel, arcoiris frecuente. PO 17-Oct-2026: su rio NO se detiene antes del remolino (Maxi tambien puede perder; su suavidad viene de los grupos, la velocidad baja y el arcoiris). Rio v2 (HE-91, 17-Oct-2026): valores PROVISIONALES de docs/fichas/motor-rio.md §11 (maqueta aprobada por el PO); la calibracion es HE-92 (disenador-niveles).",
+  "motor": "rio",
   "perfil": "semilla",
   "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
-  "gotas": 36,
-  "colores": ["rojo", "amarillo", "azul", "rosa"],
+  "gotas": 50,
+  "grupo": [
+    3,
+    4
+  ],
+  "colores": [
+    "rojo",
+    "amarillo",
+    "azul",
+    "rosa"
+  ],
+  "arcoiris": {
+    "uno_cada": 9,
+    "minimo_entre": 6,
+    "umbral_peligro": 0.6,
+    "multiplicador_peligro": 2.5
+  },
+  "municion": {
+    "gotas_cabeza": 12,
+    "peso_cabeza": 3,
+    "peso_componente": 0.6
+  },
   "radio": 26,
   "velocidad": 13,
   "subida": 0.35,
   "entrada_rapida_hasta": 0.28,
-  "mezclas": false,
   "guia": "completa",
-  "tiempo_par": 110,
+  "guia_largo": 1280,
+  "tiempo_par": 170,
   "lineas_voz": {}
 }

@@ -1,0 +1,52 @@
+{
+  "id_nivel": "arcoiris_z3_rio_estrella",
+  "nota": "Rio de pintura, Sofia, etapa dificil (PO 17-Oct-2026: los colores de 2 + 1 y la batidora de 3 espacios entran desde la zona 3). 5 colores de 2 + 1 sueltos de 3 tipos (ids provisionales hasta HE-94), batidora de 3 (con los 3 primarios distintos sale cafe), sin pistas. Todavia NO esta en el mapa: las zonas 2-5 siguen con la Lluvia hasta tener sus rios (roadmap H5); usa la espiral de la zona 1 hasta que exista el recorrido de la zona 3. Rio v2 (HE-91, 17-Oct-2026): valores PROVISIONALES de docs/fichas/motor-rio.md §11 (maqueta aprobada por el PO); la calibracion es HE-92 (disenador-niveles).",
+  "motor": "rio",
+  "perfil": "estrella",
+  "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
+  "gotas": 80,
+  "grupo": [
+    1,
+    3
+  ],
+  "colores": [
+    "rojo",
+    "amarillo",
+    "azul"
+  ],
+  "secundarios": [
+    "verde",
+    "naranja",
+    "violeta"
+  ],
+  "p_secundario": 0.35,
+  "terciarios": {
+    "cantidad": 5,
+    "tipos": 3,
+    "separacion_min": 8,
+    "desde_gota": 12
+  },
+  "batidora": {
+    "espacios": 3,
+    "servir": 2,
+    "pistas": "no"
+  },
+  "arcoiris": {
+    "uno_cada": 22,
+    "minimo_entre": 6,
+    "umbral_peligro": 0.6,
+    "multiplicador_peligro": 2.5
+  },
+  "municion": {
+    "gotas_cabeza": 12,
+    "peso_cabeza": 3,
+    "peso_componente": 0.6
+  },
+  "radio": 22,
+  "velocidad": 48,
+  "subida": 0.7,
+  "entrada_rapida_hasta": 0.28,
+  "guia": "no",
+  "tiempo_par": 150,
+  "lineas_voz": {}
+}

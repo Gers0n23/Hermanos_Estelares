@@ -26,7 +26,8 @@
   - **v2** (17-Oct-2026): esta ficha. Formaliza la maqueta `rio-v2.html` y las decisiones del PO de hoy.
     **Manda sobre el roadmap §5, §6 y §10**, que quedan marcados como reemplazados donde corresponde.
 - **Estado**: propuesta para auditoría de `experto-ux-parvulo` (§17) y calibración de `disenador-niveles`
-  (§16). Nada de esto está implementado en Godot todavía.
+  (§16). **Implementada en Godot por `dev-godot` (HE-91, 17-Oct-2026)** con los valores provisionales de §11
+  y arte dibujado por código; ver §14.1 para lo que se decidió al implementar.
 - **Código actual (v1)**: `scripts/motores/rio/logica_rio.gd` (reglas), `motor_rio.gd` (dibujo y
   entrada), `recorrido_rio.gd`; escena `escenas/minijuegos/rio/motor_rio.tscn`; arnés
   `herramientas/qa_test_rio.gd`.
@@ -579,6 +580,27 @@ Resultado de la mezcla (`mezcla_de(contenido)`):
   sin `batidora`; además lleva el arreglo de combo/cadena (§7). Hay que re-simularla (`disenador-niveles`).
 
 ---
+
+### 14.1 Implementación (HE-91, `dev-godot`, 17-Oct-2026)
+
+- Todo lo de §5-§10 vive en `LogicaRio` (señales de §13.3, más `batidora_se_vacio`, `palanca_vacia` y
+  `servida_evaporada`); el motor solo dibuja y atiende la entrada. `qa_test_rio` cubre los 13 puntos de §15.
+- `puente_batidora.angulo` va **en radianes** (como el ejemplo de §13.2), a diferencia de `angulo_inicio` y
+  `angulo_fin` de la espiral, que van en múltiplos de π. Está en `z1_espiral.json`.
+- **Por delegación**: la servida sin destino (§8.2) se evapora siempre que llega a la boca **o** cuando un
+  reventón limpia su color, también en el instante de servir (si se sirve un color que no está en el río,
+  "puf" y vuelve lo que Coco tenía). Así Coco nunca dispara una gota que ensucia el río.
+- **Por delegación**: la gota rebotada y las servidas se aplican a la cola en el instante; el vuelo en arco
+  (0,32 s y 0,38 s) es solo visual, y durante ese tiempo no se puede disparar.
+- `zona3_chupetines/rio_estrella.json` (etapa difícil de Sofía) existe como datos y en el arnés, pero
+  **no está en el mapa**: las zonas 2-5 siguen con la Lluvia hasta tener sus ríos (roadmap H5). Usa la
+  espiral de la zona 1 hasta que exista el recorrido de la zona 3.
+- Río de la batalla: `grupo: [2, 3]` y arcoíris cada 14 (valores de Nicole, provisionales hasta HE-92). El
+  modo equipo del Río todavía no está cableado al motor (HE-70); para cuando lo esté,
+  `LogicaRio.aciertos_por_reventon(es_cadena, cadena_vale_aciertos)` da la regla corregida de §7.
+- Pendiente: la opción "menos movimiento" no existe aún en `Progreso`; el motor la lee si aparece un método
+  `menos_movimiento()`. Los SFX propios del Río (clac, boing, glug, fiuuu, puaj, arpegio, cuerda elástica)
+  son provisionales: se reusan los de la interfaz con otro tono.
 
 ## 15. Qué debe probar el arnés `herramientas/qa_test_rio.gd`
 

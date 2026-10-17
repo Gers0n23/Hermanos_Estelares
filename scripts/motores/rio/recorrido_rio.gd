@@ -14,6 +14,12 @@ extends RefCounted
 ##
 ## La distancia `s` se mide desde el primer punto del recorrido; `s < 0` es "todavía en la nube"
 ## (la gota no se ve) y `s >= largo` es "se la tragó el remolino".
+##
+## `puente_batidora` (opcional; docs/fichas/motor-rio.md §10.1 y §13.2): dónde va el puente con la batidora
+## de Nicole y Sofía. Va en el recorrido porque es geometría (entre Coco y la batidora no pasa el río).
+##   {"angulo": 7.854, "tunel_px": 66, "palanca_offset": [0, 92]}   (espiral; `angulo` en RADIANES)
+##   {"fraccion": 0.61, ...}                                         (cualquier recorrido)
+## Sin el campo, `tiene_puente()` es false y el motor no dibuja puente, batidora ni túnel.
 
 const PASO_MUESTREO := 3.0
 
@@ -22,6 +28,12 @@ var acumulado := PackedFloat32Array()
 var largo := 0.0
 var fin := Vector2.ZERO
 var centro := Vector2(640, 372)
+
+# Puente de la batidora (vacío si el recorrido no lo trae)
+var s_puente := -1.0
+var tunel_px := 66.0
+var palanca_offset := Vector2(0, 92)
+var _indice_puente := -1
 
 
 static func desde_archivo(ruta: String) -> RecorridoRio:
@@ -36,15 +48,42 @@ static func desde_archivo(ruta: String) -> RecorridoRio:
 
 
 func construir(datos: Dictionary) -> void:
+	_indice_puente = -1
+	var puente: Variant = datos.get("puente_batidora", null)
+	var angulo_puente := INF
+	if puente is Dictionary and puente.has("angulo"):
+		angulo_puente = float(puente["angulo"])
 	match str(datos.get("tipo", "espiral")):
 		"puntos":
 			_construir_puntos(datos)
 		_:
-			_construir_espiral(datos)
+			_construir_espiral(datos, angulo_puente)
 	_acumular()
+	s_puente = -1.0
+	if puente is Dictionary:
+		tunel_px = float(puente.get("tunel_px", 66.0))
+		palanca_offset = _vec(puente.get("palanca_offset", [0, 92]))
+		if _indice_puente >= 0:
+			s_puente = acumulado[_indice_puente]
+		elif puente.has("fraccion"):
+			s_puente = largo * clampf(float(puente["fraccion"]), 0.0, 1.0)
 
 
-func _construir_espiral(datos: Dictionary) -> void:
+## ¿Este recorrido trae el puente de la batidora?
+func tiene_puente() -> bool:
+	return s_puente >= 0.0
+
+
+## Centro de la batidora (sobre el puente).
+func posicion_batidora() -> Vector2:
+	return posicion(s_puente)
+
+
+func posicion_palanca() -> Vector2:
+	return posicion_batidora() + palanca_offset
+
+
+func _construir_espiral(datos: Dictionary, angulo_puente := INF) -> void:
 	centro = _vec(datos.get("centro", [640, 372]))
 	var entrada := _vec(datos.get("entrada", [160, 800]))
 	var r0 := float(datos.get("radio_inicio", 300))
@@ -60,9 +99,13 @@ func _construir_espiral(datos: Dictionary) -> void:
 		puntos.append(Vector2(inicio_espiral.x, y))
 		y -= PASO_MUESTREO
 	var th := t0
+	var mejor := INF
 	while th <= t1:
 		var r := r0 - (r0 - r1) * (th - t0) / (t1 - t0)
 		puntos.append(centro + Vector2(r * escala.x * cos(th), r * escala.y * sin(th)))
+		if absf(th - angulo_puente) < mejor:
+			mejor = absf(th - angulo_puente)
+			_indice_puente = puntos.size() - 1
 		th += 0.002
 
 

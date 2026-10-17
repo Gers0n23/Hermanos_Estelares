@@ -1,16 +1,46 @@
 {
   "id_nivel": "arcoiris_z1_lluvia_brote",
-  "nota": "Río de pintura, Nicole (valores del mockup aprobado; el cuarto color es el rosado, su favorito). Reutiliza el id_nivel de la Lluvia de la zona 1 a propósito, para no perder avance. PROVISIONAL hasta la curva de disenador-niveles (roadmap §10).",
+  "nota": "Rio de pintura, Nicole (el cuarto color es el rosado, su favorito). Reutiliza el id_nivel de la Lluvia de la zona 1 a proposito, para no perder avance. Un solo secundario (verde, ~16 %) y batidora de 2 espacios sobre el puente, con pistas en cada rio. Rio v2 (HE-91, 17-Oct-2026): valores PROVISIONALES de docs/fichas/motor-rio.md §11 (maqueta aprobada por el PO); la calibracion es HE-92 (disenador-niveles).",
+  "motor": "rio",
   "perfil": "brote",
   "recorrido": "res://datos/recorridos/arcoiris/z1_espiral.json",
-  "gotas": 36,
-  "colores": ["rojo", "amarillo", "azul", "rosa"],
+  "gotas": 50,
+  "grupo": [
+    2,
+    3
+  ],
+  "colores": [
+    "rojo",
+    "amarillo",
+    "azul",
+    "rosa"
+  ],
+  "secundarios": [
+    "verde"
+  ],
+  "p_secundario": 0.16,
+  "batidora": {
+    "espacios": 2,
+    "servir": 2,
+    "pistas": "siempre"
+  },
+  "arcoiris": {
+    "uno_cada": 14,
+    "minimo_entre": 6,
+    "umbral_peligro": 0.6,
+    "multiplicador_peligro": 2.5
+  },
+  "municion": {
+    "gotas_cabeza": 12,
+    "peso_cabeza": 3,
+    "peso_componente": 0.6
+  },
   "radio": 26,
-  "velocidad": 26,
+  "velocidad": 24,
   "subida": 0.35,
   "entrada_rapida_hasta": 0.28,
-  "mezclas": false,
   "guia": "completa",
-  "tiempo_par": 70,
+  "guia_largo": 1280,
+  "tiempo_par": 120,
   "lineas_voz": {}
 }
