@@ -6,7 +6,7 @@
 
 ## ESTADO ACTUAL
 
-- **Última actualización**: 17-Oct-2026. Diseño de la Torre y del cierre de Arcoíris cerrado: ficha `motor-lanzar.md` v3, `modo-equipo.md` v7.2, guion v4 y storyboard v4.1; re-auditoría UX sin bloqueantes. HE-71 y HE-73 ✅.
+- **Última actualización**: 17-Oct-2026. WIP liberado por el PO (HE-02, HE-10 y HE-60 en revisión del PO) y HE-59 en curso. Antes: diseño de la Torre y del cierre de Arcoíris cerrado: ficha `motor-lanzar.md` v3, `modo-equipo.md` v7.2, guion v4 y storyboard v4.1; re-auditoría UX sin bloqueantes. HE-71 y HE-73 ✅.
 - **Fase activa**: **Fase 1 — Núcleo + Capítulo 1 completo**. **Prioridad vigente (decisión del PO del 06-Oct)**: la épica "Juego en equipo y Parejas de Coco con reto real" va antes de lo que falta del camino crítico del capítulo 1. La Fase 0.5 (arte conceptual) sigue abierta en paralelo, sin prioridad.
 - **WIP de Dev**: **1/2** (decisión del PO, 17-Oct: HE-02, HE-10 y HE-60 salen del WIP por estar colgadas; quedan en revisión del PO). Solo HE-59 en curso; queda una plaza libre.
 - **En curso (Dev)**: HE-59 (`dev-godot`), primera de la cadena HE-59 → HE-76 → HE-77 → HE-79 → HE-80.
