@@ -219,7 +219,7 @@ Detalle histórico: ver archivo/TABLERO-historico.md
 
 ## ÉPICA TRANSVERSAL — Juego en equipo y Parejas de Coco con reto real
 
-**Fuentes de verdad**: [`docs/fichas/modo-equipo.md`](fichas/modo-equipo.md) (v7.1, §14 batalla y §14.16 Torre), [`docs/fichas/motor-emparejar.md`](fichas/motor-emparejar.md) §10, [`docs/fichas/motor-lanzar.md`](fichas/motor-lanzar.md) v2, [`docs/guiones/cierre-arcoiris.md`](guiones/cierre-arcoiris.md) v3, [`docs/cinematicas/cierre_arcoiris.md`](cinematicas/cierre_arcoiris.md) v3 y la auditoría UX [`docs/validaciones/2026-10-13_ux-torre-cierre-arcoiris.md`](validaciones/2026-10-13_ux-torre-cierre-arcoiris.md). Base: GDD §3, §5 y P6 de §9.
+**Fuentes de verdad**: [`docs/fichas/modo-equipo.md`](fichas/modo-equipo.md) (v7.2, §14 batalla y §14.16 Torre), [`docs/fichas/motor-emparejar.md`](fichas/motor-emparejar.md) §10, [`docs/fichas/motor-lanzar.md`](fichas/motor-lanzar.md) v3, [`docs/guiones/cierre-arcoiris.md`](guiones/cierre-arcoiris.md) v4, [`docs/cinematicas/cierre_arcoiris.md`](cinematicas/cierre_arcoiris.md) v4.1 y las auditorías UX [`2026-10-13`](validaciones/2026-10-13_ux-torre-cierre-arcoiris.md) y [`2026-10-17` (re-auditoría)](validaciones/2026-10-17_ux-reauditoria-torre-cierre.md). Base: GDD §3, §5 y P6 de §9.
 
 **Idea**: (1) modo **"juego en equipo"** cooperativo, 2 o 3 hermanos por turnos en la misma tablet, contra un rival común (el Coleccionauta), **nunca entre ellos y sin rankings**; cada turno con la dificultad del hermano y Maxi con ayuda guiada. (2) **Mejoras de Parejas de Coco** con reto real (racha, "¡a la primera!", tiempo par, récord, vistazo, cartas especiales, Camino de colores, álbum de cartas).
 
