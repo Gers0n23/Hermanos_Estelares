@@ -229,7 +229,15 @@ def _todas_las_imagenes(wiki: str) -> list[tuple[str, str]]:
 
 
 def _miniaturas(wiki: str, archivos: list[str]) -> list[tuple[str, str]]:
-    return _miniaturas(wiki, archivos)
+    salida = []
+    for i in range(0, len(archivos), 40):
+        d = _api(wiki, action="query", titles="|".join(archivos[i:i + 40]), prop="imageinfo",
+                 iiprop="url|size", iiurlwidth=LADO * 2)
+        for p in d.get("query", {}).get("pages", {}).values():
+            info = (p.get("imageinfo") or [{}])[0]
+            if info.get("thumburl") and min(info.get("width", 0), info.get("height", 0)) >= 180:
+                salida.append((p["title"], info["thumburl"]))
+    return salida
 
 
 def _slug(texto: str) -> str:
@@ -259,15 +267,7 @@ def _imagenes_galeria(wiki: str, pagina: str, clave: str, maximo: int) -> list[t
     if len(archivos) > maximo:
         paso = len(archivos) / maximo
         archivos = [archivos[int(i * paso)] for i in range(maximo)]
-    salida = []
-    for i in range(0, len(archivos), 40):
-        d = _api(wiki, action="query", titles="|".join(archivos[i:i + 40]), prop="imageinfo",
-                 iiprop="url|size", iiurlwidth=LADO * 2)
-        for p in d.get("query", {}).get("pages", {}).values():
-            info = (p.get("imageinfo") or [{}])[0]
-            if info.get("thumburl") and min(info.get("width", 0), info.get("height", 0)) >= 180:
-                salida.append((p["title"], info["thumburl"]))
-    return salida
+    return _miniaturas(wiki, archivos)
 
 
 def _a_carta(datos: bytes) -> Image.Image | None:
