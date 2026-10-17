@@ -251,7 +251,7 @@ Detalle histórico: ver archivo/TABLERO-historico.md
 12. **La Torre en HE-39: se decide tras el playtest** del capítulo 1 (HE-18).
 13. **Orden de turnos: `maxi_intercalado` con 9 globos de base y +4 tras la 1.ª derrota**; cada intento empieza con Maxi, Nicole y Sofía tiran la misma cantidad y el último tiro es siempre el seguro de Maxi (UX M4; reemplaza el "reparto parejo" del 13-Oct).
 
-**Ajustes vigentes de la auditoría UX HE-71** : **B1** → storyboard v4 conciliado con el guion v3 (HE-73); sin él no se implementan el bloque 2 ni los gags. **B2** → disparo solo tras arrastre ≥40 px desde el contacto y Coco fuera del área de agarre (HE-73/HE-77). **"Antes del epílogo" ≤6 s medido con audio real** (HE-73/HE-83).
+**Ajustes vigentes de la auditoría UX HE-71 (resueltos en diseño el 17-Oct)**: **B1** → storyboard v4.1 conciliado con el guion v4. **B2** → disparo solo tras arrastre ≥40 px y Coco fuera del área de agarre (HE-77). **"Antes del epílogo" ≤6 s con audio real** (HE-83). Por delegación del PO (17-Oct): broches siguientes a los 12 s; fiesta reutilizada tras el epílogo, compacta (≈9,4 s); cambio de `nucleo_batalla_hito`. Clave `cancelar_tiron_sin_pausa` apagada: se enciende solo si el playtest muestra globos robados (R6/P5).
 
 **Tarjetas de la Torre y del cierre**: HE-71 a HE-87. Las de diseño, arte, guion y auditoría (HE-71 a HE-75, HE-80 y HE-86) no consumen WIP de Dev. **Ninguna pasa a "En curso" sin que el PO lo pida.**
 
