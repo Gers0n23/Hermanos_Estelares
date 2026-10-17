@@ -26,7 +26,7 @@
   2. `dev-godot` ya trabaja HE-59 y sigue en este orden: HE-59 → HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
   3. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79). De eso depende el gigante A.
 - **Pendientes del PO**:
-  - revisar HE-10 y aprobar HE-02 con los QA junior, para normalizar el WIP;
+  - revisar HE-10 y aprobar HE-02 con los QA junior, y hacer el playtest de HE-60 (ya no consumen WIP);
   - `--estimar` y OK sobre el COSTO de las voces (HE-60, HE-67 y HE-86) y de las 77 líneas de recuerdos (N4);
   - antes del playtest de HE-60: limpiar `especiales_conocidos` de Sofía en el guardado real (con el juego cerrado y respaldo);
   - decidir si se graba a los niños en la cuenta regresiva y la fiesta (opcional: los tres o ninguno);
