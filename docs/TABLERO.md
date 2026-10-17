@@ -23,7 +23,7 @@
 - **Avance general**: **25/110 tarjetas ✅**.
 - **Próximos pasos**:
   1. Sin WIP de Dev: arte N2-N21 del storyboard v4.1 (HE-74 y HE-75, `disenador-personajes`); un solo `--estimar` de voces (HE-60, HE-67 y HE-86) para el OK del PO; HE-72 (GDD).
-  2. Cuando haya WIP, `dev-godot` implementa en este orden: HE-59 → HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
+  2. `dev-godot` ya trabaja HE-59 y sigue en este orden: HE-59 → HE-76 → HE-77 → HE-79 → HE-80 y HE-78; HE-81 → HE-82; HE-69 → HE-83; HE-84 → HE-85; cierra HE-87.
   3. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79). De eso depende el gigante A.
 - **Pendientes del PO**:
   - revisar HE-10 y aprobar HE-02 con los QA junior, para normalizar el WIP;
