@@ -16,7 +16,6 @@
   - HE-10: falta la revisión del PO y el playtest (F5 → título → hermano → Arcoíris).
   - HE-60: el código está listo. Faltan las 20 voces TTS de reto (OK del PO sobre el costo), la prueba en tablet y el playtest.
   - HE-89: implementada y verificada en PC (`qa_test_parejas_reto` 61 OK, `qa_test_parejas_zonas` 425 OK, `qa_test_retos_sofia` y `qa_test_gestor_turnos` en 0 fallos). Falta que el PO juegue en PC y tablet, la auditoría UX del globito del tutorial, la recalibración de `umbrales_puntaje` y `tiempo_par_s` y de los tiempos del vistazo (`disenador-niveles`), la voz `vistazo_mira` y el playtest.
-  - HE-90 (Río v2, diseño): ficha `motor-rio.md` v2 y maqueta `rio-v2.html` en disco. El PO la probó y dijo que "funciona correctamente", pero no queda aprobada hasta que responda las preguntas 1, 3 y 4. La maqueta conserva el error del choque en el retroceso (corregido solo en el juego, por pedido del PO): HE-91 parte de la lógica corregida de `logica_rio.gd`.
 - **Fuera del WIP de Dev**: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS) y HE-68 (storyboard de la batalla; falta la validación UX).
 - **Bloqueos**:
   - **R17, decisión del PO pendiente (bloquea HE-76, HE-80 y HE-88)**: con 3 etapas la Torre pasa de ≈5,8 a ≈16 min (p80 ≈21) y la batalla queda en ≈28-30 min. Opciones: **A** (3 etapas con guardado entre etapas, recomendada), **B** (2 etapas) o **C** (3 etapas más cortas).
