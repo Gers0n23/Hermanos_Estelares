@@ -238,7 +238,7 @@ Detalle histórico: ver archivo/TABLERO-historico.md
 **Las 13 decisiones delegadas (13-Oct, por delegación del PO), con los ajustes vigentes tras la auditoría UX HE-71**:
 
 1. **Globo gigante: variante A** (Coco lo infla tras la 2.ª derrota, lo tira Maxi, no gana solo; lo celebran los tres retratos). **Condicionada** a que el ≥95 % en ≤3 intentos lo demuestre el simulador **con las distribuciones del arnés de física** (HE-79/HE-80); si el 3.er intento queda bajo 99 %, se sube primero `gigante.agarre_min`.
-2. **Pausa natural** entre el bloque de la victoria y el de la partida, después de la parte C; se retoma desde el hito del Claro.
+2. **Pausa natural** entre el bloque de la victoria y el de la partida, después de la parte C; se retoma desde el hito del Claro (**aprobada por delegación del PO, 17-Oct**).
 3. **Final en el Mapa Estelar con Animalia encendida** y la nave en rumbo, **sin encadenar** el viaje tipo Galaga.
 4. Coco dice que **«la otra ala está en Animalia»**, como gancho.
 5. **Tanque de Maxi: los 3 colores recuperados.**
