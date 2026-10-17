@@ -13,10 +13,10 @@
   - HE-02: solo falta la aprobación de los QA junior y del PO.
   - HE-10: solo falta la revisión del PO y el playtest (F5 → título → hermano → Arcoíris).
   - HE-60: el código está listo. Para cerrarla faltan las 20 voces TTS de reto (OK del PO sobre el costo) y la prueba en tablet.
-  - Fuera del WIP de Dev: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS), HE-68 (storyboard de la batalla; falta la validación UX) y HE-71 (correcciones B1/B2 y re-auditoría corta).
+  - Fuera del WIP de Dev: HE-57 (ficha del modo equipo), HE-67 (voces de la batalla; falta el OK del costo TTS) y HE-68 (storyboard de la batalla; falta la validación UX).
 - **Bloqueos**:
-  - La implementación de la Torre y de la partida (HE-69 en esas etapas, HE-76 a HE-85) no arranca mientras B1 y B2 estén abiertos.
-  - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y 105 de HE-86.
+  - El diseño de la Torre ya no bloquea: la implementación (HE-76 a HE-85) espera plaza de WIP y la cadena HE-59 → HE-76.
+  - El costo TTS necesita `--estimar` y el OK del PO: 20 líneas de reto de HE-60 (van primero), 78 de HE-67 y las de HE-86 (105 + 18 nuevas o regeneradas del guion v4). No se generó audio.
   - Cadena técnica: no existen todavía `GestorTurnos`, `batalla.gd` ni `viaje_siguiente_requiere`. La Torre depende de HE-59 (⬜), que no tiene plaza de WIP.
   - La calibración de la Torre es una estimación a mano: se valida con HE-79 y HE-80 cuando exista el motor.
 - **Avance general**: **23/110 tarjetas ✅**.
