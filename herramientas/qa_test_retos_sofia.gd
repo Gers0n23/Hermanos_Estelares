@@ -493,9 +493,9 @@ func _probar_parejas(ruta: String) -> void:
 	motor.carta_intercambiada.connect(func(_a, _b) -> void: resultado["intercambios"] += 1)
 	get_root().add_child(motor)
 	await _esperar(1.0)
-	# HE-60: vistazo al repartir; el tablero no acepta jugadas hasta que termina.
+	# HE-60: tutorial (primera vez, PO 17-Oct-2026) y vistazo al repartir; el tablero no acepta jugadas hasta que terminan.
 	var t_vistazo := Time.get_ticks_msec()
-	while motor._en_vistazo and Time.get_ticks_msec() - t_vistazo < 15000:
+	while (motor._en_tutorial or motor._en_vistazo) and Time.get_ticks_msec() - t_vistazo < 30000:
 		await process_frame
 	var nivel: Dictionary = motor.nivel
 	var cartas: Array = motor._cartas

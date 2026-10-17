@@ -1,0 +1,875 @@
+<title>Río de pintura v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700&display=swap">
+<style>
+/* Layout: escena 16:9 jugable arriba, selector de hermano encima, estado y guía por hermano debajo. */
+:root{
+  --bg:#f3f8f1; --fg:#24303a; --muted:#5f6d76; --card:#ffffff; --line:#d5e4d6;
+  --accent:#2e8f5b; --accent-2:#e3692e;
+  --font-display:'Baloo 2','Trebuchet MS',sans-serif; --font-body:'Nunito','Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111b17; --fg:#e8f2ec; --muted:#9db3a7; --card:#1a2822; --line:#2f4439; --accent:#6fd59c; --accent-2:#ff9b62; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111b17; --fg:#e8f2ec; --muted:#9db3a7; --card:#1a2822; --line:#2f4439; --accent:#6fd59c; --accent-2:#ff9b62; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;
+  padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(24px,4vw,34px);line-height:1.1;margin:0;text-wrap:balance}
+h2{font-family:var(--font-display);font-size:18px;margin:0 0 4px;text-wrap:balance}
+.sub{margin:4px 0 0;color:var(--muted);max-width:72ch}
+.perfiles{display:flex;flex-wrap:wrap;gap:8px}
+.perfiles button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--bg)}
+#escena{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:2px solid var(--line);background:#d8f1df;touch-action:none}
+canvas{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+.estado{font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums}
+.estado b{font-weight:800;color:var(--accent)}
+.barra{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-weight:700;color:var(--fg);background:var(--card);border:2px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hermanos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.hermanos section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.hermanos h2 small{font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:13px}
+.hermanos p{margin:0;font-size:14px}
+.cambios{min-width:0}
+.cambios ul{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px;max-width:85ch}
+.tabla{overflow-x:auto}
+table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;min-width:640px}
+th,td{border-bottom:1px solid var(--line);padding:6px 10px;text-align:left}
+th{font-family:var(--font-display);font-weight:800}
+.pie{color:var(--muted);font-size:13px;max-width:85ch;margin:0}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Río de pintura v2</h1>
+    <p class="sub">Maqueta jugable del primer juego del Planeta Arcoíris, con lo que pidió el PO: <b>grupos de gotas más largos</b> (Maxi y Nicole ven fácil dónde disparar), el <b>retroceso de Zuma</b> que se nota, la <b>gota arcoíris</b> salvavidas, y para Nicole y Sofía la <b>batidora sobre el puente</b>: se le disparan primarios, mezcla y se sirve con la palanca. En la etapa difícil de Sofía aparecen colores de <b>2 + 1</b> (por ejemplo, 2 rojas + 1 amarilla).</p>
+  </header>
+
+  <div class="perfiles" role="group" aria-label="Elegir hermano">
+    <button type="button" id="p-maxi" data-perfil="maxi">Maxi · 2 años</button>
+    <button type="button" id="p-nicole" data-perfil="nicole">Nicole · 5 años</button>
+    <button type="button" id="p-sofia1" data-perfil="sofia1">Sofía · zona 1</button>
+    <button type="button" id="p-sofia3" data-perfil="sofia3">Sofía · etapa difícil</button>
+  </div>
+
+  <div id="escena"><canvas id="c" width="1280" height="720" aria-label="Río de pintura: Coco dispara gotas al río"></canvas></div>
+
+  <div class="estado" id="estado" aria-live="polite"></div>
+  <div class="barra">
+    <button id="reiniciar" type="button">Reiniciar río</button>
+    <button id="pausa" type="button">Pausa</button>
+    <button id="demo" type="button">Armar jugada de cadena</button>
+  </div>
+
+  <div class="hermanos">
+    <section><h2>Maxi <small>Semilla</small></h2><p>Río de 50 gotas en <b>grupos de 3 a 4</b> (antes, la mitad de las gotas venían sueltas). Va lento, con la guía de puntería completa. Un solo disparo revienta un grupo. No hay batidora, y la gota arcoíris sale más seguido.</p></section>
+    <section><h2>Nicole <small>Brote</small></h2><p>50 gotas en grupos de 2 a 3 y guía completa. En el río aparecen <b>pocas gotas verdes</b>, que Coco no tiene: hay que dispararle a la batidora una amarilla y una azul, y después tocar la palanca para servir <b>2 verdes</b>.</p></section>
+    <section><h2>Sofía <small>Estrella · zona 1</small></h2><p>70 gotas en grupos de 1 a 3, sin guía. Más de un tercio del río son verdes, naranjas y violetas. La batidora tiene 2 espacios. Mezclar le cuesta disparos mientras el río sigue avanzando: tiene que decidir cuándo le conviene.</p></section>
+    <section><h2>Sofía <small>Estrella · etapa difícil</small></h2><p>80 gotas, más rápido, batidora de <b>3 espacios</b>. Hay unas pocas gotas raras de 2 + 1, que llevan su receta en puntitos. <b>Peligro</b>: si mete los 3 primarios distintos sale café, la batidora eructa y se vacía.</p></section>
+  </div>
+
+  <section class="cambios">
+    <h2>Qué cambia respecto del juego actual</h2>
+    <ul>
+      <li><b>Arreglo de un error</b>: el generador del río prometía grupos de 1 a 3 gotas, pero nunca armaba 3 seguidas. Ahora cada hermano tiene su propio tamaño de grupo.</li>
+      <li><b>Retroceso visible</b>: cuando los extremos de un corte son del mismo color, brillan y se atraen. Al chocar suena un "¡clac!", hay un destello y la pantalla tiembla.</li>
+      <li><b>Combo y cadena separados</b>: el combo cuenta los aciertos seguidos y la cadena cuenta los retrocesos que revientan.</li>
+      <li><b>Munición que ayuda</b>: salen más seguido los colores de las gotas que van más cerca del remolino.</li>
+      <li><b>Gota arcoíris</b>: llega al azar como munición, más seguido cuando el río ya pasó el 60 % del camino, y revienta el grupo donde cae aunque sea de una sola gota. Pasa por encima de la batidora.</li>
+      <li><b>No hay mezclas dentro del río</b> (antes ocurrían sin querer). Todo se mezcla en la batidora. Las recetas del costado se encienden con lo que tiene la batidora y se apagan cuando ese color ya no está en el río.</li>
+      <li><b>El puente</b> está en la última vuelta, abajo, a mitad del recorrido y lejos del remolino. Cualquier disparo hacia abajo le pega a la batidora y las gotas pasan escondidas por el túnel, como en Zuma.</li>
+    </ul>
+  </section>
+
+  <div class="tabla">
+    <table>
+      <thead><tr><th>Parámetro</th><th>Maxi</th><th>Nicole</th><th>Sofía z1</th><th>Sofía difícil</th></tr></thead>
+      <tbody>
+        <tr><td>Gotas</td><td>50</td><td>50</td><td>70</td><td>80</td></tr>
+        <tr><td>Tamaño de grupo</td><td>3-4</td><td>2-3</td><td>1-3</td><td>1-3</td></tr>
+        <tr><td>Velocidad (px/s)</td><td>13</td><td>24</td><td>42</td><td>48</td></tr>
+        <tr><td>Colores mezclados en el río</td><td>no</td><td>verde, ~16 %</td><td>3, ~35 %</td><td>3, ~35 % + 5 de 2 + 1</td></tr>
+        <tr><td>Espacios de la batidora</td><td>—</td><td>2</td><td>2</td><td>3</td></tr>
+        <tr><td>Gota arcoíris (1 cada…)</td><td>9 disparos</td><td>14</td><td>20</td><td>22</td></tr>
+        <tr><td>Guía de puntería</td><td>completa</td><td>completa</td><td>no</td><td>no</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="pie">Controles: toca o arrastra para apuntar y suelta para disparar. Toca a Coco para cambiar la gota de la boca por la de la mano. Toca la palanca bajo la batidora para servir la mezcla. En PC: espacio dispara, Tab cambia y S sirve. "Armar jugada de cadena" pone al frente del río dos del color A, dos del B y dos del A, y te carga el B, para que veas el retroceso. Es una maqueta para decidir: las cifras son una estimación sin calibrar (las fija <b>disenador-niveles</b> con el simulador), el dibujo de Coco y del puente es provisional, y los colores de 2 + 1 todavía no tienen nombre para los niños.</p>
+</div>
+
+<script>
+(() => {
+'use strict';
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const W = 1280, H = 720, TAU = Math.PI * 2;
+const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------------------------------------------------------------- colores y recetas
+const PAL = {
+  rojo:'#E8434B', amarillo:'#FFC83A', azul:'#3D7BE0', verde:'#36B866', naranja:'#FF8A3D', violeta:'#9B5DE5', rosa:'#FF7EB6',
+  rojo_naranja:'#F2582B', amarillo_naranja:'#FFAA2E', amarillo_verde:'#AFD13A', azul_verde:'#1FA39A', azul_violeta:'#5A5FD8', rojo_violeta:'#C93E8E',
+  cafe:'#8B5A3C'
+};
+const PRIM = ['rojo','amarillo','azul'];
+const SEC = {verde:['amarillo','azul'], naranja:['rojo','amarillo'], violeta:['rojo','azul']};
+const TER = {
+  rojo_naranja:['rojo','rojo','amarillo'], amarillo_naranja:['amarillo','amarillo','rojo'],
+  amarillo_verde:['amarillo','amarillo','azul'], azul_verde:['azul','azul','amarillo'],
+  azul_violeta:['azul','azul','rojo'], rojo_violeta:['rojo','rojo','azul']
+};
+const receta = c => SEC[c] || TER[c] || null;
+const componentes = c => { const r = receta(c); return r ? [...new Set(r)] : [c]; };
+function mezclaDe(cont) {
+  if (!cont.length) return null;
+  const n = {}; cont.forEach(c => n[c] = (n[c] || 0) + 1);
+  const k = Object.keys(n);
+  if (k.length === 1) return k[0];
+  if (k.length === 3) return 'cafe';
+  if (cont.length === 2) { for (const s in SEC) if (SEC[s].includes(k[0]) && SEC[s].includes(k[1])) return s; }
+  const dom = n[k[0]] > n[k[1]] ? k[0] : k[1], otro = dom === k[0] ? k[1] : k[0];
+  for (const t in TER) if (TER[t][0] === dom && TER[t][2] === otro) return t;
+  return 'cafe';
+}
+
+// ---------------------------------------------------------------- perfiles (provisionales)
+const PERFILES = {
+  maxi:   {gotas:50, grupo:[3,4], colores:['rojo','amarillo','azul','rosa'], sec:[], pSec:0, nTer:0, radio:26, vel:13, subida:.35, guia:true, jarra:0, arcoiris:9, par:170},
+  nicole: {gotas:50, grupo:[2,3], colores:['rojo','amarillo','azul','rosa'], sec:['verde'], pSec:.16, nTer:0, radio:26, vel:24, subida:.35, guia:true, jarra:2, arcoiris:14, par:120},
+  sofia1: {gotas:70, grupo:[1,3], colores:PRIM, sec:['verde','naranja','violeta'], pSec:.35, nTer:0, radio:22, vel:42, subida:.6, guia:false, jarra:2, arcoiris:20, par:125},
+  sofia3: {gotas:80, grupo:[1,3], colores:PRIM, sec:['verde','naranja','violeta'], pSec:.35, nTer:5, tiposTer:3, radio:22, vel:48, subida:.7, guia:false, jarra:3, arcoiris:22, par:150}
+};
+
+// ---------------------------------------------------------------- recorrido (igual que recorrido_rio.gd, espiral de la zona 1)
+const C = {x:640, y:372};
+const pts = [], acum = [];
+let largo = 0, FIN, sPuente = 0;
+(function construir() {
+  const r0 = 300, r1 = 150, t0 = Math.PI, t1 = 4 * Math.PI, ex = 1.6, ey = .95;
+  const ini = {x: C.x + r0 * ex * Math.cos(t0), y: C.y + r0 * ey * Math.sin(t0)};
+  for (let y = 800; y > ini.y; y -= 3) pts.push({x: ini.x, y});
+  let iPuente = 0, mejor = 1e9;
+  for (let th = t0; th <= t1; th += 0.002) {
+    const r = r0 - (r0 - r1) * (th - t0) / (t1 - t0);
+    pts.push({x: C.x + r * ex * Math.cos(th), y: C.y + r * ey * Math.sin(th)});
+    const dd = Math.abs(th - 2.5 * Math.PI);
+    if (dd < mejor) { mejor = dd; iPuente = pts.length - 1; }
+  }
+  let tot = 0;
+  for (let i = 0; i < pts.length; i++) { if (i) tot += Math.hypot(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y); acum.push(tot); }
+  largo = tot; FIN = pts[pts.length - 1]; sPuente = acum[iPuente];
+})();
+function idx(s) { let lo = 0, hi = acum.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (acum[m] <= s) lo = m; else hi = m - 1; } return lo; }
+function pos(s) {
+  if (s <= 0) { const dx = pts[1].x - pts[0].x, dy = pts[1].y - pts[0].y, l = Math.hypot(dx, dy); return {x: pts[0].x + dx / l * s, y: pts[0].y + dy / l * s}; }
+  if (s >= largo) return {x: FIN.x, y: FIN.y};
+  const i = idx(s), j = Math.min(i + 1, acum.length - 1);
+  const k = acum[j] > acum[i] ? (s - acum[i]) / (acum[j] - acum[i]) : 0;
+  return {x: pts[i].x + (pts[j].x - pts[i].x) * k, y: pts[i].y + (pts[j].y - pts[i].y) * k};
+}
+function tan(s) { const a = pos(s - 2), b = pos(s + 2), l = Math.hypot(b.x - a.x, b.y - a.y) || 1; return {x: (b.x - a.x) / l, y: (b.y - a.y) / l}; }
+const JAR = pos(sPuente);
+const PALANCA = {x: JAR.x, y: JAR.y + 92};
+const TUNEL = 66;
+
+// ---------------------------------------------------------------- constantes de juego (de logica_rio.gd)
+const VEL_ENTRADA = 420, VEL_RETROCESO = 420, VEL_TRAGAR = 900, VEL_BALA = 1150, ORB = 86, PELIGRO = .82, RADIO_COCO = 72;
+
+// ---------------------------------------------------------------- estado
+let perfilId = 'nicole', P = PERFILES[perfilId];
+let gotas = [], balas = [], vuelos = [], parts = [], anillos = [], textos = [];
+let actual = '', siguiente = '', puntos = 0, cadena = 0, combo = 0, mayorCadena = 0, tiempo = 0;
+let estado = 'jugando', entrando = true, espera = 0, sigId = 0, velTragar = VEL_TRAGAR, desdeArcoiris = 0;
+let jarra = {cont: [], tiembla: 0, cafe: 0, usada: false, servida: false};
+let stats = {mezclas: 0, arcoiris: 0, cadenas: 0};
+let ang = -Math.PI / 2, apuntando = false, mirando = 1, lengua = 0, carga = 1, salto = 0, giro = 0, shake = 0, t = 0, pausa = false, estrellas = 0, finT = 0;
+let atraidos = new Set();
+let cauceCache = null;
+const d = () => P.radio * 2;
+const rnd = Math.random, pick = a => a[Math.floor(rnd() * a.length)], randi = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+const col = c => c === 'arcoiris' ? '#FFFFFF' : (PAL[c] || '#B9B4C9');
+const esBasico = c => P.colores.includes(c);
+
+function generar(demo) {
+  const out = []; let prev = '';
+  if (demo) { const A = P.colores[0], B = P.colores[2]; out.push(A, A, B, B, A, A); prev = A; }
+  while (out.length < P.gotas) {
+    let cand = (P.sec.length && rnd() < P.pSec) ? P.sec : P.colores;
+    cand = cand.filter(c => c !== prev);
+    if (!cand.length) cand = P.colores.filter(c => c !== prev);
+    const c = pick(cand), n = randi(P.grupo[0], P.grupo[1]);
+    for (let i = 0; i < n && out.length < P.gotas; i++) out.push(c);
+    prev = c;
+  }
+  if (P.nTer) {
+    const tipos = Object.keys(TER).sort(() => rnd() - .5).slice(0, P.tiposTer);
+    const usados = []; let intento = 0;
+    while (usados.length < P.nTer && intento++ < 300) {
+      const i = randi(12, out.length - 2);
+      if (usados.some(u => Math.abs(u - i) < 8)) continue;
+      out[i] = pick(tipos); usados.push(i);
+    }
+  }
+  return out;
+}
+function nueva(s, color) { return {s, color, id: ++sigId, ot: 0, ox: 0, oy: 0}; }
+
+function reiniciar(demo) {
+  cauceCache = null;
+  gotas = generar(demo).map((c, i) => nueva(-i * d(), c));
+  balas = []; vuelos = []; parts = []; anillos = []; textos = [];
+  puntos = 0; cadena = 0; combo = 0; mayorCadena = 0; tiempo = 0; estado = 'jugando'; entrando = true; espera = 0; desdeArcoiris = 0;
+  jarra = {cont: [], tiembla: 0, cafe: 0, usada: false, servida: false};
+  stats = {mezclas: 0, arcoiris: 0, cadenas: 0}; estrellas = 0; finT = 0;
+  actual = municion(); siguiente = municion();
+  if (demo) { actual = siguiente = P.colores[2]; }
+  texto(C.x, C.y + 150, P.jarra ? '¡Junta 3 iguales!' : '¡Junta 3 iguales!', '#2E9E5B', 2.4, 34);
+}
+
+// ---------------------------------------------------------------- munición
+function progresoCabeza() { return gotas.length ? Math.max(0, Math.min(1, gotas[0].s / largo)) : 0; }
+function municion() {
+  desdeArcoiris++;
+  const prob = (1 / P.arcoiris) * (progresoCabeza() > .6 ? 2.5 : 1);
+  if (desdeArcoiris >= 6 && rnd() < prob) { desdeArcoiris = 0; return 'arcoiris'; }
+  const w = {};
+  gotas.forEach((g, i) => {
+    const peso = i < 12 ? 3 : 1;
+    if (esBasico(g.color)) w[g.color] = (w[g.color] || 0) + peso;
+    else if (P.jarra) componentes(g.color).forEach(c => { if (esBasico(c)) w[c] = (w[c] || 0) + peso * .6; });
+  });
+  const ks = Object.keys(w);
+  if (!ks.length) return pick(P.colores);
+  let r = rnd() * ks.reduce((a, k) => a + w[k], 0);
+  for (const k of ks) { r -= w[k]; if (r <= 0) return k; }
+  return ks[0];
+}
+function util(c) {
+  if (!esBasico(c)) return true; // la mezcla servida y la arcoíris son armas: no se cambian solas
+  return gotas.some(g => g.color === c || (P.jarra && !esBasico(g.color) && componentes(g.color).includes(c)));
+}
+function refrescar() {
+  if (!gotas.length) return;
+  if (!util(actual)) actual = municion();
+  if (!util(siguiente)) siguiente = municion();
+}
+
+// ---------------------------------------------------------------- acciones
+function disparar() {
+  if (estado !== 'jugando' || espera > 0 || !actual || pausa) return;
+  const o = {x: C.x + Math.cos(ang) * ORB, y: C.y + Math.sin(ang) * ORB};
+  balas.push({x: o.x, y: o.y, vx: Math.cos(ang) * VEL_BALA, vy: Math.sin(ang) * VEL_BALA, color: actual});
+  actual = util(siguiente) ? siguiente : municion();
+  siguiente = municion();
+  espera = .22; lengua = 1; carga = 0; sonar('lengua');
+}
+function intercambiar() {
+  if (estado !== 'jugando' || pausa) return;
+  [actual, siguiente] = [siguiente, actual]; giro = 1; carga = .4; sonar('cambio');
+}
+function servible() {
+  const r = mezclaDe(jarra.cont);
+  return P.jarra && jarra.cont.length >= 2 && r && !PRIM.includes(r) && r !== 'cafe' && jarra.cafe <= 0;
+}
+function servir() {
+  if (!P.jarra || estado !== 'jugando' || pausa) return;
+  if (!servible()) { jarra.tiembla = .4; sonar('nop'); return; }
+  const r = mezclaDe(jarra.cont);
+  vuelos.push({x0: JAR.x, y0: JAR.y - 20, t: 0, dur: .38, color: r, tipo: 'servir'});
+  jarra.cont = []; jarra.servida = true; stats.mezclas++; sonar('servir');
+}
+function capturar(color, bx, by) {
+  const lim = P.jarra, cont = jarra.cont;
+  let rechazo = !PRIM.includes(color) || cont.length >= lim || jarra.cafe > 0;
+  if (!rechazo && lim === 2 && cont.includes(color)) rechazo = true;
+  if (!rechazo && lim === 3 && cont.filter(c => c === color).length >= 2) rechazo = true;
+  if (rechazo) {
+    jarra.tiembla = .5; sonar('nop');
+    vuelos.push({x0: bx, y0: by, t: 0, dur: .32, color, tipo: 'devolver'});
+    return;
+  }
+  cont.push(color); jarra.usada = true; jarra.tiembla = .35; sonar('glug');
+  for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (rnd() - .5) * 2; parts.push({x: JAR.x, y: JAR.y - 40, vx: Math.cos(a) * 160, vy: Math.sin(a) * 220, r: 4 + rnd() * 3, color, vida: .6}); }
+  if (mezclaDe(cont) === 'cafe') { jarra.cafe = 1.2; sonar('puaj'); }
+}
+function llegoVuelo(v) {
+  if (v.tipo === 'servir') { actual = v.color; siguiente = v.color; carga = 0; salto = .7; anillos.push({x: C.x, y: C.y, t: 0, dur: .5, color: col(v.color), r0: 30, r1: 110}); }
+  else { siguiente = actual; actual = v.color; carga = .3; }
+}
+
+// ---------------------------------------------------------------- reglas del río (port de logica_rio.gd)
+const tocan = i => i + 1 < gotas.length && gotas[i].s - gotas[i + 1].s <= d() + 2;
+function tramo(i) {
+  const c = gotas[i].color; let lo = i, hi = i;
+  while (lo > 0 && tocan(lo - 1) && gotas[lo - 1].color === c) lo--;
+  while (hi < gotas.length - 1 && tocan(hi) && gotas[hi + 1].color === c) hi++;
+  return [lo, hi];
+}
+function reventar(i, esCadena, forzar) {
+  const [a, b] = tramo(i), n = b - a + 1;
+  if (n < 3 && !forzar) return 0;
+  cadena = esCadena ? cadena + 1 : Math.max(1, cadena);
+  mayorCadena = Math.max(mayorCadena, cadena);
+  let sx = 0, sy = 0; const color = gotas[i].color;
+  for (let k = a; k <= b; k++) { const p = pos(gotas[k].s); sx += p.x; sy += p.y; }
+  gotas.splice(a, n);
+  const cx = sx / n, cy = sy / n, ganados = n * 10 * cadena;
+  puntos += ganados;
+  for (let k = 0; k < n * 5; k++) { const an = rnd() * TAU, v = 120 + rnd() * 320; parts.push({x: cx, y: cy, vx: Math.cos(an) * v, vy: Math.sin(an) * v - 120, r: P.radio * (.14 + rnd() * .22), color, vida: .6 + rnd() * .5}); }
+  anillos.push({x: cx, y: cy, t: 0, dur: .35, color: col(color), r0: P.radio, r1: P.radio * 2.6});
+  texto(cx, cy, '+' + ganados, '#272140', 1, 30);
+  if (esCadena) {
+    stats.cadenas++;
+    texto(C.x, C.y - 150, '¡Cadena x' + cadena + '!', '#FF6A2A', 1.4, 50);
+    shake = reducido ? 0 : .3; giro = 1;
+  }
+  salto = esCadena ? 1 : .6;
+  sonar('pop', Math.pow(2, Math.min(cadena - 1 + Math.max(0, combo), 12) / 12));
+  refrescar();
+  return n;
+}
+function insertar(j, bx, by, color) {
+  const g = gotas[j], p = pos(g.s), tg = tan(g.s);
+  const delante = ((bx - p.x) * tg.x + (by - p.y) * tg.y) > 0;
+  const real = color === 'arcoiris' ? g.color : color;
+  const nv = nueva(delante ? g.s + d() : g.s, real);
+  nv.ox = bx; nv.oy = by; nv.ot = .12;
+  const k = delante ? j : j + 1;
+  gotas.splice(k, 0, nv);
+  cadena = 0;
+  if (color === 'arcoiris') {
+    stats.arcoiris++; sonar('arcoiris');
+    for (let q = 0; q < 6; q++) anillos.push({x: p.x, y: p.y, t: -q * .04, dur: .5, color: Object.values(PAL)[q], r0: 10, r1: 90});
+  }
+  const n = reventar(k, false, color === 'arcoiris');
+  if (n > 0) {
+    combo++;
+    if (combo > 1) { puntos += combo * 10; texto(C.x + 150, C.y - 96, 'Combo ' + combo, '#2E9E5B', .9, 30); }
+  } else { combo = 0; sonar('inserta'); }
+}
+function retroceder(dt) {
+  atraidos = new Set();
+  const grupos = []; let ini = 0;
+  for (let i = 0; i < gotas.length; i++) if (!tocan(i)) { grupos.push([ini, i]); ini = i + 1; }
+  for (let g = 0; g < grupos.length - 1; g++) {
+    const [a0, a1] = grupos[g], b0 = grupos[g + 1][0];
+    if (gotas[a1].color !== gotas[b0].color) continue;
+    atraidos.add(gotas[a1].id); atraidos.add(gotas[b0].id);
+    for (let k = a0; k <= a1; k++) gotas[k].s -= VEL_RETROCESO * dt;
+    const falta = d() - (gotas[a1].s - gotas[b0].s);
+    if (falta > 0) {
+      for (let k = a0; k <= a1; k++) gotas[k].s += falta;
+      const p = pos(gotas[a1].s - d() / 2);
+      anillos.push({x: p.x, y: p.y, t: 0, dur: .3, color: '#FFFFFF', r0: 8, r1: 70});
+      shake = Math.max(shake, reducido ? 0 : .14);
+      sonar('clac');
+      reventar(a1, true, false);
+      break;
+    }
+  }
+}
+function empujar(dt) {
+  const D = d();
+  for (let i = gotas.length - 2; i >= 0; i--) {
+    const min = gotas[i + 1].s + D;
+    if (gotas[i].s < min) gotas[i].s = Math.min(min, gotas[i].s + Math.max(700 * dt, (min - gotas[i].s) * .35));
+  }
+}
+function enTunel(s) { return P.jarra && Math.abs(s - sPuente) < TUNEL; }
+function gotaEn(x, y, dist) {
+  let mejor = -1, md = dist;
+  for (let i = 0; i < gotas.length; i++) {
+    const s = gotas[i].s;
+    if (s <= -2 || s >= largo || enTunel(s)) continue;
+    const p = pos(s), dd = Math.hypot(p.x - x, p.y - y);
+    if (dd < md) { md = dd; mejor = i; }
+  }
+  return mejor;
+}
+function moverBalas(dt) {
+  const vivas = [];
+  for (const b of balas) {
+    const pasos = Math.max(1, Math.ceil(VEL_BALA * dt / (P.radio * .35)));
+    let fin = false;
+    for (let k = 0; k < pasos; k++) {
+      b.x += b.vx * dt / pasos; b.y += b.vy * dt / pasos;
+      if (b.x < -40 || b.x > W + 40 || b.y < -40 || b.y > H + 40) { fin = true; break; }
+      if (estado !== 'jugando') continue;
+      if (P.jarra && b.color !== 'arcoiris' && Math.hypot(b.x - JAR.x, b.y - JAR.y) < 56) { capturar(b.color, b.x, b.y); fin = true; break; }
+      const gi = gotaEn(b.x, b.y, d() * .92);
+      if (gi >= 0) { insertar(gi, b.x, b.y, b.color); fin = true; break; }
+    }
+    if (!fin) vivas.push(b);
+  }
+  balas = vivas;
+}
+function velocidad() {
+  if (estado === 'tragando') return velTragar;
+  if (entrando) return VEL_ENTRADA;
+  return P.vel * (1 + P.subida * Math.min(1, tiempo / 90));
+}
+function avanzar(dt) {
+  if (espera > 0) espera -= dt;
+  if (estado === 'jugando') { tiempo += dt; retroceder(dt); }
+  if (estado === 'jugando' || estado === 'tragando') {
+    if (gotas.length) {
+      const v = velocidad();
+      if (estado === 'tragando') gotas.forEach(g => g.s += v * dt); else gotas[gotas.length - 1].s += v * dt;
+      if (entrando && gotas[0].s > largo * .28) entrando = false;
+    }
+    empujar(dt);
+    gotas.forEach(g => { if (g.ot > 0) g.ot -= dt; });
+    if (estado === 'jugando') {
+      if (!gotas.length) {
+        estado = 'gano'; finT = 0;
+        estrellas = tiempo <= P.par ? 3 : tiempo <= P.par * 1.35 ? 2 : 1;
+        sonar('gana');
+        for (let k = 0; k < 140; k++) { const a = rnd() * TAU, v = 200 + rnd() * 500; parts.push({x: C.x, y: C.y - 40, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 300, r: 4 + rnd() * 5, color: pick(Object.keys(PAL)), vida: 1.4 + rnd()}); }
+      } else if (gotas[0].s >= largo) {
+        estado = 'tragando';
+        velTragar = Math.max(VEL_TRAGAR, (largo - gotas[gotas.length - 1].s) / 2);
+        texto(FIN.x, FIN.y - 76, '¡Glu glu!', '#655D82', 1.3, 42); sonar('glu');
+      }
+    } else {
+      gotas = gotas.filter(g => g.s < largo);
+      if (!gotas.length) { estado = 'perdio'; finT = 0; }
+    }
+  }
+  moverBalas(dt);
+  vuelos.forEach(v => v.t += dt);
+  vuelos = vuelos.filter(v => { if (v.t >= v.dur) { llegoVuelo(v); return false; } return true; });
+  if (jarra.cafe > 0) { jarra.cafe -= dt; if (jarra.cafe <= 0) { jarra.cont = []; for (let k = 0; k < 14; k++) parts.push({x: JAR.x + (rnd() - .5) * 40, y: JAR.y - 50, vx: (rnd() - .5) * 120, vy: -120 - rnd() * 120, r: 6 + rnd() * 6, color: 'cafe', vida: .8}); } }
+}
+
+// ---------------------------------------------------------------- efectos
+function texto(x, y, txt, color, dur, tam) { textos.push({x, y, txt, color, t: 0, dur, tam}); }
+
+// ---------------------------------------------------------------- sonido (sintetizado, sin archivos)
+let ac = null;
+function sonar(tipo, tono = 1) {
+  if (!ac) return;
+  const now = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.connect(g); g.connect(ac.destination);
+  const env = (a, dur) => { g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(a, now + .01); g.gain.exponentialRampToValueAtTime(0.0001, now + dur); o.start(now); o.stop(now + dur + .02); };
+  switch (tipo) {
+    case 'pop': o.type = 'sine'; o.frequency.setValueAtTime(520 * tono, now); o.frequency.exponentialRampToValueAtTime(260 * tono, now + .12); env(.25, .14); break;
+    case 'clac': o.type = 'square'; o.frequency.setValueAtTime(1500, now); o.frequency.exponentialRampToValueAtTime(420, now + .05); env(.12, .07); break;
+    case 'lengua': o.type = 'triangle'; o.frequency.setValueAtTime(300, now); o.frequency.exponentialRampToValueAtTime(700, now + .06); env(.08, .07); break;
+    case 'inserta': o.type = 'sine'; o.frequency.setValueAtTime(240, now); env(.08, .06); break;
+    case 'cambio': o.type = 'triangle'; o.frequency.setValueAtTime(660, now); o.frequency.exponentialRampToValueAtTime(880, now + .08); env(.08, .09); break;
+    case 'glug': o.type = 'sine'; o.frequency.setValueAtTime(320, now); o.frequency.exponentialRampToValueAtTime(140, now + .18); env(.2, .2); break;
+    case 'servir': o.type = 'triangle'; o.frequency.setValueAtTime(300, now); o.frequency.exponentialRampToValueAtTime(1000, now + .22); env(.15, .24); break;
+    case 'nop': o.type = 'square'; o.frequency.setValueAtTime(180, now); env(.05, .1); break;
+    case 'puaj': o.type = 'sawtooth'; o.frequency.setValueAtTime(140, now); o.frequency.exponentialRampToValueAtTime(70, now + .4); env(.12, .45); break;
+    case 'glu': o.type = 'sine'; o.frequency.setValueAtTime(400, now); o.frequency.exponentialRampToValueAtTime(90, now + .8); env(.2, .85); break;
+    case 'arcoiris': case 'gana': {
+      o.disconnect(); const notas = tipo === 'gana' ? [523, 659, 784, 1047, 1319] : [784, 988, 1175, 1568];
+      notas.forEach((f, i) => { const oo = ac.createOscillator(), gg = ac.createGain(); oo.type = 'triangle'; oo.frequency.value = f; oo.connect(gg); gg.connect(ac.destination);
+        const t0 = now + i * .07; gg.gain.setValueAtTime(.0001, t0); gg.gain.exponentialRampToValueAtTime(.15, t0 + .01); gg.gain.exponentialRampToValueAtTime(.0001, t0 + .25); oo.start(t0); oo.stop(t0 + .3); });
+      break; }
+  }
+}
+
+// ---------------------------------------------------------------- entrada
+function aEscena(e) { const r = cv.getBoundingClientRect(); return {x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height}; }
+function apuntar(p) { if (Math.hypot(p.x - C.x, p.y - C.y) > 30) ang = Math.atan2(p.y - C.y, p.x - C.x); }
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { ac = null; } }
+  const p = aEscena(e);
+  if (estado === 'perdio' || (estado === 'gano' && finT > 1.2)) { reiniciar(false); return; }
+  if (estado !== 'jugando' || pausa) return;
+  if (P.jarra && Math.hypot(p.x - PALANCA.x, p.y - PALANCA.y) < 48) { servir(); return; }
+  if (Math.hypot(p.x - C.x, p.y - (C.y - 6)) < RADIO_COCO) { intercambiar(); return; }
+  apuntando = true; apuntar(p);
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+});
+cv.addEventListener('pointermove', e => { if (apuntando) apuntar(aEscena(e)); });
+cv.addEventListener('pointerup', e => { if (!apuntando) return; apuntando = false; apuntar(aEscena(e)); disparar(); });
+cv.addEventListener('pointercancel', () => { apuntando = false; });
+window.addEventListener('keydown', e => {
+  if (e.target && e.target.tagName === 'BUTTON' && e.code === 'Space') return;
+  if (e.code === 'Space') { e.preventDefault(); disparar(); }
+  else if (e.code === 'Tab') { e.preventDefault(); intercambiar(); }
+  else if (e.code === 'KeyS') servir();
+  else if (e.code === 'KeyP') alternarPausa();
+});
+function alternarPausa() { pausa = !pausa; document.getElementById('pausa').textContent = pausa ? 'Seguir' : 'Pausa'; }
+document.getElementById('pausa').addEventListener('click', alternarPausa);
+document.getElementById('reiniciar').addEventListener('click', () => reiniciar(false));
+document.getElementById('demo').addEventListener('click', () => reiniciar(true));
+document.querySelectorAll('.perfiles button').forEach(b => b.addEventListener('click', () => elegir(b.dataset.perfil)));
+function elegir(id) {
+  perfilId = id; P = PERFILES[id];
+  document.querySelectorAll('.perfiles button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.perfil === id)));
+  try { localStorage.setItem('rio-v2-perfil', id); } catch (_) {}
+  reiniciar(false);
+}
+
+// ---------------------------------------------------------------- dibujo
+function circulo(x, y, r, c) { ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, TAU); ctx.fillStyle = c; ctx.fill(); }
+function elipse(x, y, rx, ry, c, rot = 0) { ctx.beginPath(); ctx.ellipse(x, y, rx, ry, rot, 0, TAU); ctx.fillStyle = c; ctx.fill(); }
+function hexRgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function mezclarHex(a, b, k) { const A = hexRgb(a), B = hexRgb(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * k).toString(16).padStart(2, '0')).join(''); }
+function oscuro(h, k) { return mezclarHex(h, '#000000', k); }
+function claro(h, k) { return mezclarHex(h, '#FFFFFF', k); }
+function alfa(h, a) { const [r, g, b] = hexRgb(h); return `rgba(${r},${g},${b},${a})`; }
+
+function dibujarGota(x, y, r, color, id, cara = true) {
+  if (color === 'arcoiris') { dibujarArcoiris(x, y, r); return; }
+  const base = col(color);
+  circulo(x, y + r * .12, r * .95, 'rgba(43,51,80,.18)');
+  circulo(x, y, r * .95, oscuro(base, .38));
+  circulo(x, y, r * .95 - Math.max(2, r * .08), base);
+  circulo(x + r * .12, y + r * .16, r * .62, oscuro(base, .08));
+  circulo(x - r * .1, y - r * .12, r * .55, claro(base, .1));
+  elipse(x - r * .38, y - r * .42, r * .22, r * .12, 'rgba(255,255,255,.8)', -.6);
+  if (TER[color]) { // receta en puntitos: 2 + 1
+    const rc = TER[color];
+    rc.forEach((c, i) => { const px = x + (i - 1) * r * .34, py = y - r * .5; circulo(px, py, r * .17, '#FFFFFF'); circulo(px, py, r * .12, col(c)); });
+  }
+  if (!cara || r < 8) return;
+  const parp = ((t * 1000 + id * 733) % 4100) < 130;
+  ctx.strokeStyle = '#272140'; ctx.lineWidth = Math.max(1.5, r * .07); ctx.lineCap = 'round';
+  for (const l of [-1, 1]) {
+    const ox = x + l * r * .27, oy = y + r * .02;
+    if (parp) { ctx.beginPath(); ctx.moveTo(ox - r * .1, oy); ctx.lineTo(ox + r * .1, oy); ctx.stroke(); }
+    else { circulo(ox, oy, r * .11, '#272140'); circulo(ox + r * .04, oy - r * .04, r * .04, '#FFFFFF'); }
+  }
+  ctx.beginPath(); ctx.arc(x, y + r * .22, r * .14, .15 * Math.PI, .85 * Math.PI); ctx.stroke();
+}
+function dibujarArcoiris(x, y, r) {
+  const cs = ['#E8434B', '#FF8A3D', '#FFC83A', '#36B866', '#3D7BE0', '#9B5DE5'];
+  circulo(x, y + r * .12, r * .95, 'rgba(43,51,80,.18)');
+  circulo(x, y, r * .95, '#3a2f5e');
+  for (let k = 0; k < 6; k++) {
+    const a0 = t * 2.4 + k * TAU / 6;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.arc(x, y, r * .86, a0, a0 + TAU / 6); ctx.closePath(); ctx.fillStyle = cs[k]; ctx.fill();
+  }
+  circulo(x, y, r * .34, '#FFFFFF');
+  elipse(x - r * .38, y - r * .42, r * .22, r * .12, 'rgba(255,255,255,.85)', -.6);
+  const b = .5 + .5 * Math.sin(t * 8);
+  ctx.strokeStyle = `rgba(255,255,255,${.4 + .4 * b})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, r * 1.08 + b * 3, 0, TAU); ctx.stroke();
+}
+
+function construirCauce() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const fondo = g.createRadialGradient(640, 360, 80, 640, 360, 760);
+  fondo.addColorStop(0, '#F4FBEF'); fondo.addColorStop(1, '#BFE6C8');
+  g.fillStyle = fondo; g.fillRect(0, 0, W, H);
+  // tréboles del claro
+  for (let k = 0; k < 40; k++) { const x = (k * 197) % W, y = (k * 113) % H; g.fillStyle = 'rgba(46,158,91,.10)'; for (let h = 0; h < 3; h++) { g.beginPath(); g.arc(x + Math.cos(h * 2.1) * 7, y + Math.sin(h * 2.1) * 7, 7, 0, TAU); g.fill(); } }
+  const D = d();
+  const capa = (ancho, color) => { g.beginPath(); for (let i = 0; i < pts.length; i += 3) { const p = pts[i]; i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y); } g.lineTo(FIN.x, FIN.y); g.strokeStyle = color; g.lineWidth = ancho; g.lineCap = 'round'; g.lineJoin = 'round'; g.stroke(); };
+  capa(D + 26, 'rgba(185,138,94,.55)'); capa(D + 18, '#E9C58F'); capa(D + 8, '#BDEFD9'); capa(D + 2, '#FFF6E8');
+  const cs = Object.values(PAL);
+  for (let i = 0, k = 0; i < pts.length - 3; i += 27, k++) {
+    const p = pts[i], q = pts[i + 3], l = Math.hypot(q.x - p.x, q.y - p.y) || 1, nx = -(q.y - p.y) / l, ny = (q.x - p.x) / l, lado = k % 2 ? -1 : 1;
+    g.beginPath(); g.arc(p.x + nx * lado * (D / 2 + 6), p.y + ny * lado * (D / 2 + 6), 2.6, 0, TAU); g.fillStyle = cs[k % cs.length]; g.fill();
+  }
+  return c;
+}
+
+function dibujarNube() {
+  const c = {x: 160, y: 690};
+  let llenas = 0; gotas.forEach(g => { if (g.s < 0) llenas++; });
+  const inf = 1 + Math.min(.18, llenas * .005) + Math.sin(t * 2) * .02;
+  const bs = [[-46, 6], [46, 6], [-20, -18], [22, -22], [0, 10]];
+  bs.forEach(([x, y]) => circulo(c.x + x * inf, c.y + y * inf, 34 * inf, '#8E8AA0'));
+  bs.forEach(([x, y]) => circulo(c.x + x * inf, c.y + y * inf, 30 * inf, '#A9A5B8'));
+  ctx.strokeStyle = '#272140'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  for (const l of [-1, 1]) { circulo(c.x + l * 16, c.y - 6, 4.5, '#272140'); ctx.beginPath(); ctx.moveTo(c.x + l * 8, c.y - 18); ctx.lineTo(c.x + l * 24, c.y - 14); ctx.stroke(); }
+  ctx.beginPath(); ctx.arc(c.x, c.y + 14, 9, 1.15 * Math.PI, 1.85 * Math.PI); ctx.stroke();
+}
+function dibujarRemolino() {
+  const c = FIN;
+  if (estado === 'gano') {
+    const cs = Object.values(PAL);
+    for (let k = 0; k < 6; k++) { const a = TAU * k / 6 + t * .6; circulo(c.x + Math.cos(a) * 30, c.y + Math.sin(a) * 30, 24, cs[k]); }
+    circulo(c.x, c.y, 22, '#FFCB3D'); return;
+  }
+  if (progresoCabeza() > PELIGRO && estado === 'jugando') circulo(c.x, c.y, 74, `rgba(232,67,75,${.3 + .2 * Math.sin(t * 8)})`);
+  for (let k = 0; k < 5; k++) circulo(c.x, c.y, 48 - k * 8, mezclarHex('#A7A4B4', '#3C3A48', k / 4));
+  const giroR = t * (2.4 + progresoCabeza() * 3);
+  ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 3;
+  for (let b = 0; b < 3; b++) { ctx.beginPath(); for (let a = 0; a < 4.2; a += .1) { const r = 42 - a * 8.5, x = c.x + Math.cos(a + giroR + b * 2.09) * r, y = c.y + Math.sin(a + giroR + b * 2.09) * r; a ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+}
+
+function dibujarGotas() {
+  for (let i = gotas.length - 1; i >= 0; i--) {
+    const g = gotas[i];
+    if (g.s < -2) continue;
+    let p = pos(g.s);
+    if (g.ot > 0) { const k = 1 - g.ot / .12; p = {x: g.ox + (p.x - g.ox) * k, y: g.oy + (p.y - g.oy) * k}; }
+    const cerca = largo - g.s, D = d();
+    const esc = cerca < D ? Math.max(.2, cerca / D) : 1;
+    if (atraidos.has(g.id)) { const b = .5 + .5 * Math.sin(t * 20); circulo(p.x, p.y, P.radio * (1.25 + .15 * b), alfa('#FFFFFF', .55 + .3 * b)); }
+    dibujarGota(p.x, p.y, P.radio * esc, g.color, g.id);
+  }
+}
+
+function dibujarPuente() {
+  if (!P.jarra) return;
+  const tg = tan(sPuente), a = Math.atan2(tg.y, tg.x), D = d();
+  ctx.save(); ctx.translate(JAR.x, JAR.y); ctx.rotate(a);
+  const L = TUNEL + 8, A = D / 2 + 30;
+  // bocas del túnel
+  for (const l of [-1, 1]) { elipse(l * L, 0, 14, D / 2 + 8, '#6B4A33'); elipse(l * L, 0, 9, D / 2 + 2, '#3E2A1D'); }
+  // galleta del puente
+  ctx.beginPath(); ctx.roundRect(-L, -A, L * 2, A * 2, 18); ctx.fillStyle = '#E2B57A'; ctx.fill();
+  ctx.lineWidth = 4; ctx.strokeStyle = '#B98A5E'; ctx.stroke();
+  ctx.beginPath(); ctx.roundRect(-L + 8, -A + 8, L * 2 - 16, A * 2 - 16, 12); ctx.strokeStyle = 'rgba(255,246,232,.7)'; ctx.lineWidth = 3; ctx.setLineDash([6, 8]); ctx.stroke(); ctx.setLineDash([]);
+  [[-48, -34], [40, -38], [-30, 36], [52, 30], [0, -44]].forEach(([x, y]) => circulo(x, y, 5, '#7A5236'));
+  ctx.restore();
+  // batidora
+  const tb = jarra.tiembla > 0 ? Math.sin(t * 60) * 5 * jarra.tiembla : 0;
+  const x = JAR.x + tb, y = JAR.y;
+  const atencion = !jarra.usada && gotas.some(g => !esBasico(g.color) && g.s > 0);
+  if (atencion) { const b = .5 + .5 * Math.sin(t * 5); circulo(x, y - 8, 62 + b * 8, `rgba(255,203,61,${.25 + .25 * b})`); }
+  // base (motor)
+  ctx.beginPath(); ctx.roundRect(x - 40, y + 14, 80, 30, 12); ctx.fillStyle = '#FF8FB1'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#2B3350'; ctx.stroke();
+  for (let k = 0; k < P.jarra; k++) { const sx = x - (P.jarra - 1) * 13 + k * 26, c = jarra.cont[k]; circulo(sx, y + 29, 8, '#FFF6E8'); if (c) circulo(sx, y + 29, 6, col(c)); }
+  // vaso
+  const vaso = new Path2D(); vaso.moveTo(x - 36, y - 50); vaso.lineTo(x + 36, y - 50); vaso.lineTo(x + 28, y + 14); vaso.lineTo(x - 28, y + 14); vaso.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.fill(vaso);
+  const r = jarra.cafe > 0 ? 'cafe' : mezclaDe(jarra.cont);
+  if (r) {
+    const nivel = jarra.cont.length / P.jarra, top = y + 14 - 60 * nivel;
+    ctx.save(); ctx.clip(vaso);
+    const ondula = Math.sin(t * 6) * 3;
+    ctx.beginPath(); ctx.moveTo(x - 40, top + ondula); ctx.quadraticCurveTo(x, top - 6 - ondula, x + 40, top + ondula); ctx.lineTo(x + 40, y + 16); ctx.lineTo(x - 40, y + 16); ctx.closePath();
+    ctx.fillStyle = col(r); ctx.fill();
+    if (jarra.cafe > 0) for (let k = 0; k < 4; k++) circulo(x - 18 + k * 12, top + 10 + Math.sin(t * 9 + k) * 6, 4, '#6A4129');
+    ctx.restore();
+  }
+  ctx.lineWidth = 4; ctx.strokeStyle = '#2B3350'; ctx.stroke(vaso);
+  ctx.beginPath(); ctx.moveTo(x - 22, y - 42); ctx.lineTo(x - 26, y + 2); ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 4; ctx.stroke();
+  // aspas
+  ctx.save(); ctx.translate(x, y + 6); ctx.rotate(jarra.tiembla > 0 || jarra.cafe > 0 ? t * 30 : 0);
+  ctx.strokeStyle = '#2B3350'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-12, 0); ctx.lineTo(12, 0); ctx.moveTo(0, -5); ctx.lineTo(0, 5); ctx.stroke(); ctx.restore();
+  // palanca para servir
+  const sv = servible(), pl = PALANCA;
+  if (sv) { const b = .5 + .5 * Math.sin(t * 7); circulo(pl.x, pl.y, 46 + b * 6, `rgba(255,203,61,${.35 + .3 * b})`); }
+  circulo(pl.x, pl.y + 4, 36, 'rgba(43,51,80,.3)');
+  circulo(pl.x, pl.y, 36, '#2B3350');
+  circulo(pl.x, pl.y, 32, sv ? '#FFCB3D' : '#E7E3EE');
+  if (sv) dibujarGota(pl.x, pl.y + 4, 15, r, 0, false);
+  ctx.fillStyle = sv ? '#2B3350' : '#B9B4C9';
+  ctx.beginPath(); ctx.moveTo(pl.x, pl.y - 26); ctx.lineTo(pl.x + 11, pl.y - 13); ctx.lineTo(pl.x - 11, pl.y - 13); ctx.closePath(); ctx.fill();
+}
+
+function dibujarGuia() {
+  if (!P.guia || estado !== 'jugando' || !actual) return;
+  const dx = Math.cos(ang), dy = Math.sin(ang);
+  let x = C.x + dx * ORB, y = C.y + dy * ORB, rec = 0, k = 0, golpe = -1, aJarra = false;
+  const c = actual === 'arcoiris' ? '#FFFFFF' : col(actual);
+  while (rec < 1400) {
+    x += dx * 8; y += dy * 8; rec += 8; k++;
+    if (x < 0 || x > W || y < 0 || y > H) break;
+    if (P.jarra && actual !== 'arcoiris' && Math.hypot(x - JAR.x, y - JAR.y) < 56) { aJarra = true; break; }
+    golpe = gotaEn(x, y, d() * .92);
+    if (golpe >= 0) break;
+    if (k % 3 === 2) circulo(x, y, P.radio * .16, alfa(c === '#FFFFFF' ? '#9B5DE5' : c, .8 - rec / 2800));
+  }
+  ctx.lineWidth = 4; ctx.strokeStyle = c === '#FFFFFF' ? '#9B5DE5' : c;
+  const anillo = (px, py, rr) => { for (let s = 0; s < 16; s += 2) { const a0 = TAU * s / 16 + t; ctx.beginPath(); ctx.arc(px, py, rr, a0, a0 + TAU / 16); ctx.stroke(); } };
+  if (golpe >= 0) { const q = pos(gotas[golpe].s); anillo(q.x, q.y, P.radio + 7); }
+  else if (aJarra) anillo(JAR.x, JAR.y - 16, 52);
+}
+
+function dibujarCoco() {
+  const dx = Math.cos(ang), dy = Math.sin(ang), m = mirando;
+  const cx = C.x, cy = C.y - 6;
+  // plato giratorio
+  const py = cy + 76;
+  elipse(cx, py + 10, 86, 30, '#E7A9C4'); elipse(cx, py, 86, 30, '#FFD9E8'); elipse(cx, py, 70, 22, '#FFF1F6');
+  const cs = Object.values(PAL);
+  for (let k = 0; k < 10; k++) { const a = ang + TAU * k / 10; circulo(cx + Math.cos(a) * 78, py + Math.sin(a) * 26, 3.2, cs[k % cs.length]); }
+  circulo(cx + Math.cos(ang) * 78, py + Math.sin(ang) * 26, 7, '#FFCB3D');
+  const sal = Math.sin(salto * Math.PI) * 26;
+  const peligro = estado === 'jugando' && progresoCabeza() > PELIGRO;
+  const bx = cx + (peligro ? Math.sin(t * 47) * 2 : 0), by = cy - sal;
+  const rot = Math.max(-.12, Math.min(.12, dx * .12)) + Math.sin(giro * Math.PI) * .35 * m;
+  const verde = '#5CC46E';
+  const tinte = actual && actual !== 'arcoiris' ? mezclarHex(verde, col(actual), .38) : verde;
+  ctx.save(); ctx.translate(bx, by); ctx.rotate(rot);
+  // cola enrollada
+  ctx.strokeStyle = oscuro(tinte, .2); ctx.lineWidth = 14; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(-m * 44, 40, 18, 0, TAU * .8); ctx.stroke();
+  // cuerpo y panza
+  elipse(0, 24, 52, 46, oscuro(tinte, .12)); elipse(0, 22, 48, 42, tinte); elipse(m * 6, 32, 28, 26, claro(tinte, .35));
+  // cresta de ánimo
+  for (let k = 0; k < 5; k++) circulo(-m * 22 + m * k * 12, -66 + Math.abs(k - 2) * 3, 8, k % 2 ? '#FF8FB1' : '#FFCB3D');
+  // cabeza
+  circulo(0, -32, 40, oscuro(tinte, .12)); circulo(0, -32, 37, tinte);
+  elipse(m * 30, -22, 22, 15, tinte);
+  circulo(m * 18, -14, 7, 'rgba(255,143,177,.6)');
+  // ojo torreta
+  circulo(m * 6, -44, 18, '#2B3350'); circulo(m * 6, -44, 15, '#FFFFFF');
+  const ldx = dx * Math.cos(-rot) - dy * Math.sin(-rot), ldy = dx * Math.sin(-rot) + dy * Math.cos(-rot);
+  circulo(m * 6 + ldx * 6, -44 + ldy * 6, 7, '#272140'); circulo(m * 6 + ldx * 6 + 2, -46 + ldy * 6, 2.4, '#FFFFFF');
+  ctx.restore();
+  const boca = {x: bx + (m * 46) * Math.cos(rot) - (-20) * Math.sin(rot), y: by + (m * 46) * Math.sin(rot) + (-20) * Math.cos(rot)};
+  // gota de reserva en la mano
+  if (siguiente && (estado === 'jugando' || estado === 'tragando')) dibujarGota(bx - 46 * m, by + 44, P.radio * .62, siguiente, 2, false);
+  if (peligro) { const sy = by - 70 + ((t * 30) % 18); circulo(bx - 38 * m, sy, 6, '#8FD8F5'); }
+  // lengua
+  if (estado === 'jugando' || estado === 'tragando') {
+    const lar = ORB + Math.sin(lengua * Math.PI) * 44, px = C.x + dx * lar, py2 = C.y + dy * lar;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#C9567A'; ctx.lineWidth = 13; ctx.beginPath(); ctx.moveTo(boca.x, boca.y); ctx.lineTo(px, py2); ctx.stroke();
+    ctx.strokeStyle = '#FF8FB1'; ctx.lineWidth = 9; ctx.stroke();
+    circulo(px, py2, 7, '#FF8FB1');
+    if (actual && lengua < .5) dibujarGota(C.x + dx * ORB, C.y + dy * ORB, P.radio * (.4 + .6 * carga), actual, 1);
+  }
+}
+
+function caja(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.fillStyle = 'rgba(255,248,238,.93)'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#2B3350'; ctx.stroke(); }
+function letra(txt, x, y, tam, color, a = 1) {
+  ctx.font = `800 ${tam}px 'Baloo 2', 'Trebuchet MS', sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.lineWidth = Math.max(4, tam * .18); ctx.strokeStyle = `rgba(255,255,255,${.95 * a})`; ctx.lineJoin = 'round'; ctx.strokeText(txt, x, y);
+  ctx.globalAlpha = a; ctx.fillStyle = color; ctx.fillText(txt, x, y); ctx.globalAlpha = 1;
+}
+function estrella(x, y, r, c) { ctx.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * .45 : r; ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } ctx.closePath(); ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = '#2B3350'; ctx.stroke(); }
+
+function dibujarHud() {
+  caja(470, 14, 340, 74, 37);
+  letra(String(puntos), 570, 52, 42, '#272140');
+  estrella(684, 50, 17, '#FFCB3D');
+  letra(String(Math.max(record(), puntos)), 748, 52, 30, '#2E9E5B');
+  if (combo > 1) letra('Combo ' + combo, 640, 108, 26, '#2E9E5B');
+  // cuánto río queda
+  caja(1032, 26, 216, 36, 18);
+  const frac = 1 - gotas.length / P.gotas;
+  ctx.fillStyle = '#2E9E5B'; ctx.beginPath(); ctx.roundRect(1040, 34, Math.max(0.01, 200 * frac), 20, 10); ctx.fill();
+  // recetas vivas
+  if (!P.jarra) return;
+  const presentes = new Set(gotas.map(g => g.color));
+  const filas = P.sec.slice();
+  if (P.nTer) [...presentes].filter(c => TER[c]).forEach(c => filas.push(c));
+  const contenido = jarra.cont, resultado = mezclaDe(contenido);
+  const alto = 46, y0 = 92;
+  caja(1062, y0, 202, filas.length * alto + 16, 22);
+  filas.forEach((c, i) => {
+    const y = y0 + 8 + alto * i + alto / 2, rc = receta(c), activo = presentes.has(c);
+    const parcial = contenido.length && contenido.every(x => rc.filter(z => z === x).length >= contenido.filter(z => z === x).length);
+    const exacto = resultado === c;
+    if (exacto || (parcial && activo)) { ctx.fillStyle = exacto ? 'rgba(255,203,61,.6)' : 'rgba(255,203,61,.25)'; ctx.beginPath(); ctx.roundRect(1068, y - 21, 190, 42, 16); ctx.fill(); }
+    if (!jarra.usada && activo && perfilId === 'nicole') { const b = .5 + .5 * Math.sin(t * 5); ctx.strokeStyle = `rgba(255,203,61,${.5 + .5 * b})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(1068, y - 21, 190, 42, 16); ctx.stroke(); }
+    ctx.globalAlpha = activo ? 1 : .3;
+    let x = 1086;
+    rc.forEach((ing, k) => { dibujarGota(x, y, 12, ing, 0, false); x += 28; if (k < rc.length - 1) { letra('+', x - 14, y, 18, '#655D82', activo ? 1 : .3); ctx.globalAlpha = activo ? 1 : .3; } });
+    letra('=', x - 2, y, 22, '#655D82', activo ? 1 : .3); ctx.globalAlpha = activo ? 1 : .3;
+    dibujarGota(x + 30, y, 17, c, 0, false);
+    ctx.globalAlpha = 1;
+  });
+}
+let recordes = {};
+try { recordes = JSON.parse(localStorage.getItem('rio-v2-record') || '{}') || {}; } catch (_) { recordes = {}; }
+function record() { return recordes[perfilId] || 0; }
+function guardarRecord() { if (puntos > record()) { recordes[perfilId] = puntos; try { localStorage.setItem('rio-v2-record', JSON.stringify(recordes)); } catch (_) {} return true; } return false; }
+let recordNuevo = false;
+
+function dibujarPista() {
+  // Primera vez: una flechita punteada de Coco a la batidora, y otra de la batidora a la palanca.
+  if (!P.jarra || estado !== 'jugando') return;
+  const b = .5 + .5 * Math.sin(t * 5);
+  if (!jarra.usada && gotas.some(g => !esBasico(g.color) && g.s > 0)) {
+    ctx.setLineDash([4, 12]); ctx.lineDashOffset = -t * 40; ctx.strokeStyle = `rgba(255,170,46,${.5 + .4 * b})`; ctx.lineWidth = 6; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(C.x, C.y + 96); ctx.lineTo(JAR.x, JAR.y - 64); ctx.stroke(); ctx.setLineDash([]);
+  } else if (jarra.usada && !jarra.servida && servible()) {
+    const y = PALANCA.y - 64 - b * 8;
+    ctx.fillStyle = '#FFAA2E'; ctx.beginPath(); ctx.moveTo(PALANCA.x + 56, y + 40); ctx.lineTo(PALANCA.x + 76, y + 20); ctx.lineTo(PALANCA.x + 66, y + 20); ctx.lineTo(PALANCA.x + 66, y); ctx.lineTo(PALANCA.x + 46, y); ctx.lineTo(PALANCA.x + 46, y + 20); ctx.lineTo(PALANCA.x + 36, y + 20); ctx.closePath();
+    ctx.save(); ctx.translate(PALANCA.x + 56, y + 20); ctx.rotate(Math.PI * .75); ctx.translate(-(PALANCA.x + 56), -(y + 20)); ctx.fill(); ctx.restore();
+  }
+}
+
+function dibujarFin() {
+  ctx.fillStyle = 'rgba(43,51,80,.35)'; ctx.fillRect(0, 0, W, H);
+  caja(390, 150, 500, 400, 48);
+  ctx.fillStyle = '#FFF8EE'; ctx.beginPath(); ctx.roundRect(392, 152, 496, 396, 46); ctx.fill();
+  const reb = Math.sin(t * 5) * 6;
+  if (estado === 'perdio') {
+    letra('¡Glu glu glu!', 640, 220 + reb, 56, '#655D82');
+  } else {
+    letra('¡Río limpio!', 640, 220 + reb, 56, '#2E9E5B');
+    for (let k = 0; k < 3; k++) estrella(560 + k * 80, 300, 30, k < estrellas ? '#FFCB3D' : '#E7E3EE');
+  }
+  letra(String(puntos), 590, estado === 'perdio' ? 300 : 372, 44, '#272140');
+  estrella(668, estado === 'perdio' ? 298 : 370, 18, '#FFCB3D');
+  letra(String(record()), 722, estado === 'perdio' ? 300 : 372, 32, '#2E9E5B');
+  if (recordNuevo) letra('¡Nuevo récord!', 640, estado === 'perdio' ? 350 : 420, 30, '#FF8A3D');
+  // flecha circular de otra vez
+  const x = 640, y = 480;
+  circulo(x, y, 44, '#FFCB3D');
+  ctx.strokeStyle = '#2B3350'; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(x, y, 22, -Math.PI * .15, Math.PI * 1.45); ctx.stroke();
+  ctx.fillStyle = '#2B3350'; const pa = {x: x + Math.cos(-Math.PI * .15) * 22, y: y + Math.sin(-Math.PI * .15) * 22};
+  ctx.beginPath(); ctx.moveTo(pa.x - 12, pa.y - 4); ctx.lineTo(pa.x + 10, pa.y - 6); ctx.lineTo(pa.x + 2, pa.y + 14); ctx.closePath(); ctx.fill();
+}
+
+function dibujar() {
+  if (!cauceCache) cauceCache = construirCauce();
+  ctx.save();
+  if (shake > 0) ctx.translate((rnd() - .5) * 14 * shake, (rnd() - .5) * 14 * shake);
+  ctx.drawImage(cauceCache, 0, 0);
+  dibujarNube(); dibujarRemolino(); dibujarGotas(); dibujarPuente(); dibujarGuia(); dibujarPista();
+  balas.forEach(b => dibujarGota(b.x, b.y, P.radio, b.color, 7));
+  vuelos.forEach(v => {
+    const k = Math.min(1, v.t / v.dur), dest = {x: C.x + Math.cos(ang) * ORB, y: C.y + Math.sin(ang) * ORB};
+    const x = v.x0 + (dest.x - v.x0) * k, y = v.y0 + (dest.y - v.y0) * k - Math.sin(k * Math.PI) * 60;
+    dibujarGota(x, y, P.radio * .9, v.color, 3, false);
+  });
+  anillos.forEach(a => { if (a.t < 0) return; const k = a.t / a.dur; ctx.strokeStyle = a.color.startsWith('#') ? alfa(a.color, 1 - k) : a.color; ctx.lineWidth = 6 * (1 - k) + 1; ctx.beginPath(); ctx.arc(a.x, a.y, a.r0 + (a.r1 - a.r0) * k, 0, TAU); ctx.stroke(); });
+  parts.forEach(p => circulo(p.x, p.y, p.r, alfa(col(p.color), Math.min(1, p.vida * 2))));
+  dibujarCoco();
+  dibujarHud();
+  textos.forEach(x => { const k = x.t / x.dur, e = k < .15 ? .7 + k * 2 : 1, a = k > .75 ? (1 - k) / .25 : 1; letra(x.txt, x.x, x.y - k * 40, Math.round(x.tam * e), x.color, a); });
+  if (pausa && estado === 'jugando') { ctx.fillStyle = 'rgba(43,51,80,.25)'; ctx.fillRect(0, 0, W, H); letra('Pausa', 640, 360, 64, '#FFFFFF'); }
+  ctx.restore();
+  if (estado === 'perdio' || (estado === 'gano' && finT > 1.2)) dibujarFin();
+}
+
+// ---------------------------------------------------------------- estado HTML
+const elEstado = document.getElementById('estado');
+let ultimoEstado = '';
+function actualizarEstado() {
+  const s = `Quedan <b>${gotas.length}</b> gotas · Puntos <b>${puntos}</b> · Mayor cadena <b>x${mayorCadena}</b> · Cadenas <b>${stats.cadenas}</b> · Arcoíris usadas <b>${stats.arcoiris}</b>` +
+    (P.jarra ? ` · Mezclas servidas <b>${stats.mezclas}</b>` : '') + ` · Tiempo <b>${Math.floor(tiempo)} s</b> (par ${P.par} s)`;
+  if (s !== ultimoEstado) { elEstado.innerHTML = s; ultimoEstado = s; }
+}
+
+// ---------------------------------------------------------------- bucle
+let previo = performance.now(), acumEstado = 0, finProcesado = false;
+function bucle(ahora) {
+  let dt = Math.min(.05, (ahora - previo) / 1000); previo = ahora;
+  if (document.hidden) dt = 0;
+  t += dt;
+  if (!pausa) {
+    avanzar(dt);
+    lengua = Math.max(0, lengua - dt / .14); carga = Math.min(1, carga + dt / .16); salto = Math.max(0, salto - dt * 3);
+    giro = Math.max(0, giro - dt * 9); shake = Math.max(0, shake - dt * 1.6);
+    if (jarra.tiembla > 0) jarra.tiembla -= dt;
+    if (Math.abs(Math.cos(ang)) > .25) mirando = Math.sign(Math.cos(ang));
+    parts.forEach(p => { p.vy += 900 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.vida -= dt; }); parts = parts.filter(p => p.vida > 0);
+    anillos.forEach(a => a.t += dt); anillos = anillos.filter(a => a.t < a.dur);
+    textos.forEach(x => x.t += dt); textos = textos.filter(x => x.t < x.dur);
+    if (estado === 'gano' || estado === 'perdio') {
+      finT += dt;
+      if (!finProcesado) { recordNuevo = guardarRecord(); finProcesado = true; }
+    } else finProcesado = false;
+  }
+  dibujar();
+  acumEstado += dt; if (acumEstado > .2) { acumEstado = 0; actualizarEstado(); }
+  requestAnimationFrame(bucle);
+}
+
+let inicial = 'nicole';
+try { const g = localStorage.getItem('rio-v2-perfil'); if (g && PERFILES[g]) inicial = g; } catch (_) {}
+elegir(inicial);
+requestAnimationFrame(bucle);
+})();
+</script>

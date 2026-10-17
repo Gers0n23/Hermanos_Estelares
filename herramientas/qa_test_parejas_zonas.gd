@@ -18,7 +18,7 @@ const Dibujos := preload("res://scripts/motores/emparejar/dibujos_emparejar.gd")
 const ZONAS := ["zona1_claro", "zona2_charcos", "zona3_chupetines", "zona4_islotes", "zona5_cima"]
 const PERFILES := {"semilla": "maxi", "brote": "nicole"}
 ## Parejas por ronda que admite cada perfil (ficha de zonas §3.3) y lado minimo de carta (GDD §6.1).
-const PARES_POR_PERFIL := {"semilla": [2, 5], "brote": [3, 6]}
+const PARES_POR_PERFIL := {"semilla": [2, 4], "brote": [3, 6]}
 const LADO_MINIMO := 96.0
 
 var _fallos := 0
@@ -84,12 +84,13 @@ func _validar_rondas(nivel: Dictionary, perfil: String) -> void:
 					detalle.append(figura)
 		datos_ok = datos_ok and cantidad >= rango[0] and cantidad <= rango[1] and pool.size() >= cantidad and ids.size() == pool.size()
 		if perfil == "semilla":
-			datos_ok = datos_ok and not oculto
+			# PO 17-Oct-2026: Maxi tambien juega con cartas tapadas (con vistazo de todas al repartir).
+			datos_ok = datos_ok and oculto
 		var fijos := pool.filter(func(p): return p.get("fijo", false)).size()
 		print("        ronda %d: %s · %d de un pool de %d%s%s%s" % [i + 1, ronda.get("tema", "?"), cantidad, pool.size(),
 			" · tapadas" if oculto else " · a la vista", " · bailan" if ronda.get("cartas_bailan", 0) else "",
 			" · %d fija(s)" % fijos if fijos else ""])
-	_check(datos_ok, "rondas con %d-%d parejas, pool suficiente, ids unicos%s" % [rango[0], rango[1], " y siempre a la vista (Maxi)" if perfil == "semilla" else ""])
+	_check(datos_ok, "rondas con %d-%d parejas, pool suficiente, ids unicos%s" % [rango[0], rango[1], " y siempre tapadas (Maxi)" if perfil == "semilla" else ""])
 	_check(dibujos_ok, "todas las cartas tienen dibujo %s" % ("" if dibujos_ok else str(detalle)))
 
 
@@ -165,9 +166,9 @@ func _jugar(ruta: String, perfil: String, nivel: Dictionary) -> void:
 		while (motor._ronda != i or motor._en_transicion) and Time.get_ticks_msec() - t0 < 12000:
 			await process_frame
 		await _esperar(0.7)
-		# HE-60: el vistazo al repartir (rondas tapadas de Nicole) bloquea el tablero unos segundos.
+		# HE-60: el tutorial (primera vez) y el vistazo al repartir bloquean el tablero unos segundos.
 		var t_vistazo := Time.get_ticks_msec()
-		while motor._en_vistazo and Time.get_ticks_msec() - t_vistazo < 15000:
+		while (motor._en_tutorial or motor._en_vistazo) and Time.get_ticks_msec() - t_vistazo < 30000:
 			await process_frame
 		var cartas: Array = motor._cartas
 		var oculto := bool(ronda.get("oculto", nivel.get("oculto", false)))

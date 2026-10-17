@@ -508,6 +508,17 @@ Señales nuevas: `racha_cambiada(n)`, `a_la_primera(id_pareja)` y `record_supera
 
 ### 10.2 Vistazo al repartir
 
+> **Cambio del PO (17-Oct-2026), reemplaza lo de abajo en solitario.** "Que se volteen un par de cartas
+> no sirve para nada: pueden salir solo cartas distintas y no dan ninguna pista." Ahora el vistazo muestra
+> **todas** las cartas (`vistazo.cartas: "todas"`) a los tres hermanos, **Maxi incluido**: Maxi pasa a
+> jugar con cartas tapadas; su ventaja es tener menos parejas (2-4). El tiempo escala con el tablero:
+> `ms + ms_por_carta × cartas` (provisional: Maxi 2500 + 300, Nicole 2000 + 200, Sofía 1500 + 100).
+> Mirar el vistazo **no** gasta el "¡a la primera!". La explicación de Coco al empezar pasa a ser un
+> **tutorial de una sola vez por hermano** (pausa + globito con pictograma y botón de jugar); las
+> partidas siguientes no explican nada (tocar a Coco la repite). El modo equipo conserva su vistazo de
+> parejas completas. Pendiente: recalibrar `umbrales_puntaje` y `tiempo_par_s` (`disenador-niveles`),
+> auditoría UX del globito y playtest.
+
 **[PO]** Al repartir, algunas cartas se muestran unos 2 s. La cantidad escala con el tablero (4 de 12,
 8 de 16 y 12 de 20, como en *Memory Master* de *Super Mario 64 DS* y el memorice de *NSMB*). Nicole las
 ve más tiempo y Sofía ve menos cartas.

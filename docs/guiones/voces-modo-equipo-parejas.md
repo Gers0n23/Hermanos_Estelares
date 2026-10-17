@@ -365,7 +365,7 @@ la racha ×2, la línea de racha **reemplaza** a `acierto_par_0X`.
 | arcoiris_emparejar_reto_vela_encendida | Coco | «¡La velita sigue encendida! ¡Puntos de regalo!» | contenta, con tintineo | Se termina el tablero con la vela encendida | `voces/arcoiris/emparejar/reto/vela_encendida.wav` | TTS |
 | arcoiris_emparejar_reto_vela_dormida | Coco | «Shhh... la velita se quedó dormida. ¡Tú sigue, que cada pareja suma!» | susurrando el "shhh", después alegre y cómplice; jamás "se acabó" | La vela se apaga (M7.3); Coco se encoge de hombros | `voces/arcoiris/emparejar/reto/vela_dormida.wav` | TTS |
 | arcoiris_emparejar_reto_vistazo_mira | Coco | «¡Mira!» | corta, con destello | Cada vistazo al repartir (en solitario) | `voces/arcoiris/emparejar/reto/vistazo_mira.wav` | TTS |
-| arcoiris_emparejar_reto_vistazo_presenta | Coco | «Al repartir, te muestro unas cartas un ratito. ¡Míralas bien!» | cómplice, contando un secreto | Primer vistazo de cada hermano (en lugar de `vistazo_mira`) | `voces/arcoiris/emparejar/reto/vistazo_presenta.wav` | TTS |
+| arcoiris_emparejar_reto_vistazo_presenta | Coco | «Al repartir, te muestro todas las cartas un ratito. ¡Míralas bien!» | cómplice, contando un secreto | Primer vistazo de cada hermano (en lugar de `vistazo_mira`) | `voces/arcoiris/emparejar/reto/vistazo_presenta.wav` | TTS |
 
 ### 6.1 Las estrellitas de Nicole por puntaje (motor §10.1.1)
 

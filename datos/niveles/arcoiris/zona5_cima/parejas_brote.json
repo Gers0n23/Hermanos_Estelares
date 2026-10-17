@@ -642,9 +642,9 @@
     "tres": 4600
   },
   "vistazo": {
-    "cartas": "auto",
-    "ms": 3000,
-    "pares_completos": true
+    "cartas": "todas",
+    "ms": 2000,
+    "ms_por_carta": 200
   },
   "puntaje": {
     "por_par": 100,

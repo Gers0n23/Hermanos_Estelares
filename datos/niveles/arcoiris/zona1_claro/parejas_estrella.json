@@ -224,9 +224,9 @@
     "vela_dormida": "voces/arcoiris/emparejar/reto/vela_dormida.wav"
   },
   "vistazo": {
-    "cartas": "auto",
-    "ms": 2000,
-    "pares_completos": false
+    "cartas": "todas",
+    "ms": 1500,
+    "ms_por_carta": 100
   },
   "puntaje": {
     "por_par": 100,

@@ -851,7 +851,7 @@ nuevo aquí.
 | `vela_dormida` | `arcoiris_emparejar_reto_vela_dormida` | «Shhh... la velita se quedó dormida. ¡Tú sigue, que cada pareja suma!» |
 | `vela_encendida` | `arcoiris_emparejar_reto_vela_encendida` | «¡La velita sigue encendida! ¡Puntos de regalo!» |
 | `vistazo` (el "¡mira!") | `arcoiris_emparejar_reto_vistazo_mira` | «¡Mira!» |
-| `vistazo_presenta` | `arcoiris_emparejar_reto_vistazo_presenta` | «Al repartir, te muestro unas cartas un ratito. ¡Míralas bien!» |
+| `vistazo_presenta` | `arcoiris_emparejar_reto_vistazo_presenta` | «Al repartir, te muestro todas las cartas un ratito. ¡Míralas bien!» |
 
 Lo que falta es **generar el audio**, no escribirlo: son 20 líneas TTS de Coco (≈ 700 caracteres), y
 conviene incluirlas en el **mismo lote** que la batalla, primero en la cola, porque bloquean el playtest

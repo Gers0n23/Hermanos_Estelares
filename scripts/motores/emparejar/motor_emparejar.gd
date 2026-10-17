@@ -37,8 +37,11 @@ extends "res://scripts/base/minijuego_base.gd"
 ##   del record propio, vela del tiempo par (cupcake) y record personal al terminar.
 ## - `puntaje.mostrar: "solo_sonido"` (Maxi): solo la cresta y el "ding" que sube de tono. Sin numeros,
 ##   sin barra, sin vela ni record (GDD §6, regla de oro 2).
-## - `vistazo`: al repartir, algunas cartas se muestran juntas un ratito (Nicole parejas completas,
-##   Sofia cartas sueltas) en cada ronda tapada. No es una pista: no cuesta nada.
+## - `vistazo`: al repartir, las cartas se muestran juntas un ratito en cada ronda tapada. No es una pista:
+##   no cuesta nada. Desde el 17-Oct-2026 (PO) se muestran TODAS (`cartas: "todas"`), tambien a Maxi:
+##   unas pocas cartas sueltas no daban ninguna pista. Mirar el vistazo no quita el "¡a la primera!".
+## - Tutorial (PO 17-Oct-2026): la intro de Coco solo suena la PRIMERA vez de cada hermano, con el juego
+##   en pausa y un globito con pictograma (`globo_tutorial_emparejar.gd`). Despues se juega directo.
 ## - `umbrales_puntaje` (Nicole): 1-3 estrellitas por puntaje base (sin el bono de la vela).
 ## Las voces de reto aun no estan grabadas (HE-67): si falta una, suena la generica de siempre.
 ## Correcciones de las auditorias HE-60 (07-Oct-2026, UX y QA):
@@ -117,6 +120,9 @@ const SEGUNDOS_ESPERA_INTRO := 6.0
 const SEGUNDOS_EXTRA_PRESENTACION := 1.5
 ## Tope de espera a que Coco termine una presentacion antes de encender la vela (UX M3).
 const SEGUNDOS_ESPERA_PRESENTACION := 12.0
+## Tutorial: tope de espera a la voz de la intro antes de mostrar el boton de jugar.
+const SEGUNDOS_ESPERA_TUTORIAL := 16.0
+const GloboTutorial := preload("res://scripts/motores/emparejar/globo_tutorial_emparejar.gd")
 ## UX m5: el trebol de "¡a la primera!" aterriza junto al contador xN (no sobre la vela).
 const DESTINO_TREBOL := Vector2(120, 330)
 
@@ -197,6 +203,7 @@ var _pares_station := 0  ## pares de toda la estacion (todas las rondas), para l
 var _ya_vistas := {}
 var _jugada_virgen := true
 var _en_vistazo := false
+var _en_tutorial := false
 var _vela_activa := false
 var _vela_corriendo := false
 var _vela_restante := 0.0
@@ -254,7 +261,6 @@ func _ready() -> void:
 	_construir_progreso()
 	_preparar_reto()
 	_boton_pista.visible = bool(nivel.get("pistas_cuestan_estrellita", false))
-	_reproducir_voz("intro", _linea("intro"))
 	_actualizar_depuracion()
 	_arrancar_tablero()
 
@@ -420,6 +426,9 @@ func _al_tocar_carta(carta: CartaEmparejar) -> void:
 		_al_tocar_carta_equipo(carta)
 		return
 	if carta.esta_acertada or _en_gag or _en_transicion:
+		return
+	if _en_tutorial:
+		carta.pulso_espera()
 		return
 	if _en_vistazo:
 		# El vistazo no se puede saltar (ficha §10.2 punto 4): el toque solo hace el pulso suave y un
@@ -1375,6 +1384,10 @@ func _tope_barra() -> float:
 ## Cada tablero nuevo (inicio o ronda): vistazo si toca y despues corre la vela.
 func _arrancar_tablero() -> void:
 	var ronda := _ronda
+	if ronda == 0 and _hay_tutorial():
+		await _mostrar_tutorial()
+		if not is_inside_tree():
+			return
 	if _hay_vistazo():
 		await _hacer_vistazo()
 		if not is_inside_tree() or ronda != _ronda:
@@ -1403,7 +1416,34 @@ func _arrancar_tablero() -> void:
 
 
 func _hay_vistazo() -> bool:
-	return _oculto and _conf.get("vistazo", null) is Dictionary and obtener_perfil_dificultad() != "semilla"
+	return _oculto and _conf.get("vistazo", null) is Dictionary
+
+
+## La explicacion de Coco es un tutorial de una sola vez por hermano (PO 17-Oct-2026). QA M1: sin voz de
+## intro no hay tutorial (una regla que no se puede explicar por voz no se muestra) ni se da por visto.
+func _hay_tutorial() -> bool:
+	return not presentacion_vista("tutorial_parejas") and _voz_existe(_linea("intro"))
+
+
+## Pausa el juego con el globito de Coco mientras explica; se cierra con el boton de jugar.
+func _mostrar_tutorial() -> void:
+	_en_tutorial = true
+	var globo := GloboTutorial.new()
+	_efectos.get_parent().add_child(globo)
+	_reaccion_anfitriona("salta")
+	_reproducir_voz("intro", _linea("intro"))
+	marcar_presentacion_vista("tutorial_parejas")
+	await _esperar_voz(SEGUNDOS_ESPERA_TUTORIAL)
+	if not is_instance_valid(globo):
+		return
+	globo.habilitar_cierre()
+	# Como la celebracion: si nadie toca "jugar", el juego sigue solo (0 = espera el toque).
+	if segundos_auto_continuar > 0.0:
+		get_tree().create_timer(segundos_auto_continuar).timeout.connect(func() -> void:
+			if is_instance_valid(globo):
+				globo.cerrar())
+	await globo.cerrado
+	_en_tutorial = false
 
 
 ## Vistazo al repartir (§10.2): las elegidas se dan vuelta juntas con "¡mira!", una pompa se encoge
@@ -1415,7 +1455,7 @@ func _hacer_vistazo() -> void:
 	await get_tree().create_timer(0.15 + _cartas.size() * SEGUNDOS_CASCADA_REPARTO + 0.45).timeout
 	if not is_inside_tree():
 		return
-	var segundos := float(conf.get("ms", 2000)) / 1000.0
+	var segundos := (float(conf.get("ms", 2000)) + float(conf.get("ms_por_carta", 0)) * elegidas.size()) / 1000.0
 	# UX M2: SIEMPRE se espera a que Coco termine (intro o consigna de la ronda): nadie memoriza cartas
 	# mientras escucha una instruccion.
 	await _esperar_voz(SEGUNDOS_ESPERA_INTRO)
@@ -1432,8 +1472,11 @@ func _hacer_vistazo() -> void:
 		# UX M2: siempre "¡mira!" justo antes de dar vuelta las cartas.
 		_reproducir_voz("vistazo", _linea("vistazo"))
 	reproducir_sfx(SFX_VOLTEAR, 1.2)
+	# PO 17-Oct-2026: en solitario, mirar el vistazo no gasta el "¡a la primera!" (si no, con todas a la vista
+	# nunca saldria). En equipo si cuenta: el halo de Maxi y la ayuda tenue de Nicole se guian por lo ya visto.
 	for carta: CartaEmparejar in elegidas:
-		_ya_vistas[carta] = true
+		if es_modo_equipo():
+			_ya_vistas[carta] = true
 		carta.destapar_vistazo()
 		_estallido(carta.global_position + carta.size / 2.0, 5, [Color.WHITE, DORADO], 0.5)
 	_mostrar_pompa(segundos)
@@ -1451,10 +1494,13 @@ func _hacer_vistazo() -> void:
 	_en_vistazo = false
 
 
-## Cuales se muestran (M6, aceptado por el PO): parejas completas (Nicole: 1 par con <= 10 cartas, 2 con
-## 12-16) o cartas sueltas sin repetir grupo (Sofia: round(cartas/4)). `cartas` numerico pisa el "auto".
+## Cuales se muestran: `cartas: "todas"` (PO 17-Oct-2026, todos los hermanos en solitario), parejas
+## completas (modo equipo; antes Nicole: 1 par con <= 10 cartas, 2 con 12-16) o cartas sueltas sin repetir
+## grupo (antes Sofia: round(cartas/4)). `cartas` numerico pisa el "auto".
 func _cartas_vistazo(conf: Dictionary) -> Array:
 	var cantidad = conf.get("cartas", "auto")
+	if str(cantidad) == "todas":
+		return _cartas.filter(func(c: CartaEmparejar) -> bool: return not c.esta_acertada)
 	var auto: bool = not (cantidad is float or cantidad is int)
 	var por_grupo := {}
 	for carta in _cartas:

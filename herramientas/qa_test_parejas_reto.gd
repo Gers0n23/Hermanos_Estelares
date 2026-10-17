@@ -2,11 +2,14 @@ extends SceneTree
 
 ## QA de HE-60 "Parejas de Coco con reto real" (ficha motor-emparejar §10.1, §10.1.1 y §10.2) para los
 ## tres perfiles:
-## - Maxi (semilla, zona 1): racha solo con sonido y cresta; sin numeros, barra, vela, vistazo ni record.
-## - Nicole (brote, zona 2): vistazo de parejas completas, racha x1-x5, "¡a la primera!", el fallo corta
+## - Maxi (semilla, zona 1): racha solo con sonido y cresta; sin numeros, barra, vela ni record. Desde el
+##   17-Oct-2026 (PO) juega con cartas tapadas y vistazo de TODAS las cartas, como sus hermanas.
+## - Tutorial (PO 17-Oct-2026): la intro de Coco es un tutorial de una sola vez por hermano (pausa + globito);
+##   la segunda partida no explica nada.
+## - Nicole (brote, zona 2): vistazo de todas las cartas, racha x1-x5, "¡a la primera!", el fallo corta
 ##   la racha sin restar, record personal (primera partida sin vela; la segunda, con vela porque ya hay
 ##   record) y estrellitas 1-3 por puntaje base guardadas en Progreso.
-## - Sofia (estrella, zona 1): vela desde la primera partida, vistazo de cartas sueltas, tope x5,
+## - Sofia (estrella, zona 1): vela desde la primera partida, vistazo de todas las cartas, tope x5,
 ##   estrellitas por fallos sin cambios y record con el bono de la vela.
 ## - Un nivel sin `puntaje` ni `vistazo` se juega exactamente como antes.
 ## - Correcciones de las auditorias HE-60 (07-Oct-2026): salir tras el ultimo par no pierde la estacion
@@ -86,7 +89,14 @@ func _esperar_tablero(motor: Node, ronda: int) -> void:
 	await _esperar(0.6)
 
 
+func _esperar_tutorial(motor: Node) -> void:
+	var t0 := Time.get_ticks_msec()
+	while motor._en_tutorial and Time.get_ticks_msec() - t0 < 25000:
+		await process_frame
+
+
 func _esperar_fin_vistazo(motor: Node) -> void:
+	await _esperar_tutorial(motor)
 	var t0 := Time.get_ticks_msec()
 	while motor._en_vistazo and Time.get_ticks_msec() - t0 < 15000:
 		await process_frame
@@ -144,15 +154,20 @@ func _probar_maxi() -> void:
 	motor.completado.connect(func(d: int) -> void: completado[0] = d)
 	motor.racha_cambiada.connect(func(n: int) -> void: rachas.append(n))
 	get_root().add_child(motor)
+	await process_frame
+	_check(motor._en_tutorial, "primera vez de Maxi: tutorial con el juego en pausa")
 	await _esperar_tablero(motor, 0)
 	_check(motor._cresta != null and motor._cresta.get_parent() == motor._anfitriona, "la cresta de Coco esta (racha solo con sonido y nuditos)")
 	_check(motor._barra_record == null and motor._contador_racha == null and motor._vela == null, "sin barra de record, sin contador x2 ni vela")
-	_check(not motor._en_vistazo and not motor._hay_vistazo(), "sin vistazo (sus cartas ya estan a la vista)")
+	_check(motor._oculto and motor._hay_vistazo() and str(motor._conf["vistazo"]["cartas"]) == "todas", "cartas tapadas con vistazo de todas (PO 17-Oct)")
+	await _esperar_fin_vistazo(motor)
+	_check(_progreso.especial_conocido("maxi", "tutorial_parejas"), "el tutorial queda marcado como visto")
 	var grupos := _por_pareja(motor)
 	await _tocar_grupo(motor, grupos[grupos.keys()[0]])
 	_check(motor._racha == 1 and motor._cresta.encendidos == 1, "un par enciende un nudito (racha 1)")
 	for i in motor._rondas.size():
 		await _esperar_tablero(motor, i)
+		await _esperar_fin_vistazo(motor)
 		if i == motor._rondas.size() - 1:
 			# Ultima ronda (3 parejas): un par y un "no es este" que corta la racha.
 			grupos = _por_pareja(motor)
@@ -179,7 +194,10 @@ func _probar_nicole() -> void:
 	motor.completado.connect(func(d: int) -> void: completado[0] = d)
 	motor.a_la_primera.connect(func(_id: String) -> void: primeras[0] += 1)
 	get_root().add_child(motor)
-	await _esperar(0.9 + motor._cartas.size() * motor.SEGUNDOS_CASCADA_REPARTO)
+	_check(motor._en_tutorial and motor.get_node("capa_ui/ui").get_children().any(func(n): return n.get_script() == motor.GloboTutorial),
+		"primera vez de Nicole: tutorial con globito")
+	await _esperar_tutorial(motor)
+	await _esperar(0.05)
 	_check(motor._en_vistazo, "al repartir hay vistazo (ronda tapada)")
 	# Primera vez: Coco espera la intro y presenta el vistazo; contamos las cartas a la vista mientras dura.
 	var t0 := Time.get_ticks_msec()
@@ -193,33 +211,30 @@ func _probar_nicole() -> void:
 			for c in a_la_vista:
 				ids_vistos[c.id_pareja] = ids_vistos.get(c.id_pareja, 0) + 1
 		await process_frame
-	_check(maximo == 2 and ids_vistos.size() == 1, "vistazo de 1 pareja completa con %d cartas (vio %d de %s)" % [motor._cartas.size(), maximo, ids_vistos])
+	_check(maximo == motor._cartas.size(), "vistazo de TODAS las cartas (vio %d de %d)" % [maximo, motor._cartas.size()])
 	_check(motor._cartas.all(func(c): return not c.mostrando), "tras el vistazo todas vuelven a taparse")
 	# QA M1: solo se gasta la presentacion si su voz existe (y sono).
 	_check(_progreso.especial_conocido("nicole", "vistazo") == _voz_del_nivel(motor, "vistazo_presenta"),
 		"presentacion del vistazo marcada solo si su voz existe (voz %s, marcada %s)" % [_voz_del_nivel(motor, "vistazo_presenta"), _progreso.especial_conocido("nicole", "vistazo")])
 	_check(motor._vela == null, "primera partida sin record: no hay vela (M7.1)")
 	_check(motor._barra_record != null and motor._barra_record.record == 0, "barra de puntaje sin banderita (no hay record)")
-	# Un par que nadie vio: "¡a la primera!".
+	# Mirar el vistazo no gasta el "¡a la primera!": el primer par acertado lo da.
 	var grupos := _por_pareja(motor)
-	var virgen := ""
-	for id in grupos:
-		if grupos[id].all(func(c): return not motor._ya_vistas.has(c)):
-			virgen = id
-			break
-	await _tocar_grupo(motor, grupos[virgen])
-	_check(primeras[0] == 1 and motor._puntaje_base == 300, "'¡a la primera!': 100 x1 + 200 (puntaje %d)" % motor._puntaje_base)
-	# Un par ya visto (el del vistazo) no es "a la primera"; la racha sube a x2.
+	await _tocar_grupo(motor, grupos[grupos.keys()[0]])
+	_check(primeras[0] == 1 and motor._puntaje_base == 300, "'¡a la primera!' tras el vistazo: 100 x1 + 200 (puntaje %d)" % motor._puntaje_base)
+	# Una carta ya dada vuelta en un "no es este" si gasta el bono; el fallo corta la racha y vuelve a x1.
+	await _fallar(motor)
 	grupos = _por_pareja(motor)
 	var visto := ""
 	for id in grupos:
 		if grupos[id].any(func(c): return motor._ya_vistas.has(c)):
 			visto = id
 			break
-	if visto != "":
-		await _tocar_grupo(motor, grupos[visto])
-		_check(primeras[0] == 1 and motor._racha == 2 and motor._puntaje_base == 500, "par ya visto: x2 = 200, sin bono (puntaje %d)" % motor._puntaje_base)
-		_check(motor._contador_racha.visible and motor._contador_racha.text == "×2", "contador de racha '×2' junto a Coco")
+	await _tocar_grupo(motor, grupos[visto])
+	_check(primeras[0] == 1 and motor._racha == 1 and motor._puntaje_base == 400, "par ya tocado: x1 = 100, sin bono (puntaje %d)" % motor._puntaje_base)
+	grupos = _por_pareja(motor)
+	await _tocar_grupo(motor, grupos[grupos.keys()[0]])
+	_check(motor._racha == 2 and motor._contador_racha.visible and motor._contador_racha.text == "×2", "contador de racha '×2' junto a Coco")
 	await _resolver_todo(motor)
 	for i in range(1, motor._rondas.size()):
 		await _esperar_tablero(motor, i)
@@ -245,6 +260,7 @@ func _probar_nicole() -> void:
 	completado = [-1]
 	motor.completado.connect(func(d: int) -> void: completado[0] = d)
 	get_root().add_child(motor)
+	_check(not motor._en_tutorial, "segunda partida: sin tutorial ni explicacion de Coco")
 	await _esperar(0.5)
 	_check(motor._record_previo == record and motor._barra_record.record == record, "la banderita-cupcake esta a la altura de SU record (%d)" % record)
 	_check(motor._vela != null and motor._vela_activa and motor._vela_total == 75.0, "con record, aparece la vela (75 s, desde la zona 2)")
@@ -277,21 +293,16 @@ func _probar_sofia() -> void:
 	await _esperar(0.5)
 	_check(motor._vela != null and motor._vela_activa, "vela desde la primera partida (vela_desde_primera)")
 	_check(motor._vela.size.y < 80.0 and not Rect2(motor._vela.position, motor._vela.size).intersects(motor.ZONA_TABLERO), "vela de menos de 80 px y fuera del tablero")
+	await _esperar_tutorial(motor)
 	var t0 := Time.get_ticks_msec()
 	var maximo := 0
-	var repetidos := false
-	await _esperar(0.9)
+	await _esperar(0.05)
 	while motor._en_vistazo and Time.get_ticks_msec() - t0 < 15000:
 		var a_la_vista: Array = motor._cartas.filter(func(c): return c.mostrando)
 		if a_la_vista.size() > maximo:
 			maximo = a_la_vista.size()
-			var ids := {}
-			for c in a_la_vista:
-				ids[c.id_pareja] = true
-			repetidos = ids.size() != a_la_vista.size()
 		await process_frame
-	var esperadas := roundi(motor._cartas.size() / 4.0)
-	_check(maximo == esperadas and not repetidos, "vistazo de %d cartas sueltas de %d, nunca dos del mismo par (vio %d)" % [esperadas, motor._cartas.size(), maximo])
+	_check(maximo == motor._cartas.size(), "vistazo de TODAS las cartas (vio %d de %d)" % [maximo, motor._cartas.size()])
 	var vela_antes: float = motor._vela_restante
 	_check(is_equal_approx(vela_antes, motor._vela_total), "la vela no corre durante el vistazo")
 	await _resolver_todo(motor)
@@ -321,6 +332,7 @@ func _probar_sin_reto() -> void:
 	await _esperar(0.9)
 	_check(motor._reto.is_empty() and motor._cresta == null and motor._barra_record == null and motor._vela == null, "sin cresta, barra ni vela")
 	_check(not motor._en_vistazo and motor._cartas.all(func(c): return not c.mostrando), "sin vistazo: todas tapadas desde el inicio")
+	await _esperar_tutorial(motor)
 	await _resolver_todo(motor)
 	await _esperar_completado(motor, completado)
 	_check(completado[0] > 0 and motor._puntaje_base == 0, "completado(%d), sin puntaje" % completado[0])

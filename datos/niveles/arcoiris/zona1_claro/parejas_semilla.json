@@ -9,10 +9,10 @@
   "fondo_id": "planeta_arcoiris",
   "dificultad": "rondas (PO 27-Sep-2026)",
   "modo": "identico",
-  "oculto": false,
+  "oculto": true,
   "limite_intentos": null,
-  "tiempo_volteo_ms": 700,
-  "ayuda_tras_fallos": null,
+  "tiempo_volteo_ms": 1800,
+  "ayuda_tras_fallos": 2,
   "halo_idle": true,
   "lineas_voz": {
     "intro": "voces/arcoiris/emparejar/semilla/intro_z1.wav",
@@ -30,7 +30,9 @@
       "voces/arcoiris/emparejar/semilla/ronda_superada_02.wav",
       "voces/arcoiris/emparejar/semilla/ronda_superada_03.wav"
     ],
-    "victoria_final": "voces/arcoiris/emparejar/semilla/victoria_rondas_01.wav"
+    "victoria_final": "voces/arcoiris/emparejar/semilla/victoria_rondas_01.wav",
+    "ayuda": "voces/arcoiris/emparejar/brote/ayuda_01.wav",
+    "vistazo": "voces/arcoiris/emparejar/reto/vistazo_mira.wav"
   },
   "rondas": [
     {
@@ -278,5 +280,10 @@
   "puntaje": {
     "racha_tope": 5,
     "mostrar": "solo_sonido"
+  },
+  "vistazo": {
+    "cartas": "todas",
+    "ms": 2500,
+    "ms_por_carta": 300
   }
 }
