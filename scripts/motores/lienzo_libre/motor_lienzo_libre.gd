@@ -16,6 +16,8 @@ extends "res://scripts/base/minijuego_base.gd"
 ##   al tocarlo, hace que Coco repita la consigna. Sin avance, Coco da una PISTA FANTASMA. Al cumplir
 ##   todos: gran celebracion y aparece "mostrar a Coco". Sin tiempo limite, sin fallo.
 ## - ZOOM con pinza, rueda o lupa (no para Maxi). Un dedo pinta; dos dedos nunca pintan.
+## - MUNDO GRANDE (ficha §12): en las hojas con tema de Nicole y Sofia el mundo mide 2x2 pantallas;
+##   arranca en zoom 1 (un cuarto de la hoja) y "ver todo" aleja hasta la hoja entera.
 ##
 ## Encargos de las zonas 2-5 (`encargo`): libre, sellos_escena, colorear_zonas, colorear_codigo,
 ## pinta_coco, coco_pide, mezcla_paleta, dedo_magico, espejo, mandala, decora_ala, viste_coco. En
@@ -42,6 +44,8 @@ const StickerVivo := preload("res://scripts/motores/lienzo_libre/sticker_vivo.gd
 const RECT_LIENZO := Rect2(0, 0, 1280, 720)
 ## Parte del papel que no tapan los botones: alli se encuadran las laminas de 824x530 y el mosaico.
 const AREA_SEGURA := Rect2(128, 168, 972, 544)
+## Ficha §12: lado del mundo (en pantallas) de las hojas con tema de Nicole y Sofia (Maxi: 1).
+const ESCALA_MUNDO_GRANDE := 2.0
 const DOCK_X := 12.0
 const DOCK_Y := 128.0
 const RECT_INSPIRACION := Rect2(128, 12, 192, 108)
@@ -425,10 +429,15 @@ func _empezar_hoja(indice: int) -> void:
 	_cerrar_popup()
 	_cerrar_inspiracion()
 
+	# Ficha §12: mundo grande solo en las hojas con tema y con zoom (Nicole y Sofia); el JSON puede
+	# fijar otro `escala_mundo`. Maxi y las hojas de colorear de las zonas 2-5 siguen a 1x.
+	var con_zoom := _perfil != "semilla" and bool(_cfg.get("zoom", true))
+	var con_tema := not (hoja.get("tema", {}) as Dictionary).is_empty()
+	lienzo.fijar_escala_mundo(float(_cfg.get("escala_mundo", ESCALA_MUNDO_GRANDE)) if con_zoom and con_tema else 1.0)
 	lienzo.limpiar()
 	lienzo.bloqueado = false
-	lienzo.area_segura = AREA_SEGURA
-	lienzo.zoom_permitido = _perfil != "semilla" and bool(_cfg.get("zoom", true))
+	lienzo.fijar_area_libre(AREA_SEGURA)
+	lienzo.zoom_permitido = con_zoom
 	lienzo.papel = Color(str(_cfg.get("papel", "#FFF8EE")))
 	lienzo.radio_pincel = float(_cfg.get("radio_pincel", {"semilla": 26.0, "brote": 16.0, "estrella": 11.0}.get(_perfil, 16.0)))
 	lienzo.lado_sello = int(_cfg.get("lado_sello", {"semilla": 124, "brote": 88, "estrella": 72}.get(_perfil, 88)))
@@ -484,6 +493,8 @@ func _empezar_hoja(indice: int) -> void:
 	_preparar_pedidos()
 	_preparar_mezcla()
 	_preparar_objetivos()
+	# Ficha §12.5: encuadre de arranque (mundo grande: zoom 1 mirando el horizonte; si no, la hoja entera).
+	lienzo.encuadre_inicial()
 	# La hoja quedo armada: esa es la foto a la que vuelve "reiniciar" (y el historial empieza vacio).
 	lienzo.fijar_inicio()
 	_colocar_botones_edicion()
@@ -525,19 +536,27 @@ func _preparar_escena(tema: Dictionary) -> void:
 			clases[str(id)] = clase.trim_suffix("s") if clase != "lugares" else "lugar"
 	lienzo.clases = clases
 	lienzo.combinaciones = _cfg.get("combinaciones", [])
-	lienzo.zonas = tema.get("zonas", {})
+	# Ficha §12: las coordenadas del tema vienen en px de la pantalla (1280x720); en el mundo grande se
+	# escalan (zonas, lugares de fondo, puestos y caminos iniciales). Los stickers no se agrandan.
+	var e := lienzo.escala_mundo
+	var zonas := {}
+	var zonas_tema: Dictionary = tema.get("zonas", {})
+	for nombre in zonas_tema:
+		var r: Array = zonas_tema[nombre]
+		zonas[nombre] = [float(r[0]) * e, float(r[1]) * e, float(r[2]) * e, float(r[3]) * e]
+	lienzo.zonas = zonas
 	# Lugares de fondo (§1.1): {id, ancla, radio, region?, lineal?}.
 	for datos: Dictionary in tema.get("lugares_fondo", []):
-		lienzo.poner_lugar_fijo(str(datos.get("id", "")), Laminas.vec(datos.get("ancla", null)), float(datos.get("radio", 80.0)),
+		lienzo.poner_lugar_fijo(str(datos.get("id", "")), Laminas.vec(datos.get("ancla", null)) * e, float(datos.get("radio", 80.0)) * e,
 			str(datos.get("region", "")), bool(datos.get("lineal", false)))
 	# Lugares que ya vienen puestos (el granero de la granja): stickers normales.
 	for datos: Dictionary in tema.get("puestos", []):
-		var puesto: StickerVivo = lienzo.poner_sticker(str(datos.get("sticker", "")), Laminas.vec(datos.get("pos", null)), float(datos.get("escala", 1.0)))
+		var puesto: StickerVivo = lienzo.poner_sticker(str(datos.get("sticker", "")), Laminas.vec(datos.get("pos", null)) * e, float(datos.get("escala", 1.0)))
 		puesto.set_meta("puesto", true)
 	for datos: Dictionary in tema.get("caminos_iniciales", []):
 		var puntos := PackedVector2Array()
 		for p in datos.get("puntos", []):
-			puntos.append(Laminas.vec(p))
+			puntos.append(Laminas.vec(p) * e)
 		lienzo.agregar_camino(puntos, str(datos.get("tipo", "sendero")), false)
 	var caminos: Array = tema.get("caminos", [])
 	if not caminos.is_empty():
@@ -911,7 +930,7 @@ func _construir_dock() -> void:
 	_boton_ver_todo.pressed.connect(func() -> void:
 		_sfx_suave(SFX_ELEGIR)
 		lienzo.ver_todo())
-	_boton_ver_todo.visible = lienzo.zoom > 1.01
+	_boton_ver_todo.visible = lienzo.zoom > lienzo.zoom_minimo() + 0.01
 	_refrescar_dock()
 
 
@@ -919,7 +938,7 @@ func _refrescar_dock() -> void:
 	for entrada: Dictionary in _dock_botones:
 		var boton: Button = entrada["boton"]
 		var grupo: String = entrada["grupo"]
-		var activo := (grupo == "lupa" and (lienzo.lupa_armada or lienzo.zoom > 1.01)) or \
+		var activo := (grupo == "lupa" and (lienzo.lupa_armada or lienzo.zoom > lienzo.zoom_base() + 0.01)) or \
 			(grupo != "colores" and grupo != "lupa" and (_grupos.get(grupo, []) as Array).has(lienzo.herramienta))
 		_estilizar_boton(boton, Color("#FFE38A") if activo else Color("#FFF8EE"), false)
 		(boton.get_meta("dibujo") as Control).queue_redraw()
@@ -943,13 +962,15 @@ func _al_tocar_dock(grupo: String) -> void:
 	abrir_popup(grupo)
 
 
-## Lupa (lienzo-escenas-retos.md §1.7): alterna 1x / 2x. Con 1x queda ARMADA y el siguiente toque
-## en el lienzo acerca al doble centrado ahi; con zoom, vuelve a 1x. La pinza de dos dedos y la rueda
-## del mouse quedan como extra. Publica para QA.
+## Lupa (lienzo-escenas-retos.md §1.7 y ficha §12.4): sin acercar, queda ARMADA y el siguiente toque
+## en el lienzo acerca ahi (desde la hoja entera al zoom normal; desde el normal, al doble). Acercada,
+## vuelve al zoom normal sin perder lo que se miraba. Armada, otro toque la desarma. La pinza de dos
+## dedos y la rueda del mouse quedan como extra. Publica para QA.
 func usar_lupa() -> void:
-	if lienzo.zoom > 1.01 or lienzo.lupa_armada:
+	if lienzo.lupa_armada:
 		lienzo.lupa_armada = false
-		lienzo.ver_todo()
+	elif lienzo.zoom > lienzo.zoom_base() + 0.01:
+		lienzo.volver_a_base()
 	else:
 		lienzo.lupa_armada = true
 	_refrescar_dock()
@@ -1184,7 +1205,7 @@ func _elegir_herramienta(id: String, con_sonido := true) -> void:
 
 func _al_cambiar_zoom(zoom: float) -> void:
 	if _boton_ver_todo != null and is_instance_valid(_boton_ver_todo):
-		_boton_ver_todo.visible = zoom > 1.01
+		_boton_ver_todo.visible = zoom > lienzo.zoom_minimo() + 0.01
 	if not _dock_botones.is_empty():
 		_refrescar_dock()
 	_ocultar_barra()
@@ -1300,6 +1321,8 @@ func _datos_inspiracion(lamina: Dictionary) -> Dictionary:
 		var datos: Dictionary = (tema["inspiracion"] as Dictionary).duplicate()
 		datos["fondo"] = Laminas.preparar(tema.get("fondo", {}))
 		datos["tamano"] = Vector2(RECT_LIENZO.size)
+		# Ficha §12.7: la tarjeta es una IDEA de la hoja entera, no un mapa a escala: sus stickers
+		# conservan el tamano de siempre aunque el mundo sea grande (a la mitad no se reconocen).
 		return datos
 	var imagen := str(_cfg.get("imagen_modelo", ""))
 	if imagen != "" and bool(_cfg.get("modelo", false)) and ResourceLoader.exists(imagen):
@@ -2482,7 +2505,7 @@ func _mostrar_pista_de(objetivo: Dictionary) -> void:
 							"viajero": str(nodos[0].id)}, 4.5)
 					return
 		"encerrar":
-			var centro := Vector2(640, 520)
+			var centro := Vector2(640, 520) * lienzo.escala_mundo
 			for sticker: StickerVivo in lienzo.stickers():
 				if _coincide(sticker.id, str(o.get("sticker", ""))):
 					centro = sticker.centro()
@@ -2497,7 +2520,7 @@ func _mostrar_pista_de(objetivo: Dictionary) -> void:
 		"circuito":
 			var puntos := PackedVector2Array()
 			for k in 33:
-				puntos.append(Vector2(640, 520) + Vector2.from_angle(TAU * k / 32.0) * Vector2(260, 90))
+				puntos.append(Vector2(640, 520) * lienzo.escala_mundo + Vector2.from_angle(TAU * k / 32.0) * Vector2(260, 90))
 			lienzo.mostrar_fantasma({"tipo": "circuito", "puntos": puntos, "viajero": str(o.get("viajero", ""))}, 4.5)
 			_pulsar_grupo("cosas")
 		"pintar_zona":
@@ -2517,7 +2540,7 @@ func _mostrar_pista_de(objetivo: Dictionary) -> void:
 							_pulsar_grupo("colores")
 							return
 			elif _encargo == "dedo_magico":
-				lienzo.mostrar_fantasma({"tipo": "camino", "puntos": PackedVector2Array([Vector2(640, 60), Vector2(560, 360), Vector2(660, 660)])}, 4.5)
+				lienzo.mostrar_fantasma({"tipo": "camino", "puntos": PackedVector2Array([Vector2(640, 60) * lienzo.escala_mundo, Vector2(560, 360) * lienzo.escala_mundo, Vector2(660, 660) * lienzo.escala_mundo])}, 4.5)
 			elif _encargo in ["espejo", "mandala"]:
 				lienzo.mostrar_fantasma({"tipo": "guia"}, 4.5)
 			elif not lienzo.lamina.is_empty() and not lienzo.stickers_objeto:
@@ -2569,8 +2592,8 @@ func _pos_sugerida(id: String) -> Vector2:
 	var tema: Dictionary = _hojas[_indice_hoja].get("tema", {})
 	for elemento: Dictionary in (tema.get("inspiracion", {}) as Dictionary).get("elementos", []):
 		if str(elemento.get("sticker", "")) == id or (id == "trex" and Stickers.es_dino(str(elemento.get("sticker", "")))):
-			return Laminas.vec(elemento.get("pos", null))
-	return Vector2(620, 420)
+			return Laminas.vec(elemento.get("pos", null)) * lienzo.escala_mundo
+	return Vector2(620, 420) * lienzo.escala_mundo
 
 
 func _curva(a: Vector2, b: Vector2) -> PackedVector2Array:

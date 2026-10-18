@@ -7,6 +7,12 @@ extends Control
 ## mundo quedan mas chicos (mas detalle). Las laminas de 824x530 (zonas 2-5) se encuadran con escala
 ## uniforme en `area_segura`, la parte del papel que no tapan los botones de las esquinas.
 ##
+## MUNDO GRANDE (ficha §12, 17-Oct-2026): en las hojas con tema de Nicole y Sofia el mundo mide
+## `escala_mundo` (2) veces la pantalla: 2560x1440. El fondo, sus zonas y las posiciones del tema se
+## escalan; stickers, pincel y caminos NO (miden en pantalla lo mismo que antes al zoom 1, el de
+## arranque). Zoom 1 = 1 px del mundo por px de pantalla; se aleja hasta ver la hoja entera
+## (`zoom_minimo()`, 0,5) y se acerca hasta `zoom_maximo()` (2). Maxi y las hojas de colorear: 1x.
+##
 ## Capas, de abajo hacia arriba:
 ## 1. Papel y LAMINA vectorial (o MOSAICO por codigo), con `_draw`.
 ## 2. PINTURA: una sola `Image` del tamano del lienzo (`Image.blend_rect`, nativo).
@@ -73,6 +79,12 @@ const PAUSA_LLEGADA := 1.1
 ## Un toque que se mueve menos que esto (px de pantalla) es "tocar", no "arrastrar".
 const TOLERANCIA_TOQUE := 14.0
 const ZOOM_MAX := 3.0
+## Mundo grande (ficha §12): pantalla base, tope del zoom y segundos del paseo de la camara.
+const TAMANO_PANTALLA := Vector2i(1280, 720)
+const ZOOM_MAX_MUNDO_GRANDE := 2.0
+const SEGUNDOS_ENFOQUE := 0.6
+## Pintura en mosaicos: al pintar solo se sube a la GPU el pedazo tocado (no la Image entera).
+const LADO_MOSAICO := Vector2i(640, 360)
 ## Caminos que adornan o encierran pero no llevan viajeros (R6 de lienzo-escenas-retos.md; la cerca
 ## se agrega por delegacion: es el corral, no un camino para pasear).
 const SIN_VIAJEROS := ["guirnalda", "cerca"]
@@ -96,6 +108,13 @@ const ANCHO_CAMINO_SEMILLA := 0.7
 const SEGUNDOS_BORRAR_CAMINO := 1.2
 
 var tamano := Vector2i(1280, 720)
+## Cuantas pantallas mide el mundo por lado (1 = como la pantalla; 2 = mundo grande, ficha §12).
+var escala_mundo := 1.0
+## Parte de la PANTALLA libre de botones (sin escalar): ahi se busca mostrar las pistas.
+var area_libre := Rect2(Vector2.ZERO, Vector2(1280, 720))
+var _tween_vista: Tween
+## Pista que quedo esperando a que se levante el dedo para mover la camara.
+var _enfoque_pendiente := Rect2()
 var papel := Color("#FFF8EE")
 var color_actual := Color("#EE4035")
 var herramienta := "pincel"
@@ -190,12 +209,17 @@ var _inicio: Dictionary = {}
 
 var _pintura: Image
 var _respaldo: Image
-var _textura: ImageTexture
+## Mosaicos de la pintura en pantalla: [{"rect": Rect2i, "imagen": Image, "textura": ImageTexture}].
+var _mosaicos_pintura: Array = []
+## Parte de la pintura cambiada desde el ultimo cuadro (en px del mundo); vacia = nada que subir.
+var _rect_sucio := Rect2i()
+## `_sucio = true` marca TODA la pintura (deshacer, hornear); los trazos marcan solo su pedazo.
 var _sucio := false:
 	set(valor):
 		_sucio = valor
 		if valor:
 			_pintura_tocada = true
+			_rect_sucio = Rect2i(Vector2i.ZERO, tamano)
 var _brochas := {}
 var _calcomanias := {}
 var _capa_sellos: Control
@@ -281,9 +305,12 @@ func _process(delta: float) -> void:
 			if float(polvo["t"]) >= float(polvo["dur"]):
 				_polvos.erase(polvo)
 		_capa_efectos.queue_redraw()
-	if _sucio:
-		_sucio = false
-		_textura.update(_pintura)
+	if _rect_sucio.has_area():
+		_subir_pintura()
+	if _enfoque_pendiente.has_area() and not _presionado and not en_gesto:
+		var rect := _enfoque_pendiente
+		_enfoque_pendiente = Rect2()
+		mostrar_en_vista(rect)
 	if _presionado and herramienta == "purpurina" and not _purpurina_disparada:
 		_quieto += delta
 		if _quieto >= 1.0:
@@ -300,10 +327,31 @@ func _process(delta: float) -> void:
 # Preparacion de cada hoja
 # ---------------------------------------------------------------------------
 
+## Fija el tamano del mundo para la hoja (ficha §12): 1 = la pantalla; 2 = mundo grande (2560x1440).
+## Se llama ANTES de `limpiar()` (que crea la pintura del tamano nuevo).
+func fijar_escala_mundo(escala: float) -> void:
+	escala_mundo = maxf(1.0, escala)
+	tamano = Vector2i((Vector2(TAMANO_PANTALLA) * escala_mundo).round())
+	custom_minimum_size = Vector2(tamano)
+	size = Vector2(tamano)
+	for capa in [_capa_caminos, _capa_sellos, _capa_efectos, _capa_guias, _capa_fantasma]:
+		if capa != null:
+			capa.size = Vector2(tamano)
+	area_segura = Rect2(area_libre.position * escala_mundo, area_libre.size * escala_mundo)
+
+
+## Parte de la pantalla sin botones. En el mundo, `area_segura` es esa misma parte con la hoja entera
+## a la vista (escalada por `escala_mundo`).
+func fijar_area_libre(rect: Rect2) -> void:
+	area_libre = rect
+	area_segura = Rect2(rect.position * escala_mundo, rect.size * escala_mundo)
+
+
 func limpiar() -> void:
 	_pintura = Image.create(tamano.x, tamano.y, false, Image.FORMAT_RGBA8)
 	_respaldo = Image.create(tamano.x, tamano.y, false, Image.FORMAT_RGBA8)
-	_textura = ImageTexture.create_from_image(_pintura)
+	_crear_mosaicos_pintura()
+	_enfoque_pendiente = Rect2()
 	lamina = {}
 	mosaico = {}
 	guia = {}
@@ -357,6 +405,10 @@ func encuadrar(tam_original: Vector2) -> void:
 	if tam_original.is_equal_approx(Vector2(tamano)) or tam_original.x <= 0.0:
 		_escala_lamina = 1.0
 		_desfase_lamina = Vector2.ZERO
+	elif tam_original.is_equal_approx(Vector2(TAMANO_PANTALLA)) and escala_mundo > 1.0:
+		# Mundo grande (ficha §12): el fondo 16:9 llena el mundo entero.
+		_escala_lamina = escala_mundo
+		_desfase_lamina = Vector2.ZERO
 	else:
 		_escala_lamina = minf(area_segura.size.x / tam_original.x, area_segura.size.y / tam_original.y)
 		_desfase_lamina = (area_segura.position + (area_segura.size - tam_original * _escala_lamina) / 2.0).round()
@@ -369,6 +421,9 @@ func escala_lamina() -> float:
 
 func poner_lamina(datos: Dictionary) -> void:
 	lamina = Laminas.encuadrar(Laminas.preparar(datos), _escala_lamina, _desfase_lamina)
+	if escala_mundo > 1.0 and is_equal_approx(_escala_lamina, escala_mundo):
+		# El contorno del fondo crece con el fondo (con la hoja entera a la vista se ve como antes).
+		lamina["escala_trazo"] = escala_mundo
 	_tocadas.clear()
 	_completa_avisada = false
 	queue_redraw()
@@ -466,11 +521,32 @@ func en_zona(punto: Vector2, zona: String) -> bool:
 # Zoom (pinza de dos dedos, rueda del mouse o lupa)
 # ---------------------------------------------------------------------------
 
+## Zoom con el que se ve la hoja ENTERA (1 en el mundo 1x; 0,5 en el mundo grande).
+func zoom_minimo() -> float:
+	return minf(float(TAMANO_PANTALLA.x) / tamano.x, float(TAMANO_PANTALLA.y) / tamano.y)
+
+
+func zoom_maximo() -> float:
+	return ZOOM_MAX_MUNDO_GRANDE if escala_mundo > 1.0 else ZOOM_MAX
+
+
+## Zoom "normal" (1 px del mundo = 1 px de pantalla): el de arranque y al que vuelve la lupa.
+func zoom_base() -> float:
+	return clampf(1.0, zoom_minimo(), zoom_maximo())
+
+
+## Zoom con el que se CREAN las cosas (pincel, stickers, caminos): con la vista alejada se usa el
+## normal, asi lo nuevo no crece en el mundo (alejarse sirve para tener mas lugar, ficha §12.3).
+func zoom_trazo() -> float:
+	return maxf(zoom, 1.0)
+
+
 ## Acerca o aleja manteniendo fijo el punto de PANTALLA `ancla` (coordenadas del padre).
 func aplicar_zoom(nuevo: float, ancla: Vector2) -> void:
+	_parar_paseo()
 	if not zoom_permitido:
-		nuevo = 1.0
-	nuevo = clampf(nuevo, 1.0, ZOOM_MAX)
+		nuevo = zoom_base()
+	nuevo = clampf(nuevo, zoom_minimo(), zoom_maximo())
 	var mundo := (ancla - position) / zoom
 	zoom = nuevo
 	scale = Vector2(zoom, zoom)
@@ -480,25 +556,141 @@ func aplicar_zoom(nuevo: float, ancla: Vector2) -> void:
 
 ## Desplaza la vista (arrastre con dos dedos), sin salirse del papel.
 func desplazar(delta_pantalla: Vector2) -> void:
+	_parar_paseo()
 	position = _limitar(position + delta_pantalla)
 
 
-## Lupa (GDD §6.4: sin gestos complejos): con la lupa armada, el toque acerca al doble ahi.
+## Lupa (GDD §6.4: sin gestos complejos): con la lupa armada, el toque acerca ahi. Desde la hoja
+## entera (o algo alejada) va al zoom normal; desde el normal, al doble (ficha §12.4).
 func usar_lupa_en(punto_mundo: Vector2) -> void:
 	lupa_armada = false
-	aplicar_zoom(2.0, a_pantalla(punto_mundo))
-
-
-func ver_todo() -> void:
-	zoom = 1.0
-	scale = Vector2.ONE
-	position = Vector2.ZERO
+	var destino := zoom_base() if zoom < zoom_base() - 0.01 else zoom_base() * 2.0
+	_parar_paseo()
+	_poner_vista(destino, punto_mundo)
 	zoom_cambiado.emit(zoom)
 
 
+## "Ver todo": la hoja entera a la vista (en el mundo 1x es volver a 1x).
+func ver_todo() -> void:
+	_parar_paseo()
+	_poner_vista(zoom_minimo(), Vector2(tamano) / 2.0)
+	zoom_cambiado.emit(zoom)
+
+
+## Lupa con zoom: vuelve al zoom normal sin perder lo que se estaba mirando (en el mundo 1x, es
+## "ver todo", como antes).
+func volver_a_base() -> void:
+	_parar_paseo()
+	_poner_vista(zoom_base(), centro_de_vista())
+	zoom_cambiado.emit(zoom)
+
+
+## Encuadre de arranque (ficha §12.5). Mundo 1x: la hoja entera. Mundo grande: zoom normal, centrado
+## en X y con el horizonte (el borde de abajo del cielo) a un tercio de la altura de la pantalla, asi
+## lo primero que se ve es suelo para poner cosas y una franja de cielo arriba. Sin cielo, el centro.
+func encuadre_inicial() -> void:
+	if escala_mundo <= 1.0 or not zoom_permitido:
+		ver_todo()
+		return
+	var centro := Vector2(tamano) / 2.0
+	if cielo.has_area() and cielo.end.y < tamano.y - 4.0:
+		centro.y = cielo.end.y - TAMANO_PANTALLA.y / 3.0 + TAMANO_PANTALLA.y / 2.0
+	_parar_paseo()
+	_poner_vista(zoom_base(), centro)
+	zoom_cambiado.emit(zoom)
+
+
+## Punto del mundo que esta en el centro de la pantalla.
+func centro_de_vista() -> Vector2:
+	return a_mundo(Vector2(TAMANO_PANTALLA) / 2.0)
+
+
+## Rect del mundo que se ve en pantalla.
+func vista_mundo() -> Rect2:
+	return Rect2(a_mundo(Vector2.ZERO), Vector2(TAMANO_PANTALLA) / zoom)
+
+
+## ¿El rect del mundo se ve entero en la parte de la pantalla sin botones?
+func se_ve(rect: Rect2) -> bool:
+	return area_libre.encloses(Rect2(a_pantalla(rect.position), rect.size * zoom))
+
+
+## Mueve la camara suavemente para que se vea `rect` (px del mundo) en la parte sin botones: se
+## desplaza y, si no cabe, se aleja (nunca mas que la hoja entera). Si ya se ve, no hace nada. Si hay
+## un dedo pintando, espera a que se levante (nunca mueve la hoja debajo del dedo).
+func mostrar_en_vista(rect: Rect2) -> void:
+	if not zoom_permitido or rect == Rect2():
+		return
+	rect = rect.grow(24.0 / zoom)
+	if se_ve(rect):
+		return
+	if _presionado or en_gesto:
+		_enfoque_pendiente = rect
+		return
+	var destino_zoom := minf(zoom, minf(area_libre.size.x / maxf(1.0, rect.size.x), area_libre.size.y / maxf(1.0, rect.size.y)))
+	destino_zoom = clampf(destino_zoom, zoom_minimo(), zoom_maximo())
+	# El centro del rect va al centro de la parte libre de la pantalla. Si el borde de la hoja no deja
+	# llevarlo hasta ahi (una pista pegada a una orilla), se prueba alejando un poco mas y se queda el
+	# encuadre donde MAS se ve la pista sin botones encima (a igualdad, el mas cercano).
+	var centro_libre := area_libre.get_center()
+	var hasta_pos := Vector2.ZERO
+	var mejor := -1.0
+	var z := destino_zoom
+	while true:
+		var pos := _limitar_con(centro_libre - rect.get_center() * z, z)
+		var en_pantalla := Rect2(pos + rect.position * z, rect.size * z)
+		var fraccion := en_pantalla.intersection(area_libre).get_area() / maxf(1.0, en_pantalla.get_area())
+		if fraccion > mejor + 0.01:
+			mejor = fraccion
+			destino_zoom = z
+			hasta_pos = pos
+		if fraccion >= 0.999 or z <= zoom_minimo() + 0.001:
+			break
+		z = maxf(zoom_minimo(), z * 0.9)
+	var desde_zoom := zoom
+	var desde_pos := position
+	_parar_paseo()
+	_tween_vista = create_tween()
+	_tween_vista.tween_method(func(k: float) -> void:
+		zoom = lerpf(desde_zoom, destino_zoom, k)
+		scale = Vector2(zoom, zoom)
+		position = _limitar(desde_pos.lerp(hasta_pos, k)), 0.0, 1.0, SEGUNDOS_ENFOQUE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween_vista.tween_callback(func() -> void: zoom_cambiado.emit(zoom))
+
+
+func paseando() -> bool:
+	return _tween_vista != null and _tween_vista.is_valid() and _tween_vista.is_running()
+
+
+func _parar_paseo() -> void:
+	if _tween_vista != null and _tween_vista.is_valid():
+		_tween_vista.kill()
+	_tween_vista = null
+
+
+## Pone el zoom y deja el punto del mundo `centro` en el centro de la pantalla (sin salirse del papel).
+func _poner_vista(nuevo_zoom: float, centro: Vector2) -> void:
+	zoom = clampf(nuevo_zoom, zoom_minimo(), zoom_maximo())
+	scale = Vector2(zoom, zoom)
+	position = _limitar(Vector2(TAMANO_PANTALLA) / 2.0 - centro * zoom)
+
+
 func _limitar(pos: Vector2) -> Vector2:
-	var minimo := Vector2(tamano) - Vector2(tamano) * zoom
-	return Vector2(clampf(pos.x, minimo.x, 0.0), clampf(pos.y, minimo.y, 0.0))
+	return _limitar_con(pos, zoom)
+
+
+## Nunca se ve fuera de la hoja: si la hoja (a ese zoom) es mas grande que la pantalla, sus bordes no
+## pueden entrar; si cabe, queda centrada.
+func _limitar_con(pos: Vector2, z: float) -> Vector2:
+	var pantalla := Vector2(TAMANO_PANTALLA)
+	var hoja := Vector2(tamano) * z
+	var salida := pos
+	for eje in 2:
+		if hoja[eje] <= pantalla[eje] + 0.01:
+			salida[eje] = (pantalla[eje] - hoja[eje]) / 2.0
+		else:
+			salida[eje] = clampf(pos[eje], pantalla[eje] - hoja[eje], 0.0)
+	return salida
 
 
 ## Punto del mundo (lienzo) a pantalla (coordenadas del padre) y al reves.
@@ -747,7 +939,7 @@ func cancelar_trazo() -> void:
 
 
 func _paso_trazo() -> float:
-	var r := radio_pincel / zoom
+	var r := radio_pincel / zoom_trazo()
 	match herramienta:
 		"pincel_corazon", "pincel_estrella":
 			return r * 2.6
@@ -755,18 +947,18 @@ func _paso_trazo() -> float:
 			return r * 0.9
 		"pincel_grueso":
 			return r * 0.5
-	return maxf(1.5 / zoom, r * 0.3)
+	return maxf(1.5 / zoom_trazo(), r * 0.3)
 
 
 func _radio_herramienta() -> float:
 	match herramienta:
 		"pincel_grueso", "goma":
-			return radio_pincel * 1.8 / zoom
-	return radio_pincel / zoom
+			return radio_pincel * 1.8 / zoom_trazo()
+	return radio_pincel / zoom_trazo()
 
 
 func _lado_mundo() -> float:
-	return lado_sello / zoom
+	return lado_sello / zoom_trazo()
 
 
 func _color_del_trazo() -> Color:
@@ -791,21 +983,22 @@ func _estampar_en(punto: Vector2, _primero: bool) -> void:
 			for p in puntos:
 				var tam := mascara.get_size()
 				_pintura.blit_rect_mask(vacio, mascara, Rect2i(Vector2i.ZERO, tam), Vector2i(roundi(p.x - tam.x / 2.0), roundi(p.y - tam.y / 2.0)))
+				_marcar_pintura(p, tam)
 		"pincel_corazon", "pincel_estrella":
 			var tipo := herramienta.trim_prefix("pincel_")
-			var imagen := _calcomania(tipo, color_actual, maxi(8, int(radio_pincel * 2.4 / zoom)))
+			var imagen := _calcomania(tipo, color_actual, maxi(8, int(radio_pincel * 2.4 / zoom_trazo())))
 			for p in puntos:
-				Raster.estampar(_pintura, imagen, p)
+				_estampar_pintura(imagen, p)
 		"purpurina":
 			for p in puntos:
 				for i in 3:
-					var chispa := _calcomania("destello", [DORADO, Color.WHITE, color_actual.lightened(0.3)][i], maxi(6, int(randf_range(10.0, 20.0) / zoom)))
-					Raster.estampar(_pintura, chispa, p + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * radio_pincel * 1.2 / zoom)
+					var chispa := _calcomania("destello", [DORADO, Color.WHITE, color_actual.lightened(0.3)][i], maxi(6, int(randf_range(10.0, 20.0) / zoom_trazo())))
+					_estampar_pintura(chispa, p + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * radio_pincel * 1.2 / zoom_trazo())
 		_:
 			var brocha := _brocha(_color_del_trazo(), _radio_herramienta())
 			for p in puntos:
-				Raster.estampar(_pintura, brocha, p)
-	_sucio = true
+				_estampar_pintura(brocha, p)
+	_pintura_tocada = true
 
 
 ## Punto y sus copias segun la simetria activa (espejo: 2; mandala: 12 = 6 ejes con reflejo).
@@ -823,6 +1016,50 @@ func puntos_simetricos(punto: Vector2) -> Array[Vector2]:
 				lista.append(centro_simetria + rel.rotated(angulo))
 				lista.append(centro_simetria + reflejo.rotated(angulo))
 	return lista
+
+
+## Estampa en la pintura y marca solo ese pedazo para subirlo a la GPU.
+func _estampar_pintura(sello: Image, centro: Vector2) -> void:
+	Raster.estampar(_pintura, sello, centro)
+	_marcar_pintura(centro, sello.get_size())
+
+
+func _marcar_pintura(centro: Vector2, tam: Vector2i) -> void:
+	_pintura_tocada = true
+	var rect := Rect2i(Vector2i(roundi(centro.x - tam.x / 2.0) - 1, roundi(centro.y - tam.y / 2.0) - 1), tam + Vector2i(2, 2))
+	rect = rect.intersection(Rect2i(Vector2i.ZERO, tamano))
+	if not rect.has_area():
+		return
+	_rect_sucio = rect if not _rect_sucio.has_area() else _rect_sucio.merge(rect)
+
+
+## Parte la pintura en mosaicos de LADO_MOSAICO (4 en el mundo 1x, 16 en el grande): cada cuadro
+## solo se sube a la GPU lo que cambio (subir 2560x1440 enteros en cada trazo seria lento en la tablet).
+func _crear_mosaicos_pintura() -> void:
+	_mosaicos_pintura.clear()
+	for y in range(0, tamano.y, LADO_MOSAICO.y):
+		for x in range(0, tamano.x, LADO_MOSAICO.x):
+			var rect := Rect2i(x, y, mini(LADO_MOSAICO.x, tamano.x - x), mini(LADO_MOSAICO.y, tamano.y - y))
+			var imagen := Image.create(rect.size.x, rect.size.y, false, Image.FORMAT_RGBA8)
+			_mosaicos_pintura.append({"rect": rect, "imagen": imagen, "textura": ImageTexture.create_from_image(imagen)})
+	_rect_sucio = Rect2i()
+
+
+func _subir_pintura() -> void:
+	var sucio := _rect_sucio
+	_rect_sucio = Rect2i()
+	_sucio = false
+	for mosaico_pintura: Dictionary in _mosaicos_pintura:
+		var rect: Rect2i = mosaico_pintura["rect"]
+		if rect.intersects(sucio):
+			var imagen: Image = mosaico_pintura["imagen"]
+			imagen.blit_rect(_pintura, rect, Vector2i.ZERO)
+			(mosaico_pintura["textura"] as ImageTexture).update(imagen)
+
+
+## Mosaicos que se subieron (para QA): cuantos hay en total.
+func mosaicos_pintura() -> int:
+	return _mosaicos_pintura.size()
 
 
 func _brocha(color: Color, radio: float) -> Image:
@@ -872,8 +1109,7 @@ func _poner_sello(tipo: String, punto: Vector2) -> void:
 			if espejado:
 				final_img = imagen.duplicate()
 				final_img.flip_x()
-			Raster.estampar(_pintura, final_img, p)
-			_sucio = true
+			_estampar_pintura(final_img, p)
 	sello_puesto.emit(tipo, punto)
 	color_usado.emit(color_actual)
 
@@ -1868,7 +2104,8 @@ func _restaurar(foto: Dictionary, pintura: Image) -> void:
 	_celdas = (foto["celdas"] as Dictionary).duplicate()
 	if pintura != null:
 		_pintura.copy_from(pintura)
-		_textura.update(_pintura)
+		_sucio = true
+		_subir_pintura()
 	queue_redraw()
 	_capa_caminos.queue_redraw()
 	_capa_efectos.queue_redraw()
@@ -2071,9 +2308,9 @@ func _cerrar_camino() -> void:
 ## Agrega un camino (trazado o inicial del tema): suaviza, pega las puntas a los lugares y detecta
 ## circuitos. Devuelve el camino o {} si era demasiado corto.
 func agregar_camino(crudo: PackedVector2Array, tipo: String, avisar := true) -> Dictionary:
-	var puntos := remuestrear(suavizar(crudo), 10.0 / zoom)
+	var puntos := remuestrear(suavizar(crudo), 10.0 / zoom_trazo())
 	var largo := _largo(puntos)
-	if puntos.size() < 2 or largo < 50.0 / zoom:
+	if puntos.size() < 2 or largo < 50.0 / zoom_trazo():
 		_capa_caminos.queue_redraw()
 		return {}
 	var desde := lugar_en(crudo[0], iman / zoom)
@@ -2094,7 +2331,7 @@ func agregar_camino(crudo: PackedVector2Array, tipo: String, avisar := true) -> 
 	if cerrado:
 		puntos.append(puntos[0])
 	var camino := {"puntos": puntos, "tipo": tipo, "desde": desde, "hasta": hasta, "cerrado": cerrado,
-		"largos": _largos(puntos), "k": 1.0 / zoom, "n": _numero_camino, "ancho": ancho_caminos}
+		"largos": _largos(puntos), "k": 1.0 / zoom_trazo(), "n": _numero_camino, "ancho": ancho_caminos}
 	_numero_camino += 1
 	caminos.append(camino)
 	if caminos.size() > MAX_CAMINOS:
@@ -2148,11 +2385,11 @@ func borrar_camino(camino: Dictionary) -> void:
 	for nodo in bajados:
 		if is_instance_valid(nodo):
 			_soltar(nodo)
-	var muestras := a_lo_largo(camino["puntos"], 70.0 / zoom)
+	var muestras := a_lo_largo(camino["puntos"], 70.0 / zoom_trazo())
 	if muestras.is_empty():
 		muestras = [[camino["puntos"][0], Vector2.RIGHT]]
 	for muestra: Array in muestras:
-		_agregar_polvo(muestra[0], "polvo", 60.0 / zoom)
+		_agregar_polvo(muestra[0], "polvo", 60.0 / zoom_trazo())
 	_capa_caminos.queue_redraw()
 	camino_borrado.emit(camino)
 	sticker_cambiado.emit()
@@ -2508,7 +2745,7 @@ func _dibujar_caminos() -> void:
 		dibujar_camino(_capa_caminos, puntos, camino["tipo"], k, ancho)
 	if _camino_actual.size() >= 2 and _camino_tenido.is_empty():
 		var tipo := herramienta.trim_prefix("camino_") if herramienta.begins_with("camino_") else str(conector.get("tipo", tipo_camino))
-		dibujar_camino(_capa_caminos, _camino_actual, tipo, 1.0 / zoom, ancho_caminos)
+		dibujar_camino(_capa_caminos, _camino_actual, tipo, 1.0 / zoom_trazo(), ancho_caminos)
 
 
 ## Dibuja un camino sobre cualquier CanvasItem o Grabador (pantalla, PNG e icono de la herramienta,
@@ -2639,6 +2876,41 @@ func mostrar_fantasma(datos: Dictionary, segundos := 4.0) -> void:
 	_fantasma = datos
 	_fantasma_resta = segundos
 	_capa_fantasma.queue_redraw()
+	# Ficha §12.6: si la pista queda fuera de la vista (o tapada por los botones), la camara va a ella.
+	if not datos.is_empty() and segundos > 0.0:
+		var rect := rect_fantasma()
+		if rect != Rect2():
+			# Tambien el tiempo del paseo: la pista sigue visible un rato despues de llegar.
+			# Una zona grande (el rio, el pasto) basta con que asome en la vista.
+			var basta_parte := str(datos.get("tipo", "")) == "zona"
+			if basta_parte and Rect2(a_pantalla(rect.position), rect.size * zoom).intersection(area_libre).get_area() >= minf(rect.get_area() * zoom * zoom, area_libre.get_area()) * 0.25:
+				return
+			if not se_ve(rect.grow(24.0 / zoom)):
+				_fantasma_resta += SEGUNDOS_ENFOQUE
+			mostrar_en_vista(rect)
+
+
+## Rect del mundo que ocupa la pista fantasma (vacio si no se puede saber).
+func rect_fantasma() -> Rect2:
+	match str(_fantasma.get("tipo", "")):
+		"camino", "circuito":
+			var puntos: PackedVector2Array = _fantasma.get("puntos", PackedVector2Array())
+			if puntos.is_empty():
+				return Rect2()
+			var caja := Rect2(puntos[0], Vector2.ZERO)
+			for p in puntos:
+				caja = caja.expand(p)
+			return caja.grow(40.0 / zoom_trazo())
+		"sticker":
+			var pos: Vector2 = _fantasma.get("pos", Vector2(tamano) / 2.0)
+			var r := lado_sello * 0.65 / zoom_trazo()
+			return Rect2(pos - Vector2(r, r), Vector2(r, r) * 2.0)
+		"zona":
+			var i := int(_fantasma.get("indice", -1))
+			var regiones: Array = lamina.get("regiones", [])
+			if i >= 0 and i < regiones.size():
+				return _caja_de(regiones[i]["poligono"])
+	return Rect2()
 
 
 func fantasma_activo() -> Dictionary:
@@ -2674,7 +2946,7 @@ func _dibujar_fantasma() -> void:
 		"sticker":
 			var id := str(_fantasma.get("id", ""))
 			var pos: Vector2 = _fantasma.get("pos", Vector2(tamano) / 2.0)
-			var r := lado_sello * 0.5 / zoom * (1.0 + 0.08 * sin(_tiempo * 5.0))
+			var r := lado_sello * 0.5 / zoom_trazo() * (1.0 + 0.08 * sin(_tiempo * 5.0))
 			_capa_fantasma.draw_circle(pos, r * 1.25, Color(1, 1, 1, alfa * 0.35))
 			_capa_fantasma.draw_arc(pos, r * 1.25, 0.0, TAU, 40, oscuro, 4.0 / zoom, true)
 			if Stickers.tiene(id):
@@ -2861,7 +3133,8 @@ func _draw() -> void:
 		Laminas.dibujar(self, lamina)
 	if not mosaico.is_empty():
 		_dibujar_mosaico()
-	draw_texture(_textura, Vector2.ZERO)
+	for mosaico_pintura: Dictionary in _mosaicos_pintura:
+		draw_texture(mosaico_pintura["textura"], Vector2((mosaico_pintura["rect"] as Rect2i).position))
 
 
 func _dibujar_mosaico() -> void:
@@ -2908,8 +3181,16 @@ func _dibujar_guias() -> void:
 # ---------------------------------------------------------------------------
 
 ## Compone el dibujo completo (papel + lamina/mosaico + pintura + caminos + stickers) en una Image.
-## No usa el renderer: funciona igual en la tablet que headless. Siempre a 1280x720, sin zoom.
+## No usa el renderer: funciona igual en la tablet que headless. Siempre a 1280x720, sin zoom: el
+## mundo grande (ficha §12) se compone entero y se reduce (la hoja completa, como en "ver todo").
 func componer() -> Image:
+	var imagen := _componer_mundo()
+	if imagen.get_size() != TAMANO_PANTALLA:
+		imagen.resize(TAMANO_PANTALLA.x, TAMANO_PANTALLA.y, Image.INTERPOLATE_LANCZOS)
+	return imagen
+
+
+func _componer_mundo() -> Image:
 	var imagen := Image.create(tamano.x, tamano.y, false, Image.FORMAT_RGBA8)
 	imagen.fill(papel)
 	if not guia.is_empty():

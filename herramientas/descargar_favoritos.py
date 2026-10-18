@@ -143,6 +143,16 @@ TEMAS: dict[str, dict] = {
             ("Doctor Octopus", "octopus"), ("Spider-Man (Tom Holland)", "holland"),
         ],
     },
+    # La Spider-Man Wiki trae mucho comic adulto: Spidey infantil desde la wiki de Disney.
+    "spidey": {
+        "wiki": "disney",
+        "hermanos": ["maxi"],
+        "personajes": [
+            ("Spider-Man", "spider"), ("Miles Morales", "miles"), ("Gwen Stacy", "gwen"),
+            ("Spidey and His Amazing Friends", "spidey"), ("Hulk", "hulk"), ("Venom", "venom"),
+            ("Ms. Marvel", "marvel"), ("Black Panther", "panther"),
+        ],
+    },
     "disney": {
         "wiki": "disney",
         "hermanos": ["nicole", "sofia"],

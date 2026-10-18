@@ -270,12 +270,13 @@ pasada.
   *Diferencia con el catálogo §1.7*: allí los objetivos van arriba a la izquierda y la barra abajo. El PO
   pidió el dock en una esquina y la columna izquierda quedó para el dock. Por eso, por delegación, los
   objetivos pasaron a la derecha y la inspiración a la izquierda.
-- **Zoom**:
+- **Zoom** (en las hojas con tema de Nicole y Sofía lo reemplaza el **mundo grande**, §12):
   - La lupa alterna 1× y 2× (catálogo §1.7): con 1× queda armada y el siguiente toque acerca al doble
     ahí. "Ver todo" aparece con zoom.
   - La rueda del mouse y la pinza de dos dedos quedan como extra.
   - Con zoom, el pincel, los sellos, los stickers nuevos, los caminos y los imanes conservan su tamaño
-    **en pantalla**: en el mundo se dividen por el zoom.
+    **en pantalla**: en el mundo se dividen por el zoom. Alejado (zoom < 1, solo en el mundo grande),
+    lo nuevo usa el tamaño del zoom 1 (§12.3).
 - **Dos dedos nunca pintan**, tampoco en Maxi. El segundo dedo deshace lo que hizo el primero en ese
   trazo (pintura, stickers, camino a medias, arrastre), y sigue así hasta levantar todos los dedos.
 - **Inspiración**: la escena de ejemplo se dibuja con nuestros stickers a partir del tema (`inspiracion`:
@@ -860,3 +861,137 @@ sentados arriba". La spec la decidió el coordinador por delegación y aquí se 
   - ¿8 amigos son demasiados para Maxi en "Cosas"?
   - ¿Se entiende la burbuja de Coco sin su cuerpo?
 - **Playtest con los tres**.
+
+## 12. Mundo grande y zoom alejable (17-Oct-2026)
+
+Pedido directo del PO: *"deberíamos iniciar en la imagen con mucho zoom, para que los stickers y
+elementos como casas se vean más pequeños; así, si deciden hacer zoom inverso, el lienzo se pueda
+ampliar para que puedan dibujar más cosas"*. Las decisiones de detalle se tomaron **por delegación**
+del PO (se infieren de sus pedidos anteriores) y quedan registradas acá.
+
+### 12.1 Qué cambia y para quién
+
+- **Nicole y Sofía, hojas con tema** (perfiles con `zoom_permitido`): el mundo mide
+  `escala_mundo` = 2 pantallas por lado, **2560×1440**. El JSON puede fijar otro `escala_mundo`.
+- **Maxi** (`semilla`): sin cambios. Mundo 1×, sin zoom, sin paseos de cámara.
+- **Hojas de colorear de las zonas 2-5** (láminas 824×530, mosaico, espejo, mandala): siguen en 1×
+  con su lupa de siempre, por delegación. Son páginas para colorear enteras: empezar viendo un cuarto
+  no tiene sentido ahí.
+
+### 12.2 Qué se escala y qué no
+
+- **Se escala ×2** (llena el mundo): el fondo y sus regiones, el contorno del fondo
+  (`escala_trazo`, para que con la hoja entera a la vista se vea como antes), las `zonas` del tema
+  (cielo y otras), los lugares de fondo (ancla y radio), los `puestos`, los caminos iniciales, el cielo
+  y la gravedad (que salen del fondo y de las zonas), las posiciones sugeridas de las pistas (las de la
+  inspiración) y los centros por defecto de las pistas de corral y circuito.
+- **No se escala**: los stickers, los sellos, el pincel y los caminos. Al zoom 1, el de arranque, miden
+  en pantalla lo mismo que antes; en el mundo quedan "más chicos".
+- **Constantes en px del mundo que no cambian**, porque se miden contra stickers que no crecen: el
+  radio del tiznado del sol (180), la gravedad y la velocidad de los viajeros. Una caída desde más alto
+  dura un poco más (raíz de 2), y se ve igual en pantalla.
+- **Tarjeta de inspiración**: es una *idea* de la hoja entera, no un mapa a escala. Por delegación sus
+  stickers conservan el tamaño de siempre: a la mitad no se reconocían (se probó en una captura).
+
+### 12.3 Zoom
+
+- Escala de zoom: 1 = 1 px del mundo por px de pantalla. Rango **[0,5 – 2]** en el mundo grande
+  (`zoom_minimo()` = hoja entera; `zoom_maximo()` = 2). En el mundo 1× sigue siendo [1 – 3].
+- Se **arranca en 1**: se ve un cuarto de la hoja.
+- **"Ver todo"** pasa a 0,5: la hoja entera ocupa justo la pantalla. El botón se ve siempre que no se
+  esté viendo la hoja entera, así que en el mundo grande aparece desde el arranque.
+- **Límites** (`_limitar`): nunca se ve fuera de la hoja. Si la hoja a ese zoom es más grande que la
+  pantalla, sus bordes no pueden entrar; si cabe, queda centrada.
+- La pinza de dos dedos y la rueda llegan hasta 0,5 y hasta 2.
+- **Con la vista alejada, lo nuevo no crece** (`zoom_trazo()` = máx(zoom, 1)). Si no, un sticker
+  puesto a 0,5 mediría el doble en el mundo y alejarse no daría lugar para más cosas, que es lo que
+  pidió el PO. Al acercar, lo nuevo se achica como antes. Por eso con la hoja entera a la vista un
+  sticker nuevo se ve a la mitad (unos 45 px). Para tocarlo sigue valiendo el mínimo de 36 px de
+  pantalla de radio (72 px de diámetro).
+
+### 12.4 Lupa (GDD §6.4: un toque, sin gestos)
+
+Hay tres niveles fijos: **hoja entera (0,5)**, **normal (1)** y **cerca (2)**.
+
+- **Sin acercar** (en la hoja entera o en el normal): tocar la lupa la **arma**, y el siguiente toque
+  en el lienzo acerca **ahí**, centrado. Desde la hoja entera va al normal; desde el normal, al doble.
+  Así, "ver todo + lupa + toque donde quiero ir" es la forma simple de moverse por la hoja sin
+  arrastrar con dos dedos.
+- **Acercada** (más que el normal): tocar la lupa vuelve al **normal** mirando lo mismo
+  (`volver_a_base()`). No salta a la hoja entera: para eso está "ver todo".
+- **Armada**: otro toque en la lupa la desarma.
+- En el mundo 1× queda igual que antes (1× ↔ 2×).
+
+### 12.5 Encuadre inicial
+
+Zoom 1, **centrado en X**, con el **horizonte** (el borde de abajo del `cielo`) a **un tercio de la
+altura de la pantalla**. Así lo primero que se ve tiene sentido: dos tercios de suelo, donde se ponen
+casas, ponys y caminos, y una franja de cielo arriba, donde van el sol y las nubes. Si la escena no
+tiene cielo, se centra la hoja.
+
+- Granja: se ve y = 360–1080, con el horizonte en 600.
+- Ciudad: se ve y = 340–1060, con el horizonte en 580.
+
+### 12.6 Que nadie se trabe: la cámara va a la pista
+
+Cuando Coco muestra una pista fantasma (camino, sticker o zona) que queda fuera de la vista, o
+tapada por los botones, la cámara **se desliza** (0,6 s, `mostrar_en_vista`). Lleva la pista al centro
+de la parte de la pantalla sin botones (`area_libre`) y, si no cabe, **se aleja**, como mucho hasta
+la hoja entera. Si un borde de la hoja impide centrarla, prueba alejándose y se queda con el encuadre
+donde más se ve la pista (a igualdad, el más cercano).
+
+- **Nunca mueve la hoja bajo un dedo**: si hay alguien pintando o arrastrando, espera a que levante el
+  dedo.
+- Una zona grande (el río, el pasto) no mueve la cámara si ya asoma lo suficiente.
+- La pista dura 0,6 s más cuando hubo paseo, para que se vea al llegar.
+- Maxi no tiene paseos: siempre ve la hoja entera.
+
+### 12.7 Guardado y rendimiento
+
+- **PNG**: `componer()` arma el mundo entero y lo **reduce a 1280×720** (Lanczos): la hoja completa,
+  como en "ver todo". Las imágenes van solo a `user://dibujos`; `progreso.json` no guarda imágenes ni
+  crece.
+- **Pintura en mosaicos** de 640×360 (16 en el mundo grande): en cada cuadro solo se sube a la GPU el
+  pedazo tocado. Subir 2560×1440 (14,7 MB) en cada trazo habría sido lento en la tablet.
+- **Deshacer**: sigue guardando la pintura comprimida con zstd, y solo en los pasos que pintaron.
+- **Balde**: rellena regiones vectoriales, así que no hay relleno por píxel que se ponga lento.
+- **Medido en PC** (arnés): trazo + paso del historial 14 ms, subida 0,2 ms, deshacer 10 ms y
+  `componer()` 170 ms (solo al mostrar la hoja a Coco). Falta medir en la tablet (§12.9).
+
+### 12.8 Verificación (17-Oct-2026, Godot 4.7.1)
+
+- `qa_test_lienzo`: la suite completa con las 15 rutas y el epílogo, sin fallos (cifra final en el
+  avance).
+- Casos nuevos:
+  - zoom inicial 1, el mundo 2560×1440 y el horizonte en el tercio de arriba;
+  - el fondo llena el mundo, y los lugares, los puestos y las zonas quedan escalados;
+  - los stickers no crecen;
+  - la lupa en los tres niveles y la rueda;
+  - "ver todo" a 0,5 muestra la hoja entera y oculta el botón;
+  - límites con zoom 0,7 y centrado si la hoja cabe;
+  - con la vista alejada, lo nuevo no crece;
+  - gravedad y cielo escalados (el cielo de la granja llega a y = 600);
+  - pista fuera de la vista, con el dedo apoyado (espera) y con una pista larga (se aleja);
+  - Maxi sin zoom ni paseos;
+  - rendimiento;
+  - PNG de 1280×720.
+- En las escenas de Nicole y Sofía, el arnés convierte las posiciones del fondo con `_w()`; las
+  distancias entre stickers no se escalan.
+- Capturas en ventana con `herramientas/capturar_lienzo_mundo.gd`:
+  - `*_mundo_0_inspiracion`;
+  - `*_mundo_1_zoom_inicial`;
+  - `*_mundo_2_ver_todo`;
+  - `*_mundo_3_pista_enfocada`;
+  - `*_mundo_4_png_guardado`.
+
+### 12.9 Pendientes y preguntas
+
+- **Playtest**:
+  - ¿Nicole y Sofía descubren "ver todo" y la lupa para moverse?
+  - ¿El paseo de la cámara hacia la pista se entiende, o marea?
+- **Encuadre inicial**: en la granja, el granero y el río quedan fuera de la primera vista (aparecen
+  al alejar o cuando la pista los muestra). ¿Prefiere el PO que se arranque mirando los lugares del
+  primer objetivo?
+- **UX (HE-102)**: con la hoja entera a la vista, los stickers nuevos se ven a la mitad (~45 px); hay
+  que auditar si Nicole los arrastra bien así.
+- **Medir en la tablet** el trazo y el deshacer con la pintura de 2560×1440.

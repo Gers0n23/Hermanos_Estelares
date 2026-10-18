@@ -27,6 +27,8 @@ var _eventos: Array = []
 
 
 func _initialize() -> void:
+	# Pares favoritos al azar (PO 17-Oct-2026) apagados: este arnes busca pares concretos.
+	preload("res://scripts/motores/emparejar/favoritos_emparejar.gd").desactivado = true
 	print("=== QA dev HE-59: modo equipo (GestorTurnos + Parejas en equipo) ===")
 	_progreso = get_root().get_node_or_null("Progreso")
 	if _progreso == null or _progreso.ruta_guardado != _progreso.RUTA_GUARDADO_PRUEBAS:

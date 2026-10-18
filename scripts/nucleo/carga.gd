@@ -70,9 +70,26 @@ func _iniciar_orbita_navecita() -> void:
 ## La nave-estrella (diseño final) no da vueltas de cabeza: se mantiene derecha, se
 ## inclina hacia donde avanza y, en la mitad de abajo del anillo, usa la version que mira
 ## a la izquierda (la placa "Hermanos Estelares" siempre se lee al derecho).
+## El cambio de lado es un giro continuo: al pasar por los costados del anillo (donde
+## avanza en vertical) la nave se angosta como si rotara sobre si misma, cambia de
+## version cuando esta casi de canto y vuelve a ensancharse; la inclinacion pasa por
+## cero en ese momento, asi nada salta de golpe.
+const INCLINACION_MAX := 0.35
+const ANCHO_GIRO := 0.4      # |cos(rumbo)| bajo el cual la nave va girando
+const ANCHO_MINIMO := 0.12   # fraccion del ancho cuando esta de canto
+
+var _escala_nave := Vector2.ONE
+
+
 func _process(_delta: float) -> void:
-	var rumbo := wrapf(_navecita_pivote.rotation, -PI, PI)
-	var hacia_derecha := cos(rumbo) >= 0.0
-	_navecita.texture = NAVE_DERECHA if hacia_derecha else NAVE_IZQUIERDA
-	var inclinacion := rumbo if hacia_derecha else wrapf(rumbo - PI, -PI, PI)
-	_navecita.global_rotation = clampf(inclinacion, -0.6, 0.6) * 0.6
+	if _escala_nave == Vector2.ONE:
+		_escala_nave = _navecita.scale
+	var rumbo := _navecita_pivote.rotation
+	var avance_x := cos(rumbo)   # >0 avanza hacia la derecha
+	var avance_y := sin(rumbo)   # >0 avanza hacia abajo
+	var giro := smoothstep(0.0, ANCHO_GIRO, absf(avance_x))
+	var lado := 1.0 if avance_x >= 0.0 else -1.0
+	_navecita.texture = NAVE_DERECHA if lado > 0.0 else NAVE_IZQUIERDA
+	_navecita.scale = Vector2(_escala_nave.x * lerpf(ANCHO_MINIMO, 1.0, giro), _escala_nave.y)
+	# Nariz hacia abajo al bajar y hacia arriba al subir, para ambos lados.
+	_navecita.global_rotation = avance_y * INCLINACION_MAX * lado * giro

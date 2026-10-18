@@ -49,6 +49,7 @@ script = ExtResource("8_vista_portadas")
 position = Vector2(1, 1)
 
 [node name="navecita" type="Sprite2D" parent="anillo_progreso/navecita_pivote"]
+z_index = 10
 position = Vector2(0, -270)
 rotation = 0.08
 scale = Vector2(0.34, 0.34)

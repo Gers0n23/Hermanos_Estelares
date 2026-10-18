@@ -42,6 +42,8 @@ var figura := ""
 var color_figura := DORADO
 ## Par "momento memorable" del nivel (ficha de nivel §7): brilla con halo arcoiris al verse.
 var especial := false
+## Par favorito (foto de algo que le encanta al hermano, PO 17-Oct-2026): se dibuja a carta completa.
+var favorito := false
 var esta_acertada := false
 var disabled := false
 ## Si el nino la ve (estado logico). La cara se dibuja recien a mitad del giro.
@@ -118,6 +120,7 @@ func configurar(datos: Dictionary, oculto: bool) -> void:
 	var color_base := Dibujos.color_por_defecto(figura) if Dibujos.tiene(figura) 		else Color.from_hsv(float(hash(id_pareja) % 360) / 360.0, 0.5, 0.95)
 	color_figura = Color.from_string(str(datos.get("color", "")), color_base)
 	especial = bool(datos.get("especial", false))
+	favorito = bool(datos.get("favorito", false))
 	estilo = str(datos.get("estilo", ""))
 	receta = datos.get("receta", [])
 	forma = str(datos.get("forma", ""))
@@ -137,6 +140,11 @@ func configurar(datos: Dictionary, oculto: bool) -> void:
 	if figura == "" and _textura == null and forma == "" and estilo != "receta" and estilo != "letra":
 		figura = "circulo"
 	reiniciar(oculto)
+
+
+## Imagen del elemento (sprite del nivel o foto de un par favorito); null si es un dibujo.
+func textura() -> Texture2D:
+	return _textura
 
 
 func es_sombra() -> bool:
@@ -381,6 +389,10 @@ func _dibujar() -> void:
 
 
 func _dibujar_cara(centro: Vector2, s: Vector2) -> void:
+	if favorito and _textura != null:
+		_dibujar_favorito(centro, s)
+		_dibujar_marcas(centro, s)
+		return
 	if not es_sombra() and not Dibujos.es_bandera(figura):
 		_cuerpo.draw_circle(centro, s.x * 0.37, Color(color_figura, 0.2))
 	if estilo == "receta":
@@ -394,6 +406,13 @@ func _dibujar_cara(centro: Vector2, s: Vector2) -> void:
 	else:
 		_dibujar_figura(centro, s)
 	_dibujar_marcas(centro, s)
+
+
+## Par favorito: la foto casi a carta completa, con marco dorado (se distingue de los dibujos).
+func _dibujar_favorito(centro: Vector2, s: Vector2) -> void:
+	var rect := Rect2(centro - s * 0.42, s * 0.84)
+	_cuerpo.draw_texture_rect(_textura, rect, false)
+	_cuerpo.draw_rect(rect.grow(s.x * 0.012), DORADO, false, maxf(3.0, s.x * 0.03))
 
 
 ## Receta de color: gotas de cada color con un "+" entre ellas (verde = azul + amarillo).

@@ -123,6 +123,7 @@ const SEGUNDOS_ESPERA_PRESENTACION := 12.0
 ## Tutorial: tope de espera a la voz de la intro antes de mostrar el boton de jugar.
 const SEGUNDOS_ESPERA_TUTORIAL := 16.0
 const GloboTutorial := preload("res://scripts/motores/emparejar/globo_tutorial_emparejar.gd")
+const Favoritos := preload("res://scripts/motores/emparejar/favoritos_emparejar.gd")
 ## UX m5: el trebol de "¡a la primera!" aterriza junto al contador xN (no sobre la vela).
 const DESTINO_TREBOL := Vector2(120, 330)
 
@@ -360,7 +361,7 @@ func _grupos_del_nivel() -> Array:
 		return datos["grupos"]
 	var grupos: Array = []
 	for par: Dictionary in datos.get("pares", []):
-		grupos.append({"id_grupo": par.get("id_pareja", ""), "especial": par.get("especial", false),
+		grupos.append({"id_grupo": par.get("id_pareja", ""), "especial": par.get("especial", false), "fijo": par.get("fijo", false),
 			"figura": par.get("figura", ""), "color": par.get("color", ""), "voz": par.get("voz", ""),
 			"elementos": [par.get("elemento_a", {}), par.get("elemento_b", {})]})
 	return grupos
@@ -371,7 +372,8 @@ func _construir_tablero() -> void:
 	_voces_par.clear()
 	_ya_vistas.clear()
 	_jugada_virgen = true
-	for grupo: Dictionary in _grupos_del_nivel():
+	var grupos := Favoritos.mezclar(_grupos_del_nivel(), _conf if not _conf.is_empty() else nivel, _hermanos_favoritos())
+	for grupo: Dictionary in grupos:
 		if str(grupo.get("voz", "")) != "":
 			_voces_par[str(grupo.get("id_grupo", ""))] = str(grupo["voz"])
 		for info: Dictionary in grupo.get("elementos", []):
@@ -380,6 +382,7 @@ func _construir_tablero() -> void:
 			elemento["figura"] = info.get("figura", grupo.get("figura", ""))
 			elemento["color"] = info.get("color", grupo.get("color", ""))
 			elemento["especial"] = grupo.get("especial", false)
+			elemento["favorito"] = grupo.get("favorito", false)
 			elementos.append(elemento)
 	elementos.shuffle()
 
@@ -405,6 +408,13 @@ func _construir_tablero() -> void:
 		carta.tocada.connect(_al_tocar_carta)
 		carta.aparecer(0.15 + i * 0.035)
 		_cartas.append(carta)
+
+
+## Hermanos cuyos favoritos pueden salir en el tablero: todo el equipo o el que juega solo.
+func _hermanos_favoritos() -> Array:
+	if not equipo.is_empty():
+		return Array(equipo)
+	return [obtener_id_personaje()]
 
 
 ## Una ranura por par encontrado: se llena con la figura que vuela desde el tablero. Le
@@ -604,7 +614,7 @@ func _celebrar_grupo(grupo: Array) -> void:
 	if indice < _ranuras.size():
 		_volar_a_ranura(voladora, medio, _ranuras[indice])
 	_reaccion_anfitriona("salta")
-	if voladora.especial:
+	if voladora.especial or voladora.favorito:
 		_arcoiris_especial()
 		_confeti.restart()
 
@@ -739,6 +749,7 @@ func _despues(segundos: float, accion: Callable) -> void:
 func _volar_a_ranura(carta: CartaEmparejar, desde: Vector2, ranura) -> void:
 	var volador := Icono.new()
 	volador.figura = carta.figura
+	volador.textura = carta.textura()
 	volador.color = carta.color_figura
 	volador.alegre = true
 	volador.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -758,6 +769,7 @@ func _volar_a_ranura(carta: CartaEmparejar, desde: Vector2, ranura) -> void:
 			volador.queue_free()
 			return
 		ranura.figura = carta.figura
+		ranura.textura = carta.textura()
 		ranura.color = carta.color_figura
 		ranura.alegre = true
 		ranura.pivot_offset = ranura.size / 2.0

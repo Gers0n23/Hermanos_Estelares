@@ -41,3 +41,8 @@ __pycache__/
 # Solo viajan dentro del APK. Catalogo y placeholders si se versionan (docs/fichas/album-recuerdos.md).
 assets/recuerdos/fotos/
 assets/recuerdos/voces/
+
+# Imagenes "favoritos" de Parejas (PO 17-Oct-2026): bajadas de wikis de fans, con copyright de
+# terceros. Uso familiar sin publicar: el repo es publico, asi que NO se suben. Se regeneran con
+# `python -I herramientas/descargar_favoritos.py` (el catalogo datos/favoritos/catalogo.json si se versiona).
+assets/sprites/favoritos/

@@ -34,6 +34,8 @@ var _filtro := ""
 
 
 func _initialize() -> void:
+	# Pares favoritos al azar (PO 17-Oct-2026) apagados: este arnes busca pares concretos.
+	preload("res://scripts/motores/emparejar/favoritos_emparejar.gd").desactivado = true
 	if OS.get_cmdline_user_args().size() > 0:
 		_filtro = OS.get_cmdline_user_args()[0]
 	print("=== QA retos de Sofia (dificultad v3) ===")

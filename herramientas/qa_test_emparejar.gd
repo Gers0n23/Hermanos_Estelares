@@ -23,6 +23,8 @@ var _modo := "sofia_normal"
 
 
 func _initialize() -> void:
+	# Pares favoritos al azar (PO 17-Oct-2026) apagados: este arnes busca pares concretos.
+	preload("res://scripts/motores/emparejar/favoritos_emparejar.gd").desactivado = true
 	var args := OS.get_cmdline_user_args()
 	if args.size() > 0:
 		_modo = args[0]

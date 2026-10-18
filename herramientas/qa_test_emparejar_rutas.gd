@@ -19,6 +19,8 @@ var _fallos := 0
 
 
 func _initialize() -> void:
+	# Pares favoritos al azar (PO 17-Oct-2026) apagados: este arnes busca pares concretos.
+	preload("res://scripts/motores/emparejar/favoritos_emparejar.gd").desactivado = true
 	print("=== QA emparejar: rutas por hermano (demo Arcoiris) ===")
 	for ruta in RUTAS:
 		await _probar_ruta(ruta)

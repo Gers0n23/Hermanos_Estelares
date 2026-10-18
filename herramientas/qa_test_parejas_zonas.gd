@@ -26,6 +26,8 @@ var _pares_jugados := {"semilla": 0, "brote": 0}
 
 
 func _initialize() -> void:
+	# Pares favoritos al azar (PO 17-Oct-2026) apagados: este arnes busca pares concretos.
+	preload("res://scripts/motores/emparejar/favoritos_emparejar.gd").desactivado = true
 	print("=== QA Parejas de Coco: Maxi y Nicole en las 5 zonas ===")
 	for zona in ZONAS:
 		for perfil in PERFILES:

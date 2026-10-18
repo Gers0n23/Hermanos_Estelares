@@ -196,7 +196,7 @@ static func dibujar(lienzo: CanvasItem, lamina: Dictionary, desfase := Vector2.Z
 		if not bool(region.get("sin_contorno", false)):
 			var cerrado := puntos.duplicate()
 			cerrado.append(puntos[0])
-			lienzo.draw_polyline(cerrado, Color(COLOR_CONTORNO, alfa), maxf(1.5, GROSOR_CONTORNO * escala), true)
+			lienzo.draw_polyline(cerrado, Color(COLOR_CONTORNO, alfa), maxf(1.5, GROSOR_CONTORNO * escala * float(lamina.get("escala_trazo", 1.0))), true)
 	dibujar_detalles(lienzo, lamina, desfase, escala, alfa)
 
 
@@ -242,7 +242,7 @@ static func rasterizar(imagen: Image, lamina: Dictionary) -> void:
 		var color: Color = region["color"]
 		Raster.rellenar_poligono(imagen, puntos, color, color.a < 1.0)
 		if not bool(region.get("sin_contorno", false)):
-			Raster.trazar(imagen, puntos, GROSOR_CONTORNO, COLOR_CONTORNO, true)
+			Raster.trazar(imagen, puntos, GROSOR_CONTORNO * float(lamina.get("escala_trazo", 1.0)), COLOR_CONTORNO, true)
 	for detalle: Dictionary in lamina.get("detalles", []):
 		var tipo := str(detalle.get("tipo", "linea"))
 		var centro := vec(detalle.get("centro", null))
