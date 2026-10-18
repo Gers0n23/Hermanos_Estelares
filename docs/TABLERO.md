@@ -30,7 +30,7 @@
   - **Río v2**: HE-91 en 🟡; el modo equipo del Río aún no está cableado al motor (queda en HE-70). HE-94 sigue bloqueada por la decisión "naranja/naranjo" del PO (única pregunta abierta del Río v2).
   - **Riesgo (Río de la batalla)**: al pasar `rio_equipo.json` a `grupo` y `arcoiris`, el calibrado v1 deja de valer y cambia la duración de la ronda del Río; eso mueve la duración total de la batalla (≈28-30 min) con la que se decide R17 y que HE-80 toma como marco. HE-92 debe re-simularla e informar el delta; si R17 se decide antes, revisar la cifra con el dato nuevo. HE-91 no debe romper el modo equipo (`GestorTurnos`, `cadena_vale_aciertos`).
   - **Pinta v2**: 3 preguntas al PO por choques con el GDD (ver "Pendientes del PO"); la de guardar la hoja a medias condiciona HE-98. **Riesgo**: las hojas de Sofía duran 9-13 min. **Riesgo (HE-104)**: la gravedad puede romper escenas del catálogo al portarlas (`bomberos`, `tren_chile`; anotado en HE-98). Nota: `qa_test_voces` tiene 20 fallas previas en `emparejar/reto`, ajenas a Pinta, sin tarjeta propia.
-- **Avance general**: **27/127 tarjetas ✅** (nace HE-104 en 🟡).
+- **Avance general**: **27/128 tarjetas ✅** (nace HE-105 en 🟡).
 - **Próximos pasos**:
   1. **PO**: decidir R17 (A, B o C); jugar HE-59 y HE-89 en PC; decidir "naranja/naranjo" (desbloquea HE-94).
   1b. **PO: jugar el Río v2 (HE-91) en PC y tablet.** Sin WIP, ya desbloqueadas: HE-92 (calibrar, re-simular la ronda del Río de la batalla e informar el delta para R17, decidir la entrada de Sofía z3 y su recorrido), HE-93 (arte de batidora, puente, túnel y palanca) y HE-95 (UX de pantallas reales).
