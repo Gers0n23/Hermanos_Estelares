@@ -16,10 +16,10 @@
     "fucsia",
     "anil"
   ],
-  "velocidad_caida": 120,
+  "velocidad_caida": 155,
+  "elementos_simultaneos": 4,
+  "intervalo_gotas_s": 0.85,
   "variacion_velocidad": 0.15,
-  "elementos_simultaneos": 3,
-  "intervalo_gotas_s": 1.1,
   "probabilidad_util": 0.55,
   "ranuras_visibles": true,
   "memorizar_s": 0,

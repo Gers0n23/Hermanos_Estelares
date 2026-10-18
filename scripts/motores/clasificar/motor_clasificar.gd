@@ -90,6 +90,8 @@ const TURQUESA := Color("#45C6C0")
 var _modo := "libre"
 var _velocidad := 0.0
 var _variacion := 0.0
+var _aceleracion := 0.0  ## fraccion de velocidad que se suma en cada tanda (canciones mas rapidas)
+var _intervalo := 0.25  ## segundos entre gotas que entran juntas: caen en chorro, no en fila
 var _simultaneas := 1
 var _iman := 140.0
 var _limite = null  ## null = sin limite; si no, fallos por tanda
@@ -241,6 +243,8 @@ func _configurar_desde_nivel() -> void:
 	_modo = str(nivel.get("modo", "libre"))
 	_velocidad = float(nivel.get("velocidad_caida", 0.0))
 	_variacion = clampf(float(nivel.get("variacion_velocidad", 0.0)), 0.0, 0.9)
+	_aceleracion = maxf(0.0, float(nivel.get("aceleracion_por_ronda", 0.0)))
+	_intervalo = maxf(0.0, float(nivel.get("intervalo_gotas_s", 0.25)))
 	_simultaneas = maxi(1, int(nivel.get("elementos_simultaneos", 1)))
 	_iman = float(nivel.get("iman_tolerancia_px", 140.0))
 	var limite = nivel.get("limite_intentos", null)
@@ -502,7 +506,7 @@ func _crear_gota(id: String, tipo := "normal", lado := 0.0) -> GotaClasificar:
 	var tam := lado if lado > 0.0 else _tam_gota * (1.3 if tipo == "gigante" else 1.0)
 	gota.configurar(id, _color(id), tam, tipo)
 	_capa_gotas.add_child(gota)
-	gota.velocidad = _velocidad * (1.0 + randf_range(-_variacion, _variacion))
+	gota.velocidad = _velocidad * (1.0 + _aceleracion * _ronda) * (1.0 + randf_range(-_variacion, _variacion))
 	gota.cayendo = _velocidad > 0.0
 	gota.tomada.connect(_al_tomar)
 	gota.movida.connect(_al_mover)
@@ -539,7 +543,15 @@ func _reponer() -> void:
 		gota.casa = _lugar_para_gota(gota)
 		gota.fijar_centro(gota.casa)
 		gota.aparecer(retraso)
-		retraso += 0.25
+		if gota.cayendo and retraso > 0.0:
+			# Como las notas de Guitar Hero: cada gota arranca a caer en su turno.
+			gota.cayendo = false
+			var ref: WeakRef = weakref(gota)
+			_despues(retraso, func() -> void:
+				var viva: Variant = ref.get_ref()
+				if viva != null:
+					viva.cayendo = true)
+		retraso += _intervalo
 		if info["tipo"] == "jirafa":
 			_despues(0.3, func() -> void: _reproducir_voz("especial_aparece", _linea("especial_aparece"), true))
 	_actualizar_llamada()
@@ -931,8 +943,7 @@ func _nuevo_pedido_nombrar() -> void:
 	var xs := [480.0, 700.0, 920.0] if opciones.size() == 3 else _posiciones_x(opciones.size())
 	for i in opciones.size():
 		var gota := _crear_gota(opciones[i])
-		gota.cayendo = false
-		gota.casa = Vector2(xs[i], 330.0)
+		gota.casa = Vector2(xs[i], Y_APARICION if gota.cayendo else 330.0)
 		gota.fijar_centro(gota.casa)
 		gota.aparecer(0.1 + i * 0.12)
 	_despues(0.35, _decir_pedido)

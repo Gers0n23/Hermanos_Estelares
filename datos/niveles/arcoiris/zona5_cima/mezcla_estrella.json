@@ -25,10 +25,10 @@
     "verde_oliva",
     "chocolate"
   ],
-  "velocidad_caida": 145,
+  "velocidad_caida": 195,
+  "elementos_simultaneos": 5,
+  "intervalo_gotas_s": 0.65,
   "variacion_velocidad": 0.35,
-  "elementos_simultaneos": 3,
-  "intervalo_gotas_s": 0.9,
   "probabilidad_util": 0.5,
   "ranuras_visibles": false,
   "memorizar_s": 6,

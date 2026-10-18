@@ -17,10 +17,10 @@
     "chocolate",
     "durazno"
   ],
-  "velocidad_caida": 135,
+  "velocidad_caida": 180,
+  "elementos_simultaneos": 4,
+  "intervalo_gotas_s": 0.75,
   "variacion_velocidad": 0.3,
-  "elementos_simultaneos": 3,
-  "intervalo_gotas_s": 1.0,
   "probabilidad_util": 0.5,
   "ranuras_visibles": false,
   "memorizar_s": 0,

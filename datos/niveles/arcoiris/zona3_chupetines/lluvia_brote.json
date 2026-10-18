@@ -14,8 +14,11 @@
   "ayuda_tras_fallos": 2,
   "ayuda_idle_s": 12,
   "regalo_tras_derrotas": true,
-  "velocidad_caida": 28,
-  "elementos_simultaneos": 1,
+  "velocidad_caida": 145,
+  "elementos_simultaneos": 3,
+  "intervalo_gotas_s": 0.6,
+  "aceleracion_por_ronda": 0.1,
+  "variacion_velocidad": 0.25,
   "colores": [
     "rojo",
     "azul",

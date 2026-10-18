@@ -345,7 +345,8 @@ brillo), para que cualquier color conserve el volumen del estilo del menú de pl
   - **Sofía** (combinaciones tipo HHA, se ven sus siluetas en la cartilla para planificar): serie de un
     color (4 zonas iguales), arcoíris (6 zonas de 6 colores distintos), simetría perfecta (izq = der en
     color y patrón), 3 patrones distintos, un color mezclado por ella en 3 zonas, tripulación completa
-    (los 4 sentados), un rincón para cada uno (los 3 cojines con el color de su dueño), sala decorada (5
+    (los 3 hermanos sentados en los cojines), un regalo en el rincón de cada hermano (una cosa junto a
+    cada cojín), sala decorada (5
     muebles en 2 superficies distintas), etc.
   - **Nicole** (de a una, dicha por Cometa: "¿Le pones lunares a algo?"): pinta 3 partes, un patrón, 3
     calcomanías, una planta adentro, sienta a alguien, decora el rincón de un hermano, etc.
@@ -376,7 +377,7 @@ brillo), para que cualquier color conserve el volumen del estilo del menú de pl
 | `escena` | Ruta del motor (la usa el núcleo para lanzarlo) |
 | `piezas[]` | `{id, planeta, orden, hueco: [x, y, ángulo], zonas[], broches_estrella: {maxi: [x,y], nicole: [...], sofia: [...]}, variantes[], aparece_dentro, voz_hueco, voz_llega, voz_encajo}` |
 | `vistas.fuera` / `vistas.dentro` | `zonas` (nombre → polígono), `grupos_semilla` (nombre → lista de zonas), `pares_espejo`, `superficies` (adentro: pisos, estantes, asientos), `gravedad` (false afuera) |
-| `perfiles.<semilla|brote|estrella>` | `paleta`, `herramientas`, `patrones`, `agrupar_zonas`, `pinceles`, `espejo`, `mezcla`, `boton`, `catalogo_fuera`, `catalogo_dentro`, `amigos`, `cartilla` |
+| `perfiles.<semilla/brote/estrella>` | `paleta`, `herramientas`, `patrones`, `agrupar_zonas`, `pinceles`, `espejo`, `mezcla`, `boton`, `catalogo_fuera`, `catalogo_dentro`, `amigos`, `cartilla` |
 | `instalar` | `iman_px` (220), `iman_semilla` (`"pantalla"`), `minimo_arrastre_semilla` (40), `saltos_por_toque_semilla` (3), `pista_s` ([4, 6]; Semilla [3, 5]), `valvula_manos` (2) |
 | `topes` | `calcomanias_por_vista` (40), `cajita` (30), `historial` (20), `respaldos` (5) |
 | `tiempos` | `inactivo_recordar_s` (30), `inactivo_salir_s` (60), `autor_voz_cada_s` (20) |

@@ -62,6 +62,8 @@ esqueleto que después sirve para "cada animal a su casa" (Animalia): un motor, 
   "velocidad_caida": 58,                // px/s; 0 = gotas quietas
   "variacion_velocidad": 0.5,           // ± fracción: gotas a velocidades distintas
   "elementos_simultaneos": 3,           // gotas a la vez (con divisibles: gigantes)
+  "intervalo_gotas_s": 0.7,             // s entre gotas que entran juntas: caen en chorro escalonado (defecto 0.25)
+  "aceleracion_por_ronda": 0.1,         // fracción de velocidad que se suma en cada tanda (tanda 5 = +40 %)
   "iman_tolerancia_px": 90,
   "tamano_gota": 96,                    // por defecto: Semilla 130, Brote 112, Estrella 96
   "limite_intentos": 10,                // null = sin límite. Cuenta fallos POR TANDA
