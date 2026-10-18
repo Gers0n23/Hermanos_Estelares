@@ -42,6 +42,7 @@
   - **decidir R17**: duración de la Torre (A recomendada, B o C);
   - jugar HE-59 y HE-89 en PC (DoD 2) antes de la prueba en tablet;
   - **Pinta v2 (HE-97)**, preguntas por choques con el GDD: (1) Nicole: el GDD §5 dice un objetivo a la vez; se propone que vea 3 y solo lata el primero; (2) actualizar el GDD §4: Pinta deja de ser "sin evaluar", aunque sigue sin castigo; (3) guardar la hoja a medias (GDD §6.8), porque las hojas duran ~10 min;
+  - **Lluvia de colores (HE-105)**: jugarla con los tres; nota de diseño: el GDD §5 reserva Guitar Hero para "Sigue el ritmo" (Planeta Melodía), así que aquí solo se tomó su escala de velocidad y densidad (sin carriles ni ritmo). Si quiere racha o combo tipo Guitar Hero, sería un cambio aparte;
   - **Pinta v2 (HE-104, tanda 3)**: en la granja, el granero y el río quedan fuera de la primera vista; ¿prefiere arrancar mirando los lugares del primer objetivo?;
   - HE-89: decidir si se mantienen las rondas "a la vista" de Nicole (z1 r1-r2, z4 r1, z5 r1) ahora que el vistazo muestra todas las cartas;
   - revisar HE-10 y aprobar HE-02 con los QA junior, y hacer el playtest de HE-60 (ya no consumen WIP);
