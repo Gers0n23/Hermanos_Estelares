@@ -1,6 +1,22 @@
 # Storyboard y spec — Cierre de la historia del Planeta Arcoíris (de la Torre al despegue)
 
-> Entregable de `director-cinematicas`. **Versión 4.1 (17-Oct-2026)**: aplica las mejoras de la
+> Entregable de `director-cinematicas`. **Versión 5 (05-Nov-2026, tarjeta HE-88)**: concilia el storyboard
+> con la **Torre en 3 etapas** de `docs/fichas/motor-lanzar.md` **v4 §25**, con la opción del PO
+> **R17 = A (05-Nov-2026): 3 etapas con guardado entre etapas**. El detalle nuevo está en el **§25**:
+>
+> - la caída corta y la transición entre etapas (C1 de la ficha §25.13);
+> - la presentación de cada etapa y de cada pieza especial, y la de la bandeja de Nicole (C2);
+> - qué ve la familia al retomar después de un guardado entre etapas (re-entrada corta y saltable).
+>
+> Aplica también la otra **decisión del PO del 05-Nov-2026**: **la generación de video queda postergada
+> por presupuesto**. Cada momento de la Torre funciona primero con un **reemplazo provisional barato**
+> (tarjeta estática con voz, cutout simple o paso directo), y después se puede cambiar por video **sin
+> tocar la lógica**. El contrato está en el §25.1 y la columna "Provisional / video" aparece plano por plano
+> (§25.3-§25.8). Los [CONCILIAR] de fondo y arte, de voces y de `etapas[]` quedan solo anotados (§25.10),
+> porque son de HE-74, HE-86 y HE-80. Lo que necesito de `modo-equipo.md` §14.16 está como nota en el
+> §25.9: esa sección no la edito. Changelog en el §24.
+>
+> **Versión 4.1 (17-Oct-2026)**: aplica las mejoras de la
 > re-auditoría UX (`docs/validaciones/2026-10-17_ux-reauditoria-torre-cierre.md`, N2, N3, P2 y P4), la
 > pausa entre bloques aprobada y la regla de los broches siguientes (changelog §24, v4.1).
 >
@@ -47,7 +63,9 @@
 ## 0. Reglas de dirección
 
 1. Todo es **cutout 2D dentro de Godot** (`AnimationPlayer` sobre piezas), porque depende del estado: la
-   torre, la mochila, el ala y la ruta.
+   torre, la mochila, el ala y la ruta. **v5**: en la Torre, cada momento es un **gancho** que hoy se hace
+   con cutout simple, tarjeta o paso directo, y donde no depende del estado admite un **inserto de video**
+   después, sin tocar la lógica (§25.1).
 2. **Un foco por momento.** Las voces **nunca se pisan** (de 0,15 a 0,3 s de aire entre una y otra).
 3. **Cámara fija**: solo fundidos, iris y zooms suaves (como máximo 1,0 → 1,15).
 4. **Aire después de cada chiste** (de 0,3 a 0,5 s).
@@ -106,8 +124,14 @@ Del cierre se mantiene la **parte A** entera y la fiesta de la **parte B** (B1-B
   → LA ÚNICA PAUSA: mapa de batalla con el 4.º hito brillando, voz arcoiris_batalla_torre_pausa_antes;
     nunca avanza sola (§3)
   → toque al hito → presentación de la Torre (≈ 8 s) → intro corta, sin otro "¿seguimos?" → Torre (motor lanzar)
+     v5: LA TORRE SON 3 ETAPAS (§25.2)
+     E1 "la torre de la colección" (+ confeti_presenta la 1.ª vez, §25.5.2)
        ├─ derrota → derrota-gag 1-4 (§7) → "¡otra vez!" → rearmado → intro corta
-       └─ derribo final:
+       └─ derribo de E1 → [guardado] caída corta (≈ 5,5 s, §25.3) → transición (≤ 4 s, §25.4) →
+     E2 "dos torres y un puente" (mismas derrotas)
+       └─ derribo de E2 → [guardado] caída corta → transición (+ resorte_presenta la 1.ª vez) →
+     E3 "la torre de las cosas raras" (mismas derrotas)
+       └─ derribo de E3 = el derribo final:
 BLOQUE 1 · LA VICTORIA (≈ 2,4 min)
   Anticipación (≈ 4,6 s variante A / ≈ 3,2 s variante B) (§4.1)
   Caída en el charco (≈ 10,8 s) (§4.2)          ← el momento de mayor celebración del planeta
@@ -149,6 +173,7 @@ tienen coreografía propia aquí: solo se nombran para que no falte ninguno.
 | §7 | `cuenta_instruccion`, `cuenta_tres/dos/uno` (o las de los niños), `cuenta_motores`, `cuenta_recuerda`; `vuelo_despegue`, `vuelo_puente`, `vuelo_coco_chao`; `vuelo_lejitos`, `vuelo_celebra`, `vuelo_rumbo_animalia`, `vuelo_de_vuelta` **[v4]**; `mapa_animalia_lejitos`, `mapa_animalia_antes_01/_02` **[v4]** | §12-§13 |
 | §8 | `arcoiris_009a`, `arcoiris_009b` | §15 |
 | §9.1 (retomar) | `nucleo_batalla_todos_nave_corta`, `falta_uno`, `nucleo_equipo_sube_nave_<hermano>`, `yo_tambien_<hermano>`; `nucleo_equipo_ahora_<hermano>` | §8.2, §9 |
+| **v5**: ficha v4 §25.14 (ids sugeridos; los textos los fija el guion en HE-86) | `arcoiris_batalla_torre_caida_etapa_01` / `_02`; `arcoiris_batalla_torre_etapa_2_llega` / `_3_llega`; `arcoiris_batalla_torre_confeti_presenta`, `_resorte_presenta`, `_elige_globo_presenta_nicole`; `globo_nombre_*` y `ayuda_globos_extra_02` (motor, sin plano propio). Al retomar se reutilizan `nucleo_batalla_retomar`, `intro_coleccionauta`, `intro` y `encontre_globos` | §25 |
 
 **Ya no suenan en ningún plano** (retiradas en el guion §9.2 o sin uso con la variante A):
 `arcoiris_batalla_cierre_papa_02`, `epilogo_antes_coleccionauta`, `arcoiris_despegue_coco_espera`,
@@ -177,6 +202,12 @@ descansamos y volvemos después?»). **Nunca avanza sola** y la casa está a la 
 Después va la intro corta (`arcoiris_batalla_torre_intro_coleccionauta` + `arcoiris_batalla_torre_intro`)
 y el primer turno, que **siempre es de Maxi** (ficha §8.1).
 
+**v5 (etapas)**: esta presentación es la de **E1**. En T1 la pila incluye las **3 cajas de confeti**
+(magenta, ficha §25.5.1) y, con el último "pop", aparece arriba al centro el **indicador de las 3
+torrecitas** (§25.2.2), sin voz. Entre la intro corta y la puerta de Maxi va, la 1.ª vez por familia, la
+presentación del confeti (§25.5.2). Las presentaciones de E2 y E3 son sus transiciones (§25.4). El
+reemplazo provisional de T1-T3 está en el §25.5.1.
+
 **El puente desde el interludio azul**: el gag de `livianita_3` (la mochila vacía lo hace flotar y cae
 sentado) termina el interludio como hoy. La pausa del mapa de batalla separa las dos cosas, así que no
 hace falta un puente animado.
@@ -198,6 +229,11 @@ No es cinemática: es un momento del turno que el motor anima. Va aquí porque t
 - Maxi no la oye: su consigna ya va en `maxi_globo_01/02` («toca... ¡y suelta!»).
 
 ## 4. La victoria: anticipación y caída en el charco
+
+**v5**: la anticipación y esta caída son **solo del derribo de E3** (el derribo final). Los derribos de E1
+y E2 usan la caída corta del §25.3. La composición de E3 (torre angosta, trono en x 990 sobre la columna
+central, flancos con trampolines y frascos de base en x ≈ 825 y ≈ 1155) y sus ajustes a K3 y C1 están en
+el §25.7.
 
 **Composición (ficha §4)**:
 
@@ -363,6 +399,12 @@ toque del choque (B3, v4.1) el tramo después del epílogo queda partido en ≈ 
     o descansamos y volvemos después? ¡La torre no se va a ninguna parte!»).
   - Revancha `nicole+sofia`: la ayuda 2 es `encontre_globos` con +2 globos, sin gigante (ficha §11.1).
 - **Lo que le cae encima se queda** hasta la victoria (pintura rosada, calcetín, cara pintada).
+  **v5 (etapas)**: se queda hasta el derribo **de la etapa**. En la caída corta, **la pintura se queda**
+  (se suma a sus lunares) y **los objetos salen volando con el splash** (calcetín, tapa-corona y chicle).
+  Al retomar otro día solo se restauran los lunares de las etapas ganadas (§25.6).
+- **v5**: las derrotas, las ayudas y la pausa cuentan **por etapa** (ficha §25.4); la rotación de los
+  gags cuenta **por Torre**, así que el chicle puede caer en cualquier etapa. Los planos de los gags no
+  cambian con la etapa: el trono está siempre en x ≈ 990 y la coreografía lee su posición del nivel.
 - **Los retratos se ríen juntos en el remate**, nunca mientras él se jacta. Nadie queda señalado.
 
 ### 7.2 Gag 1 · "El baile" (1.ª derrota, ≈ 16 s si nadie toca "¡otra vez!")
@@ -756,6 +798,7 @@ y que se puede jugar con dos hermanos. Propongo repetir **lo mínimo**:
 | Pieza | En la revancha |
 |---|---|
 | Presentación de la Torre (§3) | No (va directo a `arcoiris_batalla_torre_intro_revancha` y a la intro corta) |
+| **v5**: etapas (ficha §25.15) | **Las 3**, con su caída corta (ya vista: se salta) y su transición (no se salta, ≤ 4 s). Sin presentaciones de piezas especiales ni de la bandeja (ya vistas por familia). Detalle y variante "solo E3" en el §25.8 |
 | Derrotas-gag (§7) | Sí, con el conteo reiniciado (1, 2, 3, 4…) |
 | Anticipación (§4.1) | **Sí, entera**: es el desenlace de la jugada y no se salta |
 | Caída (§4.2), C1-C5 | **Sí**, y se salta con un toque (ya vista) |
@@ -787,6 +830,10 @@ del hermano**. Nadie compara con quien llegó antes.
 | Pieza | Id | Desde la 2.ª vez, un toque deja… |
 |---|---|---|
 | Presentación de la Torre | `arcoiris_batalla_final:presenta_torre` | La intro |
+| **v5**: caída corta de etapa (E1 y E2) | `arcoiris_batalla_final:caida_etapa` (un solo id para las dos; lo marca `batalla.gd`) | El estado final del §25.3 y sigue la transición |
+| **v5**: transición entre etapas | — | No se salta (≤ 4 s, orienta) |
+| **v5**: presentación del confeti, del trampolín y de la bandeja de Nicole | — | Una vez por familia; se corta si alguien toca (ficha §25.3) |
+| **v5**: re-entrada al retomar la Torre | `arcoiris_batalla_final:retomar_torre` | **Desde la 1.ª vez** (excepción, §25.6): la etapa lista y la puerta de Maxi |
 | Anticipación | — | No se salta (un toque se encola para la caída) |
 | Caída | `arcoiris_batalla_final:caida_torre` (lo marca `batalla.gd` con `momento_saltable_terminado`) | El estado final del §4.2 |
 | Derrotas-gag | — | "¡Otra vez!" las corta desde la 1.ª vez |
@@ -841,6 +888,7 @@ puede resolver cualquiera:
 | Mapa sobre la nave en la pausa | Cualquiera (es parte del target de la nave) | Es pausa: espera |
 | Cuenta regresiva | Cualquiera (el retrato que brilla) | Salta solo a los 20 s (hermanas) / 15 s (Maxi) |
 | "¡Todos a la nave!" al retomar | Cualquiera, los tres retratos | `todos_nave_corta` y `falta_uno`, que invitan sin nombrar a nadie |
+| **v5**: caída corta, transición y re-entrada de la Torre | Nadie tiene que tocar | Siguen solas; ninguna espera un toque (§25.3-§25.6) |
 
 Las líneas con nombre que no son de turno (`coco_regalo_<hermano>`, `*_gracias`) le hablan al retrato
 del dueño de la tarea, igual que si estuviera: nunca dicen que falta.
@@ -866,7 +914,11 @@ del dueño de la tarea, igual que si estuviera: nunca dicen que falta.
 |---|---|---|
 | Pausa antes de la Torre (`pausa_antes`) | 3,3 s de voz; espera un toque | Es pausa |
 | Presentación de la Torre (antes de la etapa) | ≈ 8,1 s | Desde la 2.ª vez |
+| **v5**: presentación del confeti (1.ª vez por familia, E1) | ≈ 3,8 s | Se corta al tocar |
 | Derrota-gag (por derrota) | ≈ 15-19 s sin "¡otra vez!" (gag 1 ≈ 15,6 s), más ≈ 7 s de rearmado | "¡Otra vez!" |
+| **v5**: caída corta + transición (E1→E2 y E2→E3, cada una) | ≈ 5,5 + 4,0 s = **≈ 9,5 s** (+ ≈ 3,8 s de `resorte_presenta` la 1.ª vez, antes de E3) | La caída, desde la 2.ª vez; la transición, no |
+| **v5**: re-entrada al retomar | ≈ 5 s (etapa a medias) / ≈ 7,7 s (etapa sin tiros) | Desde la 1.ª vez |
+| **v5**: **Torre jugada** (ficha §25.10) | **Típica ≈ 16 min** (v3: ≈ 5,8), p80 ≈ 21 min, ≈ 12 min con las 3 etapas al primer intento. Se corta naturalmente después de E1 o de E2: el guardado es entre etapas | — |
 | Anticipación | ≈ 4,6 s (A) / ≈ 3,2 s (B) | No |
 | Caída | ≈ 10,8 s | Desde la 2.ª vez |
 | Antes del epílogo | ≈ 4,95 s (tope ≤ 6 s con audio real) | Desde la 2.ª vez |
@@ -882,8 +934,9 @@ del dueño de la tarea, igual que si estuviera: nunca dicen que falta.
 | Cuenta y despegue | ≈ 10 s + toques + 13,8 s ≈ 27 s | Despegue desde la 2.ª vez |
 | Mapa Estelar | ≈ 12 s | Desde la 2.ª vez |
 | **Bloque 2** | **≈ 3,7 min** (con ≈ 1-2 s por toque al sobre y al teléfono; como máximo + 11 s si nadie toca) | |
-| **Total del cierre** (desde el derribo final hasta el Mapa Estelar) | **≈ 6,1 min**, en dos sesiones naturales por la pausa aprobada (§8.1) | |
-| **Revancha ganada** (desde el derribo) | ≈ 3,2-4,6 + 10,8 s + estrellitas (solo con los tres) ≈ 18 s | — |
+| **Total del cierre** (desde el derribo final hasta el Mapa Estelar) | **≈ 6,1 min**, en dos sesiones naturales por la pausa aprobada (§8.1). **v5: no cambia**, porque arranca en el derribo de E3 | |
+| **v5**: desde la entrada a la Torre hasta el Mapa Estelar | **≈ 22 min** (16 de Torre + 6,1 de cierre), repartidos en 2-3 sesiones: la Torre guarda entre etapas y el cierre tiene la pausa del §8.1 | |
+| **Revancha ganada** (desde el derribo) | ≈ 3,2-4,6 + 10,8 s + estrellitas (solo con los tres) ≈ 18 s. **v5**: más ≈ 4 s de cada transición (las caídas cortas ya se saltan) | — |
 
 **Para UX**:
 
@@ -933,6 +986,10 @@ del dueño de la tarea, igual que si estuviera: nunca dicen que falta.
 | N19 **[v4]** | Manito fantasma | Mano blanca simple, ⌀ 90 px (puede ser por código) | Primer tiro de Nicole y Sofía (§3.1) |
 | N21 **[v4.1]** | Teléfono-estrella | Estrella dorada con auricular, ≥ 200 px, con 2 cuadros de sacudida (puede ser por código sobre la sobre-estrella) | Contestar la llamada (§11, V4) |
 | N20 **[v4]** | Retratos grandes de la cuenta | Los retratos actuales a 160 y 200 px; si el SVG fuente no aguanta 200 px nítido, re-exportar | Cuenta regresiva (§12.1) |
+| **N3b** **[v5]** | **Lunares en 3 niveles** (extiende N3) | Nivel 1 (≈ 5 lunares, tras E1), nivel 2 (≈ 12, tras E2) y nivel 3 (el N3 completo, con las gotas de las antenas, en la caída final). Basta una máscara que muestre un subconjunto del N3: no es un dibujo nuevo por nivel | Caídas cortas, re-entrada y caída final (§25.3, §25.6) |
+| N22 **[v5]** | **Indicador de las 3 torrecitas** | Silueta de torrecita de 40 × 48 px en dos estados: gris de contorno y pintada (3 franjas rojo, amarillo y azul). **Puede ser por código** | §25.2.2 |
+| N23 **[v5]** | **Poses de la transición** | Corriendo "en rueda" (2 cuadros, puede ser el sprite con *bob*); con el cojín-trono en la cabeza; lanzado por el trampolín (sirve la de pedalear en el aire, N2) | §25.4 |
+| N24 **[v5]** | Nubecita "puf" | La nubecita de confeti en la que desaparece cada pieza vieja (puede ser por partículas) | §25.4 |
 
 **Por código**: el charco, el arcoíris y el puente, los chorros, las burbujas, el campo de estrellas, las
 líneas, el morph al perrito, el marco de la consola, los fuegos, el confeti, la flechita del globo fuera de
@@ -943,7 +1000,7 @@ llamada.
 
 | Dónde | Animaciones |
 |---|---|
-| `motor_lanzar` (dueño de la torre) | `presenta_torre`, `manito_fantasma`, `anticipacion` (variantes A y B), `caida_torre` (desde `estado_derribo()`), los gags `gag_baile` (frasco a ≤ 2,5 s), `gag_estornudo`, `gag_globo_vuelve` y `gag_chicle` (según `variante_derrota()`), `rearma`, `gigante_inflado` (variante A, Coco), `gigante_vuelo` (con `retratos_cachetes`) y `charco_crece` |
+| `motor_lanzar` (dueño de la torre) | `presenta_torre`, `manito_fantasma`, `anticipacion` (variantes A y B), `caida_torre` (desde `estado_derribo()`), los gags `gag_baile` (frasco a ≤ 2,5 s), `gag_estornudo`, `gag_globo_vuelve` y `gag_chicle` (según `variante_derrota()`), `rearma`, `gigante_inflado` (variante A, Coco), `gigante_vuelo` (con `retratos_cachetes`) y `charco_crece`. **v5**: `caida_etapa(nivel_lunares)`, `transicion_etapa(etapa)`, `armar_torre(por_filas)` (común a T1, la transición y la re-entrada), `presenta_especial(tipo)`, `retomar_torre(caso)` e `indicador_torrecitas` (§25) |
 | `batalla.tscn` (`CinematicasBatalla`) | `antes_epilogo` (mochila gris y pelusa), `cierre_a` (con la pista `mapa_cae`), `fiesta_tres` (B1-B4, con la espera del choque ≤ 4 s), `mapa_coleccionauta` (con la espera del toque en M1) y la pantalla de pausa. **Sin** F1/F2 entre la caída y el epílogo |
 | **`escenas/planetas/arcoiris/partida_arcoiris.tscn`** (nueva) | `entrada`, `chorro`, `nave_estornuda`, `ala_desenvolver`, `ala_encaja` (Coco), `ala_afirma(paso)`, `broche_gira`, `broche_menea`, `ala_aletea`, `ruta_linea`, `ruta_perrito`, `ruta_palabra`, `despedida_<hermano>` (plantilla), `choque_cinco`, `coco_abrazo_cometa`, `coco_cierre`, `foto` (sobre que espera ≤ 6 s), `abordaje`, `telefono_ring` (espera ≤ 5 s), `llamada_papa`, `cuenta_retrato(brilla/salta/rie)`, `cuenta_estrella`, `despegue_puente` |
 | `mapa_estelar.gd` | `llegada_rumbo(origen, destino, abierto: bool, de_vuelta: bool)`, el rumbo encendido persistente, `destino_lejano` (latido, flechita y voz de espera, §13.1) y el enfoque `lejano → encendido` (ME3) |
@@ -978,14 +1035,21 @@ llamada.
 - **Capas (`z_index`) del bloque 2**: cielo 0, suelo 10, nave 20, Coco 30, hermano 35, partículas 50,
   barra 60, casa y Cometa 70.
 
-## 21. Lo que sigue abierto [CONCILIAR]
+## 21. Lo que estaba abierto [CONCILIAR] (v5: todo cerrado)
 
 | # | Qué | Con quién |
 |---|---|---|
 | 1 | ~~Mapa Estelar, rama B~~: **cerrado** en el guion v4: `vuelo_celebra` suena en ME5 de las dos ramas (en la B, tras `vuelo_rumbo_animalia`); tras la llave de padres, sin voz | — |
 | 2 | ~~Broches, cierre solo a los 32 s~~: **confirmado** en la ficha §13.5, más la regla de los siguientes a los 12 s (v4.1) | — |
 | 3 | ~~Tanque, ayuda de los 24 s~~: **confirmado** en la ficha (un chorro cada 4 s) | — |
-| 4 | La posición de la nave en el Mapa Estelar: el guion pide "al 25 % de la ruta" en la rama A (la v3 la dejaba junto a Arcoíris). Hay que confirmar que `mapa_estelar.gd` puede dibujarla a mitad de un rumbo | `dev-godot` |
+| 4 | ~~La posición de la nave en el Mapa Estelar (al 25 % de la ruta en la rama A)~~: **trasladado** a la tarjeta HE-85, que lo absorbe (tablero). Ya no es una conciliación entre documentos: es una verificación de implementación de `dev-godot` | — |
+| 9 | ~~C1 de la ficha v4 §25.13: caída corta y transición entre etapas; composición de E3; duraciones del §18~~: **cerrado en la v5** | §25.3, §25.4, §25.7, §18 |
+| 10 | ~~C2 de la ficha v4 §25.13: presentación de cada pieza especial y de la bandeja de Nicole~~: **cerrado en la v5** | §25.5 |
+| 11 | ~~Qué ve la familia al retomar tras un guardado entre etapas (R17 = A)~~: **cerrado en la v5** | §25.6 |
+
+**v5**: no queda ningún [CONCILIAR] abierto en este storyboard. Lo que pido a otros roles son **notas** que
+no bloquean el storyboard (cada plano dice qué pasa si no se adoptan): §25.9 (`disenador-mecanicas`, para
+`modo-equipo.md` §14.16 y la ficha) y §25.10 (HE-74, HE-86 y HE-80).
 | 5 | ~~Salida de la revancha~~: **cerrado**, sin línea a propósito (guion T.9) | — |
 | 6 | ~~Numeración de planos del guion §4~~: **cerrado**; el guion usa MX1-MX4, NI0-NI5 y SO0-SO6, igual que el §9 | — |
 | 7 | ~~«morado» / «morada» de soplar~~: **corregido** en la ficha | — |
@@ -1020,6 +1084,21 @@ está.
 | T7 | **Auditoría UX y QA del cierre**, y playtest con los tres | `experto-ux-parvulo` y `tester-qa` | T2 a T5 |
 
 ## 24. Changelog
+
+### v5 (05-Nov-2026, HE-88): la Torre en 3 etapas (R17 = A) y ganchos sin video
+
+| Qué | v4.1 | v5 | Dónde |
+|---|---|---|---|
+| Estructura de la Torre | Una torre; el derribo es el final | **3 etapas** (E1, E2 y E3); los derribos de E1 y E2 llevan caída corta + transición; la anticipación y la caída del §4 son solo de E3 | §2, §4, §25.2 |
+| C1 de la ficha v4: caída corta | — | **≈ 5,5 s** (CE1-CE6): tambaleo, splash, lunares que crecen por etapa, mini fiesta y la torrecita que se pinta; saltable desde la 2.ª vez (`caida_etapa`) | §25.3 |
+| C1: transición | — | **≤ 4 s** (TR1-TR4), no saltable: sale rebotando, la torre vieja hace "puf", **la torre nueva llega volando por filas** desde fuera de cuadro y él vuelve con el cojín-trono; en E3 lo sube el trampolín | §25.4 |
+| C1: composición de E3 y §18 | Torre única en x 990 | Torre angosta de E3 en K3 y C1; flancos y trampolines fuera del charco; el gag del trampolín en C2. Cierre ≈ 6,1 min (sin cambios); Torre ≈ 16 min | §25.7, §18 |
+| C2: presentaciones | — | E1 = presentación T.1 + confeti; E2 = su transición; E3 = su transición + trampolín; la bandeja de Nicole, **en su 2.º turno de la sesión** (una cosa nueva por turno) | §3, §25.5 |
+| Retomar tras guardado entre etapas | — | **Re-entrada corta, saltable desde la 1.ª vez**: caso A (etapa a medias, ≈ 5 s) y caso B (etapa sin tiros, ≈ 7,7 s) | §25.6 |
+| Indicador de etapas | — | **3 torrecitas** arriba al centro, sin números: se pintan al ganar cada etapa | §25.2.2 |
+| Video postergado (PO, 05-Nov) | Todo cutout completo | **Contrato de ganchos**: video → cutout → tarjeta → paso directo, elegido por datos; columna "Provisional / video" plano por plano | §25.1, §25.3-§25.7 |
+| Revancha | Una torre | 3 etapas (caídas cortas saltables, transiciones enteras); variante si el PO elige "solo E3" | §14, §25.8 |
+| [CONCILIAR] | Quedaba el 4 (nave a mitad del rumbo) | Ninguno abierto: el 4 pasa a HE-85; C1, C2 y el retomar, cerrados. Notas no bloqueantes para mecánicas, arte, voces y niveles | §21, §25.9, §25.10 |
 
 ### v4 (17-Oct-2026, HE-73): bloqueante B1 de la auditoría UX HE-71
 
@@ -1067,3 +1146,415 @@ manda aplicar al hacer la v4, con su plano o sección.
 | Cabos de la ficha | §21, puntos 2, 3 y 7 abiertos | Cerrados (la ficha los confirmó); se agrega el punto 8 (P3, referencia del guion) | §21 |
 | Cabos del guion (§21, puntos 1, 5, 6 y 8) | Abiertos para `guionista` | Cerrados por el guion v4: `vuelo_celebra` también en la rama B (sin voz tras la llave), revancha sin línea, numeración de planos igual, pausa remite al §8.1 | §13.2, §14, §21 |
 | Duraciones | Bloque 2 ≈ 3,6 min; total ≈ 6 min | **Bloque 1 ≈ 2,4 min (2,5 sin toques); bloque 2 ≈ 3,7 min (+ 11 s como máximo sin toques); total ≈ 6,1 min** | §2, §18 |
+
+## 25. v5 — La Torre en 3 etapas (HE-88, 05-Nov-2026)
+
+**Insumos**: `docs/fichas/motor-lanzar.md` v4 §25 (sobre todo el §25.3, flujo entre etapas; el §25.13, C1
+y C2; el §25.14, voces; y el §25.15, revancha) y el §12 (parcial); `modo-equipo.md` §14.6 (retomar la
+batalla); la decisión del PO **R17 = A** y la de **video postergado** (05-Nov-2026, tablero, MARCO DE
+TRABAJO).
+
+**Qué no cambia**: la pausa antes de la Torre (§3), las derrotas-gag (§7), la anticipación y la caída
+final (§4, ahora solo en E3) y todo el cierre desde el derribo de E3 (§5-§13). Las reglas del §0 valen
+igual; aquí importan sobre todo la 2 (un foco), la 4 (aire tras el chiste), la 5 (nunca se hace daño),
+la 6 (saltar) y la 12 (dos hermanos y el retrato).
+
+### 25.1 Ganchos: provisional ahora, video después, la misma lógica
+
+**El problema**: la Torre necesita sus momentos narrativos ya, pero el video no tiene presupuesto. Además,
+casi todo lo de la Torre **depende del estado** (la torre real del nivel, el charco y la pose del
+derribo), y eso un video no lo puede saber.
+
+**La regla**: cada momento es un **gancho** con un id. El motor llama al gancho y espera a que termine. El
+gancho elige, **por datos**, la mejor implementación disponible, en este orden:
+
+| Nivel | Qué es | Costo | Cuándo |
+|---|---|---|---|
+| **V · video** | Clip `.ogv` (Theora, nativo en Godot 4) a pantalla completa, **sin diálogo** (las voces se montan encima, decisión del stack del 19-Jul-2026) | Generación de video (postergada) | Solo planos que **no dependen del estado**, como **inserto** en primer plano |
+| **CS · cutout simple** | Tweens sobre los sprites que ya existen: las piezas del nivel, `coleccionauta_provisional.png`, Coco, el charco y las partículas por código. Squash, arcos, rotaciones y `modulate`. Sin rig | Solo código | **La opción por defecto de hoy** en la Torre |
+| **TJ · tarjeta** | La escena congelada (o una ilustración fija de 1280 × 720) con la voz, 1-2 SFX y un tween de escala o fundido | Una imagen | Respaldo de un CS que todavía no esté hecho |
+| **PD · paso directo** | Se aplica el estado final y suena solo la voz sobre la escena congelada | Nada | Último respaldo: el juego nunca se traba por falta de un asset |
+
+**El contrato (para `dev-godot`)**:
+
+1. **El estado lo cambia el motor, nunca la animación.** Al terminar el gancho (o al saltarlo), el motor
+   aplica el estado final del momento (`aplicar_estado_final(id)`). Lo mismo con cualquier
+   implementación: **cambiar CS por video no toca la lógica.**
+2. **Las voces y los SFX viven en los datos del gancho**, con su tiempo de inicio, y no dentro del video.
+   Si un clip dura distinto, sus tiempos se sobrescriben en los datos (`voces_video`), no en el código.
+3. **El video va en una capa debajo de la UI**: la casa, Cometa, la barra del equipo y el indicador de
+   torrecitas **siguen a la vista y activos** encima del clip (la casa siempre está). Entra y sale con
+   un fundido de 0,2 s contra el cuadro congelado o el estado final.
+4. **Saltar** usa el mecanismo de siempre (`momento_saltable_iniciado/terminado` y `saltar_momento(id)`),
+   y el salto deja el mismo estado final con cualquier implementación.
+5. **Si falta el asset de un nivel, se baja al siguiente** (V → CS → TJ → PD) sin error visible; solo un
+   `push_warning` para QA.
+6. **Dónde van los datos**: propongo `datos/cinematicas/arcoiris_torre.json`, de cinemáticas. Así no cambia
+   el contrato de `torre_equipo.json` de la ficha. Un gancho tiene esta forma:
+
+```jsonc
+{
+  "caida_etapa": {
+    "duracion_max_s": 5.5,
+    "saltable": "desde_2a",                 // "desde_1a" | "desde_2a" | "no"
+    "implementaciones": ["video", "cutout", "tarjeta", "directo"],
+    "video": { "e1": "res://assets/video/torre/caida_etapa_e1.ogv", "e2": "res://assets/video/torre/caida_etapa_e2.ogv",
+               "entra_s": 1.5, "sale_s": 4.7 },          // el clip cubre CE2-CE5; CE1 y CE6 siguen en cutout
+    "voces": [ { "id": { "e1": "arcoiris_batalla_torre_caida_etapa_01", "e2": "arcoiris_batalla_torre_caida_etapa_02" }, "t_s": 3.2 } ],
+    "sfx":   [ { "id": "splash_redondo", "t_s": 2.4 }, { "id": "tilin", "t_s": 4.9 } ]
+  }
+}
+```
+
+**Columna "Provisional / video" de los planos**: dice qué se hace **ahora** (CS, TJ o PD) y si ese plano
+**admite video después** (y cómo) o no.
+
+### 25.2 Las 3 etapas en pantalla
+
+#### 25.2.1 Composición por etapa
+
+La forma exacta (los `rect`) la fija `disenador-niveles` en HE-80. **La coreografía nunca lleva
+coordenadas de piezas fijas en el código**: lee las del nivel y la pose de `estado_derribo()`. Lo común a
+las tres etapas es la ficha §4: la torre centrada en x 990, la base en y 584, ≤ 434 px de alto, el charco
+centrado en (990, 580), la bolsa de la resortera en (260, 430) y Coco con la canasta en (85, 584).
+
+| | E1 · "La torre de la colección" | E2 · "Dos torres y un puente" | E3 · "La torre de las cosas raras" |
+|---|---|---|---|
+| Silueta | Ancha y escalonada (x ≈ 800-1180) | Dos pilares y un puente de cartón; el trono **sobre el puente** | Angosta al centro; dos flancos de lata con un **trampolín verde** cada uno; frascos sueltos en x ≈ 825 y ≈ 1155 |
+| Lo que se lee de lejos | "Muchas cosas apiladas" | "Un puente": hay que elegir dónde pegar | "Hay que abrir un costado": los trampolines se ven limpios y verdes (no se rompen) |
+| Lunares con que **empieza** él (§25.2.3) | Ninguno | Nivel 1 | Nivel 2 |
+| Indicador (§25.2.2) | ○ ○ ○, late la 1.ª | ● ○ ○, late la 2.ª | ● ● ○, **la 3.ª late más grande** ("¡la última!") |
+
+#### 25.2.2 El indicador de las 3 torrecitas (propuesta de dirección)
+
+- **Qué es**: tres siluetas de torrecita (40 × 48 px, N22) en `Rect2(568, 16, 144, 48)`, arriba al
+  centro, a más de 24 px de Cometa y de la casa. **Sin números ni texto.**
+- **Estados**: gris de contorno (por jugar), pintada con 3 franjas rojo, amarillo y azul (ganada) y la de
+  la etapa en curso, que respira (escala 1,0 ↔ 1,06, 2 s).
+- **No es un botón**: al tocarla se menea 0,2 s, sin voz.
+- **Para qué sirve**:
+  - en la caída corta, una chispa la pinta: se ve **lo ganado**;
+  - en la transición a E3, la última late más grande: responde al riesgo R21 ("¡otra torre más!") sin
+    palabras;
+  - al retomar, las ganadas destellan: **así se ve dónde iban** (§25.6).
+- **Si UX o mecánicas no la quieren**, se omite y no cambia ningún tiempo: la chispa de CE6 vuela a la
+  mochila del Coleccionauta y el resto queda igual.
+- **Provisional**: por código (dos `Polygon2D` y un `modulate`). Sin video.
+
+#### 25.2.3 Él queda cada vez más pintado (propuesta de la ficha C1, adoptada)
+
+- **Lunares por nivel** (N3b): 1 tras E1, 2 tras E2 y **3, el completo con las gotas, solo en la caída
+  final**. Así la caída final sigue siendo la de mayor fiesta, también en lo visual.
+- **No necesita estado nuevo**: el nivel sale de `etapas_ganadas`.
+- **La mochila siempre queda gris y limpia**: la salva en cada caída. Eso es lo que prepara el epílogo.
+
+### 25.3 La caída corta de etapa (E1 y E2; ≈ 5,5 s; saltable desde la 2.ª vez)
+
+**Cuándo**: en el cuadro en que el motor detecta el derribo de E1 o de E2 (agarre 0 o trono botado, en
+vivo, ficha §25.3). La física queda congelada. **No lleva la anticipación del §4.1** (esa, con su
+silencio de K4, es solo para el derribo final) ni cámara lenta: es una caída "de capítulo", más chica que
+la final a propósito.
+
+**Id del momento**: `arcoiris_batalla_final:caida_etapa`. Es uno solo para E1 y E2, así que la caída de E2
+ya se salta si la de E1 se vio entera.
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | Música y SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| CE1 | 0,0-1,5 | La torre congelada en la pose del derribo | **Tambaleo en dos vaivenes que crecen** (±4° y ±8°, 0,6 s cada uno), con pivote en el centro de la plataforma (990, 584), sin física; queda **inclinada 9°** (0,3 s). Él, "colgando de un dedo" del cojín, patalea | — | Música a −10 dB. Dos "ñiic" de juguete | **CS**: rotación del nodo de la torre (las piezas son hijas de un pivote temporal). **Video: no** (es la torre real) |
+| CE2 | 1,5-2,4 | La torre se rinde, a velocidad normal | Las piezas interpolan desde su pose de `estado_derribo()` hasta un montón **alrededor del charco** (nunca encima). Él cae **sentado en el aire** con la **mochila en alto** (pose N2) | — | "Woosh" y "pum, pum" acolchados | **CS**: tween de cada pieza hacia una pose de la "corona" alrededor del charco (§25.11). **Video: sí, como inserto** desde 1,5 s: primer plano de él cayendo, sin la torre |
+| CE3 | 2,4-2,8 | **¡Splash!** | Aterriza sentado en (990, 578) con squash (0,75 / 1,15); corona de salpicón chica (N4); aparecen **los lunares del nivel de la etapa** (§25.2.3). **La mochila, en alto, gris y limpia.** **En el mismo cuadro, los tres retratos de la barra saltan juntos** (un salto de 40 px) y entra confeti desde un costado (≤ 30 partículas) | — | "Splash" redondo al 70 %. **Fanfarria corta** de 2 compases (la grande queda para la caída final) | **CS**: squash del sprite, lunares con máscara y partículas. **Video: sí** (en el inserto; los retratos están en la UI, encima) |
+| CE4 | 2,8-3,2 | Él, quieto | **Aire para la risa**: le gotea pintura de una antena | — | "Plip" | CS. Video: sí (inserto) |
+| CE5 | 3,2-4,7 | Él | Se mira las manos con lunares, sorprendido; sopla la mochila para ver si sigue limpia y suspira aliviado | `arcoiris_batalla_torre_caida_etapa_01` (E1) o `_02` (E2), ≤ 1,5 s (ficha §25.14) | — | CS. **Video: sí** (el clip termina en 4,7 s con fundido al estado del cutout) |
+| CE6 | 4,7-5,5 | Arriba al centro | **Una chispa sale del charco y pinta la torrecita de la etapa** en el indicador (0,4 s, "tilín"). Después **una estrellita chica vuela de la torrecita a la casa**, que late una vez (0,4 s): "lo ganado quedó guardado" (§25.6). Sin voz y sin invitar a salir | — | "Tilín" y un "tin" suave en la casa | **CS** por código. Video: no (es UI) |
+
+**Estado final** (el que deja el salto):
+
+- él sentado en el charco, con los lunares de la etapa y la mochila gris en alto;
+- las piezas en un montón alrededor del charco y el confeti que cae;
+- la torrecita pintada.
+
+Después sigue **siempre** la transición (§25.4).
+
+**Si el gancho de la caída corta está en PD**: se pinta la torrecita y suena `caida_etapa_0X` sobre la
+torre congelada. Después la transición la desarma con su "puf" igual.
+
+### 25.4 La transición (≤ 4 s; no se salta) y el arranque de la etapa nueva
+
+**Para qué**: es la **presentación de E2 y de E3**. En ≤ 4 s cuenta "se levantó, trajo otra torre y se
+subió", y la voz dice qué tiene de nuevo. Es **chistosa** (R21): el Coleccionauta nunca se rinde y siempre
+tiene más colección.
+
+**Un foco**: la torre nueva que llega. Él está fuera de cuadro, pero **sus antenas asoman por el borde
+derecho y rebotan al ritmo de la voz**, igual que el gag de la parte C (M5). El chiste es que él tira su
+colección desde afuera.
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | Música y SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| TR1 | 0,0-0,6 | Él en el charco | **Se levanta de un salto** (squash 0,8 / 1,15), sacude las antenas (gotitas), se cuelga la mochila y **sale rebotando hacia la derecha** (3 rebotes; pose "corriendo en rueda", N23) | `arcoiris_batalla_torre_etapa_2_llega` o `_3_llega` **empieza en 0,5** (≤ 3,5 s) | El **motivo del Coleccionauta** (kazoo), rápido. Tres "boing" que suben | **CS**: tween en x con *bob*. Video: no (en 0,6 s no vale un clip, y lo que sigue es el nivel real) |
+| TR2 | 0,4-1,0 | La plataforma | Las piezas viejas desaparecen **una por una en una nubecita "puf"** (N24), de izquierda a derecha, cada 0,03 s. **El charco se escurre** hasta su tamaño inicial ("glup"): es otra torre y otro charco (ficha §25.3) | (sigue) | "Puf" en ráfaga y "glup" | **CS**: escala a 0 + partículas; el charco, por código. Video: no |
+| TR3 | 1,0-3,0 | **La torre nueva llega volando** | Por **filas** de abajo hacia arriba (§25.11), las piezas de cada fila vuelan en arco desde fuera de cuadro, en (1320, 260), y aterrizan en su `rect` con un "pop" (≤ 0,3 s por fila). Las antenas, con sus lunares, asoman y rebotan en el borde derecho. **La última fila es la novedad de la etapa**: en E2, **el puente**, que cae con un "bonk" de cartón, y después sus 4 frascos; en E3, **los dos trampolines**, con un "boing-boing" | (sigue) | Un "fiu-pop" por fila, con una nota que sube (do-re-mi…) | **CS**: tween en arco por pieza (función `armar_torre`, la misma de T1 y de la re-entrada). Video: no (las piezas tienen que caer en el lugar real del nivel) |
+| TR4 | 3,0-4,0 | Él vuelve | **E2**: entra rebotando con el **cojín-trono en la cabeza** (N23), salta en arco (0,4 s) al centro del puente, pone el cojín y se sienta ("puf"). **E3**: entra corriendo, **pisa un trampolín, que lo lanza** ("¡boooing!", squash del resorte, ficha §25.5.2) en arco hasta la cima, y cae sentado en el cojín. En los dos casos termina con la **cara de "agarre lleno"**, orgulloso. **La torrecita de la etapa empieza a respirar** (en E3, más grande) | La voz termina como mucho en 4,0 | "Puf" de cojín; en E3, "¡boooing!" | **CS**. Video: no (termina en la pose real del nivel) |
+
+**Al terminar la transición** (en este orden, sin pausa ni "¿seguimos?", ficha §21 decisión 6):
+
+1. **E3, la 1.ª vez por familia**: la presentación del trampolín (§25.5.3).
+2. **Sin intro corta**: al empezar E2 y E3 **no** suenan `intro_coleccionauta` ni `intro`. La llegada ya
+   es la voz del Coleccionauta y la regla "por turnos" ya la conocen. La intro corta sí suena en cada
+   intento nuevo de la etapa (tras el rearmado, §7.5) y al retomar (§25.6). Es una nota para mecánicas
+   (§25.9, punto 3).
+3. **La puerta de Maxi**: `reiniciar_rival("maxi")` y "¡le toca a Maxi!", como en todo intento.
+
+**Tramo sin tocar entre etapas**: 5,5 + 4,0 ≈ **9,5 s** (≈ 13,3 s antes de E3 la 1.ª vez, con el
+trampolín). Es la mitad del tramo del derribo final (≈ 19 s, §4.2) y termina siempre en un turno de Maxi,
+que es un acierto seguro.
+
+**Si la voz de llegada no existe todavía** (HE-86): la transición se hace igual, sin voz, con el motivo de
+kazoo a 0 dB. No se traba.
+
+### 25.5 Las presentaciones de cada etapa
+
+| Etapa | Qué la presenta | Cuándo | Se salta |
+|---|---|---|---|
+| E1 | La presentación T.1 (§3, T1-T3) + la intro corta + **el confeti** (§25.5.2) | Al tocar el 4.º hito tras la pausa | T.1 desde la 2.ª vez; el confeti, una vez por familia y se corta al tocar |
+| E2 | Su transición (§25.4), con `etapa_2_llega` | Tras la caída corta de E1 | La transición no; la caída, desde la 2.ª vez |
+| E3 | Su transición, con `etapa_3_llega` (dice "la última", R21) + **el trampolín** (§25.5.3) | Tras la caída corta de E2 | Ídem; el trampolín, una vez por familia y se corta al tocar |
+| La bandeja de Nicole | §25.5.4 | Su 2.º turno de la sesión, la 1.ª vez por familia | Se corta al estirar |
+
+#### 25.5.1 E1: la presentación T.1 con el provisional plano por plano
+
+Los planos son los del §3. **v5**: la pila de T1 incluye las 3 cajas de confeti y, con el último "pop",
+aparece el indicador de las 3 torrecitas (sin voz y sin tiempo extra).
+
+| # | Provisional ahora | Video después |
+|---|---|---|
+| T1 (apila en cámara rápida) | **CS**: la misma `armar_torre(por_filas)` de la transición, pero las piezas salen **de la mochila** (en (990, 520)) en vez de llegar del borde, a ritmo de "caja, frasco, caja". Él aparece en la cima con un salto | **No**: es la torre real de E1. Si algún día hay video, cubre solo T2-T3 |
+| T2 (se estira hacia el arcoíris) | **TJ**: la escena congelada con él en la cima; un tween de estirarse (escala y +6 % y mano +5 px) en «...de la mano» | **Sí, como inserto**: primer plano de él de puntillas, sin mostrar la torre entera; fundido a la escena real |
+| T3 (Coco y la resortera) | **TJ**: Coco con un giro de 360° y la resortera que aparece con "boing" | **Sí, como inserto**, o se queda en TJ: es barato y suficiente |
+
+#### 25.5.2 El confeti (E1, la 1.ª vez por familia; ≈ 3,8 s)
+
+Va **después de la intro corta y antes de la puerta de Maxi**. Así la novedad queda pegada a la acción.
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| PC1 | 0,0-0,8 | Las 3 cajas de confeti | **Halo violeta** de 0,8 s (ficha §25.3) y las tres laten a la vez. Él, arriba, se asoma con las gafas-lupa a mirar la más cercana (un foco: él no habla) | — | "Tin" triple | **CS**: halo por código y escala. Video: no |
+| PC2 | 0,3-3,3 | Ídem | En «¡pomf, fiesta de confeti!», **la tapa de la caja más cercana se levanta y suelta un puñadito de confeti** (6 partículas) y se vuelve a cerrar: una muestra sin romperla | `arcoiris_batalla_torre_confeti_presenta` (≤ 3 s) | Un "pomf" chiquito, blando | CS. Video: no |
+| PC3 | 3,3-3,8 | Él | Aire: se ríe con los hombros arriba (le hizo gracia, nunca susto, R20) | — | — | CS |
+
+La intro corta termina con Coco (`intro`) y la línea del confeti también es suya. Para que no suenen
+como una sola tira, **el foco visual cambia** a las cajas (el halo de PC1) y hay 0,3 s de aire entre
+`intro` y PC2.
+
+#### 25.5.3 El trampolín (E3, la 1.ª vez por familia; ≈ 3,8 s)
+
+Va **justo después de la transición a E3**. La transición ya mostró el trampolín en uso (lo lanzó a él):
+esta presentación lo nombra.
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| PR1 | 0,0-0,8 | Los dos trampolines | Halo violeta de 0,8 s; los dos se aplastan y estiran una vez | — | "Boing" doble | CS. Video: no |
+| PR2 | 0,3-3,3 | Ídem | En «¡pero hacen boing!» **la pelusa-nubecita (N12) cae sobre un trampolín y sale rebotando** hacia arriba; él la sigue con los ojos y queda bizco (ojos A1-o) | `arcoiris_batalla_torre_resorte_presenta` (≤ 3 s) | "Boing" agudo | CS (reutiliza N12). Video: no |
+| PR3 | 3,3-3,8 | Él | Aire: se sacude la bizquera | — | — | CS |
+
+El trampolín **siempre se ve limpio y verde** (ficha §25.5.2), también en la caída final.
+
+#### 25.5.4 La bandeja de Nicole: una cosa nueva por turno
+
+- **Problema**: en el **primer** turno de Nicole de la sesión ya va la explicación del tiro con la manito
+  fantasma (§3.1, `lanzar_primer_tiro`). Si en ese mismo turno se presentara la bandeja, una niña de 5
+  años recibiría `carga` + `primer_tiro` + `elige_globo_presenta_nicole`: ≈ 8 s de instrucciones y dos
+  cosas nuevas a la vez.
+- **Dirección**: la bandeja **se presenta en el 2.º turno de Nicole de la sesión**, la 1.ª vez por
+  familia. En el 1.º, la bandeja **ya está a la vista** con el normal cargado (ficha §25.6.4): si la
+  toca, funciona igual, pero nadie se la explica todavía.
+- **Plano PN** (≈ 3,5 s, al abrirse su puerta en ese turno): halo violeta de 0,8 s sobre la bandeja; **el
+  rebotón da dos saltitos en su casilla** ("boing-boing") y suena
+  `arcoiris_batalla_torre_elige_globo_presenta_nicole` (≤ 3,5 s), **en lugar de `carga`** en ese turno
+  (el color del globo se ve igual). La voz no bloquea: si estira, se corta en 0,15 s (§0, regla 13).
+  **Provisional**: CS por código. **Video**: no.
+- **Si la ficha mantiene el disparador original** (el 1.er turno), la secuencia en ese turno es `carga` →
+  manito con `primer_tiro` → PN solo después de su primer tiro, en el pase. Es peor, pero no se traba. Nota
+  para mecánicas en el §25.9, punto 4.
+
+### 25.6 Retomar después de un guardado entre etapas (re-entrada corta y saltable)
+
+**Qué quiere el PO (R17 = A)**: que la Torre larga se pueda cortar entre etapas sin perder nada. La
+pregunta de dirección es **qué ve la familia al volver**, otro día, para entender en dos segundos dónde
+iban, sin texto y sin repetir lo que ya vieron.
+
+**El camino de vuelta** (sin cambios, `batalla_arcoiris.md` §10 y `modo-equipo.md` §14.6): hito de la
+batalla en el mapa del planeta → "¡todos a la nave!" corta → despegue corto con `nucleo_batalla_retomar`
+(«¡seguimos donde quedamos!») → iris → **la re-entrada de la Torre** (este §).
+
+**Saltable desde la 1.ª vez** (excepción a la regla 6 del §0, con id `arcoiris_batalla_final:retomar_torre`).
+Un toque deja la etapa lista y abre la puerta de Maxi. **Motivo**: todo lo que muestra ya lo vieron (la
+intro suena en cada intento) y viene justo después del ritual de "¡todos a la nave!", así que una
+espera más no aporta nada. **Nunca dura más de ≈ 8 s.**
+
+#### 25.6.1 Caso A · la etapa estaba a medias (hubo al menos un tiro; ≈ 5 s)
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| RA1 | 0,0-0,4 | La etapa guardada **tal cual** (ficha §12): torre, charco, manchas y la cara del agarre | El iris abre. Él, arriba, con **los lunares de las etapas ganadas** (§25.2.3) | — | — | **CS**: es el estado restaurado. Video: no |
+| RA2 | 0,4-1,6 | El indicador | **Las torrecitas ganadas destellan una por una** (0,3 s cada una, "tilín" con nota) y la de la etapa en curso late. Sin voz: "esto ya lo ganamos, vamos por esta". En E1 (ninguna ganada), solo late la primera | — | "Tilín" (do, mi) | CS por código. Video: no |
+| RA3 | 1,6-2,6 | Él | Palmotea la caja de arriba, orgulloso | `arcoiris_batalla_torre_intro_coleccionauta` («¡Torrecita!», 1 s) | — | CS (o TJ) |
+| RA4 | 2,8-5,0 | Coco | Saca la resortera con un giro | `arcoiris_batalla_torre_intro` (2,2 s) | "Boing" de goma | CS (o TJ) |
+
+Después, si se agregaron globos al retomar (mínimo 5, ficha §25.4), suena `encontre_globos` (motor) y se
+abre la puerta de Maxi.
+
+**Si salieron en la pausa de una derrota**: es el caso A con el intento nuevo ya guardado y la canasta
+llena (ficha §12). Lo que le había caído encima en ese intento no se restaura: es otro día.
+
+#### 25.6.2 Caso B · la etapa no tenía tiros (se fueron en la caída corta, en la transición o antes del primer tiro; ≈ 7,7 s)
+
+Aquí **la etapa se presenta otra vez**, porque probablemente no la alcanzaron a ver.
+
+| # | Tiempo | Qué se ve | Acción y animación | Voz | SFX | Provisional / video |
+|---|---|---|---|---|---|---|
+| RB1 | 0,0-1,2 | **La plataforma vacía**, con el charco chico | Iris. Las torrecitas ganadas destellan (como RA2) | — | "Tilín" | CS. Video: no |
+| RB2 | 1,2-5,2 | La torre de la etapa llega | **TR3 + TR4** de la transición (§25.4), sin TR1 ni TR2: las antenas asoman, la torre llega por filas y él vuelve al trono (en E3, por el trampolín) | `etapa_2_llega` o `etapa_3_llega` (≤ 3,5 s), desde 1,4 | Los de TR3-TR4 | CS. Video: no |
+| RB3 | 5,5-7,7 | Coco | Saca la resortera | `arcoiris_batalla_torre_intro` (2,2 s): es la regla, que tras un día conviene oír. Sin `intro_coleccionauta`, porque ya habló él | "Boing" | CS (o TJ) |
+
+- **En E3, si la presentación del trampolín no se vio**, va entre RB2 y RB3 (§25.5.3).
+- **E1 sin tiros** (se fueron en la presentación T.1 o en el confeti) no es un caso nuevo: la
+  presentación T.1, si no se vio, o la intro corta, si ya se vio. Igual que en la v4.
+- **Nota para el guion** (HE-86): `etapa_N_llega` también suena aquí, **sin una caída antes**. El texto
+  no debe depender de la caída (por ejemplo, sin el «¡Splash!» de la idea de la ficha) o hace falta una
+  variante `_retoma`. Ver el §25.10.
+
+#### 25.6.3 Salir en cada momento: dónde vuelven
+
+| Salen durante… | Al volver ven… |
+|---|---|
+| Un turno de cualquier etapa | Caso A en esa etapa |
+| Un gag de derrota o la pausa de Coco | Caso A, con el intento nuevo guardado |
+| **La caída corta o la transición de E1 → E2** (o de E2 → E3) | **Caso B en la etapa siguiente**: nunca vuelven a la que ya ganaron. Necesita que el parcial se guarde **en el cuadro del derribo de etapa** (nota del §25.9, punto 1) |
+| La presentación del confeti o del trampolín | Caso B, o T.1 en E1. La presentación sigue sin marcarse vista y vuelve a sonar |
+| La anticipación o la caída final (E3) | Sin cambios respecto de la v4 (lo resuelve `batalla.gd` con la ronda `torre`) |
+
+**La señal de "guardado"** (CE6): la estrellita que vuela de la torrecita a la casa es para los papás.
+Les dice sin palabras que salir ahí es seguro. **No invita a salir**: no tiene voz, no hay pregunta y la
+transición sigue sola.
+
+**En el mapa de batalla** (opcional y barato, por código): el 4.º hito muestra el indicador de torrecitas
+al 50 %, con las ganadas pintadas. Solo se ve si pasan por el mapa de batalla. Si no se hace, no cambia
+nada.
+
+### 25.7 El derribo final en E3: composición y provisional de la anticipación, la caída y los gags
+
+#### 25.7.1 Ajustes de composición a E3 (C1)
+
+- **K3 (tambaleo)**: el pivote sigue en (990, 584). La torre de E3 es angosta, así que los ±9° se leen
+  mejor que en la v4. **Los flancos se tambalean con el centro** (son parte del sprite del conjunto).
+- **K4 (inclinada 11°)**: igual. Él cuelga del cojín en x ≈ 990, sobre la columna central.
+- **C1 (la torre se rinde en cámara lenta)**: los flancos se abren hacia afuera, uno hacia cada lado. Los
+  **frascos de base** (x ≈ 825 y ≈ 1155) **ruedan hacia afuera** hasta x ≈ 760 y x ≈ 1220, para no quedar
+  sobre el charco (que en el derribo mide ≥ 360 px: x ≈ 810-1170). Los **trampolines salen girando**
+  hacia los costados.
+- **C2 (gag nuevo, sin tiempo extra)**: uno de los trampolines **cae parado** junto al charco, en
+  x ≈ 1190. Él, al volver la velocidad normal, **rebota una vez en él** ("¡boooing!" grave, 0,5 s) y
+  entonces aterriza en el charco (C3, igual que antes). Así la pieza nueva de E3 paga su chiste en el
+  final. Es acolchado y nunca un golpe.
+- **C3 (lunares)**: nivel 3, el N3 completo.
+- **Estado final** (§4.2): igual, con el trampolín de C2 parado junto al charco como decorado.
+
+#### 25.7.2 Provisional y video del derribo final y de los momentos del motor
+
+| Planos | Provisional ahora | Video después |
+|---|---|---|
+| K1-K5 (anticipación) | **CS**: cámara lenta con `speed_scale` del `AnimationPlayer` y de los tweens (nunca `Engine.time_scale`); retratos con los cachetes inflados por textura; el silencio de K4 es solo audio | **No**: parte de `estado_derribo()` y el silencio necesita la torre real |
+| C1-C2 (la torre se rinde y el rebote en el trampolín) | **CS**: interpolación de las piezas reales | **No** (es la torre real) |
+| C3-C6 (splash, lunares y fiesta máxima) | **CS** | **Sí, como inserto** a pantalla completa desde C3: él en el charco, chapoteando. Los retratos que saltan, el confeti de los costados y la barra quedan en la UI, encima del clip. Fundido al estado final del §4.2 |
+| Gags G1, G2 y G4 | **CS**: el sprite del Coleccionauta con meneo, los props como sprites que caen y el cambio a "rosado", "calcetín" o "chicle" por `modulate` o sprite superpuesto. **TJ** si falta el CS: la escena congelada + el prop + la voz | **Sí, como inserto** de la parte del Coleccionauta (G1a-G1c, G2a-G2b y G4a). La risa de Coco, el logro y la ayuda siguen en CS sobre la escena real. Al salir del clip, lo que le cayó encima se ve en el sprite (regla del §7.1) |
+| Gag G3 (el globo que vuelve) | **CS**, con el color real del globo | **Sí, pero con 3 clips** (rojo, amarillo y azul), para respetar la regla del color (ficha §10.1). Si el presupuesto no alcanza, queda en CS |
+| Rearmado R1-R3, presentaciones del confeti y del trampolín, bandeja, caída corta CE1 y CE6, transición y re-entrada | **CS** | **No** (dependen del estado o son UI) |
+| Caída corta CE2-CE5 | **CS** | **Sí, como inserto**: 2 clips (lunares nivel 1 y nivel 2) |
+| Gigante GG1 (Coco lo infla) | **CS** | **Sí, como inserto** (no depende del estado). GG2-GG5, no |
+
+**Lo que el video agrega de verdad en la Torre**: los primeros planos de él (caídas, gags) y de Coco
+(gigante). Todo lo demás se queda en cutout para siempre, porque es el juego. Esto acota el presupuesto
+de video de la Torre a **10 clips cortos, 11 con el opcional** (2 de caída corta, 1 de la caída final, 6 de
+gags contando los 3 del globo que vuelve, 1 del gigante y, opcional, 1 de T2): es un dato para cuando el
+PO evalúe el presupuesto.
+
+### 25.8 La revancha con 3 etapas (ficha §25.15)
+
+| Pieza | En la revancha |
+|---|---|
+| Entrada | `intro_revancha` + la intro corta, en E1 (sin T.1 ni el confeti, ya vistos) |
+| Caída corta (E1 y E2) | Sí, y se salta con un toque (ya vista) |
+| Transición | Sí, entera (≤ 4 s): orienta igual |
+| Presentaciones del trampolín y de la bandeja | No (ya vistas por familia) |
+| Indicador de torrecitas | Sí, empieza gris otra vez (es otra jugada) |
+| Lunares | Empiezan en cero y crecen igual |
+| Derribo final | Como el §14: anticipación entera, caída saltable, mini fiesta y estrellitas (solo con los tres) **después de E3**, nunca entre etapas |
+| Salir a la mitad | **Sin parcial** (ficha §25.15): la próxima revancha empieza en E1 y no hay re-entrada. Si `modo-equipo.md` §14.16 suma `etapa` al parcial de la revancha, se usa la re-entrada del §25.6 tal cual (§25.9, punto 5) |
+| **Si el PO elige "solo E3"** (ficha §21, decisión 7) | `intro_revancha` → la torre de E3 llega con TR3-TR4 **sin voz de llegada** (el kazoo a 0 dB) → la intro corta → la puerta de Maxi |
+
+### 25.9 Notas para `disenador-mecanicas` (la ficha y `modo-equipo.md` §14.16; no las edito)
+
+Ninguna bloquea el storyboard: cada una dice qué pasa si no se adopta.
+
+1. **Guardar el parcial en el cuadro del derribo de etapa** (además de "al empezar cada etapa"), con
+   `etapa` = la siguiente y la ganada sumada a `etapas_ganadas`. Así salir en la caída corta o en la
+   transición (≈ 9,5 s, con la casa a la vista) nunca devuelve a una etapa ganada (ficha §12 v4: "nunca a
+   una que ya ganaron") y vuelve al caso B. **Si no se adopta**, esa ventana devuelve a la etapa ganada,
+   y la señal de guardado de CE6 pasa al final de TR4.
+2. **"Etapa sin tiros"** (caso B del §25.6.2): sale del parcial (intento 1, agarre perdido 0 y ningún
+   bloque cambiado) o de un campo `etapa_iniciada: false`. Lo que prefiera la ficha; el storyboard solo
+   necesita saber en qué caso está.
+3. **La intro corta no suena al empezar E2 y E3** (la reemplaza la llegada); sí en cada intento nuevo y
+   al retomar (§25.4). **Si se prefiere que suene**, va después de la llegada y antes de la puerta (+3,4
+   s por etapa).
+4. **La presentación de la bandeja de Nicole va en su 2.º turno de la sesión** y reemplaza a `carga` en
+   ese turno (§25.5.4). **Si se mantiene el 1.º**, va en el pase después de su primer tiro.
+5. **§14.16, `etapa` en la revancha**: el storyboard funciona con las dos opciones (sin parcial: empieza en
+   E1; con parcial: re-entrada del §25.6). Si la revancha guarda la etapa, la regla de las estrellitas
+   (★★ "sin perder ninguna etapa") la fija la ficha.
+6. **Ids de momentos saltables**: `<id_batalla>:caida_etapa` (uno solo para E1 y E2) y, nuevo,
+   `<id_batalla>:retomar_torre` (desde la 1.ª vez). Los marca `batalla.gd` con el mecanismo genérico; el
+   núcleo no sabe qué hay dentro.
+7. **Sin estado nuevo para lo visual**: los lunares y el indicador salen de `etapas_ganadas`, y la posición
+   del trono y las filas del armado salen del nivel.
+
+### 25.10 Conciliaciones de la ficha v4 que son de otras tarjetas (solo anotadas)
+
+| Ficha | Tarjeta | Lo que este storyboard le deja anotado |
+|---|---|---|
+| C3 (fondo y arte) | **HE-74** (`disenador-personajes`) | Además del fondo estilo menú de planetas, el confeti, el resorte y el rebotón: **N3b** (lunares en 3 niveles), **N22** (torrecitas, puede ser por código), **N23** (corriendo en rueda, con el cojín en la cabeza y lanzado por el trampolín) y **N24** (nubecita "puf"). El trampolín **siempre limpio y verde**; la caja de confeti con una **tapa que se levanta** (PC2) |
+| C4 (voces) | **HE-86** (`guionista`) | `caida_etapa_01/_02` ≤ 1,5 s y del Coleccionauta, con la imagen de CE5 (se mira los lunares). **`etapa_2_llega` y `_3_llega` suenan también al retomar sin caída** (caso B): mejor sin «¡Splash!», o una variante `_retoma`. `_3_llega` dice "la última" (R21). `elige_globo_presenta_nicole` reemplaza a `carga` en ese turno (§25.5.4). Al empezar E2 y E3 no suena la intro corta (§25.4): conviene que la llegada no repita «¡Torrecita!» |
+| C6 (`etapas[]`) | **HE-80** (`disenador-niveles`) | **La última fila de cada torre es su novedad** (en E2, el puente y sus frascos; en E3, los trampolines) porque la transición la deja para el final (TR3). El armado agrupa las piezas en **filas por la `y` inferior de su `rect`** (tolerancia de 12 px), sin campo nuevo. El trampolín de E3 tiene que dejar un camino de arco hasta la cima para TR4 (es animación: no depende de la física) |
+| C5 (`modo-equipo.md`) | HE-88 (`disenador-mecanicas`) | Ver el §25.9 |
+
+### 25.11 Notas de implementación (`AnimationPlayer` y tweens)
+
+- **Dónde**: todo lo de este § es del motor `lanzar` (dueño de la torre): un nodo `Cinematicas` con su
+  `AnimationPlayer` y el reproductor de ganchos (§25.1). Si el reproductor se escribe genérico (no sabe de
+  torres: solo lee el JSON del gancho, elige la implementación, programa voces y SFX y emite
+  `terminado`), puede vivir en `scripts/base/` y reutilizarse en Animalia. Eso lo decide `dev-godot`.
+- **`armar_torre(por_filas, origen)`**: genera los tweens desde el nivel. Agrupa las piezas por la `y`
+  inferior, ordena de abajo hacia arriba y hace un arco desde `origen` hasta el `rect` de cada pieza (≤
+  0,3 s por fila). Si hay más filas que las que caben en 2,0 s, comprime el intervalo y nunca alarga la
+  transición. Se usa con `origen` = (1320, 260) en la transición y en la re-entrada, y con `origen` = la
+  boca de la mochila en T1.
+- **Caída corta**: las piezas interpolan de `estado_derribo()` a una **"corona" de poses** alrededor del
+  charco (fuera de x 810-1170 o detrás de su borde lejano), calculada por código según la cantidad de
+  piezas. Sin física (ficha L9), igual que la caída final.
+- **Sin cámara lenta** en la caída corta ni en la transición. La cámara lenta es solo de la anticipación y
+  de C1 de la caída final, con `speed_scale`.
+- **Sincronía por pasos** `{animacion, voz, solape_s, aire_s}` (§20). **Manda el audio**: si
+  `etapa_N_llega` dura más de 3,5 s, se acortan primero TR2 y el aire de TR4, **nunca** pasa de 4,0 s. Si
+  no cabe, se le pide al guionista una toma más corta.
+- **Capas**: el clip de video (cuando exista) va en un `CanvasLayer` **debajo** de la UI (casa, Cometa,
+  barra e indicador). El indicador va en la capa de la UI, a `z_index` 60 (como la barra).
+- **El charco que se escurre** (TR2): tween de `ancho` y `alto` hasta los valores iniciales de la etapa;
+  los colores del charco nuevo arrancan vacíos.
+- **QA** (`tester-qa`):
+  - la caída corta dura ≤ 5,5 s y la transición ≤ 4,0 s con el audio real;
+  - la transición no se salta y la caída corta se salta desde la 2.ª vez;
+  - la re-entrada se salta desde la 1.ª vez;
+  - salir en la caída corta o en la transición vuelve al caso B de la etapa siguiente (con la nota 1);
+  - **con cada implementación (V, CS, TJ y PD), el estado final y el parcial son idénticos**;
+  - sin un asset de video, el gancho baja a CS sin error visible;
+  - ningún dígito ni texto en el indicador.
