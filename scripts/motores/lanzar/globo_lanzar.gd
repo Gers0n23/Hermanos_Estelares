@@ -22,6 +22,7 @@ var atraviesa_restante := 0
 var velocidad_tras_atravesar := 0.8
 var rebote := 0.15
 var v_prev := Vector2.ZERO
+var p_prev := Vector2.ZERO
 var retirado := false
 var principal := true          # el rastro sigue al globo principal del tiro
 var dividido := false
@@ -34,6 +35,7 @@ var guia_dur := 0.9
 var guia_t := 0.0
 var estela: Array = []
 var golpeo_bloque := false
+var velocidad_tras_impacto := 300.0
 
 
 func preparar(t: String, color: String, datos: Dictionary, vida: int) -> void:
@@ -94,14 +96,14 @@ func punto_guiado(t: float) -> Vector2:
 
 
 ## Fin del vuelo guiado: pasa a la fisica con la velocidad tangente del arco.
-func soltar_a_fisica() -> void:
+func soltar_a_fisica(velocidad_max: float = 300.0) -> void:
 	var dt := 1.0 / 60.0
 	var tangente := (punto_guiado(guia_dur) - punto_guiado(guia_dur - dt)) / dt
 	guiado = false
 	collision_layer = BloqueLanzar.CAPA_GLOBOS
 	collision_mask = BloqueLanzar.CAPA_MUNDO | BloqueLanzar.CAPA_BLOQUES
 	freeze = false
-	linear_velocity = tangente.limit_length(520.0)
+	linear_velocity = tangente.limit_length(velocidad_max)
 
 
 func _draw() -> void:

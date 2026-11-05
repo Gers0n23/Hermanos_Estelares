@@ -179,6 +179,7 @@ func lanzar(tipo: String, color: String, datos: Dictionary, desde: Vector2, velo
 	g.position = desde
 	g.linear_velocity = velocidad
 	g.v_prev = velocidad
+	g.p_prev = desde
 	_empezar_tiro()
 	return g
 
@@ -247,7 +248,7 @@ func globos_vivos() -> int:
 func _al_contacto_globo(cuerpo: Node, g: GloboLanzar) -> void:
 	if g.retirado or g.guiado:
 		return
-	_contactos.append({"tipo": "globo", "g": g, "c": cuerpo, "va": g.v_prev, "vd": g.linear_velocity, "p": g.global_position})
+	_contactos.append({"tipo": "globo", "g": g, "c": cuerpo, "va": g.v_prev, "vd": g.linear_velocity, "p": g.global_position, "pp": g.p_prev})
 
 
 func _al_contacto_bloque(cuerpo: Node, b: BloqueLanzar) -> void:
@@ -272,7 +273,7 @@ func _procesar_contactos() -> void:
 				# Tocar el suelo cuenta como golpe (§25.7): arranca el reloj de retiro.
 				g.cuadros_contacto = 0
 				g.primer_contacto_suelo = not cuerpo is BloqueLanzar
-				primer_impacto.emit(g, c["p"])
+				primer_impacto.emit(g, _punto_de_contacto(g, c))
 			if not cuerpo is BloqueLanzar:
 				continue
 			var b := cuerpo as BloqueLanzar
@@ -317,6 +318,27 @@ func _procesar_contactos() -> void:
 				continue
 			if b2.freeze and imp >= impulso_min:
 				_despertar_con_apoyados(b2)
+
+
+## Centro del globo en el instante del contacto: el barrido del paso en que choco (desde su posicion anterior,
+## con la misma integracion semi-implicita de la fisica), no la posicion ya resuelta despues del choque (que el
+## solver empuja hasta un paso mas alla).
+func _punto_de_contacto(g: GloboLanzar, c: Dictionary) -> Vector2:
+	if not c.has("pp"):
+		return c["p"]
+	var mov: Vector2 = ((c["va"] as Vector2) + Vector2(0, gravedad) * DT) * DT
+	var q := PhysicsShapeQueryParameters2D.new()
+	var circulo := CircleShape2D.new()
+	circulo.radius = g.radio
+	q.shape = circulo
+	q.collision_mask = BloqueLanzar.CAPA_MUNDO | BloqueLanzar.CAPA_BLOQUES
+	q.transform = Transform2D(0.0, c["pp"])
+	q.motion = mov
+	var r := get_world_2d().direct_space_state.cast_motion(q)
+	if r.size() >= 2 and r[0] < 1.0 and r[0] > 0.0:
+		return (c["pp"] as Vector2) + mov * r[0]
+	# Ya se tocaban al empezar ese paso (el CCD solo evita atravesar): la ultima posicion libre.
+	return c["pp"]
 
 
 ## Trampolin (§25.5.2): rebote 1,1 (manda el mayor), a mano porque el motor de fisica no admite > 1.
@@ -463,7 +485,7 @@ func _avanzar_globos(delta: float) -> void:
 					romper(objetivo)
 				if g.retirado or not tiro_activo:
 					continue
-				g.soltar_a_fisica()
+				g.soltar_a_fisica(g.velocidad_tras_impacto)
 				g.cuadros_contacto = 0
 				g.golpeo_bloque = true
 				primer_impacto.emit(g, g.global_position)
@@ -482,6 +504,7 @@ func _avanzar_globos(delta: float) -> void:
 			_retirar(g, true)
 		else:
 			g.v_prev = g.linear_velocity
+			g.p_prev = g.global_position
 
 
 func _retirar(g: GloboLanzar, avisar: bool) -> void:

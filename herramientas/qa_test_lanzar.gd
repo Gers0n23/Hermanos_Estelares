@@ -405,8 +405,15 @@ func _probar_maxi() -> void:
 		if not await _esperar_listo(m):
 			break
 		var obj: BloqueLanzar = m._objetivo
-		if obj == null or obj.es_trono or obj.id_bloque in m.torre.columna_trono or obj.material_bloque == "resorte":
+		var pd: Dictionary = m._etapa["torre"]["puntos_debiles"]
+		var quedan := false
+		for id in pd["semilla"] + pd["semilla_respaldo"]:
+			var x: BloqueLanzar = m.torre.bloque(str(id))
+			quedan = quedan or (x != null and x.activo() and not x.botado)
+		if obj == null or obj.es_trono or obj.material_bloque == "resorte" or (quedan and obj.id_bloque in m.torre.columna_trono):
 			nunca_trono = false
+		if not quedan:
+			print("    (aviso HE-80: se agotaron semilla y semilla_respaldo en el turno %d de Maxi; respaldo final = %s)" % [k + 1, obj.id_bloque])
 		var antes: int = m._agarre_perdido
 		var etapa_antes: int = m.etapa_actual()
 		if k == 0:
@@ -424,7 +431,7 @@ func _probar_maxi() -> void:
 		aportes.append(m._agarre_perdido - antes)
 	print("    aportes de Maxi por turno: %s" % [aportes])
 	_check(not aportes.is_empty() and aportes.all(func(a) -> bool: return int(a) >= 1), "cada tiro de Maxi bota algo (aporte >= 1)")
-	_check(nunca_trono, "el objetivo de Maxi nunca es el trono, su columna ni un resorte")
+	_check(nunca_trono, "el objetivo de Maxi nunca es el trono ni un resorte, ni la columna del trono mientras queden semilla/respaldo")
 	m.queue_free()
 	await process_frame
 	var m2 := _motor({"perfil": "maxi", "escala": 0.05})
@@ -466,6 +473,7 @@ func _probar_flujo() -> void:
 	var p_turno: Array = _parciales()
 	_check(not p_turno.is_empty() and bool(p_turno[-1]["etapa_iniciada"]) and int(p_turno[-1]["etapa"]) == 1, "turno_cerrado: parcial de E1 con etapa_iniciada = true")
 	# Derribo de E1 (trono botado) en el turno 7 (Maxi).
+	await _esperar_que(func() -> bool: return m.turnos.en_puerta(), 6.0)
 	var n_ev := _eventos.size()
 	await _jugar_turno(m, ["trono"])
 	var i_parcial := -1
@@ -476,7 +484,6 @@ func _probar_flujo() -> void:
 	var i_caida := _indice("ini", "caida_etapa")
 	_check(i_parcial >= 0 and i_caida > i_parcial, "D1: el parcial se emite en el cuadro del derribo, ANTES de caida_etapa")
 	var foto: Dictionary = _eventos[i_parcial]["e"] if i_parcial >= 0 else {}
-	print("    foto: ", foto)
 	_check(int(foto.get("etapa", 0)) == 2 and foto.get("etapas_ganadas", []) == ["e1"] and foto.get("etapa_iniciada", true) == false \
 		and int(foto.get("globos_restantes", 0)) == 13 and int(foto.get("intento", 0)) == 1 and (foto.get("bloques", {1: 1}) as Dictionary).is_empty(),
 		"D1/D2: la foto es el estado inicial de E2 (etapa 2, e1 ganada, etapa_iniciada false, 13 globos)")
@@ -487,7 +494,6 @@ func _probar_flujo() -> void:
 	_check(_hay("fin", "caida_etapa"), "caida_etapa termina (momento saltable)")
 	_check(m.turnos.hermano_actual() == "maxi", "E2 empieza con Maxi (reiniciar_rival)")
 	var ps := _parciales()
-	print("    ultimo: ", ps[-1])
 	_check(ps[-1] == foto, "el parcial de 'al empezar la etapa' es identico al del derribo")
 	_check(not m.voces_dichas.slice(v_derribo).has("intro_corta") and m.voces_dichas.slice(v_derribo).has("etapa_llegada:etapa_2_llega"), "D3: al empezar E2 no suena la intro corta; si la llegada")
 	_check(m.agarre_restante() == 20 and m.globos_restantes() == 13 and m.charco() == Vector2(120, 24), "E2: agarre 20, canasta 13 y charco chico")
@@ -495,9 +501,11 @@ func _probar_flujo() -> void:
 	# E2, intento 1: Nicole bota 2 frascos (resbalon); el resto neutro hasta gastar la canasta.
 	_turnos_ids.clear()
 	await _jugar_turno(m, [])
+	await _esperar_que(func() -> bool: return m.turnos.en_puerta(), 6.0)
 	var p_iniciada: Dictionary = _parciales()[-1]
 	_check(bool(p_iniciada["etapa_iniciada"]), "D2: tras el primer globo de E2 la etapa queda iniciada")
 	await _jugar_turno(m, ["f02", "f03"])
+	await _esperar_que(func() -> bool: return m.turnos.en_puerta(), 6.0)
 	_check(m._agarre_perdido == 3, "2 frascos + resbalon de Brote = 3 de agarre")
 	_parcial_a = _parciales()[-1].duplicate(true)
 	for k in 11:

@@ -179,7 +179,9 @@
     "v_centro_px_s": 510,
     "v_arriba_px_s": 60,
     "empuja_trono": false,
-    "inmunes": [],
+    "inmunes": [
+     "apoyos_trono"
+    ],
     "despierta": "radio_y_apoyos",
     "rompe_por_bloque": true,
     "retardo_cadena_s": 0.1,
@@ -265,7 +267,8 @@
    "justo_ahi_px": 150,
    "rotura_forzada": true,
    "semilla_mantener_s": 1.2,
-   "duracion_vuelo_s": 0.9
+   "duracion_vuelo_s": 0.9,
+   "velocidad_tras_impacto_px_s": 300
   },
   "brote": {
    "control": "arrastre",
@@ -1501,5 +1504,6 @@
  },
  "calibracion": {
   "estado": "PROVISIONAL de dev (HE-77). La calibracion por etapa es de HE-80 (§25.9) con herramientas/qa_torre_tiros.gd."
- }
+ },
+ "nota_dev_he77": "05-Nov (dev-godot, arnes qa_test_lanzar): con inmunes [] y el globo guiado a 520 px/s tras el impacto, Maxi solo derribaba E1 en 3 tiros (la onda del confeti tumbaba los apoyos del trono). Se activan las palancas de la ficha (G3: confeti.inmunes apoyos_trono) y velocidad_tras_impacto_px_s 300. Provisional: lo calibra HE-80."
 }

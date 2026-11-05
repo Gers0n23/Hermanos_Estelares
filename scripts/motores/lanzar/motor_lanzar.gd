@@ -1101,7 +1101,9 @@ func bolsa_estabilizada(t_suelta: int) -> Vector2:
 		if int(m["t"]) <= t_suelta - descarta:
 			validas.append(m)
 	if validas.is_empty():
-		return _bolsa if _muestras.is_empty() else _muestras[0]["p"]
+		# Todo el gesto cupo en la ventana descartada (tiron de < 60 ms): no hay muestra previa, manda la bolsa
+		# actual (con `cancelar_tiron_sin_pausa` apagado, un tiron rapido dispara).
+		return _bolsa
 	for i in range(validas.size() - 1, -1, -1):
 		var anterior: Dictionary = validas[i - 1] if i > 0 else {}
 		var vel := 0.0
@@ -1245,6 +1247,7 @@ func _physics_process(_delta: float) -> void:
 		if bool(d.get("guiado", false)):
 			var dur := float(proy.get("gigante", {}).get("duracion_vuelo_s", 1.6)) if tipo == "gigante" else float(_perfil_cfg("semilla").get("duracion_vuelo_s", 0.9))
 			_globo_tiro = torre.lanzar_guiado(tipo, "dorado" if tipo == "gigante" else _color, proy.get(tipo, proy.get("normal", {})), _reposo(), _objetivo, dur)
+			_globo_tiro.velocidad_tras_impacto = float(_perfil_cfg("semilla").get("velocidad_tras_impacto_px_s", 300))
 		else:
 			var datos: Dictionary = proy.get(tipo, proy.get("normal", {}))
 			var pred := torre.predecir(d["desde"], d["vel"], float(datos.get("radio_px", 26)))
