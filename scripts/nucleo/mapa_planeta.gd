@@ -535,6 +535,8 @@ func _construir_ui() -> void:
 		_arcoiris.reparent(_paisaje.capa_arcoiris(), false)
 	else:
 		_arcoiris = _control_dibujo(Rect2(440, 6, 400, 160), _dibujar_arcoiris)
+		# Un paisaje sin `capa_arcoiris()` (p. ej. Animalia) no tiene arcoiris en el cielo (HE-120).
+		_arcoiris.visible = _paisaje == null
 
 	for i in zonas.size():
 		var centro := _centro_zona(i)

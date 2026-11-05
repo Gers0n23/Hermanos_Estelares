@@ -29,8 +29,8 @@ const MARGEN_TOQUE_PLANETA := 28.0
 ## rectangular dentro de un disco.
 const TIERRA := {"id": "tierra", "nombre": "La Tierra", "pos": Vector2(92, 620), "radio": 70.0}
 const PLANETAS := [
-	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(318, 478), "radio": 86.0, "mapa": "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn"},
-	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(530, 290), "radio": 70.0},
+	{"id": "arcoiris", "nombre": "Arcoíris", "pos": Vector2(318, 478), "radio": 86.0, "mapa": "res://escenas/planetas/arcoiris/mapa_arcoiris.tscn", "datos": "res://datos/planetas/arcoiris/mapa.json"},
+	{"id": "animalia", "nombre": "Animalia", "pos": Vector2(530, 290), "radio": 70.0, "mapa": "res://escenas/planetas/animalia/mapa_animalia.tscn", "datos": "res://datos/planetas/animalia/mapa.json"},
 	{"id": "melodia", "nombre": "Melodía", "pos": Vector2(705, 480), "radio": 60.0},
 	{"id": "cuenta_cuentas", "nombre": "Cuenta-Cuentas", "pos": Vector2(880, 290), "radio": 54.0},
 	{"id": "letralandia", "nombre": "Letralandia", "pos": Vector2(1045, 450), "radio": 48.0},
@@ -66,6 +66,15 @@ const RETRATOS_HERMANO := {
 ## fijo por el progreso real del hermano activo (piezas de nave conseguidas).
 const PLANETAS_DESBLOQUEADOS_STUB := 1
 
+## HE-120 (05-Nov-2026): el planeta siguiente se abre cuando el `mapa.json` del anterior cumple su
+## `viaje_siguiente_requiere` ({"partida": id} -> `Progreso.partida_hecha(id)`, HE-81/HE-82). Mientras
+## HE-81/HE-82 no existan, ningun planeta extra se abre jugando. Modo de desarrollo para revisar
+## Animalia sin terminar Arcoiris: F6 (solo builds de depuracion) o `-- abrir_planetas` en la linea de
+## comandos. No se guarda: es una vista del PO, como F4 en el mapa de un planeta.
+static var abrir_planetas_dev := false
+
+var _desbloqueados := PLANETAS_DESBLOQUEADOS_STUB
+
 @onready var _camino: Node2D = $camino
 @onready var _contenedor_planetas: Node2D = $contenedor_planetas
 @onready var _nave: Node2D = $nave
@@ -90,6 +99,9 @@ var _despegando := false
 
 func _ready() -> void:
 	_id_perfil = Progreso.perfil_seleccionado if Progreso.perfil_seleccionado != "" else "maxi"
+	if "abrir_planetas" in OS.get_cmdline_user_args() or "--abrir_planetas" in OS.get_cmdline_user_args():
+		abrir_planetas_dev = true
+	_desbloqueados = planetas_desbloqueados()
 	_pintar_hud()
 	_pintar_camino()
 	_pintar_tierra()
@@ -102,6 +114,38 @@ func _ready() -> void:
 	_temporizador_recordatorio.wait_time = SEGUNDOS_ENTRE_RECORDATORIOS
 	_temporizador_recordatorio.timeout.connect(_reproducir_invitacion)
 	_temporizador_recordatorio.start()
+
+
+## Cuantos planetas de la ruta estan abiertos: el 1 siempre; cada siguiente, si el anterior cumple su
+## `viaje_siguiente_requiere` (o con el modo de desarrollo).
+func planetas_desbloqueados() -> int:
+	var abiertos := PLANETAS_DESBLOQUEADOS_STUB
+	while abiertos < PLANETAS.size():
+		var siguiente: Dictionary = PLANETAS[abiertos]
+		if str(siguiente.get("mapa", "")) == "" or not ResourceLoader.exists(str(siguiente["mapa"])):
+			break
+		if not (abrir_planetas_dev or _viaje_cumplido(PLANETAS[abiertos - 1])):
+			break
+		abiertos += 1
+	return abiertos
+
+
+func _viaje_cumplido(datos: Dictionary) -> bool:
+	var ruta := str(datos.get("datos", ""))
+	if ruta == "" or not FileAccess.file_exists(ruta):
+		return false
+	var mapa: Variant = JSON.parse_string(FileAccess.get_file_as_string(ruta))
+	if not mapa is Dictionary or not (mapa as Dictionary).get("viaje_siguiente_requiere", null) is Dictionary:
+		return false
+	var partida := str(mapa["viaje_siguiente_requiere"].get("partida", ""))
+	return partida != "" and Progreso.has_method("partida_hecha") and bool(Progreso.call("partida_hecha", partida))
+
+
+func _unhandled_key_input(evento: InputEvent) -> void:
+	if evento is InputEventKey and evento.pressed and not evento.echo and evento.keycode == KEY_F6 and OS.is_debug_build():
+		abrir_planetas_dev = not abrir_planetas_dev
+		print("[mapa_estelar] F6 planetas abiertos para revisar: %s" % abrir_planetas_dev)
+		get_tree().reload_current_scene()
 
 
 func _pintar_hud() -> void:
@@ -127,7 +171,7 @@ func _pintar_hud() -> void:
 func _pintar_camino() -> void:
 	var curva := _construir_curva_camino()
 	_camino.fijar_curva(curva)
-	var indice_actual: int = clampi(PLANETAS_DESBLOQUEADOS_STUB, 1, PLANETAS.size()) - 1
+	var indice_actual: int = clampi(_desbloqueados, 1, PLANETAS.size()) - 1
 	var offset_meta: float = curva.get_closest_offset(PLANETAS[indice_actual]["pos"])
 	var largo_total: float = curva.get_baked_length()
 	_camino.proporcion = 0.0 if largo_total <= 0.0 else offset_meta / largo_total
@@ -154,9 +198,9 @@ func _pintar_tierra() -> void:
 
 
 func _pintar_planetas() -> void:
-	var indice_actual: int = clampi(PLANETAS_DESBLOQUEADOS_STUB, 1, PLANETAS.size()) - 1
+	var indice_actual: int = clampi(_desbloqueados, 1, PLANETAS.size()) - 1
 	for i in PLANETAS.size():
-		var desbloqueado: bool = (i + 1) <= PLANETAS_DESBLOQUEADOS_STUB
+		var desbloqueado: bool = (i + 1) <= _desbloqueados
 		var planeta := _crear_planeta(PLANETAS[i], desbloqueado, i == indice_actual)
 		if i == indice_actual:
 			_latir(planeta)
@@ -254,7 +298,7 @@ func _iniciar_bob_nave() -> void:
 
 
 func _pintar_burbuja() -> void:
-	var indice: int = clampi(PLANETAS_DESBLOQUEADOS_STUB, 1, PLANETAS.size()) - 1
+	var indice: int = clampi(_desbloqueados, 1, PLANETAS.size()) - 1
 	var datos: Dictionary = PLANETAS[indice]
 	_burbuja_texto.text = "¡Vamos al Planeta %s!" % str(datos["nombre"])
 	_ruta_voz_actual = "res://assets/audio/voces/planetas/%s_invitacion_01.ogg" % str(datos["id"])
@@ -273,7 +317,7 @@ func _registrar_regiones() -> void:
 	_regiones.append({"rect": Rect2(_boton_casa.global_position, _boton_casa.size), "accion": func(): _ir_a_seleccion()})
 	_regiones.append({"rect": Rect2(_boton_papas.global_position, _boton_papas.size), "accion": func(): _ir_a_titulo()})
 	_regiones.append({"rect": Rect2(_boton_hangar.global_position, _boton_hangar.size), "accion": func(): _tocar_hangar()})
-	for i in mini(PLANETAS_DESBLOQUEADOS_STUB, PLANETAS.size()):
+	for i in mini(_desbloqueados, PLANETAS.size()):
 		var datos: Dictionary = PLANETAS[i]
 		if str(datos.get("escena", "")) == "" and str(datos.get("mapa", "")) == "":
 			continue
