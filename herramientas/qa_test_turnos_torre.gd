@@ -24,6 +24,7 @@ var destino_aspirar := Vector2.ZERO
 var voces: Array = []
 var etapa := 1
 var saltados: Array = []
+var vacio := false
 
 func _ready() -> void:
 	super._ready()
@@ -53,6 +54,8 @@ func reproducir_voz(ruta: String) -> void:
 	voces.append(ruta)
 
 func obtener_parcial_equipo() -> Dictionary:
+	if vacio:
+		return {}
 	return {"etapa": etapa, "globos_restantes": 9}
 
 func saltar_momento(id_animacion: String) -> void:
@@ -380,18 +383,39 @@ func _probar_base() -> void:
 	_check(motor.saltados == ["caida_etapa"] and terminados == ["caida_etapa"], "saltar_momento deja el estado final y emite terminado")
 	motor.terminar_momento_saltable("caida_etapa")
 	_check(terminados.size() == 1 and not motor.momento_saltable_en_curso(), "terminado no se repite")
+	# Politica una_vez (v4.1 §25.18.6): el contenedor salta dentro del manejador (conexion directa).
+	var salta_ya := func(id: String) -> void:
+		if id == "presenta_resorte":
+			motor.saltar_momento(id)
+	motor.momento_saltable_iniciado.connect(salta_ya)
+	_check(not motor.iniciar_momento_saltable("presenta_resorte"), "una_vez ya visto: iniciar_momento_saltable devuelve false (quedo saltado al emitir)")
+	_check(terminados.has("presenta_resorte"), "y emitio terminado en el mismo instante")
+	_check(motor.iniciar_momento_saltable("presenta_confeti"), "un momento no saltado sigue en curso (true)")
+	motor.momento_saltable_iniciado.disconnect(salta_ya)
+	var base_salto := MinijuegoBase.new()
+	var term_base: Array = []
+	base_salto.momento_saltable_terminado.connect(func(id: String) -> void: term_base.append(id))
+	base_salto.iniciar_momento_saltable("presenta_bandeja_nicole")
+	base_salto.saltar_momento("presenta_bandeja_nicole")
+	_check(term_base == ["presenta_bandeja_nicole"], "saltar_momento por defecto (sin override) da el momento por terminado")
+	base_salto.free()
 	motor.queue_free()
 	await process_frame
 
-	# Revancha: sin parcial.
+	# Revancha (v4.1 §25.18.7): parcial solo entre etapas; `{}` (a mitad de E1) no se emite.
 	var rev := _crear_motor_falso(true)
 	var parciales_rev: Array = []
 	rev.parcial_equipo_listo.connect(func(e: Dictionary) -> void: parciales_rev.append(e))
+	rev.vacio = true
 	rev.turnos.empezar()
 	await _abrir_y_esperar_turno(rev.turnos, "maxi")
 	rev.turnos.terminar_turno(false)
 	rev.notificar_parcial_equipo()
-	_check(parciales_rev.is_empty(), "en revancha nunca se emite el parcial")
+	_check(parciales_rev.is_empty(), "revancha a mitad de E1: el parcial {} no se emite")
+	rev.vacio = false
+	rev.etapa = 2
+	rev.notificar_parcial_equipo()
+	_check(parciales_rev.size() == 1 and int(parciales_rev[0]["etapa"]) == 2, "revancha en la frontera de etapa: el parcial se emite")
 	rev.queue_free()
 
 	# Solitario: notificar_parcial_equipo no hace nada y no hay gestor.
@@ -450,3 +474,7 @@ func _probar_progreso() -> void:
 	var r4: Dictionary = _progreso.registrar_revancha_batalla(b, "torre", 3, 28)
 	_check(r4["record_nuevo"] and not r4["primer_record"] and int(_progreso.obtener_revancha_batalla(b, "torre")["record"]) == 28, "menos globos es record nuevo")
 	_check(not _progreso.batalla_ganada(b), "la revancha no toca la batalla ni sus parciales")
+	_check(_progreso.guardar_parcial_batalla(b, "torre_revancha", {"revancha": true, "etapa": 3, "etapa_iniciada": false}), "parcial de la revancha con id de ronda torre_revancha (v4.1)")
+	_check(_progreso.obtener_etapa_parcial_batalla(b, "torre_revancha") == 3 and _progreso.obtener_etapa_parcial_batalla(b, "torre") == 0, "la etapa de la revancha no se mezcla con la de la Torre")
+	_check(not bool(_progreso.obtener_parcial_batalla(b)["estado"]["etapa_iniciada"]), "etapa_iniciada se guarda tal cual (el nucleo no la interpreta)")
+	_progreso.borrar_parcial_batalla(b)

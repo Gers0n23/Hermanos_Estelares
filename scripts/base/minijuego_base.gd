@@ -54,9 +54,13 @@ extends Node2D
 ## - Momentos saltables (`momento_saltable_iniciado/terminado`, `saltar_momento`): el contenedor decide si se
 ##   salta (cinematica ya vista por la familia); el motor solo deja el estado final. Con las cinematicas
 ##   postergadas por presupuesto (PO, 05-Nov-2026) es el mismo gancho para el reemplazo provisional.
-## - Revancha (`revancha`, `resultado_revancha`): sin parcial.
-## - Parcial a demanda (`notificar_parcial_equipo`): al empezar cada etapa y al terminar cada derrota-gag,
-##   ademas del de cada `turno_cerrado`. El estado puede traer `"etapa"` (Progreso lo protege, R17 = A).
+## - Revancha (`revancha`, `resultado_revancha`). v4.1 (motor-lanzar §25.18.7): tambien tiene parcial, solo
+##   entre etapas; el motor devuelve `{}` cuando no hay nada que guardar y la base no lo emite.
+## - Parcial a demanda (`notificar_parcial_equipo`): en el derribo de cada etapa, al empezarla y al terminar
+##   cada derrota-gag, ademas del de cada `turno_cerrado`. El estado puede traer `"etapa"` (Progreso lo
+##   protege, R17 = A) y `"etapa_iniciada"` (la interpreta el motor; ausente = true).
+## - Politica `una_vez` de batalla.gd (§25.18.6): salta EN el manejador de `momento_saltable_iniciado`;
+##   `iniciar_momento_saltable()` devuelve false si el momento quedo saltado en ese mismo instante.
 
 signal completado(destellos: int)
 ## El contenedor (escena del planeta) conecta esta senal para volver al mapa sin perder
@@ -516,11 +520,15 @@ func restaurar_parcial_equipo(_estado: Dictionary) -> void:
 
 ## Emite el parcial de la ronda (`obtener_parcial_equipo()`) para quien lo guarde (batalla.gd). La base lo
 ## llama en cada `turno_cerrado` y al terminar cada derrota-gag; el motor, cuando su ficha pide otro momento
-## (la Torre: al empezar cada etapa, antes del primer turno, R17 = A). En revancha o en solitario no emite.
+## (la Torre: en el derribo de E1/E2 y al empezar cada etapa, R17 = A). En solitario no emite; un estado vacio
+## (`{}`: nada que guardar, p. ej. la revancha a mitad de E1) tampoco se emite.
 func notificar_parcial_equipo() -> void:
-	if revancha or not es_modo_equipo():
+	if not es_modo_equipo():
 		return
-	parcial_equipo_listo.emit(obtener_parcial_equipo())
+	var estado := obtener_parcial_equipo()
+	if estado.is_empty():
+		return
+	parcial_equipo_listo.emit(estado)
 
 
 # --- Extensiones HE-76 (motor-lanzar §13.2): virtuales y momentos saltables ---
@@ -536,18 +544,23 @@ func variante_derrota() -> String:
 	return ""
 
 
-## Virtual: corta el momento `id_animacion` y deja su estado final. Al terminar, el motor llama
-## `terminar_momento_saltable(id_animacion)` (como si hubiera terminado solo). Implementacion vacia.
-func saltar_momento(_id_animacion: String) -> void:
-	pass
+## Virtual: corta el momento `id_animacion`, deja su estado final y llama `terminar_momento_saltable(id)`
+## (como si hubiera terminado solo). Por defecto solo lo da por terminado: un motor que no anima nada propio
+## (p. ej. una presentacion de voz) no necesita sobreescribirla. Puede llegar dentro del manejador de
+## `momento_saltable_iniciado` (politica `una_vez`, conexion directa).
+func saltar_momento(id_animacion: String) -> void:
+	terminar_momento_saltable(id_animacion)
 
 
-## El motor avisa que empieza un momento saltable. Llamadas repetidas con el mismo id se ignoran.
-func iniciar_momento_saltable(id_animacion: String) -> void:
+## El motor avisa que empieza un momento saltable. Devuelve true si sigue en curso despues de emitir; false si
+## el contenedor lo salto en ese mismo instante (`una_vez` ya visto) o si ya estaba en curso: el motor entonces
+## no muestra nada (en la bandeja de Nicole, suena `carga`). Llamadas repetidas con el mismo id se ignoran.
+func iniciar_momento_saltable(id_animacion: String) -> bool:
 	if id_animacion == "" or id_animacion in _momentos_en_curso:
-		return
+		return false
 	_momentos_en_curso.append(id_animacion)
 	momento_saltable_iniciado.emit(id_animacion)
+	return id_animacion in _momentos_en_curso
 
 
 ## El motor avisa que el momento termino (solo o saltado). Solo emite si estaba en curso: una vez por momento.

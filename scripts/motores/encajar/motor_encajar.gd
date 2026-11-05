@@ -2858,7 +2858,7 @@ func aplicar_perfil_turno(perfil: String) -> void:
 		_elegir_pieza_maxi()
 
 
-func _hueco_de(pieza: PiezaEncajar):
+func _hueco_de(pieza: PiezaEncajar) -> Variant:
 	for hueco in _huecos:
 		if "pieza_" + str(hueco["id"]) == pieza.id:
 			return hueco
@@ -3031,7 +3031,7 @@ func gag_derrota_aspirar(destino: Vector2) -> float:
 	for pieza in _en_bandeja():
 		pieza.cancelar_arrastre()
 		_dejar_de_flotar(pieza, false)
-		var tween := pieza.create_tween().set_parallel(true)
+		var tween: Tween = pieza.create_tween().set_parallel(true)
 		tween.tween_property(pieza, "position", destino - pieza.size / 2.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 		tween.tween_property(pieza, "scale", Vector2.ONE * 0.15, 0.7)
 		tween.chain().tween_callback(pieza.hide)
@@ -3046,7 +3046,7 @@ func gag_derrota_devolver(perfil_siguiente: String) -> float:
 		pieza.show()
 		var grados := _rotacion_para_perfil(pieza, perfil_siguiente)
 		pieza.rotacion_grados = wrapf(grados, 0.0, 360.0)
-		var tween := pieza.create_tween().set_parallel(true)
+		var tween: Tween = pieza.create_tween().set_parallel(true)
 		tween.tween_property(pieza, "position", pieza.casa - pieza.size / 2.0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		tween.tween_property(pieza, "scale", Vector2.ONE * pieza.escala_bandeja, 0.5)
 		tween.tween_property(pieza, "rotation", deg_to_rad(pieza.rotacion_grados), 0.5)

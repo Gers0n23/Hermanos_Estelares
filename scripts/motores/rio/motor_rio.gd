@@ -192,7 +192,8 @@ func _configurar_desde_nivel() -> void:
 	recorrido = RecorridoRio.desde_archivo(ruta_recorrido)
 	_guia = str(nivel.get("guia", "completa"))
 	_guia_largo = float(nivel.get("guia_largo", 1280.0))
-	_tiempo_par = float(nivel.get("tiempo_par", 70.0))
+	# `tiempo_par: null` (nivel de batalla: sin estrellitas por tiempo) = el valor por defecto.
+	_tiempo_par = float(nivel.get("tiempo_par", 70.0)) if nivel.get("tiempo_par", 70.0) != null else 70.0
 	logica.configurar(nivel, recorrido, _semilla)
 	# `tiempo_par` del JSON es para un río entero; con rondas cada una lleva una fracción de las gotas.
 	_tiempo_par *= logica.rondas * float(nivel.get("fraccion_ronda", 0.6)) if logica.rondas > 1 else 1.0
