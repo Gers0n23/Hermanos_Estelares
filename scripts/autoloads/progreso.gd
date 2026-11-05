@@ -778,14 +778,65 @@ func batalla_ganada(id_batalla: String) -> bool:
 	return batalla is Dictionary and bool(batalla.get("ganada", false))
 
 
-func guardar_parcial_batalla(id_batalla: String, id_ronda: String, estado: Dictionary) -> void:
-	_batalla(id_batalla)["parcial"] = {"ronda": id_ronda, "estado": estado}
+## M4 (§14.6): el parcial de la ronda en curso; `estado` es del motor y el nucleo no lo interpreta, salvo una
+## clave generica opcional: `"etapa"` (int >= 1) para rondas de varias etapas (la Torre, motor-lanzar §12 y §25;
+## PO 05-Nov-2026, R17 = A: guardado entre etapas). Se copia a `parcial.etapa` y protege la regla "al retomar
+## se vuelve a la etapa guardada, nunca a una ganada": un parcial de la MISMA ronda con una etapa menor que la
+## ya guardada se rechaza (devuelve false, sin tocar el archivo). Sin etapa en el estado, `parcial.etapa` = 0.
+func guardar_parcial_batalla(id_batalla: String, id_ronda: String, estado: Dictionary) -> bool:
+	var batalla := _batalla(id_batalla)
+	var etapa := maxi(0, int(estado.get("etapa", 0)))
+	var anterior = batalla.get("parcial", {})
+	if anterior is Dictionary and str(anterior.get("ronda", "")) == id_ronda and etapa < int(anterior.get("etapa", 0)):
+		push_warning("Progreso.guardar_parcial_batalla: etapa %d < %d ya guardada en '%s'; se ignora" % [etapa, int(anterior.get("etapa", 0)), id_ronda])
+		return false
+	batalla["parcial"] = {"ronda": id_ronda, "etapa": etapa, "estado": estado}
 	guardar()
+	return true
 
 
 func obtener_parcial_batalla(id_batalla: String) -> Dictionary:
 	var parcial = _batalla(id_batalla).get("parcial", {})
 	return parcial if parcial is Dictionary else {}
+
+
+## Etapa guardada de la ronda en curso (0 = sin parcial, otra ronda o una ronda sin etapas). Sirve, p. ej., para
+## que el hito del mapa de batalla muestre cuanto falta sin numeros. Guardados viejos sin `etapa`: la lee del estado.
+func obtener_etapa_parcial_batalla(id_batalla: String, id_ronda: String) -> int:
+	var parcial := obtener_parcial_batalla(id_batalla)
+	if str(parcial.get("ronda", "")) != id_ronda:
+		return 0
+	var estado = parcial.get("estado", {})
+	var del_estado := int(estado.get("etapa", 0)) if estado is Dictionary else 0
+	return maxi(0, int(parcial.get("etapa", del_estado)))
+
+
+## Revancha (motor-lanzar §11 y §13.3): `equipo.batallas.<id>.revanchas.<id_ronda>` = {estrellitas, record}.
+## Sin subir version: se crea al escribir. Guarda el maximo de estrellitas y el record si mejora (menor y >= 0;
+## record = recursos usados, -1 = sin record). Guarda una sola vez.
+func registrar_revancha_batalla(id_batalla: String, id_ronda: String, estrellitas: int, record: int) -> Dictionary:
+	var batalla := _batalla(id_batalla)
+	if not batalla.get("revanchas", null) is Dictionary:
+		batalla["revanchas"] = {}
+	var previa := obtener_revancha_batalla(id_batalla, id_ronda)
+	var record_previo := int(previa["record"])
+	var resultado := {"estrellitas_nuevas": estrellitas > int(previa["estrellitas"]),
+		"record_nuevo": record >= 0 and (record_previo < 0 or record < record_previo),
+		"primer_record": record >= 0 and record_previo < 0}
+	batalla["revanchas"][id_ronda] = {
+		"estrellitas": maxi(int(previa["estrellitas"]), clampi(estrellitas, 0, 3)),
+		"record": record if resultado["record_nuevo"] else record_previo}
+	guardar()
+	return resultado
+
+
+## {"estrellitas": int, "record": int} (0 y -1 si nunca se jugo).
+func obtener_revancha_batalla(id_batalla: String, id_ronda: String) -> Dictionary:
+	var revanchas = _batalla(id_batalla).get("revanchas", {})
+	var r = revanchas.get(id_ronda, {}) if revanchas is Dictionary else {}
+	if not r is Dictionary:
+		r = {}
+	return {"estrellitas": int(r.get("estrellitas", 0)), "record": int(r.get("record", -1))}
 
 
 func borrar_parcial_batalla(id_batalla: String) -> void:

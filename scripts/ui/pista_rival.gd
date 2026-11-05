@@ -39,6 +39,9 @@ var _salto_bandera := 0.0
 var _salto_cometa := 0.0
 ## true mientras dura la animacion del resbalon: el "plof" nunca se corta (QA §14.9).
 var resbalando := false
+## Modo sin pista del GestorTurnos (la Torre, HE-76): solo se dibuja Cometa (tocable); ni galletas, ni mesa,
+## ni Coleccionauta (vive en la escena del motor). Las animaciones siguen siendo inofensivas.
+var sin_pista := false
 
 
 func _ready() -> void:
@@ -72,6 +75,9 @@ func _process(delta: float) -> void:
 # ---------------------------------------------------------------------------
 
 func _draw() -> void:
+	if sin_pista:
+		_dibujar_cometa()
+		return
 	# Franja suave de fondo para separar la pista del tablero.
 	var fondo := StyleBoxFlat.new()
 	fondo.bg_color = Color(0.17, 0.09, 0.36, 0.45)

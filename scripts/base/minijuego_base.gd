@@ -47,6 +47,16 @@ extends Node2D
 ## `turnos.configurar(...)` y decide cuando termina un turno. Esta base registra la victoria en
 ## `Progreso.registrar_victoria_equipo` (nunca la estacion individual de nadie), monta la fiesta
 ## multihermano (`celebrar_equipo`) y orquesta la derrota-gag con los virtuales `gag_derrota_*`.
+##
+## EXTENSIONES HE-76 (motor-lanzar.md §12, §13.2 y §25; genericas, el nucleo no conoce la Torre):
+## - Modo sin pista del gestor: la derrota-gag no anima `pista_rival`; aspira hacia `ancla_rival_motor()` y
+##   lee la voz de `variante_derrota()`.
+## - Momentos saltables (`momento_saltable_iniciado/terminado`, `saltar_momento`): el contenedor decide si se
+##   salta (cinematica ya vista por la familia); el motor solo deja el estado final. Con las cinematicas
+##   postergadas por presupuesto (PO, 05-Nov-2026) es el mismo gancho para el reemplazo provisional.
+## - Revancha (`revancha`, `resultado_revancha`): sin parcial.
+## - Parcial a demanda (`notificar_parcial_equipo`): al empezar cada etapa y al terminar cada derrota-gag,
+##   ademas del de cada `turno_cerrado`. El estado puede traer `"etapa"` (Progreso lo protege, R17 = A).
 
 signal completado(destellos: int)
 ## El contenedor (escena del planeta) conecta esta senal para volver al mapa sin perder
@@ -55,6 +65,14 @@ signal salir_solicitado()
 ## M4 (batalla, HE-69): parcial de la ronda tras cada turno cerrado. Fuera de la batalla nadie lo escucha
 ## (m3: el modo equipo suelto no guarda parciales).
 signal parcial_equipo_listo(estado: Dictionary)
+## HE-76 (motor-lanzar §13.2): un momento animado que se puede saltar desde la 2.a vez ("caida_etapa",
+## "caida_torre"...). El contenedor marca la cinematica vista al recibir `terminado`. El nucleo no sabe que hay
+## dentro: solo el id.
+signal momento_saltable_iniciado(id_animacion: String)
+signal momento_saltable_terminado(id_animacion: String)
+## Revancha (motor-lanzar §11 y §25.15): se emite antes de `completado`. record = recursos usados (-1 = sin
+## record, p. ej. hubo ayudas).
+signal resultado_revancha(estrellitas: int, record: int)
 
 const CELEBRACION_ESCENA := "res://escenas/ui/celebracion.tscn"
 const PREFIJO_AUDIO := "res://assets/audio/"
@@ -82,6 +100,8 @@ const MARGEN_VOZ_AUTO_CONTINUAR := 1.5
 @export var destellos_fijos: int = -1
 ## Vacio = juego en solitario (todo igual que antes). 2 o 3 ids = modo equipo (si el nivel lo admite).
 @export var equipo: Array[String] = []
+## Revancha (motor-lanzar §11): el contenedor la pone antes de agregar el motor al arbol. Sin parcial.
+@export var revancha: bool = false
 
 ## Monto por hermano si el contenedor no fija `destellos_fijos` en un nivel de equipo (§7.1).
 const DESTELLOS_EQUIPO_POR_DEFECTO := 50
@@ -101,6 +121,8 @@ var _gag_terminado := false
 var _id_gag := 0
 var _capa_gag: CanvasLayer
 var _boton_otra_vez_equipo: Button
+## Momentos saltables en curso (ids), en el orden en que empezaron.
+var _momentos_en_curso: Array[String] = []
 
 
 func _ready() -> void:
@@ -117,7 +139,7 @@ func _ready() -> void:
 		add_child(turnos)
 		turnos.rival_llego.connect(_al_llegar_rival)
 		turnos.turno_cerrado.connect(func(_id: String, _perfecto: bool) -> void:
-			parcial_equipo_listo.emit(obtener_parcial_equipo()))
+			notificar_parcial_equipo())
 
 
 ## Carga y parsea el JSON de nivel indicado. Devuelve el Dictionary resultante
@@ -485,6 +507,56 @@ func restaurar_parcial_equipo(_estado: Dictionary) -> void:
 	pass
 
 
+## Emite el parcial de la ronda (`obtener_parcial_equipo()`) para quien lo guarde (batalla.gd). La base lo
+## llama en cada `turno_cerrado` y al terminar cada derrota-gag; el motor, cuando su ficha pide otro momento
+## (la Torre: al empezar cada etapa, antes del primer turno, R17 = A). En revancha o en solitario no emite.
+func notificar_parcial_equipo() -> void:
+	if revancha or not es_modo_equipo():
+		return
+	parcial_equipo_listo.emit(obtener_parcial_equipo())
+
+
+# --- Extensiones HE-76 (motor-lanzar §13.2): virtuales y momentos saltables ---
+
+## Boca del rival en la escena del motor (modo sin pista): hacia aqui vuela lo que se aspira. Vacia = centro.
+func ancla_rival_motor() -> Vector2:
+	return Vector2(640, 360)
+
+
+## Variante de la derrota-gag: "" = `lineas_voz.derrota_gag_equipo` es un Array (lo de Parejas); si no, la base
+## lee `derrota_gag_equipo[clave]` (un Array). El motor decide la rotacion; la base no sabe que gag es.
+func variante_derrota() -> String:
+	return ""
+
+
+## Virtual: corta el momento `id_animacion` y deja su estado final. Al terminar, el motor llama
+## `terminar_momento_saltable(id_animacion)` (como si hubiera terminado solo). Implementacion vacia.
+func saltar_momento(_id_animacion: String) -> void:
+	pass
+
+
+## El motor avisa que empieza un momento saltable. Llamadas repetidas con el mismo id se ignoran.
+func iniciar_momento_saltable(id_animacion: String) -> void:
+	if id_animacion == "" or id_animacion in _momentos_en_curso:
+		return
+	_momentos_en_curso.append(id_animacion)
+	momento_saltable_iniciado.emit(id_animacion)
+
+
+## El motor avisa que el momento termino (solo o saltado). Solo emite si estaba en curso: una vez por momento.
+func terminar_momento_saltable(id_animacion: String) -> void:
+	if not id_animacion in _momentos_en_curso:
+		return
+	_momentos_en_curso.erase(id_animacion)
+	momento_saltable_terminado.emit(id_animacion)
+
+
+func momento_saltable_en_curso(id_animacion: String = "") -> bool:
+	if id_animacion == "":
+		return not _momentos_en_curso.is_empty()
+	return id_animacion in _momentos_en_curso
+
+
 # --- Derrota-gag del equipo (§5.5 y §11.4): la orquesta la base ---
 
 ## El rival llego a la mesa: el retrato del siguiente ya esta al centro y la entrada bloqueada.
@@ -495,22 +567,32 @@ func _al_llegar_rival() -> void:
 	var id := _id_gag
 	turnos.barra.achicar_centro()
 	_mostrar_otra_vez_equipo()
+	# Sin pista (la Torre) el rival vive en la escena del motor: la base no anima pista_rival y apunta a su ancla.
+	var sin_pista := turnos.sin_pista()
+	var boca := ancla_rival_motor() if sin_pista else turnos.posicion_boca_rival()
 	# 1-2. La mochila-torre aspira lo pendiente ("¡a mi coleccion!", "sluuurp").
 	var linea := _lineas_gag()
 	_decir_gag(linea, 0)
-	var t_aspira := maxf(turnos.pista.aspirar(), gag_derrota_aspirar(turnos.posicion_boca_rival()))
-	await get_tree().create_timer(t_aspira).timeout
+	var t_aspira := gag_derrota_aspirar(boca)
+	if not sin_pista:
+		t_aspira = maxf(turnos.pista.aspirar(), t_aspira)
+	await get_tree().create_timer(maxf(t_aspira, 0.01)).timeout
 	if id != _id_gag or not _en_gag_equipo:
 		return
 	# 3. Se infla, estornuda y todo vuelve a la mesa, ya listo para quien juega despues.
 	_decir_gag(linea, 1)
-	var t_devuelve := maxf(turnos.pista.estornudar(), gag_derrota_devolver(turnos.perfil_actual()))
-	await get_tree().create_timer(t_devuelve).timeout
+	var t_devuelve := gag_derrota_devolver(turnos.perfil_actual())
+	if not sin_pista:
+		t_devuelve = maxf(turnos.pista.estornudar(), t_devuelve)
+	await get_tree().create_timer(maxf(t_devuelve, 0.01)).timeout
 	if id != _id_gag or not _en_gag_equipo:
 		return
 	_gag_terminado = true
+	# motor-lanzar §12: el intento nuevo (con sus ayudas) queda guardado aunque salgan antes de "¡otra vez!".
+	notificar_parcial_equipo()
 	# 4. Cae sentado; voces en plural (nunca nombran a un hermano, B3.3) y el logro comun de Cometa.
-	turnos.pista.sentarse()
+	if not sin_pista:
+		turnos.pista.sentarse()
 	for i in range(2, linea.size()):
 		await _esperar_voz_libre(4.0)
 		if id != _id_gag or not _en_gag_equipo:
@@ -522,13 +604,18 @@ func _al_llegar_rival() -> void:
 	reproducir_voz(_linea_logro_comun(contar_logro_equipo()))
 
 
+## Lineas de la derrota-gag: un Array (Parejas) o, con `variante_derrota()` != "", el Array de esa clave en un
+## mapa (la Torre). "PENDIENTE" (o cualquier valor que no sea Array) = clave ausente (nota HE-69, 07-Oct).
 func _lineas_gag() -> Array:
 	var lineas = nivel.get("lineas_voz", {}).get("derrota_gag_equipo", [])
+	var variante := variante_derrota()
+	if lineas is Dictionary:
+		lineas = lineas.get(variante, []) if variante != "" else []
 	return lineas if lineas is Array else []
 
 
 func _decir_gag(lineas: Array, i: int) -> void:
-	if i < lineas.size():
+	if i < lineas.size() and str(lineas[i]) != "PENDIENTE":
 		reproducir_voz(str(lineas[i]))
 
 
@@ -601,7 +688,9 @@ func tocar_otra_vez_equipo() -> void:
 	if audio != null:
 		audio.detener_voz()
 	if not _gag_terminado:
+		_gag_terminado = true
 		gag_derrota_terminar_ya(turnos.perfil_actual())
+		notificar_parcial_equipo()
 	await reintentar_equipo()
 	if is_inside_tree():
 		turnos.reiniciar_rival()
