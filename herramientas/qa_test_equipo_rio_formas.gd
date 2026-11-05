@@ -333,8 +333,15 @@ func _probar_formas() -> void:
 	_check(giradas > 0 and motor._rotacion_por_toque, "Sofia: piezas giradas al azar (%d sin calzar) y rotacion por toque" % giradas)
 	var encajados_antes: int = motor._encajados
 	g._pos_rival = g.pasos_rival() - 1
-	var mala := _pieza_bandeja(motor)
-	motor.soltar_pieza(mala, _hueco_ajeno(motor, mala)["centro"])
+	var resultado := ""
+	for p in motor._en_bandeja():
+		for hueco in motor._huecos:
+			if resultado == "no_es_este" or hueco["pieza"] != null or (hueco["color"] as Color).is_equal_approx(p.color):
+				continue
+			resultado = motor.soltar_pieza(p, hueco["centro"])
+			if resultado == "girar":
+				motor._dejar_de_flotar(p)
+	_check(resultado == "no_es_este", "Sofia suelta una pieza en un hueco equivocado")
 	_check(await _esperar_que(func() -> bool: return "cerrado:sofia:false" in _eventos, 3.0), "Sofia: el primer fallo pasa el turno")
 	_check(await _esperar_que(func() -> bool: return "llego" in _eventos, 6.0), "con el rival en pasos - 1, llega en el pase")
 	_check(await _esperar_que(func() -> bool: return motor._gag_terminado, 6.0), "la derrota-gag termina")
