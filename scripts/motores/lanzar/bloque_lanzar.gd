@@ -17,7 +17,7 @@ const CAPA_BLOQUES := 2
 const CAPA_GLOBOS := 4
 
 var id_bloque := ""
-var material := "carton"
+var material_bloque := "carton"
 var forma := "rect"
 var ancho := 60.0
 var alto := 60.0
@@ -45,7 +45,7 @@ var squash := 1.0
 
 func preparar(datos: Dictionary, mat: Dictionary) -> void:
 	id_bloque = str(datos.get("id", ""))
-	material = str(datos.get("material", "carton"))
+	material_bloque = str(datos.get("material", "carton"))
 	forma = str(datos.get("forma", "rect"))
 	contenido = str(datos.get("contenido", ""))
 	var r: Array = datos.get("rect", [0, 0, 60, 60])
@@ -149,7 +149,7 @@ func rearmar() -> void:
 
 
 func agregar_mancha(punto_global: Vector2, color: String) -> void:
-	if material == "resorte":
+	if material_bloque == "resorte":
 		return  # El trampolin siempre se ve limpio y verde (§25.5.2).
 	manchas.append({"pos": to_local(punto_global).limit_length(maxf(ancho, alto) * 0.45), "color": color})
 	while manchas.size() > 6:
@@ -172,11 +172,11 @@ func _draw() -> void:
 		var pulso := 0.75 + 0.25 * sin(Time.get_ticks_msec() / 220.0)
 		draw_circle(Vector2.ZERO, halo * pulso, Color(halo_color, 0.35))
 		draw_arc(Vector2.ZERO, halo * pulso, 0, TAU, 40, halo_color, 4.0, true)
-	var color: Color = COLORES_MATERIAL.get(material, Color.WHITE)
+	var color: Color = COLORES_MATERIAL.get(material_bloque, Color.WHITE)
 	if es_trono:
 		color = Color("#9B5DE5")
 	var rect := Rect2(-medio, Vector2(ancho, alto))
-	match material:
+	match material_bloque:
 		"caramelo":
 			_dibujar_frasco(rect, color)
 		"lata":
@@ -206,7 +206,7 @@ func _draw() -> void:
 		var c: Color = COLORES_MANCHA.get(str(m["color"]), Color.WHITE)
 		draw_circle(m["pos"], 7.0, c)
 		draw_circle(m["pos"] + Vector2(6, 3), 3.5, c)
-	if salud < resistencia and not irrompible and material != "caramelo":
+	if salud < resistencia and not irrompible and material_bloque != "caramelo":
 		# Dano parcial visible (abolladura / tapa floja), sin numeros.
 		draw_line(Vector2(-ancho * 0.25, -alto * 0.2), Vector2(ancho * 0.1, alto * 0.1), Color(CONTORNO, 0.6), 2.5)
 	draw_set_transform_matrix(Transform2D.IDENTITY)

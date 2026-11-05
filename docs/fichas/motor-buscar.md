@@ -4,6 +4,9 @@
 - **Estado**: PROPUESTA. Falta: maqueta HTML (HE-110) y aprobación del PO, auditoría de `experto-ux-parvulo`
   (HE-111), escenas y calibración de `disenador-niveles` (HE-D6), arte de `disenador-personajes` (HE-114) y
   voces de `guionista` (HE-112). La implementación (HE-118) espera al playtest del capítulo 1 (HE-18).
+- **Actualización HE-124 (05-Nov-2026, política de derrota)**: el sol llega a los tres perfiles (Sofía 1,6 ×
+  par, Nicole 2,2 × par desde z1, Maxi 3 × par) y el regalo de Sofía pasa a 3 derrotas. Las preguntas de §16
+  quedan **cerradas** (el PO delegó). Cambios marcados **[HE-124]** ([Decisión 05-Nov, HE-124]).
 - **Fuentes**: GDD §1, §4 (Animalia), §5, §6 y §8; `docs/perfil-jugadores.md`; `docs/stack-tecnico.md`;
   `scripts/base/minijuego_base.gd`; `scripts/base/gestor_turnos.gd`; `docs/fichas/modo-equipo.md` §11.4;
   `docs/fichas/lienzo-escenas-retos.md` §1.6-§1.7 (cola de objetivos y lupa de Pinta v2);
@@ -11,7 +14,8 @@
   (HE-A4b: la antena es su "radar de olfateo", gancho de este juego).
 
 **Marcas**: **[PO]** decisión del PO (05-Nov-2026) · **[Ref]** tomado del juego de referencia ·
-**[Propuesta]** de `disenador-mecanicas`, reversible · **[Abierta]** necesita al PO (§16).
+**[Propuesta]** de `disenador-mecanicas`, reversible · **[HE-124]** [Decisión 05-Nov, HE-124] (§16 ya no
+tiene preguntas abiertas).
 
 ---
 
@@ -25,7 +29,7 @@ escrita.**
 |---|---|---|
 | **¿Dónde está Wally?** (Handford, 1987) | Escena densa con mucho "ruido visual"; objetivo chico dentro de la multitud; **señuelos parecidos** (los que se visten como Wally) | La página fija: la escena se recorre arrastrando |
 | **Hidden Folks** (Adriaan de Jongh, 2017) | **Todo lo tocable reacciona con su sonido** (su firma: sonidos hechos con la boca); **lista de objetivos** con su dibujo y una **pista escrita**; objetos que **se abren** al tocarlos (carpas, arbustos, puertas) y esconden a alguien; escenas que crecen de 1-2 pantallas a muchas; cero castigo | El pellizco para hacer zoom (GDD §6.4) y los mapas de 6-10 pantallas (sesiones de 2-5 min) |
-| Juegos casuales de objetos ocultos | El **reloj** de escena para el reto de Sofía | El castigo por tocar al azar (aquí solo corta la racha) |
+| Juegos casuales de objetos ocultos | El **reloj** de escena (el sol), en los tres perfiles con su factor [HE-124] | El castigo por tocar al azar (aquí solo corta la racha) |
 
 **Escala por edad sacada de las referencias** [Ref + Propuesta]: Hidden Folks sube la dificultad con el
 **tamaño de la escena**, la **cantidad de objetivos**, lo **escondido** que está cada uno (parte visible,
@@ -179,8 +183,11 @@ superpone con un señuelo, **gana el objetivo**. Si se superpone con un objeto i
 | `camuflaje` (color parecido al fondo) | no | no | desde z2 |
 | `senuelos` | no | 0 (z1-z3) → 1 (z4-z5) | 2 (z3) → 4 (z5) |
 | Pista | — | voz + silueta ("¡busca al pony!") | z1-z2 descriptiva ("el que tiene rayas"); z3+ con dos rasgos ("rayas y bigotes, pero chiquito"); z5 indirecta ("le encanta el frío") |
-| Tiempo par | no | desde z2, solo si ya hay récord | sí |
-| Sol (derrota) | no | no [Propuesta; §16, pregunta 1] | sí: 2 × tiempo par |
+| `tiempo_par_s` (escena) [HE-124] | 35 → 45 s por escena (solo para el sol; no se muestra) | 80 → 160 s (desde z1; el **bono** y el récord, solo con récord previo) | 150 → 270 s |
+| Sol (derrota) [HE-124] | **sí: 3 × tiempo par** (§10.1) | **sí, desde z1: 2,2 × tiempo par** | **sí: 1,6 × tiempo par** (antes 2 ×) |
+| `sol.minimo_reintento_s` [HE-124] | 60 | 60 | 45 |
+| `regalo_tras_derrotas` [HE-124] | 2 | 2 | **3** |
+| `ayuda_fuerte_tras_derrotas` [HE-124] | 3 (§10.1) | — | — |
 | Lupa | no | no | desde z3 |
 | Ayuda quieto | 6 s: el siguiente asoma la cabeza y llama; 10 s: Toby corre y lo señala | 12 s: la escena se desliza hacia la zona del activo; 20 s: el activo asoma y llama | — (pista con costo) |
 
@@ -232,29 +239,40 @@ Brote).
 
 ## 10. El fallo
 
-### 10.1 Semilla: el fallo no existe
+### 10.1 Semilla: tocar nunca es un error, perder es posible pero suave [HE-124]
 
 - No hay lista ni orden: **cualquier** animal que encuentre vale, y **todo** lo que toque responde. Los
   animales se esconden a medias y **hacen ruido** cada tanto (cada 5-8 s uno al azar, desde su escondite: el
   sonido sale de su lado de la pantalla).
 - La ayuda (6 s / 10 s) garantiza que nunca se trabe.
+- **Lo único que hace perder es el sol** (3 × par: ~105-135 s por escena de 5-7 animales que Maxi encuentra en
+  ~35-45 s). Su sol es un **solcito con carita que bosteza**; al ponerse, los escondidos salen a hacerle
+  cosquillas a Toby (1,5 s, sin puntaje en el cartel, solo la flecha gigante).
+- **Regalo tras 2 derrotas**: Toby encuentra uno. **Ayuda fuerte tras 3**: en la escena siguiente todos los
+  animales **asoman la cabeza y llaman a la vez** y no hay sol (victoria asegurada); Toby lo presenta como
+  "¡ahora se esconden mal a propósito!".
 
-### 10.2 Derrota-gag de Sofía: "¡Se puso el sol!"
+### 10.2 Derrota-gag: "¡Se puso el sol!" (los tres perfiles [HE-124])
 
-- El sol baja despacio detrás de los árboles (relojito de 2 × tiempo par; sin tic-tac ni parpadeo).
+- El sol baja despacio detrás de los árboles (relojito de `sol.factor_par` × tiempo par: Sofía 1,6, Nicole
+  2,2, Maxi 3; sin tic-tac ni parpadeo).
 - Si se pone con animales sin encontrar: **se encienden las lucecitas de la carpa de Toby** y todos los
   escondidos salen a la vez gritando "¡aquí estábamos!", haciendo caras chistosas; uno se le sube a Toby a la
   cabeza y otro le saca la lengua al casco; Toby se cae sentado de risa. 2,5 s.
 - "¡Otra vez!" grande (tocar en cualquier parte del cartel). **Los ya encontrados se quedan encontrados**; los
   que faltan **se cambian de escondite** (otro de sus 2-3 posibles) y el sol vuelve con el tiempo
-  proporcional a los que faltan (`tiempo_par × 2 × faltan / total`, mínimo 45 s).
-- **Tras 2 derrotas**: Toby regala uno (lo encuentra él con el olfato).
+  proporcional a los que faltan (`tiempo_par × factor_par × faltan / total`, mínimo `minimo_reintento_s`).
+- **Regalo** [HE-124]: Toby regala uno (lo encuentra él con el olfato) **tras 3 derrotas** en Sofía y **tras 2**
+  en Nicole y Maxi. Se ofrece descansar tras 4 (Sofía) o 3 (Nicole).
+- **Destellos y estrellitas solo al ganar**; los encontrados quedan encontrados.
 
-### 10.3 Brote: sin derrota [Propuesta]
+### 10.3 Brote: con derrota desde z1 [HE-124; reemplaza "sin derrota"]
 
-Buscar con reloj a los 5 años choca con el género (Wally y Hidden Folks no tienen reloj) y con la regla de un
-objetivo a la vez. El reto de Nicole es el tiempo par, el récord y las estrellitas. Si el PO quiere que pueda
-perder (§16, pregunta 1), se activa el sol con 3 × tiempo par desde z4.
+Wally y Hidden Folks no tienen reloj, pero los juegos casuales de objetos ocultos (la otra referencia de §1)
+sí, y el PO pidió que perder sea posible en todo. Para no romper la regla de **un objetivo a la vez**, el sol
+de Nicole mide la **escena entera** (2,2 × par: 80 s de par en z1 → 176 s de sol para 5 animales), nunca cada
+objetivo, y la ayuda de 12 s / 20 s sigue activa: una niña que busca con ganas casi siempre llega (~75 % al
+primer intento, p25). Al reintentar, lo encontrado se queda y solo los que faltan cambian de escondite.
 
 ### 10.4 Pista de Sofía (cuesta una estrellita): el radar de Toby
 
@@ -307,21 +325,26 @@ desliza un poco hacia allá; si está en la pantalla, aparece un **círculo cál
   "ruido_semilla_s": [5, 8],               // Semilla: cada cuánto suena un escondido
   "lupa": true,
   "mapita": true,
-  "tiempo_par_s": 150,
-  "sol": { "factor_par": 2.0, "minimo_reintento_s": 45 },   // null = sin derrota
+  "tiempo_par_s": 150,                     // [Decisión 05-Nov, HE-124] obligatorio en los tres perfiles (Semilla: por escena)
+  "sol": { "factor_par": 1.6, "minimo_reintento_s": 45 },   // null = sin derrota. [Decisión 05-Nov, HE-124] estrella {1.6, 45} (antes 2.0) · brote {2.2, 60} desde z1 · semilla {3.0, 60}
   "puntos": { "encontrado": 100, "racha_max": 5, "ojo_aguila": 100, "dos_pasos": 100, "por_segundo": 10 },
   "racha_brote_s": 25,
   "umbrales_puntaje": { "dos": 1600, "tres": 2300 },
-  "regalo_tras_derrotas": 2,
+  "regalo_tras_derrotas": 3,               // [Decisión 05-Nov, HE-124] estrella 3 (antes 2) · brote 2 · semilla 2
+  "ayuda_fuerte_tras_derrotas": null,      // [Decisión 05-Nov, HE-124] clave nueva. Semilla: { "derrotas": 3, "todos_asoman": true, "sin_sol": true }
+  "descanso_tras_derrotas": 4,             // [Decisión 05-Nov, HE-124] clave nueva: estrella 4 · brote 3 · semilla null
   "ayuda_idle_s": null,                    // Semilla [6, 10]; Brote [12, 20]
   "pistas_cuestan_estrellita": true,
   "lineas_voz": {
     "intro": "…", "cuenta_toby": "…", "instruccion": "…", "busca": { "cebra": "…" },
     "ya_encontrado": "…", "senuelo": { "tigre": "…" }, "victoria": ["…"], "derrota_gag": "…",
-    "regalo": "…", "pista_usada": "…", "record": "…", "primer_record": "…"
+    "regalo": "…", "pista_usada": "…", "record": "…", "primer_record": "…", "ayuda_fuerte": "…", "descansar": "…"
   }
 }
 ```
+
+- Retrocompatibilidad [HE-124]: sin `ayuda_fuerte_tras_derrotas` → no hay; sin `descanso_tras_derrotas` → 3;
+  `sol` activo sin `tiempo_par_s` → `push_warning` y sin sol.
 
 ### 11.2 Validador de escenas (para `disenador-niveles`)
 
@@ -377,8 +400,8 @@ Debe demostrar:
 4. Escondites que se abren (1 y 2 pasos), señuelos con su presentación chistosa y el cambio de escondite al
    reintentar.
 5. La lupa **igual a la de Pinta v2** (un toque arma, el siguiente acerca 2×).
-6. Racha, "ojo de águila", tiempo par, récord en `localStorage`, el sol de Sofía con la derrota-gag y el radar
-   de Toby.
+6. Racha, "ojo de águila", tiempo par, récord en `localStorage`, el sol de los tres perfiles (con el solcito
+   que bosteza de Maxi) con la derrota-gag y el radar de Toby [HE-124].
 7. Un registro de tiempos por objetivo (para calibrar `tiempo_par_s`) y un botón "ver zonas de toque".
 
 ## 14. Riesgos de usabilidad (para `experto-ux-parvulo`)
@@ -394,6 +417,7 @@ Debe demostrar:
 | R7 | **El mapita** a 200 × 60 px es chico para tocarlo | Zona de toque de 96 px de alto; si no se usa, se quita |
 | R8 | **Mariposas** del ambiente HE-A7b en las escenas de Nicole y Sofía | Sacarlas (regla 8) |
 | R9 | **Mareo** por inercia en tablet | Frenado corto (0,4 s) y la opción "menos movimiento" la apaga |
+| R10 | **El sol convierte la exploración en apuro** y Nicole o Sofía empiezan a tocar a ráfagas [HE-124] | Tocar objetos sigue sin cortar nada y los señuelos solo cortan la racha; si el playtest muestra ráfagas, subir el factor (Nicole 2,5) antes que quitar el sol |
 
 ## 15. Qué debe probar el arnés (`herramientas/qa_test_buscar.gd`)
 
@@ -401,21 +425,22 @@ Debe demostrar:
 2. Toque frente a arrastre con el umbral; un toque sobre un objetivo superpuesto a un señuelo da el objetivo.
 3. Encontrar, señuelo, objeto, escondite de 1 y 2 pasos con sus señales; "ya encontrado" en Brote.
 4. Racha y puntaje según §9.1 (objetos no cortan; señuelos sí).
-5. Semilla: sin lista, cualquier animal vale; ruido cada 5-8 s; ayudas a los 6 y 10 s.
-6. Sol de Sofía: derrota, encontrados intactos, escondites nuevos, tiempo proporcional, regalo tras 2.
+5. Semilla: sin lista, cualquier animal vale; ruido cada 5-8 s; ayudas a los 6 y 10 s; ayuda fuerte tras 3
+   derrotas (todos asoman, sin sol, victoria asegurada) [HE-124].
+6. Sol en los tres perfiles [HE-124]: derrota con su `factor_par`, encontrados intactos, escondites nuevos,
+   tiempo proporcional con su mínimo, regalo tras 3 (Estrella) o 2 (Brote y Semilla), 0 destellos al perder.
 7. Parcial: salir y volver retoma encontrados y escondites.
 8. Equipo: tope por perfil, `segundos_por_turno` con cambio de escondite y `terminar_turno(true)`, jugada
    automática de Maxi.
 9. Escena: zonas de toque mínimas por perfil medidas en pantalla; la lupa compartida funciona igual que en Pinta.
 
-## 16. Preguntas abiertas para el PO
+## 16. Decisiones (antes preguntas abiertas) [HE-124: el PO delegó, 05-Nov-2026]
 
-1. **[Abierta] ¿Nicole puede perder aquí?** Propongo que no (Wally y Hidden Folks no tienen reloj; su reto es
-   el tiempo par, el récord y las estrellitas). La alternativa: el sol con 3 × tiempo par desde z4.
-2. **[Abierta] La lupa compartida**: ¿de acuerdo con que `dev-godot` extraiga la lupa de Pinta a una pieza común
-   para que funcione igual en los dos juegos? (no cambia nada de Pinta para los niños).
-3. **[Abierta] Arte**: ¿escenas compuestas con piezas reutilizables (más barato y data-driven) o ilustraciones
-   enteras por escena (más lindas, mucho más costosas)?
-4. **[Abierta] Sonidos "hechos con la boca"** de los objetos: ¿los graban los niños? Sería un lindo regalo
-   dentro del regalo (como en Hidden Folks).
-5. **[Abierta] Foto de grupo al final**: ¿va al álbum de recuerdos como estampita o queda solo como celebración?
+1. **¿Nicole puede perder?** → **Sí, desde z1, con el sol de 2,2 × par** sobre la escena entera; Sofía 1,6 ×;
+   Maxi 3 × (§8.1, §10). Política del PO: GDD §6 regla 11.
+2. **Lupa compartida** → **sí**: `dev-godot` extrae la lupa de Pinta a `scripts/ui/lupa_zoom.gd` y la usan los
+   dos motores (para los niños, Pinta no cambia).
+3. **Arte** → **escenas compuestas con piezas SVG reutilizables** (§11.3): data-driven y alcanzable.
+4. **Sonidos "hechos con la boca"** → **sí, los graban los niños** cuando el PO pueda organizar la sesión;
+   mientras tanto, CC0. No bloquea la implementación.
+5. **Foto de grupo** → **solo celebración**: el álbum queda reservado a las fotos reales de la familia.

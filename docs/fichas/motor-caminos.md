@@ -4,13 +4,17 @@
 - **Estado**: PROPUESTA. Falta: maqueta HTML (HE-110) y aprobación del PO, auditoría de `experto-ux-parvulo`
   (HE-111), tableros y calibración de `disenador-niveles` (HE-D6), voces de `guionista` (HE-112). La
   implementación (HE-117) espera al playtest del capítulo 1 (HE-18).
+- **Actualización HE-124 (05-Nov-2026, política de derrota)**: la tormenta llega a los tres perfiles (Sofía
+  1,6 × par, Nicole 2,2 × par desde z1, Maxi 3 × par) y el regalo de Sofía pasa a 3 derrotas. Las preguntas
+  de §16 quedan **cerradas** (el PO delegó). Cambios marcados **[HE-124]** ([Decisión 05-Nov, HE-124]).
 - **Fuentes**: GDD §1, §4 (Animalia), §5, §6 y §8; `docs/perfil-jugadores.md`; `docs/stack-tecnico.md`;
   `scripts/base/minijuego_base.gd`; `scripts/base/gestor_turnos.gd`; `docs/fichas/modo-equipo.md` §11.4;
   `docs/fichas/motor-clasificar.md` §1; `docs/fichas/lienzo-escenas-retos.md` §1.2 (caminos de Pinta v2);
   `docs/fichas/motor-topos.md` §3 (`racha_toby.gd`).
 
 **Marcas**: **[PO]** decisión del PO (05-Nov-2026) · **[Ref]** tomado tal cual de Flow Free · **[Propuesta]**
-de `disenador-mecanicas`, reversible · **[Abierta]** necesita al PO (§16).
+de `disenador-mecanicas`, reversible · **[HE-124]** [Decisión 05-Nov, HE-124] (§16 ya no tiene preguntas
+abiertas).
 
 ---
 
@@ -29,7 +33,7 @@ caminos no se pueden cruzar, y en los niveles difíciles hay que cubrir todas la
 | "Perfecto" = tantos trazos como pares (sin rehacer) | Bono "¡sin borrones!" y parte de las estrellitas de Sofía | — |
 | Pistas (revelan un tubo) | Toby olfatea y dibuja un camino; a Sofía le cuesta una estrellita | — |
 | Variante **Bridges**: celdas puente donde dos tubos se cruzan | Puentecitos de madera (Sofía z3+) | Hexes y Warps: no |
-| Modo **Time Trial** | Tiempo par y récord; la tormenta de Sofía (§10.2) | — |
+| Modo **Time Trial** | Tiempo par y récord; la tormenta de los tres perfiles (§10.2) [HE-124] | — |
 
 **Lo propio de Animalia**: en Sofía desde z2, las casas **no tienen el color del animal**: son su hábitat
 real (pingüino → hielo, rana → nenúfar, pudú → bosque). Antes de trazar hay que **saber** de quién es cada
@@ -198,8 +202,10 @@ más los sonidos de cada animal. Ningún sonido de error.
 | `iman_casa` | 1 celda (la casa "chupa" el camino) | 0 | 0 |
 | `tableros` por estación | 5 | 4 | 4 (z1-z3) → 3 (z4-z5) |
 | Forma de los tableros | caminos casi rectos (z1), con una curva (z3+) | con 1-2 curvas | serpenteantes; con llenado, la solución única obliga a rodeos |
-| Tiempo par | no | desde z2, solo si ya hay récord | sí |
-| Tormenta (derrota) | no | no [Propuesta; §16, pregunta 1] | sí: 2 × tiempo par |
+| `tiempo_par_s` por tablero [HE-124] | 15 → 25 s (solo para la tormenta; no se muestra) | 35 → 80 s (desde z1; el **bono** y el relojito de récord, solo con récord previo) | 60 → 120 s |
+| Tormenta (derrota) [HE-124] | **sí: 3 × tiempo par** | **sí, desde z1: 2,2 × tiempo par** | **sí: 1,6 × tiempo par** (antes 2 ×) |
+| `regalo_tras_derrotas` (en el mismo tablero) [HE-124] | 2 | 2 | **3** |
+| `ayuda_fuerte_tras_derrotas` [HE-124] | 3 (§10.1) | — | — |
 | Ayuda quieto | 6 s: el animal salta y aparece la guía; 10 s: mano fantasma que traza | 15 s: la casa del siguiente par sin cerrar late | — (pista con costo) |
 
 **De dónde salen los números**: Flow Free empieza en 5 × 5 con ~5 pares y en el pack Regular sube a ~N pares
@@ -257,18 +263,26 @@ min); Sofía 50-90 s (~4 min). Se confirma en la maqueta y el playtest.
 
 ## 10. El fallo
 
-### 10.1 Semilla: el fallo no existe
+### 10.1 Semilla: equivocarse no existe, perder es posible pero suave [HE-124]
 
 - No se puede cortar nada, no hay casas equivocadas que acepten, soltar no rompe nada y el imán completa
-  los caminos casi hechos.
+  los caminos casi hechos. **Lo único que hace perder es la tormenta** (3 × tiempo par: ~45-75 s por tablero
+  de 15-25 s): solo la ve un Maxi que se distrajo mucho rato.
 - **Válvula contra trabarse** [Propuesta]: si dos caminos se encierran mutuamente (en 4 × 3 es raro pero
   posible), a los 6 s sin avance Toby **sopla** el camino que estorba (se va en hojitas) y aparece la guía del
   que falta.
-- Tablero completo siempre se alcanza con la mano fantasma (10 s).
+- La mano fantasma (10 s) sigue mostrando la solución: con ella, todo tablero se termina dentro del tiempo.
+- **Nube de Maxi**: una nubecita **blanca con carita dormida** (no gris), que bosteza al llegar. Su lluvia
+  es de **burbujas**, no de gotas: los animales sin casa juegan a reventarlas y se sacuden como perritos.
+  1,5 s, sin cartel de puntaje: solo la flecha circular gigante con la carita de Toby.
+- **Regalo tras 2 derrotas** en el mismo tablero: Toby traza un camino. **Ayuda fuerte tras 3**: Toby traza
+  todos menos uno, y ese tablero **no tiene nube** (victoria asegurada). Toby lo presenta como "¡hagámoslo
+  juntos!".
 
-### 10.2 Derrota-gag de Sofía: "¡La tormenta de risa!"
+### 10.2 Derrota-gag: "¡La tormenta de risa!" (los tres perfiles [HE-124])
 
-- Sobre el tablero, una **nubecita gris** avanza por un riel corto arriba (es el relojito: 2 × tiempo par).
+- Sobre el tablero, una **nubecita gris** avanza por un riel corto arriba (es el relojito:
+  `tormenta.factor_par` × tiempo par; Sofía 1,6, Nicole 2,2, Maxi 3 con la nube blanca de §10.1).
   No acelera, no parpadea y no suena hasta llegar.
 - Si llega con caminos sin cerrar: **llueve sobre el tablero**, los animales que no llegaron abren
   paraguas de hoja, saltan a los charquitos y se sacuden **como perritos** salpicando la pantalla (gotitas
@@ -277,13 +291,17 @@ min); Sofía 50-90 s (~4 min). Se confirma en la maqueta y el playtest.
 - "¡Otra vez!" grande (≥ 160 px; tocar en cualquier parte del cartel). **Los tableros ya resueltos se
   quedan resueltos**: se reintenta solo el tablero en curso, con la nube de vuelta al inicio y el mismo
   tablero (un puzle de solución única se aprende al reintentar: es parte del reto).
-- **Tras 2 derrotas en el mismo tablero**: Toby regala un camino (lo traza él, como una pista gratis).
+- **Regalo** [HE-124]: Toby regala un camino (lo traza él, como una pista gratis) **tras 3 derrotas en el
+  mismo tablero** en Sofía y **tras 2** en Nicole y Maxi. Se ofrece descansar tras 4 (Sofía) o 3 (Nicole).
+- **Destellos y estrellitas solo al ganar** la estación; los tableros ya resueltos quedan resueltos.
 
-### 10.3 Brote: sin derrota [Propuesta]
+### 10.3 Brote: con derrota desde z1 [HE-124; reemplaza "sin derrota"]
 
-Nicole no pierde en este juego: el reto es el puzle, el récord y las estrellitas por puntaje (precedente de
-Parejas). Flow Free tampoco tiene derrota: su presión es el Time Trial, que aquí es el tiempo par. Si el PO
-la quiere (§16, pregunta 1), se activa la misma tormenta con 3 × tiempo par desde z4.
+Nicole también puede perder, desde el primer tablero: tormenta de 2,2 × tiempo par (35 s de par en z1 → 77
+s de nube para 3 caminos en 5 × 5). Flow Free no tiene derrota, pero su Time Trial es el reto popular que
+toma la tormenta; con 2,2 × par, una niña de 5 años que juega concentrada casi siempre llega (~75 % al primer
+intento, p25), y la que se queda pegada en un camino ve una tormenta que da risa y reintenta el mismo
+tablero. El corte de caminos ajenos sigue siendo provisional mientras no suelte (R2).
 
 ### 10.4 Pista de Sofía (cuesta una estrellita)
 
@@ -330,7 +348,7 @@ gratis.
         "B": { "animal": "pudu", "casa": "bosque" },
         "C": { "animal": "condor", "casa": "montana" }
       },
-      "tiempo_par_s": 70,
+      "tiempo_par_s": 70,                  // [Decisión 05-Nov, HE-124] obligatorio en los tres perfiles (la tormenta lo usa siempre)
       "solucion": ["…"]                    // la escribe el validador; la usan la pista y la mano fantasma
     }
   ],
@@ -341,18 +359,23 @@ gratis.
   "puntos": { "llegada": 100, "racha_max": 5, "tablero": 300, "sin_borrones": 300, "por_segundo": 10 },
   "umbrales_puntaje": null,                // Brote: { "dos": X, "tres": Y }
   "umbrales_estrellitas": { "trazos_de_mas": 1, "intentos_casa": 0 },   // Estrella
-  "tiempo_par": true,                      // Brote: solo con récord previo
-  "tormenta": { "factor_par": 2.0 },       // null = sin derrota
-  "regalo_tras_derrotas": 2,
+  "tiempo_par": true,                      // bono y relojito de récord. Brote: solo con récord previo; Semilla: false
+  "tormenta": { "factor_par": 1.6 },       // null = sin derrota. [Decisión 05-Nov, HE-124] estrella 1.6 (antes 2.0) · brote 2.2 desde z1 · semilla 3.0 (nube blanca)
+  "regalo_tras_derrotas": 3,               // [Decisión 05-Nov, HE-124] en el mismo tablero: estrella 3 (antes 2) · brote 2 · semilla 2
+  "ayuda_fuerte_tras_derrotas": null,      // [Decisión 05-Nov, HE-124] clave nueva. Semilla: { "derrotas": 3, "caminos_regalados": "todos_menos_uno", "sin_tormenta": true }
+  "descanso_tras_derrotas": 4,             // [Decisión 05-Nov, HE-124] clave nueva: estrella 4 · brote 3 · semilla null
   "ayuda_idle_s": [6, 10],                 // Semilla: guía; mano fantasma
   "pistas_cuestan_estrellita": true,
   "lineas_voz": {
     "intro": "…", "instruccion": "…", "faltan_flores": "…", "casa_ajena": ["…"],
     "tablero_listo": ["…"], "victoria": ["…"], "derrota_gag": "…", "regalo": "…",
-    "pista_usada": "…", "record": "…", "primer_record": "…"
+    "pista_usada": "…", "record": "…", "primer_record": "…", "ayuda_fuerte": "…", "descansar": "…"
   }
 }
 ```
+
+- Retrocompatibilidad [HE-124]: sin `ayuda_fuerte_tras_derrotas` → no hay; sin `descanso_tras_derrotas` → 3;
+  un tablero sin `tiempo_par_s` con `tormenta` activa → `push_warning` y la tormenta no sale en ese tablero.
 
 ### 11.2 Rejugabilidad sin generar tableros
 
@@ -403,7 +426,9 @@ Debe demostrar:
 2. **Maxi**: el animal bajo el dedo, el imán de casa y la válvula de Toby que sopla.
 3. **Llenado** con "¡faltan flores!", puentes, rocas y casas neutras con el rechazo "¡aquí no vivo yo!".
 4. Llegada a casa con el animal caminando sus huellas y el florecer en cadena.
-5. Trazos y "¡sin borrones!", racha, tiempo par, récord en `localStorage`, la tormenta de Sofía y su reintento.
+5. Trazos y "¡sin borrones!", racha, tiempo par, récord en `localStorage`, la tormenta de los tres perfiles
+   (con la nube blanca de Maxi) y su reintento; un jugador simulado por edad que dé el % de tableros
+   terminados antes de la nube, para fijar `tiempo_par_s` (meta: p40 / p25 / p10) [HE-124].
 6. Un **validador de solución única** en la propia maqueta (botón "validar tablero") y 3 tableros de muestra por
    perfil, con giros y espejos.
 
@@ -419,6 +444,8 @@ Debe demostrar:
 | R6 | **Barrer sin querer** borra todo | Está en la esquina, lejos del tablero; es reversible solo rehaciendo. Si el playtest muestra toques accidentales, mantener presionado 0,5 s (pregunta a UX) |
 | R7 | **El puente** no se lee como "aquí se puede cruzar" | Puente de madera visible con baranda; la primera vez, un animal cruza por él solo como demostración |
 | R8 | **Confusión con Pinta v2** (también hay caminos que llevan animales a lugares) | Lenguaje visual distinto: aquí baldosas y cuadrícula; allá lienzo libre |
+| R9 | **La nube apura a Nicole** y la hace trazar peor (un puzle con reloj) [HE-124] | La nube no acelera, no parpadea ni suena; 2,2 × par. Medir si sus trazos por tablero suben con la nube respecto de una partida sin ella |
+| R10 | **Maxi no entiende la nube** y la derrota lo sorprende [HE-124] | Nube blanca con carita dormida, lluvia de burbujas que se pueden reventar; observar si ríe o se queda quieto |
 
 ## 15. Qué debe probar el arnés (`herramientas/qa_test_caminos.gd`)
 
@@ -429,22 +456,24 @@ Debe demostrar:
 3. Choques: cortar ajeno (B/E) y bloquear (S); rocas; puente solo en recto; casa ajena con `casa_rechazo`.
 4. Llenado: con todos llegados y baldosas vacías no termina y emite `falta_llenar`; sin llenado, termina.
 5. Trazos, "¡sin borrones!", racha y puntaje según §9.1.
-6. Semilla: imán de 1 celda, válvula a los 6 s, mano fantasma a los 10 s; nunca queda sin salida.
-7. Tormenta: derrota, reintento del tablero en curso con los resueltos intactos, regalo tras 2.
+6. Semilla: imán de 1 celda, válvula a los 6 s, mano fantasma a los 10 s; nunca queda sin salida; con la mano
+   fantasma seguida al pie de la letra, todo tablero termina antes de la nube.
+7. Tormenta [HE-124]: en los tres perfiles con su `factor_par`; derrota, reintento del tablero en curso con los
+   resueltos intactos, regalo tras 3 (Estrella) o 2 (Brote y Semilla), ayuda fuerte de Semilla tras 3 (sin
+   nube, victoria asegurada); 0 destellos y 0 estrellitas al perder.
 8. Equipo: tope por perfil, caminos llegados fijos, `segundos_por_turno` → `terminar_turno(true)`, jugada
    automática de Maxi.
 9. Escena: arrastres con `push_input` en 4 × 3 y 9 × 9; ninguna celda bajo 64 px.
 
-## 16. Preguntas abiertas para el PO
+## 16. Decisiones (antes preguntas abiertas) [HE-124: el PO delegó, 05-Nov-2026]
 
-1. **[Abierta] ¿Nicole puede perder aquí?** Propongo que no (el reto es el puzle, el récord y las estrellitas,
-   como Flow Free y como Parejas). La alternativa: tormenta con 3 × tiempo par desde z4.
-2. **[Abierta] Convivencia con Pinta v2**: allá los caminos son dibujo libre (Labo Train) y aquí puzle
-   (Flow Free). Son mecánicas distintas, pero el tema se parece. ¿Les parece bien, o en Pinta se evita que
-   los encargos de Animalia pidan "llevar un animal a su casa"?
-3. **[Abierta] Red de seguridad de Maxi**: si en la maqueta o el playtest Maxi no logra trazar, ¿se acepta que
-   su estación use `clasificar` (arrastrar el animal a su casa, ya implementado) en vez de `caminos`?
-4. **[Abierta] Casas neutras de Sofía desde z2**: ¿o prefieren que sigan con color hasta z3 para que primero
-   domine el puzle?
-5. **[Abierta] Tablero compartido en equipo**: ¿les gusta que los hermanos armen **un mismo** tablero (más
-   cooperativo, pero uno puede estorbar al otro) o cada uno arma su par en un tablero separado?
+1. **¿Nicole puede perder?** → **Sí, desde z1, con tormenta de 2,2 × par**; Sofía 1,6 ×; Maxi 3 × con nube
+   blanca (§8.1, §10). Política del PO: GDD §6 regla 11.
+2. **Convivencia con Pinta v2** → **se acepta**: son mecánicas distintas (dibujo libre frente a puzle en
+   cuadrícula) y lenguajes visuales distintos (R8). Ningún encargo de Pinta pide "llevar un animal a su casa"
+   en una cuadrícula; Animalia no tiene Pinta, así que no hay choque en el mismo planeta.
+3. **Red de seguridad de Maxi** → **sí**: si la maqueta (HE-110) o el playtest muestran que Maxi no logra
+   trazar ni con el animal bajo el dedo, su estación abre `clasificar` en modo `libre` con animales y casas
+   (solo un nivel, sin código nuevo). La decide `disenador-niveles` con la evidencia, sin volver al PO.
+4. **Casas neutras de Sofía** → **desde z2** (tabla §8.1): en z1 domina el puzle con colores.
+5. **Tablero en equipo** → **compartido**, con los caminos llegados fijos (§12.2).

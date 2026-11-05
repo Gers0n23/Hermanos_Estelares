@@ -23,6 +23,10 @@
   calibración con los jugadores simulados de las maquetas (HE-110), las voces de `guionista` (HE-112) y el
   arte de `disenador-personajes` (HE-114). **No se crea nada en `datos/` todavía**: el borrador del
   `mapa.json` va en §9.
+- **Actualización HE-124 (05-Nov-2026, `disenador-mecanicas`, política de derrota del PO)**: los tres
+  hermanos pueden perder en los 4 juegos (GDD §6 regla 11). Esta ficha recibe las metas, relojes, corazones
+  y regalos nuevos por perfil y zona, y **todas sus preguntas abiertas y decisiones [Prov] quedan cerradas**
+  (el PO delegó la decisión). Las celdas cambiadas van marcadas **[HE-124]** ([Decisión 05-Nov, HE-124]).
 - **Fuentes**: GDD §1, §3, §4 (Animalia y "dinosaurios de Maxi"), §5, §6 y §8; `docs/perfil-jugadores.md`;
   Toby (HE-A4b) y el ambiente de Animalia (HE-A7b) en `docs/guia-estilo-generacion.md` §3; las 4 fichas de
   motor; `docs/fichas/hangar-nave.md` (ala derecha); `docs/fichas/album-recuerdos.md` §4-§5;
@@ -30,7 +34,8 @@
 
 **Marcas**: **[PO]** decisión del PO · **[Prov]** opción que recomienda una ficha de motor ante una
 pregunta abierta, que esta ficha asume como **provisional, falta el OK del PO** · **[Propuesta]** decisión
-de `disenador-niveles`, reversible · **[Abierta]** necesita al PO (§13).
+de `disenador-niveles`, reversible · **[HE-124]** [Decisión 05-Nov, HE-124] (§13 ya no tiene preguntas
+abiertas).
 
 ---
 
@@ -126,7 +131,7 @@ pero el mapa lo ven Nicole y Sofía: se reemplazan por pájaros y hojas que caen
 | Zonas 2 y 4 completadas | Además, **1 foto personal** del álbum de recuerdos (`album-recuerdos.md` §5: zonas 2 y 4 de cada planeta), con la línea de entrega "¡otra foto de la billetera de papá!" |
 | Zona 3 completada | Escena de historia «La huellita de Toby» + **ala derecha** (pieza 2 de HE-A6: panel curvo verde selva con una huellita pintada) + video-llamada de papá + **1 foto familiar** del álbum + hangar en modo `instalar`. Mientras el video esté postergado por presupuesto, la escena y la video-llamada son **ganchos saltables con tarjeta estática y voz** (decisión del PO, 05-Nov-2026) |
 | Zona 5 completada | **El Gran Desfile** completo (§6.1) y la voz `planeta_completo` |
-| Zona perfecta (Nicole y Sofía) | **Gema en el collar de explorador** de Toby (cosmético, se ve en el mapa cuando ese hermano juega) y marco dorado en la foto de la zona si la tiene. Ver §6.3 y la pregunta [Abierta] 3 |
+| Zona perfecta (Nicole y Sofía) | **Gema en el collar de explorador** de Toby (cosmético, se ve en el mapa cuando ese hermano juega) y marco dorado en la foto de la zona si la tiene. Ver §6.3 (decidido en §13.3) |
 
 **Recuerdos de zona** (objetos del rincón de regalos del hangar; arte de `disenador-personajes`; al tocarlos,
 Toby los nombra):
@@ -153,31 +158,33 @@ estaciones con más rondas bajaría el ritmo a los 2 años, y en el playtest de 
 
 ### 2.4 Lo que esta ficha asume de las preguntas abiertas de las fichas de motor
 
-Todas son **[Prov]: provisional, falta el OK del PO**. Si el PO elige otra opción, cambian solo las celdas
-marcadas en §4.
+**[HE-124] Todas quedan decididas** (el PO delegó, 05-Nov-2026): se confirma la opción asumida, salvo las
+tres de "¿Nicole puede perder?", que la política de derrota del PO resuelve con **sí, en los 4 juegos** (y
+también Maxi, con derrota suave). Las marcas [Prov] que quedan en el texto se leen como **decididas**.
 
-| Ficha | Pregunta | Opción asumida |
+| Ficha | Pregunta | Decisión |
 |---|---|---|
 | `motor-topos` §16.1 | "Sopa de burbujas" de Letralandia | Será otro nivel del motor `topos` (no afecta a Animalia) |
-| `motor-topos` §16.2 | ¿Nicole puede perder en ¿Quién habla? | **Sí**, con meta muy generosa (percentil 10, ~90 % gana al primer intento) |
+| `motor-topos` §16.2 | ¿Nicole puede perder en ¿Quién habla? | **Sí** [HE-124], meta al percentil 25 (~75 % gana al primer intento); Sofía p40, Maxi p10 |
 | `motor-topos` §16.3 | Letra inicial para Nicole en z5 | **Sí**, opcional, en el 25 % de los pedidos y nunca requisito |
 | `motor-topos` §16.4 | Dinos de Maxi | **Granja en z1-z2; dinos desde z3**, creciendo hasta z5 |
 | `motor-topos` §16.5 | Ranas y sapos | **No se usan** en ninguna ruta mientras no se decida |
-| `motor-caminos` §16.1 | ¿Nicole puede perder en Cada quien a su casa? | **No** (sin tormenta; reto = puzle, récord y estrellitas) |
+| `motor-caminos` §16.1 | ¿Nicole puede perder en Cada quien a su casa? | **Sí** [HE-124], tormenta de 2,2 × par desde z1 (Sofía 1,6 ×, Maxi 3 ×) |
 | `motor-caminos` §16.2 | Convivencia con Pinta v2 | Sin efecto aquí: Animalia no tiene Pinta |
 | `motor-caminos` §16.3 | Red de seguridad de Maxi con `clasificar` | **Sí, solo si la maqueta o el playtest muestran que no logra trazar** |
 | `motor-caminos` §16.4 | Casas neutras de Sofía | **Desde z2** (tabla del motor) |
 | `motor-caminos` §16.5 | Tablero compartido en equipo | **Compartido**, con los caminos llegados fijos |
-| `motor-buscar` §16.1 | ¿Nicole puede perder en Escondite animal? | **No** (sin sol; reto = tiempo par, récord y estrellitas) |
+| `motor-buscar` §16.1 | ¿Nicole puede perder en Escondite animal? | **Sí** [HE-124], sol de 2,2 × par desde z1 sobre la escena entera (Sofía 1,6 ×, Maxi 3 ×) |
 | `motor-buscar` §16.2 | Lupa compartida con Pinta | **Sí**, la misma pieza extraída |
 | `motor-buscar` §16.3 | Arte de escenas | **Compuestas con piezas SVG reutilizables** |
 | `motor-buscar` §16.4 | Sonidos "hechos con la boca" | **Sí, los graban los niños** cuando se pueda; CC0 mientras tanto |
 | `motor-buscar` §16.5 | Foto de grupo al final | **Solo celebración** (el álbum queda reservado a las fotos de la familia) |
 | `motor-runner` §16.1 | Meta + tramo del récord | **Sí**: se gana en la meta y se sigue por el récord |
 | `motor-runner` §16.2 | Corredor de Nicole | **Uno por zona**: pony, pony, jirafa, gatito y pony estelar (§4.4) |
-| `motor-runner` §16.3 | Salto variable de Sofía | **Opcional en z4-z5**, a confirmar con la maqueta |
-| `motor-runner` §16.4 | Banderita a la mitad para Nicole | **Sí** |
-| `motor-runner` §16.5 | Carrera de Toby en el GDD §4 | La propone esta ficha; el GDD lo edita quien decida el PO |
+| `motor-runner` §16.3 | Salto variable de Sofía | **Activado en z4-z5** [HE-124]; se apaga en datos si la maqueta muestra saltos largos sin querer |
+| `motor-runner` §16.4 | Banderita a la mitad para Nicole | **Sí**, y también para Maxi [HE-124] |
+| `motor-runner` §16.5 | Carrera de Toby en el GDD §4 | **Hecho** [HE-124]: nota en el GDD §4 |
+| (nueva, HE-124) | ¿Nicole puede perder en la Carrera? | **Sí**: 2 corazones (sin burbujas); Sofía 1 corazón + burbuja rara; Maxi 3 corazones |
 
 ---
 
@@ -198,8 +205,7 @@ favoritos**. Ningún hermano juega "el mismo nivel con más animales": cada ruta
   insectos, ni arañas, ni mariposas, ni ranas o sapos mientras el PO no decida.
 - **Sin depredadores que asusten**: no hay leones, tigres, lobos, hienas, cocodrilos ni tiburones. Los dinos
   carnívoros de Maxi (T-rex, carnotauro, spinosaurio) sí, porque son su gusto explícito: siempre redondos,
-  sonrientes y torpes. `motor-topos.md` §8.2 lista la **hiena** para Sofía; esta ficha la **saca** (ver
-  [Abierta] 6).
+  sonrientes y torpes. La **hiena** y el **lobo** salen también de `motor-topos.md` §8.2 [HE-124, decidido].
 - **Datos curiosos verdaderos**: cada dato de Sofía lo revisa `guionista` contra una fuente antes de grabar.
   Los de esta ficha son de conocimiento general (pingüino de Humboldt que rebuzna, huemul en el escudo de
   Chile, pudú entre los ciervos más chicos del mundo, flamenco rosado por lo que come, milodón en la cueva
@@ -213,14 +219,16 @@ favoritos**. Ningún hermano juega "el mismo nivel con más animales": cada ruta
 Lectura: cada juego tiene una **tabla de temas** (qué se juega en cada zona, por hermano) y una **tabla de
 parámetros por perfil** con los campos del esquema JSON del motor. Lo que no se nombra toma el valor por
 defecto de la ficha de motor. Todos los números son **valores de partida para la maqueta (HE-110)**: los
-umbrales de victoria y de estrellitas se fijan con sus jugadores simulados (p10 para la meta de Nicole, p30
-para la de Sofía, p50 y p80 para las estrellitas), como se hizo en Arcoíris (HE-40 §7.2).
+umbrales de victoria y de estrellitas se fijan con sus jugadores simulados (**[HE-124]** p10 para la meta de
+Maxi, **p25** para la de Nicole, **p40** para la de Sofía; p50 y p80 para las estrellitas), como se hizo en
+Arcoíris (HE-40 §7.2). Relojes de derrota: Sofía 1,6 × par, Nicole 2,2 ×, Maxi 3 ×. Regalo tras 3 derrotas
+(Sofía) o 2 (Nicole y Maxi); ayuda fuerte de Maxi tras 3 (GDD §6 regla 11).
 
 ### 4.1 ¿Quién habla? — motor `topos`
 
 **Temas**
 
-| Zona | Maxi · Semilla (nunca pierde, el animal espera) | Nicole · Brote (meta generosa, un pedido a la vez) | Sofía · Estrella (meta exigente, estrellitas) |
+| Zona | Maxi · Semilla (el animal espera 6 s; derrota suave [HE-124]) | Nicole · Brote (meta p25, un pedido a la vez) | Sofía · Estrella (meta p40, estrellitas) |
 |---|---|---|---|
 | 1 · Campamento | **El corralito**: vaca, perro, gato, pato, caballo y gallo, todos con sonidos muy distintos. Primera victoria fácil | **Los amigos del campamento**: gatito, caballo, vaca, perro, pato y oveja | **Cachorros**: perrito, gatito cachorro, gerbo (chillido), pony, cabrita, pollito y cuy ("cui-cui") |
 | 2 · Laguna | **Chapuzones**: pato, lobo marino, hipopótamo, elefante echándose agua, chancho en el barro y el **perrito bombero** (sirena "¡uiu!") | **La orilla**: pato, flamenco, hipopótamo, lobo marino, gatito y caballo bebiendo | **Laguna y costa de Chile**: lobo marino, pingüino de Humboldt (rebuzna), pato, ganso, flamenco, huillín y ballena; primeros pares parecidos (pato/ganso) |
@@ -238,13 +246,17 @@ aprobarlo (R5 de `motor-topos.md`).
 |---|---|---|---|---|---|
 | `madrigueras` | 3 | 3 | 3 | 4 | 4 |
 | `asomados` | 2 | 2 | 2 | 3 | 3 |
-| `pedidos` | 10 | 10 | 12 | 12 | 12 |
-| `t_arriba_s` | null | null | null | null | null |
+| `rondas` × `duracion_s` [HE-124] | 1 × 45 | 1 × 45 | 1 × 50 | 1 × 55 | 1 × 60 |
+| `meta` [HE-124] (≈ p10) | 5 | 5 | 6 | 6 | 7 |
+| `t_arriba_s` [HE-124] (antes null) | 6,0 | 6,0 | 5,5 | 5,5 | 5,0 |
+| `pedidos` | null (solo la ayuda fuerte usa 6) | null | null | null | null |
 | `repetir_sonido` / `ondas_visibles` | cada_3s / completas | igual | igual | igual | igual |
 | Toby dorado | 1 por ronda (fiesta) | 1 | 1 | 1 | 1 |
-| `ayuda_idle_s` | [4, 8] | [4, 8] | [4, 8] | [4, 8] | [4, 8] |
+| `ayuda_idle_s` [HE-124] | [3, 5] | [3, 5] | [3, 5] | [3, 5] | [3, 5] |
+| `regalo_tras_derrotas` / ayuda fuerte [HE-124] | 2 → meta × 0,7 / 3 → el animal espera (`t_arriba_s: null`, 6 pedidos sin reloj) | igual | igual | igual | igual |
 
-Duración: ~2-3 min. Con 2 asomados, el que no sonó **también celebra** (GDD §4), pero solo el pedido avanza.
+Duración: ~1,5-2 min (antes 2-3). Con 2 asomados, el que no sonó **también celebra** (GDD §4) y tocarlo no es
+fallo; solo el pedido avanza, y solo el sol sin la meta hace perder.
 
 **Parámetros — Nicole (Brote)**
 
@@ -254,17 +266,18 @@ Duración: ~2-3 min. Con 2 asomados, el que no sonó **también celebra** (GDD �
 | `asomados` | 3 | 3 | 4 | 4 | 4 |
 | `t_arriba_s` | 2,6 | 2,4 | 2,2 | 2,0 | 1,8 |
 | `pausa_entre_pedidos` | 0,7 | 0,7 | 0,65 | 0,6 | 0,6 |
-| `rondas` × `duracion_s` [Propuesta, §12.1] | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 |
-| `meta` (aciertos **por ronda**) | 12 | 13 | 14 | 15 | 16 |
+| `rondas` × `duracion_s` [HE-124, decidido] | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 |
+| `meta` (aciertos **por ronda**) [HE-124] (≈ p25; antes 12-16) | 14 | 15 | 16 | 17 | 18 |
 | `repetir_sonido` | una_vez | una_vez | no | no | no |
 | `ondas_visibles` | completas | completas | completas | completas | completas |
 | `similares` / `p_similar` | — | — | — | pony/caballo · 0,15 | pony/caballo · 0,2 |
 | `pedido_escrito` [Prov] | — | — | — | — | letra · 0,25 (P pony, G gatito, J jirafa, C caballo, V vaca, O oveja, M mono) |
 | Toby dorado (`cada_s`) | 15 | 15 | 15 | 15 | 15 |
 | `regalo_tras_derrotas` | 2 → meta × 0,8 | igual | igual | igual | igual |
+| `descanso_tras_derrotas` [HE-124] | 3 | 3 | 3 | 3 | 3 |
 
-Derrota [Prov]: "¡Nos escondimos todos!" (`motor-topos.md` §10.2). Con 2 rondas, si pierde la segunda
-reintenta **solo la segunda**: la primera queda ganada.
+Derrota [HE-124, decidida]: "¡Nos escondimos todos!" (`motor-topos.md` §10.2). Con 2 rondas, si pierde la
+segunda reintenta **solo la segunda**: la primera queda ganada.
 
 **Parámetros — Sofía (Estrella)**
 
@@ -277,8 +290,10 @@ reintenta **solo la segunda**: la primera queda ganada.
 | `t_arriba_s` | 1,6 | 1,45 | 1,3 | 1,15 | 1,0 |
 | `intervalo_pedido_s` | — | — | 1,4 | 1,25 | 1,1 |
 | `pausa_entre_pedidos` | 0,5 | 0,5 | — | — | — |
-| `rondas` × `duracion_s` [Propuesta, §12.1] | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 |
-| `meta` (por ronda) | 18 | 20 | 22 | 24 | 26 |
+| `rondas` × `duracion_s` [HE-124, decidido] | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 | 2 × 60 |
+| `meta` (por ronda) [HE-124] (≈ p40; antes 18-26) | 20 | 22 | 24 | 26 | 28 |
+| `regalo_tras_derrotas` [HE-124] | 3 → meta × 0,85 | igual | igual | igual | igual |
+| `descanso_tras_derrotas` [HE-124] | 4 | 4 | 4 | 4 | 4 |
 | `ondas_visibles` | completas | completas | mínimas | mínimas | mínimas |
 | `p_similar` | 0 | 0,2 | 0,25 | 0,3 | 0,3 |
 | `pedido_escrito` (palabra, ≤ 8 letras) | — | — | 0,25 | 0,25 | 0,25 |
@@ -322,8 +337,9 @@ nombres largos (PINGÜINO cabe justo; CARPINTERO y TRICAHUE no) solo van por son
 | `rocas` | 0 | 0 · 0 · 0 · 1 · 2 | 0 · 2 · 3 · 3 · 4 |
 | `puentes` | 0 | 0 | 0 · 0 · 1 · 1 · 2 |
 | Forma | recto · recto · 1 curva · 1 curva · 1-2 curvas | 1-2 curvas | serpenteante |
-| `tiempo_par_s` por tablero | — | — · 45 · 60 · 70 · 80 (solo con récord previo) | 60 · 70 · 85 · 95 · 120 |
-| `tormenta` | null | null [Prov] | factor 2,0 |
+| `tiempo_par_s` por tablero [HE-124] | 15 · 15 · 18 · 22 · 25 (solo para la nube) | **35** · 45 · 60 · 70 · 80 (la nube desde z1; bono y relojito solo con récord previo) | 60 · 70 · 85 · 95 · 120 |
+| `tormenta` [HE-124] | **factor 3,0** (nube blanca, §10.1 del motor) | **factor 2,2** desde z1 | **factor 1,6** (antes 2,0) |
+| `regalo_tras_derrotas` (mismo tablero) [HE-124] | 2 (+ ayuda fuerte tras 3) | 2 | 3 |
 | `animal_bajo_dedo` / `iman_casa` | sí / 1 | no / 0 | no / 0 |
 | `ayuda_idle_s` | [6, 10] + válvula de Toby | 15 s (late la casa siguiente) | — (pista con costo) |
 | `umbrales_estrellitas` | — | por puntaje | `trazos_de_mas: 1`, `intentos_casa: 0` |
@@ -369,8 +385,9 @@ y "tiene la crin más larga del valle" (pony).
 | `senuelos` | 0 | 0 · 0 · 0 · 1 · 1 | 0 · 1 · 2 · 3 · 4 |
 | `modo_lista` / `mostrar_palabra` | libre / — | uno / sí | tarjetas (3) / — |
 | `lupa` | no | no | no · no · sí · sí · sí |
-| `tiempo_par_s` | — | — · 100 · 130 · 150 · 160 (solo con récord) | 150 · 170 · 200 · 230 · 270 |
-| `sol` | null | null [Prov] | factor 2,0; mínimo 45 s |
+| `tiempo_par_s` [HE-124] | 35 · 35 · 40 · 40 · 45 **por escena** (solo para el sol) | **80** · 100 · 130 · 150 · 160 (el sol desde z1; bono y récord solo con récord previo) | 150 · 170 · 200 · 230 · 270 |
+| `sol` [HE-124] | **factor 3,0**; mínimo 60 s (solcito que bosteza) | **factor 2,2** desde z1; mínimo 60 s | **factor 1,6** (antes 2,0); mínimo 45 s |
+| `regalo_tras_derrotas` [HE-124] | 2 (+ ayuda fuerte tras 3: todos asoman, sin sol) | 2 | 3 |
 | `ayuda_idle_s` | [6, 10] | [12, 20] | — (radar de Toby con costo) |
 
 Duración: Maxi ~3 min (dos escenas cortas); Nicole ~2,5-3 min; Sofía ~4-5 min.
@@ -379,12 +396,12 @@ Duración: Maxi ~3 min (dos escenas cortas); Nicole ~2,5-3 min; Sofía ~4-5 min.
 
 **Temas**
 
-| Zona | Maxi · Semilla (un dino; lo blando se atraviesa) | Nicole · Brote (burbuja; banderita a la mitad) | Sofía · Estrella (corre Toby) |
+| Zona | Maxi · Semilla (un dino; 3 corazones [HE-124]) | Nicole · Brote (2 corazones [HE-124]; banderita a la mitad) | Sofía · Estrella (corre Toby; 1 corazón) |
 |---|---|---|---|
 | 1 · Campamento | Corre el **T-rex**. Montoncitos de hojas y arbustos; huevitos; meta: la carpa de Toby revienta en confeti | Corre un **pony** rosado. Troncos, piedras redondas, cerquitas de flores; manzanitas y corazones; meta: el establo | **Toby**. Troncos y cajas de exploración; globos desde los 40 s; huesitos; meta: su carpa |
 | 2 · Laguna | Corre el **spinosaurio**: cada charquito salpica ("¡splash!") | **Pony** por la orilla: charcos y nenúfares; meta: el muelle | Charcos y nenúfares; **peces que saltan del agua** (aéreo bajo) y gaviotas (aéreo alto) desde los 40 s |
 | 3 · Pradera | Corre el **carnotauro**: arbustos floridos y fardos | Corre la **jirafa**: primeros aéreos altos (pajaritos), que pasan por arriba si no salta; meta: la acacia | Altos y bajos desde el inicio: pajaritos y cometas de papel; grupos de 2 |
-| 4 · Árbol | **¡T-rex bombero!** con casco rojo: cada salto hace "¡uiu!"; conos blanditos y mangueras enrolladas; gotitas de agua; meta: el cuartel de bomberos, que tira un chorro arcoíris | Corre un **gatito**: raíces y hongos; pajaritos altos; meta: el árbol de los nidos | Raíces, hongos gigantes, loros (altos) y hojas que caen (bajos); grupos de 3; **salto variable** opcional [Prov] |
+| 4 · Árbol | **¡T-rex bombero!** con casco rojo: cada salto hace "¡uiu!"; conos blanditos y mangueras enrolladas; gotitas de agua; meta: el cuartel de bomberos, que tira un chorro arcoíris | Corre un **gatito**: raíces y hongos; pajaritos altos; meta: el árbol de los nidos | Raíces, hongos gigantes, loros (altos) y hojas que caen (bajos); grupos de 3; **salto variable** activado [HE-124] |
 | 5 · Valle | **Los tres dinos en fila** (T-rex adelante, spinosaurio y carnotauro detrás, saltan en cadena con un toque); meta: el **volcán de confeti** | Corre el **pony estelar**, que deja una estela de estrellas; altos y bajos; meta: el arcoíris del valle | **La carrera de noche**: el atardecer llega antes (50 %) y se corre bajo estrellas fugaces; huesos de juguete y rocas de esponja; meta: el valle |
 
 **Parámetros por perfil**
@@ -398,13 +415,16 @@ Duración: Maxi ~3 min (dos escenas cortas); Nicole ~2,5-3 min; Sofía ~4-5 min.
 | `huecos.min_s` | 3,5 | 1,7 · 1,65 · 1,55 · 1,45 · 1,4 | 1,2 · 1,15 · 1,05 · 1,0 · 0,95 |
 | `grupo_max` | 1 | 1 · 1 · 2 · 2 · 2 | 2 · 2 · 2 · 3 · 3 |
 | `aereos` | no | no · no · altos · altos · altos y bajos | desde 40 s · desde 40 s · altos y bajos desde el inicio |
-| `burbuja` | — | inicial 1; cada 25 s | sin inicial; cada 40 · 40 · 40 · 55 · 55 s |
+| `corazones` [HE-124] | 3 | 2 | 1 |
+| `obstaculos_blandos` [HE-124] | no (sí solo con la ayuda fuerte tras 3 derrotas) | no | no |
+| `burbuja` [HE-124] | — | — (antes inicial 1; cada 25 s) | sin inicial; cada 55 · 55 · 55 · 70 · 70 s (antes 40-55) |
 | `meta_s` | 60 · 60 · 70 · 75 · 80 | 75 · 80 · 85 · 90 · 95 | 90 · 95 · 105 · 110 · 120 |
 | `tramo_record_s` | — | 45 | 90 |
-| `banderita_mitad` | — | sí [Prov] | no (sí tras 2 derrotas, con la burbuja de la suerte) |
-| `salto_variable` | no | no | no · no · no · opcional · opcional [Prov] |
+| `banderita_mitad` [HE-124] | sí | sí | no (sí tras 3 derrotas, con la burbuja de la suerte) |
+| `regalo_tras_derrotas` [HE-124] | 2 → 4 corazones | 2 → burbuja de la suerte | 3 → burbuja de la suerte + banderita |
+| `salto_variable` [HE-124] | no | no | no · no · no · sí · sí |
 | `atardecer_en` | 0,7 | 0,7 | 0,7 · 0,7 · 0,7 · 0,7 · 0,5 |
-| `ayuda_idle_s` | [8, 15] | — | — |
+| `ayuda_idle_s` [HE-124] | [5, 12] (antes [8, 15]) | — | — |
 
 Validación del motor: todos los `huecos.min_s` superan `duracion_salto + 0,3 s` (Nicole 1,1 s; Sofía 0,92 s).
 Ventana de salto de Sofía en z5 con grupo de 3 a 1100 px/s: (0,62 × 1100 − 0,7 × 330 − 0,6 × 95) / 1100 ≈
@@ -416,30 +436,35 @@ valle de noche, Toby cae sobre un montón de hojas que brillan.
 
 ### 4.5 Resumen de la escalera por hermano
 
-- **Maxi (Semilla)**: sube en **variedad y sorpresa**, nunca en exigencia: de la granja a los dinos, de 2 a 3
-  animales en pantalla y de tableros rectos a una curva. En ningún juego existe el error: el animal espera,
-  el camino no se corta, todos hacen ruido y lo blando se atraviesa.
+- **Maxi (Semilla)**: sube en **variedad y sorpresa**, casi nunca en exigencia: de la granja a los dinos, de 2
+  a 3 animales en pantalla y de tableros rectos a una curva. Equivocarse no existe (tocar al otro animal
+  celebra, el camino no se corta, todos hacen ruido), pero **perder sí, muy de vez en cuando** [HE-124]: el
+  animal se esconde a los 6 s, hay nube y sol de 3 × par y 3 corazones en la carrera. Metas al p10 (~90 % gana
+  al primer intento), gags cortos y afinados, regalo tras 2 y **ayuda fuerte tras 3** (victoria asegurada).
 - **Nicole (Brote)**: sube en **velocidad, cantidad y atención**, siempre **un objetivo a la vez**: aviso de
   2,6 s a 1,8 s, de 3 a 5 caminos con llenado desde z3, escenas más grandes y escondidas y aéreos que no hay
-  que saltar desde z3. Derrota-gag solo en ¿Quién habla? y en la Carrera [Prov], con meta generosa. Lectura
-  inicial: palabras bajo la silueta y letra inicial opcional en z5.
+  que saltar desde z3. **Derrota-gag en los 4 juegos desde z1** [HE-124]: metas al p25, nube y sol de 2,2 ×
+  par y 2 corazones; regalo tras 2. Lectura inicial: palabras bajo la silueta y letra inicial opcional en z5.
 - **Sofía (Estrella)**: reto real con **una regla nueva por zona**. z1, la mecánica pura; z2, pares parecidos,
   hábitats sin color y camuflaje; z3, modo continuo, pedido escrito, puentes, lupa y aéreos dobles; z4, pedido
-  doble, escondites de 2 pasos y salto variable; z5, impostor, 9×9, pistas indirectas y la noche. Siempre
-  completable: pista con costo, regalo tras 2 derrotas y retos dorados opcionales.
+  doble, escondites de 2 pasos y salto variable; z5, impostor, 9×9, pistas indirectas y la noche. **Más
+  exigente** [HE-124]: metas al p40, nube y sol de 1,6 × par, un choque sin burbuja termina la carrera. Siempre
+  completable: pista con costo, regalo tras **3** derrotas, descanso ofrecido tras 4 y retos dorados opcionales.
 
 ---
 
 ## 5. Gags de derrota (resumen)
 
-| Juego | Quién puede perder | Gag | Reintento |
+| Juego | Quién puede perder [HE-124] | Gag | Reintento |
 |---|---|---|---|
-| ¿Quién habla? | Nicole [Prov] y Sofía | "¡Nos escondimos todos!": todos salen a la vez desafinados; a Toby se le empaña el casco y estornuda | Toque en el cartel; solo la ronda perdida |
-| Cada quien a su casa | Sofía | "¡La tormenta de risa!": los animales sin casa abren paraguas de hoja y se sacuden como perritos | Solo el tablero en curso; regalo de un camino tras 2 |
-| Escondite animal | Sofía | "¡Se puso el sol!": todos salen gritando "¡aquí estábamos!", uno se le sube a Toby a la cabeza | Encontrados quedan; los demás cambian de escondite |
-| Carrera de Toby | Nicole [Prov] y Sofía | "¡Al barro!": rueda como pelota y se sacude como perrito sobre la pantalla | Un toque; Nicole desde la banderita si la pasó |
+| ¿Quién habla? | Los tres (Maxi: sol sin la meta p10) | "¡Nos escondimos todos!": todos salen a la vez desafinados; a Toby se le empaña el casco y estornuda. Maxi: versión afinada de 1,5 s | Toque en el cartel; solo la ronda perdida |
+| Cada quien a su casa | Los tres (nube 1,6 / 2,2 / 3 × par) | "¡La tormenta de risa!": los animales sin casa abren paraguas de hoja y se sacuden como perritos. Maxi: nube blanca dormilona y lluvia de burbujas | Solo el tablero en curso; regalo de un camino tras 3 (Sofía) o 2 |
+| Escondite animal | Los tres (sol 1,6 / 2,2 / 3 × par) | "¡Se puso el sol!": todos salen gritando "¡aquí estábamos!", uno se le sube a Toby a la cabeza. Maxi: le hacen cosquillas a Toby | Encontrados quedan; los demás cambian de escondite |
+| Carrera de Toby | Los tres (1 / 2 / 3 corazones) | "¡Al barro!": rueda como pelota y se sacude como perrito sobre la pantalla. Maxi: se sienta en hojas y estornuda confeti | Un toque; Nicole y Maxi desde la banderita si la pasaron |
 
-Maxi no tiene derrota en ningún juego.
+Para los tres: reintento de un toque, cero progreso perdido, destellos y estrellitas solo al ganar, nunca
+sonidos de error ni pantallas rojas (GDD §6 regla 11). Maxi tiene además la **ayuda fuerte** tras 3 derrotas
+seguidas en cada juego.
 
 ---
 
@@ -468,11 +493,11 @@ Aparecen como botón dorado de 96 px en la tarjeta de la estación cuando Sofía
 
 | Estación | Reto dorado | Reglas | Premio |
 |---|---|---|---|
-| Cada quien a su casa · z5 | **El gran tablero de Toby** | 1 tablero de 9×9 con 8 pares, 3 puentes y 4 rocas, todo con casas de hábitat y llenado. Pocos pares en 9×9 obliga a caminos largos (lo más difícil de Flow Free). Sin tormenta; con guardado parcial | Huellita dorada en el arnés de Toby en el mapa |
-| Carrera de Toby · z5 | **Sendero sin fin** (el dino de Chrome puro) | Sin meta: de 620 a 1150 px/s en 100 s, una sola burbuja inicial, grupos de 3, altos y bajos. Se "completa" al aguantar **150 s**: ahí aparece una **aurora austral** en el cielo de la noche ("en el sur de Chile a veces se ve"). Después sigue sin fin por el récord. Derrota-gag y regalo tras 2 como en la carrera normal | La aurora queda en el cielo del mapa cuando Sofía juega + banderita dorada en el sendero |
+| Cada quien a su casa · z5 | **El gran tablero de Toby** | 1 tablero de 9×9 con 8 pares, 3 puentes y 4 rocas, todo con casas de hábitat y llenado. Pocos pares en 9×9 obliga a caminos largos (lo más difícil de Flow Free). **Con tormenta de 1,6 × par** [HE-124: antes sin tormenta; "derrota en todo" para Sofía], `tiempo_par_s` 240 provisional; regalo tras 3; con guardado parcial | Huellita dorada en el arnés de Toby en el mapa |
+| Carrera de Toby · z5 | **Sendero sin fin** (el dino de Chrome puro) | Sin meta: de 620 a 1150 px/s en 100 s, una sola burbuja inicial, grupos de 3, altos y bajos. Se "completa" al aguantar **150 s**: ahí aparece una **aurora austral** en el cielo de la noche ("en el sur de Chile a veces se ve"). Después sigue sin fin por el récord. Derrota-gag y regalo tras 3 como en la carrera normal [HE-124] | La aurora queda en el cielo del mapa cuando Sofía juega + banderita dorada en el sendero |
 
-Alternativa más cara (pregunta [Abierta] 5): **Escondite de noche** en el valle, con linterna y solo pistas
-indirectas. Pide arte nuevo de noche; los dos dorados de arriba salen casi sin arte.
+Alternativa descartada [HE-124, cierra la pregunta 5]: **Escondite de noche** en el valle, con linterna y solo
+pistas indirectas. Pide arte nuevo de noche; van los dos dorados de arriba, que salen casi sin arte.
 
 ### 6.3 Maestría: la zona perfecta
 
@@ -480,7 +505,7 @@ indirectas. Pide arte nuevo de noche; los dos dorados de arriba salen casi sin a
   (no hay Pinta, que en Arcoíris quedaba fuera).
 - Premio: una **gema en el collar de explorador** de Toby (5 gemas = collar completo, que Toby luce en el mapa
   cuando juega ese hermano) y, en las zonas 2 y 4, el **marco dorado** en su foto del álbum.
-- **Equidad Nicole/Sofía** [Propuesta, ver [Abierta] 3]: en Animalia Nicole también gana 1-3 estrellitas por
+- **Equidad Nicole/Sofía** [HE-124, decidido: sí]: en Animalia Nicole también gana 1-3 estrellitas por
   puntaje en los 4 juegos (lo dicen las 4 fichas de motor). La ficha del álbum habla solo de "estrellitas
   máximas de Sofía". Propongo que la zona perfecta valga **igual para Nicole y Sofía**, con el mismo collar y
   el mismo marco: si solo Sofía lo puede ganar con el mismo tipo de estrellitas, se crea una comparación que
@@ -917,7 +942,8 @@ sonidos de los objetos del Escondite, idealmente grabados por los niños [Prov].
    dura ~1,5 min, por debajo de los 2-5 min de una sesión y de la meta de horas del planeta. Propongo un campo
    `rondas` (2 rondas de 60 s con mini-fiesta entre ellas; puntaje sumado; meta por ronda; si se pierde la 2.ª,
    se reintenta solo esa). Es el mismo patrón de rondas de Arcoíris. Si el PO prefiere estaciones cortas para
-   rejugar por récord (como Chrome), basta con `rondas: 1`.
+   rejugar por récord (como Chrome), basta con `rondas: 1`. **[HE-124] Decidido**: `rondas: 2` en Brote y
+   Estrella, `rondas: 1` en Semilla; la clave ya está en el esquema de `motor-topos.md` §11.
 2. **`caminos`: solución única sin llenado** (`disenador-mecanicas` y quien programe el validador). Sin
    llenado casi siempre hay rodeos válidos. Para Maxi y Nicole z1-z2 el validador debería exigir un **camino
    más corto único** por par, que es el que dibujan la guía y la mano fantasma.
@@ -934,37 +960,30 @@ sonidos de los objetos del Escondite, idealmente grabados por los niños [Prov].
 6. **Álbum y estrellitas de Nicole** (`disenador-mecanicas`, `album-recuerdos.md`): el marco dorado está escrito
    solo para Sofía; con estrellitas para Nicole en Animalia conviene extenderlo a las dos (§6.3).
 7. **GDD §4** (PO): lista 3 juegos para Animalia; falta "Carrera de Toby" y actualizar las descripciones de
-   "Cada quien a su casa" (hoy dice "arrastrar") y "¿Quién habla?" a las mecánicas nuevas. Esta ficha no
-   edita el GDD.
+   "Cada quien a su casa" (hoy dice "arrastrar") y "¿Quién habla?" a las mecánicas nuevas. **[HE-124]
+   Hecho** con una nota en el GDD §4 que apunta a las fichas de motor.
 8. **Ambiente HE-A7b** (`disenador-personajes`): trae mariposas como relleno; hay que sacarlas del mapa y de
    todas las escenas donde juegan Nicole y Sofía.
 
 ---
 
-## 13. Preguntas abiertas para el PO
+## 13. Decisiones (antes preguntas abiertas) [HE-124: el PO delegó, 05-Nov-2026]
 
-1. **[Abierta] El hilo del planeta**: ¿les gusta "la siesta y el Gran Desfile" (cada zona despierta un rincón y
-   sus animales se suman al desfile)?
-2. **[Abierta] Zona secreta**: ¿el Valle de los Dinosaurios como zona 5, con el pony estelar (un toque de
-   fantasía para Nicole y Sofía en un planeta de animales reales)? La alternativa es dejar los dinos en z4 y
-   hacer la z5 un rincón de frío (pingüinos, oso polar), con más arte nuevo.
-3. **[Abierta] Zona perfecta para Nicole y Sofía por igual** (collar de Toby y marco dorado en la foto), ya que
-   en Animalia las dos ganan estrellitas en los 4 juegos. Recomiendo que sí.
-4. **[Abierta] Estaciones de ¿Quién habla? con 2 rondas de 60 s** (§12.1), o 1 ronda corta para rejugar por
-   récord.
-5. **[Abierta] Retos dorados de Sofía**: ¿"El gran tablero de Toby" y "Sendero sin fin" (casi sin arte nuevo), o
-   prefieren un "Escondite de noche" (más arte)?
-6. **[Abierta] Depredadores**: esta ficha deja fuera leones, tigres, lobos, cocodrilos y la hiena (que
-   `motor-topos.md` proponía para Sofía) por el mood "sin depredadores" del ambiente aprobado, y mantiene los
-   dinos carnívoros de Maxi en versión tierna. ¿De acuerdo?
-7. **[Abierta] Animales de Chile para Sofía** (pingüino de Humboldt, huillín, huemul, pudú, cóndor, tricahue,
-   carpintero negro, monito del monte, chucao, milodón), en línea con el tema Chile de Arcoíris. ¿Les gusta?
-8. **[Abierta] Perrito bombero y T-rex bombero para Maxi** (su sueño de ser bombero), dentro de un planeta de
-   animales.
-9. **[Abierta] El loro que dice el nombre**: pide grabar "¡hola, Maxi/Nicole/Sofía!" con la voz del loro (TTS
-   local). ¿Va?
-10. **[Abierta] Modo equipo v1** en las 5 estaciones de ¿Quién habla?, y el resto con la batalla (HE-115).
-11. **[Abierta] Alcance del capítulo 2** (como P8 de Arcoíris): ¿se entrega con las zonas 1-3 (incluyen la
-    pieza, la escena y la batalla) y las zonas 4-5 como expedición extra si el arte aprieta?
-12. **Además**, las 20 decisiones **[Prov]** de §2.4, que esta ficha asumió con la opción que recomendaba cada
-    ficha de motor y que esperan su OK.
+1. **Hilo del planeta** → **sí**: "la siesta y el Gran Desfile" (cada zona despierta un rincón).
+2. **Zona secreta** → **sí**: el Valle de los Dinosaurios como zona 5, con el pony estelar; los dinos son el
+   gusto más fuerte de Maxi y la z5 de frío pediría más arte nuevo.
+3. **Zona perfecta para Nicole y Sofía por igual** → **sí**: mismo collar y mismo marco dorado (evita la
+   comparación entre hermanas); `album-recuerdos.md` debe extender el marco a Nicole (hallazgo §12.6).
+4. **¿Quién habla? con 2 rondas de 60 s** → **sí** para Nicole y Sofía; Maxi juega 1 ronda de 45-60 s (§4.1).
+5. **Retos dorados de Sofía** → **"El gran tablero de Toby" y "Sendero sin fin"**, ambos con derrota (§6.2).
+6. **Depredadores** → **fuera** leones, tigres, lobos, cocodrilos y la hiena; los dinos carnívoros de Maxi se
+   quedan en versión tierna.
+7. **Animales de Chile para Sofía** → **sí**; cada dato curioso lo verifica `guionista` contra una fuente.
+8. **Perrito bombero y T-rex bombero para Maxi** → **sí**.
+9. **El loro que dice el nombre** → **sí**, con la voz grabada por la familia si se puede y TTS local mientras
+   tanto (nada sale de la tablet).
+10. **Modo equipo v1** → **sí**, en las 5 estaciones de ¿Quién habla?; el resto llega con la batalla (HE-115).
+    El modo equipo no cambia con HE-124.
+11. **Alcance del capítulo 2** → **zonas 1-3 son el núcleo** (pieza, escena y batalla); las zonas 4-5 llegan
+    como expedición extra si el arte aprieta.
+12. **Las decisiones [Prov] de §2.4** → **confirmadas** como dice esa tabla (con los cambios de HE-124).

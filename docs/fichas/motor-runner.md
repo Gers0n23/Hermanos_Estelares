@@ -5,15 +5,19 @@
   (HE-111), calibración de `disenador-niveles` (HE-D6), arte de `disenador-personajes` (HE-114: tres
   corredores) y voces de `guionista` (HE-112). La implementación (HE-119) espera al playtest del capítulo 1
   (HE-18).
-- **Es el 4.º juego de Animalia** [PO, 05-Nov-2026]. El GDD §4 todavía lista 3 juegos para Animalia: hay que
-  agregarlo cuando el PO lo decida (esta ficha no edita el GDD).
+- **Es el 4.º juego de Animalia** [PO, 05-Nov-2026]. El GDD §4 ya lo nombra (nota de HE-124, 05-Nov-2026).
+- **Actualización HE-124 (05-Nov-2026, política de derrota)**: **corazones** por perfil — Sofía 1 (un choque
+  fuera de burbuja = derrota, como Chrome), Nicole 2, Maxi 3 (ya no atraviesa lo blando) — y regalo de Sofía
+  tras 3 derrotas. Las preguntas de §16 quedan **cerradas** (el PO delegó). Cambios marcados **[HE-124]**
+  ([Decisión 05-Nov, HE-124]).
 - **Fuentes**: GDD §1, §4, §5, §6 y §8; `docs/perfil-jugadores.md`; `docs/stack-tecnico.md`;
   `scripts/base/minijuego_base.gd`; `scripts/base/gestor_turnos.gd`; `docs/fichas/modo-equipo.md` §11.4;
   `docs/fichas/motor-lanzar.md` §2 (la física solo vive en `lanzar`); `docs/fichas/motor-topos.md` §3
   (`racha_toby.gd`).
 
 **Marcas**: **[PO]** decisión del PO (05-Nov-2026) · **[Ref]** tomado del juego de referencia ·
-**[Propuesta]** de `disenador-mecanicas`, reversible · **[Abierta]** necesita al PO (§16).
+**[Propuesta]** de `disenador-mecanicas`, reversible · **[HE-124]** [Decisión 05-Nov, HE-124] (§16 ya no
+tiene preguntas abiertas).
 
 ---
 
@@ -53,8 +57,8 @@ récord siempre a la vista.
   y altura fijas (§6.2), sin motor de física ni cuerpos rígidos. Los choques son cajas que se superponen.
 - **Hay meta**: Chrome es infinito, pero una estación tiene que poder **completarse** (GDD §3). Llegar a la
   meta gana la estación; después de la meta la carrera **sigue** para el récord (§5.3).
-- **El choque no siempre termina** (§10): en Semilla no existe y en Brote y Estrella existe la **burbuja**
-  protectora del casco de Toby.
+- **El choque no siempre termina** (§10) [HE-124]: cada perfil tiene **corazones** (Sofía 1, Nicole 2, Maxi
+  3) y Sofía además encuentra a veces la **burbuja** protectora del casco de Toby.
 
 **Escala por edad sacada de Chrome**: el reto de Chrome es el **tiempo de aviso** (cuánto tarda el obstáculo
 en llegar) y el **hueco** entre obstáculos. Escalamos el tiempo de aviso por el tiempo de reacción de cada
@@ -124,7 +128,8 @@ empieza a correr. 3 s sin obstáculos [Ref] (2,5 s en Sofía).
   suena la fanfarria y la estación queda ganada (`asegurar_victoria` en ese instante).
 - **Maxi** termina ahí.
 - **Nicole y Sofía** siguen corriendo: "¡sigue, sigue, por el récord!". La velocidad sigue subiendo hasta la
-  máxima. El tramo del récord termina con el primer choque sin burbuja, o al llegar al **final del
+  máxima. Al cruzar la meta, los corazones se **rellenan** [HE-124]. El tramo del récord termina cuando se
+  acaban los corazones (Sofía: el primer choque sin burbuja), o al llegar al **final del
   sendero** (`tramo_record_s`: Nicole 45 s, Sofía 90 s), que es una fiesta extra ("¡llegamos al final de la
   selva!"). En el tramo del récord **chocar no es derrota**: es el final de una carrera ya ganada.
 
@@ -206,10 +211,14 @@ El motor solo recibe sprites y cajas; el tema es contenido.
 | `hueco_max` | 1,5 × mínimo [Ref] | 1,5 × mínimo | 1,5 × mínimo |
 | Grupos (`grupo_max`) | 1 | 1 (z1-z2) → 2 (z3-z5) | 2 (z1-z3) → 3 (z4-z5) |
 | Aéreos | no | z3-z4: solo **altos**; z5: altos y **bajos** | desde los 40 s (z1-z2); z3+: altos y bajos desde el inicio |
-| Burbuja | no hace falta | empieza con 1; otra cada ~25 s de carrera | empieza sin; una cada ~40 s (z1-z3) → ~55 s (z4-z5) |
+| `corazones` [HE-124] | **3** | **2** | **1** |
+| `obstaculos_blandos` (se atraviesan) [HE-124] | **no** (solo con la ayuda fuerte) | no | no |
+| Burbuja [HE-124] | no | **no** (sus corazones la reemplazan; antes 1 inicial + 1 cada ~25 s) | empieza sin; una cada **~55 s** (z1-z3) → **~70 s** (z4-z5) (antes 40 → 55) |
+| `regalo_tras_derrotas` [HE-124] | 2 | 2 | **3** |
+| `ayuda_fuerte_tras_derrotas` [HE-124] | 3 (§10.1) | — | — |
 | Meta (s de carrera) | 60 | 75 → 95 | 90 → 120 |
 | Tramo del récord | no | hasta 45 s | hasta 90 s |
-| Banderita a la mitad | — | sí (§10.3) | no |
+| Banderita a la mitad | sí [HE-124] | sí (§10.3) | no (sí con el regalo) |
 | `salto_variable` | no | no | no (z1-z3) → opcional (z4-z5) |
 
 **Por qué estos números** [Propuesta]: el tiempo de reacción visual simple de un niño de 8 años es ~1,3 veces
@@ -248,7 +257,8 @@ provisional**: lo fija `disenador-niveles` con el jugador simulado de la maqueta
 | Llegar a la meta | +200 |
 | Llegar al final del sendero (tramo del récord) | +300 |
 
-**Saltos limpios**: obstáculos pasados sin choque (con o sin burbuja). Un choque con burbuja corta la racha.
+**Saltos limpios**: obstáculos pasados sin choque (con o sin burbuja). Un choque con burbuja o que gasta un
+corazón corta la racha [HE-124].
 
 ### 9.2 Estrellitas
 
@@ -267,17 +277,29 @@ provisional**: lo fija `disenador-niveles` con el jugador simulado de la maqueta
 
 ## 10. El fallo
 
-### 10.1 Semilla: el fallo no existe
+### 10.1 Semilla: chocar es gracioso, perder es posible pero suave [HE-124]
 
-- Los obstáculos son **blanditos**: si el dino no salta, **los atraviesa** con un "¡crunch!" de hojas que
-  vuelan, una risita y sin frenar (como pasar por un montón de hojas secas en el patio). **También es
-  divertido**: no hay "mal".
+- Los obstáculos siguen siendo **blanditos** de dibujo, pero ya no se atraviesan gratis: si el dino no salta,
+  pasa por encima con un "¡crunch!" de hojas que vuelan, una risita, **sin frenar**, y **un corazón** sale
+  volando como una hojita (1 s de parpadeo sin choques). Con **3 corazones** y el salto imantado (todo toque
+  hasta 1,2 s antes del obstáculo sale perfecto), solo pierde un Maxi que dejó de tocar durante 3 obstáculos
+  (~10 s a 240 px/s con huecos de 3,5 s).
 - Saltar sobre un obstáculo da una estrella, un rugido y un "¡siiii!" (el grito real de Maxi, GDD §2).
-- Siempre llega a la meta a los 60 s. El volcán de confeti lo espera.
-- Si no toca nada durante 8 s, el dino lo mira y ruge bajito; a los 15 s, salta solo el siguiente obstáculo
-  (para mostrarle que se puede).
+- **Ayuda quieto** [HE-124: antes 8 / 15 s]: a los **5 s** sin tocar, el dino lo mira y ruge bajito; a los
+  **12 s**, salta solo el siguiente obstáculo (para mostrarle que se puede).
+- **Derrota de Maxi**: el dino se sienta en un montón de hojas, le cae una hoja en la nariz y estornuda
+  confeti (1,5 s, sin barro en la pantalla, sin puntaje). Reintento de un toque **desde la banderita** si pasó
+  la mitad, con los 3 corazones.
+- **Regalo tras 2 derrotas**: la carrera siguiente empieza con **4 corazones**. **Ayuda fuerte tras 3**: la
+  carrera siguiente vuelve al modo de antes, `obstaculos_blandos: true` (todo se atraviesa sin perder
+  corazones) y llega siempre al volcán de confeti. Cometa lo presenta como "¡carrera de hojas!".
 
-### 10.2 La burbuja (Brote y Estrella)
+### 10.2 La burbuja (Estrella) y los corazones (los tres perfiles) [HE-124]
+
+- **Corazones**: arriba a la izquierda, junto al camino a la meta, 1-3 corazones grandes con la cara del
+  corredor. Un choque sin burbuja gasta uno: el corredor tropieza **sin caerse** (salta, gira en el aire,
+  "¡uy!"), parpadea 1 s sin choques y sigue. El último corazón es la derrota (§10.3). Sofía tiene 1: su primer
+  choque sin burbuja es la derrota, como en Chrome. **No se recuperan** durante la carrera (sí al cruzar la meta).
 
 - La burbuja es el casco de Toby en grande: una esfera de vidrio alrededor del corredor.
 - **Chocar con burbuja**: la burbuja revienta con "¡plop!" y gotitas, el corredor parpadea 1 s (no choca con
@@ -287,18 +309,20 @@ provisional**: lo fija `disenador-niveles` con el jugador simulado de la maqueta
 
 ### 10.3 Derrota-gag: "¡Al barro!"
 
-- Chocar **sin burbuja antes de la meta** → el corredor tropieza, **rueda como pelota** tres veces, cae sentado
+- Gastar el **último corazón** antes de la meta [HE-124] → el corredor tropieza, **rueda como pelota** tres veces, cae sentado
   en un charco de barro con un "¡splosh!" y se **sacude como perrito**, salpicando gotitas de barro **sobre la
   pantalla** (caen por el vidrio y se limpian solas en 1 s). Los pajaritos se ríen; Toby (si no es el
   corredor) se tapa la boca de risa. 2,5 s.
 - Cartel con el puntaje, la banderita del récord y la flecha circular grande; **tocar en cualquier parte del
   cartel** reintenta. El reintento empieza en 1 toque, con la largada corta (sin la voz).
-- **Nicole: banderita a la mitad** [Propuesta]: si pasó la mitad del camino, reintenta **desde la banderita**
-  (con burbuja nueva y la velocidad de ese punto). Si no la pasó, desde el inicio.
-- **Sofía**: reintenta desde el inicio, como Chrome. **Tras 2 derrotas seguidas**, Toby le regala "¡una
-  burbuja de la suerte!": la carrera siguiente empieza con burbuja y con la banderita a la mitad.
-- **Tras 3 derrotas**, Toby propone descansar, sin obligar.
-- **Cero progreso perdido**: nada guardado se toca; el récord solo puede subir.
+- **Nicole (y Maxi): banderita a la mitad** [HE-124, decidido]: si pasó la mitad del camino, reintenta
+  **desde la banderita** (con los corazones llenos y la velocidad de ese punto). Si no la pasó, desde el inicio.
+  **Tras 2 derrotas seguidas**, la carrera siguiente empieza con una **burbuja de la suerte** (un choque gratis).
+- **Sofía**: reintenta desde el inicio, como Chrome. **Tras 3 derrotas seguidas** [HE-124, antes 2], Toby le
+  regala "¡una burbuja de la suerte!": la carrera siguiente empieza con burbuja y con la banderita a la mitad.
+- **Ofrecer descansar**, sin obligar: tras 4 derrotas (Sofía) o 3 (Nicole).
+- **Cero progreso perdido**: nada guardado se toca; el récord solo puede subir. **Destellos y estrellitas solo
+  al cruzar la meta**; una carrera perdida da 0.
 
 ## 11. Esquema JSON del nivel
 
@@ -328,23 +352,29 @@ provisional**: lo fija `disenador-niveles` con el jugador simulado de la maqueta
              "variable": null },                  // { "extra": 0.35, "desde_s": 0.12, "tope_s": 0.25 }
   "huecos": { "min_s": 1.2, "factor_max": 1.5, "grupo_max": 2, "repetidos_max": 2 },
   "aereos": { "desde_s": 40, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.2 },   // null = sin aéreos
-  "obstaculos_blandos": false,             // true en Semilla: se atraviesan
-  "burbuja": { "inicial": false, "cada_s": 40, "invulnerable_s": 1.0 },         // null = sin burbuja
+  "obstaculos_blandos": false,             // true = se atraviesan sin gastar corazón. [Decisión 05-Nov, HE-124] false en los tres; true solo en la ayuda fuerte de Semilla
+  "corazones": 1,                          // [Decisión 05-Nov, HE-124] clave nueva: estrella 1 · brote 2 · semilla 3. Se rellenan al cruzar la meta
+  "burbuja": { "inicial": false, "cada_s": 55, "invulnerable_s": 1.0 },         // null = sin burbuja. [Decisión 05-Nov, HE-124] estrella cada 55 (z1-z3) / 70 (z4-z5), antes 40/55 · brote null · semilla null
   "meta_s": 90,                            // segundos de carrera hasta la meta
   "tramo_record_s": 90,                    // null = termina en la meta
-  "banderita_mitad": false,
-  "regalo_tras_derrotas": 2,
+  "banderita_mitad": false,                // [Decisión 05-Nov, HE-124] brote true · semilla true · estrella false (true tras el regalo)
+  "regalo_tras_derrotas": 3,               // [Decisión 05-Nov, HE-124] estrella 3 (antes 2) · brote 2 · semilla 2 (4 corazones en vez de burbuja)
+  "ayuda_fuerte_tras_derrotas": null,      // [Decisión 05-Nov, HE-124] clave nueva. Semilla: { "derrotas": 3, "obstaculos_blandos": true }
+  "descanso_tras_derrotas": 4,             // [Decisión 05-Nov, HE-124] clave nueva: estrella 4 · brote 3 · semilla null
   "puntos": { "por_segundo": 10, "racha_saltos": 5, "racha": 50, "meta": 200, "final": 300 },
   "hito_cada": 100,
   "umbrales_puntaje": { "dos": 1500, "tres": 2200 },
-  "ayuda_idle_s": null,                    // Semilla: [8, 15]
+  "ayuda_idle_s": null,                    // Semilla: [5, 12]. [Decisión 05-Nov, HE-124] antes [8, 15]
   "lineas_voz": {
     "intro": "…", "largada": "…", "meta": ["…"], "sigue_record": "…", "final_sendero": "…",
     "derrota_gag": "…", "regalo": "…", "descansar": "…", "record": "…", "primer_record": "…",
-    "aereo_presenta": "…"
+    "aereo_presenta": "…", "corazon_menos": ["…"], "ayuda_fuerte": "…"
   }
 }
 ```
+
+- Retrocompatibilidad [HE-124]: sin `corazones` → 1; sin `ayuda_fuerte_tras_derrotas` → no hay; sin
+  `descanso_tras_derrotas` → 3. `corazon_menos` es un sonido corto ("¡uy!"), nunca una voz que interrumpa.
 
 - Validación al cargar: el hueco mínimo en tiempo debe ser ≥ `duracion_salto_s` + 0,3 s (siempre se puede
   aterrizar y volver a saltar); con `grupo_max`, el ancho del grupo debe caber en la ventana de salto a la
@@ -391,8 +421,8 @@ Debe demostrar:
 3. Obstáculos de suelo, grupos, aéreos altos y bajos, coleccionables y la burbuja.
 4. Atardecer y noche, hitos cada 100, la meta y el tramo del récord, y la **banderita del récord en el sendero**
    (con `localStorage`).
-5. La derrota-gag "¡al barro!" con el barro en la pantalla, el reintento de un toque y la banderita a la mitad
-   de Nicole.
+5. Los corazones por perfil, la derrota-gag "¡al barro!" con el barro en la pantalla (y la de hojas de Maxi), el
+   reintento de un toque y la banderita a la mitad de Nicole y Maxi [HE-124].
 6. Un **jugador simulado** por edad (tiempo de reacción con variación) que corra 1.000 carreras y entregue el %
    que llega a la meta, el % que choca en aéreos altos y los percentiles de puntaje, para fijar huecos, metas y
    umbrales.
@@ -403,9 +433,10 @@ Debe demostrar:
 | # | Riesgo | Propuesta / qué mirar |
 |---|---|---|
 | R1 | **El toque no se siente respondido** en el aire o justo antes de aterrizar | Salto en cola de 150 ms y guiño en el aire |
-| R2 | **Maxi toca a ráfagas** sin mirar | No pasa nada malo: cada toque salta o hace voltereta, y lo blando se atraviesa |
+| R2 | **Maxi toca a ráfagas** sin mirar | No pasa nada malo: cada toque salta o hace voltereta, y el salto imantado hace perfecto todo toque cercano; tocar a ráfagas es justo lo que lo hace ganar |
+| R10 | **Corazones que se van** se leen como castigo [HE-124] | El corazón sale volando como hojita con un "¡uy!" chistoso, el corredor no se cae; nunca un sonido de error. Observar la cara de Nicole al perder el primero |
 | R3 | **"No saltar" el aéreo alto** le cuesta a Nicole (inhibición a los 5 años) | Recién desde z3, presentado solo y despacio; medir en el simulador y el playtest |
-| R4 | **Frustración de Sofía** con la velocidad máxima de z5 (~1,0 s de aviso) | Burbujas, regalo tras 2 derrotas, meta antes de la máxima; la máxima vive sobre todo en el tramo del récord |
+| R4 | **Frustración de Sofía** con la velocidad máxima de z5 (~1,0 s de aviso) y un solo corazón [HE-124] | Burbujas cada ~55-70 s, regalo tras 3 derrotas, meta antes de la máxima; la máxima vive sobre todo en el tramo del récord. Meta de llegada al primer intento: ~60 % (p40); si el simulador da < 50 %, bajar `grupo_max` antes que sumar corazones |
 | R5 | **Barro en la pantalla** molesta o da asco | Gotitas caricaturescas, 1 s, se van solas; desactivable con "menos movimiento" |
 | R6 | **La mano tapa al corredor** si toca cerca de él | Se puede tocar **en cualquier parte**: la voz de largada lo dice ("¡toca donde quieras para saltar!") |
 | R7 | **Salto variable** (mantener) = gesto nuevo para Sofía | Opcional y solo z4+; ver §16, pregunta 3 |
@@ -420,19 +451,27 @@ Debe demostrar:
    limpio), amable de Brote.
 3. Cajas de choque al 70/80 % y 60/75 %; aéreo alto: sin saltar pasa, saltando choca.
 4. Burbuja: revienta, 1 s invulnerable, no se acumula, aparece cada `cada_s`.
-5. Semilla: lo blando se atraviesa sin frenar; meta siempre a los 60 s; ayudas a los 8 y 15 s.
-6. Meta: `asegurar_victoria` al cruzarla; tramo del récord; chocar en el tramo no es derrota.
-7. Derrota y reintento: banderita a la mitad de Nicole, regalo de Sofía tras 2, el récord nunca baja.
+5. Semilla [HE-124]: un choque gasta un corazón sin frenar; 3 corazones; ayudas a los 5 y 12 s; regalo de 4
+   corazones tras 2; ayuda fuerte tras 3 (`obstaculos_blandos: true`, llega siempre a la meta).
+6. Meta: `asegurar_victoria` al cruzarla; los corazones se rellenan; tramo del récord; quedarse sin corazones
+   en el tramo no es derrota.
+7. Derrota y reintento: último corazón → derrota; banderita a la mitad de Nicole y Maxi, regalo de Nicole tras
+   2 y de Sofía tras 3, descanso tras 3 / 4, 0 destellos al perder, el récord nunca baja.
 8. Equipo: tope por perfil, posta con cambio de corredor, choque → `terminar_turno(true)`, mundo congelado en el
    pase, jugada automática de Maxi.
 9. Escena: tocar los botones no hace saltar; tocar cualquier otro punto sí.
 
-## 16. Preguntas abiertas para el PO
+## 16. Decisiones (antes preguntas abiertas) [HE-124: el PO delegó, 05-Nov-2026]
 
-1. **[Abierta] Meta + tramo del récord**: ¿de acuerdo con que la estación se gane al llegar a la meta y después
-   se siga corriendo por el récord (Chrome es infinito)? ¿O prefieren carreras cerradas, sin tramo extra?
-2. **[Abierta] Corredor de Nicole**: ¿pony o jirafa? (o uno por zona).
-3. **[Abierta] Salto variable para Sofía** (mantener el dedo = salto más alto, como en Chrome): suma reto, pero
-   es un gesto más. Propongo probarlo en la maqueta y decidir con ella.
-4. **[Abierta] Nicole con banderita a la mitad**: ¿les parece bien que no tenga que repetir la carrera entera?
-5. **[Abierta] GDD §4**: agregar "Carrera de Toby" como 4.º juego de Animalia cuando lo aprueben.
+1. **Meta + tramo del récord** → **sí**: la estación se gana en la meta y se sigue por el récord (lo infinito
+   de Chrome vive en el tramo y en el dorado "Sendero sin fin").
+2. **Corredor de Nicole** → **uno por zona**: pony, pony, jirafa, gatito y pony estelar
+   (`planeta-animalia-zonas.md` §4.4). La jirafa agacha el cuello bajo los aéreos altos y su caja de choque es
+   solo el cuerpo.
+3. **Salto variable de Sofía** → **sí, activado en z4-z5** (`salto.variable` con extra 0,35). Es el "mantener =
+   más alto" de Chrome y un reto real para 8 años; el salto corto sigue funcionando igual, así que nunca es
+   obligatorio. Si la maqueta muestra que dispara saltos largos sin querer, `disenador-niveles` lo apaga en
+   datos (`variable: null`) sin volver al PO.
+4. **Banderita a la mitad** → **sí para Nicole y también para Maxi** (con corazones llenos); Sofía la gana con
+   el regalo.
+5. **GDD §4** → hecho: la nota de HE-124 nombra "Carrera de Toby" como 4.º juego.
