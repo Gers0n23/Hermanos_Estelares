@@ -1,0 +1,1505 @@
+{
+ "id_nivel": "arcoiris_batalla_torre_equipo",
+ "motor": "lanzar",
+ "modo_juego": "equipo",
+ "planeta": "arcoiris",
+ "zona": "batalla",
+ "tema": "Etapa de jefe: la Torre de la Coleccion (3 etapas)",
+ "nota": "dev-godot 05-Nov-2026 (HE-77). Contrato de motor-lanzar.md v4.1 §14 + §25.8. VALORES PROVISIONALES: las torres son la forma del §25.2.3 (E1 20 piezas / E2 16 / E3 17, peso_botable 32 / 27 / 26, agarre 24 / 20 / 20) con rects puestos por dev para que el motor corra; los rect finales y la calibracion son de disenador-niveles (HE-80, C6) con el arnes de tiros. Voces: todas las rutas son las de la ficha y todavia no existen (HE-86); el motor sigue sin voz si faltan.",
+ "semilla": 1207,
+ "mundo": {
+  "gravedad_px_s2": 980,
+  "fisica_hz": 60,
+  "iteraciones_solver": 24,
+  "suelo_y": 584,
+  "zona_juego": [
+   0,
+   110,
+   1280,
+   490
+  ],
+  "techo_virtual_y": -400,
+  "asentamiento_max_s": 3.5,
+  "asentamiento_desde": "retiro_ultimo_globo",
+  "reposo": {
+   "v_px_s": 8,
+   "w_rad_s": 0.1,
+   "durante_s": 0.4
+  },
+  "despertar": {
+   "impulso_min": 40,
+   "por_apoyo": true,
+   "apoyo_tolerancia_px": 3,
+   "apoyo_superposicion": 0.2
+  },
+  "derribo": {
+   "desplazamiento_px": 40,
+   "giro_grados": 35
+  },
+  "max_cuerpos": 40
+ },
+ "resortera": {
+  "bolsa_reposo": [
+   260,
+   430
+  ],
+  "base": [
+   260,
+   584
+  ],
+  "radio_agarre_px": {
+   "brote": 120,
+   "estrella": 80
+  },
+  "arrastre_min_px": 40,
+  "estiramiento_min_px": 40,
+  "lado_torre_x": 260,
+  "estiramiento_max_px": {
+   "brote": 220,
+   "estrella": 200
+  },
+  "velocidad_max_px_s": 1300,
+  "angulo_grados": [
+   -15,
+   75
+  ],
+  "estabilizador": {
+   "descarta_ms": 60,
+   "quieto_px_s": 150,
+   "bufer_ms": 250
+  },
+  "reves_tolerancia_px": 40,
+  "manito_explicacion_s": 0.8,
+  "cancelar_tiron_sin_pausa": {
+   "activo": false,
+   "duracion_max_s": 0.35
+  }
+ },
+ "retiro_globos": {
+  "vida_tras_contacto_cuadros": {
+   "normal": 110,
+   "rebota": 200,
+   "triple_mini": 110,
+   "triple": 110,
+   "pesado": 110,
+   "gigante": 110
+  },
+  "vida_max_cuadros": 420,
+  "suelo_cuenta_como_contacto": true,
+  "fuera_x": [
+   -60,
+   1340
+  ],
+  "fuera_abajo_y": 720
+ },
+ "proyectiles": {
+  "normal": {
+   "radio_px": 26,
+   "masa": 1.0,
+   "rebote": 0.15,
+   "multiplicador_dano": 1.0
+  },
+  "rebota": {
+   "radio_px": 26,
+   "masa": 1.0,
+   "rebote": 0.85,
+   "multiplicador_dano": 1.0
+  },
+  "triple": {
+   "radio_px": 22,
+   "masa": 0.6,
+   "rebote": 0.15,
+   "multiplicador_dano": 1.0,
+   "division": {
+    "cantidad": 3,
+    "abanico_grados": 7,
+    "masa_cada_uno": 0.5,
+    "radio_cada_uno_px": 18,
+    "toque_desde_s": 0.15,
+    "toque_zona_y": [
+     110,
+     600
+    ]
+   }
+  },
+  "pesado": {
+   "radio_px": 28,
+   "masa": 3.0,
+   "rebote": 0.05,
+   "multiplicador_dano": 2.0,
+   "atraviesa": [
+    "caramelo"
+   ],
+   "atraviesa_max": 3,
+   "velocidad_tras_atravesar": 0.8
+  },
+  "gigante": {
+   "radio_px": 72,
+   "masa": 8.0,
+   "duracion_vuelo_s": 1.6,
+   "agarre_min": 12
+  }
+ },
+ "materiales": {
+  "caramelo": {
+   "resistencia": 1,
+   "impulso_por_punto": 60,
+   "densidad": 0.6,
+   "friccion": 0.6,
+   "rebote": 0.05,
+   "rotura": "destapa"
+  },
+  "carton": {
+   "resistencia": 3,
+   "impulso_por_punto": 60,
+   "densidad": 1.0,
+   "friccion": 0.9,
+   "rebote": 0.05,
+   "rotura": "tapa"
+  },
+  "lata": {
+   "resistencia": 6,
+   "impulso_por_punto": 60,
+   "densidad": 1.6,
+   "friccion": 0.7,
+   "rebote": 0.1,
+   "rotura": "abolla"
+  },
+  "confeti": {
+   "resistencia": 1,
+   "impulso_por_punto": 60,
+   "densidad": 0.6,
+   "friccion": 0.6,
+   "rebote": 0.05,
+   "rotura": "explota",
+   "peso_agarre_sugerido": 1,
+   "explosion": {
+    "radio_px": 150,
+    "v_borde_px_s": 90,
+    "v_centro_px_s": 510,
+    "v_arriba_px_s": 60,
+    "empuja_trono": false,
+    "inmunes": [],
+    "despierta": "radio_y_apoyos",
+    "rompe_por_bloque": true,
+    "retardo_cadena_s": 0.1,
+    "cadena_max": 3
+   }
+  },
+  "resorte": {
+   "irrompible": true,
+   "densidad": 1.5,
+   "friccion": 0.9,
+   "rebote": 1.1,
+   "rebote_combina": "max",
+   "rotura": null,
+   "peso_agarre_sugerido": 1
+  }
+ },
+ "coleccionauta": {
+  "offset_en_trono": [
+   0,
+   -40
+  ],
+  "radio_golpe_px": 56,
+  "deslizamiento_max_px": 60,
+  "area_sigue_sprite": true,
+  "inclinacion_trono_max_grados": 6,
+  "balanceo_rig_max_grados": 4
+ },
+ "tambaleo_bloques": {
+  "max_grados": 1.0,
+  "pivote": "base_del_bloque",
+  "a_cero_al_apuntar_s": 0.2
+ },
+ "charco": {
+  "centro": [
+   990,
+   580
+  ],
+  "inicial": [
+   120,
+   24
+  ],
+  "maximo": [
+   520,
+   60
+  ],
+  "escalon_tiro_neutro": [
+   50,
+   4
+  ],
+  "escalon_globo_al_suelo": [
+   25,
+   2
+  ],
+  "minimo_al_derribo": [
+   360,
+   44
+  ]
+ },
+ "agarre": {
+  "bonus_max_por_tiro": 3,
+  "golpe_directo": {
+   "bonus": 1,
+   "perfiles": [
+    "brote",
+    "estrella"
+   ]
+  },
+  "estados_cara": [
+   0.25,
+   0.5,
+   0.75
+  ]
+ },
+ "balance": {
+  "factor_min": 1.3
+ },
+ "perfiles": {
+  "semilla": {
+   "control": "toque_o_arrastre_dirigido",
+   "proyectiles": [
+    "normal"
+   ],
+   "justo_ahi_px": 150,
+   "rotura_forzada": true,
+   "semilla_mantener_s": 1.2,
+   "duracion_vuelo_s": 0.9
+  },
+  "brote": {
+   "control": "arrastre",
+   "guia": "completa",
+   "iman_objetivo_px": 28,
+   "rastro_tiro_anterior": true,
+   "proyectiles": [
+    "normal",
+    "rebota"
+   ],
+   "bandeja": [
+    410,
+    480,
+    224,
+    104
+   ],
+   "resbalon": {
+    "derribo_min": 2,
+    "bonus": 1
+   },
+   "ayuda_tras_turnos_sin_derribo": 2
+  },
+  "estrella": {
+   "control": "arrastre",
+   "guia": "arranque",
+   "guia_arranque_puntos": 4,
+   "rastro_tiro_anterior": true,
+   "proyectiles": [
+    "normal",
+    "triple",
+    "pesado"
+   ],
+   "bandeja": [
+    410,
+    480,
+    344,
+    104
+   ],
+   "resbalon": {
+    "derribo_min": 3,
+    "bonus": 2
+   }
+  }
+ },
+ "colores_globos": [
+  "rojo",
+  "amarillo",
+  "azul"
+ ],
+ "acierto_grande_piezas": 3,
+ "etapas": [
+  {
+   "id": "e1",
+   "voz_llegada": null,
+   "agarre_inicial": 24,
+   "torre": {
+    "plataforma": {
+     "rect": [
+      990,
+      584,
+      380,
+      36
+     ]
+    },
+    "bloques": [
+     {
+      "id": "l01",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       835,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l02",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       925,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l03",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1055,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l04",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1145,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "f03",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       990,
+       548,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "patito"
+     },
+     {
+      "id": "k03",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       990,
+       498,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "t01",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       880,
+       468,
+       160,
+       18
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "t02",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       1100,
+       468,
+       160,
+       18
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c01",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       840,
+       450,
+       80,
+       60
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l05",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       930,
+       450,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l06",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1050,
+       450,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c02",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       1140,
+       450,
+       80,
+       60
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c03",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       840,
+       390,
+       120,
+       40
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c04",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       1140,
+       390,
+       120,
+       40
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "f01",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       800,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "guante"
+     },
+     {
+      "id": "k01",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       840,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "f04",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       880,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "globo_nieve"
+     },
+     {
+      "id": "f02",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1100,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cuchara"
+     },
+     {
+      "id": "k02",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       1140,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "f05",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1180,
+       350,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cono"
+     }
+    ],
+    "trono": {
+     "id": "trono",
+     "material": "carton",
+     "rect": [
+      990,
+      370,
+      150,
+      36
+     ],
+     "peso_agarre": 6
+    },
+    "puntos_debiles": {
+     "semilla": [
+      "f01",
+      "f02",
+      "f04",
+      "f05",
+      "k01",
+      "k02",
+      "f03",
+      "k03"
+     ],
+     "semilla_respaldo": [
+      "c03",
+      "c04"
+     ],
+     "gigante_objetivo": [
+      "c01",
+      "c02"
+     ],
+     "brote": {
+      "ids": [
+       "c01",
+       "c02",
+       "l05"
+      ],
+      "halo_px": 72
+     },
+     "estrella": {
+      "ids": [
+       "t01",
+       "l06"
+      ],
+      "halo_px": 40,
+      "destello_cada_s": 3.0
+     }
+    },
+    "orden_reparacion": [
+     "f01",
+     "f02",
+     "f04",
+     "f05",
+     "k01",
+     "k02",
+     "c03",
+     "c04",
+     "f03",
+     "k03",
+     "c01",
+     "c02",
+     "l05",
+     "l06",
+     "t01",
+     "t02",
+     "l01",
+     "l02",
+     "l03",
+     "l04"
+    ]
+   },
+   "presenta_especial": "confeti"
+  },
+  {
+   "id": "e2",
+   "voz_llegada": "etapa_2_llega",
+   "agarre_inicial": 20,
+   "torre": {
+    "plataforma": {
+     "rect": [
+      990,
+      584,
+      380,
+      36
+     ]
+    },
+    "bloques": [
+     {
+      "id": "l01",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       860,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c01",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       860,
+       468,
+       70,
+       60
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l02",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       860,
+       408,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c02",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       860,
+       328,
+       70,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l03",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1120,
+       548,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c03",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       1120,
+       468,
+       70,
+       60
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l04",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1120,
+       408,
+       60,
+       80
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c04",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       1120,
+       328,
+       70,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c05",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       990,
+       548,
+       80,
+       60
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "f01",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       990,
+       488,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "patito"
+     },
+     {
+      "id": "k01",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       990,
+       438,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "pu1",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       990,
+       278,
+       340,
+       24
+      ],
+      "rot": 0.0,
+      "peso_agarre": 3
+     },
+     {
+      "id": "f02",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       850,
+       254,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "guante"
+     },
+     {
+      "id": "f03",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       893,
+       254,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "globo_nieve"
+     },
+     {
+      "id": "f04",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1087,
+       254,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cuchara"
+     },
+     {
+      "id": "f05",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1130,
+       254,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cono"
+     }
+    ],
+    "trono": {
+     "id": "trono",
+     "material": "carton",
+     "rect": [
+      990,
+      254,
+      150,
+      36
+     ],
+     "peso_agarre": 6
+    },
+    "puntos_debiles": {
+     "semilla": [
+      "f02",
+      "f05",
+      "f03",
+      "f04",
+      "f01",
+      "k01"
+     ],
+     "semilla_respaldo": [
+      "c05"
+     ],
+     "gigante_objetivo": [
+      "c01",
+      "c03"
+     ],
+     "brote": {
+      "ids": [
+       "c05",
+       "c01",
+       "c03"
+      ],
+      "halo_px": 72
+     },
+     "estrella": {
+      "ids": [
+       "c02",
+       "c04"
+      ],
+      "halo_px": 40,
+      "destello_cada_s": 3.0
+     }
+    },
+    "orden_reparacion": [
+     "f02",
+     "f05",
+     "f03",
+     "f04",
+     "f01",
+     "k01",
+     "c05",
+     "c02",
+     "c04",
+     "c01",
+     "c03",
+     "pu1",
+     "l02",
+     "l04",
+     "l01",
+     "l03"
+    ]
+   }
+  },
+  {
+   "id": "e3",
+   "voz_llegada": "etapa_3_llega",
+   "agarre_inicial": 20,
+   "torre": {
+    "plataforma": {
+     "rect": [
+      990,
+      584,
+      380,
+      36
+     ]
+    },
+    "bloques": [
+     {
+      "id": "l01",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       990,
+       548,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c01",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       990,
+       478,
+       70,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l02",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       990,
+       428,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "c02",
+      "material": "carton",
+      "forma": "rect",
+      "rect": [
+       990,
+       358,
+       70,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l03",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       990,
+       308,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l04",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       905,
+       548,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l05",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       905,
+       478,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "r01",
+      "material": "resorte",
+      "forma": "rect",
+      "rect": [
+       905,
+       408,
+       84,
+       20
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "k01",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       905,
+       388,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "f01",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       905,
+       338,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "patito"
+     },
+     {
+      "id": "l06",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1075,
+       548,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "l07",
+      "material": "lata",
+      "forma": "rect",
+      "rect": [
+       1075,
+       478,
+       60,
+       70
+      ],
+      "rot": 0.0,
+      "peso_agarre": 2
+     },
+     {
+      "id": "r02",
+      "material": "resorte",
+      "forma": "rect",
+      "rect": [
+       1075,
+       408,
+       84,
+       20
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "k02",
+      "material": "confeti",
+      "forma": "rect",
+      "rect": [
+       1075,
+       388,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1
+     },
+     {
+      "id": "f02",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1075,
+       338,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "guante"
+     },
+     {
+      "id": "f03",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       825,
+       548,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cuchara"
+     },
+     {
+      "id": "f04",
+      "material": "caramelo",
+      "forma": "capsula",
+      "rect": [
+       1155,
+       548,
+       40,
+       50
+      ],
+      "rot": 0.0,
+      "peso_agarre": 1,
+      "contenido": "cono"
+     }
+    ],
+    "trono": {
+     "id": "trono",
+     "material": "carton",
+     "rect": [
+      990,
+      238,
+      150,
+      36
+     ],
+     "peso_agarre": 6
+    },
+    "puntos_debiles": {
+     "semilla": [
+      "f03",
+      "f04",
+      "f01",
+      "f02",
+      "k01",
+      "k02"
+     ],
+     "semilla_respaldo": [
+      "l04",
+      "l06"
+     ],
+     "gigante_objetivo": [
+      "l05",
+      "l07"
+     ],
+     "brote": {
+      "ids": [
+       "k01",
+       "k02",
+       "c01"
+      ],
+      "halo_px": 72
+     },
+     "estrella": {
+      "ids": [
+       "c02",
+       "l02"
+      ],
+      "halo_px": 40,
+      "destello_cada_s": 3.0
+     }
+    },
+    "orden_reparacion": [
+     "f03",
+     "f04",
+     "f01",
+     "f02",
+     "k01",
+     "k02",
+     "r01",
+     "r02",
+     "l05",
+     "l07",
+     "l04",
+     "l06",
+     "c02",
+     "l03",
+     "c01",
+     "l02",
+     "l01"
+    ]
+   },
+   "presenta_especial": "resorte"
+  }
+ ],
+ "transicion_etapa": {
+  "caida_corta_s": 5.5,
+  "transicion_max_s": 4.0,
+  "momento_saltable": "caida_etapa",
+  "presenta_especial_halo_s": 0.8,
+  "anticipacion_s": 4.3,
+  "caida_torre_s": 10.5,
+  "retomar_a_s": 5.0,
+  "retomar_b_s": 7.7,
+  "presentacion_s": 12.0,
+  "presenta_especial_s": 3.8
+ },
+ "intentos": {
+  "globos_base": 13,
+  "ayudas": [
+   {
+    "desde_derrota": 1,
+    "globos_extra": 4,
+    "voz": "ayuda_intento_1"
+   },
+   {
+    "desde_derrota": 2,
+    "globo_gigante": true,
+    "gigante_reemplaza_primero": true,
+    "voz": "ayuda_intento_2"
+   }
+  ],
+  "derrotas_cuentan_por": "etapa",
+  "gags_cuentan_por": "torre",
+  "pausa_desde_derrota": 3,
+  "gigante_turno_perfil": "semilla",
+  "cada_intento_empieza_con": "semilla",
+  "conservar_dano": 0.3,
+  "conservar_minimo_si_hubo_botadas": 1,
+  "botadas_no_rearmadas": "suelo_decorado",
+  "globos_minimos_al_retomar": 5,
+  "retomar_redondeo": "siguiente_1_mod_4",
+  "retomar_tope": "canasta_llena_del_intento",
+  "variantes_gag": [
+   "baile",
+   "estornudo",
+   "globo_que_vuelve",
+   "chicle"
+  ],
+  "gags_por_derrota": [
+   1,
+   2,
+   3
+  ],
+  "gags_rotacion_desde": 4,
+  "logro_comun_corte": 0.5,
+  "voz_ultimo_globo": true
+ },
+ "revancha": {
+  "sobrantes_tres": 1,
+  "record": "globos_usados_menor",
+  "estrellitas_y_record_solo_con": "maxi+nicole+sofia"
+ },
+ "equipo": {
+  "rival": null,
+  "confirmar_turno": true,
+  "orden": "maxi_intercalado",
+  "puerta_tras_semilla": "arrastre",
+  "bloqueo_tras_puerta_ms": 400,
+  "maxi_mueve_rival": false,
+  "semilla_auto_s": 20,
+  "composiciones": {
+   "maxi+nicole+sofia": {},
+   "maxi+nicole": {
+    "solo_revancha": true,
+    "globos_base": 13,
+    "globos_extra_1": 4,
+    "agarre_inicial": "CALIBRAR"
+   },
+   "maxi+sofia": {
+    "solo_revancha": true,
+    "globos_base": 13,
+    "globos_extra_1": 4,
+    "agarre_inicial": "CALIBRAR"
+   },
+   "nicole+sofia": {
+    "solo_revancha": true,
+    "orden": "alternado",
+    "alterna_quien_empieza": true,
+    "globos_base": 12,
+    "globos_extra_1": 4,
+    "ayuda_2": {
+     "globos_extra": 2
+    },
+    "voz_ultimo_globo": false,
+    "agarre_inicial": "CALIBRAR"
+   }
+  }
+ },
+ "lineas_voz": {
+  "presentacion": [
+   "voces/arcoiris/batalla/torre/presenta_coleccionauta.wav",
+   "voces/arcoiris/batalla/torre/presenta_alcanzo.wav",
+   "voces/arcoiris/batalla/torre/presenta_coco.wav"
+  ],
+  "intro_ronda": [
+   "voces/arcoiris/batalla/torre/intro_coleccionauta.wav",
+   "voces/arcoiris/batalla/torre/intro.wav"
+  ],
+  "repetir": {
+   "semilla": "voces/nucleo/equipo/lanzar_repetir_maxi.wav",
+   "brote": "voces/nucleo/equipo/lanzar_repetir.wav",
+   "estrella": "voces/nucleo/equipo/lanzar_repetir.wav"
+  },
+  "carga": {
+   "rojo": "voces/arcoiris/batalla/torre/carga_01.wav",
+   "amarillo": "voces/arcoiris/batalla/torre/carga_02.wav",
+   "azul": "voces/arcoiris/batalla/torre/carga_03.wav"
+  },
+  "carga_corta": {
+   "rojo": "voces/arcoiris/despegue/tanque_color_rojo.wav",
+   "amarillo": "voces/arcoiris/despegue/tanque_color_amarillo.wav",
+   "azul": "voces/arcoiris/despegue/tanque_color_azul.wav"
+  },
+  "explica_tiro": "voces/nucleo/equipo/lanzar_primer_tiro.wav",
+  "maxi_carga": [
+   "voces/arcoiris/batalla/torre/maxi_globo_01.wav",
+   "voces/arcoiris/batalla/torre/maxi_globo_02.wav"
+  ],
+  "maxi_acierto": [
+   "voces/arcoiris/batalla/torre/maxi_le_dio_01.wav",
+   "voces/arcoiris/batalla/torre/maxi_le_dio_02.wav"
+  ],
+  "acierto_equipo": {
+   "caja": "voces/arcoiris/batalla/torre/acierto_01.wav",
+   "frasco": "voces/arcoiris/batalla/torre/acierto_02.wav",
+   "tambalea": "voces/arcoiris/batalla/torre/acierto_03.wav"
+  },
+  "acierto_grande": "voces/arcoiris/batalla/torre/acierto_grande.wav",
+  "fallo_equipo": [
+   "voces/arcoiris/batalla/torre/fallo_01.wav",
+   "voces/arcoiris/batalla/torre/fallo_02.wav"
+  ],
+  "ultimo_globo": "voces/arcoiris/batalla/torre/ultimo_globo.wav",
+  "rival_reacciona": [
+   "voces/arcoiris/batalla/torre/reacciona_01.wav",
+   "voces/arcoiris/batalla/torre/reacciona_02.wav",
+   "voces/arcoiris/batalla/torre/reacciona_03.wav"
+  ],
+  "gigante_aparece": "voces/arcoiris/batalla/torre/gigante_coleccionauta.wav",
+  "gigante_turno": "voces/arcoiris/batalla/torre/gigante_turno.wav",
+  "gigante_turno_maxi": "PENDIENTE",
+  "gigante_impacto": "voces/arcoiris/batalla/torre/gigante_impacto.wav",
+  "derrota_gag_equipo": {
+   "baile": [
+    "voces/arcoiris/batalla/torre/derrota_1_coleccionauta.wav",
+    "voces/arcoiris/batalla/torre/derrota_1_coco_risa.wav"
+   ],
+   "estornudo": [
+    "voces/arcoiris/batalla/torre/derrota_2_coleccionauta.wav",
+    "voces/arcoiris/batalla/torre/derrota_2_coco_risa.wav"
+   ],
+   "globo_que_vuelve": [
+    "voces/arcoiris/batalla/torre/derrota_3_coleccionauta.wav",
+    "voces/arcoiris/batalla/torre/derrota_3_coco_risa.wav"
+   ],
+   "chicle": [
+    "voces/arcoiris/batalla/torre/derrota_4_coleccionauta.wav",
+    "voces/arcoiris/batalla/torre/derrota_4_coco_risa.wav"
+   ]
+  },
+  "logro_comun": {
+   "1": "voces/nucleo/equipo/cajas_botadas_01.wav",
+   "2": "voces/nucleo/equipo/cajas_botadas_02.wav"
+  },
+  "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav",
+  "ayuda_intento_1": "voces/arcoiris/batalla/torre/ayuda_globos_extra.wav",
+  "ayuda_intento_2": "voces/arcoiris/batalla/torre/ayuda_globo_gigante.wav",
+  "pausa_desde_intento_3": "voces/arcoiris/batalla/torre/pausa.wav",
+  "rival_rearma": [
+   "voces/arcoiris/batalla/torre/rearma_01.wav",
+   "voces/arcoiris/batalla/torre/rearma_02.wav"
+  ],
+  "maxi_regalito": "voces/arcoiris/equipo/maxi_regalito.wav",
+  "porras_fin_maxi": "voces/arcoiris/emparejar/equipo/porras_fin_maxi.wav",
+  "anticipacion": "PENDIENTE",
+  "caida": [
+   "voces/arcoiris/batalla/torre/cae_lenta.wav",
+   "voces/arcoiris/batalla/torre/cae_charco.wav",
+   "voces/arcoiris/batalla/torre/cae_risa.wav"
+  ],
+  "justo_ahi_maxi": "PENDIENTE",
+  "elige_globo_presenta": "PENDIENTE",
+  "toca_en_el_aire": "PENDIENTE",
+  "encontre_globos": "PENDIENTE",
+  "intro_revancha": "PENDIENTE",
+  "estrellitas_equipo": {
+   "1": "PENDIENTE",
+   "2": "PENDIENTE",
+   "3": "PENDIENTE"
+  },
+  "etapa_llegada": {
+   "etapa_2_llega": "PENDIENTE",
+   "etapa_3_llega": "PENDIENTE"
+  },
+  "caida_etapa": [
+   "PENDIENTE",
+   "PENDIENTE"
+  ],
+  "presenta_especial": {
+   "confeti": "PENDIENTE",
+   "resorte": "PENDIENTE"
+  },
+  "elige_globo_presenta_nicole": "PENDIENTE",
+  "globo_nombre": {
+   "normal": "PENDIENTE",
+   "rebota": "PENDIENTE",
+   "triple": "PENDIENTE",
+   "pesado": "PENDIENTE"
+  },
+  "le_toca": {
+   "maxi": [
+    "voces/nucleo/equipo/le_toca_maxi_01.wav",
+    "voces/nucleo/equipo/le_toca_maxi_02.wav"
+   ],
+   "nicole": [
+    "voces/nucleo/equipo/le_toca_nicole_01.wav",
+    "voces/nucleo/equipo/le_toca_nicole_02.wav"
+   ],
+   "sofia": [
+    "voces/nucleo/equipo/le_toca_sofia_01.wav",
+    "voces/nucleo/equipo/le_toca_sofia_02.wav"
+   ]
+  }
+ },
+ "calibracion": {
+  "estado": "PROVISIONAL de dev (HE-77). La calibracion por etapa es de HE-80 (§25.9) con herramientas/qa_torre_tiros.gd."
+ }
+}
