@@ -94,6 +94,9 @@ var gotas_cabeza := 12
 var peso_cabeza := 3.0
 var peso_componente := 0.6
 var rondas := 1  ## rondas por nivel (el JSON puede pedir 3); con 1 se comporta como la v2
+## Batalla (modo-equipo.md §14.3, `tope_avance`): fraccion del recorrido que la cabeza nunca pasa (0 = sin
+## tope). Con tope la cola se frena al llegar y nunca se traga el rio: en la batalla no hay remolino.
+var tope_cabeza := 0.0
 var subida_ronda := SUBIDA_POR_RONDA
 
 # Estado
@@ -657,10 +660,12 @@ func tramo(i: int) -> Vector2i:
 
 ## Revienta el tramo de `i` si tiene 3+ (o siempre, si `forzar`: la gota arcoíris). La cadena vale 1 en un
 ## reventón directo y sube 1 por cada retroceso que revienta (nunca por aciertos seguidos: eso es el combo).
-func _reventar_en(i: int, es_cadena: bool, forzar := false) -> int:
+## `umbral` (3 por defecto) solo baja para la bala de Maxi en la batalla (N2, §14.3): la logica no sabe de
+## perfiles, el motor lo pasa. Los retrocesos y cadenas siguen siempre con 3.
+func _reventar_en(i: int, es_cadena: bool, forzar := false, umbral := 3) -> int:
 	var t := tramo(i)
 	var n := t.y - t.x + 1
-	if n < 3 and not forzar:
+	if n < umbral and not forzar:
 		return 0
 	cadena = maxi(cadena, 1) + 1 if es_cadena else 1
 	mayor_cadena = maxi(mayor_cadena, cadena)
@@ -681,7 +686,7 @@ func _reventar_en(i: int, es_cadena: bool, forzar := false) -> int:
 
 ## Inserta la bala que pegó en la gota `j`. La gota nueva queda delante o detrás según el lado del impacto.
 ## La arcoíris toma el color de la gota tocada y revienta ese grupo aunque sea de 1.
-func insertar(j: int, posicion_bala: Vector2, color: String) -> void:
+func insertar(j: int, posicion_bala: Vector2, color: String, umbral := 3) -> void:
 	var g: Dictionary = gotas[j]
 	var p := recorrido.posicion(g["s"])
 	var delante := (posicion_bala - p).dot(recorrido.tangente(g["s"])) > 0.0
@@ -697,7 +702,7 @@ func insertar(j: int, posicion_bala: Vector2, color: String) -> void:
 	if es_arcoiris:
 		estadisticas["arcoiris"] += 1
 		arcoiris_pego.emit(p, real)
-	var n := _reventar_en(idx, false, es_arcoiris)
+	var n := _reventar_en(idx, false, es_arcoiris, umbral)
 	if n > 0:
 		combo += 1
 		mayor_combo = maxi(mayor_combo, combo)
@@ -713,6 +718,104 @@ func insertar(j: int, posicion_bala: Vector2, color: String) -> void:
 ## aunque venga después de otro (el error de la v1 contaba dos aciertos seguidos como cadena).
 static func aciertos_por_reventon(es_cadena: bool, cadena_vale: int) -> int:
 	return maxi(1, cadena_vale) if es_cadena else 1
+
+
+# ---------------------------------------------------------------------------
+# Batalla: el reventon de Maxi (modo-equipo.md §14.3, N2) y el parcial de equipo (§14.6)
+# ---------------------------------------------------------------------------
+
+## Tramos visibles (todas sus gotas con 0 < s < largo y fuera del tunel), de la cabeza a la cola:
+## [{"lo": int, "hi": int, "color": String, "ids": Array}].
+func tramos_visibles() -> Array:
+	var lista: Array = []
+	var i := 0
+	while i < gotas.size():
+		var t := tramo(i)
+		var visible := true
+		for k in range(t.x, t.y + 1):
+			var s: float = gotas[k]["s"]
+			if s <= 0.0 or s >= recorrido.largo or en_tunel(s):
+				visible = false
+		if visible:
+			var ids: Array = []
+			for k in range(t.x, t.y + 1):
+				ids.append(gotas[k]["id"])
+			lista.append({"lo": t.x, "hi": t.y, "color": gotas[t.x]["color"], "ids": ids})
+		i = t.y + 1
+	return lista
+
+
+## Objetivo de la bala de Maxi: el tramo visible mas largo; con empate, el mas cercano a la cabeza. Devuelve
+## sus ids (no indices: cambian al insertar) o [] si todavia no hay gotas a la vista.
+func objetivo_semilla() -> Array:
+	var mejor: Dictionary = {}
+	for t in tramos_visibles():
+		if mejor.is_empty() or t["ids"].size() > mejor["ids"].size():
+			mejor = t
+	return mejor.get("ids", []).duplicate()
+
+
+## Indices actuales de las gotas `ids` que siguen en el rio (vacio si ya no queda ninguna).
+func indices_de(ids: Array) -> Array:
+	var lista: Array = []
+	for i in gotas.size():
+		if gotas[i]["id"] in ids:
+			lista.append(i)
+	return lista
+
+
+## Inserta `color` pegada al tramo `ids`, en el extremo mas cercano a `punto` (donde toco Maxi), aunque una
+## bala real habria pegado antes en otra gota: la curva es solo visual. Devuelve false si el tramo ya no esta.
+func insertar_en_tramo(ids: Array, punto: Vector2, color: String, umbral := 3) -> bool:
+	var indices := indices_de(ids)
+	if indices.is_empty() or estado != "jugando":
+		return false
+	var lo: int = indices.min()
+	var hi: int = indices.max()
+	var p_lo := recorrido.posicion(gotas[lo]["s"])
+	var p_hi := recorrido.posicion(gotas[hi]["s"])
+	if punto.distance_to(p_lo) <= punto.distance_to(p_hi):
+		insertar(lo, p_lo + recorrido.tangente(gotas[lo]["s"]) * radio, color, umbral)
+	else:
+		insertar(hi, p_hi - recorrido.tangente(gotas[hi]["s"]) * radio, color, umbral)
+	return true
+
+
+## Nada en movimiento que pueda acreditarse a alguien: sin balas, sin puntas atrayendose y sin gotas
+## acomodandose tras una insercion (§14.15 punto 3: el turno cierra en estado estable).
+func estable() -> bool:
+	if not balas.is_empty() or not _atraidas.is_empty():
+		return false
+	for g in gotas:
+		if g["ot"] > 0.0:
+			return false
+	return true
+
+
+func colores_en_orden() -> Array:
+	var lista: Array = []
+	for g in gotas:
+		lista.append(g["color"])
+	return lista
+
+
+## Al retomar un parcial: el rio vuelve con estas gotas (cabeza -> cola), todas esperando en la nube.
+func cargar_colores(lista: Array) -> void:
+	gotas.clear()
+	balas.clear()
+	pendientes.clear()
+	_atraidas.clear()
+	_tiempo_atraccion.clear()
+	for i in lista.size():
+		gotas.append(_nueva_gota(-i * diametro(), str(lista[i])))
+	entrando = true
+	estado = "jugando"
+	_ordenar_municion()
+
+
+## Municion justa a demanda (el motor cambia `actual` para la bala de Maxi y despues la devuelve).
+func ordenar_municion() -> void:
+	_ordenar_municion()
 
 
 func progreso_cabeza() -> float:
@@ -753,7 +856,7 @@ func avanzar(dt: float) -> void:
 			if estado == "tragando":
 				for g in gotas:
 					g["s"] += vel * dt
-			else:
+			elif tope_cabeza <= 0.0 or gotas[0]["s"] < recorrido.largo * tope_cabeza:
 				gotas[gotas.size() - 1]["s"] += vel * dt
 			if entrando and gotas[0]["s"] > recorrido.largo * entrada_hasta:
 				entrando = false
@@ -764,7 +867,7 @@ func avanzar(dt: float) -> void:
 		if estado == "jugando":
 			if gotas.is_empty():
 				_terminar_ronda()
-			elif gotas[0]["s"] >= recorrido.largo:
+			elif gotas[0]["s"] >= recorrido.largo and tope_cabeza <= 0.0:
 				estado = "tragando"
 				var cola: float = gotas[gotas.size() - 1]["s"]
 				_vel_tragar = maxf(VEL_TRAGAR, (recorrido.largo - cola) / SEGUNDOS_TRAGAR)

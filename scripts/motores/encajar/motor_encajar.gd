@@ -215,7 +215,11 @@ func _ready() -> void:
 	if nivel.has("rondas"):
 		_pruebas = _armar_rondas()
 	_crear_capas_siluetas()
+	if turnos != null:
+		_layout_equipo()
 	_iniciar_prueba()
+	if turnos != null:
+		_preparar_equipo()
 
 
 func _process(delta: float) -> void:
@@ -403,6 +407,13 @@ func _restaurar_piezas_ronda() -> void:
 	var hechos: Array = estado.get("huecos_hechos", [])
 	if hechos.is_empty() or int(estado.get("indice", -1)) != _indice_prueba:
 		return
+	_restaurar_huecos(hechos)
+	_intentos_usados = int(estado.get("intentos", 0))
+	_actualizar_depuracion()
+
+
+## Pone en silencio las piezas de los huecos `hechos` y repone la bandeja (parcial por perfil o de equipo).
+func _restaurar_huecos(hechos: Array) -> void:
 	_restaurando = true
 	for id_hueco in hechos:
 		var hueco = null
@@ -427,10 +438,8 @@ func _restaurar_piezas_ronda() -> void:
 		pieza.rotacion_grados = wrapf(float(hueco["rotacion"]), 0.0, 360.0)
 		pieza.fijar_centro(hueco["centro"])
 		_encajar(pieza, hueco)
-	_intentos_usados = int(estado.get("intentos", 0))
 	_restaurando = false
 	_acomodar_bandeja(_sacar_de_cola())
-	_actualizar_depuracion()
 
 
 ## Guarda en que ronda va la serie, para retomarla si el nino sale (GDD §6 regla 8). Se borra al ganar.
@@ -1071,6 +1080,9 @@ func _al_tomar(pieza: PiezaEncajar) -> void:
 	_inactivo = 0.0
 	if _terminado or _en_gag or _en_modelo:
 		return
+	if turnos != null and not _pieza_jugable(pieza):
+		_pulso_bloqueado(pieza)
+		return
 	_elegida_antes = _pieza_elegida
 	_elegir(pieza)
 	# Una pieza puesta NO sale del marco al presionarla: recien si el dedo la arrastra (UX R3). Un toque
@@ -1085,6 +1097,8 @@ func _al_tomar(pieza: PiezaEncajar) -> void:
 
 func _al_mover(pieza: PiezaEncajar, punto: Vector2) -> void:
 	if pieza.bloqueada or _terminado or _en_gag or _en_modelo:
+		return
+	if turnos != null and not _pieza_jugable(pieza):
 		return
 	_inactivo = 0.0
 	if not _arrastrando.has(pieza):
@@ -1120,6 +1134,9 @@ func _al_soltar(pieza: PiezaEncajar, _punto: Vector2) -> void:
 	_siluetas.hueco_cercano = null
 	_siluetas.queue_redraw()
 	if pieza.bloqueada or _terminado or _en_gag or _en_modelo:
+		return
+	if turnos != null and not _pieza_jugable(pieza):
+		pieza.volver_a_casa()
 		return
 	soltar_pieza(pieza, pieza.centro_global())
 
@@ -1211,7 +1228,9 @@ func _fallar(pieza: PiezaEncajar, solo_giro := false, hueco_cercano = null) -> S
 		_reproducir_voz("no_es_este", _linea_al_azar("no_es_este"))
 	pieza.volver_a_casa(true)
 	_reaccion_anfitriona("menea")
-	if _limite_intentos != null and _intentos_usados >= int(_limite_intentos):
+	if turnos != null:
+		_fallo_equipo()
+	elif _limite_intentos != null and _intentos_usados >= int(_limite_intentos):
 		_disparar_derrota_gag()
 	_actualizar_depuracion()
 	return "girar" if solo_giro else "no_es_este"
@@ -1220,6 +1239,8 @@ func _fallar(pieza: PiezaEncajar, solo_giro := false, hueco_cercano = null) -> S
 func _al_tocar_pieza(pieza: PiezaEncajar) -> void:
 	_inactivo = 0.0
 	if _terminado or _en_gag or _en_modelo:
+		return
+	if turnos != null and not _pieza_jugable(pieza):
 		return
 	if pieza.colocada and _mecanica in ["tangram_libre", "marco"]:
 		# Una pieza puesta en el tablero solo da un saltito: para girarla hay que sacarla primero.
@@ -1344,7 +1365,7 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 		return
 	_encajados += 1
 	_llenar_ranura(pieza)
-	if _modo_rondas and not _restaurando and _encajados < _requeridos:
+	if _modo_rondas and not _restaurando and _encajados < _requeridos and turnos == null:
 		_guardar_piezas_ronda()
 	if _restaurando:
 		return
@@ -1362,6 +1383,8 @@ func _encajar(pieza: PiezaEncajar, hueco: Dictionary) -> void:
 		_completar_prueba(voz_figura)
 		_actualizar_depuracion()
 		return
+	if turnos != null:
+		_acierto_equipo(pieza)
 	var ruta_dicha := ""
 	if voz_figura != "":
 		ruta_dicha = voz_figura
@@ -2244,6 +2267,9 @@ func _limpiar_tablero() -> void:
 
 
 func _celebrar_victoria(voz_figura: String) -> void:
+	if turnos != null:
+		_victoria_equipo(voz_figura)
+		return
 	_terminado = true
 	_siluetas.hueco_objetivo = null
 	_siluetas.hueco_pista = null
@@ -2682,3 +2708,377 @@ func _dibujar_flecha(icono: Control) -> void:
 		puntos.append(c + p * k)
 	icono.draw_colored_polygon(puntos, TURQUESA)
 	Figura.contornear(icono, puntos, 5.0 * k)
+
+
+# ---------------------------------------------------------------------------
+# Modo equipo (HE-70; modo-equipo.md §11.4, §14.3 y §14.15; ronda 2 de la batalla)
+# ---------------------------------------------------------------------------
+# El GestorTurnos lleva los turnos; este motor decide cuando termina uno: con el tope de aciertos del perfil
+# (lo cierra el gestor y el motor confirma con la mesa quieta) o con un fallo (Nicole tiene segunda
+# oportunidad). Soltar en el vacio no es fallo. Cada turno aplica la capa de su perfil (`capas_perfil`):
+# Maxi con las reglas de su ruta, una sola pieza con halo (la mas grande) y las demas inertes; Nicole con
+# las piezas enderezadas; Sofia con las piezas giradas al azar. Las piezas nunca cambian sin el "fiu".
+# Sin ranuras, medallas, destellos por pieza, limite de intentos, parcial por perfil ni fiesta propia.
+
+const RECT_CASA_EQUIPO := Rect2(1172, 8, 100, 96)
+const SEGUNDOS_ESTABLE_EQUIPO := 0.4
+var _eq: Dictionary = {}
+var _eq_capa: Dictionary = {}
+var _eq_pieza_objetivo: PiezaEncajar = null
+var _eq_fallos_turno := 0
+var _eq_cerrando := false
+var _eq_victoria := false
+var _eq_restaurado := false
+var _eq_tweens_gag: Array[Tween] = []
+
+
+func _layout_equipo() -> void:
+	var bloque = nivel.get("equipo", {})
+	_eq = bloque if bloque is Dictionary else {}
+	# Cometa vive en la pista del gestor; la casa va arriba a la derecha (>= 96 px). Sin barra de piezas,
+	# medallas ni Coco fijo (su rect pisaria la barra del equipo y la guirnalda).
+	_boton_cometa.hide()
+	_barra_progreso.hide()
+	_anfitriona.hide()
+	_boton_salir.position = RECT_CASA_EQUIPO.position
+	_boton_salir.size = RECT_CASA_EQUIPO.size
+	_boton_salir.pivot_offset = RECT_CASA_EQUIPO.size / 2.0
+
+
+func _preparar_equipo() -> void:
+	_ayuda_idle = 0.0
+	_limite_intentos = null
+	if _medallas != null:
+		_medallas.hide()
+	var perfiles := {}
+	for id in equipo:
+		perfiles[id] = perfil_de(id)
+	var ui: Control = _boton_salir.get_parent()
+	turnos.configurar(equipo, _config_gestor(), perfiles, ui)
+	var capa := ui.get_node_or_null("capa_equipo")
+	if capa != null:
+		ui.move_child(capa, _efectos.get_index())
+	turnos.turno_iniciado.connect(func(_id: String, perfil: String) -> void: aplicar_perfil_turno(perfil))
+	turnos.tope_alcanzado.connect(_al_tope_equipo)
+	turnos.jugada_automatica_pedida.connect(_jugada_automatica_equipo)
+	turnos.entrada_bloqueada_cambio.connect(func(bloqueada: bool) -> void:
+		if bloqueada:
+			_quitar_halo_maxi())
+	_arrancar_equipo.call_deferred()
+
+
+func _clave_equipo() -> String:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null:
+		return progreso.clave_equipo(equipo)
+	var copia := equipo.duplicate()
+	copia.sort()
+	return "+".join(PackedStringArray(copia))
+
+
+func _config_gestor() -> Dictionary:
+	var config: Dictionary = _eq.duplicate(true)
+	var comps = _eq.get("composiciones", {})
+	var comp: Dictionary = {}
+	if comps is Dictionary and not comps.is_empty():
+		comp = comps.get(_clave_equipo(), comps.values()[0])
+		if not comps.has(_clave_equipo()):
+			push_warning("motor_encajar: composicion '%s' no esta en %s; uso la primera" % [_clave_equipo(), ruta_nivel])
+	config.erase("composiciones")
+	config["pasos_rival"] = int(comp.get("pasos_rival", _eq.get("pasos_rival", 5)))
+	config["aciertos_totales"] = _requeridos
+	config["lineas_voz"] = nivel.get("lineas_voz", {})
+	var record := -1
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and planeta_id != "" and not en_batalla:
+		record = progreso.obtener_record_equipo(planeta_id, _id_nivel_actual(), _clave_equipo())
+	config["record_pasos"] = record
+	return config
+
+
+func _arrancar_equipo() -> void:
+	await get_tree().create_timer(0.4).timeout
+	if not is_inside_tree() or _eq_victoria:
+		return
+	await _esperar_voz_libre(6.0)
+	if not is_inside_tree() or _eq_victoria:
+		return
+	if _eq_restaurado:
+		turnos.empezar_retomando()
+	else:
+		turnos.empezar()
+
+
+## La guirnalda va 16 px a la izquierda de `zona_figuras`, centrada en su alto (§14.3, N9).
+func ancla_meta_turno() -> Vector2:
+	return Vector2(_zona_figuras.position.x - 16.0, _zona_figuras.get_center().y)
+
+
+func _pieza_jugable(pieza: PiezaEncajar) -> bool:
+	if turnos == null:
+		return true
+	if not turnos.turno_activo() or turnos.entrada_bloqueada() or _eq_cerrando or _eq_victoria:
+		return false
+	if bool(_eq_capa.get("otras_piezas_inertes", false)) and _eq_pieza_objetivo != null and pieza != _eq_pieza_objetivo:
+		return false
+	return true
+
+
+## Con la entrada bloqueada (o una pieza inerte en el turno de Maxi) la pieza solo hace el pulso, amable.
+func _pulso_bloqueado(pieza: PiezaEncajar) -> void:
+	pieza.cancelar_arrastre()
+	if not pieza.colocada:
+		pieza.pulso()
+		reproducir_sfx(SFX_TOQUE, 1.2, -6.0)
+
+
+## La capa del perfil del turno (§14.15 punto 1): sin_error, iman, toque_lleva_a_casa, rotacion, giro que
+## cuenta fallo, objetivo guiado y guia de color; y el "fiu" que endereza o gira las piezas de la bandeja.
+func aplicar_perfil_turno(perfil: String) -> void:
+	var capas = nivel.get("capas_perfil", {})
+	_eq_capa = capas.get(perfil, {}) if capas is Dictionary and capas.get(perfil, null) is Dictionary else {}
+	_eq_fallos_turno = 0
+	_eq_cerrando = false
+	_sin_error = bool(_eq_capa.get("sin_error", perfil == "semilla"))
+	_toque_lleva_a_casa = bool(_eq_capa.get("toque_lleva_a_casa", false))
+	_iman = float(_eq_capa.get("iman_tolerancia_px", _cfg.get("iman_tolerancia_px", 120.0)))
+	_rotacion_por_toque = bool(_eq_capa.get("rotacion_por_toque", false))
+	_paso_rotacion = float(_eq_capa.get("paso_rotacion", 90.0))
+	_giro_cuenta_fallo = bool(_eq_capa.get("giro_cuenta_fallo", perfil != "estrella"))
+	_lado_minimo_bandeja = float(_eq_capa.get("lado_minimo_bandeja", _lado_minimo_bandeja))
+	_objetivo_guiado = false
+	var guia := bool(_eq_capa.get("guia_color", false))
+	_siluetas.guia_color = guia
+	for capa in _capas_siluetas:
+		capa.guia_color = guia
+	_siluetas.queue_redraw()
+	_fiu_bandeja(perfil)
+	_quitar_halo_maxi()
+	if perfil == "semilla" and str(_eq_capa.get("objetivo_guiado", "")) != "":
+		_elegir_pieza_maxi()
+
+
+func _hueco_de(pieza: PiezaEncajar):
+	for hueco in _huecos:
+		if "pieza_" + str(hueco["id"]) == pieza.id:
+			return hueco
+	return null
+
+
+## Rotacion de la pieza en la bandeja segun el perfil: derecha (la de su hueco) o girada al azar.
+func _rotacion_para_perfil(pieza: PiezaEncajar, perfil: String) -> float:
+	var hueco = _hueco_de(pieza)
+	var correcta := float(hueco["rotacion"]) if hueco != null else pieza.rotacion_grados
+	var capas = nivel.get("capas_perfil", {})
+	var capa: Dictionary = capas.get(perfil, {}) if capas is Dictionary and capas.get(perfil, null) is Dictionary else {}
+	if bool(capa.get("girar_al_azar_al_empezar", false)):
+		var paso := float(capa.get("paso_rotacion", 90.0))
+		var opciones: Array = []
+		for k in int(round(360.0 / paso)):
+			var g := wrapf(correcta + paso * (k + 1), 0.0, 360.0)
+			if hueco == null or not Geo.calzan(pieza.poligono(g), hueco["forma_centrada"]):
+				opciones.append(g)
+		return opciones.pick_random() if not opciones.is_empty() else wrapf(correcta + paso, 0.0, 360.0)
+	if bool(capa.get("enderezar_al_empezar", false)) or perfil != "estrella":
+		return correcta
+	return pieza.rotacion_grados
+
+
+## Al empezar el turno las piezas cambian SIEMPRE con un "fiu" visible (nunca de golpe).
+func _fiu_bandeja(perfil: String) -> void:
+	var giro := false
+	for pieza in _en_bandeja():
+		var destino := _rotacion_para_perfil(pieza, perfil)
+		if not is_equal_approx(wrapf(destino, 0.0, 360.0), pieza.rotacion_grados):
+			pieza.girar_a(destino, 0.35)
+			giro = true
+	if giro:
+		reproducir_sfx(SFX_GIRO, 1.3)
+
+
+## Maxi: la pieza mas grande que queda en la bandeja brilla y su hueco respira ("¡Maxi, la pieza que brilla!").
+func _elegir_pieza_maxi() -> void:
+	var mejor: PiezaEncajar = null
+	for pieza in _en_bandeja():
+		var hueco = _hueco_de(pieza)
+		if hueco == null or hueco["pieza"] != null:
+			continue
+		if mejor == null or pieza.ancho * pieza.alto > mejor.ancho * mejor.alto:
+			mejor = pieza
+	_eq_pieza_objetivo = mejor
+	if mejor == null:
+		return
+	mejor.brillar(600.0)
+	mejor.saltito(16.0)
+	_siluetas.hueco_objetivo = _hueco_de(mejor)
+	_siluetas.queue_redraw()
+	var voz := _linea("maxi_pieza_que_brilla")
+	if voz != "PENDIENTE":
+		_reproducir_voz("maxi_pieza_que_brilla", voz)
+
+
+func _quitar_halo_maxi() -> void:
+	if _eq_pieza_objetivo != null and is_instance_valid(_eq_pieza_objetivo):
+		_eq_pieza_objetivo.brillar(0.0)
+	_eq_pieza_objetivo = null
+	if _siluetas.hueco_objetivo != null:
+		_siluetas.hueco_objetivo = null
+		_siluetas.queue_redraw()
+
+
+## M2: 20 s sin tocar en el turno de Maxi -> la pieza que brilla vuela sola a su lugar.
+func _jugada_automatica_equipo() -> void:
+	if turnos.perfil_actual() != "semilla" or not turnos.turno_activo() or turnos.entrada_bloqueada():
+		return
+	if _eq_pieza_objetivo == null or not is_instance_valid(_eq_pieza_objetivo):
+		_elegir_pieza_maxi()
+	var pieza := _eq_pieza_objetivo
+	if pieza == null:
+		return
+	var hueco = _hueco_de(pieza)
+	if hueco == null or hueco["pieza"] != null:
+		return
+	var voz := _linea("maxi_regalito")
+	if voz != "PENDIENTE":
+		_reproducir_voz("maxi_regalito", voz)
+	pieza.girar_a(float(hueco["rotacion"]), 0.1)
+	_encajar(pieza, hueco)
+
+
+func _acierto_equipo(pieza: PiezaEncajar) -> void:
+	if pieza == _eq_pieza_objetivo:
+		_quitar_halo_maxi()
+	turnos.notificar_acierto()
+
+
+## B2.1: el gestor llego al tope y espera la mesa quieta (sin pieza flotando chueca ni arrastre).
+func _al_tope_equipo() -> void:
+	_eq_cerrando = true
+	var id_turno := turnos.hermano_actual()
+	while true:
+		await get_tree().create_timer(SEGUNDOS_ESTABLE_EQUIPO).timeout
+		if not is_inside_tree() or _eq_victoria or turnos.hermano_actual() != id_turno:
+			return
+		if _flotando.is_empty() and _arrastrando.is_empty():
+			break
+	for pieza in _en_bandeja():
+		pieza.cancelar_arrastre()
+	turnos.confirmar_turno_estable()
+
+
+## "No es este" en equipo: Nicole tiene segunda oportunidad con su primer fallo; si no, pasa el turno, con
+## la pieza ya de vuelta en la bandeja (estado estable).
+func _fallo_equipo() -> void:
+	_eq_fallos_turno += 1
+	turnos.notificar_fallo_suave()
+	if turnos.perfil_actual() == "brote" and bool(_eq.get("segunda_oportunidad_brote", true)) and _eq_fallos_turno == 1:
+		var voz := _linea("segunda_oportunidad")
+		if voz != "" and voz != "PENDIENTE":
+			_voz_diferida("segunda_oportunidad", voz, 0.9)
+		return
+	_eq_cerrando = true
+	var id_turno := turnos.hermano_actual()
+	await get_tree().create_timer(SEGUNDOS_ESTABLE_EQUIPO + 0.1).timeout
+	if not is_inside_tree() or _eq_victoria or turnos.hermano_actual() != id_turno or not turnos.turno_activo():
+		return
+	turnos.terminar_turno(true)
+
+
+func _victoria_equipo(voz_figura: String) -> void:
+	if _eq_victoria:
+		return
+	_eq_victoria = true
+	_terminado = true
+	_quitar_halo_maxi()
+	for pieza in _piezas:
+		pieza.bloqueada = true
+		pieza.cancelar_arrastre()
+	var pasos := turnos.pasos_usados()
+	turnos.detener()
+	if turnos.pista != null:
+		turnos.pista.fraccion_cinta = 1.0
+	_despues(0.5, func() -> void: _confeti.restart())
+	if voz_figura != "":
+		_reproducir_voz("figura_completa", voz_figura)
+	if en_batalla:
+		await get_tree().create_timer(1.2).timeout
+		if is_inside_tree():
+			emitir_completado(0)
+		return
+	var resultado := asegurar_victoria_equipo(pasos)
+	turnos.rival_aplaude()
+	await get_tree().create_timer(1.4).timeout
+	if not is_inside_tree():
+		return
+	if bool(resultado.get("record_nuevo", false)) and not bool(resultado.get("primer_record", false)):
+		turnos.pista.saltar_banderita()
+	celebrar_equipo(pasos, _linea_al_azar("victoria_equipo"))
+
+
+# --- Virtuales del modo equipo (minijuego_base, §11.4) ---
+
+func _matar_tweens_gag() -> void:
+	for tween in _eq_tweens_gag:
+		if tween != null and tween.is_valid():
+			tween.kill()
+	_eq_tweens_gag.clear()
+
+
+## Las piezas sueltas de la bandeja vuelan a la boca de la mochila-torre y se ocultan.
+func gag_derrota_aspirar(destino: Vector2) -> float:
+	_matar_tweens_gag()
+	_quitar_halo_maxi()
+	for pieza in _en_bandeja():
+		pieza.cancelar_arrastre()
+		_dejar_de_flotar(pieza, false)
+		var tween := pieza.create_tween().set_parallel(true)
+		tween.tween_property(pieza, "position", destino - pieza.size / 2.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		tween.tween_property(pieza, "scale", Vector2.ONE * 0.15, 0.7)
+		tween.chain().tween_callback(pieza.hide)
+		_eq_tweens_gag.append(tween)
+	return 0.8
+
+
+## Vuelven "estornudadas" a la bandeja, ya en el estado del perfil que juega despues (m2 de HE-66).
+func gag_derrota_devolver(perfil_siguiente: String) -> float:
+	_matar_tweens_gag()
+	for pieza in _en_bandeja():
+		pieza.show()
+		var grados := _rotacion_para_perfil(pieza, perfil_siguiente)
+		pieza.rotacion_grados = wrapf(grados, 0.0, 360.0)
+		var tween := pieza.create_tween().set_parallel(true)
+		tween.tween_property(pieza, "position", pieza.casa - pieza.size / 2.0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(pieza, "scale", Vector2.ONE * pieza.escala_bandeja, 0.5)
+		tween.tween_property(pieza, "rotation", deg_to_rad(pieza.rotacion_grados), 0.5)
+		_eq_tweens_gag.append(tween)
+	return 0.6
+
+
+func gag_derrota_terminar_ya(perfil_siguiente: String) -> void:
+	_matar_tweens_gag()
+	for pieza in _en_bandeja():
+		pieza.show()
+		pieza.rotacion_grados = wrapf(_rotacion_para_perfil(pieza, perfil_siguiente), 0.0, 360.0)
+		pieza.rotation = deg_to_rad(pieza.rotacion_grados)
+		pieza.scale = Vector2.ONE * pieza.escala_bandeja
+		pieza.fijar_centro(pieza.casa)
+
+
+func contar_logro_equipo() -> int:
+	return _encajados
+
+
+## Parcial de la ronda (§14.6): los huecos llenos.
+func obtener_parcial_equipo() -> Dictionary:
+	var hechos: Array = []
+	for hueco in _huecos:
+		if hueco["pieza"] != null and not hueco["opcional"]:
+			hechos.append(str(hueco["id"]))
+	return {"huecos_hechos": hechos}
+
+
+func restaurar_parcial_equipo(estado: Dictionary) -> void:
+	var hechos = estado.get("huecos_hechos", [])
+	if hechos is Array and not hechos.is_empty():
+		_restaurar_huecos(hechos)
+	_eq_restaurado = true

@@ -19,6 +19,15 @@ extends "res://scripts/base/minijuego_base.gd"
 ## Entrada: tocar (o arrastrar) apunta y al soltar Coco dispara; tocar a Coco cambia la gota de la
 ## boca con la de la mano; tocar la palanca sirve. Perder nunca castiga: "¡Glu glu glu!" y reintento de
 ## un toque (GDD §6). PC: espacio dispara, Tab intercambia, S sirve.
+##
+## MODO EQUIPO (HE-70; modo-equipo.md §11.4, §14.3 y §14.15; ronda 1 de la batalla): con `equipo` y un nivel
+## `"modo_juego": "equipo"`, el `GestorTurnos` lleva los turnos y este motor solo decide cuando termina uno:
+## al gastar las `gotas_por_turno` de ese perfil y con el rio quieto (sin balas ni retroceso). No hay fallo:
+## cada reventon es un acierto (una cadena vale `cadena_vale_aciertos`). Con la entrada bloqueada (puerta,
+## ritual, pase) el rio y las balas se detienen; la cabeza nunca pasa `tope_avance` (sin remolino ni derrota
+## propia). Maxi (semilla): halo dorado sobre el tramo visible mas largo, Coco cargado con ese color, toda la
+## pantalla dispara y su bala va siempre a ese tramo con umbral 2 (N2). Sin HUD, textos, record ni fiesta
+## propia (R2): al ganar, fiesta del equipo o, en la batalla (`en_batalla`), solo `completado(0)`.
 
 signal partida_terminada(gano: bool, puntos: int)
 
@@ -110,6 +119,23 @@ var _record_nuevo := false
 var _estrellas := 0
 var _fase := "jugando"  ## jugando | tragando | resumen | celebrando | perdio
 
+# Modo equipo (HE-70)
+const RECT_CASA_EQUIPO := Rect2(1172, 8, 100, 96)
+const SEGUNDOS_REACCION_TURNO := 0.5
+const SEGUNDOS_BALA_MAXI := 0.45
+var _eq: Dictionary = {}
+var _eq_disparos := 0
+var _eq_limite := 3
+var _eq_cerrando := false
+var _eq_objetivo: Array = []  ## ids del tramo con halo (turno semilla)
+var _eq_actual_previo := ""
+var _eq_bala_maxi: Dictionary = {}  ## {"desde", "punto", "t", "color", "ids"}
+var _eq_reventadas := 0
+var _eq_rojo_visto := false
+var _eq_victoria := false
+var _eq_restaurado := false
+var _eq_gag: Dictionary = {}  ## {"fase": aspirar|oculto|devolver, "t", "dur", "destino"}
+
 
 func _ready() -> void:
 	super._ready()
@@ -157,6 +183,8 @@ func _ready() -> void:
 		push_error("motor_rio: nivel vacio, revisa ruta_nivel (%s)" % ruta_nivel)
 		return
 	_configurar_desde_nivel()
+	if turnos != null:
+		_preparar_equipo()
 
 
 func _configurar_desde_nivel() -> void:
@@ -209,7 +237,10 @@ func _process(delta: float) -> void:
 	_t += delta
 	if recorrido == null:
 		return
-	logica.avanzar(delta)
+	if turnos != null:
+		_procesar_equipo(delta)
+	if not _rio_pausado():
+		logica.avanzar(delta)
 	_lengua = maxf(0.0, _lengua - delta / 0.14)
 	_carga = minf(1.0, _carga + delta / 0.16)
 	_salto = maxf(0.0, _salto - delta * 3.0)
@@ -261,6 +292,8 @@ func _process(delta: float) -> void:
 func _al_input_juego(evento: InputEvent) -> void:
 	if recorrido == null:
 		return
+	if turnos != null and _input_equipo(evento):
+		return
 	if evento is InputEventMouseButton and evento.button_index == MOUSE_BUTTON_LEFT:
 		_juego.accept_event()
 		if _fase != "jugando":
@@ -295,16 +328,25 @@ func apuntar_a(p: Vector2) -> void:
 
 
 func disparar() -> bool:
+	if turnos != null:
+		if not _turno_jugable():
+			return false
+		if turnos.perfil_actual() == "semilla":
+			return _disparar_maxi(recorrido.centro + Vector2.from_angle(_angulo) * 200.0)
 	if logica.disparar(recorrido.centro + Vector2.from_angle(_angulo) * ORBITA, _angulo):
 		_lengua = 1.0
 		_carga = 0.0
 		reproducir_sfx(SFX_LENGUA)
+		if turnos != null:
+			_eq_disparos += 1
 		return true
 	return false
 
 
 func intercambiar() -> void:
 	if _fase != "jugando":
+		return
+	if turnos != null and (not _turno_jugable() or turnos.perfil_actual() == "semilla" and not bool(_eq.get("intercambio_semilla", false))):
 		return
 	logica.intercambiar()
 	_giro_coco = 1.0
@@ -314,7 +356,7 @@ func intercambiar() -> void:
 
 ## Tocar la palanca: el botón se hunde siempre (respuesta inmediata) y sirve si hay algo listo.
 func servir() -> bool:
-	if _fase != "jugando" or not logica.tiene_batidora():
+	if _fase != "jugando" or not logica.tiene_batidora() or (turnos != null and not _turno_jugable()):
 		return false
 	_palanca_hundida = 0.15
 	return logica.servir()
@@ -348,6 +390,8 @@ func _al_insertar(_posicion: Vector2, _color_id: String) -> void:
 
 
 func _al_reventar(cantidad: int, centro: Vector2, color_id: String, cadena: int, ganados: int, es_cadena: bool) -> void:
+	if turnos != null:
+		_reventon_equipo(cantidad, color_id, es_cadena)
 	for k in cantidad * 5:
 		var a := randf() * TAU
 		var v := randf_range(120.0, 440.0)
@@ -453,6 +497,11 @@ func _al_empezar_a_tragar() -> void:
 
 
 func _al_terminar(gano: bool) -> void:
+	if turnos != null:
+		# En equipo no hay record, ni estrellitas, ni "¡Glu glu glu!" (con el tope no se puede perder).
+		if gano:
+			_victoria_equipo()
+		return
 	_record_nuevo = _guardar_record(logica.puntos)
 	partida_terminada.emit(gano, logica.puntos)
 	if gano:
@@ -504,6 +553,9 @@ func _guardar_record(puntaje: int) -> bool:
 
 
 func _texto_flotante(posicion: Vector2, texto: String, color: Color, duracion: float, tamano: int) -> void:
+	# En equipo ningun texto (ni "+N", ni "¡Cadena ×3!", ni "Combo"): nada con digitos en la batalla (M8.5, R2).
+	if turnos != null:
+		return
 	_textos.append({"pos": posicion, "texto": texto, "color": color, "t": 0.0, "dur": duracion, "tam": tamano})
 
 
@@ -549,12 +601,16 @@ func _dibujar_juego() -> void:
 	# De la cola a la cabeza: la cabeza queda encima. Las del túnel no se ven (§10.1).
 	var atraidas := logica.ids_atraidas()
 	var latido := 0.5 + 0.5 * sin(_t * TAU * 3.0)
+	_dibujar_halo_maxi()
 	for i in range(logica.gotas.size() - 1, -1, -1):
 		var g: Dictionary = logica.gotas[i]
 		var s: float = g["s"]
 		if s < -2.0 or logica.en_tunel(s):
 			continue
 		var p := recorrido.posicion(s)
+		if not _eq_gag.is_empty():
+			_dibujar_gota_gag(p, g)
+			continue
 		if g["ot"] > 0.0:
 			p = g["origen"].lerp(p, 1.0 - g["ot"] / 0.12)
 		var cerca := recorrido.largo - s
@@ -569,6 +625,7 @@ func _dibujar_juego() -> void:
 	_dibujar_pistas()
 	for bala in logica.balas:
 		_dibujar_gota(_juego, bala["pos"], logica.radio, bala["color"], 7)
+	_dibujar_bala_maxi()
 	var boca := recorrido.centro + Vector2.from_angle(_angulo) * ORBITA
 	for v in _vuelos:
 		var k := clampf(v["t"] / v["dur"], 0.0, 1.0)
@@ -678,7 +735,8 @@ func _dibujar_remolino() -> void:
 		_juego.draw_circle(c, 22.0, DORADO)
 		Figura.dibujar_cara(_juego, c, 0.5, true)
 		return
-	var peligro := logica.progreso_cabeza() > PELIGRO and _fase == "jugando"
+	# En equipo el remolino nunca pulsa en rojo (con el tope del 70 % esa senal no corresponde, §14.15).
+	var peligro := logica.progreso_cabeza() > PELIGRO and _fase == "jugando" and turnos == null
 	if peligro:
 		_juego.draw_circle(c, 74.0, Color(0.91, 0.26, 0.29, 0.3 + 0.2 * sin(_t * 8.0)))
 	for k in 5:
@@ -816,6 +874,9 @@ func _dibujar_pistas() -> void:
 func _dibujar_guia() -> void:
 	if _guia == "no" or _fase != "jugando" or logica.actual == "":
 		return
+	# En equipo, solo durante el turno; la bala de Maxi va sola al halo (no necesita guia).
+	if turnos != null and (not _turno_jugable() or turnos.perfil_actual() == "semilla"):
+		return
 	var dir := Vector2.from_angle(_angulo)
 	var p := recorrido.centro + dir * ORBITA
 	var es_arcoiris := logica.actual == LogicaRio.ARCOIRIS
@@ -872,7 +933,7 @@ func _dibujar_coco() -> void:
 	var escala := ALTO_COCO / float(TEXTURA_COCO.get_height())
 	var respira := 1.0 + sin(_t * 2.6) * 0.018
 	var salto := sin(_salto * PI) * 26.0
-	var temblor := Vector2(sin(_t * 47.0) * 2.0, 0) if _fase == "jugando" and logica.progreso_cabeza() > PELIGRO else Vector2.ZERO
+	var temblor := Vector2(sin(_t * 47.0) * 2.0, 0) if _fase == "jugando" and logica.progreso_cabeza() > PELIGRO and turnos == null else Vector2.ZERO
 	var inclinacion := clampf(dir.x * 0.12, -0.12, 0.12) + sin(_giro_coco * PI) * 0.35 * _mirando
 	var tam := Vector2(TEXTURA_COCO.get_width(), TEXTURA_COCO.get_height()) * escala
 	var pos := c + Vector2(0, -salto) + temblor
@@ -901,12 +962,17 @@ func _dibujar_coco() -> void:
 		_juego.draw_line(boca, punta, Color("#C9567A"), 13.0, true)
 		_juego.draw_line(boca, punta, Color("#FF8FB1"), 9.0, true)
 		_juego.draw_circle(punta, 7.0, Color("#FF8FB1"))
-		if logica.actual != "" and _lengua < 0.5 and _vuelos.is_empty():
+		if logica.actual != "" and _lengua < 0.5 and _vuelos.is_empty() and _eq_bala_maxi.is_empty():
 			_dibujar_gota(_juego, c + dir * ORBITA, logica.radio * (0.4 + 0.6 * _carga), logica.actual, 1)
+		# Equipo (B1.1): las gotas del turno que quedan, sin numeros, en la mano de Coco.
+		if turnos != null and turnos.turno_activo() and turnos.perfil_actual() != "semilla":
+			for k in range(1, mini(_eq_limite - _eq_disparos, 3)):
+				_dibujar_gota(_juego, pos + Vector2(-38.0 * _mirando + k * 14.0 * _mirando, 52.0 + k * 6.0), logica.radio * 0.42, logica.siguiente if logica.siguiente != "" else logica.actual, 4, false)
 
 
 func _dibujar_hud() -> void:
-	if recorrido == null:
+	# En equipo no se dibuja el HUD propio (M5.5, R2): ni puntos, ni record, ni barra de rio.
+	if recorrido == null or turnos != null:
 		return
 	# Puntos y récord, en una píldora arriba al centro.
 	var caja := Rect2(470, 14, 340, 74)
@@ -1078,3 +1144,364 @@ func _dibujar_icono_reintentar(icono: Control) -> void:
 	var flecha := PackedVector2Array([punta + Vector2(-22, -6), punta + Vector2(18, -10), punta + Vector2(4, 26)])
 	icono.draw_colored_polygon(flecha, CREMA)
 	Figura.contornear(icono, flecha, 5.0)
+
+
+# ---------------------------------------------------------------------------
+# Modo equipo (HE-70; modo-equipo.md §11.4, §14.3 y §14.15)
+# ---------------------------------------------------------------------------
+
+func _preparar_equipo() -> void:
+	var bloque = nivel.get("equipo", {})
+	_eq = bloque if bloque is Dictionary else {}
+	logica.tope_cabeza = clampf(float(_eq.get("tope_avance", 0.7)), 0.1, 0.95)
+	_textos.clear()
+	_boton_salir.position = RECT_CASA_EQUIPO.position
+	_boton_salir.size = RECT_CASA_EQUIPO.size
+	_boton_salir.pivot_offset = RECT_CASA_EQUIPO.size / 2.0
+	var perfiles := {}
+	for id in equipo:
+		perfiles[id] = perfil_de(id)
+	var ui: Control = _boton_salir.get_parent()
+	turnos.configurar(equipo, _config_gestor(), perfiles, ui)
+	# La capa del equipo va sobre el rio pero bajo la casa y el cartel (la casa siempre se puede tocar).
+	var capa := ui.get_node_or_null("capa_equipo")
+	if capa != null:
+		ui.move_child(capa, _hud.get_index())
+	turnos.turno_iniciado.connect(func(_id: String, perfil: String) -> void: aplicar_perfil_turno(perfil))
+	turnos.jugada_automatica_pedida.connect(_jugada_automatica_equipo)
+	_arrancar_equipo.call_deferred()
+
+
+func _clave_equipo() -> String:
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null:
+		return progreso.clave_equipo(equipo)
+	var copia := equipo.duplicate()
+	copia.sort()
+	return "+".join(PackedStringArray(copia))
+
+
+## El bloque `equipo` con la composicion aplicada (pasos_rival). La cinta de la pista la llena el motor
+## (fraccion de gotas reventadas), por eso `aciertos_totales` = 0.
+func _config_gestor() -> Dictionary:
+	var config: Dictionary = _eq.duplicate(true)
+	var comps = _eq.get("composiciones", {})
+	var comp: Dictionary = {}
+	if comps is Dictionary and not comps.is_empty():
+		comp = comps.get(_clave_equipo(), comps.values()[0])
+		if not comps.has(_clave_equipo()):
+			push_warning("motor_rio: composicion '%s' no esta en %s; uso la primera" % [_clave_equipo(), ruta_nivel])
+	config.erase("composiciones")
+	config["pasos_rival"] = int(comp.get("pasos_rival", _eq.get("pasos_rival", 5)))
+	config["aciertos_totales"] = 0
+	config["lineas_voz"] = nivel.get("lineas_voz", {})
+	var record := -1
+	var progreso := get_node_or_null("/root/Progreso")
+	if progreso != null and planeta_id != "" and not en_batalla:
+		record = progreso.obtener_record_equipo(planeta_id, _id_nivel_actual(), _clave_equipo())
+	config["record_pasos"] = record
+	return config
+
+
+## Intro de la ronda y primer turno (con Maxi). Si el contenedor restauro un parcial antes, se retoma (N6).
+func _arrancar_equipo() -> void:
+	await get_tree().create_timer(0.3).timeout
+	if not is_inside_tree() or _eq_victoria:
+		return
+	var intro := _linea_voz("intro_ronda")
+	if intro != "" and intro != "PENDIENTE" and ResourceLoader.exists(resolver_ruta_audio(intro)):
+		reproducir_voz(intro)
+		await _esperar_voz_libre(6.0)
+	if not is_inside_tree() or _eq_victoria:
+		return
+	if _eq_restaurado:
+		turnos.empezar_retomando()
+	else:
+		turnos.empezar()
+
+
+func _rio_pausado() -> bool:
+	if turnos == null:
+		return false
+	# Pausa real (§14.15 punto 4): con la entrada bloqueada (puerta, ritual de Maxi, pase, gag) nada se mueve.
+	return turnos.entrada_bloqueada() or not _eq_gag.is_empty() or _eq_victoria
+
+
+func _turno_jugable() -> bool:
+	return turnos != null and turnos.turno_activo() and not turnos.entrada_bloqueada() and not _eq_cerrando \
+		and not _eq_victoria and _eq_disparos < _eq_limite and _fase == "jugando"
+
+
+## La capa del perfil del turno (§14.15 punto 1): guia, gotas del turno, intercambio y, para Maxi, el objetivo
+## con halo y Coco cargado con su color (N2). La llama `turno_iniciado`.
+func aplicar_perfil_turno(perfil: String) -> void:
+	var guias = nivel.get("guia_por_perfil", {})
+	_guia = str(guias.get(perfil, nivel.get("guia", "completa"))) if guias is Dictionary else str(nivel.get("guia", "completa"))
+	var por_turno = _eq.get("gotas_por_turno", {})
+	_eq_limite = maxi(1, int(por_turno.get(perfil, 1 if perfil == "semilla" else 3)) if por_turno is Dictionary else 3)
+	_eq_disparos = 0
+	_eq_cerrando = false
+	_eq_objetivo = []
+	if perfil == "semilla":
+		_elegir_objetivo_maxi()
+
+
+## Objetivo de Maxi: el tramo visible mas largo (empate: el mas cercano a la cabeza). Se elige al empezar su
+## turno y solo se cambia si desaparece (el halo no salta).
+func _elegir_objetivo_maxi() -> void:
+	_eq_objetivo = logica.objetivo_semilla()
+	if _eq_objetivo.is_empty():
+		return
+	var indices := logica.indices_de(_eq_objetivo)
+	if _eq_actual_previo == "":
+		_eq_actual_previo = logica.actual
+	logica.actual = logica.gotas[indices[0]]["color"]
+
+
+func _procesar_equipo(delta: float) -> void:
+	if not _eq_gag.is_empty():
+		_eq_gag["t"] += delta
+		if _eq_gag["fase"] == "aspirar" and _eq_gag["t"] >= _eq_gag["dur"]:
+			_eq_gag["fase"] = "oculto"
+		elif _eq_gag["fase"] == "devolver" and _eq_gag["t"] >= _eq_gag["dur"]:
+			_eq_gag = {}
+	if _eq_victoria or not turnos.turno_activo():
+		return
+	if not _eq_bala_maxi.is_empty() and not turnos.entrada_bloqueada():
+		_eq_bala_maxi["t"] += delta
+		if _eq_bala_maxi["t"] >= SEGUNDOS_BALA_MAXI:
+			_llegar_bala_maxi()
+	if turnos.perfil_actual() == "semilla" and _eq_disparos == 0:
+		if _eq_objetivo.is_empty() or logica.indices_de(_eq_objetivo).is_empty():
+			_eq_objetivo = []
+			_elegir_objetivo_maxi()
+	if not _eq_cerrando and _eq_disparos >= _eq_limite and _eq_bala_maxi.is_empty() and logica.estable():
+		_cerrar_turno_equipo()
+
+
+## §14.15 punto 3: el turno cierra con el rio quieto; si algo se vuelve a mover en la reaccion, espera.
+func _cerrar_turno_equipo() -> void:
+	_eq_cerrando = true
+	var id_turno := turnos.hermano_actual()
+	while true:
+		await get_tree().create_timer(SEGUNDOS_REACCION_TURNO).timeout
+		if not is_inside_tree() or _eq_victoria or not turnos.turno_activo() or turnos.hermano_actual() != id_turno:
+			return
+		if logica.estable():
+			break
+	turnos.terminar_turno(false)
+
+
+## Bala de Maxi: la lengua sale hacia su dedo y la gota curva con estela hasta el tramo con halo.
+func _disparar_maxi(punto: Vector2) -> bool:
+	if _eq_objetivo.is_empty() or logica.indices_de(_eq_objetivo).is_empty():
+		_eq_objetivo = []
+		_elegir_objetivo_maxi()
+	if _eq_objetivo.is_empty():
+		return false
+	var color: String = logica.gotas[logica.indices_de(_eq_objetivo)[0]]["color"]
+	_apuntar(punto)
+	_lengua = 1.0
+	_carga = 0.0
+	reproducir_sfx(SFX_LENGUA)
+	_eq_bala_maxi = {"desde": recorrido.centro + Vector2.from_angle(_angulo) * ORBITA, "punto": punto, "t": 0.0,
+		"color": color, "ids": _eq_objetivo.duplicate()}
+	_eq_disparos += 1
+	if punto.distance_to(_centro_objetivo()) <= float(_eq.get("justo_ahi_px", 150)):
+		_voz_equipo("justo_ahi")
+	# La reserva no cambia; la boca vuelve a lo que tenia antes del turno de Maxi.
+	logica.actual = _eq_actual_previo if _eq_actual_previo != "" else logica.actual
+	_eq_actual_previo = ""
+	logica.ordenar_municion()
+	return true
+
+
+func _llegar_bala_maxi() -> void:
+	var bala := _eq_bala_maxi
+	_eq_bala_maxi = {}
+	var umbral := int(_eq.get("umbral_reventon_semilla", 2))
+	var ids: Array = bala["ids"]
+	if logica.indices_de(ids).is_empty():
+		# El tramo se fue (un retroceso lo revento): va al nuevo objetivo, siempre revienta algo.
+		ids = logica.objetivo_semilla()
+	if ids.is_empty():
+		return
+	var color: String = logica.gotas[logica.indices_de(ids)[0]]["color"]
+	logica.insertar_en_tramo(ids, bala["punto"], color, umbral)
+	_eq_objetivo = []
+
+
+func _centro_objetivo() -> Vector2:
+	var indices := logica.indices_de(_eq_objetivo)
+	if indices.is_empty():
+		return recorrido.centro
+	var suma := Vector2.ZERO
+	for i in indices:
+		suma += recorrido.posicion(logica.gotas[i]["s"])
+	return suma / indices.size()
+
+
+## Entrada en equipo. Devuelve true si el evento ya quedo resuelto aqui.
+func _input_equipo(evento: InputEvent) -> bool:
+	if not evento is InputEventMouseButton or evento.button_index != MOUSE_BUTTON_LEFT:
+		return not _turno_jugable() and evento is InputEventMouseMotion
+	_juego.accept_event()
+	if not _turno_jugable():
+		# Entrada bloqueada (puerta, pase, gag) o gotas del turno gastadas: Coco solo salta un poquito.
+		if evento.pressed:
+			_salto = maxf(_salto, 0.3)
+		_apuntando = false
+		return true
+	if turnos.perfil_actual() == "semilla":
+		# Toda la pantalla dispara, tambien un toque sobre Coco (en su turno no hay intercambio).
+		if evento.pressed:
+			_disparar_maxi(evento.position + _juego.position)
+		return true
+	return false
+
+
+## M2: 20 s sin ningun toque en el turno de Maxi -> su gota sale sola hacia el tramo con halo.
+func _jugada_automatica_equipo() -> void:
+	if not _turno_jugable() or turnos.perfil_actual() != "semilla":
+		return
+	if _eq_objetivo.is_empty():
+		_elegir_objetivo_maxi()
+	if _eq_objetivo.is_empty():
+		return
+	_voz_equipo("maxi_regalito")
+	_disparar_maxi(_centro_objetivo())
+
+
+func _reventon_equipo(cantidad: int, color_id: String, es_cadena: bool) -> void:
+	_eq_reventadas += cantidad
+	if turnos.pista != null:
+		turnos.pista.fraccion_cinta = clampf(float(_eq_reventadas) / maxf(1.0, logica.total_real), 0.0, 1.0)
+	if color_id == "rojo" and not _eq_rojo_visto:
+		_eq_rojo_visto = true
+		_voz_equipo("gafas_rojas")
+	# Una cadena (retroceso que revienta) vale `cadena_vale_aciertos`; un acierto directo, 1.
+	var veces := LogicaRio.aciertos_por_reventon(es_cadena, int(_eq.get("cadena_vale_aciertos", 2)))
+	for k in veces:
+		turnos.notificar_acierto()
+
+
+func _voz_equipo(clave: String) -> void:
+	var ruta := _linea_voz(clave)
+	if ruta == "" or ruta == "PENDIENTE":
+		return
+	var audio := get_node_or_null("/root/Audio")
+	if audio != null and audio.esta_hablando():
+		return
+	reproducir_voz(ruta)
+
+
+func _victoria_equipo() -> void:
+	if _eq_victoria:
+		return
+	_eq_victoria = true
+	_fase = "resumen"
+	var pasos := turnos.pasos_usados()
+	turnos.detener()
+	_confeti.position = recorrido.centro
+	_confeti.restart()
+	_confeti.emitting = true
+	reproducir_sfx(SFX_GANA)
+	if en_batalla:
+		# La batalla hace el interludio: aqui no se registra nada ni hay fiesta (§14.9, §14.15 punto 5).
+		await get_tree().create_timer(1.0).timeout
+		if is_inside_tree():
+			emitir_completado(0)
+		return
+	var resultado := asegurar_victoria_equipo(pasos)
+	turnos.rival_aplaude()
+	await get_tree().create_timer(1.2).timeout
+	if not is_inside_tree():
+		return
+	if bool(resultado.get("record_nuevo", false)) and not bool(resultado.get("primer_record", false)):
+		turnos.pista.saltar_banderita()
+	_fase = "celebrando"
+	celebrar_equipo(pasos, _linea_voz("victoria_equipo"))
+
+
+# --- Halo de Maxi, bala dirigida y gag (dibujo) ---
+
+func _dibujar_halo_maxi() -> void:
+	if turnos == null or _eq_objetivo.is_empty() or not turnos.turno_activo() or turnos.perfil_actual() != "semilla":
+		return
+	var b := 0.5 + 0.5 * sin(_t * 5.0)
+	for i in logica.indices_de(_eq_objetivo):
+		var p := recorrido.posicion(logica.gotas[i]["s"])
+		_juego.draw_circle(p, logica.radio * (1.45 + 0.15 * b), Color(1, 0.8, 0.24, 0.35 + 0.3 * b))
+
+
+func _dibujar_bala_maxi() -> void:
+	if _eq_bala_maxi.is_empty():
+		return
+	var k := clampf(_eq_bala_maxi["t"] / SEGUNDOS_BALA_MAXI, 0.0, 1.0)
+	var desde: Vector2 = _eq_bala_maxi["desde"]
+	var indices := logica.indices_de(_eq_bala_maxi["ids"])
+	var hasta := recorrido.centro if indices.is_empty() else recorrido.posicion(logica.gotas[indices[0]]["s"])
+	var control: Vector2 = _eq_bala_maxi["punto"]
+	var color: String = _eq_bala_maxi["color"]
+	# Estela: puntitos que se desvanecen detras de la gota (curva de Bezier por el punto que toco).
+	for q in 6:
+		var kq := maxf(0.0, k - q * 0.06)
+		var pq := desde.lerp(control, kq).lerp(control.lerp(hasta, kq), kq)
+		_juego.draw_circle(pq, logica.radio * (0.5 - q * 0.06), Color(_color(color), 0.5 - q * 0.08))
+	var p := desde.lerp(control, k).lerp(control.lerp(hasta, k), k)
+	_dibujar_gota(_juego, p, logica.radio, color, 7)
+
+
+func _dibujar_gota_gag(p: Vector2, g: Dictionary) -> void:
+	var fase: String = _eq_gag["fase"]
+	if fase == "oculto":
+		return
+	var k := clampf(_eq_gag["t"] / maxf(0.01, _eq_gag["dur"]), 0.0, 1.0)
+	if fase == "devolver":
+		k = 1.0 - k
+	k = k * k
+	var destino: Vector2 = _eq_gag["destino"]
+	_dibujar_gota(_juego, p.lerp(destino, k), logica.radio * lerpf(1.0, 0.3, k), g["color"], g["id"])
+
+
+# --- Virtuales del modo equipo (minijuego_base, §11.4) ---
+
+## Las gotas que quedan vuelan a la boca de la mochila-torre y se ocultan.
+func gag_derrota_aspirar(destino: Vector2) -> float:
+	_eq_bala_maxi = {}
+	_eq_gag = {"fase": "aspirar", "t": 0.0, "dur": 0.8, "destino": destino}
+	return 0.8
+
+
+## Vuelven "estornudadas" al cauce, en su mismo orden (lo conservado nunca se toca).
+func gag_derrota_devolver(_perfil_siguiente: String) -> float:
+	var destino: Vector2 = _eq_gag.get("destino", recorrido.centro)
+	_eq_gag = {"fase": "devolver", "t": 0.0, "dur": 0.6, "destino": destino}
+	return 0.6
+
+
+func gag_derrota_terminar_ya(_perfil_siguiente: String) -> void:
+	_eq_gag = {}
+
+
+func contar_logro_equipo() -> int:
+	return _eq_reventadas
+
+
+## Parcial de la ronda (§14.6): las gotas que quedan, en su orden, y lo que tiene Coco.
+func obtener_parcial_equipo() -> Dictionary:
+	return {"gotas": logica.colores_en_orden(), "actual": logica.actual, "siguiente": logica.siguiente,
+		"reventadas": _eq_reventadas}
+
+
+func restaurar_parcial_equipo(estado: Dictionary) -> void:
+	var lista = estado.get("gotas", [])
+	if not lista is Array or lista.is_empty():
+		return
+	logica.cargar_colores(lista)
+	_eq_reventadas = int(estado.get("reventadas", 0))
+	for clave in ["actual", "siguiente"]:
+		var color := str(estado.get(clave, ""))
+		if color != "" and color in logica.colores_presentes():
+			logica.set(clave, color)
+	_eq_restaurado = true

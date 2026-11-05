@@ -102,6 +102,9 @@ const MARGEN_VOZ_AUTO_CONTINUAR := 1.5
 @export var equipo: Array[String] = []
 ## Revancha (motor-lanzar §11): el contenedor la pone antes de agregar el motor al arbol. Sin parcial.
 @export var revancha: bool = false
+## Ronda de batalla (modo-equipo.md §14.9 y §14.15 punto 5; lo fija batalla.gd, HE-69): al ganar, el motor no
+## registra la victoria de equipo ni hace su fiesta: solo emite `completado(0)` (el interludio es de la batalla).
+@export var en_batalla: bool = false
 
 ## Monto por hermano si el contenedor no fija `destellos_fijos` en un nivel de equipo (§7.1).
 const DESTELLOS_EQUIPO_POR_DEFECTO := 50
@@ -162,8 +165,12 @@ func cargar_nivel(ruta: String) -> Dictionary:
 	return nivel
 
 
-## "semilla" | "brote" | "estrella", tal cual viene en el nivel.
+## "semilla" | "brote" | "estrella", tal cual viene en el nivel. En equipo (modo-equipo.md §14.15 punto 2,
+## HE-70), el perfil del turno en curso (el del hermano cuyo retrato esta al centro o jugando); antes del
+## primer turno, el del nivel.
 func obtener_perfil_dificultad() -> String:
+	if turnos != null and turnos.perfil_actual() != "":
+		return turnos.perfil_actual()
 	return String(nivel.get("perfil", "semilla"))
 
 
