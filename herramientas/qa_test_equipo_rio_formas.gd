@@ -251,11 +251,26 @@ func _hueco_libre_de(motor: Node, pieza: PiezaEncajar) -> Variant:
 	return motor._hueco_de(pieza)
 
 
-## Un hueco libre de OTRO color que la pieza (con exigir_color no calza nunca).
+## Un hueco libre de OTRO color (con exigir_color no calza) sin ningun candidato vecino, dentro del iman, donde la
+## pieza calce derecha o girando: soltarla ahi es siempre "no es este".
 func _hueco_ajeno(motor: Node, pieza: PiezaEncajar) -> Variant:
 	for hueco in motor._huecos:
-		if hueco["pieza"] == null and not (hueco["color"] as Color).is_equal_approx(pieza.color):
+		if hueco["pieza"] != null or (hueco["color"] as Color).is_equal_approx(pieza.color):
+			continue
+		var limpio := true
+		for c in motor._candidatos(hueco["centro"]):
+			if motor._calza(pieza, c) or motor._calza_girando(pieza, c):
+				limpio = false
+		if limpio:
 			return hueco
+	return null
+
+
+## Una pieza de la bandeja que tenga algun hueco ajeno limpio (ver arriba).
+func _pieza_con_ajeno(motor: Node) -> PiezaEncajar:
+	for p in motor._en_bandeja():
+		if _hueco_ajeno(motor, p) != null:
+			return p
 	return null
 
 
@@ -295,8 +310,13 @@ func _probar_formas() -> void:
 			mas_grande = false
 	_check(mas_grande and motor._siluetas.hueco_objetivo == motor._hueco_de(objetivo), "es la mas grande y su hueco respira")
 	var otra := _pieza_bandeja(motor, objetivo)
-	motor._al_tocar_pieza(otra)
-	_check(not otra.colocada, "las otras piezas son inertes en el turno de Maxi")
+	if otra == null:
+		# Con escala real la bandeja a veces solo tiene lugar para la pieza grande: se prueba con una de la cola.
+		print("        (la bandeja tiene una sola pieza: se prueba la inercia con su propia regla)")
+		_check(motor._pieza_jugable(objetivo), "la pieza con halo es la unica jugable")
+	else:
+		motor._al_tocar_pieza(otra)
+		_check(not otra.colocada and not motor._pieza_jugable(otra), "las otras piezas son inertes en el turno de Maxi")
 	motor._al_tocar_pieza(objetivo)
 	_check(objetivo.colocada, "toque_lleva_a_casa: un toque y la pieza vuela a su lugar")
 	_check("tope" in _eventos, "tope 1 de Maxi")
@@ -312,7 +332,7 @@ func _probar_formas() -> void:
 	_check(not motor._rotacion_por_toque and not motor._sin_error, "Nicole: sin rotacion por toque y con error")
 	var vacio := _pieza_bandeja(motor)
 	_check(motor.soltar_pieza(vacio, Vector2(640, 700)) == "nada" and g.turno_activo(), "soltar en el vacio no es fallo: el turno sigue")
-	var fallada := _pieza_bandeja(motor)
+	var fallada := _pieza_con_ajeno(motor)
 	var ajeno = _hueco_ajeno(motor, fallada)
 	_check(motor.soltar_pieza(fallada, ajeno["centro"]) == "no_es_este", "una pieza en un hueco equivocado es fallo")
 	await _esperar(0.6)
@@ -333,14 +353,8 @@ func _probar_formas() -> void:
 	_check(giradas > 0 and motor._rotacion_por_toque, "Sofia: piezas giradas al azar (%d sin calzar) y rotacion por toque" % giradas)
 	var encajados_antes: int = motor._encajados
 	g._pos_rival = g.pasos_rival() - 1
-	var resultado := ""
-	for p in motor._en_bandeja():
-		for hueco in motor._huecos:
-			if resultado == "no_es_este" or hueco["pieza"] != null or (hueco["color"] as Color).is_equal_approx(p.color):
-				continue
-			resultado = motor.soltar_pieza(p, hueco["centro"])
-			if resultado == "girar":
-				motor._dejar_de_flotar(p)
+	var mala := _pieza_con_ajeno(motor)
+	var resultado: String = motor.soltar_pieza(mala, _hueco_ajeno(motor, mala)["centro"])
 	_check(resultado == "no_es_este", "Sofia suelta una pieza en un hueco equivocado")
 	_check(await _esperar_que(func() -> bool: return "cerrado:sofia:false" in _eventos, 3.0), "Sofia: el primer fallo pasa el turno")
 	_check(await _esperar_que(func() -> bool: return "llego" in _eventos, 6.0), "con el rival en pasos - 1, llega en el pase")
