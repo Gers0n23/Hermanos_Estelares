@@ -1,0 +1,190 @@
+{
+  "id_nivel": "animalia_z3_runner_estrella",
+  "motor": "runner",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona3_pradera",
+  "tema": "Altos y bajos desde el inicio: pajaritos y cometas de papel; grupos de 2",
+  "nota": "dev-godot HE-119 (05-Nov-2026): generado por herramientas/generar_niveles_runner.py. Numeros de planeta-animalia-zonas.md §4.4 y de motor-runner.md [HE-124] (politica de derrota del PO del 05-Nov-2026: corazones, regalo, ayuda fuerte, descanso). PROVISIONAL hasta la maqueta HE-110 y el playtest.",
+  "escenario": {
+    "id": "pradera",
+    "noche": false
+  },
+  "fondo": {
+    "parallax": [
+      0.2,
+      0.5,
+      1.0
+    ],
+    "atardecer_en": 0.7
+  },
+  "corredor": {
+    "alto": 150,
+    "ancho": 120,
+    "caja": [
+      0.6,
+      0.75
+    ],
+    "id": "toby"
+  },
+  "obstaculos": [
+    {
+      "id": "tronco",
+      "dibujo": "tronco",
+      "tamano": [
+        90,
+        60
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "piedra",
+      "dibujo": "piedra",
+      "tamano": [
+        70,
+        55
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "fardo",
+      "dibujo": "fardo",
+      "tamano": [
+        80,
+        70
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "pajarito_alto",
+      "dibujo": "pajarito",
+      "tamano": [
+        70,
+        60
+      ],
+      "tipo": "aereo_alto",
+      "altura": 135
+    },
+    {
+      "id": "cometa_alta",
+      "dibujo": "cometa_papel",
+      "tamano": [
+        70,
+        60
+      ],
+      "tipo": "aereo_alto",
+      "altura": 135
+    },
+    {
+      "id": "pajarito_bajo",
+      "dibujo": "pajarito",
+      "tamano": [
+        70,
+        55
+      ],
+      "tipo": "aereo_bajo",
+      "altura": 30
+    }
+  ],
+  "caja_obstaculo": [
+    0.7,
+    0.8
+  ],
+  "coleccionables": {
+    "ids": [
+      "huesito"
+    ],
+    "puntos": 25,
+    "radio": 22,
+    "cada_s": [
+      3,
+      6
+    ]
+  },
+  "meta": {
+    "dibujo": "acacia"
+  },
+  "velocidad": 590,
+  "velocidad_max": 1050,
+  "segundos_a_max": 110,
+  "inicio_libre_s": 2.5,
+  "salto": {
+    "duracion_s": 0.62,
+    "altura": 185,
+    "impulso_s": 0.04,
+    "imantado_s": 0,
+    "imantado_max_s": 0,
+    "amable_px": 0,
+    "en_cola_ms": 150,
+    "variable": null
+  },
+  "huecos": {
+    "min_s": 1.05,
+    "factor_max": 1.5,
+    "grupo_max": 2,
+    "repetidos_max": 2
+  },
+  "aereos": {
+    "desde_s": 0,
+    "tipos": [
+      "aereo_alto",
+      "aereo_bajo"
+    ],
+    "p": 0.22
+  },
+  "obstaculos_blandos": false,
+  "corazones": 1,
+  "invulnerable_golpe_s": 1.0,
+  "burbuja": {
+    "inicial": false,
+    "cada_s": 55,
+    "invulnerable_s": 1.0
+  },
+  "meta_s": 105,
+  "tramo_record_s": 90,
+  "banderita_mitad": false,
+  "regalo_tras_derrotas": 3,
+  "regalo": {
+    "tipo": "burbuja",
+    "banderita_mitad": true
+  },
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "gag_derrota_s": 2.5,
+  "puntos": {
+    "por_segundo": 10,
+    "racha_saltos": 5,
+    "racha": 50,
+    "meta": 200,
+    "final": 300
+  },
+  "hito_cada": 100,
+  "mostrar_puntaje": "numero",
+  "ayuda_idle_s": null,
+  "lineas_voz": {
+    "intro": "voces/animalia/runner/intro_estrella_z3.wav",
+    "largada": "voces/animalia/runner/largada.wav",
+    "meta": [
+      "voces/animalia/runner/meta_01.wav",
+      "voces/animalia/runner/meta_02.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/runner/al_barro_z3.wav",
+      "voces/animalia/runner/al_barro_01.wav",
+      "voces/animalia/runner/al_barro_02.wav"
+    ],
+    "regalo": "voces/animalia/runner/regalo_burbuja_sofia.wav",
+    "descansar": "voces/animalia/runner/descansar.wav",
+    "victoria": "voces/animalia/runner/victoria_estrella.wav",
+    "burbuja_presenta": "voces/animalia/runner/burbuja_presenta.wav",
+    "corazon_menos": [
+      "voces/animalia/runner/uy_01.wav",
+      "voces/animalia/runner/uy_02.wav"
+    ],
+    "sigue_record": "voces/animalia/runner/sigue_record.wav",
+    "final_sendero": "voces/animalia/runner/final_sendero.wav",
+    "record": "voces/animalia/runner/record.wav",
+    "primer_record": "voces/animalia/runner/primer_record.wav",
+    "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav"
+  }
+}

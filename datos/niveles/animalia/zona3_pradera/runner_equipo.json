@@ -1,0 +1,453 @@
+{
+  "id_nivel": "animalia_z3_runner_equipo",
+  "motor": "runner",
+  "modo_juego": "equipo",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona3_pradera",
+  "tema": "Carrera de postas en la Pradera de las Jirafas: una sola carrera hasta la meta compartida; cada turno es un tramo y la posta (un huesito dorado) pasa al corredor del siguiente hermano (motor-runner.md §12.2)",
+  "nota": "dev-godot HE-119 (05-Nov-2026): PROVISIONAL. Tope por turno = obstaculos pasados limpios (semilla 2, brote 5, estrella 8). La meta del equipo son `obstaculos_meta` pasos limpios en total. Choque sin burbuja = fallo que corta el turno. Sin puntaje, sin burbuja y sin corazones en equipo. planeta-animalia-zonas.md §8 solo pide equipo en ¿Quien habla?: estos niveles quedan listos para cuando el PO quiera sumar la Carrera al modo equipo o a la batalla (HE-115).",
+  "escenario": {
+    "id": "pradera",
+    "noche": false
+  },
+  "fondo": {
+    "parallax": [
+      0.2,
+      0.5,
+      1.0
+    ],
+    "atardecer_en": 0.7
+  },
+  "corredor": {
+    "alto": 150,
+    "ancho": 120,
+    "caja": [
+      0.6,
+      0.75
+    ],
+    "id": "toby"
+  },
+  "obstaculos": [
+    {
+      "id": "tronco",
+      "dibujo": "tronco",
+      "tamano": [
+        90,
+        60
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "piedra",
+      "dibujo": "piedra",
+      "tamano": [
+        70,
+        55
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "fardo",
+      "dibujo": "fardo",
+      "tamano": [
+        80,
+        70
+      ],
+      "tipo": "suelo"
+    }
+  ],
+  "caja_obstaculo": [
+    0.7,
+    0.8
+  ],
+  "velocidad": 400,
+  "salto": {
+    "duracion_s": 0.8,
+    "altura": 210,
+    "impulso_s": 0.05,
+    "imantado_s": 0,
+    "imantado_max_s": 0,
+    "amable_px": 12,
+    "en_cola_ms": 150,
+    "variable": null
+  },
+  "huecos": {
+    "min_s": 1.6,
+    "factor_max": 1.5,
+    "grupo_max": 1,
+    "repetidos_max": 2
+  },
+  "meta": {
+    "dibujo": "acacia"
+  },
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "maxi_mueve_rival": false,
+    "semilla_auto_s": 20,
+    "aciertos_max_turno": {
+      "semilla": 2,
+      "brote": 5,
+      "estrella": 8
+    },
+    "composiciones": {
+      "maxi+nicole+sofia": {
+        "pasos_rival": 6,
+        "obstaculos_meta": 30
+      },
+      "maxi+nicole": {
+        "pasos_rival": 6,
+        "obstaculos_meta": 21
+      },
+      "maxi+sofia": {
+        "pasos_rival": 5,
+        "obstaculos_meta": 24
+      },
+      "nicole+sofia": {
+        "pasos_rival": 5,
+        "obstaculos_meta": 32
+      }
+    },
+    "perfiles": {
+      "semilla": {
+        "corredor": {
+          "alto": 170,
+          "ancho": 130,
+          "caja": [
+            0.6,
+            0.75
+          ],
+          "id": "carno"
+        },
+        "obstaculos": [
+          {
+            "id": "arbusto_florido",
+            "dibujo": "arbusto_florido",
+            "tamano": [
+              90,
+              70
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "fardo",
+            "dibujo": "fardo",
+            "tamano": [
+              80,
+              70
+            ],
+            "tipo": "suelo"
+          }
+        ],
+        "velocidad": 240,
+        "velocidad_max": 240,
+        "segundos_a_max": null,
+        "inicio_libre_s": 1.5,
+        "salto": {
+          "duracion_s": 0.9,
+          "altura": 240,
+          "impulso_s": 0.06,
+          "imantado_s": 1.2,
+          "imantado_max_s": 0.8,
+          "amable_px": 0,
+          "en_cola_ms": 150,
+          "variable": null
+        },
+        "huecos": {
+          "min_s": 3.5,
+          "factor_max": 1.5,
+          "grupo_max": 1,
+          "repetidos_max": 2
+        },
+        "aereos": null,
+        "obstaculos_blandos": true,
+        "coleccionables": {
+          "ids": [
+            "huevito"
+          ],
+          "puntos": 0,
+          "radio": 22,
+          "cada_s": [
+            3,
+            6
+          ]
+        }
+      },
+      "brote": {
+        "corredor": {
+          "alto": 200,
+          "ancho": 130,
+          "caja": [
+            0.6,
+            0.6
+          ],
+          "id": "jirafa"
+        },
+        "obstaculos": [
+          {
+            "id": "tronco",
+            "dibujo": "tronco",
+            "tamano": [
+              90,
+              60
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "piedra",
+            "dibujo": "piedra",
+            "tamano": [
+              70,
+              55
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "pajarito_alto",
+            "dibujo": "pajarito",
+            "tamano": [
+              70,
+              60
+            ],
+            "tipo": "aereo_alto",
+            "altura": 135
+          }
+        ],
+        "velocidad": 425,
+        "velocidad_max": 485,
+        "segundos_a_max": 30,
+        "inicio_libre_s": 1.5,
+        "salto": {
+          "duracion_s": 0.8,
+          "altura": 210,
+          "impulso_s": 0.05,
+          "imantado_s": 0,
+          "imantado_max_s": 0,
+          "amable_px": 12,
+          "en_cola_ms": 150,
+          "variable": null
+        },
+        "huecos": {
+          "min_s": 1.55,
+          "factor_max": 1.5,
+          "grupo_max": 2,
+          "repetidos_max": 2
+        },
+        "aereos": {
+          "desde_s": 0,
+          "tipos": [
+            "aereo_alto"
+          ],
+          "p": 0.2
+        },
+        "obstaculos_blandos": false,
+        "coleccionables": {
+          "ids": [
+            "manzanita",
+            "corazon"
+          ],
+          "puntos": 0,
+          "radio": 22,
+          "cada_s": [
+            3,
+            6
+          ]
+        }
+      },
+      "estrella": {
+        "corredor": {
+          "alto": 150,
+          "ancho": 120,
+          "caja": [
+            0.6,
+            0.75
+          ],
+          "id": "toby"
+        },
+        "obstaculos": [
+          {
+            "id": "tronco",
+            "dibujo": "tronco",
+            "tamano": [
+              90,
+              60
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "piedra",
+            "dibujo": "piedra",
+            "tamano": [
+              70,
+              55
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "fardo",
+            "dibujo": "fardo",
+            "tamano": [
+              80,
+              70
+            ],
+            "tipo": "suelo"
+          },
+          {
+            "id": "pajarito_alto",
+            "dibujo": "pajarito",
+            "tamano": [
+              70,
+              60
+            ],
+            "tipo": "aereo_alto",
+            "altura": 135
+          },
+          {
+            "id": "cometa_alta",
+            "dibujo": "cometa_papel",
+            "tamano": [
+              70,
+              60
+            ],
+            "tipo": "aereo_alto",
+            "altura": 135
+          },
+          {
+            "id": "pajarito_bajo",
+            "dibujo": "pajarito",
+            "tamano": [
+              70,
+              55
+            ],
+            "tipo": "aereo_bajo",
+            "altura": 30
+          }
+        ],
+        "velocidad": 590,
+        "velocidad_max": 650,
+        "segundos_a_max": 30,
+        "inicio_libre_s": 1.5,
+        "salto": {
+          "duracion_s": 0.62,
+          "altura": 185,
+          "impulso_s": 0.04,
+          "imantado_s": 0,
+          "imantado_max_s": 0,
+          "amable_px": 0,
+          "en_cola_ms": 150,
+          "variable": null
+        },
+        "huecos": {
+          "min_s": 1.05,
+          "factor_max": 1.5,
+          "grupo_max": 2,
+          "repetidos_max": 2
+        },
+        "aereos": {
+          "desde_s": 0,
+          "tipos": [
+            "aereo_alto",
+            "aereo_bajo"
+          ],
+          "p": 0.22
+        },
+        "obstaculos_blandos": false,
+        "coleccionables": {
+          "ids": [
+            "huesito"
+          ],
+          "puntos": 0,
+          "radio": 22,
+          "cada_s": [
+            3,
+            6
+          ]
+        }
+      }
+    }
+  },
+  "lineas_voz": {
+    "intro_ronda": "voces/animalia/runner/equipo_intro.wav",
+    "posta": "voces/animalia/runner/equipo_posta.wav",
+    "maxi_regalito": "voces/animalia/runner/equipo_maxi_regalito.wav",
+    "derrota_gag_equipo": [
+      "voces/animalia/runner/equipo_gag_01.wav",
+      "voces/animalia/runner/equipo_gag_02.wav",
+      "voces/animalia/runner/equipo_gag_03.wav"
+    ],
+    "logro_comun": {
+      "1": "voces/animalia/runner/equipo_logro_01.wav",
+      "2": "voces/animalia/runner/equipo_logro_02.wav",
+      "3": "voces/animalia/runner/equipo_logro_03.wav",
+      "4": "voces/animalia/runner/equipo_logro_04.wav",
+      "5": "voces/animalia/runner/equipo_logro_05.wav",
+      "6": "voces/animalia/runner/equipo_logro_06.wav"
+    },
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav",
+    "victoria_equipo": "voces/animalia/runner/equipo_victoria.wav",
+    "le_toca": {
+      "maxi": [
+        "voces/nucleo/equipo/le_toca_maxi_01.wav",
+        "voces/nucleo/equipo/le_toca_maxi_02.wav",
+        "voces/nucleo/equipo/le_toca_maxi_03.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/le_toca_nicole_01.wav",
+        "voces/nucleo/equipo/le_toca_nicole_02.wav",
+        "voces/nucleo/equipo/le_toca_nicole_03.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/le_toca_sofia_01.wav",
+        "voces/nucleo/equipo/le_toca_sofia_02.wav",
+        "voces/nucleo/equipo/le_toca_sofia_03.wav"
+      ]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": [
+        "voces/nucleo/equipo/animo_maxi_01.wav",
+        "voces/nucleo/equipo/animo_maxi_02.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/animo_nicole_01.wav",
+        "voces/nucleo/equipo/animo_nicole_02.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/animo_sofia_01.wav",
+        "voces/nucleo/equipo/animo_sofia_02.wav"
+      ]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "rival_embobado": [
+      "voces/nucleo/equipo/coleccionauta/embobado_01.wav",
+      "voces/nucleo/equipo/coleccionauta/embobado_02.wav",
+      "voces/nucleo/equipo/coleccionauta/embobado_03.wav"
+    ],
+    "rival_retrocede": [
+      "voces/nucleo/equipo/coleccionauta/retrocede_01.wav",
+      "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"
+    ],
+    "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav"
+  }
+}

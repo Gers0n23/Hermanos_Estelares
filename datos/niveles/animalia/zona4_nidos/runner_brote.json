@@ -1,0 +1,157 @@
+{
+  "id_nivel": "animalia_z4_runner_brote",
+  "motor": "runner",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "tema": "Corre un gatito: raices y hongos; pajaritos altos; meta: el arbol de los nidos",
+  "nota": "dev-godot HE-119 (05-Nov-2026): generado por herramientas/generar_niveles_runner.py. Numeros de planeta-animalia-zonas.md §4.4 y de motor-runner.md [HE-124] (politica de derrota del PO del 05-Nov-2026: corazones, regalo, ayuda fuerte, descanso). PROVISIONAL hasta la maqueta HE-110 y el playtest.",
+  "escenario": {
+    "id": "nidos",
+    "noche": false
+  },
+  "fondo": {
+    "parallax": [
+      0.2,
+      0.5,
+      1.0
+    ],
+    "atardecer_en": 0.7
+  },
+  "corredor": {
+    "alto": 150,
+    "ancho": 120,
+    "caja": [
+      0.6,
+      0.75
+    ],
+    "id": "gatito"
+  },
+  "obstaculos": [
+    {
+      "id": "raiz",
+      "dibujo": "raiz",
+      "tamano": [
+        100,
+        50
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "hongo",
+      "dibujo": "hongo",
+      "tamano": [
+        80,
+        80
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "pajarito_alto",
+      "dibujo": "pajarito",
+      "tamano": [
+        70,
+        60
+      ],
+      "tipo": "aereo_alto",
+      "altura": 135
+    }
+  ],
+  "caja_obstaculo": [
+    0.7,
+    0.8
+  ],
+  "coleccionables": {
+    "ids": [
+      "manzanita",
+      "corazon"
+    ],
+    "puntos": 25,
+    "radio": 22,
+    "cada_s": [
+      3,
+      6
+    ]
+  },
+  "meta": {
+    "dibujo": "arbol_nidos"
+  },
+  "velocidad": 440,
+  "velocidad_max": 680,
+  "segundos_a_max": 120,
+  "inicio_libre_s": 3.0,
+  "salto": {
+    "duracion_s": 0.8,
+    "altura": 210,
+    "impulso_s": 0.05,
+    "imantado_s": 0,
+    "imantado_max_s": 0,
+    "amable_px": 12,
+    "en_cola_ms": 150,
+    "variable": null
+  },
+  "huecos": {
+    "min_s": 1.45,
+    "factor_max": 1.5,
+    "grupo_max": 2,
+    "repetidos_max": 2
+  },
+  "aereos": {
+    "desde_s": 0,
+    "tipos": [
+      "aereo_alto"
+    ],
+    "p": 0.22
+  },
+  "obstaculos_blandos": false,
+  "corazones": 2,
+  "invulnerable_golpe_s": 1.0,
+  "burbuja": null,
+  "meta_s": 90,
+  "tramo_record_s": 45,
+  "banderita_mitad": true,
+  "regalo_tras_derrotas": 2,
+  "regalo": {
+    "tipo": "burbuja"
+  },
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 3,
+  "gag_derrota_s": 2.5,
+  "puntos": {
+    "por_segundo": 10,
+    "racha_saltos": 5,
+    "racha": 50,
+    "meta": 200,
+    "final": 300
+  },
+  "hito_cada": 100,
+  "mostrar_puntaje": "barra",
+  "ayuda_idle_s": null,
+  "lineas_voz": {
+    "intro": "voces/animalia/runner/intro_brote_z4.wav",
+    "largada": "voces/animalia/runner/largada.wav",
+    "meta": [
+      "voces/animalia/runner/meta_01.wav",
+      "voces/animalia/runner/meta_02.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/runner/al_barro_z4.wav",
+      "voces/animalia/runner/al_barro_01.wav",
+      "voces/animalia/runner/al_barro_02.wav"
+    ],
+    "regalo": "voces/animalia/runner/regalo_burbuja.wav",
+    "descansar": "voces/animalia/runner/descansar.wav",
+    "victoria": "voces/animalia/runner/victoria_brote.wav",
+    "burbuja_presenta": "voces/animalia/runner/burbuja_presenta.wav",
+    "corazon_menos": [
+      "voces/animalia/runner/uy_01.wav",
+      "voces/animalia/runner/uy_02.wav"
+    ],
+    "sigue_record": "voces/animalia/runner/sigue_record.wav",
+    "final_sendero": "voces/animalia/runner/final_sendero.wav",
+    "record": "voces/animalia/runner/record.wav",
+    "primer_record": "voces/animalia/runner/primer_record.wav",
+    "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav",
+    "mitad": "voces/animalia/runner/banderita_mitad.wav"
+  }
+}
