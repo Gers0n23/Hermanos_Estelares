@@ -1,0 +1,149 @@
+{
+  "id_nivel": "animalia_z4_topos_estrella",
+  "motor": "topos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "fondo_tema": "nidos",
+  "fondo": "",
+  "tema": "Aves y selva",
+  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p40 (20 -> 28 por ronda), 2 rondas de 60 s, regalo tras 3 derrotas (meta x 0,85), descanso tras 4 y pista con costo. Umbrales: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+  "madrigueras": 9,
+  "modo": "continuo",
+  "asomados": 4,
+  "asomados_min": 3,
+  "asomados_max": 5,
+  "intervalo_pedido_s": 1.25,
+  "t_arriba_s": 1.15,
+  "variacion_t_arriba": 0.25,
+  "aviso_s": 0.08,
+  "pausa_entre_pedidos": 0.5,
+  "pedidos": null,
+  "duracion_s": 60,
+  "rondas": 2,
+  "meta": 26,
+  "meta_ficha": 26,
+  "repetir_sonido": "no",
+  "ondas_visibles": "minimas",
+  "animales": [
+    {
+      "id": "buho",
+      "sonido": "sfx/animalia/animales/buho.ogg",
+      "nombre_voz": "voces/animalia/nombres/buho.wav",
+      "palabra": "BÚHO"
+    },
+    {
+      "id": "lechuza",
+      "sonido": "sfx/animalia/animales/lechuza.ogg",
+      "nombre_voz": "voces/animalia/nombres/lechuza.wav"
+    },
+    {
+      "id": "tucan",
+      "sonido": "sfx/animalia/animales/tucan.ogg",
+      "nombre_voz": "voces/animalia/nombres/tucan.wav",
+      "palabra": "TUCÁN"
+    },
+    {
+      "id": "tricahue",
+      "sonido": "sfx/animalia/animales/tricahue.ogg",
+      "nombre_voz": "voces/animalia/nombres/tricahue.wav"
+    },
+    {
+      "id": "choroy",
+      "sonido": "sfx/animalia/animales/choroy.ogg",
+      "nombre_voz": "voces/animalia/nombres/choroy.wav"
+    },
+    {
+      "id": "carpintero",
+      "sonido": "sfx/animalia/animales/carpintero.ogg",
+      "nombre_voz": "voces/animalia/nombres/carpintero.wav"
+    },
+    {
+      "id": "mono_aullador",
+      "sonido": "sfx/animalia/animales/mono_aullador.ogg",
+      "nombre_voz": "voces/animalia/nombres/mono_aullador.wav"
+    },
+    {
+      "id": "perezoso",
+      "sonido": "sfx/animalia/animales/perezoso.ogg",
+      "nombre_voz": "voces/animalia/nombres/perezoso.wav"
+    },
+    {
+      "id": "chucao",
+      "sonido": "sfx/animalia/animales/chucao.ogg",
+      "nombre_voz": "voces/animalia/nombres/chucao.wav",
+      "palabra": "CHUCAO"
+    }
+  ],
+  "similares": [
+    [
+      "tricahue",
+      "choroy"
+    ],
+    [
+      "buho",
+      "lechuza"
+    ]
+  ],
+  "p_similar": 0.3,
+  "pedido_escrito": {
+    "p": 0.25,
+    "tipo": "palabra"
+  },
+  "pedido_doble": {
+    "p": 0.2,
+    "separacion_s": 0.4
+  },
+  "toby_dorado": {
+    "cada_s": 12,
+    "puntos": 300
+  },
+  "impostor": null,
+  "puntos": {
+    "acierto": 100,
+    "racha_max": 5,
+    "rapidito": 50,
+    "rapidito_fraccion": 0.4,
+    "doble": 200,
+    "meta": 500
+  },
+  "umbrales_puntaje": {
+    "dos": 10600,
+    "tres": 12600
+  },
+  "regalo_tras_derrotas": {
+    "derrotas": 3,
+    "meta_factor": 0.85
+  },
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "max_estrellitas_tras_derrota": 2,
+  "pistas_cuestan_estrellita": true,
+  "pista_pedidos": 3,
+  "lineas_voz": {
+    "intro": "voces/animalia/topos/estrella/z4_intro.wav",
+    "instruccion": "voces/animalia/topos/estrella/instruccion.wav",
+    "meta_llena": "voces/animalia/topos/estrella/meta_llena.wav",
+    "victoria": [
+      "voces/animalia/topos/estrella/victoria_01.wav",
+      "voces/animalia/topos/estrella/victoria_02.wav",
+      "voces/animalia/topos/estrella/victoria_03.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/topos/estrella/derrota_gag_01.wav",
+      "voces/animalia/topos/estrella/derrota_gag_02.wav"
+    ],
+    "regalo": "voces/animalia/topos/estrella/regalo.wav",
+    "toby_dorado": [
+      "voces/animalia/topos/estrella/toby_dorado_01.wav",
+      "voces/animalia/topos/estrella/toby_dorado_02.wav"
+    ],
+    "toby_dorado_presenta": "voces/animalia/topos/estrella/toby_dorado_presenta.wav",
+    "toby_tocado": "voces/animalia/topos/estrella/toby_tocado.wav",
+    "ronda_2": "voces/animalia/topos/estrella/ronda_2.wav",
+    "descansar": "voces/animalia/topos/estrella/descansar.wav",
+    "record": "voces/animalia/topos/estrella/record.wav",
+    "primer_record": "voces/animalia/topos/estrella/primer_record.wav",
+    "pista_usada": "voces/animalia/topos/estrella/pista_usada.wav"
+  }
+}

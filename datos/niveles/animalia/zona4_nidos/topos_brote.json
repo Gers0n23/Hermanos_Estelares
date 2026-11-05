@@ -1,0 +1,125 @@
+{
+  "id_nivel": "animalia_z4_topos_brote",
+  "motor": "topos",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "fondo_tema": "nidos",
+  "fondo": "",
+  "tema": "Arriba en los nidos",
+  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p25 (14 -> 18 por ronda), 2 rondas de 60 s, regalo tras 2 derrotas (meta x 0,8) y descanso tras 3. Umbrales de estrellitas: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+  "madrigueras": 6,
+  "modo": "tandas",
+  "asomados": 4,
+  "t_arriba_s": 2.0,
+  "aviso_s": 0.15,
+  "pausa_entre_pedidos": 0.6,
+  "pedidos": null,
+  "duracion_s": 60,
+  "rondas": 2,
+  "meta": 16,
+  "meta_ficha": 17,
+  "repetir_sonido": "no",
+  "ondas_visibles": "completas",
+  "animales": [
+    {
+      "id": "mono",
+      "sonido": "sfx/animalia/animales/mono.ogg",
+      "nombre_voz": "voces/animalia/nombres/mono.wav"
+    },
+    {
+      "id": "tucan",
+      "sonido": "sfx/animalia/animales/tucan.ogg",
+      "nombre_voz": "voces/animalia/nombres/tucan.wav"
+    },
+    {
+      "id": "loro",
+      "sonido": "sfx/animalia/animales/loro.ogg",
+      "nombre_voz": "voces/animalia/nombres/loro.wav"
+    },
+    {
+      "id": "buho",
+      "sonido": "sfx/animalia/animales/buho.ogg",
+      "nombre_voz": "voces/animalia/nombres/buho.wav"
+    },
+    {
+      "id": "gatito",
+      "sonido": "sfx/animalia/animales/gatito.ogg",
+      "nombre_voz": "voces/animalia/nombres/gatito.wav"
+    },
+    {
+      "id": "caballo",
+      "sonido": "sfx/animalia/animales/caballo.ogg",
+      "nombre_voz": "voces/animalia/nombres/caballo.wav"
+    },
+    {
+      "id": "pony",
+      "sonido": "sfx/animalia/animales/pony.ogg",
+      "nombre_voz": "voces/animalia/nombres/pony.wav"
+    }
+  ],
+  "similares": [
+    [
+      "pony",
+      "caballo"
+    ]
+  ],
+  "p_similar": 0.15,
+  "pedido_escrito": {
+    "p": 0.0,
+    "tipo": "letra"
+  },
+  "pedido_doble": {
+    "p": 0.0,
+    "separacion_s": 0.4
+  },
+  "toby_dorado": {
+    "cada_s": 15,
+    "puntos": 300
+  },
+  "impostor": null,
+  "puntos": {
+    "acierto": 100,
+    "racha_max": 5,
+    "rapidito": 50,
+    "rapidito_fraccion": 0.4,
+    "doble": 200,
+    "meta": 500
+  },
+  "umbrales_puntaje": {
+    "dos": 7400,
+    "tres": 8900
+  },
+  "regalo_tras_derrotas": {
+    "derrotas": 2,
+    "meta_factor": 0.8
+  },
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 3,
+  "pistas_cuestan_estrellita": false,
+  "lineas_voz": {
+    "intro": "voces/animalia/topos/brote/z4_intro.wav",
+    "instruccion": "voces/animalia/topos/brote/instruccion.wav",
+    "meta_llena": "voces/animalia/topos/brote/meta_llena.wav",
+    "victoria": [
+      "voces/animalia/topos/brote/victoria_01.wav",
+      "voces/animalia/topos/brote/victoria_02.wav",
+      "voces/animalia/topos/brote/victoria_03.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/topos/brote/derrota_gag_01.wav",
+      "voces/animalia/topos/brote/derrota_gag_02.wav"
+    ],
+    "regalo": "voces/animalia/topos/brote/regalo.wav",
+    "toby_dorado": [
+      "voces/animalia/topos/brote/toby_dorado_01.wav",
+      "voces/animalia/topos/brote/toby_dorado_02.wav"
+    ],
+    "toby_dorado_presenta": "voces/animalia/topos/brote/toby_dorado_presenta.wav",
+    "toby_tocado": "voces/animalia/topos/brote/toby_tocado.wav",
+    "ronda_2": "voces/animalia/topos/brote/ronda_2.wav",
+    "descansar": "voces/animalia/topos/brote/descansar.wav",
+    "record": "voces/animalia/topos/brote/record.wav",
+    "primer_record": "voces/animalia/topos/brote/primer_record.wav"
+  }
+}

@@ -80,8 +80,10 @@ pelean, las cosas salen mal; cuando cooperan, avanzan y rescatan a papá.
   niveles de Nicole y Sofía la derrota existe y es un **gag** (el cohete hace *pffft* y aterriza
   en un charco, el personaje queda cubierto de pintura, los animales se ríen contigo). Risa
   primero, botón gigante de «¡otra vez!» inmediato y **cero progreso perdido**. La dificultad se
-  ajusta a cada edad para que nunca sea imposible. Para Maxi (nivel Semilla) el fallo sigue sin
-  existir: a los 2 años ni la derrota más chistosa se procesa bien.
+  ajusta a cada edad para que nunca sea imposible. *(Actualizado 05-Nov-2026, decisión del PO,
+  HE-124: «perder sí debe ser una opción para que sea entretenido, incluso aunque se frustren un
+  poco». Desde ahora **los tres perfiles pueden perder**, también Maxi, con una derrota suave y muy
+  graciosa: ver §6 regla 11.)*
 - **Sin castigo ni presión de tiempo narrativa**: la misión avanza al ritmo de ellos — jamás un
   «apúrate que papá espera».
 - Equivocarse siempre recibe ánimo ("¡casi! inténtalo otra vez") y acertar recibe fiesta (confeti, estrellitas, sonidos alegres).
@@ -98,7 +100,7 @@ sesión de descubrimiento — `docs/perfil-jugadores.md`.)*
 
 | Personaje | Edad | Personalidad | Rol en la historia | Perfil de juego |
 |---|---|---|---|---|
-| **Maxi** | 2 años | Muy despierto, bueno para bailar, actitud muy valiente. Nada lo asusta. | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Sin fallo posible: toda interacción produce algo bonito. Cero texto, todo audio e íconos. |
+| **Maxi** | 2 años | Muy despierto, bueno para bailar, actitud muy valiente. Nada lo asusta. | El pequeño explorador valiente. Nada lo asusta: encuentra piezas y secretos donde nadie mira. | **Nivel Semilla** — tocar, arrastrar, causa-efecto. Toda interacción produce algo bonito; **perder es posible pero suave** (HE-124, 05-Nov-2026: meta muy generosa, gag gracioso, reintento de un toque y ayuda fuerte de la mascota tras 3 derrotas, §6 regla 11). Cero texto, todo audio e íconos. |
 | **Nicole** | 5 años | Extrovertida, adorable y siempre contenta; muy solidaria, comparte sin dudar; hace amigos con facilidad y sin miedo al ridículo; mucha imaginación, ama dibujar y pintar. | La embajadora artista y solidaria: se hace amiga de los habitantes de cada planeta sin ningún miedo, comparte lo que tiene con quien lo necesita, y dibuja los recuerdos del viaje. | **Nivel Brote** — contar hasta 10-20, formas, memoria, clasificar, secuencias simples, **y refuerzo de lectura inicial** (reconocer letras, unir sonido-letra, primeras palabras cortas) *(decisión del PO, 06-Ago-2026: aprender a leer es hoy el reto más grande de Nicole, así que los minijuegos orientados a eso son especialmente bienvenidos en su ruta)*. Instrucciones 100% por voz — el refuerzo de lectura es apoyo, nunca un requisito para avanzar. |
 | **Sofía** | 8 años | Muy inteligente, líder natural, buena para leer y resolver desafíos; cuida a sus hermanos chicos como una "mini-mamá"; se frustra rápido, por eso el fracaso nunca castiga. | La líder de la misión y hermana mayor que cuida a los otros dos: lee las pistas, arma el plan y guía a sus hermanos hasta papá. | **Nivel Estrella** — lectura de frases cortas, sumas y restas (con números algo mayores), lógica, retos de habilidad suaves, con **reto alto** *(decisión del PO, 14-Sep-2026: reemplaza a la "dificultad levemente mayor" del 06-Ago-2026, ver §5)*. Texto simple apoyado por voz. |
 
@@ -339,8 +341,8 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 #### Planeta Arcoíris
 1. **Lluvia de colores** — caen gotas de colores, hay que tocarlas/arrastrarlas al charco del mismo color. S: tocar cualquier gota hace magia de color. B: emparejar color correcto. E: mezclas (azul+amarillo=verde). *(03-Oct-2026: en rediseño para B y E sobre una mecánica probada no rítmica — ver §5 "Mecánicas probadas y reto real".)* *(06-Oct-2026, decisión del PO: se reemplaza por **«Río de pintura»**, tipo Zuma: Coco dispara gotas con la lengua a un río que avanza hacia un remolino gris, con mezclas para E, poderes, súper y récords. Es el primer juego del planeta. S también lo juega: el mismo río que B, solo que más lento. Roadmap y diseño en `docs/roadmap-rio-de-pintura.md`.)*
 2. **Formas traviesas** — encajar formas en siluetas (tipo tablero de encaje). S: 3 formas grandes con imán generoso. B: 6-8 formas. E: figuras compuestas (una casa hecha de triángulo+cuadrado).
-3. **Pinta con Coco** — lienzo libre para pintar con dedos/mouse; Coco imita los colores usados. Igual para todos (juego de expresión, sin objetivo). Se puede guardar el dibujo. *(14-Sep-2026: desde la zona 2 del mapa del planeta suma "encargos creativos" de Coco —colorear por zonas, espejo, mezcla en paleta, decorar el ala— siempre sin fallo en ningún perfil.)*
-4. **Parejas de Coco** *(cuarto minijuego, decisión del PO 14-Sep-2026; motor `emparejar`)* — encontrar parejas de figuras y colores. S: pares siempre a la vista, imposible perder. B: memoria con cartas tapadas, tiempos generosos y ayuda de Coco. E: memoria real con límite de intentos, estrellitas, correspondencias (mezcla ↔ receta, figura ↔ sombra) y el arcoíris secreto.
+3. **Pinta con Coco** — lienzo libre para pintar con dedos/mouse; Coco imita los colores usados. Igual para todos (juego de expresión, sin objetivo). Se puede guardar el dibujo. *(14-Sep-2026: desde la zona 2 del mapa del planeta suma "encargos creativos" de Coco —colorear por zonas, espejo, mezcla en paleta, decorar el ala— siempre sin fallo en ningún perfil.)* *(05-Nov-2026, HE-124/HE-125: el **lienzo libre** sigue sin derrota —no tiene objetivo que fallar—, pero los **encargos** suman un solcito que "seca la pintura" con derrota-gag por perfil. El dibujo **nunca** se pierde: se guarda en "Mis obras" aunque el encargo no se logre. Detalle en `docs/fichas/recalibracion-arcoiris-derrota.md`.)*
+4. **Parejas de Coco** *(cuarto minijuego, decisión del PO 14-Sep-2026; motor `emparejar`)* — encontrar parejas de figuras y colores. S: pares siempre a la vista, con un límite de fallos muy generoso (HE-124/HE-125: antes "imposible perder"). B: memoria con cartas tapadas, tiempos generosos y ayuda de Coco. E: memoria real con límite de intentos, estrellitas, correspondencias (mezcla ↔ receta, figura ↔ sombra) y el arcoíris secreto.
 
 > **Variantes por zona**: cada minijuego del Planeta Arcoíris tiene una variante distinta y más
 > retadora en cada una de las 5 zonas del mapa del planeta, por hermano. Ver
@@ -350,6 +352,13 @@ Cada minijuego lista su mecánica base y cómo escala en los tres niveles
 1. **¿Quién habla?** — suena un animal, hay que tocar cuál fue. S: 2 opciones, ambas celebran pero se refuerza la correcta. B: 4 opciones. E: 6 opciones + animales menos comunes.
 2. **Cada quien a su casa** — arrastrar animales a su hábitat (pez→agua, pájaro→nido...). S: 2 animales. B: 5. E: 8 + hábitats menos obvios (pingüino→hielo).
 3. **Escondite animal** — escena llena de detalles donde encontrar animales escondidos (tipo "buscar y encontrar"). S: animales visibles que hacen ruido al tocarlos. B: encontrar los 5 de la lista (por voz). E: encontrar por pista leída ("busca al que tiene rayas").
+
+> *(05-Nov-2026, decisión del PO: Animalia es una réplica completa de Arcoíris con **4 juegos**; el 4.º es
+> **Carrera de Toby** (motor `runner`, tipo el dinosaurio de Chrome). Las mecánicas vigentes de los 4 juegos
+> —¿Quién habla? tipo Whac-a-Mole, Cada quien a su casa tipo Flow Free, Escondite animal tipo Hidden Folks y
+> la Carrera— y su escala por perfil, incluida la derrota de HE-124, viven en `docs/fichas/motor-topos.md`,
+> `motor-caminos.md`, `motor-buscar.md`, `motor-runner.md` y `planeta-animalia-zonas.md`. Las descripciones
+> de arriba son las originales y quedan como referencia.)*
 
 #### Planeta Melodía
 1. **La banda de Octavio** — tocar instrumentos que suenan de verdad (caja de sonidos). S: libre, todo suena bonito. B: repetir secuencias de 2-3 sonidos (tipo "Simon" muy suave). E: secuencias de 4-6 y ritmos.
@@ -409,9 +418,9 @@ familia). Todo el detalle está en `docs/fichas/album-recuerdos.md`.
 - **Todo desbloqueado entre hermanos**: cualquiera puede entrar a los niveles de los otros,
   sin castigo ni bloqueo (jugar la ruta de otro no rompe el progreso propio).
 - Regla de oro por perfil (aplica a los niveles de la ruta de cada uno):
-  - **Semilla (Maxi)**: imposible perder, imposible trabarse. Todo lo tocable responde con algo agradable. Nada de texto ni menús intermedios.
-  - **Brote (Nicole)**: se puede "no lograrlo" con derrota-gag y reintento suave inmediato; los errores dan pistas por voz. Máximo un objetivo a la vez. **Refuerzo de lectura inicial** *(decisión del PO, 06-Ago-2026)*: Nicole está aprendiendo a leer ahora mismo, así que su ruta prioriza contenido de letras/sonidos/palabras cortas (mismo espíritu que Planeta Letralandia, ver §4) como complemento bienvenido al resto de su ruta (conteo, formas, memoria...) — nunca la reemplaza ni se vuelve requisito para avanzar.
-  - **Estrella (Sofía)**: se puede perder de verdad — siempre con derrota chistosa, nunca imposible para su edad — y hay puntaje de 1-3 estrellitas para incentivar repetir; completar siempre es posible y siempre se celebra. **Reto alto** *(decisión del PO, 14-Sep-2026, "dificultad v3"; reemplaza al "levemente mayor" del 06-Ago-2026)*: armar 2-3 piezas "lo hace con los ojos cerrados", así que su ruta usa retos de 8-12 años respaldados por estudios y juegos de lógica — tangram de 7 piezas solo con contorno y espejo, copia de memoria, marcos de pentominós (Katamino), memoria de 12-18 pares con tríos, sombras en espejo y cartas que se mueven. Los límites se fijan con una jugadora simulada con la memoria visual típica de su edad (~5 elementos). Para que nunca quede trabada: **pistas que cuestan una estrellita**, **Coco regala una pieza o pareja tras 2 derrotas** y cada estación final tiene un **reto dorado opcional** (aparece con 3 estrellitas) que no bloquea nada. Detalle en `docs/fichas/planeta-arcoiris-zonas.md` §3.2-§3.3.
+  - **Semilla (Maxi)**: imposible trabarse. Todo lo tocable responde con algo agradable. Nada de texto ni menús intermedios. **Perder es posible pero suave** *(05-Nov-2026, HE-124; reemplaza a "imposible perder")*: metas al percentil 10 de un jugador simulado de 2 años (~90 % gana al primer intento), gag corto y gracioso, reintento de un toque, regalo tras 2 derrotas y **ayuda fuerte** tras 3 (la mascota deja la victoria asegurada en el intento siguiente). Ver §6 regla 11.
+  - **Brote (Nicole)**: se puede perder en **todos** los juegos *(HE-124: metas al percentil 25, ~75 % gana al primer intento)*, con derrota-gag y reintento suave inmediato; los errores dan pistas por voz; regalo tras 2 derrotas. Máximo un objetivo a la vez. **Refuerzo de lectura inicial** *(decisión del PO, 06-Ago-2026)*: Nicole está aprendiendo a leer ahora mismo, así que su ruta prioriza contenido de letras/sonidos/palabras cortas (mismo espíritu que Planeta Letralandia, ver §4) como complemento bienvenido al resto de su ruta (conteo, formas, memoria...) — nunca la reemplaza ni se vuelve requisito para avanzar.
+  - **Estrella (Sofía)**: se puede perder de verdad — siempre con derrota chistosa, nunca imposible para su edad — y hay puntaje de 1-3 estrellitas para incentivar repetir; completar siempre es posible y siempre se celebra. **Reto alto** *(decisión del PO, 14-Sep-2026, "dificultad v3"; reemplaza al "levemente mayor" del 06-Ago-2026)*: armar 2-3 piezas "lo hace con los ojos cerrados", así que su ruta usa retos de 8-12 años respaldados por estudios y juegos de lógica — tangram de 7 piezas solo con contorno y espejo, copia de memoria, marcos de pentominós (Katamino), memoria de 12-18 pares con tríos, sombras en espejo y cartas que se mueven. Los límites se fijan con una jugadora simulada con la memoria visual típica de su edad (~5 elementos). Para que nunca quede trabada: **pistas que cuestan una estrellita**, **Coco regala una pieza o pareja tras 3 derrotas seguidas** *(HE-124, 05-Nov-2026: antes tras 2; sus metas suben al percentil 40, ~60 % gana al primer intento)* y cada estación final tiene un **reto dorado opcional** (aparece con 3 estrellitas) que no bloquea nada. Detalle en `docs/fichas/planeta-arcoiris-zonas.md` §3.2-§3.3.
 - **Perder nunca frustra** (ver §1 Tono): la derrota es un gag que da risa, reintento inmediato
   con botón gigante y cero progreso perdido.
 - En la zona de padres se podrá **ajustar el perfil de cada niño** manualmente (los niños crecen: en un año Maxi puede pasar a Brote).
@@ -452,6 +461,28 @@ Reglas obligatorias para toda pantalla del juego:
 8. **Salir siempre es seguro**: cerrar el juego en cualquier momento no pierde progreso.
 9. **Feedback de celebración generoso**: confeti, estrellas, bailecito del personaje y frase de ánimo al completar cualquier cosa.
 10. **Volumen y música ajustables por separado** (música / efectos / voz), recordados por perfil.
+11. **Perder es posible** *(decisión del PO, 05-Nov-2026, HE-124: «definimos dificultades demasiado
+    fáciles para todos los niveles. Perder sí debe ser una opción para que sea entretenido para los
+    niños, incluso aunque se frustren un poco»)*. Todo minijuego con objetivo admite derrota en los tres
+    perfiles; lo que cambia por edad es **cuánto cuesta perder** y **cuánto ayuda la mascota después**:
+
+    | | Sofía · Estrella | Nicole · Brote | Maxi · Semilla |
+    |---|---|---|---|
+    | Meta calibrada al (jugador simulado de su edad) | **percentil 40** (~60 % gana al 1.er intento) | **percentil 25** (~75 %) | **percentil 10** (~90 %) |
+    | Relojes de derrota (nube, sol…) | **1,6 × tiempo par** | **2,2 × tiempo par** | **3 × tiempo par** |
+    | Juegos de reflejos (runner) | 1 choque fuera de burbuja = derrota (como Chrome) | 2 corazones | 3 corazones |
+    | Regalo de la mascota | tras **3** derrotas seguidas | tras **2** | tras **2** |
+    | Ayuda fuerte (victoria asegurada en el intento siguiente) | — | — | tras **3** |
+    | Ofrecer descansar (sin obligar) | tras 4 | tras 3 | — (la ayuda fuerte ya resuelve) |
+
+    Y lo que **nunca** cambia: la derrota es un **gag que da risa** (§1), el reintento es de **un toque**
+    (botón ≥ 160 px o tocar en cualquier parte del cartel), **nada guardado se pierde** (destellos,
+    estaciones, récords, dibujos y fotos; dentro de un nivel, lo ya ganado —rondas, tableros, encontrados,
+    murales— queda ganado), y **jamás** textos o sonidos de castigo, zumbidos de error, pantallas rojas,
+    caras tristes ni conteos regresivos que apuren. **Destellos y estrellitas solo se ganan al ganar**
+    (perder da 0 y no resta). El modo equipo y las batallas siguen su propia regla (`modo-equipo.md`).
+    Parámetros por juego: Animalia en sus fichas de motor; Arcoíris en
+    `docs/fichas/recalibracion-arcoiris-derrota.md` (HE-125).
 
 ---
 

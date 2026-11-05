@@ -1,0 +1,19 @@
+# Voces del Rio de pintura en solitario (motor rio v2; HE-94; guion docs/guiones/voces-rio.md). Todas de Coco.
+# Nombres de los 2 + 1 = los del Taller de Coco (mezclar/recetas). Se dice "naranja" (decision del PO 05-Nov-2026).
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# Generar con el TTS local gratuito que elija el PO (pendiente). Sin audio todavia.
+# personaje: coco
+voces/arcoiris/rio/colores/verde.wav	¡Verde!
+voces/arcoiris/rio/colores/naranja.wav	¡Naranja!
+voces/arcoiris/rio/colores/violeta.wav	¡Violeta!
+voces/arcoiris/rio/colores/tomate.wav	¡Rojo tomate!
+voces/arcoiris/rio/colores/mango.wav	¡Color mango!
+voces/arcoiris/rio/colores/verde_limon.wav	¡Verde limón!
+voces/arcoiris/rio/colores/verde_azulado.wav	¡Verde azulado!
+voces/arcoiris/rio/colores/anil.wav	¡Añil!
+voces/arcoiris/rio/colores/fucsia.wav	¡Fucsia!
+voces/arcoiris/rio/batidora_presenta_brote.wav	¡Mira, Nicole, una batidora! Dispárale una amarilla y una azul... ¡y toca la palanca!
+voces/arcoiris/rio/batidora_presenta_estrella.wav	¡Una batidora en el puente! Dispárale dos colores, toca la palanca... ¡y te sirve la mezcla!
+voces/arcoiris/rio/dos_mas_uno_presenta.wav	¡Colores nuevos! Mira sus puntitos: dos de un color y uno de otro. ¡Tres gotas a la batidora!
+voces/arcoiris/rio/cafe_primera.wav	¡Jajaja! ¡Rojo, amarillo y azul... café! ¡La batidora se tomó un cafecito!
+voces/arcoiris/rio/cafe_otra_vez.wav	¡Otro cafecito! Con dos iguales, sale un color nuevo.
