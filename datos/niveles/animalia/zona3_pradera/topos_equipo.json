@@ -1,0 +1,199 @@
+{
+  "id_nivel": "animalia_z3_topos_equipo",
+  "motor": "topos",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona3_pradera",
+  "fondo_tema": "pradera",
+  "fondo": "",
+  "modo_juego": "equipo",
+  "tema": "¿Quién habla? en equipo: un solo claro y el turno se mide en pedidos (motor-topos.md §12.2)",
+  "nota": "HE-116 (05-Nov-2026). Contrato de modo-equipo.md §11.4 y motor-topos.md §12.2: tope por turno (M 1, N 3, S 4), el escape corta el turno, el error es fallo suave, Maxi sin escape y con jugada automatica. Gana el equipo al juntar aciertos_meta; el Coleccionauta avanza en los pases con fallo. Valores de dev-godot PROVISIONALES: disenador-niveles debe simularlos (como HE-66).",
+  "madrigueras": 6,
+  "modo": "tandas",
+  "asomados": 3,
+  "t_arriba_s": 2.4,
+  "aviso_s": 0.15,
+  "pausa_entre_pedidos": 0.7,
+  "duracion_s": null,
+  "rondas": 1,
+  "meta": null,
+  "repetir_sonido": "una_vez",
+  "ondas_visibles": "completas",
+  "animales": [
+    {
+      "id": "jirafa",
+      "sonido": "sfx/animalia/animales/jirafa.ogg",
+      "nombre_voz": "voces/animalia/nombres/jirafa.wav"
+    },
+    {
+      "id": "cebra",
+      "sonido": "sfx/animalia/animales/cebra.ogg",
+      "nombre_voz": "voces/animalia/nombres/cebra.wav"
+    },
+    {
+      "id": "elefante",
+      "sonido": "sfx/animalia/animales/elefante.ogg",
+      "nombre_voz": "voces/animalia/nombres/elefante.wav"
+    },
+    {
+      "id": "caballo",
+      "sonido": "sfx/animalia/animales/caballo.ogg",
+      "nombre_voz": "voces/animalia/nombres/caballo.wav"
+    },
+    {
+      "id": "gatito",
+      "sonido": "sfx/animalia/animales/gatito.ogg",
+      "nombre_voz": "voces/animalia/nombres/gatito.wav"
+    },
+    {
+      "id": "burro",
+      "sonido": "sfx/animalia/animales/burro.ogg",
+      "nombre_voz": "voces/animalia/nombres/burro.wav"
+    }
+  ],
+  "similares": [],
+  "p_similar": 0.0,
+  "toby_dorado": null,
+  "impostor": null,
+  "perfiles": {
+    "semilla": {
+      "t_arriba_s": null,
+      "asomados": 2,
+      "repetir_sonido": "cada_3s",
+      "ondas_visibles": "completas",
+      "pausa_entre_pedidos": 0.9
+    },
+    "brote": {
+      "t_arriba_s": 2.2,
+      "asomados": 3,
+      "repetir_sonido": "una_vez",
+      "ondas_visibles": "completas",
+      "pausa_entre_pedidos": 0.7
+    },
+    "estrella": {
+      "t_arriba_s": 1.3,
+      "asomados": 4,
+      "repetir_sonido": "no",
+      "ondas_visibles": "minimas",
+      "pausa_entre_pedidos": 0.5
+    }
+  },
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "ms_volteo_equipo": 800,
+    "maxi_mueve_rival": false,
+    "racha_retrocede_rival": 0,
+    "semilla_auto_s": 20,
+    "aciertos_max_turno": {
+      "semilla": 1,
+      "brote": 3,
+      "estrella": 4
+    },
+    "composiciones": {
+      "maxi+nicole": {
+        "pasos_rival": 5,
+        "aciertos_meta": 12
+      },
+      "maxi+sofia": {
+        "pasos_rival": 5,
+        "aciertos_meta": 13
+      },
+      "nicole+sofia": {
+        "pasos_rival": 6,
+        "aciertos_meta": 16
+      },
+      "maxi+nicole+sofia": {
+        "pasos_rival": 6,
+        "aciertos_meta": 16
+      }
+    }
+  },
+  "lineas_voz": {
+    "le_toca": {
+      "maxi": [
+        "voces/nucleo/equipo/le_toca_maxi_01.wav",
+        "voces/nucleo/equipo/le_toca_maxi_02.wav",
+        "voces/nucleo/equipo/le_toca_maxi_03.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/le_toca_nicole_01.wav",
+        "voces/nucleo/equipo/le_toca_nicole_02.wav",
+        "voces/nucleo/equipo/le_toca_nicole_03.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/le_toca_sofia_01.wav",
+        "voces/nucleo/equipo/le_toca_sofia_02.wav",
+        "voces/nucleo/equipo/le_toca_sofia_03.wav"
+      ]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": [
+        "voces/nucleo/equipo/animo_maxi_01.wav",
+        "voces/nucleo/equipo/animo_maxi_02.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/animo_nicole_01.wav",
+        "voces/nucleo/equipo/animo_nicole_02.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/animo_sofia_01.wav",
+        "voces/nucleo/equipo/animo_sofia_02.wav"
+      ]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "intro_ronda": "voces/animalia/topos/equipo/z3_intro.wav",
+    "maxi_regalito": "voces/animalia/topos/equipo/maxi_regalito.wav",
+    "derrota_gag_equipo": [
+      "voces/animalia/topos/equipo/derrota_gag_01.wav",
+      "voces/animalia/topos/equipo/derrota_gag_02.wav",
+      "voces/animalia/topos/equipo/derrota_gag_03.wav"
+    ],
+    "logro_comun": {
+      "1": "voces/animalia/topos/equipo/logro_01.wav",
+      "2": "voces/animalia/topos/equipo/logro_02.wav",
+      "3": "voces/animalia/topos/equipo/logro_03.wav",
+      "4": "voces/animalia/topos/equipo/logro_04.wav",
+      "5": "voces/animalia/topos/equipo/logro_05.wav",
+      "6": "voces/animalia/topos/equipo/logro_06.wav",
+      "7": "voces/animalia/topos/equipo/logro_07.wav",
+      "8": "voces/animalia/topos/equipo/logro_08.wav",
+      "9": "voces/animalia/topos/equipo/logro_09.wav",
+      "10": "voces/animalia/topos/equipo/logro_10.wav",
+      "11": "voces/animalia/topos/equipo/logro_11.wav",
+      "12": "voces/animalia/topos/equipo/logro_12.wav",
+      "13": "voces/animalia/topos/equipo/logro_13.wav",
+      "14": "voces/animalia/topos/equipo/logro_14.wav",
+      "15": "voces/animalia/topos/equipo/logro_15.wav",
+      "16": "voces/animalia/topos/equipo/logro_16.wav",
+      "17": "voces/animalia/topos/equipo/logro_17.wav",
+      "18": "voces/animalia/topos/equipo/logro_18.wav",
+      "19": "voces/animalia/topos/equipo/logro_19.wav",
+      "20": "voces/animalia/topos/equipo/logro_20.wav"
+    },
+    "nos_alcanzo": "voces/animalia/topos/equipo/nos_alcanzo.wav",
+    "victoria_equipo": "voces/animalia/topos/equipo/victoria.wav"
+  }
+}

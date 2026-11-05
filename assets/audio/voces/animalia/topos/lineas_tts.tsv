@@ -1,0 +1,161 @@
+# Voces de «¿Quién habla?» (motor topos, Planeta Animalia; HE-116, 05-Nov-2026). Las dice Toby.
+# Generado por herramientas/generar_niveles_topos.py (mismas rutas que los JSON de datos/niveles/animalia/).
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# Sin audio todavia: el juego funciona sin estos archivos (Audio.reproducir_voz los salta y el motor revisa que existan).
+# Pendiente de guionista (HE-112): revisar tono y datos; los sonidos de animales y SFX son sintetizados (motor) hasta los CC0.
+# personaje: toby
+voces/animalia/topos/semilla/z1_intro.wav	¡Hola, Maxi! Soy Toby. Mis amigos se esconden en sus hoyitos. ¡Escucha quién habla y tócalo!
+voces/animalia/topos/semilla/z2_intro.wav	¡Chapuzones, Maxi! ¿Escuchas? ¡Toca al que hace el ruido!
+voces/animalia/topos/semilla/z3_intro.wav	¡Shhh, Maxi! Hoy viene un dino sorpresa... ¡escucha y toca al que habla!
+voces/animalia/topos/semilla/z4_intro.wav	¡Dinos en el bosque, Maxi! ¡Grrr! Toca al dino que habla.
+voces/animalia/topos/semilla/z5_intro.wav	¡Todos los dinos, Maxi! Y el chiquitito Dinito. ¡Escucha y toca!
+voces/animalia/topos/semilla/instruccion.wav	¡Escucha! Toca al animalito que hace el ruido.
+voces/animalia/topos/semilla/meta_llena.wav	¡Siii! ¡El collar está lleno! ¡Sigamos jugando!
+voces/animalia/topos/semilla/victoria_01.wav	¡Lo lograste, Maxi! ¡Qué oído de explorador!
+voces/animalia/topos/semilla/victoria_02.wav	¡Bravo, Maxi! ¡Todos mis amigos te aplauden!
+voces/animalia/topos/semilla/victoria_03.wav	¡Guau, guau! ¡Ganaste, Maxi!
+voces/animalia/topos/semilla/derrota_gag_01.wav	¡Achís! ¡Jajaja! ¡Otra vez, otra vez!
+voces/animalia/topos/semilla/derrota_gag_02.wav	¡Uy, se nos hizo de noche! ¡Juguemos otra vez!
+voces/animalia/topos/semilla/regalo.wav	¡Te ayudo con mi nariz! Esta vez el collar es más cortito.
+voces/animalia/topos/semilla/ayuda_fuerte.wav	¡Ahora yo te ayudo a buscar! Los animalitos te esperan.
+voces/animalia/topos/semilla/toby_dorado_01.wav	¡Me encontraste! ¡Soy yo, Toby dorado!
+voces/animalia/topos/semilla/toby_dorado_02.wav	¡Jiji! ¡Hola, Maxi!
+voces/animalia/topos/semilla/toby_dorado_presenta.wav	¡Sorpresa! A veces yo también me escondo, brillando como el oro.
+voces/animalia/topos/semilla/toby_tocado.wav	¡Guau! ¡Escucha otra vez!
+voces/animalia/topos/brote/z1_intro.wav	¡Hola, Nicole! Mis amigos del campamento juegan a esconderse. ¡Toca al que habló antes de que se esconda!
+voces/animalia/topos/brote/z2_intro.wav	¡A la orilla, Nicole! Escucha bien y toca al que hace el sonido. ¡Rapidito!
+voces/animalia/topos/brote/z3_intro.wav	¡Llegaron las jirafas, Nicole! La jirafa hace un zumbido suavecito. ¿Lo escuchas?
+voces/animalia/topos/brote/z4_intro.wav	¡Arriba en los nidos, Nicole! Ojo: el pony y el caballo relinchan distinto. ¡Escucha bien!
+voces/animalia/topos/brote/z5_intro.wav	¡El valle mágico, Nicole! A veces te muestro una letra: toca al animal que empieza con esa letra.
+voces/animalia/topos/brote/instruccion.wav	Escucha el sonido y toca al animal que habló, antes de que se esconda.
+voces/animalia/topos/brote/meta_llena.wav	¡Collar lleno, Nicole! ¡Sigue sumando puntos!
+voces/animalia/topos/brote/ronda_2.wav	¡Ganaste la primera ronda! ¡Vamos con la segunda!
+voces/animalia/topos/brote/victoria_01.wav	¡Lo lograste, Nicole! ¡Tienes oído de jirafa!
+voces/animalia/topos/brote/victoria_02.wav	¡Increíble, Nicole! ¡Todos mis amigos cantan para ti!
+voces/animalia/topos/brote/victoria_03.wav	¡Bravo, Nicole! ¡Qué rapidez!
+voces/animalia/topos/brote/derrota_gag_01.wav	¡Nos escondimos todos! ¡Achís! ¡Otra vez!
+voces/animalia/topos/brote/derrota_gag_02.wav	¡Jajaja, se me empañó el casco! ¿Jugamos otra?
+voces/animalia/topos/brote/regalo.wav	¡Te ayudo olfateando! Esta vez el collar es más cortito.
+voces/animalia/topos/brote/descansar.wav	¿Vamos a jugar a otra cosa y volvemos después? ¡Tú eliges!
+voces/animalia/topos/brote/record.wav	¡Nuevo récord, Nicole! ¡Te ganaste el hueso-trofeo!
+voces/animalia/topos/brote/primer_record.wav	¡Tu primer récord! Aquí queda tu banderita.
+voces/animalia/topos/brote/toby_dorado_01.wav	¡Me atrapaste! ¡Puntos dorados!
+voces/animalia/topos/brote/toby_dorado_02.wav	¡Toby dorado! ¡Bien, Nicole!
+voces/animalia/topos/brote/toby_dorado_presenta.wav	¡Si me ves brillar, tócame! ¡Valgo muchos puntos!
+voces/animalia/topos/brote/toby_tocado.wav	¡Guau! ¡Tú puedes, Nicole!
+voces/animalia/topos/estrella/z1_intro.wav	¡Sofía, los cachorros quieren jugar! Toca al que habló antes de que se esconda. ¿Cuántos atrapas en un minuto?
+voces/animalia/topos/estrella/z2_intro.wav	La laguna y la costa de Chile, Sofía. Cuidado: el pato y el ganso suenan parecido.
+voces/animalia/topos/estrella/z3_intro.wav	Ahora todos salen y se esconden a su ritmo. Toca solo al que habla... ¡y a veces te lo escribo en un cartel!
+voces/animalia/topos/estrella/z4_intro.wav	Aves y selva, Sofía. A veces hablan dos seguidos: ¡toca a los dos!
+voces/animalia/topos/estrella/z5_intro.wav	El gran coro, Sofía. Y ojo: alguien se disfrazó de animal... ¡no lo toques!
+voces/animalia/topos/estrella/instruccion.wav	Toca solo al que habla, antes de que se esconda. Llena el collar antes de que se ponga el sol.
+voces/animalia/topos/estrella/meta_llena.wav	¡Meta! Ahora, a buscar el récord.
+voces/animalia/topos/estrella/ronda_2.wav	Primera ronda lista. ¡La segunda va más rápido!
+voces/animalia/topos/estrella/victoria_01.wav	¡Ganaste, Sofía! Tienes reflejos de líder.
+voces/animalia/topos/estrella/victoria_02.wav	¡Qué oído, Sofía! Ni el búho te gana.
+voces/animalia/topos/estrella/victoria_03.wav	¡Bravo! Todos los animales cantan en tu honor.
+voces/animalia/topos/estrella/derrota_gag_01.wav	¡Nos escondimos todos! ¡Achís! ¿La revancha?
+voces/animalia/topos/estrella/derrota_gag_02.wav	¡Jajaja! Se me empañó el casco. ¡Otra vez, Sofía!
+voces/animalia/topos/estrella/regalo.wav	Te ayudo olfateando: esta vez la meta es un poquito más corta.
+voces/animalia/topos/estrella/descansar.wav	¿Y si jugamos a otra cosa y volvemos? El récord te espera.
+voces/animalia/topos/estrella/record.wav	¡Nuevo récord, Sofía! El hueso-trofeo es tuyo.
+voces/animalia/topos/estrella/primer_record.wav	Tu primer récord. ¡A superarlo!
+voces/animalia/topos/estrella/pista_usada.wav	¡Olfateo, olfateo! Mira dónde brilla.
+voces/animalia/topos/estrella/toby_dorado_01.wav	¡Me atrapaste! Trescientos puntos.
+voces/animalia/topos/estrella/toby_dorado_02.wav	¡Toby dorado! ¡Qué reflejos!
+voces/animalia/topos/estrella/toby_dorado_presenta.wav	Si me ves brillar, tócame: valgo trescientos puntos, y no corto tu racha.
+voces/animalia/topos/estrella/toby_tocado.wav	¡Guau! Concéntrate, tú puedes.
+voces/animalia/topos/estrella/impostor_01.wav	¡Me descubriste! ¡Jajaja, qué cosquillas!
+voces/animalia/topos/estrella/impostor_02.wav	¡Ay, se me cayeron las orejas de cartón!
+voces/animalia/topos/estrella/impostor_presenta.wav	¡Cuidado! El Coleccionauta se disfrazó de animal. ¡A él no lo toques!
+voces/animalia/topos/letras/c.wav	¡k k k!
+voces/animalia/topos/letras/g.wav	¡ggg!
+voces/animalia/topos/letras/j.wav	¡jjj!
+voces/animalia/topos/letras/m.wav	¡mmm!
+voces/animalia/topos/letras/o.wav	¡ooo!
+voces/animalia/topos/letras/p.wav	¡ppp!
+voces/animalia/topos/letras/v.wav	¡vvv!
+voces/animalia/topos/equipo/z1_intro.wav	¡Juntos, en el campamento! Escuchen quién habla y tóquenlo. ¡Cada uno en su turno!
+voces/animalia/topos/equipo/z2_intro.wav	¡Equipo a la laguna! Toquen al que habla antes de que se esconda.
+voces/animalia/topos/equipo/z3_intro.wav	¡Equipo a la pradera! ¡Que no se escape ninguno!
+voces/animalia/topos/equipo/z4_intro.wav	¡Equipo a los nidos! Escuchen bien, por turnos.
+voces/animalia/topos/equipo/z5_intro.wav	¡El valle, equipo! ¡Juntemos muchos animalitos!
+voces/animalia/topos/equipo/maxi_regalito.wav	¡Mira, Maxi! ¡El animalito salta solito para ti!
+voces/animalia/topos/equipo/derrota_gag_01.wav	¡A mi colección! ¡Sluuurp!
+voces/animalia/topos/equipo/derrota_gag_02.wav	¡Achís! ¡Uy, se me escaparon todos!
+voces/animalia/topos/equipo/derrota_gag_03.wav	¡Jajaja! ¡Otra vez, equipo!
+voces/animalia/topos/equipo/nos_alcanzo.wav	¡Nos alcanzó! Pero juntos lo volvemos a intentar.
+voces/animalia/topos/equipo/victoria.wav	¡Lo logramos juntos! ¡Los animales cantan para el equipo!
+voces/animalia/topos/equipo/logro_01.wav	¡Igual encontramos 1 animalito!
+voces/animalia/topos/equipo/logro_02.wav	¡Igual encontramos 2 animalitos!
+voces/animalia/topos/equipo/logro_03.wav	¡Igual encontramos 3 animalitos!
+voces/animalia/topos/equipo/logro_04.wav	¡Igual encontramos 4 animalitos!
+voces/animalia/topos/equipo/logro_05.wav	¡Igual encontramos 5 animalitos!
+voces/animalia/topos/equipo/logro_06.wav	¡Igual encontramos 6 animalitos!
+voces/animalia/topos/equipo/logro_07.wav	¡Igual encontramos 7 animalitos!
+voces/animalia/topos/equipo/logro_08.wav	¡Igual encontramos 8 animalitos!
+voces/animalia/topos/equipo/logro_09.wav	¡Igual encontramos 9 animalitos!
+voces/animalia/topos/equipo/logro_10.wav	¡Igual encontramos 10 animalitos!
+voces/animalia/topos/equipo/logro_11.wav	¡Igual encontramos 11 animalitos!
+voces/animalia/topos/equipo/logro_12.wav	¡Igual encontramos 12 animalitos!
+voces/animalia/topos/equipo/logro_13.wav	¡Igual encontramos 13 animalitos!
+voces/animalia/topos/equipo/logro_14.wav	¡Igual encontramos 14 animalitos!
+voces/animalia/topos/equipo/logro_15.wav	¡Igual encontramos 15 animalitos!
+voces/animalia/topos/equipo/logro_16.wav	¡Igual encontramos 16 animalitos!
+voces/animalia/topos/equipo/logro_17.wav	¡Igual encontramos 17 animalitos!
+voces/animalia/topos/equipo/logro_18.wav	¡Igual encontramos 18 animalitos!
+voces/animalia/topos/equipo/logro_19.wav	¡Igual encontramos 19 animalitos!
+voces/animalia/topos/equipo/logro_20.wav	¡Igual encontramos 20 animalitos!
+# Nombres de animales (compartidos por los 4 motores de Animalia; si otro guion ya los tiene, gana uno solo).
+voces/animalia/nombres/alpaca.wav	¡Alpaca!
+voces/animalia/nombres/ballena.wav	¡Ballena!
+voces/animalia/nombres/braquiosaurio.wav	¡Braquiosaurio!
+voces/animalia/nombres/buho.wav	¡Búho!
+voces/animalia/nombres/burro.wav	¡Burrito!
+voces/animalia/nombres/caballo.wav	¡Caballo!
+voces/animalia/nombres/cabra.wav	¡Cabra!
+voces/animalia/nombres/cabrita.wav	¡Cabrita!
+voces/animalia/nombres/carnotauro.wav	¡Carnotauro!
+voces/animalia/nombres/carpintero.wav	¡Carpintero!
+voces/animalia/nombres/cebra.wav	¡Cebra!
+voces/animalia/nombres/chancho.wav	¡Chanchito!
+voces/animalia/nombres/choroy.wav	¡Choroy!
+voces/animalia/nombres/chucao.wav	¡Chucao!
+voces/animalia/nombres/condor.wav	¡Cóndor!
+voces/animalia/nombres/cuy.wav	¡Cuy!
+voces/animalia/nombres/dinito.wav	¡Dinito!
+voces/animalia/nombres/elefante.wav	¡Elefante!
+voces/animalia/nombres/flamenco.wav	¡Flamenco!
+voces/animalia/nombres/gallo.wav	¡Gallo!
+voces/animalia/nombres/ganso.wav	¡Ganso!
+voces/animalia/nombres/gatito.wav	¡Gatito!
+voces/animalia/nombres/gato.wav	¡Gato!
+voces/animalia/nombres/gerbo.wav	¡Gerbo!
+voces/animalia/nombres/guanaco.wav	¡Guanaco!
+voces/animalia/nombres/hipopotamo.wav	¡Hipopótamo!
+voces/animalia/nombres/huemul.wav	¡Huemul!
+voces/animalia/nombres/huillin.wav	¡Huillín!
+voces/animalia/nombres/jirafa.wav	¡Jirafa!
+voces/animalia/nombres/lechuza.wav	¡Lechuza!
+voces/animalia/nombres/lobo_marino.wav	¡Lobo marino!
+voces/animalia/nombres/loro.wav	¡Loro!
+voces/animalia/nombres/mono.wav	¡Mono!
+voces/animalia/nombres/mono_aullador.wav	¡Mono aullador!
+voces/animalia/nombres/nandu.wav	¡Ñandú!
+voces/animalia/nombres/oveja.wav	¡Oveja!
+voces/animalia/nombres/pato.wav	¡Pato!
+voces/animalia/nombres/perezoso.wav	¡Perezoso!
+voces/animalia/nombres/perrito.wav	¡Perrito!
+voces/animalia/nombres/perrito_bombero.wav	¡Perrito bombero!
+voces/animalia/nombres/perro.wav	¡Perro!
+voces/animalia/nombres/pinguino.wav	¡Pingüino!
+voces/animalia/nombres/pollito.wav	¡Pollito!
+voces/animalia/nombres/pony.wav	¡Pony!
+voces/animalia/nombres/pony_estelar.wav	¡Pony estelar!
+voces/animalia/nombres/pudu.wav	¡Pudú!
+voces/animalia/nombres/spinosaurio.wav	¡Espinosaurio!
+voces/animalia/nombres/trex.wav	¡Tiranosaurio!
+voces/animalia/nombres/tricahue.wav	¡Tricahue!
+voces/animalia/nombres/triceratops.wav	¡Triceratops!
+voces/animalia/nombres/tucan.wav	¡Tucán!
+voces/animalia/nombres/vaca.wav	¡Vaca!
