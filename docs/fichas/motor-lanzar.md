@@ -60,6 +60,12 @@
 > del storyboard §25.9 y cierra los [CONCILIAR] del §25.13. **Todo está en el §25.18**, que manda sobre
 > el §12, el §25.3, el §25.6.4 y el §25.15 donde los contradiga. Lo que cambia para `dev-godot` (HE-76)
 > está resumido en el §25.18.8.
+>
+> **v4.2 (07-Nov-2026): [Decisión 05-Nov, delegada]**, ya implementada en el motor (HE-77): **sin pausa
+> entre etapas** y **revancha solo con E3, sin parcial**, con las estrellitas y el récord de la v3. Deja de
+> aplicar el parcial `torre_revancha` (§25.18.7, D8). Suma el riesgo **R23**: la Torre provisional es
+> demasiado fácil (HE-80 / HE-125). **Todo está en el §25.19**, que manda sobre el §11, el §25.15 y el
+> §25.18 donde los contradiga.
 
 - **Autor**: `disenador-mecanicas`
 - **Versiones**:
@@ -69,9 +75,12 @@
     (changelog en §24);
   - **v4** (17-Oct-2026): dificultad por etapas, según la maqueta v2 aprobada por el PO (§25);
   - **v4.1** (05-Nov-2026, HE-88): guardado entre etapas (R17 = A) y conciliación con el storyboard v5
-    (§25.18).
+    (§25.18);
+  - **v4.2** (07-Nov-2026): **[Decisión 05-Nov, delegada]**, ya implementada en HE-77: sin pausa entre
+    etapas y revancha solo con E3, sin parcial (el §25.18.7 deja de aplicar); riesgo R23 de la Torre
+    provisional demasiado fácil para HE-80 / HE-125 (§25.19).
 - **Estado**: la v3 está **re-auditada por UX** (aprobada sin bloqueantes). **La v4 espera la auditoría
-  UX** de R17-R22 (§25.11), en especial la duración y la bandeja de Nicole. Las cifras siguen siendo
+  UX** de R17-R23 (§25.11), en especial la duración y la bandeja de Nicole. Las cifras siguen siendo
   **estimaciones a mano** hasta que corran el arnés de tiros (§15.3) y el simulador (§15.4). La
   calibración fina es de **HE-80**.
 - **Tarjetas relacionadas**: HE-66 (diseño de la batalla), HE-69 (implementación), HE-17 (pieza/ala),
