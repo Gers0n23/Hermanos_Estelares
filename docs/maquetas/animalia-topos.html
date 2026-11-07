@@ -88,11 +88,11 @@ li{margin:2px 0}
   <details>
     <summary>Qué mirar al probar</summary>
     <ul>
-      <li><b>Maxi</b>: no hay reloj; el animal que suena espera, repite su sonido cada 3 s, salta a los 4 s quieto y aparece una mano a los 8 s. Si toca a otro, los dos celebran. Desde la zona 3 aparece un dino.</li>
+      <li><b>Maxi</b> (HE-124): ronda de 45 a 60 s con un collar de 5 a 7 huesos. El animal que suena espera 6 s (5 s en la zona 5), repite su sonido cada 3 s, salta a los 3 s quieto y aparece una mano a los 5 s; si nadie lo toca, saluda con la patita y se esconde. Tocar a otro no es fallo: los dos celebran. La derrota es corta y afinada, sin puntaje. Tras 2 derrotas la meta baja un 30 %; tras 3, «ayuda fuerte»: 6 pedidos sin reloj y el animal espera.</li>
       <li><b>Nicole</b>: 2 rondas de 60 s con meta generosa (collar de huesos). Si se esconde el que habló, se ríe desde el hoyo y se corta la racha (colita de Toby). En la zona 5, a veces aparece una letra en vez del sonido.</li>
       <li><b>Sofía</b>: desde la zona 3, modo continuo (cada animal sube y baja a su ritmo), ondas mínimas, palabra escrita. En la zona 4 hay pedidos dobles y en la 5, el Coleccionauta disfrazado. La antena de Toby es la pista, que cuesta una estrellita.</li>
       <li><b>Toque</b>: responde al presionar, no al soltar. Un toque sobre un animal que se está escondiendo todavía vale.</li>
-      <li><b>Derrota</b>: si se pone el solcito sin el collar lleno, todos salen a la vez, desafinados, y Toby estornuda. Toca el cartel para reintentar solo esa ronda. Tras 2 derrotas, la meta baja un 20 %.</li>
+      <li><b>Derrota</b>: si se pone el solcito sin el collar lleno, todos salen a la vez, desafinados, y Toby estornuda. Toca el cartel para reintentar solo esa ronda. Regalo de Toby (meta más baja y ondas completas): Nicole tras 2 derrotas (× 0,8), Sofía tras 3 (× 0,85). Se ofrece descansar tras 3 (Nicole) o 4 (Sofía).</li>
       <li><b>Sonidos</b>: son síntesis provisional. Lo importante es si los pares parecidos (pato/ganso, burro/caballo, oveja/cabra, alpaca/jirafa, búho/lechuza) se distinguen en el parlante de la tablet.</li>
     </ul>
   </details>
@@ -323,9 +323,10 @@ const POOLS={
 const CARA={maxi:'👶',nicole:'👧',sofia:'👱‍♀️'};
 function cfgBase(h,z){
   const i=z-1;
-  if(h==='maxi')return{perfil:'semilla',madrigueras:[3,3,3,4,4][i],modo:'tandas',asomados:[2,2,2,3,3][i],asomados_min:2,asomados_max:3,intervalo_pedido_s:1.4,t_arriba_s:null,variacion:0.25,aviso_s:0.15,pausa_entre_pedidos:0.9,pedidos:[10,10,12,12,12][i],rondas:1,duracion_s:null,meta:null,repetir:'cada_3s',ondas:'completas',p_similar:0,tipo_escrito:null,p_escrito:0,p_doble:0,dorado_cada_s:null,impostor_cada_s:null,pista:false,umbral_dos:null,umbral_tres:null,regalo_factor:0.8,rapidito_frac:0.4,ayuda1_s:4,ayuda2_s:8};
-  if(h==='nicole')return{perfil:'brote',madrigueras:[4,4,6,6,6][i],modo:'tandas',asomados:[3,3,4,4,4][i],asomados_min:2,asomados_max:4,intervalo_pedido_s:1.4,t_arriba_s:[2.6,2.4,2.2,2.0,1.8][i],variacion:0.25,aviso_s:0.15,pausa_entre_pedidos:[0.7,0.7,0.65,0.6,0.6][i],pedidos:null,rondas:2,duracion_s:60,meta:[12,13,14,15,16][i],repetir:[ 'una_vez','una_vez','no','no','no'][i],ondas:'completas',p_similar:[0,0,0,0.15,0.2][i],tipo_escrito:z===5?'letra':null,p_escrito:z===5?0.25:0,p_doble:0,dorado_cada_s:15,impostor_cada_s:null,pista:false,umbral_dos:14000,umbral_tres:18000,regalo_factor:0.8,rapidito_frac:0.4};
-  return{perfil:'estrella',madrigueras:[6,6,9,9,9][i],modo:z<=2?'tandas':'continuo',asomados:[4,5,5,5,5][i],asomados_min:[2,2,2,3,3][i],asomados_max:[4,4,4,5,6][i],intervalo_pedido_s:[1.4,1.4,1.4,1.25,1.1][i],t_arriba_s:[1.6,1.45,1.3,1.15,1.0][i],variacion:0.25,aviso_s:0.08,pausa_entre_pedidos:0.5,pedidos:null,rondas:2,duracion_s:60,meta:[18,20,22,24,26][i],repetir:'no',ondas:z<=2?'completas':'minimas',p_similar:[0,0.2,0.25,0.3,0.3][i],tipo_escrito:z>=3?'palabra':null,p_escrito:z>=3?0.25:0,p_doble:z>=4?0.2:0,dorado_cada_s:12,impostor_cada_s:z===5?15:null,pista:true,umbral_dos:23000,umbral_tres:27000,regalo_factor:0.8,rapidito_frac:0.4};
+  // Valores de HE-124 (política de derrota: pierden los tres; planeta-animalia-zonas.md §4.1)
+  if(h==='maxi')return{perfil:'semilla',madrigueras:[3,3,3,4,4][i],modo:'tandas',asomados:[2,2,2,3,3][i],asomados_min:2,asomados_max:3,intervalo_pedido_s:1.4,t_arriba_s:[6,6,5.5,5.5,5][i],variacion:0.25,aviso_s:0.15,pausa_entre_pedidos:0.9,pedidos:null,rondas:1,duracion_s:[45,45,50,55,60][i],meta:[5,5,6,6,7][i],repetir:'cada_3s',ondas:'completas',p_similar:0,tipo_escrito:null,p_escrito:0,p_doble:0,dorado_cada_s:null,impostor_cada_s:null,pista:false,umbral_dos:null,umbral_tres:null,regalo_derrotas:2,regalo_factor:0.7,fuerte_derrotas:3,fuerte_pedidos:6,descanso_derrotas:null,rapidito_frac:0.4,ayuda1_s:3,ayuda2_s:5};
+  if(h==='nicole')return{perfil:'brote',madrigueras:[4,4,6,6,6][i],modo:'tandas',asomados:[3,3,4,4,4][i],asomados_min:2,asomados_max:4,intervalo_pedido_s:1.4,t_arriba_s:[2.6,2.4,2.2,2.0,1.8][i],variacion:0.25,aviso_s:0.15,pausa_entre_pedidos:[0.7,0.7,0.65,0.6,0.6][i],pedidos:null,rondas:2,duracion_s:60,meta:[14,15,16,17,18][i],repetir:[ 'una_vez','una_vez','no','no','no'][i],ondas:'completas',p_similar:[0,0,0,0.15,0.2][i],tipo_escrito:z===5?'letra':null,p_escrito:z===5?0.25:0,p_doble:0,dorado_cada_s:15,impostor_cada_s:null,pista:false,umbral_dos:14000,umbral_tres:18000,regalo_derrotas:2,regalo_factor:0.8,fuerte_derrotas:null,fuerte_pedidos:6,descanso_derrotas:3,rapidito_frac:0.4};
+  return{perfil:'estrella',madrigueras:[6,6,9,9,9][i],modo:z<=2?'tandas':'continuo',asomados:[4,5,5,5,5][i],asomados_min:[2,2,2,3,3][i],asomados_max:[4,4,4,5,6][i],intervalo_pedido_s:[1.4,1.4,1.4,1.25,1.1][i],t_arriba_s:[1.6,1.45,1.3,1.15,1.0][i],variacion:0.25,aviso_s:0.08,pausa_entre_pedidos:0.5,pedidos:null,rondas:2,duracion_s:60,meta:[20,22,24,26,28][i],repetir:'no',ondas:z<=2?'completas':'minimas',p_similar:[0,0.2,0.25,0.3,0.3][i],tipo_escrito:z>=3?'palabra':null,p_escrito:z>=3?0.25:0,p_doble:z>=4?0.2:0,dorado_cada_s:12,impostor_cada_s:z===5?15:null,pista:true,umbral_dos:23000,umbral_tres:27000,regalo_derrotas:3,regalo_factor:0.85,fuerte_derrotas:null,fuerte_pedidos:6,descanso_derrotas:4,rapidito_frac:0.4};
 }
 const CAMPOS=[
   ['madrigueras','Madrigueras (3, 4, 6 o 9)',1],['modo','Modo',null,['tandas','continuo']],
@@ -337,7 +338,9 @@ const CAMPOS=[
   ['p_similar','Prob. de par parecido',0.05],['tipo_escrito','Pedido escrito',null,['','palabra','letra']],['p_escrito','Prob. de pedido escrito',0.05],
   ['p_doble','Prob. de pedido doble',0.05],['dorado_cada_s','Toby dorado cada, s (vacío = no)',1],['impostor_cada_s','Coleccionauta cada, s (vacío = no)',1],
   ['pista','Pista con costo (antena de Toby)'],['umbral_dos','Puntaje para 2 estrellitas (suma de rondas)',100],['umbral_tres','Puntaje para 3 estrellitas',100],
-  ['regalo_factor','Meta tras 2 derrotas (factor)',0.05],['rapidito_frac','«¡Rapidito!»: fracción del tiempo arriba',0.05]
+  ['regalo_derrotas','Regalo de Toby tras N derrotas seguidas',1],['regalo_factor','Factor de la meta con el regalo',0.05],
+  ['fuerte_derrotas','Maxi: ayuda fuerte tras N derrotas (vacío = no)',1],['fuerte_pedidos','Ayuda fuerte: pedidos sin reloj',1],['descanso_derrotas','Ofrecer descansar tras N derrotas (vacío = no)',1],
+  ['ayuda1_s','Maxi: el pedido salta y suena, s',0.5],['ayuda2_s','Maxi: mano fantasma, s',0.5],['rapidito_frac','«¡Rapidito!»: fracción del tiempo arriba',0.05]
 ];
 const DISPOS={
   3:{filas:[[520,[440,740,1040]]],hoyo:240,animal:220,tw:270,th:320},
@@ -359,7 +362,11 @@ let fondo=null;
 function poolActual(){return POOLS[hermano][zona-1].map(s=>s[0]==='*'?{id:s.slice(1),sorpresa:true}:{id:s,sorpresa:false})}
 function esSemilla(){return cfg.perfil==='semilla'}
 function ondasEf(){return regaloActivo?'completas':(cfg.ondas||'completas')}
-function tArriba(){return (cfg.t_arriba_s==null||cfg.t_arriba_s<=0)?Infinity:cfg.t_arriba_s}
+let fuerte=false; // ayuda fuerte de Maxi (HE-124 §10.3): el animal espera, pedidos sin reloj
+function tArriba(){if(fuerte)return Infinity;return (cfg.t_arriba_s==null||cfg.t_arriba_s<=0)?Infinity:cfg.t_arriba_s}
+function sinReloj(){return fuerte||!cfg.duracion_s}
+function nPedidos(){return fuerte?(cfg.fuerte_pedidos||6):(cfg.pedidos||8)}
+function ayuda2(){return fuerte?4:(cfg.ayuda2_s||5)}
 
 function armarHoyos(){
   const opciones=[3,4,6,9];let n=cfg.madrigueras||3;if(!DISPOS[n]){n=opciones.reduce((a,b)=>Math.abs(b-n)<Math.abs(a-n)?b:a,3)}
@@ -373,7 +380,7 @@ function arriba(h){return h.oc&&(h.oc.est==='sube'||h.oc.est==='arriba')}
 
 function nuevaPartida(){
   tareas=[];parts=[];flot=[];vuelos=[];
-  ronda=1;puntaje=0;derrotasSeguidas=0;huboDerrota=false;pistasUsadas=0;pistaRestante=0;regaloActivo=false;cartel=null;nuevoRecord=false;
+  ronda=1;puntaje=0;derrotasSeguidas=0;huboDerrota=false;fuerte=false;pistasUsadas=0;pistaRestante=0;regaloActivo=false;cartel=null;nuevoRecord=false;
   rec=leerRec();armarHoyos();if(!fondo)fondo=pintarFondo();
   fase='intro';tFase=0;toby.expr='';toby.empanado=0;toby.orejasVuelan=0;
   programar(0.4,()=>decir(instruccion()));
@@ -390,7 +397,7 @@ function empezarRonda(){
   hoyos.forEach(h=>{h.oc=null;h.brillo=0});tanda=null;escrito=null;
   sub='pausa';tSub=0.6;tDorado=0;tImpostor=0;tPedido=0;tSpawn=0;doradoPendiente=false;impostorPendiente=false;
   pedidosHechos=0;sorpresaUsada=false;idle=0;ayudaNivel=0;mano=null;
-  doradoSemillaEn=esSemilla()?Math.max(1,Math.floor(al(2,Math.max(3,(cfg.pedidos||8)-2)))):-1;
+  doradoSemillaEn=esSemilla()?Math.max(1,Math.floor(al(2,Math.max(3,(sinReloj()?nPedidos():(cfg.meta||5))-1)))):-1;
   fase='juego';tFase=0;
 }
 
@@ -407,7 +414,7 @@ function elegirTanda(){
   if(!cand.length){tipoEsc=null;cand=disp.filter(id=>id!==ultimoPedido);if(!cand.length)cand=disp.slice()}
   let ped=pick(cand);
   const sorp=pool.find(e=>e.sorpresa&&!sorpresaUsada);
-  if(sorp&&pedidosHechos>=Math.floor((cfg.pedidos||8)/2)){ped=sorp.id;tipoEsc=null}
+  if(sorp&&pedidosHechos>=Math.floor((sinReloj()?nPedidos():(cfg.meta||6))/2)){ped=sorp.id;tipoEsc=null}
   const pedidos=[ped];
   let resto=disp.filter(id=>id!==ped&&!(pool.find(e=>e.id===id&&e.sorpresa)));
   if(tipoEsc==='letra')resto=resto.filter(id=>!ANIM[id].ini||ANIM[id].ini!==ANIM[ped].ini);
@@ -458,9 +465,11 @@ function acierto(h){
   const a=ANIM[oc.id];voz(a.r,{pitch:1.25,pan:(h.x-640)/700});
   tobySalta();
   if(esSemilla()){
-    SFX.pling(pedidosHechos);pedidosHechos++;
+    SFX.pling(pedidosHechos);pedidosHechos++;aciertosRonda++;
     particulas(h.x,h.y-h.aw*0.5,14,'estrella');
-    vuelos.push({x0:h.x,y0:h.y-h.aw*0.5,x1:posHueso(pedidosHechos-1,cfg.pedidos||8).x,y1:52,v:0,dur:0.5,emo:'🦴',s:34,alLlegar:SFX.hueso});
+    const nB=sinReloj()?nPedidos():Math.max(1,metaEf);
+    vuelos.push({x0:h.x,y0:h.y-h.aw*0.5,x1:posHueso(Math.min(nB,pedidosHechos)-1,nB).x,y1:52,v:0,dur:0.5,emo:'🦴',s:34,alLlegar:SFX.hueso});
+    if(!sinReloj()&&!metaCobrada&&aciertosRonda>=metaEf){metaCobrada=true;collarDorado=1.5;programar(0.5,()=>SFX.meta())}
     return;
   }
   racha++;const mult=Math.min(5,racha);let pts=100*mult;
@@ -505,7 +514,7 @@ function actualizarTandas(dt){
   if(sub==='pausa'){
     tSub-=dt;
     if(tSub<=0&&hoyos.every(h=>!h.oc)){
-      if(esSemilla()&&pedidosHechos>=(cfg.pedidos||8)){victoriaFinal();return}
+      if(sinReloj()&&pedidosHechos>=nPedidos()){victoriaFinal();return}
       lanzarTanda();sub='aviso';tSub=Math.max(cfg.aviso_s||0.1,tanda.pedidos.some(h=>h.brillo>0)?0.4:0);
     }
   }else if(sub==='aviso'){
@@ -523,14 +532,17 @@ function actualizarTandas(dt){
       tanda.ultimoHabla+=dt;idle+=dt;
       if(pend.length&&cfg.repetir==='cada_3s'&&tanda.ultimoHabla>=3){tanda.ultimoHabla=0;hablar(pend[0])}
       if(pend.length&&idle>=(cfg.ayuda1_s||4)&&ayudaNivel<1){ayudaNivel=1;pend[0].oc.baile=0.6;hablar(pend[0]);tanda.ultimoHabla=0}
-      if(pend.length&&idle>=(cfg.ayuda2_s||8)&&ayudaNivel<2){ayudaNivel=2;mano={h:pend[0],t:0}}
+      if(pend.length&&idle>=ayuda2()&&ayudaNivel<2){ayudaNivel=2;mano={h:pend[0],t:0}}
     }else{
       if(cfg.repetir==='una_vez'&&!tanda.repetido&&tanda.t>=tArriba()/2&&!escrito){tanda.repetido=true;pend.forEach(h=>hablar(h))}
-      if(tanda.t>=tArriba()&&pend.length){
-        const algunoHecho=hechos.length>0;
-        pend.forEach(h=>{const oc=h.oc;bajar(h);if(!algunoHecho){oc.escapando=true;SFX.risita();programar(0.16,()=>{if(!oc.tocado){cortarRacha();tobyExpr('tapa',0.9)}})}});
-        hoyos.forEach(h=>{if(h.oc&&!h.oc.pedido)bajar(h)});escrito=null;sub='pausa';tSub=cfg.pausa_entre_pedidos||0.6;return;
-      }
+    }
+    if(tanda.t>=tArriba()&&pend.length){
+      // escape (los tres perfiles, HE-124). En Semilla es amable: saluda con la patita y baja, sin racha.
+      if(esSemilla()&&!tanda.saludo){tanda.saludo=true;pend.forEach(h=>{h.oc.baile=0.3});SFX.risita();return}
+      if(esSemilla()&&tanda.t<tArriba()+0.3)return;
+      const algunoHecho=hechos.length>0;
+      pend.forEach(h=>{const oc=h.oc;bajar(h);if(!algunoHecho&&!esSemilla()){oc.escapando=true;SFX.risita();programar(0.16,()=>{if(!oc.tocado){cortarRacha();tobyExpr('tapa',0.9)}})}});
+      hoyos.forEach(h=>{if(h.oc&&!h.oc.pedido)bajar(h)});escrito=null;mano=null;sub='pausa';tSub=cfg.pausa_entre_pedidos||0.6;return;
     }
     if(!pend.length){
       hoyos.forEach(h=>{if(h.oc&&h.oc.est!=='salta')bajar(h)});mano=null;escrito=null;
@@ -580,7 +592,7 @@ function finRonda(){
   programar(0.5,()=>{if(aciertosRonda>=metaEf)ganarRonda();else perderRonda()});
 }
 function ganarRonda(){
-  derrotasSeguidas=0;regaloActivo=false;
+  derrotasSeguidas=0;regaloActivo=false;fuerte=false;
   if(ronda<(cfg.rondas||1)){fase='mini';tFase=0;confeti(50);SFX.meta();tobySalta();tobyExpr('risa',1.5);programar(2.2,()=>{ronda++;empezarRonda()})}
   else victoriaFinal();
 }
@@ -599,16 +611,19 @@ function victoriaFinal(){
 }
 function perderRonda(){
   derrotasSeguidas++;huboDerrota=true;fase='gag';tFase=0;
-  const ids=poolActual().map(e=>e.id);
-  hoyos.forEach(h=>{h.oc=nuevoOc(pick(ids),'animal');h.oc.est='sube';h.oc.baile=2.4;voz(ANIM[h.oc.id].r,{pitch:al(0.75,1.35),vol:0.7,pan:(h.x-640)/700})});
-  toby.empanado=0.01;toby.orejasVuelan=1.5;tobyExpr('risa',2.5);
-  programar(1.2,()=>SFX.achis());
-  programar(2.5,()=>{cartel={tipo:'derrota'};fase='cartel';hoyos.forEach(h=>bajar(h));toby.empanado=0;
-    if(derrotasSeguidas>=3)decir('¿Vamos a jugar a otra cosa y volvemos?');else decir('¡Nos escondimos todos! ¿Otra vez?')});
+  const ids=poolActual().map(e=>e.id);const suave=esSemilla();const acorde=[1,1.26,1.5,2,1.26,1.5,2,2.52,3];
+  // Semilla (HE-124): 1,5 s, volumen normal y afinado; Brote y Estrella: 2,5 s, desafinado y fuerte
+  hoyos.forEach((h,i)=>{h.oc=nuevoOc(pick(ids),'animal');h.oc.est='sube';h.oc.baile=suave?1.4:2.4;voz(ANIM[h.oc.id].r,{pitch:suave?acorde[i%acorde.length]*0.9:al(0.75,1.35),vol:suave?0.45:0.75,pan:(h.x-640)/700,t0:suave?i*0.1:0})});
+  toby.empanado=0.01;toby.orejasVuelan=suave?1:1.5;tobyExpr('risa',suave?1.5:2.5);
+  programar(suave?0.9:1.2,()=>SFX.achis());
+  const dur=suave?1.5:2.5;
+  programar(dur,()=>{cartel={tipo:'derrota'};fase='cartel';hoyos.forEach(h=>bajar(h));toby.empanado=0;
+    if(cfg.descanso_derrotas&&derrotasSeguidas>=cfg.descanso_derrotas)decir('¿Vamos a jugar a otra cosa y volvemos?');else decir(suave?'¡Otra vez, otra vez!':'¡Nos escondimos todos! ¿Otra vez?')});
 }
 function reintentar(){
   cartel=null;puntaje=puntajeInicioRonda;
-  if(derrotasSeguidas>=2){regaloActivo=true;programar(0.3,()=>decir('¡Toby te ayuda olfateando!'))}
+  if(cfg.fuerte_derrotas&&derrotasSeguidas>=cfg.fuerte_derrotas){fuerte=true;regaloActivo=false;programar(0.3,()=>decir('¡Ahora yo te ayudo a buscar!'))}
+  else if(derrotasSeguidas>=(cfg.regalo_derrotas||2)){regaloActivo=true;programar(0.3,()=>decir('¡Toby te ayuda olfateando!'))}
   empezarRonda();
 }
 function actualizar(dt){
@@ -622,7 +637,8 @@ function actualizar(dt){
   actualizarOcupantes(dt);tFase+=dt;
   if(fase==='intro'){if(tFase>1.2)empezarRonda()}
   else if(fase==='juego'){
-    if(!esSemilla()){tRonda+=dt;if(cfg.duracion_s&&tRonda>=cfg.duracion_s){finRonda();return}
+    if(!sinReloj()){tRonda+=dt;if(cfg.duracion_s&&tRonda>=cfg.duracion_s){finRonda();return}}
+    if(!esSemilla()){
       tDorado+=cfg.modo==='continuo'?0:dt;if(cfg.modo!=='continuo'){if(cfg.dorado_cada_s&&tDorado>=cfg.dorado_cada_s){tDorado=0;doradoPendiente=true}tImpostor+=dt;if(cfg.impostor_cada_s&&tImpostor>=cfg.impostor_cada_s){tImpostor=0;impostorPendiente=true}}}
     if(cfg.modo==='continuo'&&!esSemilla())actualizarContinuo(dt);else actualizarTandas(dt);
   }
@@ -668,14 +684,14 @@ function posHueso(i,n){const x0=450,x1=830;const x=n<=1?640:x0+(x1-x0)*i/(n-1);r
 function hueso(x,y,s,lleno,dorado){ctx.save();ctx.translate(x,y);ctx.fillStyle=lleno?(dorado?'#ffd23f':'#fffaf0'):'rgba(255,255,255,.28)';ctx.strokeStyle=lleno?'#c9a66b':'rgba(120,100,70,.35)';ctx.lineWidth=2;
   ctx.beginPath();ctx.rect(-s*0.5,-s*0.14,s,s*0.28);ctx.fill();[[-0.5,-0.15],[-0.5,0.15],[0.5,-0.15],[0.5,0.15]].forEach(q=>{ctx.beginPath();ctx.arc(q[0]*s,q[1]*s,s*0.17,0,7);ctx.fill();ctx.stroke()});ctx.restore()}
 function dibujarCollar(){
-  const n=esSemilla()?(cfg.pedidos||8):metaEf;if(!n)return;const hechos=esSemilla()?pedidosHechos:aciertosRonda;
+  const n=sinReloj()?nPedidos():metaEf;if(!n)return;const hechos=sinReloj()?pedidosHechos:aciertosRonda;
   ctx.strokeStyle='#b5651d';ctx.lineWidth=5;ctx.beginPath();for(let i=0;i<=20;i++){const p=posHueso(i/20*(n-1),n);if(n<=1){p.x=430+i*21}if(i===0)ctx.moveTo(430,45);ctx.lineTo(p.x,p.y-4)}ctx.lineTo(850,45);ctx.stroke();
   const s=Math.min(34,380/Math.max(1,n)*0.95);
   for(let i=0;i<n;i++){const p=posHueso(i,n);hueso(p.x,p.y,s,i<hechos,metaCobrada||collarDorado>0)}
   if(collarDorado>0){ctx.globalAlpha=Math.min(1,collarDorado);estrella(640,30,16,7,'#ffd23f');ctx.globalAlpha=1}
 }
 function dibujarSol(){
-  if(esSemilla()||!cfg.duracion_s)return;const p=Math.min(1,tRonda/cfg.duracion_s);
+  if(sinReloj())return;const p=Math.min(1,tRonda/cfg.duracion_s);
   const x=1080+150*p,y=96-48*Math.sin(Math.PI*Math.min(1,p*0.98+0.01));
   ctx.fillStyle='rgba(255,210,63,.35)';ctx.beginPath();ctx.arc(x,y,40,0,7);ctx.fill();ctx.fillStyle='#ffd23f';ctx.beginPath();ctx.arc(x,y,30,0,7);ctx.fill();
   ctx.fillStyle='#e0a800';ell(x-9,y-4,3,4);ell(x+9,y-4,3,4);ctx.strokeStyle='#e0a800';ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y+4,9,0.2,Math.PI-0.2);ctx.stroke();
@@ -793,7 +809,7 @@ function bucle(ahora){const dt=Math.min(0.05,Math.max(0,(ahora-ult)/1000));ult=a
 /* ================= panel, simulador e interfaz ================= */
 const elEstado=document.getElementById('estado');let tEstado=0;
 function actualizarEstado(){tEstado+=1;if(tEstado%10)return;
-  const p=esSemilla()?('Pedidos '+pedidosHechos+'/'+(cfg.pedidos||8)):('Ronda '+ronda+'/'+(cfg.rondas||1)+' · aciertos '+aciertosRonda+'/'+metaEf+' · puntaje '+puntaje+' · racha ×'+Math.min(5,racha)+' · tiempo '+Math.max(0,Math.ceil((cfg.duracion_s||0)-tRonda))+' s · récord '+rec);
+  const p=sinReloj()?('Ayuda fuerte · pedidos '+pedidosHechos+'/'+nPedidos()):esSemilla()?('aciertos '+aciertosRonda+'/'+metaEf+' · tiempo '+Math.max(0,Math.ceil((cfg.duracion_s||0)-tRonda))+' s · derrotas seguidas '+derrotasSeguidas):('Ronda '+ronda+'/'+(cfg.rondas||1)+' · aciertos '+aciertosRonda+'/'+metaEf+' · puntaje '+puntaje+' · racha ×'+Math.min(5,racha)+' · tiempo '+Math.max(0,Math.ceil((cfg.duracion_s||0)-tRonda))+' s · récord '+rec);
   elEstado.textContent=({maxi:'Maxi',nicole:'Nicole',sofia:'Sofía'})[hermano]+' · zona '+zona+' · '+cfg.modo+' · '+p+(regaloActivo?' · meta con regalo':'')+(pistasUsadas?' · pistas '+pistasUsadas:'')+' · fase '+fase;
 }
 function alCambiarCampo(clave){if(clave==='madrigueras'){armarHoyos();tanda=null;escrito=null;sub='pausa';tSub=0.3}if(clave==='meta'&&fase==='juego'){metaEf=cfg.meta==null?0:Math.round(cfg.meta*(regaloActivo?cfg.regalo_factor:1))}}
@@ -805,7 +821,7 @@ document.getElementById('reiniciar').addEventListener('click',()=>{audio();nueva
 document.getElementById('completa').addEventListener('click',()=>{const e=document.getElementById('escena');try{if(document.fullscreenElement)document.exitFullscreen();else if(e.requestFullscreen)e.requestFullscreen()}catch(_){}});
 document.getElementById('verZonas').addEventListener('click',ev=>{verZonas=!verZonas;ev.currentTarget.setAttribute('aria-pressed',verZonas?'true':'false')});
 document.getElementById('voz').addEventListener('click',ev=>{vozActiva=!vozActiva;ev.currentTarget.setAttribute('aria-pressed',vozActiva?'true':'false');if(!vozActiva&&'speechSynthesis' in window)try{speechSynthesis.cancel()}catch(_){}});
-document.getElementById('forzarFin').addEventListener('click',()=>{if(fase==='juego'&&!esSemilla())tRonda=cfg.duracion_s||60;else if(fase==='juego'&&esSemilla()){pedidosHechos=cfg.pedidos||8}});
+document.getElementById('forzarFin').addEventListener('click',()=>{if(fase==='juego'&&!sinReloj())tRonda=cfg.duracion_s||60;else if(fase==='juego'){pedidosHechos=nPedidos()}});
 document.getElementById('borrarRec').addEventListener('click',()=>{try{Object.keys(localStorage).filter(k=>k.indexOf('he_animalia_'+JUEGO)===0).forEach(k=>localStorage.removeItem(k))}catch(_){}rec=0});
 
 function percentil(a,p){if(!a.length)return 0;const s=a.slice().sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.max(0,Math.floor(p/100*(s.length-1)+0.5)))]}
@@ -840,7 +856,7 @@ function simularRonda(rt,sd,err){
 }
 document.getElementById('simular').addEventListener('click',()=>{
   const out=document.getElementById('simSalida');
-  if(esSemilla()){out.textContent='Maxi no tiene reloj ni meta: no hay nada que calibrar con el simulador. Su estación termina siempre tras '+(cfg.pedidos||8)+' pedidos.';return}
+  if(!cfg.duracion_s){out.textContent='Sin duración de ronda no hay meta que calibrar.';return}
   const rt=parseFloat(document.getElementById('simRt').value)||1,sd=parseFloat(document.getElementById('simSd').value)||0.3,err=parseFloat(document.getElementById('simErr').value)||0.1;
   const N=1000,acs=[],tot=[];let ganaR1=0,ganaTodo=0;const R=cfg.rondas||1;
   for(let i=0;i<N;i++){let s=0,todas=true;for(let r=0;r<R;r++){const x=simularRonda(rt,sd,err);acs.push(x.ac);s+=x.pts;if(r===0&&x.gano)ganaR1++;if(!x.gano)todas=false}tot.push(s);if(todas)ganaTodo++}
@@ -848,7 +864,7 @@ document.getElementById('simular').addEventListener('click',()=>{
    'Gana una ronda al primer intento: '+Math.round(ganaR1/N*100)+' %. Gana las '+R+' rondas sin perder ninguna: '+Math.round(ganaTodo/N*100)+' %.\n'+
    'Aciertos por ronda: p10 '+percentil(acs,10)+' · p30 '+percentil(acs,30)+' · p50 '+percentil(acs,50)+' · p80 '+percentil(acs,80)+' · p90 '+percentil(acs,90)+'\n'+
    'Puntaje de la estación ('+R+' rondas): p50 '+percentil(tot,50)+' · p80 '+percentil(tot,80)+'\n'+
-   'Sugerencia: meta = '+(hermano==='nicole'?'p10 = '+percentil(acs,10):'p30 = '+percentil(acs,30))+' · umbral_dos = '+percentil(tot,50)+' · umbral_tres = '+percentil(tot,80)+' (redondear a 100).';
+   'Sugerencia HE-124: meta = '+({maxi:'p10 = '+percentil(acs,10),nicole:'p25 = '+percentil(acs,25),sofia:'p40 = '+percentil(acs,40)})[hermano]+(esSemilla()?' (Maxi no tiene puntaje ni estrellitas).':' · umbral_dos = '+percentil(tot,50)+' · umbral_tres = '+percentil(tot,80)+' (redondear a 100).');
 });
 
 cargar('nicole',1);
