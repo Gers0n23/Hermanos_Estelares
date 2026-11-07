@@ -110,6 +110,9 @@
   batalla ≈ 28-30 min, el parcial con `etapa`, `etapas_ganadas` y `etapa_iniciada` (guardado también en
   el derribo de cada etapa), la re-entrada `retomar_torre`, las políticas de los momentos por datos y la
   revancha que guarda entre etapas. **Sin firmas nuevas** en el §11.4.
+- **v7.3.1, 07-Nov-2026**: **[Decisión 05-Nov, delegada]** (implementada en HE-77): sin pausa entre etapas
+  y **revancha solo con E3, sin parcial** (estrellitas y récord de la v3); el parcial `torre_revancha` deja
+  de existir. Cambia el §14.16 y el punto 6 del §14.16.1 (`motor-lanzar.md` §25.19).
 - **Referencias**:
   - GDD §1 (tono y derrota-gag), §3 (modo misión familiar), §5 ("Mecánicas probadas y reto real"), §6
     (UX obligatoria) y §8 (alcance negativo);
@@ -2582,8 +2585,9 @@ diseño, y sus correcciones están incorporadas:
   - **v7.2**: la revancha se puede jugar **con dos hermanos** (dos retratos), **sin estrellitas ni
     récord** y sin escribir nada en `revanchas` (motor-lanzar §11.1). Estrellitas y récord, solo con los
     tres.
-  - **v7.3**: la revancha juega las 3 etapas (★★ = sin perder ninguna etapa) y **guarda entre etapas**
-    (§14.16.1, punto 6). Composiciones con dos: 13 / 17 por etapa con Maxi y 12 / 16 para
+  - ~~**v7.3**: la revancha juega las 3 etapas (★★ = sin perder ninguna etapa) y guarda entre etapas.~~
+    **[Decisión 05-Nov, delegada]**: la revancha juega **solo E3**, sin parcial, con las estrellitas y el
+    récord de la v3 (§14.16.1, punto 6). Composiciones con dos: 13 / 17 con Maxi y 12 / 16 para
     `nicole+sofia`.
 
 **Lo que cambia del §14**:
@@ -2595,7 +2599,7 @@ diseño, y sus correcciones están incorporadas:
 | §14.3, "El reloj de la ronda es la pista de galletas" | Única forma de perder | En la Torre, el reloj es **la canasta de globos**; la derrota llega igual en el pase, con el retrato del siguiente al centro (`terminar_turno_sin_recursos(siguiente_id)`; v7.2: queda al centro Maxi, que cerró el intento y abre el próximo) |
 | §14.5 (si pierden) | Gags de aspirar y estornudar | En la Torre, los **4 gags del guion** y el rearmado parcial (motor-lanzar §10) |
 | §14.4 (mapa de batalla) | 3 hitos | **4 hitos**; el de la Torre, el último y más grande |
-| §14.3, "Duración" y §14.13 riesgo 1 | Meta de ≤ 15 min en total | La batalla pasa a **≈ 18-20 min**. La Torre dura **5-7 min** (típica ≈ 5,8) y la precede **una sola** pausa "¿vamos ahora o descansamos?", en el mapa de batalla **antes** de la presentación T.1, con la voz `arcoiris_batalla_torre_pausa_antes` (v7.2, UX HE-71 M6; la presentación sigue directo a la intro). **Jugarla en dos sesiones o más es el caso normal**; la meta de ≤ 5 min por ronda de color no cambia. **(v7.3)** Con 3 etapas, la Torre típica dura **≈ 16 min** (meta ≤ 15) y la batalla completa **≈ 28-30 min** más el cierre: se juega en **2-3 sesiones**, y cada etapa es un buen lugar para cortar (§14.16.1). Sigue habiendo **una sola** pausa con pregunta, la de antes de la Torre: entre etapas no hay "¿seguimos?" (motor-lanzar §21, decisión abierta 6) |
+| §14.3, "Duración" y §14.13 riesgo 1 | Meta de ≤ 15 min en total | La batalla pasa a **≈ 18-20 min**. La Torre dura **5-7 min** (típica ≈ 5,8) y la precede **una sola** pausa "¿vamos ahora o descansamos?", en el mapa de batalla **antes** de la presentación T.1, con la voz `arcoiris_batalla_torre_pausa_antes` (v7.2, UX HE-71 M6; la presentación sigue directo a la intro). **Jugarla en dos sesiones o más es el caso normal**; la meta de ≤ 5 min por ronda de color no cambia. **(v7.3)** Con 3 etapas, la Torre típica dura **≈ 16 min** (meta ≤ 15) y la batalla completa **≈ 28-30 min** más el cierre: se juega en **2-3 sesiones**, y cada etapa es un buen lugar para cortar (§14.16.1). Sigue habiendo **una sola** pausa con pregunta, la de antes de la Torre: entre etapas no hay "¿seguimos?" (**[Decisión 05-Nov, delegada]**: sin pausa entre etapas, tras la caída corta se pasa directo a la siguiente; motor-lanzar §25.19.1) |
 | §14.6 (parcial) | Río, Formas, Parejas, epílogo | También la Torre: torre exacta, charco, intento, ayudas ganadas, conteo de gags y globos (v7.2: mínimo 5, redondeado hacia arriba a 5/9/13 para que el retomado también termine con Maxi); empieza Maxi. "Descansar" tras un gag guarda el intento nuevo (motor-lanzar §12). **(v7.3)** Suma `etapa`, `etapas_ganadas` y `etapa_iniciada`; se guarda **también en el cuadro del derribo de E1 y E2** con la etapa siguiente ya anotada, y al volver hay una re-entrada corta (`retomar_torre`, caso A o B). Detalle en el §14.16.1 |
 | §14.7, **"La batalla no condiciona nada (UX HE-66, M7)"** | Puntos 1-4 | **ANULADO por cambio del PO (12 y 13-Oct-2026)**: la batalla **sí condiciona el viaje al planeta 2**, pero **como estado familiar**. Con **un** hermano con el ala (zona 3) y la batalla ganada, la ceremonia de preparativos (bloque 2 del storyboard) instala el ala y **la nave queda lista para todos**: cualquier hermano puede viajar, aunque todavía no tenga su ala, y completar Arcoíris después. **Llave en la zona de padres** para instalar el ala sin la batalla. M7.4 sigue valiendo ("el ala no se gana en la batalla"); M7.1 y M7.2 dejan de valer; M7.3 (el hito sin alarmas) se mantiene como tono. **v7.2 (UX HE-71 M8)**: la llave se acompaña de una línea de estado a la vista en la zona de padres, y la batalla y la partida se pueden jugar con dos hermanos usando el retrato del tercero (§14.7). Animalia antes de la partida: lejana, sin candado, con latido y la voz `arcoiris_despegue_mapa_animalia_antes_01/02` (M9). Datos y API: `equipo.partidas.<planeta>` (`pasos`, `hecha`, `ceremonia`, `forzada`), `equipo.rumbos`, `mapa.json` → `"viaje_siguiente_requiere": {"partida": "arcoiris"}` y `batalla.tras_ganar` (motor-lanzar §13.4). Riesgo R10 para UX |
 | §14.7, el hito del Claro | La mochila-torre gris | Tres estados: batalla no ganada → la mochila gris; ganada y partida pendiente → **hito de partida** (la nave con el mapa, storyboard §7.1); partida hecha → la mochila pintada con **"la Torre otra vez"** (revancha) |
@@ -2614,8 +2618,10 @@ diseño, y sus correcciones están incorporadas:
   de la revancha y HE-39). El gigante, el orden de turnos y la revancha con dos quedaron resueltos por
   delegación el 17-Oct-2026;
 - re-auditoría corta de UX (B2, M2-M5, M10) sobre motor-lanzar v3 y el storyboard v4;
-- **(v7.3)** auditoría UX de la v4 / v4.1 (R17-R22) y del storyboard v5 §25; decisiones abiertas 6 y 7 de
-  motor-lanzar §21 (pausa entre etapas y revancha de 3 etapas o solo E3).
+- **(v7.3)** auditoría UX de la v4 / v4.1 (R17-R23) y del storyboard v5 §25. ~~Decisiones abiertas 6 y 7
+  de motor-lanzar §21~~ **cerradas [Decisión 05-Nov, delegada]**: sin pausa entre etapas; revancha solo E3
+  (motor-lanzar §25.19);
+- recalibrar la Torre provisional, demasiado fácil (HE-80 / HE-125; motor-lanzar §25.19.3, R23).
 
 #### 14.16.1 La Torre en 3 etapas, con guardado entre etapas (v7.3, HE-88) [PO: R17 = A, 05-Nov-2026]
 
@@ -2646,12 +2652,16 @@ toca al núcleo (`batalla.gd`, `Progreso`, `GestorTurnos`).
    `momento_saltable_iniciado/terminado` y `saltar_momento(id)` alcanzan. La conexión de `batalla.gd` a
    `momento_saltable_iniciado` tiene que ser directa (no diferida), y el toque que salta no se consume.
    Lo "visto" sigue en `equipo.cinematicas_vistas` (por familia, §11.5).
-6. **La revancha guarda entre etapas** (nota 5) [delegación]: solo en el derribo de E1 y E2, en el mismo
+6. **La revancha se juega solo con E3, sin parcial** **[Decisión 05-Nov, delegada]** (implementada en
+   HE-77; motor-lanzar §25.15 y §25.19.2). `batalla.gd` la sigue tratando como la ronda `torre` con
+   `motor.revancha = true`; el motor arranca directo en E3. **No hay parcial de revancha**: salir con la
+   casa no cuesta ni cuenta y al volver empieza de cero. Estrellitas como en la v3: ★ ganar, ★★ al 1.er
+   intento, ★★★ además con ≥ `sobrantes_tres` (1) globo sobrante. Récord = globos usados, −1 si hubo
+   derrotas. Con dos hermanos, sin estrellitas ni récord (sin cambios). **Deja de aplicar** el parcial
+   `torre_revancha` (motor-lanzar §25.18.7, D8): `batalla.gd` no guarda ni lee nada con ese id.
+   ~~La revancha guarda entre etapas (nota 5) [delegación]: solo en el derribo de E1 y E2, en el mismo
    hueco (`guardar_parcial_batalla(id_batalla, "torre_revancha", estado)`), con los acumulados de las
-   estrellitas y del récord. Salir a mitad de una etapa la reinicia entera, nunca vuelve a E1. Al volver:
-   "¡todos a la nave!" corto y `retomar_torre` (caso B). Si vuelven con otra composición, sigue sin
-   estrellitas ni récord. **Reemplaza** el "sin parcial" de la revancha (§14.16, motor-lanzar §11 y §25.15).
-   Si el PO elige "revancha solo E3" (motor-lanzar §21, decisión 7), este punto no aplica.
+   estrellitas y del récord.~~
 7. **Sin intro corta al empezar E2 y E3** (nota 3, adoptada): la llegada del Coleccionauta la reemplaza. Sí
    suena en cada intento nuevo y al retomar.
 8. **La bandeja de Nicole se presenta en su 2.º turno de la sesión** (nota 4, adoptada), una vez por

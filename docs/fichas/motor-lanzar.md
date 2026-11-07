@@ -843,8 +843,10 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
   - después, directo a la Torre, **sin presentación T.1** (una vez vista), con la intro corta.
 - **La torre parte nueva**, igual que el charco y la canasta (`globos_base`). Las ayudas (§10.3) también
   rigen en la revancha: nunca se traba.
-- **(v4)** La revancha juega **las 3 etapas**. El récord suma los globos de las tres, y las estrellitas
-  piden "sin perder ninguna etapa" (§25.15).
+- ~~**(v4)** La revancha juega **las 3 etapas**. El récord suma los globos de las tres, y las estrellitas
+  piden "sin perder ninguna etapa" (§25.15).~~ **[Decisión 05-Nov, delegada]** La revancha se juega
+  **solo con E3** (la torre de los trampolines), sin parcial; las estrellitas y el récord son los de esta
+  tabla, como en la v3 (§25.15, §25.19).
 - **Al ganar una revancha**:
   - anticipación (no se salta) → caída (se salta, ya vista);
   - **sin** antes del epílogo, epílogo, cierres, parte C ni foto;
@@ -861,9 +863,12 @@ Con Maxi nunca es 0; si lo fuera, suena `nucleo_equipo_nos_alcanzo`.
   Los globos sobrantes vuelan al cielo uno por uno, con un "pop" de estrella. Sin números.
 - **Récord familiar**: **los menos globos usados** en una victoria sin ayudas. Se ve como la banderita en
   la canasta. Voces que ya existen: "¡nuevo récord del equipo!" y "¡su primer récord!" (m6).
+  **[Decisión 05-Nov, delegada]**: récord = globos usados en E3; **−1 si hubo derrotas** en esa revancha
+  (en la práctica es lo mismo que "sin ayudas": la 1.ª ayuda llega con la 1.ª derrota).
 - **Nunca hay comparación entre hermanos.** 0 destellos [Propuesta]. Sin parcial: salir no cuesta nada y
-  no cuenta. **(v4.1)**: con 3 etapas, guarda solo entre etapas (§25.18.7); salir a mitad de una etapa
-  sigue sin costar nada y sin contar.
+  no cuenta. ~~**(v4.1)**: con 3 etapas, guarda solo entre etapas (§25.18.7); salir a mitad de una etapa
+  sigue sin costar nada y sin contar.~~ **[Decisión 05-Nov, delegada]**: con la revancha solo de E3
+  vuelve el "sin parcial" de la v3; el §25.18.7 deja de aplicar.
 
 ### 11.1 Revancha con dos hermanos (v3) [PO, por delegación 17-Oct]
 
@@ -1002,7 +1007,7 @@ func saltar_momento(id_animacion: String) -> void         # virtual: deja el est
 
 ## Revancha (§11). batalla.gd la pone antes de añadir el motor al árbol.
 var revancha: bool = false
-signal resultado_revancha(estrellitas: int, record: int)  # antes de completado; record = globos usados (-1 si hubo ayudas)
+signal resultado_revancha(estrellitas: int, record: int)  # antes de completado; record = globos usados en E3 (-1 si hubo derrotas; decisión 05-Nov, §25.19)
 
 # motor_lanzar.gd (propias del motor; respuesta al storyboard §18.7) ---------------------------
 ## Se emite UNA vez, en el cuadro del derribo final (agarre 0 o trono botado), con toda la física ya congelada.
@@ -1069,8 +1074,9 @@ func estado_derribo() -> Dictionary
 - **Modo revancha**:
   - solo la ronda con `"revancha": true`, con `motor.revancha = true`;
   - escucha `resultado_revancha` → `Progreso.registrar_revancha_batalla(...)`;
-  - sin destellos y sin cinemáticas de cierre; **(v4.1)** con un parcial propio, solo entre etapas
-    (§25.18.7; antes: "sin parcial").
+  - sin destellos y sin cinemáticas de cierre; ~~**(v4.1)** con un parcial propio, solo entre etapas
+    (§25.18.7; antes: "sin parcial").~~ **[Decisión 05-Nov, delegada]**: la revancha juega solo E3 y
+    **no tiene parcial** (vuelve la regla de la v3; el parcial `torre_revancha` no existe, §25.19).
 - **`Progreso`** (dentro de `equipo.batallas.<id>`, sin subir versión; se crea al leer si falta):
 
   ```jsonc
@@ -1977,12 +1983,13 @@ el arnés afectado.
    13 + 4 y el agarre mínimo 16.
 5. **(v4) Si la Torre típica pasa de 15 min** después de las palancas 1 y 2 del §25.10: ¿E1 con 9 globos
    de calentamiento? Cambia la maqueta aprobada, así que lo decide el PO.
-6. **(v4) ¿Pausa entre etapas?** Propuesta: **no**. La transición es de ≤ 4 s, el parcial se guarda al
-   empezar cada etapa y la casa siempre está a la vista. Si el playtest muestra cansancio, se ofrece el
-   mapa de batalla entre E2 y E3.
-7. **(v4) Revancha**: las 3 etapas (propuesta, §25.15) o solo E3. Con las tres dura ≈ 12-16 min.
-   **(v4.1)**: con las tres, ahora guarda entre etapas (§25.18.7), así que R22 baja. Si el PO elige "solo
-   E3", no hace falta parcial y el §25.18.7 no aplica.
+6. ~~**(v4) ¿Pausa entre etapas?**~~ **Resuelta [Decisión 05-Nov, delegada]: sin pausa.** Tras la caída
+   corta, la transición (≤ 4 s) lleva directo a la etapa siguiente; el parcial ya está guardado y la casa
+   siempre está a la vista. Si el playtest muestra cansancio, se reabre (ofrecer el mapa de batalla entre
+   E2 y E3). Implementado en HE-77 (§25.19).
+7. ~~**(v4) Revancha**: las 3 etapas o solo E3.~~ **Resuelta [Decisión 05-Nov, delegada]: solo E3**, sin
+   parcial; estrellitas y récord como en la v3 (§11, §25.15, §25.19). El §25.18.7 (D8) deja de aplicar.
+   Implementado en HE-77.
 
 ---
 
@@ -2212,7 +2219,8 @@ nueva: **≤ 40 cuerpos por etapa** (E1, la más grande: 20 piezas + trono + pla
 3. **Transición ≤ 4 s, con voz** (C1): él sale del charco, corre (o rebota) hacia la derecha, y la
    torre nueva **se arma pieza por pieza con "pop"** mientras corre. Suena la línea
    `etapa_2_llega` o `etapa_3_llega` (§25.14). **No se salta** (es corta y orienta). No hay pausa ni
-   pregunta de "¿seguimos?" (la decisión abierta 6 está en el §21).
+   pregunta de "¿seguimos?" (**[Decisión 05-Nov, delegada]**: sin pausa entre etapas; la decisión 6 del
+   §21 queda cerrada, §25.19).
 4. **La etapa nueva empieza**:
    - **se reinicia por etapa**: el agarre (al `agarre_inicial` de la etapa), la torre, el charco
      (arranca chico, porque es otra torre), la canasta (13), los intentos de la etapa (las ayudas y la
@@ -2561,7 +2569,8 @@ en escalera** [delegación; HE-80 puede moverlas con datos del arnés y del play
 | R19 | **El resorte desvía un tiro** y una niña siente "¡no es justo!" | Se ve limpio y verde, con un "boing" claro; la presentación de Coco en E3; la guía de Nicole muestra el choque con el resorte como impacto | Frases de injusticia en E3 |
 | R20 | **La onda del confeti asusta** (estallido) | Sonido blando de fiesta, anillo blanco, nada de fuego ni humo; el Coleccionauta se ríe | Caras de susto en Maxi la primera vez |
 | R21 | **"¡Otra torre más!"**: frustración de "nunca se acaba" en E2 o E3 | La transición dura ≤ 4 s y es chistosa (él corre y la torre se arma con pops); la línea de llegada de E3 dice que es **la última** | ¿Celebran o se quejan al ver la torre nueva? |
-| R22 | **La revancha completa dura ≈ 12-16 min** y no tiene parcial | Ver la decisión abierta 7 (§21) | ¿Juegan la revancha entera? |
+| R22 | ~~**La revancha completa dura ≈ 12-16 min** y no tiene parcial~~ **Cerrado [Decisión 05-Nov, delegada]**: la revancha es solo E3 (≈ 3-5 min), sin parcial | La revancha corta (§25.19) | ¿Piden la revancha más de una vez por tarde? ¿Echan de menos E1 y E2? |
+| R23 | **La Torre provisional es demasiado fácil** (HE-80 / HE-125): ver el §25.19.3 | Recalibrar en HE-80 con las palancas del §25.19.3 | Tiros por etapa; ¿Maxi se queda sin objetivo? |
 
 ### 25.12 Para `tester-qa` (casos nuevos v4)
 
@@ -2662,20 +2671,34 @@ En total son **10 nuevas** y **1 variante sugerida**. Siguen pendientes las de l
 `elige_globo_presenta` (Sofía), `toca_en_el_aire`, `encontre_globos`, `intro_revancha`,
 `estrellitas_equipo` y `justo_ahi_maxi`.
 
-### 25.15 Revancha v4 [delegación]
+### 25.15 Revancha v4 [delegación] — reemplazada por la decisión del 05-Nov
 
-- **Se juegan las 3 etapas** (es "la Torre"). Las ayudas son por etapa, como siempre: nunca se traba.
-- **Récord** = los globos usados **en las tres**, sin ayudas.
-- **Estrellitas**:
-  - ★: ganar;
-  - ★★: ganar **sin perder ninguna etapa**;
-  - ★★★: sin perder ninguna etapa y con ≥ `sobrantes_tres` (1) globo sobrante **en cada etapa**.
-  
-  La meta del 15-25 % de 3★ se recalibra en HE-80.
-- ~~**Sin parcial**, como en la v3. Por eso dura ≈ 12-16 min (R22, decisión abierta 7).~~ **(v4.1)
-  Reemplazado**: la revancha guarda **solo entre etapas** (en el derribo de E1 y de E2), con `etapa`
-  y lo necesario para las estrellitas y el récord (§25.18.7). Salir a mitad de una etapa la reinicia,
-  nunca vuelve a E1.
+> **[Decisión 05-Nov, delegada]** (el PO delegó al orquestador; implementada en el motor por `dev-godot`,
+> HE-77): **la revancha se juega SOLO con E3**, sin parcial. Lo de abajo tachado queda para la
+> trazabilidad. Detalle en el §25.19.
+
+- **Se juega solo E3** (la torre angosta de los trampolines, la última y la más rara): ≈ 3-5 min (§25.10), el
+  tamaño de una ronda. Entra con `intro_revancha` + la intro corta, directo a E3 (sin E1, sin E2, sin
+  caída corta ni transición). Las ayudas de E3 rigen como siempre: nunca se traba.
+- **Sin parcial**, como en la v3: salir con la casa **no cuesta ni cuenta**; al volver, la revancha
+  empieza de cero.
+- **Estrellitas** (las de la v3, §11):
+  - ★: ganar (con ayudas);
+  - ★★: ganar **en el primer intento** de esa revancha;
+  - ★★★: en el primer intento y con ≥ `sobrantes_tres` (1) globo sobrante.
+- **Récord** = los globos usados en E3; **−1 si hubo derrotas** en esa revancha.
+- La meta del 15-25 % de 3★ (§15) se recalibra en HE-80 **sobre E3 sola**.
+- La revancha con dos (§11.1) no cambia: sin estrellitas ni récord, con la canasta de E3 de su
+  composición (13 / 17 con Maxi; 12 / 16 `nicole+sofia`).
+
+Texto anterior (v4 / v4.1), **ya no aplica**:
+
+- ~~**Se juegan las 3 etapas** (es "la Torre"). Las ayudas son por etapa, como siempre: nunca se traba.~~
+- ~~**Récord** = los globos usados **en las tres**, sin ayudas.~~
+- ~~**Estrellitas**: ★ ganar; ★★ ganar sin perder ninguna etapa; ★★★ sin perder ninguna etapa y con ≥
+  `sobrantes_tres` (1) globo sobrante en cada etapa.~~
+- ~~**(v4.1)** la revancha guarda solo entre etapas (en el derribo de E1 y de E2), con `etapa` y lo
+  necesario para las estrellitas y el récord (§25.18.7).~~
 
 ### 25.16 Lo que la maqueta simplifica y **no** se adopta (para que nadie lo copie)
 
@@ -2705,7 +2728,7 @@ En total son **10 nuevas** y **1 variante sugerida**. Siguen pendientes las de l
 | Retiro de los globos (suelo = golpe, 110 / 200 / 420 cuadros); asentamiento desde el último retiro | §25.7, §2 (v4), §6.1 (v4), §6.2 (v4) |
 | Metas de calibración por etapa (HE-80) | §25.9, §15.1 (v4) |
 | Duración ≈ 16 min de Torre; R17-R22 | §25.10, §25.11, §16 (v4), §19 (v4) |
-| Revancha de 3 etapas | §25.15, §11 (v4) |
+| Revancha de 3 etapas (**reemplazada [Decisión 05-Nov, delegada]**: solo E3, §25.19) | §25.15, §11 (v4) |
 
 ---
 
@@ -2722,7 +2745,7 @@ contradiga.
 | 2. Saber si la etapa "no tenía tiros" | **Campo explícito `etapa_iniciada`** | §25.18.2 |
 | 3. Sin intro corta al empezar E2 y E3 | **Adoptada** | §25.18.3 |
 | 4. La bandeja de Nicole en su 2.º turno, en lugar de `carga` | **Adoptada** | §25.18.5 |
-| 5. `etapa` en la revancha | **Sí: la revancha guarda solo entre etapas** | §25.18.7 |
+| 5. `etapa` en la revancha | ~~**Sí: la revancha guarda solo entre etapas**~~ **No aplica [Decisión 05-Nov, delegada]**: la revancha es solo E3, sin parcial | §25.18.7, §25.19 |
 | 6. Ids `caida_etapa` y `retomar_torre` | **Adoptados**, más 3 ids de presentaciones | §25.18.4, §25.18.6 |
 | 7. Sin estado nuevo para lo visual | **De acuerdo**: lunares e indicador salen de `etapas_ganadas` | — |
 
@@ -2798,7 +2821,7 @@ La **intro corta** son `intro_coleccionauta` («¡Torrecita!») y `intro` (Coco 
 | Retomar, caso A | Intro corta (storyboard RA3-RA4) |
 | Retomar, caso B en E2 o E3 | `etapa_N_llega` + **solo `intro`** (storyboard RB2-RB3) |
 | Retomar, caso B en E1 | Como "entrar a la Torre" (T.1 si no se vio; si no, la intro corta) |
-| Revancha | `intro_revancha` + intro corta en E1; en E2 y E3, como en la batalla (sin intro corta) |
+| Revancha | ~~`intro_revancha` + intro corta en E1; en E2 y E3, como en la batalla (sin intro corta)~~ **[Decisión 05-Nov, delegada]**: `intro_revancha` + intro corta, directo a E3 (luego `resorte_presenta` si no se presentó). Cada intento nuevo, intro corta |
 
 #### 25.18.4 La re-entrada al retomar y el momento `retomar_torre`
 
@@ -2873,9 +2896,14 @@ v4.1 suma dos políticas más. Viven en un **campo nuevo y opcional** de la rond
 - **Ids nuevos** (todos con el prefijo `<id_batalla>:`): `retomar_torre`, `presenta_confeti`,
   `presenta_resorte` y `presenta_bandeja_nicole`. `caida_etapa` y `caida_torre` ya existían.
 
-#### 25.18.7 La revancha guarda entre etapas
+#### 25.18.7 La revancha guarda entre etapas — **YA NO APLICA**
 
-**Decisión [delegación]**: **sí**, la revancha de 3 etapas guarda `etapa`, pero **solo entre etapas**. Es
+> **[Decisión 05-Nov, delegada]**: la revancha se juega **solo con E3** y **sin parcial** (§25.15,
+> §25.19). Todo este apartado, el parcial con id de ronda `"torre_revancha"` y sus campos
+> (`globos_usados`, `derrotas_revancha`, `con_sobrante_en_todas`, `ayudas_usadas`, `clave_equipo`) **dejan
+> de aplicar** (D8 retirado). Se conserva el texto para la trazabilidad.
+
+~~**Decisión [delegación]**: **sí**, la revancha de 3 etapas guarda `etapa`, pero **solo entre etapas**.~~ Es
 lo que pidió el PO para la Torre (R17 = A: "cortar entre etapas sin perder nada") y baja el R22 (12-16 min
 sin poder parar). **No** guarda a mitad de una etapa: la revancha es un premio opcional y no conviene
 complicarla.
@@ -2927,7 +2955,7 @@ complicarla.
 | D5 | **Bandeja de Nicole en su 2.º turno de la sesión**, en lugar de `carga`; contador de turnos `brote` en memoria | Comportamiento | §25.18.5 |
 | D6 | **Momentos nuevos** `presenta_confeti`, `presenta_resorte` y `presenta_bandeja_nicole`: el motor los envuelve con `momento_saltable_iniciado/terminado` y mira si quedaron saltados al emitir. **No hay señales ni firmas nuevas** | **Ids nuevos** | §25.18.6 |
 | D7 | **Campo de datos `rondas[].momentos`** en `arcoiris_final.json` y las políticas `desde_1a` y `una_vez` en `batalla.gd` (genérico; la conexión a `momento_saltable_iniciado` debe ser directa) | **Dato nuevo** + `batalla.gd` | §25.18.6 |
-| D8 | **Parcial de la revancha** solo entre etapas, con id de ronda `"torre_revancha"` y sus campos (`revancha`, `globos_usados`, `derrotas_revancha`, `con_sobrante_en_todas`, `ayudas_usadas`, `clave_equipo`). Reemplaza "la revancha no tiene parcial" | **Campos del parcial** + `batalla.gd` | §25.18.7 |
+| ~~D8~~ | **Retirado [Decisión 05-Nov, delegada]**: la revancha es solo E3, sin parcial (§25.19). Texto anterior: ~~**Parcial de la revancha** solo entre etapas, con id de ronda `"torre_revancha"` y sus campos (`revancha`, `globos_usados`, `derrotas_revancha`, `con_sobrante_en_todas`, `ayudas_usadas`, `clave_equipo`). Reemplaza "la revancha no tiene parcial"~~ | ~~Campos del parcial + `batalla.gd`~~ (nada) | §25.18.7, §25.19 |
 
 **Lo que no cambia**: ninguna firma de `GestorTurnos`, de `minijuego_base` ni de `Progreso`; los ids de voz;
 el contrato de `torre_equipo.json`; la secuencia de la victoria en E3.
@@ -2945,5 +2973,89 @@ el contrato de `torre_equipo.json`; la secuencia de la victoria en E3.
 - La presentación de la bandeja suena en el 2.º turno de Nicole de la sesión (nunca en el 1.º), una vez por
   familia, y en ese turno no suena `carga`. Salir a mitad de la presentación no la marca vista.
 - Con un momento `una_vez` ya visto no se oye ni se ve nada de él (ni un cuadro).
-- Revancha: salir a mitad de E2 vuelve a E2 entera; salir a mitad de E1 vuelve a E1; las estrellitas y el
-  récord usan los acumulados; volver con otra composición da `resultado_revancha(0, -1)`.
+- ~~Revancha: salir a mitad de E2 vuelve a E2 entera; salir a mitad de E1 vuelve a E1; las estrellitas y el
+  récord usan los acumulados; volver con otra composición da `resultado_revancha(0, -1)`.~~ **Reemplazado
+  [Decisión 05-Nov, delegada]** por los casos de revancha del §25.19.4.
+
+---
+
+### 25.19 Decisiones del 05-Nov (delegadas) y riesgo de balance de la Torre provisional
+
+**Origen**: el PO delegó al orquestador las decisiones abiertas 6 y 7 del §21 (05-Nov-2026). Ya están
+**implementadas en el motor `lanzar` por `dev-godot` (HE-77)**; esta sección pone la ficha al día. **Manda
+sobre el §11, el §25.3, el §25.15 y el §25.18** donde los contradiga.
+
+#### 25.19.1 Sin pausa entre etapas [Decisión 05-Nov, delegada]
+
+- Fin de E1 y de E2: derribo → **caída corta** (`caida_etapa`, saltable desde la 2.ª vez) → **transición
+  ≤ 4 s** con `etapa_N_llega` → la etapa siguiente, **directo**. No hay mapa de batalla, ni pregunta de
+  "¿seguimos?", ni botón de continuar entre medio.
+- Lo que lo hace seguro: el parcial ya se guardó en el cuadro del derribo (§25.18.1) y la casa está siempre
+  a la vista; cortar entre etapas sigue sin perder nada.
+- Sigue habiendo **una sola** pausa con pregunta en la batalla: la de antes de la Torre (`pausa_antes`,
+  §13.3). La oferta de descansar de la 3.ª derrota (`pausa`, §10.3) no cambia.
+- **Se reabre solo si el playtest** muestra cansancio en E2 → E3 (la opción guardada: ofrecer el mapa de
+  batalla entre E2 y E3).
+
+#### 25.19.2 La revancha se juega solo con E3 [Decisión 05-Nov, delegada]
+
+- **Qué se juega**: solo E3 (torre angosta, flancos de lata, trampolines). Entrada: "¡todos a la nave!"
+  corto → `intro_revancha` + intro corta → puerta de Maxi. Sin presentación T.1, sin E1 ni E2, sin caídas
+  cortas ni transiciones. Al ganar: anticipación (no se salta) → caída (se salta) → mini fiesta →
+  estrellitas y récord → mapa del planeta (lo del §11).
+- **Sin parcial**: salir con la casa **no cuesta ni cuenta**. No se escribe ningún parcial `torre_revancha`;
+  al volver, la revancha empieza de cero. El §25.18.7 y D8 dejan de aplicar.
+- **Estrellitas** (como en la v3):
+
+  | Estrellitas | Cuándo |
+  |---|---|
+  | ★ | Ganar (con o sin ayudas) |
+  | ★★ | Ganar **en el 1.er intento** de esa revancha |
+  | ★★★ | Ganar en el 1.er intento **y** con ≥ `sobrantes_tres` (1) globo sobrante |
+
+- **Récord** = globos usados en E3; **−1 si hubo derrotas** en esa revancha (no se registra). La banderita
+  de la canasta marca el récord anterior de E3.
+- **Con dos hermanos** (§11.1): igual, solo E3, sin estrellitas ni récord (`resultado_revancha(0, -1)`).
+- **Datos**: `revanchas.torre` = `{estrellitas, record}` no cambia de forma; `revancha.sobrantes_tres` sigue
+  en 1. La meta de 3★ en un 15-25 % de las revanchas (§15) pasa a medirse **sobre E3 sola** (HE-80).
+- **Por qué** (game feel): una revancha de 3-5 min es "una más" de verdad; la de 12-16 min (R22) era
+  otra batalla entera y Maxi no llega. E3 es la torre más rara y la que más pide puntería a Sofía, así que
+  es la que tiene más reto para repetir.
+
+#### 25.19.3 Riesgo de balance: la Torre provisional es demasiado fácil (HE-80 / HE-125)
+
+Lo vio la prueba del motor implementado (HE-77) con la Torre provisional:
+
+| Síntoma | Meta (§25.9) | Causa probable |
+|---|---|---|
+| **E1 cayó en 5 tiros** | p50 de tiros en el intento ganador ≥ 7 en E1; "gana con ≤ 4 tiros" ≤ 3 % | Las dos de abajo, sumadas |
+| **Un globo rompe una caja de cartón de un golpe** | El cartón es "medio": 3 de resistencia (§6.4), debería pedir 2 golpes normales | El **tope de daño por golpe es 3**, igual a la resistencia del cartón: un tiro fuerte lo abre entero |
+| **La lista de objetivos de Maxi en E1 se agota en ≈ 4 turnos** | Maxi tiene 7 turnos por intento (13 globos) | `puntos_debiles.semilla` de E1 es corta y sus piezas se botan rápido; después Maxi no tiene a qué apuntar |
+
+**Palancas, en orden** (las aplica `disenador-niveles` en HE-80 / HE-125, con el arnés; ninguna toca la
+regla de balance ni los 13 + 4 globos):
+
+1. **Tope de daño por golpe < resistencia del cartón**: tope 2 (o resistencia del cartón 4), para que el
+   cartón pida siempre ≥ 2 golpes. El pesado sigue con su daño ×2 (§6.4), que es su gracia. Revisar que la lata siga pidiendo ≥ 2 golpes del pesado.
+2. **Lista de Maxi más larga en E1**: ≥ 7 objetivos (uno por turno del intento), o que la lista **se
+   recicle** (vuelva a apuntar a la pieza en pie más cercana de la lista) en vez de agotarse. Respetando G2
+   (nunca un apoyo del trono).
+3. **Sumar peso a E1** y subir su agarre (la 1.ª palanca del §25.9: agarre 25 con `peso_botable` ≥ 33).
+4. Volver a medir E2 y E3 con el tope nuevo: el tope de daño es del motor (de todas las etapas) y puede
+   dejarlas más difíciles de lo que se quiere.
+
+**Qué observar**: tiros por etapa (p50 y "≤ 4 tiros"), golpes por caja de cartón, turnos de Maxi sin
+objetivo, y si la Torre deja de durar ≈ 16 min (con una E1 más larga, la palanca 3 del §25.10 vuelve a
+importar). Riesgo R23 del §25.11.
+
+#### 25.19.4 Para `tester-qa` (casos nuevos)
+
+- Entre etapas no aparece ninguna pausa, pregunta ni mapa: caída corta → transición ≤ 4 s → etapa nueva.
+- La revancha abre **directo en E3** (torre de E3, canasta de E3, empieza Maxi), con `intro_revancha` +
+  intro corta.
+- Salir a mitad de la revancha **no** escribe parcial ni toca `revanchas`; al volver, empieza de cero.
+- Estrellitas: ganar tras perder → 1; ganar al 1.er intento con 0 sobrantes → 2; con ≥ 1 sobrante → 3.
+- Récord: ganar al 1.er intento → globos usados; ganar tras alguna derrota → −1 (no se registra).
+- Con dos hermanos: solo E3 y `resultado_revancha(0, -1)`.
+- Balance (cuando HE-80 / HE-125 cambien los números): ninguna caja de cartón se abre con un solo globo
+  normal; Maxi tiene objetivo en todos sus turnos de E1.

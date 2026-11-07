@@ -81,6 +81,7 @@ li{margin:2px 0}
       <li><b>Maxi</b>: la escena cabe en una pantalla, no hay lista y cualquier animal vale. Cada 5 a 8 s uno hace ruido desde su lado de la pantalla. A los 6 s quieto, uno asoma la cabeza y llama; a los 10 s, Toby lo señala. Son 2 escenas: «¡se escondieron otra vez!».</li>
       <li><b>Nicole</b>: un objetivo a la vez, con voz, silueta y la palabra en mayúsculas. Si encuentra uno de la lista que todavía no le toca, cuenta igual. Desde la zona 3 hay escondites que se abren y en la 4, un señuelo que se presenta solo.</li>
       <li><b>Sofía</b>: 3 tarjetas con pista escrita (tocar una la lee). Camuflaje desde la zona 2, lupa desde la 3 (un toque la arma y el siguiente acerca 2× ahí), escondites de 2 pasos en la 4 y la 5. Los señuelos cortan la racha. El sol es el reloj: si se pone, todos gritan «¡aquí estábamos!» y los que faltan cambian de escondite.</li>
+      <li><b>Sol en los tres</b> (HE-124): Maxi 3 × par (par 35-45 s por escena, mínimo 60 s al reintentar), Nicole 2,2 × par desde la zona 1 (mínimo 60 s) y Sofía 1,6 × par (mínimo 45 s). Toby regala uno tras 2 derrotas (Sofía, tras 3). Tras 3 derrotas, Maxi recibe la ayuda fuerte: todos asoman y no hay sol.</li>
       <li><b>Toque y arrastre</b>: al presionar aparece una onda al instante. Si el dedo se mueve más de 16 px es arrastre y no toca nada. Prueba en la tablet si Nicole mueve la escena sin querer.</li>
       <li><b>Mapita</b> (arriba a la derecha): muestra qué parte de la escena se ve. Tocarlo lleva ahí.</li>
     </ul>
@@ -275,9 +276,9 @@ const PALETA=[{suelo:'#8fcf7a',lejos:'#7cc06a',cielo:'#9fdcf5',tipos:['arbusto',
   {suelo:'#b9946c',lejos:'#9c7a5a',cielo:'#f2c6a8',tipos:['roca','arbusto','roca','tronco','helecho'],abre:['cueva','caja'],deco:['volcan','geiser','huesos','nube']}];
 function cfgBase(h,z){
   const i=z-1;
-  if(h==='maxi')return{perfil:'semilla',ancho:1280,alto:720,objetivos:[5,5,6,6,7][i],escenas:2,visible:[0.8,0.8,0.75,0.75,0.7][i],tam_animal:[200,190,180,170,160][i],objetos:[6,7,8,9,10][i],abren:0,dos_pasos:0,camuflaje:false,senuelos:0,modo_lista:'libre',mostrar_palabra:false,lupa:false,mapita:false,tiempo_par_s:null,par_solo_con_record:false,sol_factor:null,sol_min_s:45,ruido_min_s:5,ruido_max_s:8,ayuda1_s:6,ayuda2_s:10,toque_min:160,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:null,pista:false,regalo_derrotas:2,umbral_dos:null,umbral_tres:null};
-  if(h==='nicole')return{perfil:'brote',ancho:[1920,1920,2560,2560,2560][i],alto:720,objetivos:[5,5,6,7,7][i],escenas:1,visible:[0.6,0.55,0.5,0.45,0.4][i],tam_animal:[120,115,110,100,96][i],objetos:[12,12,14,15,16][i],abren:[0,0,1,1,2][i],dos_pasos:0,camuflaje:false,senuelos:[0,0,0,1,1][i],modo_lista:'uno',mostrar_palabra:true,lupa:false,mapita:true,tiempo_par_s:[null,100,130,150,160][i],par_solo_con_record:true,sol_factor:null,sol_min_s:45,ruido_min_s:null,ruido_max_s:null,ayuda1_s:12,ayuda2_s:20,toque_min:96,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:25,pista:false,regalo_derrotas:2,umbral_dos:1500,umbral_tres:1900};
-  return{perfil:'estrella',ancho:[2560,2560,3200,3200,3840][i],alto:z===5?1080:720,objetivos:[8,9,10,11,12][i],escenas:1,visible:[0.4,0.35,0.3,0.25,0.2][i],tam_animal:[90,84,76,70,64][i],objetos:[14,15,18,20,24][i],abren:[1,2,3,4,4][i],dos_pasos:[0,0,0,2,2][i],camuflaje:z>=2,senuelos:[0,1,2,3,4][i],modo_lista:'tarjetas',mostrar_palabra:false,lupa:z>=3,mapita:true,tiempo_par_s:[150,170,200,230,270][i],par_solo_con_record:false,sol_factor:2.0,sol_min_s:45,ruido_min_s:null,ruido_max_s:null,ayuda1_s:null,ayuda2_s:null,toque_min:64,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:null,pista:true,regalo_derrotas:2,umbral_dos:2600,umbral_tres:3300};
+  if(h==='maxi')return{perfil:'semilla',ancho:1280,alto:720,objetivos:[5,5,6,6,7][i],escenas:2,visible:[0.8,0.8,0.75,0.75,0.7][i],tam_animal:[200,190,180,170,160][i],objetos:[6,7,8,9,10][i],abren:0,dos_pasos:0,camuflaje:false,senuelos:0,modo_lista:'libre',mostrar_palabra:false,lupa:false,mapita:false,tiempo_par_s:[35,35,40,40,45][i],par_solo_con_record:false,sol_factor:3.0,sol_min_s:60,ruido_min_s:5,ruido_max_s:8,ayuda1_s:6,ayuda2_s:10,toque_min:160,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:null,pista:false,regalo_derrotas:2,fuerte_derrotas:3,descanso_derrotas:null,umbral_dos:null,umbral_tres:null};
+  if(h==='nicole')return{perfil:'brote',ancho:[1920,1920,2560,2560,2560][i],alto:720,objetivos:[5,5,6,7,7][i],escenas:1,visible:[0.6,0.55,0.5,0.45,0.4][i],tam_animal:[120,115,110,100,96][i],objetos:[12,12,14,15,16][i],abren:[0,0,1,1,2][i],dos_pasos:0,camuflaje:false,senuelos:[0,0,0,1,1][i],modo_lista:'uno',mostrar_palabra:true,lupa:false,mapita:true,tiempo_par_s:[80,100,130,150,160][i],par_solo_con_record:true,sol_factor:2.2,sol_min_s:60,ruido_min_s:null,ruido_max_s:null,ayuda1_s:12,ayuda2_s:20,toque_min:96,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:25,pista:false,regalo_derrotas:2,fuerte_derrotas:null,descanso_derrotas:3,umbral_dos:1500,umbral_tres:1900};
+  return{perfil:'estrella',ancho:[2560,2560,3200,3200,3840][i],alto:z===5?1080:720,objetivos:[8,9,10,11,12][i],escenas:1,visible:[0.4,0.35,0.3,0.25,0.2][i],tam_animal:[90,84,76,70,64][i],objetos:[14,15,18,20,24][i],abren:[1,2,3,4,4][i],dos_pasos:[0,0,0,2,2][i],camuflaje:z>=2,senuelos:[0,1,2,3,4][i],modo_lista:'tarjetas',mostrar_palabra:false,lupa:z>=3,mapita:true,tiempo_par_s:[150,170,200,230,270][i],par_solo_con_record:false,sol_factor:1.6,sol_min_s:45,ruido_min_s:null,ruido_max_s:null,ayuda1_s:null,ayuda2_s:null,toque_min:64,margen:24,umbral_arrastre:16,inercia:true,racha_brote_s:null,pista:true,regalo_derrotas:3,fuerte_derrotas:null,descanso_derrotas:4,umbral_dos:2600,umbral_tres:3300};
 }
 const CAMPOS=[
   ['ancho','Ancho de la escena, px',10],['alto','Alto de la escena, px',10],['objetivos','Objetivos',1],['escenas','Escenas por estación',1],
@@ -287,6 +288,7 @@ const CAMPOS=[
   ['sol_factor','Sol: factor del tiempo par (vacío = sin derrota)',0.1],['sol_min_s','Sol mínimo al reintentar, s',5],
   ['ruido_min_s','Maxi: ruido de escondidos, mín. s',1],['ruido_max_s','Maxi: ruido, máx. s',1],['ayuda1_s','Ayuda 1 (asoma / desliza), s',1],['ayuda2_s','Ayuda 2 (Toby señala / asoma), s',1],
   ['toque_min','Zona de toque mínima, px',2],['margen','Margen de la zona de toque, px',2],['umbral_arrastre','Umbral toque/arrastre, px',1],['inercia','Inercia al arrastrar (apagar = menos movimiento)'],
+  ['regalo_derrotas','Toby regala uno tras N derrotas',1],['fuerte_derrotas','Maxi: ayuda fuerte tras N derrotas (vacío = no)',1],['descanso_derrotas','Ofrecer descansar tras N derrotas (vacío = no)',1],
   ['racha_brote_s','Nicole: racha se corta tras s sin encontrar',1],['pista','Radar de Toby con costo'],['umbral_dos','Puntaje para 2 estrellitas',100],['umbral_tres','Puntaje para 3 estrellitas',100]
 ];
 
@@ -296,6 +298,7 @@ let esc=null,fondoMundo=null,cam={x:0,y:0,z:1,vx:0,vy:0,obj:null},fase='intro',t
 let cola=[],encontradosOrden=[],tarjetas=[],activo=null,puntaje=0,racha=0,rec=0,tEsc=0,tUltEnc=0,tocoAlgo=false,pistasUsadas=0,huboDerrota=false,derrotas=0;
 let arr=null,lupaArmada=false,idle=0,ayudaNivel=0,tRuido=0,senalar=null,radar=null,cartel=null,estrellas=0,nuevoRecord=false,solT=0,solDur=0,parActivo=false,verZonas=false,verTodos=false,foto=0,registro=[];
 function esSemilla(){return cfg.perfil==='semilla'}
+let fuerteB=false; // ayuda fuerte de Maxi (HE-124): todos asoman y no hay sol
 
 /* ---------- construir la escena ---------- */
 function construirEscena(n){
@@ -369,7 +372,7 @@ function zonaObjeto(o){const s=o.s;return{x:o.x-s*0.55,y:o.y-s*0.85,w:s*1.1,h:s*
 
 /* ---------- partida ---------- */
 function nuevaPartida(){
-  tareas=[];parts=[];flot=[];ondas=[];escNum=0;puntaje=0;racha=0;pistasUsadas=0;huboDerrota=false;derrotas=0;cartel=null;nuevoRecord=false;registro=[];
+  tareas=[];parts=[];flot=[];ondas=[];escNum=0;puntaje=0;racha=0;pistasUsadas=0;huboDerrota=false;derrotas=0;fuerteB=false;cartel=null;nuevoRecord=false;registro=[];
   rec=leerRec();parActivo=cfg.tiempo_par_s!=null&&(!cfg.par_solo_con_record||rec>0);
   empezarEscena();actualizarBotones();
 }
@@ -378,7 +381,8 @@ function empezarEscena(){
   cam={x:0,y:0,z:1,vx:0,vy:0,obj:null};if(esc.h>H)cam.y=esc.h-H;lupaArmada=false;
   const objs=esc.animales.filter(a=>a.rol==='objetivo');
   cola=objs.slice();tarjetas=[];encontradosOrden=[];activo=null;tEsc=0;tUltEnc=0;tocoAlgo=false;idle=0;ayudaNivel=0;tRuido=al(cfg.ruido_min_s||5,cfg.ruido_max_s||8);senalar=null;radar=null;
-  solDur=(cfg.sol_factor&&cfg.tiempo_par_s)?cfg.sol_factor*cfg.tiempo_par_s:0;solT=0;
+  solDur=(cfg.sol_factor&&cfg.tiempo_par_s&&!fuerteB)?cfg.sol_factor*cfg.tiempo_par_s:0;solT=0;
+  if(fuerteB)esc.animales.forEach(a=>a.asoma=0.5);
   fase='intro';tF=0;
   programar(0.2,()=>decir(escNum>0?'¡Se escondieron otra vez!':'¡A la una, a las dos, a las tres!'));
 }
@@ -513,13 +517,14 @@ function seEscondioElSol(){
   const faltan=esc.animales.filter(a=>a.rol==='objetivo'&&!a.encontrado);faltan.forEach(a=>{a.salta=0.6;vozAni(a.id)});
   toby.encima=faltan.length?ANI[faltan[0].id][0]:null;
   programar(0.3,()=>decir('¡Aquí estábamos!'));
-  programar(2.5,()=>{cartel={tipo:'derrota'};fase='cartel'});
+  programar(esSemilla()?1.8:2.5,()=>{cartel={tipo:'derrota'};fase='cartel';if(cfg.descanso_derrotas&&derrotas>=cfg.descanso_derrotas)decir('¿Vamos a jugar a otra cosa y volvemos?')});
 }
 function reintentar(){
   cartel=null;toby.encima=null;sortearEscondites(true);
   const total=cola.length,faltan=cola.filter(a=>!a.encontrado).length;solDur=Math.max(cfg.sol_min_s||45,cfg.sol_factor*cfg.tiempo_par_s*faltan/Math.max(1,total));solT=0;fase='juego';idle=0;
   actualizarLista();
-  if(derrotas>=(cfg.regalo_derrotas||2)){const a=tarjetas[0]||cola.find(x=>!x.encontrado);if(a)programar(0.6,()=>{decir('¡Toby encontró uno con su olfato!');toby.antenaGira=1;encontrar(a)})}
+  if(cfg.fuerte_derrotas&&derrotas>=cfg.fuerte_derrotas){fuerteB=true;solDur=0;esc.animales.forEach(a=>{if(!a.encontrado)a.asoma=0.5});programar(0.4,()=>decir('¡Ahora todos se asoman para ti!'))}
+  else if(derrotas>=(cfg.regalo_derrotas||2)){const a=tarjetas[0]||cola.find(x=>!x.encontrado);if(a)programar(0.6,()=>{decir('¡Toby encontró uno con su olfato!');toby.antenaGira=1;encontrar(a)})}
 }
 /* ---------- ayudas y ruidos ---------- */
 function ayudas(dt){
@@ -542,7 +547,7 @@ function actualizar(dt){
   if(radar){radar.t-=dt;if(radar.t<=0)radar=null}
   if(esc){
     esc.objetos.concat(esc.deco).forEach(o=>{o.react=Math.max(0,o.react-dt);if(o.marca>0)o.marca=Math.min(2,o.marca+dt)});
-    esc.animales.forEach(a=>{a.salta=Math.max(0,a.salta-dt);a.llamado=Math.max(0,a.llamado-dt);if(a.asoma>0&&ayudaNivel===0)a.asoma=Math.max(0,a.asoma-dt*0.15);if(a.vuela){a.vuela.t+=dt}if(a.rebote)a.rebote=Math.max(0,a.rebote-dt)});
+    esc.animales.forEach(a=>{a.salta=Math.max(0,a.salta-dt);a.llamado=Math.max(0,a.llamado-dt);if(a.asoma>0&&ayudaNivel===0&&!fuerteB)a.asoma=Math.max(0,a.asoma-dt*0.15);if(a.vuela){a.vuela.t+=dt}if(a.rebote)a.rebote=Math.max(0,a.rebote-dt)});
     tarjetas.forEach(a=>{if(a.rebote)a.rebote=Math.max(0,a.rebote-dt)});
     // cámara: deslizamiento, inercia y rebote elástico
     if(!arr){const lim=limites();
