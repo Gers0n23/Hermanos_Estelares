@@ -26,8 +26,8 @@
     "aparece_tras_zona": 3,
     "condicion": "primer_hermano",
     "posicion": [
-      492,
-      636
+      600,
+      630
     ],
     "voz_hito": [
       "voces/animalia/batalla/hito_01.wav",
@@ -373,7 +373,7 @@
         "brillo"
       ],
       "posicion": [
-        1160,
+        1128,
         236
       ],
       "secreta": true,
