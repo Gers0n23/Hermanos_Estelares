@@ -625,11 +625,6 @@ static func item(l: CanvasItem, id: String, c: Vector2, r: float, t: float) -> v
 				circulo(l, p + Vector2(0, r * 0.25), r * 0.3, Color("#FFF6E6"))
 			palo(l, a, b, r * 0.45, Color("#FFF6E6"))
 		"gotita":
-			var p := PackedVector2Array()
-			for k in 20:
-				var ang := TAU * k / 20.0
-				var rr := r * 0.8 * (1.0 - 0.35 * max(0.0, -sin(ang)))
-				p.append(c + Vector2(cos(ang) * rr * 0.8, sin(ang) * rr) + Vector2(0, -r * 0.6 * max(0.0, -sin(ang)) * absf(cos(ang * 0.5))))
 			poligono(l, elipse_pts(c + Vector2(0, 4), Vector2(r * 0.65, r * 0.75)), Color("#6FC8F5"))
 			poligono(l, PackedVector2Array([c + Vector2(-r * 0.45, -2), c + Vector2(0, -r * 1.1), c + Vector2(r * 0.45, -2)]), Color("#6FC8F5"), false)
 			l.draw_circle(c + Vector2(-5, 4), 2.5, TINTA)
@@ -786,7 +781,7 @@ static func fondo(l: CanvasItem, escenario: String, recorrido: float, noche: flo
 			l.draw_circle(punta, 3.5, Color(1, 1, 0.9, estrellas * (1.0 - q)))
 	if aurora > 0.0:
 		for k in 4:
-			var col := [Color("#7DF2B8"), Color("#6FD6E8"), Color("#B48CE8"), Color("#7DF2B8")][k]
+			var col: Color = [Color("#7DF2B8"), Color("#6FD6E8"), Color("#B48CE8"), Color("#7DF2B8")][k]
 			var pts := PackedVector2Array()
 			for q in 33:
 				var x := q * 40.0
