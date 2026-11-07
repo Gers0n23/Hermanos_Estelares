@@ -65,11 +65,11 @@ const CARAS := [[Vector2(90, 101), 36.0], [Vector2(90, 80), 28.0], [Vector2(62, 
 ## Desfase del vaivén de cada hito (s).
 const DESFASES := [0.0, 1.3, 0.6, 2.0, 1.0]
 ## Donde toca el suelo el sendero en cada zona, desde el centro de su caja.
-const PIES := [Vector2(56, 52), Vector2(0, 74), Vector2(-46, 54), Vector2(-12, 66), Vector2(-70, 52)]
+const PIES := [Vector2(56, 52), Vector2(-20, 104), Vector2(-46, 54), Vector2(-12, 66), Vector2(-70, 52)]
 ## Puntos de control de cada tramo del sendero (bezier cúbica): salida desde el pie de la zona
 ## anterior y llegada al de la siguiente.
-const SALIDAS := [Vector2(70, -6), Vector2(70, 50), Vector2(110, -20), Vector2(60, -10)]
-const LLEGADAS := [Vector2(-60, 70), Vector2(-90, 0), Vector2(30, 90), Vector2(-60, 40)]
+const SALIDAS := [Vector2(70, -6), Vector2(90, 10), Vector2(110, -20), Vector2(60, -10)]
+const LLEGADAS := [Vector2(-80, 10), Vector2(-90, 0), Vector2(30, 90), Vector2(-60, 40)]
 ## Riachuelo del SVG (`generar_mapa_animalia.py`, capa_tierra): el puente de troncos va donde lo cruza el sendero.
 const RIO := [Vector2(452, 504), Vector2(430, 540), Vector2(432, 570), Vector2(470, 600), Vector2(510, 632), Vector2(520, 670), Vector2(506, 740)]
 
@@ -317,7 +317,7 @@ func _construir_hito_batalla() -> void:
 	var batalla: Dictionary = _mapa.get("batalla", {})
 	if batalla.is_empty():
 		return
-	var pos: Array = batalla.get("posicion", [492, 636])
+	var pos: Array = batalla.get("posicion", [600, 630])
 	_hito_batalla = Control.new()
 	_hito_batalla.name = "hito_batalla"
 	_hito_batalla.size = Vector2(128, 128)
@@ -865,7 +865,6 @@ func _preparar_desfile() -> void:
 	_desfile_lienzo.mouse_filter = Control.MOUSE_FILTER_STOP
 	_desfile_capa.add_child(_desfile_lienzo)
 	_desfile_lienzo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_desfile_lienzo.size = Vector2(1280, 720)
 	_desfile_lienzo.draw.connect(_dibujar_desfile)
 	_desfile_lienzo.gui_input.connect(func(evento: InputEvent) -> void:
 		if evento is InputEventMouseButton and evento.pressed and evento.button_index == MOUSE_BUTTON_LEFT:

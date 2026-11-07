@@ -269,7 +269,7 @@ CARPA = (
     '<g fill="#7fcf74" opacity=".85"><path d="M46 132 Q44 96 58 70 L66 70 Q56 98 60 132 Z"/>'
     '<path d="M120 132 Q124 96 114 70 L122 70 Q136 98 134 132 Z"/></g>'
     # Techo cónico verde selva con borde festoneado.
-    '<path d="M22 72 Q90 4 158 72 Z" fill="url(#g-techo)"/>'
+    '<path d="M22 72 C40 50 70 12 90 12 C110 12 140 50 158 72 Z" fill="#5fbf6a"/><path d="M22 72 C40 50 70 12 90 12 C110 12 140 50 158 72 Z" fill="url(#g-techo)"/>'
     '<path d="M22 72 Q32 82 42 72 Q52 82 62 72 Q72 82 82 72 Q92 82 102 72 Q112 82 122 72 Q132 82 142 72 Q150 80 158 72 Z" fill="#4aa255"/>'
     '<ellipse cx="68" cy="40" rx="12" ry="6" fill="#fff" opacity=".35" transform="rotate(-30 68 40)"/>'
     # Entrada (cortinas recogidas) bajo la carita.
