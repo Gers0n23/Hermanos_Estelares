@@ -87,8 +87,8 @@ METAS = {"semilla": [4, 4, 5, 6, 6], "brote": [16, 17, 16, 16, 12], "estrella": 
 # Umbrales de estrellitas (suma de las 2 rondas): p50 y p80 del jugador simulado (herramientas/simular_topos.gd,
 # 400 partidas por nivel, semilla fija). PROVISIONALES hasta el playtest.
 UMBRALES = {
-    "brote": [(7000, 8400), (7400, 8800), (7700, 9200), (7400, 8900), (7000, 8600)],
-    "estrella": [(11600, 13400), (11600, 13600), (10800, 12800), (10600, 12600), (9600, 11800)],
+    "brote": [(11050, 12850), (11150, 13000), (11150, 12650), (10450, 12450), (7350, 8800)],
+    "estrella": [(19150, 21100), (17400, 19900), (13200, 15050), (13600, 15900), (10100, 11550)],
 }
 
 
