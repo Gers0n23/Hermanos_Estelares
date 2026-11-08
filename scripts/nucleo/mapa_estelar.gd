@@ -485,7 +485,8 @@ func _mostrar_flechita(desde: Vector2, hasta: Vector2, radio_desde: float, radio
 	_flechita.points = PackedVector2Array([inicio, inicio])
 	add_child(_flechita)
 	var linea := _flechita
-	var tween := create_tween()
+	# el tween vive en la linea: si un toque nuevo la reemplaza, su tween muere con ella
+	var tween := linea.create_tween()
 	tween.tween_method(func(t: float) -> void:
 		var punta := inicio.lerp(fin, t)
 		var normal := Vector2(-direccion.y, direccion.x)

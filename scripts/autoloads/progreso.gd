@@ -128,7 +128,8 @@ func cargar() -> void:
 	var version_en_disco: int = int(resultado.get("version", 1))
 	_datos = _migrar_datos(resultado)
 	var completado_v3 := _completar_v3(_datos)
-	if not tenia_version or version_en_disco != VERSION_ACTUAL or completado_v3:
+	# Un guardado de una version FUTURA no se reescribe al cargar (se perderia su marca de version).
+	if version_en_disco <= VERSION_ACTUAL and (not tenia_version or version_en_disco != VERSION_ACTUAL or completado_v3):
 		# El archivo en disco quedaba en un esquema viejo (o sin marcar version): se
 		# reescribe de inmediato con los datos ya migrados para que la proxima carga
 		# no tenga que volver a migrar nada (stack §7: la migracion pasa una sola vez

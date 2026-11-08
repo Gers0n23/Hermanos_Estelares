@@ -335,10 +335,15 @@ func _probar_mapa_estelar() -> void:
 	var estelar := current_scene
 	_check(estelar.planetas_desbloqueados() == 1, "sin la partida de Arcoíris (HE-81/82) Animalia sigue lejana")
 	var animalia: Dictionary = estelar.PLANETAS[1]
-	var region := false
-	for r in estelar._regiones:
-		region = region or (r["rect"] as Rect2).has_point(animalia["pos"])
-	_check(not region, "Animalia cerrada no tiene zona de toque")
+	# HE-82 (M9 de motor-lanzar §13.4): Animalia cerrada SI responde al toque (latido, voz, flechita), pero
+	# nunca abre nada ni lanza el viaje. El detalle lo cubre qa_test_partida_viaje.gd.
+	var toque := InputEventMouseButton.new()
+	toque.button_index = MOUSE_BUTTON_LEFT
+	toque.pressed = true
+	toque.position = animalia["pos"]
+	estelar._input(toque)
+	await _esperar(0.9)
+	_check(current_scene == estelar, "tocar Animalia cerrada solo late: no viaja ni abre nada")
 	Estelar.abrir_planetas_dev = true
 	change_scene_to_file(MAPA_ESTELAR)
 	await _esperar(0.3)
