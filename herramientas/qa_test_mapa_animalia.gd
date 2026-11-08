@@ -337,11 +337,11 @@ func _probar_mapa_estelar() -> void:
 	var animalia: Dictionary = estelar.PLANETAS[1]
 	# HE-82 (M9 de motor-lanzar §13.4): Animalia cerrada SI responde al toque (latido, voz, flechita), pero
 	# nunca abre nada ni lanza el viaje. El detalle lo cubre qa_test_partida_viaje.gd.
-	var toque := InputEventMouseButton.new()
-	toque.button_index = MOUSE_BUTTON_LEFT
-	toque.pressed = true
-	toque.position = animalia["pos"]
-	estelar._input(toque)
+	var toque_cerrada := InputEventMouseButton.new()
+	toque_cerrada.button_index = MOUSE_BUTTON_LEFT
+	toque_cerrada.pressed = true
+	toque_cerrada.position = animalia["pos"]
+	estelar._input(toque_cerrada)
 	await _esperar(0.9)
 	_check(current_scene == estelar, "tocar Animalia cerrada solo late: no viaja ni abre nada")
 	Estelar.abrir_planetas_dev = true
