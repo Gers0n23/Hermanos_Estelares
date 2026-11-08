@@ -66,12 +66,20 @@ const RETRATOS_HERMANO := {
 ## fijo por el progreso real del hermano activo (piezas de nave conseguidas).
 const PLANETAS_DESBLOQUEADOS_STUB := 1
 
-## HE-120 (05-Nov-2026): el planeta siguiente se abre cuando el `mapa.json` del anterior cumple su
-## `viaje_siguiente_requiere` ({"partida": id} -> `Progreso.partida_hecha(id)`, HE-81/HE-82). Mientras
-## HE-81/HE-82 no existan, ningun planeta extra se abre jugando. Modo de desarrollo para revisar
+## HE-120 (05-Nov-2026) y HE-82 (07-Nov-2026): el planeta siguiente se abre cuando el `mapa.json` del
+## anterior cumple su `viaje_siguiente_requiere` ({"partida": id} -> `Progreso.partida_hecha(id)`, estado
+## FAMILIAR de HE-81: viaja cualquier hermano, tenga o no su pieza). Mientras no se cumple, ese planeta es el
+## "destino en espera" (motor-lanzar §13.4 M9): lejano, sin candado; al tocarlo late, suena una voz de
+## `voz_destino_espera` del planeta de origen y una flechita de luz vuelve al origen. Modo de desarrollo para revisar
 ## Animalia sin terminar Arcoiris: F6 (solo builds de depuracion) o `-- abrir_planetas` en la linea de
 ## comandos. No se guarda: es una vista del PO, como F4 en el mapa de un planeta.
 static var abrir_planetas_dev := false
+## M9: las variantes de `voz_destino_espera` se alternan entre visitas al Mapa (vive en la sesion).
+static var _indice_voz_espera := 0
+
+const SFX_TILIN_TONO := 1.6
+const SEGUNDOS_FLECHITA := 2.0
+const COLOR_FLECHITA := Color(1.0, 0.92, 0.55)
 
 var _desbloqueados := PLANETAS_DESBLOQUEADOS_STUB
 
@@ -95,6 +103,13 @@ var _id_perfil := "maxi"
 var _regiones: Array[Dictionary] = []
 var _ruta_voz_actual := ""
 var _despegando := false
+## Nodo dibujado de cada planeta por id (latido, respiracion del origen).
+var _nodos_planeta := {}
+## `mapa.json` ya leidos (ruta -> Dictionary).
+var _mapas_leidos := {}
+## M9: la voz del destino en espera suena como maximo una vez por visita.
+var _voz_espera_dicha := false
+var _flechita: Line2D
 
 
 func _ready() -> void:
@@ -130,15 +145,34 @@ func planetas_desbloqueados() -> int:
 	return abiertos
 
 
+## true si el `viaje_siguiente_requiere` del planeta `datos` se cumple. Sin el bloque, el siguiente no se abre.
 func _viaje_cumplido(datos: Dictionary) -> bool:
+	var requiere = _leer_mapa(datos).get("viaje_siguiente_requiere", null)
+	if not requiere is Dictionary:
+		return false
+	var partida := str((requiere as Dictionary).get("partida", ""))
+	return partida != "" and Progreso.partida_hecha(partida)
+
+
+func _leer_mapa(datos: Dictionary) -> Dictionary:
 	var ruta := str(datos.get("datos", ""))
-	if ruta == "" or not FileAccess.file_exists(ruta):
-		return false
-	var mapa: Variant = JSON.parse_string(FileAccess.get_file_as_string(ruta))
-	if not mapa is Dictionary or not (mapa as Dictionary).get("viaje_siguiente_requiere", null) is Dictionary:
-		return false
-	var partida := str(mapa["viaje_siguiente_requiere"].get("partida", ""))
-	return partida != "" and Progreso.has_method("partida_hecha") and bool(Progreso.call("partida_hecha", partida))
+	if ruta == "":
+		return {}
+	if not _mapas_leidos.has(ruta):
+		var mapa: Variant = JSON.parse_string(FileAccess.get_file_as_string(ruta)) if FileAccess.file_exists(ruta) else null
+		_mapas_leidos[ruta] = mapa if mapa is Dictionary else {}
+	return _mapas_leidos[ruta]
+
+
+## Indice en PLANETAS del destino en espera (M9): el siguiente al ultimo abierto, si ese ultimo declara un
+## `viaje_siguiente_requiere` que todavia no se cumple. -1 si no hay (o con el modo de desarrollo).
+func indice_destino_en_espera() -> int:
+	if abrir_planetas_dev or _desbloqueados >= PLANETAS.size():
+		return -1
+	var origen: Dictionary = PLANETAS[_desbloqueados - 1]
+	if not _leer_mapa(origen).get("viaje_siguiente_requiere", null) is Dictionary or _viaje_cumplido(origen):
+		return -1
+	return _desbloqueados
 
 
 func _unhandled_key_input(evento: InputEvent) -> void:
@@ -225,6 +259,7 @@ func _crear_planeta(datos: Dictionary, desbloqueado: bool, actual: bool) -> Node
 		aura.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_contenedor_planetas.add_child(aura)
 	var planeta := PlanetaDibujado.new()
+	_nodos_planeta[str(datos["id"])] = planeta
 	planeta.id_planeta = datos["id"]
 	planeta.radio = radio
 	planeta.apagado = not desbloqueado
@@ -275,6 +310,70 @@ func _posicionar_nave() -> void:
 	_nave.position = (datos["pos"] as Vector2) + Vector2(0, -float(datos["radio"]) - ALTO_NAVE_SOBRE_PLANETA)
 	_nave.scale = Vector2.ONE
 	_estela_nave.visible = false  # estacionada: sin estela de vuelo
+	_pintar_piezas_nave()
+
+
+## HE-82 (motor-lanzar §13.4): la pieza de cada planeta se dibuja PUESTA en la nave si su partida esta hecha
+## (estado familiar); antes, el hermano que ya la gano la ve envuelta junto a la nave. Lee `pieza_nave.id`
+## ("ala_izquierda", "ala_derecha", ...) de cada `mapa.json`; dibujo provisional por codigo hasta el arte.
+func _pintar_piezas_nave() -> void:
+	var puestas: Array[Dictionary] = []
+	var envueltas: Array[Dictionary] = []
+	for datos in PLANETAS:
+		var pieza = _leer_mapa(datos).get("pieza_nave", null)
+		if not pieza is Dictionary or str((pieza as Dictionary).get("id", "")) == "":
+			continue
+		var entrada := {"id": str(pieza["id"]), "planeta": str(datos["id"])}
+		if Progreso.partida_hecha(str(datos["id"])):
+			puestas.append(entrada)
+		elif Progreso.tiene_pieza_nave(_id_perfil, str(datos["id"])):
+			envueltas.append(entrada)
+	var lienzo := Node2D.new()
+	lienzo.name = "piezas_nave"
+	lienzo.show_behind_parent = true
+	_forma_nave.add_child(lienzo)
+	lienzo.set_meta("puestas", puestas.map(func(e): return e["id"]))
+	lienzo.set_meta("envueltas", envueltas.map(func(e): return e["id"]))
+	lienzo.draw.connect(func() -> void:
+		for e in puestas:
+			_dibujar_pieza_puesta(lienzo, e)
+		for k in envueltas.size():
+			_dibujar_pieza_envuelta(lienzo, envueltas[k], k))
+	lienzo.queue_redraw()
+
+
+func _colores_planeta(planeta_id: String) -> Array[Color]:
+	var estilo: Dictionary = PlanetaDibujado.ESTILOS.get(planeta_id, PlanetaDibujado.ESTILOS["arcoiris"])
+	var colores: Array[Color] = []
+	for i in 3:
+		colores.append(Color(str(estilo["colores"][i])))
+	return colores
+
+
+## Ala de tres franjas con los colores de su planeta, pegada al costado de la nave (82 x 55 px a escala 0.2).
+func _dibujar_pieza_puesta(lienzo: CanvasItem, pieza: Dictionary) -> void:
+	var lado := -1.0 if "izquierd" in str(pieza["id"]) else 1.0
+	var colores := _colores_planeta(str(pieza["planeta"]))
+	for k in 3:
+		var a := 1.0 - k * 0.22
+		var forma := PackedVector2Array([Vector2(lado * 18, -4), Vector2(lado * (18 + 26 * a), -16 * a - 2),
+			Vector2(lado * (18 + 30 * a), 4), Vector2(lado * 18, 10)])
+		lienzo.draw_colored_polygon(forma, colores[k])
+	lienzo.draw_polyline(PackedVector2Array([Vector2(lado * 18, -4), Vector2(lado * 44, -18), Vector2(lado * 48, 4),
+		Vector2(lado * 18, 10)]), PlanetaDibujado.CONTORNO, 2.0, true)
+
+
+## Paquetito con moño al pie de la nave: la pieza ganada que espera la ceremonia.
+func _dibujar_pieza_envuelta(lienzo: CanvasItem, pieza: Dictionary, k: int) -> void:
+	var lado := -1.0 if "izquierd" in str(pieza["id"]) else 1.0
+	var centro := Vector2(lado * (54 + 26 * k), 14)
+	var caja := Rect2(centro - Vector2(11, 9), Vector2(22, 18))
+	lienzo.draw_rect(caja, _colores_planeta(str(pieza["planeta"]))[0])
+	lienzo.draw_rect(caja, PlanetaDibujado.CONTORNO, false, 2.0)
+	lienzo.draw_line(centro + Vector2(0, -9), centro + Vector2(0, 9), Color.WHITE, 3.0)
+	lienzo.draw_line(centro + Vector2(-11, 0), centro + Vector2(11, 0), Color.WHITE, 3.0)
+	lienzo.draw_circle(centro + Vector2(-4, -11), 4.0, Color.WHITE)
+	lienzo.draw_circle(centro + Vector2(4, -11), 4.0, Color.WHITE)
 
 
 func _datos_planeta(id: String) -> Dictionary:
@@ -324,6 +423,77 @@ func _registrar_regiones() -> void:
 		var radio: float = datos["radio"]
 		var rect := Rect2(datos["pos"] - Vector2(radio, radio), Vector2(radio, radio) * 2.0).grow(MARGEN_TOQUE_PLANETA)
 		_regiones.append({"rect": rect, "accion": _entrar_planeta.bind(datos)})
+	# Los planetas lejanos tambien responden (GDD §6: nada muerto en pantalla), sin candado ni "bup": el
+	# destino en espera con su voz y la flechita (M9); los demas, solo el latido.
+	for i in range(mini(_desbloqueados, PLANETAS.size()), PLANETAS.size()):
+		var datos: Dictionary = PLANETAS[i]
+		var radio: float = datos["radio"]
+		var rect := Rect2(datos["pos"] - Vector2(radio, radio), Vector2(radio, radio) * 2.0).grow(MARGEN_TOQUE_PLANETA)
+		_regiones.append({"rect": rect, "accion": tocar_planeta_lejano.bind(i)})
+
+
+## Toque en un planeta todavia no abierto (M9 de motor-lanzar §13.4 si es el destino en espera): late en el
+## mismo frame (escala 1,08 y vuelta en 0,25 s) con un tilin; el destino en espera dice ademas una voz de
+## `voz_destino_espera` del planeta de origen (alternadas entre visitas, maximo una por visita) y una
+## flechita de luz va al origen, que respira. Nunca abre nada.
+func tocar_planeta_lejano(indice: int) -> void:
+	if _despegando or indice < 0 or indice >= PLANETAS.size():
+		return
+	var datos: Dictionary = PLANETAS[indice]
+	var nodo: Node2D = _nodos_planeta.get(str(datos["id"]), null)
+	if nodo != null:
+		nodo.scale = Vector2.ONE * 1.08
+		var tween := create_tween()
+		tween.tween_property(nodo, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	Audio.reproducir_sfx(RUTA_SFX_TOQUE, SFX_TILIN_TONO)
+	if indice != indice_destino_en_espera():
+		return
+	var origen: Dictionary = PLANETAS[indice - 1]
+	_mostrar_flechita(datos["pos"], origen["pos"], float(datos["radio"]), float(origen["radio"]))
+	var nodo_origen: Node2D = _nodos_planeta.get(str(origen["id"]), null)
+	if nodo_origen != null:
+		var respira := create_tween()
+		respira.tween_property(nodo_origen, "modulate", Color(1.25, 1.2, 1.05), 0.5).set_trans(Tween.TRANS_SINE)
+		respira.tween_property(nodo_origen, "modulate", Color.WHITE, 0.7).set_trans(Tween.TRANS_SINE)
+	if _voz_espera_dicha:
+		return
+	var voces = _leer_mapa(origen).get("voz_destino_espera", [])
+	if voces is String:
+		voces = [voces]
+	if not voces is Array or (voces as Array).is_empty():
+		return
+	_voz_espera_dicha = true
+	_temporizador_recordatorio.start()  # que la invitacion no pise la voz
+	var ruta := str(voces[_indice_voz_espera % (voces as Array).size()])
+	_indice_voz_espera += 1
+	Audio.reproducir_voz(ruta if ruta.begins_with("res://") else "res://assets/audio/" + ruta)
+
+
+## Flechita de luz del destino al origen (2 s): la linea crece, y al llegar se desvanece.
+func _mostrar_flechita(desde: Vector2, hasta: Vector2, radio_desde: float, radio_hasta: float) -> void:
+	if _flechita != null and is_instance_valid(_flechita):
+		_flechita.queue_free()
+	var direccion := (hasta - desde).normalized()
+	var inicio := desde + direccion * (radio_desde + 8.0)
+	var fin := hasta - direccion * (radio_hasta + 14.0)
+	_flechita = Line2D.new()
+	_flechita.name = "flechita_espera"
+	_flechita.width = 7.0
+	_flechita.default_color = COLOR_FLECHITA
+	_flechita.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_flechita.end_cap_mode = Line2D.LINE_CAP_ROUND
+	_flechita.points = PackedVector2Array([inicio, inicio])
+	add_child(_flechita)
+	var linea := _flechita
+	var tween := create_tween()
+	tween.tween_method(func(t: float) -> void:
+		var punta := inicio.lerp(fin, t)
+		var normal := Vector2(-direccion.y, direccion.x)
+		linea.points = PackedVector2Array([inicio, punta, punta - direccion * 16.0 + normal * 11.0, punta,
+			punta - direccion * 16.0 - normal * 11.0]), 0.0, 1.0, SEGUNDOS_FLECHITA * 0.6) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(linea, "modulate:a", 0.0, SEGUNDOS_FLECHITA * 0.4)
+	tween.tween_callback(linea.queue_free)
 
 
 ## `_input` y no `_unhandled_input`: las tarjetas/botones son `Panel` (filtro STOP), que se
