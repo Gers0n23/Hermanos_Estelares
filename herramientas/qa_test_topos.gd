@@ -33,7 +33,6 @@ var _fallos := 0
 var _oks := 0
 var _detalle := false
 var _progreso: Node
-var _ruta_original := ""
 var _md5_antes := {}
 var _resumen: Array = []
 
@@ -48,29 +47,35 @@ func _initialize() -> void:
 		return
 	for ruta in [_progreso.RUTA_GUARDADO, _progreso.RUTA_GUARDADO_PRUEBAS]:
 		_md5_antes[ruta] = FileAccess.get_md5(ruta) if FileAccess.file_exists(ruta) else ""
-	_ruta_original = _progreso.ruta_guardado
 	_progreso.ruta_guardado = GUARDADO_ARNES
 	_progreso._datos = _progreso._crear_datos_por_defecto()
 	_progreso.guardar()
 	await process_frame
-	_probar_niveles()
-	_probar_generador()
-	_probar_continuo()
-	_probar_toques()
-	_probar_puntaje()
-	_probar_especiales()
-	_probar_semilla()
-	_probar_calibracion()
+	# `-- --solo-escena` (desarrollo): salta la lógica y la calibración. `-- --zona=N`: solo esa zona en escena.
+	var args := OS.get_cmdline_user_args()
+	var zonas: Array = range(ZONAS.size())
+	for a in args:
+		if a.begins_with("--zona="):
+			zonas = [int(a.get_slice("=", 1)) - 1]
+	if not "--solo-escena" in args:
+		_probar_niveles()
+		_probar_generador()
+		_probar_continuo()
+		_probar_toques()
+		_probar_puntaje()
+		_probar_especiales()
+		_probar_semilla()
+		_probar_calibracion()
 	Engine.time_scale = 4.0
-	for z in ZONAS.size():
+	for z in zonas:
 		for perfil in PERFILES:
 			await _probar_escena(z, perfil)
-	for z in ZONAS.size():
+	for z in zonas:
 		await _probar_equipo(z)
 	Engine.time_scale = 1.0
 	# Guardado: se borra el del arnés y se verifica que los otros dos no se tocaron.
-	_progreso.ruta_guardado = _ruta_original
-	_progreso.cargar()
+	# Progreso se queda apuntando al archivo del arnés hasta salir (recargar el de pruebas lo reescribiría al
+	# migrar); el archivo del arnés se borra y nada más se guarda después.
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(GUARDADO_ARNES))
 	for ruta in _md5_antes:
 		var ahora := FileAccess.get_md5(ruta) if FileAccess.file_exists(ruta) else ""
@@ -469,11 +474,11 @@ func _tocar_pantalla(p: Vector2) -> void:
 	ev.pressed = true
 	ev.position = p
 	ev.index = 0
-	get_root().push_input(ev)
+	get_root().push_input(ev, true)
 	var suelta := InputEventScreenTouch.new()
 	suelta.pressed = false
 	suelta.position = p
-	get_root().push_input(suelta)
+	get_root().push_input(suelta, true)
 
 
 func _instanciar(z: int, perfil: String, planeta := "animalia") -> Node:
@@ -527,7 +532,7 @@ func _probar_escena(z: int, perfil: String) -> void:
 		_check(await _esperar_que(func(): return motor.fase() == "gag", 3.0), "%s: derrota %d -> gag" % [etiqueta, k + 1])
 		_check(await _esperar_que(func(): return motor.fase() == "perdio", 4.0) and motor._fin.visible, "%s: cartel con la flecha" % etiqueta)
 		_check(_progreso.obtener_destellos_totales(hermano) == destellos_antes and not _progreso.esta_nivel_completado(hermano, "animalia", nivel["id_nivel"]), "%s: perder da 0 destellos y no toca nada guardado" % etiqueta)
-		await _esperar(0.2)
+		await _esperar(0.4)
 		_tocar_pantalla(Vector2(640, 600))
 		await process_frame
 		_check(motor.fase() == "intro", "%s: reintento de un toque en cualquier parte" % etiqueta)

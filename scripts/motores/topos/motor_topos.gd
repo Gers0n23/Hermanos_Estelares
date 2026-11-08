@@ -462,6 +462,9 @@ func _victoria() -> void:
 	if not is_inside_tree() or id != _intento:
 		return
 	_fase = "celebrando"
+	# Sin el archivo de voz (todavía sin grabar) la fiesta va sin voz y sin aviso en consola.
+	if linea != "" and not ResourceLoader.exists(resolver_ruta_audio(linea)):
+		linea = ""
 	celebrar(destellos, _estrellas, linea)
 
 
@@ -1052,7 +1055,10 @@ func _victoria_equipo() -> void:
 	if bool(resultado.get("record_nuevo", false)) and not bool(resultado.get("primer_record", false)):
 		turnos.pista.saltar_banderita()
 	_fase = "celebrando"
-	celebrar_equipo(pasos, _ruta_voz("victoria_equipo"))
+	var linea_equipo := _ruta_voz("victoria_equipo")
+	if linea_equipo != "" and not ResourceLoader.exists(resolver_ruta_audio(linea_equipo)):
+		linea_equipo = ""
+	celebrar_equipo(pasos, linea_equipo)
 
 
 func ancla_meta_turno() -> Vector2:
