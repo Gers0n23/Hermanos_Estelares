@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/motores/cortar/motor_cortar.gd" id="1_motor"]
+
+[node name="motor_cortar" type="Node2D"]
+script = ExtResource("1_motor")
+ruta_nivel = "res://datos/niveles/animalia/batalla/burbujeada_equipo.json"
