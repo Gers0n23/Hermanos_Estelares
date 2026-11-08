@@ -457,7 +457,7 @@ static func base_animal(ci: CanvasItem, c: Vector2, r: float, color: Color) -> v
 
 ## Casa centrada en `c` (cabe en un cuadrado de lado ~2r). `color_par`: Color del par (casas de color) o
 ## Color(0,0,0,0) (casas neutras de hábitat). `abierta` 0-1: la puertita se entreabre / el hábitat "llama".
-static func casa(ci: CanvasItem, c: Vector2, r: float, d: Dictionary, color_par: Color, abierta := 0.0, t := 0.0) -> void:
+static func casa(ci: CanvasItem, c: Vector2, r: float, d: Dictionary, color_par: Color, abierta := 0.0, t := 0.0, con_placa := true) -> void:
 	var g := r * CONTORNO
 	var tipo := str(d.get("tipo", "casita"))
 	var color := col(d.get("color", "#E8434B"))
@@ -466,7 +466,9 @@ static func casa(ci: CanvasItem, c: Vector2, r: float, d: Dictionary, color_par:
 	var con_color := color_par.a > 0.0
 	# Placa: del color del par (casas de color) o crema (hábitats).
 	var placa := Rect2(c - Vector2(r, r) * 0.98, Vector2(r, r) * 1.96)
-	if con_color:
+	if not con_placa:
+		pass
+	elif con_color:
 		rect_redondo_c(ci, placa, r * 0.3, color_par.lightened(0.6), color_par, r * 0.12)
 	else:
 		rect_redondo_c(ci, placa, r * 0.3, Color("#FFF8EE"), Color("#C9B79A"), r * 0.06)

@@ -401,7 +401,7 @@ func _process(delta: float) -> void:
 	_actualizar_paseos(delta)
 	match _fase:
 		"entrando":
-			if _t_fase >= 0.02 * logica.ancho * logica.alto + 0.35:
+			if _t_fase >= _segundos_entrada():
 				_fase = "jugando"
 				_t_fase = 0.0
 		"jugando":
@@ -427,6 +427,11 @@ func _process(delta: float) -> void:
 	_hud.queue_redraw()
 	if _fin.visible:
 		_fin.queue_redraw()
+
+
+## Cascada de baldosas (0,02 s por celda, ficha §5) con tope de 1 s para que el 9 x 9 no haga esperar.
+func _segundos_entrada() -> float:
+	return minf(0.02 * logica.ancho * logica.alto, 0.7) + 0.3
 
 
 func _pausado() -> bool:
@@ -865,7 +870,7 @@ func _ganar() -> void:
 	if not is_inside_tree():
 		return
 	_fase = "celebrando"
-	celebrar(100, e, _linea("victoria"))
+	celebrar(100, e, _linea_existente("victoria"))
 
 
 func _perder() -> void:
@@ -970,6 +975,11 @@ func _linea(clave: String) -> String:
 	return str(v) if v != null else ""
 
 
+func _linea_existente(clave: String) -> String:
+	var ruta := _linea(clave)
+	return ruta if ruta != "" and ResourceLoader.exists(resolver_ruta_audio(ruta)) else ""
+
+
 ## Solo suena si el archivo existe: el juego funciona sin las voces grabadas (y sin advertencias).
 func _voz(clave: String) -> void:
 	_voz_ruta(_linea(clave))
@@ -1059,7 +1069,6 @@ func _dibujar_fondo() -> void:
 		5: {"tipo": "montana", "variante": "volcan", "color": "#A0674A", "color2": "#FF8A3D"}}
 	var d: Dictionary = hito.get(zona, hito[1])
 	_dibujar_hito(Vector2(1170, 640), 90.0, d)
-	_dibujar_hito(Vector2(1220, 90), 50.0, {"tipo": "nube", "color": "#FFFFFF", "color2": "#FFD84A"})
 
 
 func _dibujar_hito(c: Vector2, r: float, d: Dictionary) -> void:
@@ -1074,7 +1083,7 @@ func _dibujar_hito(c: Vector2, r: float, d: Dictionary) -> void:
 			Dibujo._montana(_fondo, c, r, color, color2, str(d.get("variante", "")), g, 0.0)
 		_:
 			# casa sin placa: se dibuja sobre una placa transparente
-			Dibujo.casa(_fondo, c, r, d, Color(0, 0, 0, 0), 0.0, 0.0)
+			Dibujo.casa(_fondo, c, r, d, Color(0, 0, 0, 0), 0.0, 0.0, false)
 
 
 func _dibujar_juego() -> void:
@@ -1085,7 +1094,7 @@ func _dibujar_juego() -> void:
 	var marco := Rect2(_origen, Vector2(w, h)).grow(14)
 	Dibujo.rect_redondo(_juego, marco.grow(4), 26, Color(0, 0, 0, 0.12))
 	Dibujo.rect_redondo_c(_juego, marco, 24, Color("#8A6A4A"), TINTA, 4)
-	var aparecer := clampf(_t_fase / maxf(0.01, 0.02 * logica.ancho * logica.alto + 0.3), 0.0, 1.0) if _fase == "entrando" else 1.0
+	var aparecer := clampf(_t_fase / maxf(0.01, _segundos_entrada() - 0.05), 0.0, 1.0) if _fase == "entrando" else 1.0
 	var vacias_late := _t - _late_vacias < 3.0 and logica.todos_llegaron() and logica.llenar
 	# Baldosas (caen en cascada al entrar, florecen al cubrirse).
 	for i in logica.ancho * logica.alto:
@@ -1575,7 +1584,7 @@ func _victoria_equipo() -> void:
 		return
 	if bool(resultado.get("record_nuevo", false)) and not bool(resultado.get("primer_record", false)):
 		turnos.pista.saltar_banderita()
-	celebrar_equipo(pasos, _linea("victoria_equipo"))
+	celebrar_equipo(pasos, _linea_existente("victoria_equipo"))
 
 
 func ancla_meta_turno() -> Vector2:
