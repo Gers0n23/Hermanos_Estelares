@@ -286,7 +286,7 @@ let S=null,fase='largada',tF=0,rec={p:0,d:0},derrotas=0,huboDerrota=false,ultima
 let opcionesProx={};
 function nuevaPartida(){tareas=[];parts=[];flot=[];barro=[];derrotas=0;huboDerrota=false;ultimaMitad=null;cartel=null;rec=leerRec();opcionesProx={};empezarCarrera(true);actualizarBotones()}
 function empezarCarrera(conVoz){
-  const op=Object.assign({},opcionesProx);S=nuevoEstado((Math.random()*1e9)>>>0,op);
+  const op=Object.assign({},opcionesProx);S=nuevoEstado((Math.random()*1e9)>>>0,op);ultimaMitad=op.desdeMitad?op.mitad:null;
   fase='largada';tF=conVoz?0:0.8;idle=0;ayudaNivel=0;pasoRecord=rec.d<=S.dist;hist=[];corVuelan=[];nuevoRecord=false;cartel=null;
   if(conVoz)programar(0.1,()=>decir(op.blandos?'¡Carrera de hojas!':'¡En sus marcas, listos, ya! Toca donde quieras para saltar.'));
 }
