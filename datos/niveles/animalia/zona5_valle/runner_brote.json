@@ -173,5 +173,9 @@
     "primer_record": "voces/animalia/runner/primer_record.wav",
     "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav",
     "mitad": "voces/animalia/runner/banderita_mitad.wav"
+  },
+  "umbrales_puntaje": {
+    "dos": 1330,
+    "tres": 1710
   }
 }

@@ -180,5 +180,9 @@
     "record": "voces/animalia/runner/record.wav",
     "primer_record": "voces/animalia/runner/primer_record.wav",
     "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav"
+  },
+  "umbrales_puntaje": {
+    "dos": 1980,
+    "tres": 2550
   }
 }
