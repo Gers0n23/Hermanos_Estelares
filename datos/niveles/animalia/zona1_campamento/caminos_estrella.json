@@ -1,0 +1,484 @@
+{
+  "id_nivel": "animalia_z1_caminos_estrella",
+  "motor": "caminos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "tema": "El Campamento de Toby",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#BFE59A",
+    "suelo": "#8CCB6A",
+    "zona": 1
+  },
+  "llenar": true,
+  "casas": "color",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": true,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "...C...",
+        ".e.B...",
+        "..cF...",
+        "...D...",
+        ".d..A..",
+        ".a..f..",
+        "...Eb.."
+      ],
+      "pares": {
+        "A": {
+          "animal": "cuy",
+          "casa": "casita_heno",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pollito",
+          "casa": "gallinero",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "perrito",
+          "casa": "cucha",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "conejo",
+          "casa": "madriguera",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "gatito",
+          "casa": "cojin",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "gerbo",
+          "casa": "castillito_carton",
+          "color": "#9B5DE5"
+        }
+      },
+      "tiempo_par_s": 60,
+      "solucion": {
+        "A": [[4, 4], [3, 4], [3, 5], [2, 5], [1, 5]],
+        "B": [[3, 1], [4, 1], [4, 0], [5, 0], [6, 0], [6, 1], [5, 1], [5, 2], [6, 2], [6, 3], [6, 4], [6, 5], [6, 6], [5, 6], [4, 6]],
+        "C": [[3, 0], [2, 0], [2, 1], [2, 2]],
+        "D": [[3, 3], [2, 3], [2, 4], [1, 4]],
+        "E": [[3, 6], [2, 6], [1, 6], [0, 6], [0, 5], [0, 4], [0, 3], [1, 3], [1, 2], [0, 2], [0, 1], [0, 0], [1, 0], [1, 1]],
+        "F": [[3, 2], [4, 2], [4, 3], [5, 3], [5, 4], [5, 5], [4, 5]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        ".......",
+        ".FC....",
+        "..e.aDb",
+        "......d",
+        "..E....",
+        "..B..Af",
+        "c......"
+      ],
+      "pares": {
+        "A": {
+          "animal": "gatito",
+          "casa": "cojin",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pollito",
+          "casa": "gallinero",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "cuy",
+          "casa": "casita_heno",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "perrito",
+          "casa": "cucha",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "gerbo",
+          "casa": "castillito_carton",
+          "color": "#9B5DE5"
+        }
+      },
+      "tiempo_par_s": 60,
+      "solucion": {
+        "A": [[5, 5], [4, 5], [4, 4], [4, 3], [4, 2]],
+        "B": [[2, 5], [3, 5], [3, 4], [3, 3], [3, 2], [3, 1], [3, 0], [4, 0], [4, 1], [5, 1], [5, 0], [6, 0], [6, 1], [6, 2]],
+        "C": [[2, 1], [2, 0], [1, 0], [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]],
+        "D": [[5, 2], [5, 3], [5, 4], [6, 4], [6, 3]],
+        "E": [[2, 4], [2, 3], [2, 2]],
+        "F": [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [6, 6], [6, 5]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        ".......",
+        ".A..Eb.",
+        ".D.....",
+        "...eBa.",
+        "..fFCd.",
+        ".....c.",
+        "......."
+      ],
+      "pares": {
+        "A": {
+          "animal": "gerbo",
+          "casa": "castillito_carton",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pollito",
+          "casa": "gallinero",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "perrito",
+          "casa": "cucha",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "cuy",
+          "casa": "casita_heno",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "conejo",
+          "casa": "madriguera",
+          "color": "#9B5DE5"
+        }
+      },
+      "tiempo_par_s": 60,
+      "solucion": {
+        "A": [[1, 1], [0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [6, 1], [6, 2], [6, 3], [5, 3]],
+        "B": [[4, 3], [4, 2], [5, 2], [5, 1]],
+        "C": [[4, 4], [4, 5], [5, 5]],
+        "D": [[1, 2], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [6, 6], [6, 5], [6, 4], [5, 4]],
+        "E": [[4, 1], [3, 1], [2, 1], [2, 2], [3, 2], [3, 3]],
+        "F": [[3, 4], [3, 5], [2, 5], [1, 5], [1, 4], [1, 3], [2, 3], [2, 4]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        ".......",
+        ".BA....",
+        "...Ca.d",
+        "F.b....",
+        "e.f..D.",
+        ".c...E.",
+        "......."
+      ],
+      "pares": {
+        "A": {
+          "animal": "conejo",
+          "casa": "madriguera",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "cuy",
+          "casa": "casita_heno",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "perrito",
+          "casa": "cucha",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "gerbo",
+          "casa": "castillito_carton",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "gatito",
+          "casa": "cojin",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#9B5DE5"
+        }
+      },
+      "tiempo_par_s": 60,
+      "solucion": {
+        "A": [[2, 1], [2, 0], [3, 0], [3, 1], [4, 1], [4, 0], [5, 0], [6, 0], [6, 1], [5, 1], [5, 2], [5, 3], [4, 3], [4, 2]],
+        "B": [[1, 1], [1, 0], [0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [2, 3]],
+        "C": [[3, 2], [3, 3], [3, 4], [4, 4], [4, 5], [3, 5], [2, 5], [1, 5]],
+        "D": [[5, 4], [6, 4], [6, 3], [6, 2]],
+        "E": [[5, 5], [6, 5], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 5], [0, 4]],
+        "F": [[0, 3], [1, 3], [1, 4], [2, 4]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "conejo": {
+      "nombre": "conejo",
+      "huella": "pata",
+      "tono": 1.4,
+      "dibujo": {
+        "cuerpo": "#E9E2DA",
+        "detalle": "#FFC4D6",
+        "oscuro": "#9A8E84",
+        "cabeza": "redonda",
+        "orejas": "largas",
+        "hocico": "nariz",
+        "extras": [
+          "dientes"
+        ]
+      }
+    },
+    "cuy": {
+      "nombre": "cuy",
+      "huella": "pata",
+      "tono": 1.5,
+      "dibujo": {
+        "cuerpo": "#C98A4B",
+        "detalle": "#FFFFFF",
+        "oscuro": "#7A4A26",
+        "cabeza": "redonda",
+        "orejas": "pequenas",
+        "hocico": "nariz",
+        "extras": [
+          "mancha_blanca",
+          "bigotes"
+        ]
+      }
+    },
+    "gatito": {
+      "nombre": "gatito",
+      "huella": "pata",
+      "tono": 1.4,
+      "dibujo": {
+        "cuerpo": "#C8C0D8",
+        "detalle": "#FFF4FA",
+        "oscuro": "#8E86A8",
+        "cabeza": "redonda",
+        "orejas": "punta",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes",
+          "mejillas",
+          "lazo"
+        ]
+      }
+    },
+    "gerbo": {
+      "nombre": "gerbo",
+      "huella": "pata",
+      "tono": 1.6,
+      "dibujo": {
+        "cuerpo": "#E8B57E",
+        "detalle": "#FFF0DC",
+        "oscuro": "#A8743E",
+        "cabeza": "redonda",
+        "orejas": "redondas",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes",
+          "mejillas"
+        ]
+      }
+    },
+    "perrito": {
+      "nombre": "perrito",
+      "huella": "pata",
+      "tono": 1.25,
+      "dibujo": {
+        "cuerpo": "#E3AA6A",
+        "detalle": "#FFF1DD",
+        "oscuro": "#8A5530",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "pollito": {
+      "nombre": "pollito",
+      "huella": "ave",
+      "tono": 1.6,
+      "dibujo": {
+        "cuerpo": "#FFE14D",
+        "detalle": "#FF9F2E",
+        "oscuro": "#E0B020",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico",
+        "extras": [
+          "penacho",
+          "mejillas"
+        ]
+      }
+    },
+    "pony": {
+      "nombre": "pony",
+      "huella": "pezuna",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#FFC4DD",
+        "detalle": "#FFF0F6",
+        "oscuro": "#B565D8",
+        "cabeza": "alargada",
+        "orejas": "caballo",
+        "hocico": "morro",
+        "extras": [
+          "melena",
+          "flequillo"
+        ]
+      }
+    },
+    "casita_heno": {
+      "nombre": "la casita de heno",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#E8C35A",
+        "color2": "#F6E3C6",
+        "variante": "heno"
+      }
+    },
+    "castillito_carton": {
+      "nombre": "el castillito de cartón",
+      "dibujo": {
+        "tipo": "castillito",
+        "color": "#D2A06A",
+        "color2": "#A0673F",
+        "variante": ""
+      }
+    },
+    "cojin": {
+      "nombre": "el cojín",
+      "dibujo": {
+        "tipo": "cojin",
+        "color": "#9B5DE5",
+        "color2": "#FFD84A",
+        "variante": ""
+      }
+    },
+    "cucha": {
+      "nombre": "la cucha",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#3D7BE0",
+        "color2": "#F6E3C6",
+        "variante": ""
+      }
+    },
+    "establo": {
+      "nombre": "el establo",
+      "dibujo": {
+        "tipo": "establo",
+        "color": "#B5723E",
+        "color2": "#F2D3A0",
+        "variante": ""
+      }
+    },
+    "gallinero": {
+      "nombre": "el gallinero",
+      "dibujo": {
+        "tipo": "gallinero",
+        "color": "#E8A23A",
+        "color2": "#FFF1C8",
+        "variante": ""
+      }
+    },
+    "madriguera": {
+      "nombre": "la madriguera",
+      "dibujo": {
+        "tipo": "cueva",
+        "color": "#8CCB6A",
+        "color2": "#5A3A1E",
+        "variante": "madriguera"
+      }
+    }
+  },
+  "puntos": {
+    "llegada": 100,
+    "racha_max": 5,
+    "tablero": 300,
+    "sin_borrones": 300,
+    "por_segundo": 10
+  },
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": {
+    "trazos_de_mas": 1,
+    "intentos_casa": 0
+  },
+  "tiempo_par": true,
+  "tormenta": {
+    "factor_par": 1.6
+  },
+  "regalo_tras_derrotas": 3,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "ayuda_idle_s": [],
+  "valvula_s": 0,
+  "pistas_cuestan_estrellita": true,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona1/estrella_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona1/estrella_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_estrella_01.wav",
+      "voces/animalia/caminos/comun/victoria_estrella_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_estrella.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_estrella.wav",
+    "nombres": {
+      "conejo": "voces/animalia/nombres/conejo.wav",
+      "cuy": "voces/animalia/nombres/cuy.wav",
+      "gatito": "voces/animalia/nombres/gatito.wav",
+      "gerbo": "voces/animalia/nombres/gerbo.wav",
+      "perrito": "voces/animalia/nombres/perrito.wav",
+      "pollito": "voces/animalia/nombres/pollito.wav",
+      "pony": "voces/animalia/nombres/pony.wav"
+    },
+    "descansar": "voces/animalia/caminos/comun/descansar.wav",
+    "faltan_flores": "voces/animalia/caminos/comun/faltan_flores.wav",
+    "record": "voces/animalia/caminos/comun/record.wav",
+    "primer_record": "voces/animalia/caminos/comun/primer_record.wav",
+    "sin_borrones": "voces/animalia/caminos/comun/sin_borrones.wav",
+    "casa_ajena": [
+      "voces/animalia/caminos/comun/casa_ajena_01.wav",
+      "voces/animalia/caminos/comun/casa_ajena_02.wav"
+    ],
+    "pista_usada": "voces/animalia/caminos/comun/pista_usada.wav"
+  }
+}

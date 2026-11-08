@@ -1,0 +1,510 @@
+{
+  "id_nivel": "animalia_z2_caminos_estrella",
+  "motor": "caminos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona2_laguna",
+  "tema": "La Laguna de los Nenúfares",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#B9E6E0",
+    "suelo": "#7CC8C0",
+    "zona": 2
+  },
+  "llenar": true,
+  "casas": "habitat",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": false,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        ".F..Ag.",
+        ".b...a.",
+        "..f..c.",
+        "EB...#.",
+        ".....G.",
+        ".D#....",
+        "..e..dC"
+      ],
+      "pares": {
+        "A": {
+          "animal": "huillin",
+          "casa": "rio_bosque",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "lobo_marino",
+          "casa": "roquerio",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "cisne_cuello_negro",
+          "casa": "humedal",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "oso_polar",
+          "casa": "tempano",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 70,
+      "solucion": {
+        "A": [[4, 0], [4, 1], [5, 1]],
+        "B": [[1, 3], [2, 3], [3, 3], [3, 2], [3, 1], [3, 0], [2, 0], [2, 1], [1, 1]],
+        "C": [[6, 6], [6, 5], [5, 5], [4, 5], [4, 4], [4, 3], [4, 2], [5, 2]],
+        "D": [[1, 5], [1, 4], [2, 4], [3, 4], [3, 5], [3, 6], [4, 6], [5, 6]],
+        "E": [[0, 3], [0, 4], [0, 5], [0, 6], [1, 6], [2, 6]],
+        "F": [[1, 0], [0, 0], [0, 1], [0, 2], [1, 2], [2, 2]],
+        "G": [[5, 4], [6, 4], [6, 3], [6, 2], [6, 1], [6, 0], [5, 0]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "..b....",
+        "...GBa.",
+        ".c..g#.",
+        "f#.....",
+        ".D..d.A",
+        ".e.EF.C",
+        "......."
+      ],
+      "pares": {
+        "A": {
+          "animal": "oso_polar",
+          "casa": "tempano",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "cisne_cuello_negro",
+          "casa": "humedal",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "huillin",
+          "casa": "rio_bosque",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "lobo_marino",
+          "casa": "roquerio",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 70,
+      "solucion": {
+        "A": [[6, 4], [6, 3], [6, 2], [6, 1], [6, 0], [5, 0], [5, 1]],
+        "B": [[4, 1], [4, 0], [3, 0], [2, 0]],
+        "C": [[6, 5], [6, 6], [5, 6], [5, 5], [5, 4], [5, 3], [4, 3], [3, 3], [2, 3], [2, 2], [2, 1], [1, 1], [1, 0], [0, 0], [0, 1], [0, 2], [1, 2]],
+        "D": [[1, 4], [2, 4], [3, 4], [4, 4]],
+        "E": [[3, 5], [2, 5], [1, 5]],
+        "F": [[4, 5], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 5], [0, 4], [0, 3]],
+        "G": [[3, 1], [3, 2], [4, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        "..f....",
+        ".......",
+        ".db..Ae",
+        ".#g....",
+        ".F....E",
+        "G#.BDaC",
+        "...c..."
+      ],
+      "pares": {
+        "A": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "cisne_cuello_negro",
+          "casa": "humedal",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "lobo_marino",
+          "casa": "roquerio",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "oso_polar",
+          "casa": "tempano",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "huillin",
+          "casa": "rio_bosque",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 70,
+      "solucion": {
+        "A": [[5, 2], [5, 3], [5, 4], [5, 5]],
+        "B": [[3, 5], [3, 4], [3, 3], [3, 2], [2, 2]],
+        "C": [[6, 5], [6, 6], [5, 6], [4, 6], [3, 6]],
+        "D": [[4, 5], [4, 4], [4, 3], [4, 2], [4, 1], [5, 1], [6, 1], [6, 0], [5, 0], [4, 0], [3, 0], [3, 1], [2, 1], [1, 1], [1, 2]],
+        "E": [[6, 4], [6, 3], [6, 2]],
+        "F": [[1, 4], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0], [1, 0], [2, 0]],
+        "G": [[0, 5], [0, 6], [1, 6], [2, 6], [2, 5], [2, 4], [2, 3]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        "..d#F..",
+        ".c...B.",
+        ".#E..f.",
+        "D....C.",
+        "e.b....",
+        ".ga....",
+        "....GA."
+      ],
+      "pares": {
+        "A": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "lobo_marino",
+          "casa": "roquerio",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "oso_polar",
+          "casa": "tempano",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "huillin",
+          "casa": "rio_bosque",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "cisne_cuello_negro",
+          "casa": "humedal",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 70,
+      "solucion": {
+        "A": [[5, 6], [6, 6], [6, 5], [5, 5], [4, 5], [3, 5], [2, 5]],
+        "B": [[5, 1], [5, 0], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [5, 4], [4, 4], [3, 4], [2, 4]],
+        "C": [[5, 3], [4, 3], [3, 3], [3, 2], [3, 1], [2, 1], [1, 1]],
+        "D": [[0, 3], [0, 2], [0, 1], [0, 0], [1, 0], [2, 0]],
+        "E": [[2, 2], [2, 3], [1, 3], [1, 4], [0, 4]],
+        "F": [[4, 0], [4, 1], [4, 2], [5, 2]],
+        "G": [[4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 5], [1, 5]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "ballena": {
+      "nombre": "ballena",
+      "huella": "burbuja",
+      "tono": 0.5,
+      "dibujo": {
+        "cuerpo": "#5C8FD6",
+        "detalle": "#DDEBFA",
+        "oscuro": "#3A6AB0",
+        "cabeza": "ancha",
+        "orejas": "ninguna",
+        "hocico": "sonrisa",
+        "extras": [
+          "chorro"
+        ]
+      }
+    },
+    "cisne_cuello_negro": {
+      "nombre": "cisne de cuello negro",
+      "huella": "pato",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#2B2B2B",
+        "detalle": "#C9CDD6",
+        "oscuro": "#E8434B",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico",
+        "extras": [
+          "carúncula",
+          "mejilla_blanca"
+        ]
+      }
+    },
+    "flamenco": {
+      "nombre": "flamenco",
+      "huella": "ave",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#FF8FB1",
+        "detalle": "#FFD0DE",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_curvo",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "huillin": {
+      "nombre": "huillín",
+      "huella": "pata",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#7A5236",
+        "detalle": "#D8BFA2",
+        "oscuro": "#4A2E1E",
+        "cabeza": "redonda",
+        "orejas": "pequenas",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes"
+        ]
+      }
+    },
+    "lobo_marino": {
+      "nombre": "lobo marino",
+      "huella": "aleta",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#8A6E5A",
+        "detalle": "#C9B09A",
+        "oscuro": "#4A3A2E",
+        "cabeza": "redonda",
+        "orejas": "pequenas",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes"
+        ]
+      }
+    },
+    "oso_polar": {
+      "nombre": "oso polar",
+      "huella": "pata",
+      "tono": 0.7,
+      "dibujo": {
+        "cuerpo": "#F4F4F0",
+        "detalle": "#E6E6DE",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "redondas",
+        "hocico": "nariz",
+        "extras": []
+      }
+    },
+    "pinguino": {
+      "nombre": "pingüino de Humboldt",
+      "huella": "pato",
+      "tono": 1.1,
+      "dibujo": {
+        "cuerpo": "#2B3350",
+        "detalle": "#FFFFFF",
+        "oscuro": "#F28C8C",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico",
+        "extras": [
+          "cara_blanca"
+        ]
+      }
+    },
+    "cueva_costa": {
+      "nombre": "la cueva de la costa",
+      "dibujo": {
+        "tipo": "cueva",
+        "color": "#C9B08A",
+        "color2": "#2E3A4A",
+        "variante": "costa"
+      }
+    },
+    "humedal": {
+      "nombre": "el humedal",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#7CC0B8",
+        "color2": "#7FB86A",
+        "variante": "humedal"
+      }
+    },
+    "mar": {
+      "nombre": "el mar abierto",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#2E6FC0",
+        "color2": "#DDEBFA",
+        "variante": "mar"
+      }
+    },
+    "rio_bosque": {
+      "nombre": "el río del bosque",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#4FA3E0",
+        "color2": "#2E7A3A",
+        "variante": "rio_bosque"
+      }
+    },
+    "roquerio": {
+      "nombre": "el roquerío",
+      "dibujo": {
+        "tipo": "montana",
+        "color": "#9AA3AE",
+        "color2": "#4FA3E0",
+        "variante": "roquerio"
+      }
+    },
+    "salar": {
+      "nombre": "el salar",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#F2F4F8",
+        "color2": "#FF9CC0",
+        "variante": "salar"
+      }
+    },
+    "tempano": {
+      "nombre": "el témpano",
+      "dibujo": {
+        "tipo": "hielo",
+        "color": "#DDF3FF",
+        "color2": "#4FA3E0",
+        "variante": ""
+      }
+    }
+  },
+  "puntos": {
+    "llegada": 100,
+    "racha_max": 5,
+    "tablero": 300,
+    "sin_borrones": 300,
+    "por_segundo": 10
+  },
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": {
+    "trazos_de_mas": 1,
+    "intentos_casa": 0
+  },
+  "tiempo_par": true,
+  "tormenta": {
+    "factor_par": 1.6
+  },
+  "regalo_tras_derrotas": 3,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "ayuda_idle_s": [],
+  "valvula_s": 0,
+  "pistas_cuestan_estrellita": true,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona2/estrella_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona2/estrella_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_estrella_01.wav",
+      "voces/animalia/caminos/comun/victoria_estrella_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_estrella.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_estrella.wav",
+    "nombres": {
+      "ballena": "voces/animalia/nombres/ballena.wav",
+      "cisne_cuello_negro": "voces/animalia/nombres/cisne_cuello_negro.wav",
+      "flamenco": "voces/animalia/nombres/flamenco.wav",
+      "huillin": "voces/animalia/nombres/huillin.wav",
+      "lobo_marino": "voces/animalia/nombres/lobo_marino.wav",
+      "oso_polar": "voces/animalia/nombres/oso_polar.wav",
+      "pinguino": "voces/animalia/nombres/pinguino.wav"
+    },
+    "descansar": "voces/animalia/caminos/comun/descansar.wav",
+    "faltan_flores": "voces/animalia/caminos/comun/faltan_flores.wav",
+    "record": "voces/animalia/caminos/comun/record.wav",
+    "primer_record": "voces/animalia/caminos/comun/primer_record.wav",
+    "sin_borrones": "voces/animalia/caminos/comun/sin_borrones.wav",
+    "casa_ajena": [
+      "voces/animalia/caminos/comun/casa_ajena_01.wav",
+      "voces/animalia/caminos/comun/casa_ajena_02.wav"
+    ],
+    "pista_usada": "voces/animalia/caminos/comun/pista_usada.wav",
+    "habitats": {
+      "cueva_costa": "voces/animalia/caminos/habitats/cueva_costa.wav",
+      "humedal": "voces/animalia/caminos/habitats/humedal.wav",
+      "mar": "voces/animalia/caminos/habitats/mar.wav",
+      "rio_bosque": "voces/animalia/caminos/habitats/rio_bosque.wav",
+      "roquerio": "voces/animalia/caminos/habitats/roquerio.wav",
+      "salar": "voces/animalia/caminos/habitats/salar.wav",
+      "tempano": "voces/animalia/caminos/habitats/tempano.wav"
+    }
+  }
+}
