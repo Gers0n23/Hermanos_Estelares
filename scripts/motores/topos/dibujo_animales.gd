@@ -56,9 +56,9 @@ const CATALOGO := {
 	"jirafa": {"forma": "cuello", "color": "#F7C843", "panza": "#FFF0B8", "oreja": "#E2A92A", "orejas": "ciervo", "hocico": "largo", "manchas": "#B86A28", "acento": "#B86A28", "extras": ["manchas", "osiconos", "pestanas"]},
 	"cebra": {"forma": "normal", "color": "#FFFFFF", "panza": "#FFFFFF", "oreja": "#E8E8E8", "orejas": "caballo", "hocico": "largo", "manchas": "#2E2E38", "acento": "#2E2E38", "extras": ["rayas", "crin"], "hocico_color": "#5A5A66"},
 	"alpaca": {"forma": "cuello", "color": "#F4E4C4", "panza": "#FFF8EA", "oreja": "#E2CBA2", "orejas": "ciervo", "hocico": "largo", "acento": "#FFFFFF", "extras": ["lana"]},
-	"guanaco": {"forma": "cuello", "color": "#C68A4E", "panza": "#FFF4E6", "oreja": "#A86D36", "orejas": "ciervo", "hocico": "largo", "hocico_color": "#5C5C66"},
-	"huemul": {"forma": "normal", "color": "#8D6B4B", "panza": "#E9D7BF", "oreja": "#6E5034", "orejas": "ciervo", "hocico": "largo", "acento": "#6A4A2A", "hocico_color": "#3F3A45", "extras": ["astas"]},
-	"pudu": {"forma": "normal", "color": "#A35A31", "panza": "#E9C6A4", "oreja": "#7E4222", "orejas": "ciervo", "hocico": "largo", "acento": "#6A3A1A", "cabeza": 1.15, "hocico_color": "#3F3A45", "extras": ["astas_cortas"]},
+	"guanaco": {"forma": "cuello", "color": "#C68A4E", "panza": "#FFF4E6", "oreja": "#A86D36", "orejas": "ciervo", "hocico": "largo", "hocico_color": "#8C6A4A"},
+	"huemul": {"forma": "normal", "color": "#8D6B4B", "panza": "#E9D7BF", "oreja": "#6E5034", "orejas": "ciervo", "hocico": "largo", "acento": "#6A4A2A", "hocico_color": "#C9A884", "extras": ["astas"]},
+	"pudu": {"forma": "normal", "color": "#A35A31", "panza": "#E9C6A4", "oreja": "#7E4222", "orejas": "ciervo", "hocico": "largo", "acento": "#6A3A1A", "cabeza": 1.15, "hocico_color": "#D9B08C", "extras": ["astas_cortas"]},
 	"nandu": {"forma": "cuello", "color": "#A79C8B", "panza": "#E2DBCF", "orejas": "ninguna", "hocico": "pico", "acento": "#6B6358", "cabeza": 0.85},
 	# --- Árbol y selva ---
 	"mono": {"forma": "normal", "color": "#8B5A2B", "panza": "#F2D2A9", "oreja": "#F2D2A9", "orejas": "redondas", "hocico": "ninguno", "cara": "#F2D2A9"},
@@ -424,7 +424,7 @@ static func _ojos(c: CanvasItem, centro: Vector2, r: float, u: float, cara: Dict
 	var radio := r * 0.21 if tipo != "grandes" else r * 0.28
 	for s in [-1.0, 1.0]:
 		var o := centro + Vector2(s * sep, 0)
-		var cerrado := tipo in ["cerrados", "risa"] or (tipo == "guino" and s > 0)
+		var cerrado: bool = tipo in ["cerrados", "risa"] or (tipo == "guino" and s > 0)
 		if cerrado:
 			c.draw_arc(o + Vector2(0, radio * 0.3), radio * 0.8, PI * 1.1, PI * 1.9, 10, CONTORNO, 4.5 * u, true)
 			continue
@@ -439,7 +439,7 @@ static func _ojos(c: CanvasItem, centro: Vector2, r: float, u: float, cara: Dict
 		c.draw_circle(pupila + Vector2(radio * 0.2, radio * 0.2), radio * 0.1, BLANCO)
 		if pestanas:
 			for k in 3:
-				var a := -PI / 2.0 + s * (0.5 + k * 0.32)
+				var a: float = -PI / 2.0 + s * (0.5 + k * 0.32)
 				c.draw_line(o + Vector2.from_angle(a) * radio, o + Vector2.from_angle(a) * radio * 1.45, CONTORNO, 3.0 * u, true)
 
 

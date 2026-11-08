@@ -64,7 +64,7 @@ const ESCALA_EQUIPO := 0.86
 const RECT_CASA_EQUIPO := Rect2(1172, 8, 100, 96)
 const RECT_COMETA := Rect2(124, 12, 100, 100)
 const RECT_TOBY := Rect2(36, 470, 210, 250)
-const RECT_ANTENA := Rect2(170, 400, 96, 96)
+const RECT_ANTENA := Rect2(170, 326, 96, 96)
 const RECT_CARTEL := Rect2(470, 108, 340, 92)
 const RECT_OREJA := Rect2(712, 106, 96, 96)
 const CENTRO_TOBY := Vector2(140, 712)
@@ -94,7 +94,7 @@ var _fuente: Font
 var _semilla := -1
 var _perfil := "brote"
 var _disp: Dictionary = {}
-var _pos: Array = []  ## Vector2 por madriguera (línea del hoyo)
+var _pos: Array[Vector2] = []  ## por madriguera (línea del hoyo)
 var _ancho_hoyo := 200.0
 var _alto_animal := 190.0
 var _toque := Vector2(230, 290)
@@ -655,7 +655,7 @@ func _al_sonar(id: int, animal: String, escrito: String, repite: bool) -> void:
 		_sonar_animal(animal)
 	_vis[id]["habla"] = 0.25
 	var cabeza := _pos[id] + Dibujo.punto_cabeza(animal, _alto_animal)
-	var completas := _ondas == "completas" or logica.madrigueras[id]["brilla"]
+	var completas: bool = _ondas == "completas" or logica.madrigueras[id]["brilla"]
 	_anillos.append({"pos": cabeza, "t": 0.0, "dur": 0.7, "arcos": 3 if completas else 1, "alfa": 1.0 if completas else 0.45})
 
 
@@ -1186,7 +1186,11 @@ func _dibujar_frente(capa: Control, i: int) -> void:
 		var a := PI - PI * k / 16.0
 		frente.append(c + Vector2(cos(a) * _ancho_hoyo * 0.48, sin(a) * _ancho_hoyo * 0.12))
 	capa.draw_colored_polygon(frente, TIERRA.lightened(0.08))
-	capa.draw_arc(c + Vector2(0, -2), _ancho_hoyo * 0.62, 0.15, PI - 0.15, 18, COLOR_CONTORNO, 3.0, true)
+	var borde := PackedVector2Array()
+	for k in 17:
+		var a := PI * k / 16.0
+		borde.append(c + Vector2(cos(a) * _ancho_hoyo * 0.62, sin(a) * _ancho_hoyo * 0.2 - 2.0))
+	capa.draw_polyline(borde, COLOR_CONTORNO, 3.0, true)
 	# Pasto en el borde del montículo.
 	for k in 7:
 		var x := c.x + (k - 3) * _ancho_hoyo * 0.17
@@ -1447,7 +1451,9 @@ func _dibujar_hud() -> void:
 			_hud.draw_line(sol + Vector2.from_angle(a) * 30.0, sol + Vector2.from_angle(a) * 40.0, Color("#FFB830"), 5.0, true)
 		_hud.draw_circle(sol, 29.0, COLOR_CONTORNO)
 		_hud.draw_circle(sol, 26.0, Color("#FFD23F"))
-		Figura.dibujar_cara(_hud, sol, 0.5, true)
+		for lado in [-1.0, 1.0]:
+			_hud.draw_circle(sol + Vector2(lado * 8.0, -4.0), 3.5, TINTA)
+		_hud.draw_arc(sol + Vector2(0, 2), 9.0, PI * 0.15, PI * 0.85, 10, TINTA, 3.0, true)
 		# Al final se pone detrás de una hoja.
 		Dibujo._elipse(_hud, Vector2(1236, 82), Vector2(42, 22), -0.4, Color("#4E9C45"), 2.0)
 	# Rondas: puntitos sin números arriba del collar.
@@ -1553,10 +1559,12 @@ func _dibujar_fin() -> void:
 	var centro := Vector2(640, 440)
 	if _perfil == "semilla":
 		centro = Vector2(640, 350)
-		var alto := 150.0
-		var ancho := alto * TEXTURA_TOBY.get_width() / TEXTURA_TOBY.get_height()
-		_fin.draw_texture_rect(TEXTURA_TOBY, Rect2(640 - ancho / 2.0, 260 + rebote, ancho, alto), false)
-		_flecha_circular(_fin, centro, 130.0)
+		_flecha_circular(_fin, centro, 150.0)
+		# La carita de Toby adentro de la flecha (solo la cabeza: la textura recortada arriba).
+		var alto := 92.0
+		var region := Rect2(0, 0, TEXTURA_TOBY.get_width(), TEXTURA_TOBY.get_height() * 0.52)
+		var ancho := alto * region.size.x / region.size.y
+		_fin.draw_texture_rect_region(TEXTURA_TOBY, Rect2(640 - ancho / 2.0, 350 - alto / 2.0 + rebote * 0.5, ancho, alto), region)
 		return
 	_texto(_fin, "¡Nos escondimos todos!", Vector2(640, 190 + rebote), 40, Color("#655D82"))
 	_texto(_fin, str(logica.puntaje + _puntaje_previo), Vector2(580, 262), 44, TINTA)
