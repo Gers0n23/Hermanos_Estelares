@@ -43,50 +43,50 @@
   },
   "objetos": [
     {
-      "id": "arbol_0",
-      "tipo": "arbol",
+      "id": "hongo_0",
+      "tipo": "hongo",
       "pos": [
-        276.0,
-        446.0
+        325.0,
+        441.0
       ],
-      "escala": 1.14,
+      "escala": 0.9,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "helecho_1",
+      "tipo": "helecho",
+      "pos": [
+        425.0,
+        515.0
+      ],
+      "escala": 0.85,
       "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "arbol_1",
+      "id": "arbol_2",
       "tipo": "arbol",
       "pos": [
-        395.0,
-        513.0
+        480.0,
+        529.0
       ],
-      "escala": 1.14,
+      "escala": 0.83,
       "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "roca_2",
-      "tipo": "roca",
+      "id": "arbol_3",
+      "tipo": "arbol",
       "pos": [
-        484.0,
-        557.0
+        582.0,
+        439.0
       ],
-      "escala": 1.49,
-      "espejo": true,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "helecho_3",
-      "tipo": "helecho",
-      "pos": [
-        544.0,
-        440.0
-      ],
-      "escala": 1.62,
-      "espejo": true,
+      "escala": 0.81,
+      "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -94,47 +94,47 @@
       "id": "arbol_4",
       "tipo": "arbol",
       "pos": [
-        645.0,
-        515.0
+        654.0,
+        514.0
       ],
-      "escala": 1.14,
-      "espejo": true,
+      "escala": 0.78,
+      "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "hongo_5",
-      "tipo": "hongo",
+      "id": "roca_5",
+      "tipo": "roca",
       "pos": [
-        719.0,
-        570.0
+        712.0,
+        547.0
       ],
-      "escala": 1.55,
+      "escala": 0.74,
       "espejo": false,
       "reaccion": "rebotar",
       "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
-      "id": "helecho_6",
-      "tipo": "helecho",
+      "id": "arbol_6",
+      "tipo": "arbol",
       "pos": [
-        818.0,
-        439.0
+        798.0,
+        441.0
       ],
-      "escala": 1.59,
+      "escala": 0.72,
       "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "arbol_7",
-      "tipo": "arbol",
+      "id": "helecho_7",
+      "tipo": "helecho",
       "pos": [
-        881.0,
-        507.0
+        884.0,
+        500.0
       ],
-      "escala": 1.14,
-      "espejo": false,
+      "escala": 0.92,
+      "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -142,22 +142,23 @@
       "id": "arbusto_8",
       "tipo": "arbusto",
       "pos": [
-        1001.0,
-        565.0
+        947.0,
+        549.0
       ],
-      "escala": 1.35,
+      "escala": 0.81,
       "espejo": true,
       "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
     },
     {
       "id": "nube_0",
       "tipo": "nube",
       "pos": [
-        611.0,
-        224.0
+        687.0,
+        203.0
       ],
-      "escala": 1.54,
+      "escala": 0.87,
       "reaccion": "puf",
       "sonido": "sfx/ui/puf.ogg"
     },
@@ -165,11 +166,11 @@
       "id": "nido_0",
       "tipo": "nido",
       "pos": [
-        356.0,
-        184.0
+        422.0,
+        338.0
       ],
-      "escala": 1.03,
-      "z": 447.0,
+      "escala": 0.75,
+      "z": 530.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -177,11 +178,11 @@
       "id": "nido_1",
       "tipo": "nido",
       "pos": [
-        475.0,
-        251.0
+        639.0,
+        253.0
       ],
-      "escala": 1.03,
-      "z": 514.0,
+      "escala": 0.73,
+      "z": 440.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -189,11 +190,11 @@
       "id": "nido_2",
       "tipo": "nido",
       "pos": [
-        725.0,
-        253.0
+        599.0,
+        335.0
       ],
-      "escala": 1.03,
-      "z": 516.0,
+      "escala": 0.7,
+      "z": 515.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -201,11 +202,11 @@
       "id": "nido_3",
       "tipo": "nido",
       "pos": [
-        801.0,
-        245.0
+        748.0,
+        275.0
       ],
-      "escala": 1.03,
-      "z": 508.0,
+      "escala": 0.65,
+      "z": 442.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     }
@@ -229,43 +230,63 @@
       "escondites": [
         {
           "pos": [
-            334.0,
-            554.0
+            422.0,
+            332.0
           ],
           "tamano": 170.0,
           "espejo": false,
-          "visible": 0.85,
+          "visible": 0.86,
           "asoma": [
-            -1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            264.0,
-            384.0,
-            101.0,
+            352.0,
+            162.0,
+            140.0,
             170.0
           ],
-          "detras_de": "roca_2"
+          "detras_de": "nido_0"
         },
         {
           "pos": [
-            337.0,
-            509.0
+            603.0,
+            395.0
           ],
           "tamano": 170.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.85,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            267.0,
-            339.0,
+            572.0,
+            225.0,
             101.0,
             170.0
           ],
-          "detras_de": "arbol_1"
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            1023.0,
+            497.0
+          ],
+          "tamano": 170.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            992.0,
+            327.0,
+            101.0,
+            170.0
+          ],
+          "detras_de": "helecho_7"
         }
       ]
     },
@@ -286,8 +307,8 @@
       "escondites": [
         {
           "pos": [
-            466.0,
-            295.0
+            398.5,
+            306.5
           ],
           "tamano": 162.0,
           "espejo": false,
@@ -297,12 +318,52 @@
             0.0
           ],
           "caja": [
-            371.0,
-            144.0,
+            303.0,
+            155.0,
+            180.0,
+            151.0
+          ],
+          "detras_de": "arbol_3"
+        },
+        {
+          "pos": [
+            599.0,
+            315.5
+          ],
+          "tamano": 162.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            535.0,
+            164.0,
+            148.0,
+            134.0
+          ],
+          "detras_de": "nido_2"
+        },
+        {
+          "pos": [
+            919.5,
+            332.0
+          ],
+          "tamano": 162.0,
+          "espejo": true,
+          "visible": 0.86,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            856.0,
+            181.0,
             159.0,
             151.0
           ],
-          "detras_de": "arbol_4"
+          "detras_de": "arbol_6"
         }
       ]
     },
@@ -320,7 +381,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.7,
       "nombre_voz": "voces/animalia/nombres/perezoso.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            422.0,
+            330.5
+          ],
+          "tamano": 170.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            369.0,
+            161.0,
+            105.0,
+            142.0
+          ],
+          "detras_de": "nido_0"
+        },
+        {
+          "pos": [
+            381.0,
+            310.5
+          ],
+          "tamano": 170.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            328.0,
+            140.0,
+            105.0,
+            170.0
+          ],
+          "detras_de": "arbol_3"
+        },
+        {
+          "pos": [
+            599.0,
+            319.5
+          ],
+          "tamano": 170.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            546.0,
+            150.0,
+            105.0,
+            151.0
+          ],
+          "detras_de": "nido_2"
+        }
+      ]
     },
     {
       "id": "buho",
@@ -338,7 +460,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.8,
       "nombre_voz": "voces/animalia/nombres/buho.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            599.0,
+            329.5
+          ],
+          "tamano": 162.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            546.0,
+            167.0,
+            124.0,
+            135.0
+          ],
+          "detras_de": "nido_2"
+        },
+        {
+          "pos": [
+            387.5,
+            306.5
+          ],
+          "tamano": 162.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            317.0,
+            144.0,
+            106.0,
+            162.0
+          ],
+          "detras_de": "arbol_3"
+        },
+        {
+          "pos": [
+            422.0,
+            339.5
+          ],
+          "tamano": 162.0,
+          "espejo": true,
+          "visible": 0.86,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            351.0,
+            178.0,
+            141.0,
+            126.0
+          ],
+          "detras_de": "nido_0"
+        }
+      ]
     },
     {
       "id": "loro",
@@ -357,8 +540,28 @@
       "escondites": [
         {
           "pos": [
-            827.0,
-            290.5
+            625.0,
+            386.5
+          ],
+          "tamano": 153.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            554.0,
+            234.0,
+            143.0,
+            153.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            918.5,
+            327.5
           ],
           "tamano": 153.0,
           "espejo": false,
@@ -368,9 +571,29 @@
             0.0
           ],
           "caja": [
-            791.0,
-            138.0,
+            883.0,
+            175.0,
             116.0,
+            153.0
+          ],
+          "detras_de": "arbol_6"
+        },
+        {
+          "pos": [
+            791.5,
+            384.5
+          ],
+          "tamano": 153.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            720.0,
+            232.0,
+            143.0,
             153.0
           ],
           "detras_de": "arbol_4"
@@ -392,7 +615,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.4,
       "nombre_voz": "voces/animalia/nombres/braquiosaurio.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            971.5,
+            437.0
+          ],
+          "tamano": 247.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            870.0,
+            190.0,
+            203.0,
+            247.0
+          ],
+          "detras_de": "arbol_6"
+        },
+        {
+          "pos": [
+            396.5,
+            525.0
+          ],
+          "tamano": 247.0,
+          "espejo": true,
+          "visible": 0.89,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            295.0,
+            278.0,
+            169.0,
+            247.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            1017.5,
+            497.0
+          ],
+          "tamano": 247.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            916.0,
+            250.0,
+            203.0,
+            247.0
+          ],
+          "detras_de": "helecho_7"
+        }
+      ]
     },
     {
       "id": "huevito",
@@ -409,48 +693,8 @@
       "escondites": [
         {
           "pos": [
-            318.0,
-            554.0
-          ],
-          "tamano": 119.0,
-          "espejo": true,
-          "visible": 0.85,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            274.0,
-            435.0,
-            83.0,
-            119.0
-          ],
-          "detras_de": "roca_2"
-        },
-        {
-          "pos": [
-            215.5,
-            271.5
-          ],
-          "tamano": 119.0,
-          "espejo": true,
-          "visible": 0.85,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            172.0,
-            153.0,
-            88.0,
-            119.0
-          ],
-          "detras_de": "arbol_1"
-        },
-        {
-          "pos": [
-            825.5,
-            273.5
+            1041.5,
+            497.0
           ],
           "tamano": 119.0,
           "espejo": true,
@@ -460,12 +704,52 @@
             0.0
           ],
           "caja": [
-            781.0,
-            155.0,
+            997.0,
+            378.0,
             88.0,
             119.0
           ],
-          "detras_de": "arbol_4"
+          "detras_de": "helecho_7"
+        },
+        {
+          "pos": [
+            748.0,
+            266.0
+          ],
+          "tamano": 119.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            704.0,
+            147.0,
+            88.0,
+            99.0
+          ],
+          "detras_de": "nido_3"
+        },
+        {
+          "pos": [
+            624.5,
+            544.0
+          ],
+          "tamano": 119.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            581.0,
+            425.0,
+            83.0,
+            119.0
+          ],
+          "detras_de": "roca_5"
         }
       ],
       "marca_especial": "animalia_huevo_z4"

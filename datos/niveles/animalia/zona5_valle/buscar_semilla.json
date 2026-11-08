@@ -57,68 +57,68 @@
       "id": "helecho_0",
       "tipo": "helecho",
       "pos": [
-        283.0,
-        446.0
+        354.0,
+        454.0
       ],
-      "escala": 1.38,
-      "espejo": false,
+      "escala": 0.82,
+      "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "helecho_1",
-      "tipo": "helecho",
-      "pos": [
-        381.0,
-        518.0
-      ],
-      "escala": 1.39,
-      "espejo": false,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "cristales_2",
+      "id": "cristales_1",
       "tipo": "cristales",
       "pos": [
-        517.0,
-        565.0
+        430.0,
+        513.0
       ],
-      "escala": 1.45,
+      "escala": 0.88,
       "espejo": true,
       "reaccion": "xilofono",
       "sonido": "sfx/ui/toque.ogg"
     },
     {
-      "id": "roca_3",
-      "tipo": "roca",
+      "id": "helecho_2",
+      "tipo": "helecho",
       "pos": [
-        583.0,
-        447.0
+        499.0,
+        545.0
       ],
-      "escala": 1.27,
-      "espejo": false,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "arbol_4",
-      "tipo": "arbol",
-      "pos": [
-        693.0,
-        512.0
-      ],
-      "escala": 1.14,
+      "escala": 0.88,
       "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
+      "id": "arbol_3",
+      "tipo": "arbol",
+      "pos": [
+        610.0,
+        458.0
+      ],
+      "escala": 0.72,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "huesos_4",
+      "tipo": "huesos",
+      "pos": [
+        668.0,
+        503.0
+      ],
+      "escala": 0.82,
+      "espejo": true,
+      "reaccion": "xilofono",
+      "sonido": "sfx/ui/toque.ogg"
+    },
+    {
       "id": "volcan_5",
       "tipo": "volcan",
       "pos": [
-        780.0,
-        410.0
+        753.0,
+        400.0
       ],
       "escala": 0.89,
       "espejo": false,
@@ -130,35 +130,35 @@
       "id": "roca_6",
       "tipo": "roca",
       "pos": [
-        867.0,
+        874.0,
         410.0
       ],
-      "escala": 1.22,
+      "escala": 0.82,
       "espejo": false,
       "reaccion": "rebotar",
       "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
-      "id": "huesos_7",
-      "tipo": "huesos",
+      "id": "roca_7",
+      "tipo": "roca",
       "pos": [
-        986.0,
+        931.0,
         410.0
       ],
-      "escala": 1.37,
+      "escala": 0.73,
       "espejo": true,
-      "reaccion": "xilofono",
-      "sonido": "sfx/ui/toque.ogg"
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
       "id": "juncos_a0",
       "tipo": "juncos",
       "pos": [
-        866.0,
+        885.0,
         473.0
       ],
-      "escala": 1.4,
-      "espejo": true,
+      "escala": 0.85,
+      "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -166,11 +166,11 @@
       "id": "nenufar_a1",
       "tipo": "nenufar",
       "pos": [
-        1071.0,
+        1083.0,
         533.0
       ],
-      "escala": 1.3,
-      "espejo": false,
+      "escala": 0.76,
+      "espejo": true,
       "reaccion": "salpicar",
       "sonido": "sfx/ui/blup.ogg"
     },
@@ -178,10 +178,10 @@
       "id": "nube_0",
       "tipo": "nube",
       "pos": [
-        698.0,
-        194.0
+        714.0,
+        210.0
       ],
-      "escala": 1.3,
+      "escala": 0.78,
       "reaccion": "puf",
       "sonido": "sfx/ui/puf.ogg"
     },
@@ -189,11 +189,11 @@
       "id": "nido_0",
       "tipo": "nido",
       "pos": [
-        613.0,
-        250.0
+        660.0,
+        292.0
       ],
-      "escala": 1.03,
-      "z": 513.0,
+      "escala": 0.65,
+      "z": 459.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     }
@@ -215,63 +215,63 @@
       "escondites": [
         {
           "pos": [
-            582.0,
-            515.0
+            499.0,
+            489.0
           ],
           "tamano": 200.0,
-          "espejo": true,
-          "visible": 0.8,
+          "espejo": false,
+          "visible": 0.72,
           "asoma": [
-            1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            483.0,
-            315.0,
-            199.0,
-            200.0
-          ],
-          "detras_de": "helecho_1"
-        },
-        {
-          "pos": [
-            778.5,
-            508.0
-          ],
-          "tamano": 200.0,
-          "espejo": true,
-          "visible": 0.83,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            716.0,
-            319.0,
-            162.0,
-            189.0
-          ],
-          "detras_de": "arbol_4"
-        },
-        {
-          "pos": [
-            623.0,
-            562.0
-          ],
-          "tamano": 200.0,
-          "espejo": true,
-          "visible": 0.8,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            511.0,
-            362.0,
+            400.0,
+            289.0,
             211.0,
+            156.0
+          ],
+          "detras_de": "helecho_2"
+        },
+        {
+          "pos": [
+            582.5,
+            510.0
+          ],
+          "tamano": 200.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            520.0,
+            310.0,
+            174.0,
             200.0
           ],
-          "detras_de": "cristales_2"
+          "detras_de": "cristales_1"
+        },
+        {
+          "pos": [
+            931.0,
+            369.5
+          ],
+          "tamano": 200.0,
+          "espejo": true,
+          "visible": 0.77,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            819.0,
+            170.0,
+            211.0,
+            156.0
+          ],
+          "detras_de": "roca_7"
         }
       ]
     },
@@ -293,43 +293,63 @@
       "escondites": [
         {
           "pos": [
-            986.0,
-            368.5
+            354.0,
+            402.0
           ],
           "tamano": 208.0,
-          "espejo": false,
-          "visible": 0.72,
+          "espejo": true,
+          "visible": 0.79,
           "asoma": [
             0.0,
             -1.0
           ],
           "caja": [
-            948.0,
-            161.0,
-            152.0,
-            208.0
+            240.0,
+            194.0,
+            215.0,
+            162.0
           ],
-          "detras_de": "huesos_7"
+          "detras_de": "helecho_0"
         },
         {
           "pos": [
-            983.0,
-            470.0
+            668.0,
+            500.0
           ],
           "tamano": 208.0,
-          "espejo": false,
-          "visible": 0.84,
+          "espejo": true,
+          "visible": 0.88,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            554.0,
+            292.0,
+            215.0,
+            208.0
+          ],
+          "detras_de": "huesos_4"
+        },
+        {
+          "pos": [
+            988.5,
+            407.0
+          ],
+          "tamano": 208.0,
+          "espejo": true,
+          "visible": 0.81,
           "asoma": [
             1.0,
             0.0
           ],
           "caja": [
-            958.0,
-            262.0,
-            139.0,
+            874.0,
+            199.0,
+            215.0,
             208.0
           ],
-          "detras_de": "juncos_a0"
+          "detras_de": "roca_7"
         }
       ]
     },
@@ -350,63 +370,63 @@
       "escondites": [
         {
           "pos": [
-            622.5,
-            562.0
+            430.0,
+            484.0
           ],
           "tamano": 200.0,
           "espejo": true,
           "visible": 0.8,
           "asoma": [
-            1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            518.0,
-            362.0,
-            208.0,
+            326.0,
+            284.0,
+            162.0,
             200.0
           ],
-          "detras_de": "cristales_2"
+          "detras_de": "cristales_1"
         },
         {
           "pos": [
-            740.0,
-            508.0
+            668.0,
+            500.0
           ],
           "tamano": 200.0,
           "espejo": false,
-          "visible": 0.86,
+          "visible": 0.84,
           "asoma": [
-            1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            636.0,
-            319.0,
-            208.0,
-            189.0
+            587.0,
+            300.0,
+            185.0,
+            200.0
           ],
-          "detras_de": "arbol_4"
+          "detras_de": "huesos_4"
         },
         {
           "pos": [
-            584.5,
-            515.0
+            500.5,
+            397.0
           ],
           "tamano": 200.0,
           "espejo": true,
           "visible": 0.8,
           "asoma": [
-            1.0,
+            -1.0,
             0.0
           ],
           "caja": [
-            492.0,
-            315.0,
+            396.0,
             197.0,
+            139.0,
             200.0
           ],
-          "detras_de": "helecho_1"
+          "detras_de": "volcan_5"
         }
       ]
     },
@@ -428,63 +448,63 @@
       "escondites": [
         {
           "pos": [
-            602.5,
-            562.0
+            931.0,
+            369.5
           ],
           "tamano": 208.0,
-          "espejo": true,
-          "visible": 0.8,
+          "espejo": false,
+          "visible": 0.72,
           "asoma": [
-            1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            487.0,
-            354.0,
+            815.0,
+            162.0,
+            232.0,
+            173.0
+          ],
+          "detras_de": "roca_7"
+        },
+        {
+          "pos": [
+            874.0,
+            365.0
+          ],
+          "tamano": 208.0,
+          "espejo": false,
+          "visible": 0.77,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            758.0,
+            157.0,
             232.0,
             208.0
           ],
-          "detras_de": "cristales_2"
+          "detras_de": "roca_6"
         },
         {
           "pos": [
-            592.5,
-            515.0
+            406.5,
+            542.0
           ],
           "tamano": 208.0,
           "espejo": false,
           "visible": 0.8,
           "asoma": [
-            1.0,
+            -1.0,
             0.0
           ],
           "caja": [
-            515.0,
-            307.0,
-            193.0,
+            291.0,
+            334.0,
+            232.0,
             208.0
           ],
-          "detras_de": "helecho_1"
-        },
-        {
-          "pos": [
-            780.5,
-            508.0
-          ],
-          "tamano": 208.0,
-          "espejo": false,
-          "visible": 0.83,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            716.0,
-            312.0,
-            180.0,
-            196.0
-          ],
-          "detras_de": "arbol_4"
+          "detras_de": "helecho_2"
         }
       ]
     },
@@ -503,7 +523,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.4,
       "nombre_voz": "voces/animalia/nombres/braquiosaurio.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            430.0,
+            471.0
+          ],
+          "tamano": 232.0,
+          "espejo": true,
+          "visible": 0.81,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            335.0,
+            239.0,
+            191.0,
+            232.0
+          ],
+          "detras_de": "cristales_1"
+        },
+        {
+          "pos": [
+            1022.0,
+            397.0
+          ],
+          "tamano": 232.0,
+          "espejo": false,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            948.0,
+            165.0,
+            170.0,
+            232.0
+          ],
+          "detras_de": "volcan_5"
+        },
+        {
+          "pos": [
+            622.0,
+            542.0
+          ],
+          "tamano": 232.0,
+          "espejo": false,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            548.0,
+            310.0,
+            170.0,
+            232.0
+          ],
+          "detras_de": "helecho_2"
+        }
+      ]
     },
     {
       "id": "mama_trex",
@@ -518,7 +599,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.45,
       "nombre_voz": "voces/animalia/nombres/mama_trex.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            468.0,
+            397.0
+          ],
+          "tamano": 224.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            371.0,
+            173.0,
+            195.0,
+            224.0
+          ],
+          "detras_de": "volcan_5"
+        },
+        {
+          "pos": [
+            435.0,
+            454.0
+          ],
+          "tamano": 224.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            324.0,
+            230.0,
+            209.0,
+            224.0
+          ],
+          "detras_de": "arbol_3"
+        },
+        {
+          "pos": [
+            354.0,
+            402.0
+          ],
+          "tamano": 224.0,
+          "espejo": false,
+          "visible": 0.77,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            243.0,
+            178.0,
+            237.0,
+            174.0
+          ],
+          "detras_de": "helecho_0"
+        }
+      ]
     },
     {
       "id": "huevito",
@@ -532,7 +674,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 2.0,
       "nombre_voz": "voces/animalia/nombres/huevito.wav",
-      "escondites": [],
+      "escondites": [
+        {
+          "pos": [
+            529.5,
+            451.0
+          ],
+          "tamano": 112.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            488.0,
+            339.0,
+            83.0,
+            93.0
+          ],
+          "detras_de": "helecho_0"
+        },
+        {
+          "pos": [
+            1013.0,
+            407.0
+          ],
+          "tamano": 112.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            976.0,
+            295.0,
+            78.0,
+            112.0
+          ],
+          "detras_de": "roca_6"
+        },
+        {
+          "pos": [
+            766.5,
+            500.0
+          ],
+          "tamano": 112.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            725.0,
+            388.0,
+            83.0,
+            112.0
+          ],
+          "detras_de": "huesos_4"
+        }
+      ],
       "marca_especial": "animalia_huevo_z5"
     }
   ],

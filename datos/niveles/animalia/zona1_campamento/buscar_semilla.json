@@ -43,112 +43,135 @@
   },
   "objetos": [
     {
-      "id": "arbusto_0",
-      "tipo": "arbusto",
+      "id": "carpa_0",
+      "tipo": "carpa",
       "pos": [
-        312.0,
-        446.0
+        340.0,
+        439.0
       ],
-      "escala": 1.6,
-      "espejo": false,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg",
-      "flores": true
-    },
-    {
-      "id": "arbusto_1",
-      "tipo": "arbusto",
-      "pos": [
-        372.0,
-        503.0
-      ],
-      "escala": 1.73,
-      "espejo": false,
+      "escala": 0.9,
+      "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "balde_1",
+      "tipo": "balde",
+      "pos": [
+        396.0,
+        516.0
+      ],
+      "escala": 0.93,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
       "id": "carretilla_2",
       "tipo": "carretilla",
       "pos": [
-        478.0,
-        570.0
+        488.0,
+        544.0
       ],
-      "escala": 1.8,
+      "escala": 0.95,
       "espejo": false,
       "reaccion": "rebotar",
       "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
-      "id": "gallinero_3",
-      "tipo": "gallinero",
-      "pos": [
-        599.0,
-        445.0
-      ],
-      "escala": 1.71,
-      "espejo": true,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "fardo_4",
+      "id": "fardo_3",
       "tipo": "fardo",
       "pos": [
-        675.0,
-        520.0
+        549.0,
+        442.0
       ],
-      "escala": 1.82,
-      "espejo": true,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "carpa_5",
-      "tipo": "carpa",
-      "pos": [
-        809.0,
-        570.0
-      ],
-      "escala": 1.92,
+      "escala": 0.88,
       "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "balde_6",
-      "tipo": "balde",
-      "pos": [
-        869.0,
-        443.0
-      ],
-      "escala": 1.9,
-      "espejo": false,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "cerca_7",
+      "id": "cerca_4",
       "tipo": "cerca",
       "pos": [
-        991.0,
-        518.0
+        639.0,
+        503.0
       ],
-      "escala": 1.6,
+      "escala": 0.93,
       "espejo": true,
       "reaccion": "rebotar",
       "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "gallinero_5",
+      "tipo": "gallinero",
+      "pos": [
+        703.0,
+        535.0
+      ],
+      "escala": 0.86,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbusto_6",
+      "tipo": "arbusto",
+      "pos": [
+        790.0,
+        455.0
+      ],
+      "escala": 0.86,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_7",
+      "tipo": "arbusto",
+      "pos": [
+        879.0,
+        517.0
+      ],
+      "escala": 0.84,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_8",
+      "tipo": "arbol",
+      "pos": [
+        941.0,
+        530.0
+      ],
+      "escala": 0.82,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
     },
     {
       "id": "nube_0",
       "tipo": "nube",
       "pos": [
-        714.0,
-        228.0
+        624.0,
+        195.0
       ],
-      "escala": 1.59,
+      "escala": 0.95,
       "reaccion": "puf",
       "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        884.0,
+        341.0
+      ],
+      "escala": 0.74,
+      "z": 531.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
     }
   ],
   "animales": [
@@ -166,7 +189,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 1.1,
       "nombre_voz": "voces/animalia/nombres/perrito.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            408.0,
+            439.0
+          ],
+          "tamano": 200.0,
+          "espejo": true,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            319.0,
+            239.0,
+            178.0,
+            200.0
+          ],
+          "detras_de": "fardo_3"
+        },
+        {
+          "pos": [
+            843.5,
+            532.0
+          ],
+          "tamano": 200.0,
+          "espejo": false,
+          "visible": 0.92,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            754.0,
+            332.0,
+            178.0,
+            200.0
+          ],
+          "detras_de": "gallinero_5"
+        },
+        {
+          "pos": [
+            507.5,
+            452.0
+          ],
+          "tamano": 200.0,
+          "espejo": true,
+          "visible": 0.88,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            419.0,
+            252.0,
+            178.0,
+            178.0
+          ],
+          "detras_de": "arbusto_6"
+        }
+      ]
     },
     {
       "id": "gatito",
@@ -183,7 +267,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 1.5,
       "nombre_voz": "voces/animalia/nombres/gatito.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            618.0,
+            413.5
+          ],
+          "tamano": 200.0,
+          "espejo": true,
+          "visible": 0.87,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            542.0,
+            214.0,
+            151.0,
+            200.0
+          ],
+          "detras_de": "arbol_8"
+        },
+        {
+          "pos": [
+            345.5,
+            500.0
+          ],
+          "tamano": 200.0,
+          "espejo": false,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            270.0,
+            300.0,
+            109.0,
+            200.0
+          ],
+          "detras_de": "cerca_4"
+        },
+        {
+          "pos": [
+            342.0,
+            541.0
+          ],
+          "tamano": 200.0,
+          "espejo": true,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            266.0,
+            341.0,
+            151.0,
+            200.0
+          ],
+          "detras_de": "carretilla_2"
+        }
+      ]
     },
     {
       "id": "vaca",
@@ -202,7 +347,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.6,
       "nombre_voz": "voces/animalia/nombres/vaca.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            396.0,
+            482.0
+          ],
+          "tamano": 240.0,
+          "espejo": true,
+          "visible": 0.86,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            264.0,
+            255.0,
+            264.0,
+            227.0
+          ],
+          "detras_de": "balde_1"
+        },
+        {
+          "pos": [
+            565.5,
+            452.0
+          ],
+          "tamano": 240.0,
+          "espejo": false,
+          "visible": 0.91,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            434.0,
+            225.0,
+            264.0,
+            227.0
+          ],
+          "detras_de": "arbusto_6"
+        },
+        {
+          "pos": [
+            869.5,
+            532.0
+          ],
+          "tamano": 240.0,
+          "espejo": false,
+          "visible": 0.92,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            767.0,
+            305.0,
+            235.0,
+            227.0
+          ],
+          "detras_de": "gallinero_5"
+        }
+      ]
     },
     {
       "id": "pato",
@@ -218,7 +424,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 1.3,
       "nombre_voz": "voces/animalia/nombres/pato.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            391.0,
+            439.0
+          ],
+          "tamano": 180.0,
+          "espejo": false,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            285.0,
+            301.0,
+            188.0,
+            138.0
+          ],
+          "detras_de": "fardo_3"
+        },
+        {
+          "pos": [
+            627.0,
+            541.0
+          ],
+          "tamano": 180.0,
+          "espejo": false,
+          "visible": 0.9,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            557.0,
+            403.0,
+            176.0,
+            138.0
+          ],
+          "detras_de": "carretilla_2"
+        },
+        {
+          "pos": [
+            853.5,
+            532.0
+          ],
+          "tamano": 180.0,
+          "espejo": true,
+          "visible": 0.93,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            783.0,
+            394.0,
+            176.0,
+            138.0
+          ],
+          "detras_de": "gallinero_5"
+        }
+      ]
     },
     {
       "id": "pollito",
@@ -233,7 +500,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 1.8,
       "nombre_voz": "voces/animalia/nombres/pollito.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            396.0,
+            482.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.84,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            312.0,
+            322.0,
+            168.0,
+            116.0
+          ],
+          "detras_de": "balde_1"
+        },
+        {
+          "pos": [
+            593.0,
+            452.0
+          ],
+          "tamano": 160.0,
+          "espejo": true,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            509.0,
+            292.0,
+            140.0,
+            160.0
+          ],
+          "detras_de": "arbusto_6"
+        },
+        {
+          "pos": [
+            1013.5,
+            526.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.91,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            958.0,
+            366.0,
+            140.0,
+            160.0
+          ],
+          "detras_de": "arbol_8"
+        }
+      ]
     },
     {
       "id": "caballo",
@@ -252,7 +580,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 0.8,
       "nombre_voz": "voces/animalia/nombres/caballo.wav",
-      "escondites": []
+      "escondites": [
+        {
+          "pos": [
+            389.5,
+            439.0
+          ],
+          "tamano": 260.0,
+          "espejo": true,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            266.0,
+            179.0,
+            246.0,
+            260.0
+          ],
+          "detras_de": "fardo_3"
+        },
+        {
+          "pos": [
+            390.5,
+            541.0
+          ],
+          "tamano": 260.0,
+          "espejo": false,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            267.0,
+            281.0,
+            246.0,
+            260.0
+          ],
+          "detras_de": "carretilla_2"
+        },
+        {
+          "pos": [
+            396.0,
+            482.0
+          ],
+          "tamano": 260.0,
+          "espejo": false,
+          "visible": 0.89,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            273.0,
+            222.0,
+            246.0,
+            260.0
+          ],
+          "detras_de": "balde_1"
+        }
+      ]
     },
     {
       "id": "huevito",
@@ -266,7 +655,68 @@
       "sonido": "sfx/ui/blup.ogg",
       "tono": 2.0,
       "nombre_voz": "voces/animalia/nombres/huevito.wav",
-      "escondites": [],
+      "escondites": [
+        {
+          "pos": [
+            884.0,
+            323.0
+          ],
+          "tamano": 140.0,
+          "espejo": true,
+          "visible": 0.91,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            832.0,
+            183.0,
+            103.0,
+            124.0
+          ],
+          "detras_de": "nido_0"
+        },
+        {
+          "pos": [
+            795.0,
+            383.5
+          ],
+          "tamano": 140.0,
+          "espejo": false,
+          "visible": 0.9,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            743.0,
+            244.0,
+            103.0,
+            140.0
+          ],
+          "detras_de": "arbol_8"
+        },
+        {
+          "pos": [
+            1023.0,
+            514.0
+          ],
+          "tamano": 140.0,
+          "espejo": false,
+          "visible": 0.91,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            971.0,
+            382.0,
+            103.0,
+            132.0
+          ],
+          "detras_de": "arbusto_7"
+        }
+      ],
       "marca_especial": "animalia_huevo_z1"
     }
   ],

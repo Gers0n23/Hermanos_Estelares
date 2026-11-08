@@ -270,7 +270,6 @@ func _v(perfil: String, clave: String, zi: int):
 
 func _generar(zi: int, perfil: String) -> void:
 	var zona: String = ZONAS[zi]
-	rng.seed = hash(zona + perfil) & 0x7fffffff
 	var W := float(_v(perfil, "ancho", zi))
 	var H := float(_v(perfil, "alto", zi))
 	var tam := float(_v(perfil, "tamano", zi))
@@ -281,16 +280,27 @@ func _generar(zi: int, perfil: String) -> void:
 	var secretos: Array = SECRETOS[perfil][zi]
 	var en_escena: Array = pool + senuelos + secretos
 	var n_piezas := maxi(int(_v(perfil, "objetos", zi)), n_obj + senuelos.size() + secretos.size() + 3)
-	var objetos := _componer(zona, perfil, zi, W, H, tam, n_piezas, int(_v(perfil, "abribles", zi)), int(_v(perfil, "dos_pasos", zi)))
-	var animales: Array = []
-	var aceptadas: Array = []  # {"zona": Rect2, "pieza"}
-	# Primero los que tienen menos piezas posibles (agua, arbol), despues el resto.
-	var orden := en_escena.duplicate()
-	orden.sort_custom(func(a, b) -> bool: return _opciones(a, objetos) < _opciones(b, objetos))
+	_visible_actual = visible
+	var objetos: Array = []
 	var por_id := {}
-	for id in orden:
-		var ent := _escondites_para(id, objetos, tam, visible, W, H, perfil, zi, aceptadas)
-		por_id[id] = ent
+	# Composicion con semilla fija; si algun animal queda con menos de 2 escondites se prueba la siguiente
+	# semilla (siempre la misma secuencia: el resultado es reproducible).
+	for intento in 12:
+		rng.seed = hash("%s%s%d" % [zona, perfil, intento]) & 0x7fffffff
+		_rechazos.clear()
+		objetos = _componer(zona, perfil, zi, W, H, tam, n_piezas + intento / 3, int(_v(perfil, "abribles", zi)), int(_v(perfil, "dos_pasos", zi)))
+		var aceptadas: Array = []
+		var orden := en_escena.duplicate()
+		orden.sort_custom(func(a, b) -> bool: return _opciones(a, objetos) < _opciones(b, objetos))
+		por_id = {}
+		var ok := true
+		for id in orden:
+			por_id[id] = _escondites_para(id, objetos, tam, visible, W, H, perfil, zi, aceptadas)
+			if por_id[id].size() < 2:
+				ok = false
+		if ok:
+			break
+	var animales: Array = []
 	for id in en_escena:
 		var d: Dictionary = CAT[id]
 		var animal := {"id": id, "nombre": d["palabra"].capitalize(), "palabra": d["palabra"], "aspecto": d["aspecto"],
@@ -311,8 +321,7 @@ func _generar(zi: int, perfil: String) -> void:
 			_tsv.append("%s\t%s" % [voz, texto])
 		animales.append(animal)
 		if por_id[id].size() < 2:
-			print(_rechazos.keys().slice(0, 12))
-			_rechazos.clear()
+			print("  rechazos: ", _rechazos)
 			push_error("generar: %s/%s: %s solo tiene %d escondites" % [zona, perfil, id, por_id[id].size()])
 			_fallas += 1
 	var par := float(_v(perfil, "par", zi))
@@ -403,6 +412,9 @@ const CIELO_TIPOS := ["nube"]
 func _agua_rect(zona: String, W: float, H: float) -> Rect2:
 	var suelo := _suelo_y(H)
 	if zona == "zona2_laguna":
+		if W <= 1280:
+			# Maxi: una pantalla; la laguna atras y las piezas de la orilla delante.
+			return Rect2(W * 0.25, suelo + 22, W * 0.5, 110)
 		return Rect2(W * 0.2, suelo + 30, W * 0.6, H - suelo - 170)
 	if zona == "zona5_valle":
 		return Rect2(W * 0.62, suelo + 40, W * 0.28, H - suelo - 190)
@@ -425,9 +437,14 @@ func _fondo(zona: String, W: float, H: float) -> Dictionary:
 	return f
 
 
+var _visible_actual := 0.5
+
+
+## Escala de una pieza: proporcional al animal del perfil y mas grande cuanto mas escondido debe quedar
+## (Maxi 80 % visible: piezas bajitas; Sofia 20 %: piezas que tapan casi todo).
 func _escala(tipo: String, tam: float, H: float) -> float:
 	var nominal: Vector2 = G.TAMANO_NOMINAL.get(tipo, Vector2(160, 120))
-	var s := tam / 120.0 * float(FACTOR.get(tipo, 1.0)) * rng.randf_range(0.95, 1.12)
+	var s := tam / 120.0 * (1.12 - 0.75 * _visible_actual) * float(FACTOR.get(tipo, 1.0)) * rng.randf_range(0.95, 1.12)
 	if tipo == "volcan":
 		s = clampf(H * 0.42 / nominal.y, 0.6, 1.2)
 	# Nada mas alto que el 62 % de la escena.
@@ -440,7 +457,8 @@ func _componer(zona: String, perfil: String, zi: int, W: float, H: float, tam: f
 	var suelo := _suelo_y(H)
 	var agua := _agua_rect(zona, W, H)
 	var max_y := H - 150.0
-	var margen_x := 250.0
+	# Margen lateral: lejos de Toby y de la columna del sol (Maxi no recorre: su pantalla es la escena).
+	var margen_x := 300.0 if W <= 1280 else 260.0
 	var tipos: Array = []
 	for i in n_abribles:
 		tipos.append({"tipo": piezas["abribles"][i % piezas["abribles"].size()], "abrible": true, "pasos": 2 if i < n_dos else 1})
@@ -459,7 +477,7 @@ func _componer(zona: String, perfil: String, zi: int, W: float, H: float, tam: f
 		tipos = tipos.filter(func(t) -> bool: return not t["tipo"] in ["manguera", "camion"]) + [{"tipo": "arbusto"}]
 	_mezclar(tipos)
 	# Las de suelo, repartidas a lo ancho en filas (atras / medio / adelante), saltando el agua.
-	var filas: Array = [suelo + 70, suelo + 130, max_y - 6] if H <= 720 else [suelo + 80, suelo + 170, suelo + 260, suelo + 350, max_y - 10]
+	var filas: Array = [suelo + 70, suelo + 125, max_y - 30] if H <= 720 else [suelo + 80, suelo + 170, suelo + 260, suelo + 350, max_y - 10]
 	var cuantos := tipos.size()
 	var x_disp: Array = []
 	var paso := (W - 2.0 * margen_x) / maxf(1.0, cuantos)
@@ -592,8 +610,8 @@ func _anclas(obj: Dictionary, id: String, t: float) -> Array:
 			salida.append({"lado": "arriba", "ancla": pos + Vector2(0, -6 * s) + Vector2(0, t * 0.6), "dir": Vector2(0, -1), "max": t})
 		_:
 			var base := pos + Vector2(0, -3)
-			salida.append({"lado": "izq", "ancla": base, "dir": Vector2(-1, 0), "max": caja.size.x * 0.5 + t * 0.6})
-			salida.append({"lado": "der", "ancla": base, "dir": Vector2(1, 0), "max": caja.size.x * 0.5 + t * 0.6})
+			salida.append({"lado": "izq", "ancla": base, "dir": Vector2(-1, 0), "max": caja.size.x * 0.5 + t * 0.9})
+			salida.append({"lado": "der", "ancla": base, "dir": Vector2(1, 0), "max": caja.size.x * 0.5 + t * 0.9})
 			# Por arriba solo si los pies siguen tapados (nadie flota).
 			salida.append({"lado": "arriba", "ancla": base, "dir": Vector2(0, -1), "max": caja.size.y * 0.4})
 	_mezclar(salida)
@@ -661,6 +679,7 @@ func _probar(id: String, obj: Dictionary, ancla: Dictionary, t: float, objetivo:
 		m = _medir(id, pie, t, espejo, cobs)
 	var f := float(m["fraccion"])
 	if f < vis_min + 0.01:
+		_rechazos["poco"] = _rechazos.get("poco", 0) + 1
 		return {}
 	var minimo := 160.0 if t >= 150 else (96.0 if t >= 95 else 64.0)
 	var zona := G.zona_toque(m, m["partes"], 24.0, minimo)
@@ -671,7 +690,7 @@ func _probar(id: String, obj: Dictionary, ancla: Dictionary, t: float, objetivo:
 		_rechazos["fuera"] = _rechazos.get("fuera", 0) + 1
 		return {}
 	if zona.end.y > H - 130.0 or zona.position.x < 140 or zona.position.y < 112 or zona.end.x > W - 130:
-		_rechazos["ui:%d,%d,%d,%d" % [zona.position.x, zona.position.y, zona.end.x, zona.end.y]] = 1
+		_rechazos["ui"] = _rechazos.get("ui", 0) + 1
 		return {}
 	if zona.position.x < 230 and zona.end.y > 380:
 		_rechazos["toby"] = _rechazos.get("toby", 0) + 1
@@ -805,6 +824,7 @@ func _generar_equipo() -> void:
 	var tam := 110.0
 	var vis := 0.5
 	var pool := ["gatito", "pony", "perrito", "vaca", "gerbo", "pato"]
+	_visible_actual = vis
 	var objetos := _componer(zona, "brote", 0, W, H, tam, 15, 2, 0)
 	var aceptadas: Array = []
 	var animales: Array = []
