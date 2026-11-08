@@ -252,7 +252,8 @@ static func dibujar_pieza(lienzo, obj: Dictionary, abierto: float, anim: Diction
 	var trazo := clampf(3.2 * escala, 2.2, 5.0)
 	# Sombra en el suelo (no tapa: es mas clara que el fondo y va debajo).
 	if not tipo in ["nube", "nido", "nenufar", "volcan"]:
-		var ancho := G.TAMANO_NOMINAL.get(tipo, Vector2(160, 100)).x * escala * 0.5
+		var nominal: Vector2 = G.TAMANO_NOMINAL.get(tipo, Vector2(160, 100))
+		var ancho := nominal.x * escala * 0.5
 		lienzo.draw_colored_polygon(elipse(pos + Vector2(0, 2), Vector2(ancho, ancho * 0.16), 20), Color(CONTORNO, 0.16))
 	_detalles_atras(lienzo, tipo, xf, abierto, t)
 	masa(lienzo, polis, colores, trazo)

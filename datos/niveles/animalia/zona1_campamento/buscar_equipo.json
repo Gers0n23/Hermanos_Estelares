@@ -1,0 +1,910 @@
+{
+  "id_nivel": "animalia_z1_buscar_equipo",
+  "motor": "buscar",
+  "modo_juego": "equipo",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "nota": "Escondite animal en equipo (motor-buscar.md §12.2; HE-118). Escena compartida de 2560 x 720 con 6 objetivos favoritos de los tres; lo que encuentra uno queda para todos. Sin sol: el reloj es el Coleccionauta. PROVISIONAL: calibrar pasos_rival con el simulador de equipo.",
+  "escena": {
+    "tamano": [
+      2560.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#8FD3F4",
+        "#E6F7FF"
+      ],
+      "lejos": [
+        {
+          "y": 330.0,
+          "color": "#B5E3A1",
+          "amp": 50,
+          "ondas": 2.5
+        },
+        {
+          "y": 360.0,
+          "color": "#9ED68A",
+          "amp": 30,
+          "ondas": 4,
+          "fase": 1.0
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#8CCB6A"
+      }
+    }
+  },
+  "objetos": [
+    {
+      "id": "balde_0",
+      "tipo": "balde",
+      "pos": [
+        344.0,
+        445.0
+      ],
+      "escala": 0.97,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "regadera_1",
+      "tipo": "regadera",
+      "pos": [
+        444.0,
+        507.0
+      ],
+      "escala": 1.05,
+      "espejo": true,
+      "reaccion": "chorro",
+      "sonido": "sfx/ui/fuuush.ogg"
+    },
+    {
+      "id": "arbol_2",
+      "tipo": "arbol",
+      "pos": [
+        620.0,
+        570.0
+      ],
+      "escala": 0.95,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "carpa_3",
+      "tipo": "carpa",
+      "pos": [
+        762.0,
+        449.0
+      ],
+      "escala": 1.01,
+      "espejo": false,
+      "escondite": true,
+      "pasos": 1,
+      "reaccion": "abrir",
+      "sonido": "sfx/ui/abrir.ogg"
+    },
+    {
+      "id": "arbusto_4",
+      "tipo": "arbusto",
+      "pos": [
+        917.0,
+        513.0
+      ],
+      "escala": 0.99,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "fardo_5",
+      "tipo": "fardo",
+      "pos": [
+        1084.0,
+        554.0
+      ],
+      "escala": 0.93,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "carretilla_6",
+      "tipo": "carretilla",
+      "pos": [
+        1180.0,
+        453.0
+      ],
+      "escala": 0.93,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbusto_7",
+      "tipo": "arbusto",
+      "pos": [
+        1345.0,
+        511.0
+      ],
+      "escala": 1.01,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "fardo_8",
+      "tipo": "fardo",
+      "pos": [
+        1474.0,
+        570.0
+      ],
+      "escala": 1.07,
+      "espejo": true,
+      "escondite": true,
+      "pasos": 1,
+      "reaccion": "abrir",
+      "sonido": "sfx/ui/abrir.ogg"
+    },
+    {
+      "id": "gallinero_9",
+      "tipo": "gallinero",
+      "pos": [
+        1669.0,
+        447.0
+      ],
+      "escala": 0.9,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "roca_10",
+      "tipo": "roca",
+      "pos": [
+        1817.0,
+        519.0
+      ],
+      "escala": 0.91,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbusto_11",
+      "tipo": "arbusto",
+      "pos": [
+        1979.0,
+        570.0
+      ],
+      "escala": 1.0,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "cerca_12",
+      "tipo": "cerca",
+      "pos": [
+        2090.0,
+        451.0
+      ],
+      "escala": 0.89,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "carpa_13",
+      "tipo": "carpa",
+      "pos": [
+        2243.0,
+        507.0
+      ],
+      "escala": 0.92,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        840.0,
+        216.0
+      ],
+      "escala": 1.01,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nube_1",
+      "tipo": "nube",
+      "pos": [
+        1792.0,
+        207.0
+      ],
+      "escala": 0.96,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        554.0,
+        352.0
+      ],
+      "escala": 0.86,
+      "z": 571.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "gatito",
+      "nombre": "Gatito",
+      "palabra": "GATITO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#F4A259",
+        "color2": "#FFE8CC",
+        "orejas": "punta",
+        "cola": "larga",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/gatito.wav",
+      "escondites": [
+        {
+          "pos": [
+            1474.0,
+            563.5
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 1.0,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1432.0,
+            454.0,
+            83.0,
+            110.0
+          ],
+          "dentro_de": "fardo_8"
+        },
+        {
+          "pos": [
+            762.0,
+            443.0
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 0.63,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            720.0,
+            333.0,
+            83.0,
+            110.0
+          ],
+          "dentro_de": "carpa_3"
+        },
+        {
+          "pos": [
+            988.5,
+            551.0
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            947.0,
+            447.0,
+            46.0,
+            104.0
+          ],
+          "detras_de": "fardo_5"
+        }
+      ],
+      "pista": {
+        "texto": "Un gatito naranjo con bigotes",
+        "voz": ""
+      }
+    },
+    {
+      "id": "pony",
+      "nombre": "Pony",
+      "palabra": "PONY",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#F7A8C8",
+        "color2": "#FFE3EE",
+        "orejas": "caballo",
+        "hocico": "largo",
+        "cuello": 0.35,
+        "crin": true,
+        "color_crin": "#B57EDC"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.2,
+      "nombre_voz": "voces/animalia/nombres/pony.wav",
+      "escondites": [
+        {
+          "pos": [
+            762.0,
+            443.0
+          ],
+          "tamano": 121.0,
+          "espejo": false,
+          "visible": 0.72,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            712.0,
+            322.0,
+            113.0,
+            121.0
+          ],
+          "dentro_de": "carpa_3"
+        },
+        {
+          "pos": [
+            1474.0,
+            563.5
+          ],
+          "tamano": 121.0,
+          "espejo": true,
+          "visible": 1.0,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1410.0,
+            443.0,
+            127.0,
+            121.0
+          ],
+          "dentro_de": "fardo_8"
+        },
+        {
+          "pos": [
+            804.0,
+            510.0
+          ],
+          "tamano": 121.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            740.0,
+            429.0,
+            92.0,
+            81.0
+          ],
+          "detras_de": "arbusto_4"
+        }
+      ],
+      "pista": {
+        "texto": "El pony rosado",
+        "voz": ""
+      }
+    },
+    {
+      "id": "perrito",
+      "nombre": "Perrito",
+      "palabra": "PERRITO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#D9A066",
+        "color2": "#FFF1DC",
+        "orejas": "caidas",
+        "cola": "larga"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.1,
+      "nombre_voz": "voces/animalia/nombres/perrito.wav",
+      "escondites": [
+        {
+          "pos": [
+            1474.0,
+            563.5
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 1.0,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1425.0,
+            454.0,
+            98.0,
+            110.0
+          ],
+          "dentro_de": "fardo_8"
+        },
+        {
+          "pos": [
+            762.0,
+            443.0
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 0.64,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            718.0,
+            333.0,
+            87.0,
+            110.0
+          ],
+          "dentro_de": "carpa_3"
+        },
+        {
+          "pos": [
+            1560.0,
+            444.0
+          ],
+          "tamano": 110.0,
+          "espejo": true,
+          "visible": 0.66,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1511.0,
+            334.0,
+            71.0,
+            104.0
+          ],
+          "detras_de": "gallinero_9"
+        }
+      ],
+      "pista": {
+        "texto": "Un perrito de orejas caídas",
+        "voz": ""
+      }
+    },
+    {
+      "id": "vaca",
+      "nombre": "Vaca",
+      "palabra": "VACA",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#FFFFFF",
+        "color2": "#FFC2D1",
+        "orejas": "caballo",
+        "cuernos": "chicos",
+        "patron": "manchas",
+        "color_patron": "#3B3F55",
+        "hocico": "chato"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.6,
+      "nombre_voz": "voces/animalia/nombres/vaca.wav",
+      "escondites": [
+        {
+          "pos": [
+            2090.0,
+            418.5
+          ],
+          "tamano": 132.0,
+          "espejo": true,
+          "visible": 0.61,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2017.0,
+            294.0,
+            121.0,
+            117.0
+          ],
+          "detras_de": "cerca_12"
+        },
+        {
+          "pos": [
+            795.5,
+            510.0
+          ],
+          "tamano": 132.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            723.0,
+            385.0,
+            129.0,
+            125.0
+          ],
+          "detras_de": "arbusto_4"
+        },
+        {
+          "pos": [
+            1559.0,
+            444.0
+          ],
+          "tamano": 132.0,
+          "espejo": true,
+          "visible": 0.68,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1486.0,
+            319.0,
+            97.0,
+            117.0
+          ],
+          "detras_de": "gallinero_9"
+        }
+      ],
+      "pista": {
+        "texto": "La de manchas negras que da leche",
+        "voz": ""
+      }
+    },
+    {
+      "id": "gerbo",
+      "nombre": "Gerbo",
+      "palabra": "GERBO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#E3B27A",
+        "color2": "#FFF1DC",
+        "orejas": "redondas",
+        "cola": "larga"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/gerbo.wav",
+      "escondites": [
+        {
+          "pos": [
+            1078.5,
+            450.0
+          ],
+          "tamano": 88.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1042.0,
+            362.0,
+            68.0,
+            73.0
+          ],
+          "detras_de": "carretilla_6"
+        },
+        {
+          "pos": [
+            970.0,
+            551.0
+          ],
+          "tamano": 88.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            934.0,
+            463.0,
+            56.0,
+            88.0
+          ],
+          "detras_de": "fardo_5"
+        },
+        {
+          "pos": [
+            382.5,
+            442.0
+          ],
+          "tamano": 88.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            367.0,
+            354.0,
+            52.0,
+            88.0
+          ],
+          "detras_de": "balde_0"
+        }
+      ],
+      "pista": {
+        "texto": "Un ratoncito dorado de cola larga",
+        "voz": ""
+      }
+    },
+    {
+      "id": "pato",
+      "nombre": "Pato",
+      "palabra": "PATO",
+      "aspecto": {
+        "forma": "nadador",
+        "color": "#FFFFFF",
+        "color3": "#FF9F1C",
+        "pico": "pato",
+        "cuello": 0.2
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.3,
+      "nombre_voz": "voces/animalia/nombres/pato.wav",
+      "escondites": [
+        {
+          "pos": [
+            1740.0,
+            516.0
+          ],
+          "tamano": 99.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1682.0,
+            440.0,
+            84.0,
+            76.0
+          ],
+          "detras_de": "roca_10"
+        },
+        {
+          "pos": [
+            414.0,
+            442.0
+          ],
+          "tamano": 99.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            382.0,
+            370.0,
+            91.0,
+            72.0
+          ],
+          "detras_de": "balde_0"
+        },
+        {
+          "pos": [
+            385.0,
+            504.0
+          ],
+          "tamano": 99.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            327.0,
+            428.0,
+            91.0,
+            76.0
+          ],
+          "detras_de": "regadera_1"
+        }
+      ],
+      "pista": {
+        "texto": "Un pato blanco de pico naranjo",
+        "voz": ""
+      }
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            1951.5,
+            448.0
+          ],
+          "tamano": 77.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1923.0,
+            371.0,
+            54.0,
+            60.0
+          ],
+          "detras_de": "cerca_12"
+        },
+        {
+          "pos": [
+            748.5,
+            358.0
+          ],
+          "tamano": 77.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            726.0,
+            281.0,
+            51.0,
+            73.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            1730.0,
+            516.0
+          ],
+          "tamano": 77.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1702.0,
+            439.0,
+            47.0,
+            77.0
+          ],
+          "detras_de": "roca_10"
+        }
+      ],
+      "pista": {
+        "texto": "",
+        "voz": ""
+      }
+    }
+  ],
+  "objetivos": [
+    "gatito",
+    "pony",
+    "perrito",
+    "vaca",
+    "gerbo",
+    "pato"
+  ],
+  "senuelos": [],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "uno",
+  "mostrar_palabra": true,
+  "visible_min": 0.5,
+  "tamano_animal": 110.0,
+  "zona_toque_min_px": 96,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": true,
+  "tiempo_par_s": null,
+  "sol": null,
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "maxi_mueve_rival": false,
+    "semilla_auto_s": 20,
+    "aciertos_max_turno": {
+      "semilla": 1,
+      "brote": 1,
+      "estrella": 2
+    },
+    "segundos_por_turno": {
+      "brote": 40,
+      "estrella": 35
+    },
+    "composiciones": {
+      "maxi+nicole+sofia": {
+        "pasos_rival": 6
+      },
+      "maxi+nicole": {
+        "pasos_rival": 6
+      },
+      "maxi+sofia": {
+        "pasos_rival": 5
+      },
+      "nicole+sofia": {
+        "pasos_rival": 5
+      }
+    }
+  },
+  "lineas_voz": {
+    "busca": {
+      "gatito": "voces/animalia/buscar/brote/busca_gatito.wav",
+      "pony": "voces/animalia/buscar/brote/busca_pony.wav",
+      "perrito": "voces/animalia/buscar/brote/busca_perrito.wav",
+      "vaca": "voces/animalia/buscar/brote/busca_vaca.wav",
+      "gerbo": "voces/animalia/buscar/brote/busca_gerbo.wav",
+      "pato": "voces/animalia/buscar/brote/busca_pato.wav"
+    },
+    "victoria_equipo": "voces/animalia/buscar/equipo/victoria.wav",
+    "derrota_gag_equipo": "PENDIENTE",
+    "logro_comun": "PENDIENTE",
+    "le_toca": {
+      "maxi": [
+        "voces/nucleo/equipo/le_toca_maxi_01.wav",
+        "voces/nucleo/equipo/le_toca_maxi_02.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/le_toca_nicole_01.wav",
+        "voces/nucleo/equipo/le_toca_nicole_02.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/le_toca_sofia_01.wav",
+        "voces/nucleo/equipo/le_toca_sofia_02.wav"
+      ]
+    },
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav"
+  }
+}

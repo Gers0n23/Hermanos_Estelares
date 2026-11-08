@@ -583,6 +583,7 @@ func _al_encontrar(id: String, puntos: int, racha: int, ojo: bool) -> void:
 	var animal: Dictionary = logica.animales.get(id, {})
 	reproducir_sfx(str(animal.get("sonido", SFX_ANIMAL)), float(animal.get("tono", 1.0)), -2.0)
 	_decir(str(animal.get("nombre_voz", "")))
+	_marcar_especial(id)
 	_toby_salto = 1.0
 	_t_quieto = 0.0
 	_ayuda_paso = 0
@@ -620,7 +621,16 @@ func _al_secreto(id: String) -> void:
 	reproducir_sfx(str(animal.get("sonido", SFX_ANIMAL)), float(animal.get("tono", 1.4)))
 	_decir(_linea_voz("secreto", id), true)
 	_estallido(logica.medida(id)["centro"], 10, true)
+	_marcar_especial(id)
 	secreto_encontrado.emit(id)
+
+
+## Datos (HE-120): un animal con `marca_especial` (el huevito de Dinito) deja esa marca en el hermano que lo
+## toco; el mapa la lee con `Progreso.especial_conocido`. Sin guardado (prueba) o en equipo no marca nada.
+func _marcar_especial(id: String) -> void:
+	var marca := str(logica.animales.get(id, {}).get("marca_especial", ""))
+	if marca != "" and turnos == null:
+		marcar_presentacion_vista(marca)
 
 
 func _al_objeto(id: String) -> void:

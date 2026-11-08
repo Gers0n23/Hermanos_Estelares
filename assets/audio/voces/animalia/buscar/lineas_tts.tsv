@@ -1,0 +1,228 @@
+# Voces del «Escondite animal» (motor buscar, HE-118). Generado por herramientas/generar_niveles_buscar.gd.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz (herramientas/voces_personajes/<id>/).
+# PENDIENTE: no existe herramientas/voces_personajes/toby/ (guionista HE-112). El juego funciona sin estos audios.
+# Regenerar: python herramientas/generar_voces_fal.py --lista assets/audio/voces/animalia/buscar/lineas_tts.tsv
+# personaje: toby
+voces/animalia/buscar/semilla/intro.wav	¡Hola, Maxi! Mis amigos se escondieron. ¿Me ayudas a encontrarlos?
+voces/animalia/buscar/semilla/instruccion.wav	¡Toca a los animalitos escondidos!
+voces/animalia/buscar/semilla/otra_vez.wav	¡Se escondieron otra vez! ¡A buscar!
+voces/animalia/buscar/semilla/derrota_gag.wav	¡Se puso el sol! ¡Cosquillas para Toby! ¡Otra vez!
+voces/animalia/buscar/semilla/regalo.wav	¡Snif snif! ¡Encontré uno con mi nariz!
+voces/animalia/buscar/semilla/ayuda_fuerte.wav	¡Ahora se esconden mal a propósito! ¡Mira, mira!
+voces/animalia/buscar/semilla/z1_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/semilla/victoria_01.wav	¡Los encontraste a todos! ¡Foto de grupo!
+voces/animalia/buscar/semilla/victoria_02.wav	¡Qué ojo de explorador! ¡Clic!
+voces/animalia/buscar/semilla/llama_perrito.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_gatito.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_vaca.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_pato.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_pollito.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_caballo.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/secretos/huevito.wav	¡Pío pío! ¡Un huevito de dino!
+voces/animalia/nombres/perrito.wav	¡Perrito!
+voces/animalia/nombres/gatito.wav	¡Gatito!
+voces/animalia/nombres/vaca.wav	¡Vaca!
+voces/animalia/nombres/pato.wav	¡Pato!
+voces/animalia/nombres/pollito.wav	¡Pollito!
+voces/animalia/nombres/caballo.wav	¡Caballo!
+voces/animalia/nombres/huevito.wav	¡Huevito!
+voces/animalia/buscar/brote/intro.wav	¡Hola, Nicole! Mis amigos se escondieron. ¡Busquemos de a uno!
+voces/animalia/buscar/brote/instruccion.wav	Mira la tarjeta: ¡encuentra a ese amigo!
+voces/animalia/buscar/brote/ya_encontrado.wav	¡Ese ya lo encontraste!
+voces/animalia/buscar/brote/derrota_gag.wav	¡Se puso el sol! ¡Aquí estábamos! ¿Otra vez?
+voces/animalia/buscar/brote/regalo.wav	¡Snif snif! ¡Te encontré uno de regalo!
+voces/animalia/buscar/brote/record.wav	¡Nuevo récord, Nicole!
+voces/animalia/buscar/brote/primer_record.wav	¡Tu primer récord!
+voces/animalia/buscar/brote/descansar.wav	¿Quieres descansar un ratito? Puedes volver cuando quieras.
+voces/animalia/buscar/brote/z1_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/brote/victoria_01.wav	¡Los encontraste a todos! ¡Foto de grupo!
+voces/animalia/buscar/brote/victoria_02.wav	¡Qué ojo de explorador! ¡Clic!
+voces/animalia/buscar/brote/busca_gatito.wav	¡Busca al gatito!
+voces/animalia/buscar/brote/busca_pony.wav	¡Busca al pony!
+voces/animalia/buscar/brote/busca_perrito.wav	¡Busca al perrito!
+voces/animalia/buscar/brote/busca_caballo.wav	¡Busca al caballo!
+voces/animalia/buscar/brote/busca_pato.wav	¡Busca al pato!
+voces/animalia/buscar/brote/busca_pollito.wav	¡Busca al pollito!
+voces/animalia/nombres/pony.wav	¡Pony!
+voces/animalia/buscar/estrella/z1_pista_hermanito_toby.wav	Tiene las orejas como Toby, pero no lleva casco
+voces/animalia/buscar/estrella/z1_pista_gatito.wav	Un gatito naranjo con bigotes
+voces/animalia/buscar/estrella/z1_pista_gerbo.wav	Un ratoncito dorado de cola larga
+voces/animalia/buscar/estrella/z1_pista_pony.wav	El pony rosado
+voces/animalia/buscar/estrella/z1_pista_cuy.wav	Un cuy café y blanco
+voces/animalia/buscar/estrella/z1_pista_conejo.wav	El de orejas muy largas
+voces/animalia/buscar/estrella/z1_pista_pollito.wav	Un pollito amarillo
+voces/animalia/buscar/estrella/z1_pista_cabrita.wav	Una cabrita con cuernitos
+voces/animalia/buscar/estrella/intro.wav	¡Hola, Sofía! Lee las pistas y encuentra a cada animal antes de que se ponga el sol.
+voces/animalia/buscar/estrella/instruccion.wav	Lee la tarjeta: ¿quién es?
+voces/animalia/buscar/estrella/derrota_gag.wav	¡Se puso el sol! ¡Aquí estábamos todos!
+voces/animalia/buscar/estrella/regalo.wav	¡Snif snif! Mi nariz encontró uno.
+voces/animalia/buscar/estrella/pista_usada.wav	¡Snif snif! Por aquí huele a amigo...
+voces/animalia/buscar/estrella/record.wav	¡Nuevo récord, Sofía!
+voces/animalia/buscar/estrella/primer_record.wav	¡Tu primer récord!
+voces/animalia/buscar/estrella/descansar.wav	¿Descansamos un poco? Lo que encontraste queda guardado.
+voces/animalia/buscar/estrella/presenta_lupa.wav	¡Mira mi lupa! Tócala y después toca donde quieras mirar de cerca.
+voces/animalia/buscar/estrella/presenta_radar.wav	Si te cuesta, toca mi antena: ¡mi nariz es un radar!
+voces/animalia/buscar/estrella/z1_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/estrella/victoria_01.wav	¡Los encontraste a todos! ¡Foto de grupo!
+voces/animalia/buscar/estrella/victoria_02.wav	¡Qué ojo de explorador! ¡Clic!
+voces/animalia/nombres/hermanito_toby.wav	¡Hermanito!
+voces/animalia/nombres/gerbo.wav	¡Gerbo!
+voces/animalia/nombres/cuy.wav	¡Cuy!
+voces/animalia/nombres/conejo.wav	¡Conejo!
+voces/animalia/nombres/cabrita.wav	¡Cabrita!
+voces/animalia/buscar/semilla/z2_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/semilla/llama_patito.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_hipopotamo.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_tortuga.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_pez.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_lobo_marino.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_perrito_bombero.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/nombres/patito.wav	¡Patito!
+voces/animalia/nombres/hipopotamo.wav	¡Hipopótamo!
+voces/animalia/nombres/tortuga.wav	¡Tortuga!
+voces/animalia/nombres/pez.wav	¡Pez!
+voces/animalia/nombres/lobo_marino.wav	¡Lobo Marino!
+voces/animalia/nombres/perrito_bombero.wav	¡Bombero!
+voces/animalia/buscar/brote/z2_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/brote/busca_patito.wav	¡Busca al patito!
+voces/animalia/buscar/brote/busca_flamenco.wav	¡Busca al flamenco!
+voces/animalia/buscar/brote/busca_cisne.wav	¡Busca al cisne!
+voces/animalia/buscar/brote/busca_hipopotamo.wav	¡Busca al hipopótamo!
+voces/animalia/nombres/flamenco.wav	¡Flamenco!
+voces/animalia/nombres/cisne.wav	¡Cisne!
+voces/animalia/buscar/estrella/z2_pista_pinguino.wav	El pájaro que no vuela y nada
+voces/animalia/buscar/estrella/z2_pista_lobo_marino.wav	El que aplaude con sus aletas
+voces/animalia/buscar/estrella/z2_pista_cisne.wav	El cisne de cuello negro
+voces/animalia/buscar/estrella/z2_pista_flamenco.wav	El pájaro rosado de patas largas
+voces/animalia/buscar/estrella/z2_pista_huillin.wav	Una nutria café de Chile
+voces/animalia/buscar/estrella/z2_pista_coipo.wav	Un roedor de dientes naranjos
+voces/animalia/buscar/estrella/z2_pista_pato.wav	Un pato blanco de pico naranjo
+voces/animalia/buscar/estrella/z2_pista_garza.wav	Un pájaro blanco de patas largas
+voces/animalia/buscar/estrella/z2_pista_tortuga.wav	La que lleva su casa en la espalda
+voces/animalia/buscar/estrella/z2_pista_gerbo.wav	Un ratoncito dorado de cola larga
+voces/animalia/buscar/estrella/z2_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/senuelos/ganso.wav	¡Soy el ganso, no el cisne!
+voces/animalia/nombres/pinguino.wav	¡Pingüino!
+voces/animalia/nombres/huillin.wav	¡Huillín!
+voces/animalia/nombres/coipo.wav	¡Coipo!
+voces/animalia/nombres/garza.wav	¡Garza!
+voces/animalia/nombres/ganso.wav	¡Ganso!
+voces/animalia/buscar/semilla/z3_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/semilla/llama_elefante.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_cebra.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_jirafa.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_oveja.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_triceratops.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/nombres/elefante.wav	¡Elefante!
+voces/animalia/nombres/cebra.wav	¡Cebra!
+voces/animalia/nombres/jirafa.wav	¡Jirafa!
+voces/animalia/nombres/oveja.wav	¡Oveja!
+voces/animalia/nombres/triceratops.wav	¡Trice!
+voces/animalia/buscar/brote/z3_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/brote/busca_jirafa.wav	¡Busca a la jirafa!
+voces/animalia/buscar/brote/busca_jirafita.wav	¡Busca a la jirafita!
+voces/animalia/buscar/brote/busca_cebra.wav	¡Busca a la cebra!
+voces/animalia/buscar/brote/busca_elefante.wav	¡Busca al elefante!
+voces/animalia/buscar/brote/busca_oveja.wav	¡Busca a la oveja!
+voces/animalia/nombres/jirafita.wav	¡Jirafita!
+voces/animalia/buscar/estrella/z3_pista_huemul.wav	Ciervo con cuernos, café y de Chile
+voces/animalia/buscar/estrella/z3_pista_pudu.wav	Ciervo chiquito, cuernitos cortos
+voces/animalia/buscar/estrella/z3_pista_guanaco.wav	Cuello largo, panza blanca y escupe
+voces/animalia/buscar/estrella/z3_pista_alpaca.wav	Lana esponjosa, cuello largo y chiquita
+voces/animalia/buscar/estrella/z3_pista_nandu.wav	Grande, no vuela y corre muy rápido
+voces/animalia/buscar/estrella/z3_pista_cebra.wav	Rayas blancas y negras y crin
+voces/animalia/buscar/estrella/z3_pista_jirafa.wav	Cuello larguísimo y manchas
+voces/animalia/buscar/estrella/z3_pista_caballo.wav	Crin larga, cascos y relincha
+voces/animalia/buscar/estrella/z3_pista_pony.wav	Rosado, con crin morada y chiquito
+voces/animalia/buscar/estrella/z3_pista_vizcacha.wav	Orejas largas, cola enrulada y en las rocas
+voces/animalia/buscar/estrella/z3_pista_gerbo.wav	Dorado, cola larga y orejas redondas
+voces/animalia/buscar/estrella/z3_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/senuelos/llama.wav	¡Soy la llama, no la alpaca!
+voces/animalia/buscar/senuelos/caballo_pijama.wav	¡Es mi pijama, no soy cebra!
+voces/animalia/nombres/huemul.wav	¡Huemul!
+voces/animalia/nombres/pudu.wav	¡Pudú!
+voces/animalia/nombres/guanaco.wav	¡Guanaco!
+voces/animalia/nombres/alpaca.wav	¡Alpaca!
+voces/animalia/nombres/nandu.wav	¡Ñandú!
+voces/animalia/nombres/vizcacha.wav	¡Vizcacha!
+voces/animalia/nombres/llama.wav	¡Llama!
+voces/animalia/nombres/caballo_pijama.wav	¡Caballo!
+voces/animalia/buscar/semilla/z4_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/semilla/llama_mono.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_tucan.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_perezoso.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_buho.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_loro.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_braquiosaurio.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/nombres/mono.wav	¡Mono!
+voces/animalia/nombres/tucan.wav	¡Tucán!
+voces/animalia/nombres/perezoso.wav	¡Perezoso!
+voces/animalia/nombres/buho.wav	¡Búho!
+voces/animalia/nombres/loro.wav	¡Loro!
+voces/animalia/nombres/braquiosaurio.wav	¡Braquio!
+voces/animalia/buscar/brote/z4_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/brote/busca_mono.wav	¡Busca al mono!
+voces/animalia/buscar/brote/busca_loro.wav	¡Busca al loro!
+voces/animalia/buscar/brote/busca_buho.wav	¡Busca al búho!
+voces/animalia/buscar/brote/busca_perezoso.wav	¡Busca al perezoso!
+voces/animalia/buscar/brote/busca_tucan.wav	¡Busca al tucán!
+voces/animalia/buscar/brote/busca_koala.wav	¡Busca a la koala!
+voces/animalia/buscar/senuelos/burrito.wav	¡Yo soy el burrito, no el pony!
+voces/animalia/nombres/koala.wav	¡Koala!
+voces/animalia/nombres/burrito.wav	¡Burrito!
+voces/animalia/buscar/estrella/z4_pista_condor.wav	Negro, collar blanco y alas enormes
+voces/animalia/buscar/estrella/z4_pista_buho.wav	Ojos grandes, orejitas y dice uh uh
+voces/animalia/buscar/estrella/z4_pista_tucan.wav	Pico gigante naranjo y plumas negras
+voces/animalia/buscar/estrella/z4_pista_mono.wav	Cola larga, cara clarita y trepa
+voces/animalia/buscar/estrella/z4_pista_perezoso.wav	Lento, garras largas y duerme mucho
+voces/animalia/buscar/estrella/z4_pista_tricahue.wav	Loro verde con pecho amarillo y rojo
+voces/animalia/buscar/estrella/z4_pista_carpintero.wav	Negro, cresta roja y golpea troncos
+voces/animalia/buscar/estrella/z4_pista_monito_del_monte.wav	Chiquito, ojos grandes y cola enrollada
+voces/animalia/buscar/estrella/z4_pista_chucao.wav	Pecho naranjo, cola paradita y canta fuerte
+voces/animalia/buscar/estrella/z4_pista_koala.wav	Gris, orejas peludas y abraza árboles
+voces/animalia/buscar/estrella/z4_pista_ardilla.wav	Cola esponjosa, naranja y junta nueces
+voces/animalia/buscar/estrella/z4_pista_gerbo.wav	Dorado, cola larga y orejas redondas
+voces/animalia/buscar/estrella/z4_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/senuelos/lechuza.wav	¡Soy la lechuza, no el búho!
+voces/animalia/buscar/senuelos/choroy.wav	¡Soy el choroy, no el tricahue!
+voces/animalia/buscar/senuelos/koala_peluche.wav	¡Soy de peluche!
+voces/animalia/nombres/condor.wav	¡Cóndor!
+voces/animalia/nombres/tricahue.wav	¡Tricahue!
+voces/animalia/nombres/carpintero.wav	¡Carpintero!
+voces/animalia/nombres/monito_del_monte.wav	¡Monito!
+voces/animalia/nombres/chucao.wav	¡Chucao!
+voces/animalia/nombres/ardilla.wav	¡Ardilla!
+voces/animalia/nombres/lechuza.wav	¡Lechuza!
+voces/animalia/nombres/choroy.wav	¡Choroy!
+voces/animalia/nombres/koala_peluche.wav	¡Koala!
+voces/animalia/buscar/semilla/z5_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/semilla/llama_trex.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_spinosaurio.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_carnotauro.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_mama_trex.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/buscar/semilla/llama_huevito.wav	¡Aquí estoy! ¡Búscame!
+voces/animalia/nombres/trex.wav	¡T Rex!
+voces/animalia/nombres/spinosaurio.wav	¡Spino!
+voces/animalia/nombres/carnotauro.wav	¡Carno!
+voces/animalia/nombres/mama_trex.wav	¡Mamá!
+voces/animalia/buscar/brote/z5_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/brote/busca_pony_estelar.wav	¡Busca al pony estelar!
+voces/animalia/buscar/senuelos/cebra.wav	¡Yo soy la cebra, no el caballo!
+voces/animalia/nombres/pony_estelar.wav	¡Pony Estelar!
+voces/animalia/buscar/estrella/z5_pista_pinguino.wav	Le encanta el frío
+voces/animalia/buscar/estrella/z5_pista_monito_del_monte.wav	Duerme de día y es de Chile
+voces/animalia/buscar/estrella/z5_pista_huemul.wav	Está en el escudo de Chile y tiene cuernos
+voces/animalia/buscar/estrella/z5_pista_condor.wav	La otra del escudo: vuela altísimo
+voces/animalia/buscar/estrella/z5_pista_pudu.wav	Uno de los ciervos más chiquitos del mundo
+voces/animalia/buscar/estrella/z5_pista_milodon.wav	Vivió hace miles de años en una cueva de la Patagonia
+voces/animalia/buscar/estrella/z5_pista_ballena.wav	El animal más grande que existe
+voces/animalia/buscar/estrella/z5_pista_flamenco.wav	Es rosado por lo que come
+voces/animalia/buscar/estrella/z5_pista_hermanito_toby.wav	El que más se parece a Toby
+voces/animalia/buscar/estrella/z5_pista_alpaca.wav	Su lana abriga en el altiplano
+voces/animalia/buscar/estrella/z5_pista_gerbo.wav	Guarda semillas en sus cachetes
+voces/animalia/buscar/estrella/z5_pista_pony.wav	Tiene la crin más larga del valle
+voces/animalia/buscar/estrella/z5_cuenta_toby.wav	¡A la una, a las dos y a las tres! ¡A esconderse!
+voces/animalia/buscar/secretos/pony_estelar.wav	¡El pony estelar! ¡Qué secreto más lindo!
+voces/animalia/nombres/milodon.wav	¡Milodón!
+voces/animalia/nombres/ballena.wav	¡Ballena!
+voces/animalia/buscar/equipo/victoria.wav	¡Los encontramos a todos juntos! ¡Foto de equipo!

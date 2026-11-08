@@ -1,0 +1,351 @@
+{
+  "id_nivel": "animalia_z1_buscar_semilla",
+  "motor": "buscar",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      1280.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#8FD3F4",
+        "#E6F7FF"
+      ],
+      "lejos": [
+        {
+          "y": 330.0,
+          "color": "#B5E3A1",
+          "amp": 50,
+          "ondas": 2.5
+        },
+        {
+          "y": 360.0,
+          "color": "#9ED68A",
+          "amp": 30,
+          "ondas": 4,
+          "fase": 1.0
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#8CCB6A"
+      }
+    }
+  },
+  "objetos": [
+    {
+      "id": "arbusto_0",
+      "tipo": "arbusto",
+      "pos": [
+        312.0,
+        446.0
+      ],
+      "escala": 1.6,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "arbusto_1",
+      "tipo": "arbusto",
+      "pos": [
+        372.0,
+        503.0
+      ],
+      "escala": 1.73,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "carretilla_2",
+      "tipo": "carretilla",
+      "pos": [
+        478.0,
+        570.0
+      ],
+      "escala": 1.8,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "gallinero_3",
+      "tipo": "gallinero",
+      "pos": [
+        599.0,
+        445.0
+      ],
+      "escala": 1.71,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "fardo_4",
+      "tipo": "fardo",
+      "pos": [
+        675.0,
+        520.0
+      ],
+      "escala": 1.82,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "carpa_5",
+      "tipo": "carpa",
+      "pos": [
+        809.0,
+        570.0
+      ],
+      "escala": 1.92,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "balde_6",
+      "tipo": "balde",
+      "pos": [
+        869.0,
+        443.0
+      ],
+      "escala": 1.9,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "cerca_7",
+      "tipo": "cerca",
+      "pos": [
+        991.0,
+        518.0
+      ],
+      "escala": 1.6,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        714.0,
+        228.0
+      ],
+      "escala": 1.59,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "perrito",
+      "nombre": "Perrito",
+      "palabra": "PERRITO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#D9A066",
+        "color2": "#FFF1DC",
+        "orejas": "caidas",
+        "cola": "larga"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.1,
+      "nombre_voz": "voces/animalia/nombres/perrito.wav",
+      "escondites": []
+    },
+    {
+      "id": "gatito",
+      "nombre": "Gatito",
+      "palabra": "GATITO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#F4A259",
+        "color2": "#FFE8CC",
+        "orejas": "punta",
+        "cola": "larga",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/gatito.wav",
+      "escondites": []
+    },
+    {
+      "id": "vaca",
+      "nombre": "Vaca",
+      "palabra": "VACA",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#FFFFFF",
+        "color2": "#FFC2D1",
+        "orejas": "caballo",
+        "cuernos": "chicos",
+        "patron": "manchas",
+        "color_patron": "#3B3F55",
+        "hocico": "chato"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.6,
+      "nombre_voz": "voces/animalia/nombres/vaca.wav",
+      "escondites": []
+    },
+    {
+      "id": "pato",
+      "nombre": "Pato",
+      "palabra": "PATO",
+      "aspecto": {
+        "forma": "nadador",
+        "color": "#FFFFFF",
+        "color3": "#FF9F1C",
+        "pico": "pato",
+        "cuello": 0.2
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.3,
+      "nombre_voz": "voces/animalia/nombres/pato.wav",
+      "escondites": []
+    },
+    {
+      "id": "pollito",
+      "nombre": "Pollito",
+      "palabra": "POLLITO",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#FFE066",
+        "color3": "#FF9F1C",
+        "pico": "corto"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.8,
+      "nombre_voz": "voces/animalia/nombres/pollito.wav",
+      "escondites": []
+    },
+    {
+      "id": "caballo",
+      "nombre": "Caballo",
+      "palabra": "CABALLO",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#A0663C",
+        "color2": "#E8C9A8",
+        "orejas": "caballo",
+        "hocico": "largo",
+        "cuello": 0.45,
+        "crin": true,
+        "alto_patas": 1.3
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.8,
+      "nombre_voz": "voces/animalia/nombres/caballo.wav",
+      "escondites": []
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [],
+      "marca_especial": "animalia_huevo_z1"
+    }
+  ],
+  "objetivos": [
+    "perrito",
+    "gatito",
+    "vaca",
+    "pato",
+    "pollito",
+    "caballo"
+  ],
+  "objetivos_por_partida": 5,
+  "objetivos_fijos": [],
+  "senuelos": [],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "libre",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": false,
+  "visible_min": 0.8,
+  "tamano_animal": 200.0,
+  "zona_toque_min_px": 160,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": false,
+  "tiempo_par_s": 35.0,
+  "sol": {
+    "factor_par": 3.0,
+    "minimo_reintento_s": 60
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "todos_asoman": true,
+    "sin_sol": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [
+    6,
+    10
+  ],
+  "pistas_cuestan_estrellita": false,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "escenas": 2,
+  "ruido_semilla_s": [
+    5,
+    8
+  ],
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/semilla/intro.wav",
+    "instruccion": "voces/animalia/buscar/semilla/instruccion.wav",
+    "otra_vez": "voces/animalia/buscar/semilla/otra_vez.wav",
+    "derrota_gag": "voces/animalia/buscar/semilla/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/semilla/regalo.wav",
+    "ayuda_fuerte": "voces/animalia/buscar/semilla/ayuda_fuerte.wav",
+    "cuenta_toby": "voces/animalia/buscar/semilla/z1_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/semilla/victoria_01.wav",
+      "voces/animalia/buscar/semilla/victoria_02.wav"
+    ],
+    "busca": {
+      "perrito": "voces/animalia/buscar/semilla/llama_perrito.wav",
+      "gatito": "voces/animalia/buscar/semilla/llama_gatito.wav",
+      "vaca": "voces/animalia/buscar/semilla/llama_vaca.wav",
+      "pato": "voces/animalia/buscar/semilla/llama_pato.wav",
+      "pollito": "voces/animalia/buscar/semilla/llama_pollito.wav",
+      "caballo": "voces/animalia/buscar/semilla/llama_caballo.wav"
+    },
+    "secreto": {
+      "huevito": "voces/animalia/buscar/secretos/huevito.wav"
+    }
+  }
+}

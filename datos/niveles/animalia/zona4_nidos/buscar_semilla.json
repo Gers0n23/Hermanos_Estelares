@@ -1,0 +1,552 @@
+{
+  "id_nivel": "animalia_z4_buscar_semilla",
+  "motor": "buscar",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      1280.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#86CDE8",
+        "#D9F2E4"
+      ],
+      "lejos": [
+        {
+          "y": 300.0,
+          "color": "#6FB77A",
+          "amp": 60,
+          "ondas": 4
+        },
+        {
+          "y": 340.0,
+          "color": "#5DA86A",
+          "amp": 40,
+          "ondas": 6,
+          "fase": 2.0
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#6DB65E"
+      }
+    }
+  },
+  "objetos": [
+    {
+      "id": "arbol_0",
+      "tipo": "arbol",
+      "pos": [
+        276.0,
+        446.0
+      ],
+      "escala": 1.14,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_1",
+      "tipo": "arbol",
+      "pos": [
+        395.0,
+        513.0
+      ],
+      "escala": 1.14,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "roca_2",
+      "tipo": "roca",
+      "pos": [
+        484.0,
+        557.0
+      ],
+      "escala": 1.49,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "helecho_3",
+      "tipo": "helecho",
+      "pos": [
+        544.0,
+        440.0
+      ],
+      "escala": 1.62,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_4",
+      "tipo": "arbol",
+      "pos": [
+        645.0,
+        515.0
+      ],
+      "escala": 1.14,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "hongo_5",
+      "tipo": "hongo",
+      "pos": [
+        719.0,
+        570.0
+      ],
+      "escala": 1.55,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "helecho_6",
+      "tipo": "helecho",
+      "pos": [
+        818.0,
+        439.0
+      ],
+      "escala": 1.59,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_7",
+      "tipo": "arbol",
+      "pos": [
+        881.0,
+        507.0
+      ],
+      "escala": 1.14,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_8",
+      "tipo": "arbusto",
+      "pos": [
+        1001.0,
+        565.0
+      ],
+      "escala": 1.35,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        611.0,
+        224.0
+      ],
+      "escala": 1.54,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        356.0,
+        184.0
+      ],
+      "escala": 1.03,
+      "z": 447.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_1",
+      "tipo": "nido",
+      "pos": [
+        475.0,
+        251.0
+      ],
+      "escala": 1.03,
+      "z": 514.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_2",
+      "tipo": "nido",
+      "pos": [
+        725.0,
+        253.0
+      ],
+      "escala": 1.03,
+      "z": 516.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_3",
+      "tipo": "nido",
+      "pos": [
+        801.0,
+        245.0
+      ],
+      "escala": 1.03,
+      "z": 508.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "mono",
+      "nombre": "Mono",
+      "palabra": "MONO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#A0663C",
+        "color2": "#F2D2B0",
+        "orejas": "redondas",
+        "cola": "larga",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.4,
+      "nombre_voz": "voces/animalia/nombres/mono.wav",
+      "escondites": [
+        {
+          "pos": [
+            334.0,
+            554.0
+          ],
+          "tamano": 170.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            264.0,
+            384.0,
+            101.0,
+            170.0
+          ],
+          "detras_de": "roca_2"
+        },
+        {
+          "pos": [
+            337.0,
+            509.0
+          ],
+          "tamano": 170.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            267.0,
+            339.0,
+            101.0,
+            170.0
+          ],
+          "detras_de": "arbol_1"
+        }
+      ]
+    },
+    {
+      "id": "tucan",
+      "nombre": "Tucán",
+      "palabra": "TUCÁN",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#3B3F55",
+        "color2": "#FFFFFF",
+        "color3": "#FF8A3D",
+        "pico": "grande"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/tucan.wav",
+      "escondites": [
+        {
+          "pos": [
+            466.0,
+            295.0
+          ],
+          "tamano": 162.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            371.0,
+            144.0,
+            159.0,
+            151.0
+          ],
+          "detras_de": "arbol_4"
+        }
+      ]
+    },
+    {
+      "id": "perezoso",
+      "nombre": "Perezoso",
+      "palabra": "PEREZOSO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#B9A07E",
+        "color2": "#E8DCC8",
+        "orejas": "ninguna",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.7,
+      "nombre_voz": "voces/animalia/nombres/perezoso.wav",
+      "escondites": []
+    },
+    {
+      "id": "buho",
+      "nombre": "Búho",
+      "palabra": "BÚHO",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#A8835E",
+        "color2": "#E8D2B0",
+        "color3": "#FFB347",
+        "pico": "corto",
+        "orejas": "punta",
+        "patron": "plumas"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.8,
+      "nombre_voz": "voces/animalia/nombres/buho.wav",
+      "escondites": []
+    },
+    {
+      "id": "loro",
+      "nombre": "Loro",
+      "palabra": "LORO",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#36B866",
+        "color3": "#FFC83A",
+        "pico": "curvo",
+        "cola_larga": 1.0
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.7,
+      "nombre_voz": "voces/animalia/nombres/loro.wav",
+      "escondites": [
+        {
+          "pos": [
+            827.0,
+            290.5
+          ],
+          "tamano": 153.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            791.0,
+            138.0,
+            116.0,
+            153.0
+          ],
+          "detras_de": "arbol_4"
+        }
+      ]
+    },
+    {
+      "id": "braquiosaurio",
+      "nombre": "Braquio",
+      "palabra": "BRAQUIO",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#7FC6E8",
+        "color2": "#C8EAF8",
+        "cuello": 1.6,
+        "patas_gruesas": true,
+        "largo": 1.1
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.4,
+      "nombre_voz": "voces/animalia/nombres/braquiosaurio.wav",
+      "escondites": []
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            318.0,
+            554.0
+          ],
+          "tamano": 119.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            274.0,
+            435.0,
+            83.0,
+            119.0
+          ],
+          "detras_de": "roca_2"
+        },
+        {
+          "pos": [
+            215.5,
+            271.5
+          ],
+          "tamano": 119.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            172.0,
+            153.0,
+            88.0,
+            119.0
+          ],
+          "detras_de": "arbol_1"
+        },
+        {
+          "pos": [
+            825.5,
+            273.5
+          ],
+          "tamano": 119.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            781.0,
+            155.0,
+            88.0,
+            119.0
+          ],
+          "detras_de": "arbol_4"
+        }
+      ],
+      "marca_especial": "animalia_huevo_z4"
+    }
+  ],
+  "objetivos": [
+    "mono",
+    "tucan",
+    "perezoso",
+    "buho",
+    "loro",
+    "braquiosaurio"
+  ],
+  "objetivos_por_partida": 6,
+  "objetivos_fijos": [],
+  "senuelos": [],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "libre",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": false,
+  "visible_min": 0.75,
+  "tamano_animal": 170.0,
+  "zona_toque_min_px": 160,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": false,
+  "tiempo_par_s": 42.0,
+  "sol": {
+    "factor_par": 3.0,
+    "minimo_reintento_s": 60
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "todos_asoman": true,
+    "sin_sol": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [
+    6,
+    10
+  ],
+  "pistas_cuestan_estrellita": false,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "escenas": 2,
+  "ruido_semilla_s": [
+    5,
+    8
+  ],
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/semilla/intro.wav",
+    "instruccion": "voces/animalia/buscar/semilla/instruccion.wav",
+    "otra_vez": "voces/animalia/buscar/semilla/otra_vez.wav",
+    "derrota_gag": "voces/animalia/buscar/semilla/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/semilla/regalo.wav",
+    "ayuda_fuerte": "voces/animalia/buscar/semilla/ayuda_fuerte.wav",
+    "cuenta_toby": "voces/animalia/buscar/semilla/z4_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/semilla/victoria_01.wav",
+      "voces/animalia/buscar/semilla/victoria_02.wav"
+    ],
+    "busca": {
+      "mono": "voces/animalia/buscar/semilla/llama_mono.wav",
+      "tucan": "voces/animalia/buscar/semilla/llama_tucan.wav",
+      "perezoso": "voces/animalia/buscar/semilla/llama_perezoso.wav",
+      "buho": "voces/animalia/buscar/semilla/llama_buho.wav",
+      "loro": "voces/animalia/buscar/semilla/llama_loro.wav",
+      "braquiosaurio": "voces/animalia/buscar/semilla/llama_braquiosaurio.wav"
+    },
+    "secreto": {
+      "huevito": "voces/animalia/buscar/secretos/huevito.wav"
+    }
+  }
+}
