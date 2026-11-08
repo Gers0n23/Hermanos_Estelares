@@ -575,6 +575,14 @@ func madriguera_en(p: Vector2) -> int:
 	return mejor
 
 
+## Un animal que asoma sin haber hablado (para los arneses: tocar al equivocado). -1 si no hay.
+func _senuelo_arriba_id() -> int:
+	for m in logica.madrigueras:
+		if m["tipo"] == "senuelo" and m["estado"] == "arriba" and not m["tocado"]:
+			return m["id"]
+	return -1
+
+
 func zona_toque(i: int) -> Rect2:
 	return Rect2(_pos[i].x - _toque.x / 2.0, _pos[i].y - _toque.y + 50.0 * (_toque.y / 320.0), _toque.x, _toque.y)
 
