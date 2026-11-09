@@ -475,3 +475,13 @@ Debe demostrar:
 4. **Banderita a la mitad** → **sí para Nicole y también para Maxi** (con corazones llenos); Sofía la gana con
    el regalo.
 5. **GDD §4** → hecho: la nota de HE-124 nombra "Carrera de Toby" como 4.º juego.
+
+## 17. Implementación y calibración final (HE-119, 09-Nov-2026)
+
+- **Código**: `scripts/motores/runner/` (`logica_runner.gd` sin nodos, `motor_runner.gd` escena), `escenas/minijuegos/runner/motor_runner.tscn`.
+- **Niveles**: 21 JSON en `datos/niveles/animalia/zona<N>_<slug>/runner_<perfil>.json` (+ `runner_equipo.json` por zona y `runner_estrella_dorado.json` en z5), generados por `herramientas/generar_niveles_runner.py`. No editar los JSON a mano: cambiar el generador y regenerar.
+- **Umbrales de estrellitas**: `herramientas/runner_umbrales.json`, que escribe el arnés con `-- --calibrar` (bot perfecto: dos ≈ 70 %, tres ≈ 88 % de su puntaje). Orden: generar → calibrar → generar.
+- **Ajustes respecto de §4 para cumplir HE-124**: carreras más cortas (meta en 40-44 s Maxi, 40-42 s Nicole, 30-34 s Sofía), burbuja de Sofía cada 25 s, huecos mínimos de Nicole 1,9-2,2 s, grupos de 1 en la z4 de Nicole y de 2 en la de Sofía, hongos más bajos (65 y 75 px), margen de ventana por perfil para los grupos (`huecos.margen_ventana_s`).
+- **Resultado del jugador simulado (150 carreras, primer intento)**: Maxi 82-90 %, Nicole 66-75 %, Sofía 49-60 %. Las z4-z5 quedan por debajo de la meta pero dentro de la tolerancia de ±12 puntos, a propósito: son el final del planeta. Validar en el playtest.
+- **Arnés**: `godot --headless --path . --script herramientas/qa_test_runner.gd` → 370 OK.
+- **Pendiente**: las voces (`assets/audio/voces/animalia/runner/`) aún no están grabadas; el motor avisa y sigue sin ellas.
