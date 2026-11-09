@@ -519,3 +519,11 @@ Debe demostrar, en un solo archivo sin dependencias:
    (tabla de `planeta-animalia-zonas.md` §4.1).
 5. **Ranas y sapos** → **no se usan en Animalia v1** en ninguna ruta (el mapa y el modo equipo son
    compartidos). Se revisa solo si en un playtest Nicole o Sofía las piden.
+
+## 17. Implementación y calibración final (HE-116, 09-Nov-2026)
+
+- **Código**: `scripts/motores/topos/` (`motor_topos.gd` + lógica sin nodos), `escenas/minijuegos/topos/motor_topos.tscn`.
+- **Niveles**: `datos/niveles/animalia/zona<N>_<slug>/topos_<perfil>.json` (+ equipo), generados por `herramientas/generar_niveles_topos.py`; cambiar el generador y regenerar, no editar a mano.
+- **Resultado del jugador simulado (120 rondas, primer intento)**: Maxi 86-94 % (objetivo 90), Nicole 72-86 % (75), Sofía 62-68 % (60). El riesgo de que Sofía z5 fuera imposible (maqueta) quedó descartado: 63 %.
+- **Arnés**: `godot --headless --path . --script herramientas/qa_test_topos.gd` → 812 OK (reloj y escape en los tres perfiles, regalo y ayuda fuerte de Maxi, destellos solo al ganar, modo equipo).
+- **Pendiente**: grabar las voces; validar la sensación en el playtest.
