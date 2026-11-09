@@ -27,6 +27,12 @@ const HERMANO := {"semilla": "maxi", "brote": "nicole", "estrella": "sofia"}
 const DORADO := "res://datos/niveles/animalia/zona5_valle/runner_estrella_dorado.json"
 const DT := 1.0 / 60.0
 const SEMILLAS_BOT := [1, 2, 3, 4, 5, 6]
+## Jugador con error humano, igual que el simulador de la maqueta (docs/maquetas/animalia-runner.html, SIM_DEF):
+## [precisión (desvío del toque, s), olvido (no salta), falla de inhibición (salta un aéreo alto)].
+const HUMANO := {"semilla": [0.35, 0.15, 0.0], "brote": [0.1, 0.05, 0.3], "estrella": [0.06, 0.03, 0.12]}
+## Meta de GDD §6 regla 11 (HE-124): llegar a la meta al primer intento.
+const META_LLEGADA := {"semilla": 0.9, "brote": 0.75, "estrella": 0.6}
+const TOLERANCIA_LLEGADA := 0.12
 
 var _fallos := 0
 var _oks := 0
@@ -43,6 +49,11 @@ func _initialize() -> void:
 	if not await _aislar_guardado():
 		quit(1)
 		return
+	if "--simular" in OS.get_cmdline_user_args():
+		_simular_humanos(600, true)
+		_restaurar_guardado()
+		quit(0)
+		return
 	if "--calibrar" in OS.get_cmdline_user_args():
 		_calibrar()
 		_restaurar_guardado()
@@ -55,6 +66,7 @@ func _initialize() -> void:
 	_probar_semilla()
 	_probar_meta_y_tramo()
 	_probar_bots()
+	_simular_humanos(150, false)
 	await _probar_escena()
 	await _probar_equipo()
 	_restaurar_guardado()
@@ -146,7 +158,7 @@ func _probar_niveles() -> void:
 					_chequear(n.get("burbuja") == null and n.get("banderita_mitad") == true, "%s: sin burbujas (los corazones las reemplazan), con banderita" % nombre)
 					_chequear(int(n.get("descanso_tras_derrotas", 0)) == 3, "%s: descanso tras 3" % nombre)
 				"estrella":
-					var cada := 55 if z < 3 else 70
+					var cada := 25
 					_chequear(int(n.get("burbuja", {}).get("cada_s", 0)) == cada, "%s: burbuja cada %d s" % [nombre, cada])
 					_chequear(int(n.get("descanso_tras_derrotas", 0)) == 4, "%s: descanso tras 4" % nombre)
 					_chequear((n["salto"].get("variable") != null) == (z >= 3), "%s: salto variable solo en z4-z5" % nombre)
@@ -518,6 +530,87 @@ func _probar_bots() -> void:
 		_chequear(motivo[0] == "meta" and l.corazones == 3, "Maxi z%d: con la ayuda fuerte (todo blando) llega siempre a la meta sin tocar" % (z + 1))
 
 
+## Bot humano: por cada obstáculo decide UNA vez si salta (olvido; en los altos, falla de inhibición) y con qué
+## error de tiempo. Toca cuando el centro del obstáculo está a T/2 + impulso (+ error). Maxi, con el imantado,
+## toca algo antes (como la maqueta: hasta T/2 + 0,3 s).
+func _bot_humano(l: LogicaRunner, b: Array, rng: RandomNumberGenerator, decisiones: Dictionary) -> void:
+	if l.fase_salto != "suelo" or not l.corriendo():
+		return
+	var cx := l.caja_corredor_x()
+	var o: Dictionary = {}
+	for x in l.obstaculos:
+		if x["estado"] == "pendiente" and l.caja_x(x).y >= cx.x and (o.is_empty() or x["x"] < o["x"]):
+			o = x
+	var v := maxf(1.0, l.velocidad)
+	var objetivo := minf(1.0, l.duracion_salto * 0.5 + 0.3) if l.imantado_s > 0.0 else l.duracion_salto * 0.5 + l.impulso_s
+	# Una burbuja que flota antes del próximo obstáculo: el niño también salta a buscarla (con su mismo error).
+	for it in l.items:
+		if it["tipo"] != "burbuja" or it["tomado"] or it["x"] < LogicaRunner.X_CORREDOR or l.burbuja:
+			continue
+		if not o.is_empty() and o["x"] < it["x"]:
+			break
+		var clave := "b%d" % int(it["sid"])
+		if not decisiones.has(clave):
+			decisiones[clave] = [rng.randf() >= b[1], rng.randfn(0.0, b[0])]
+		var di: Array = decisiones[clave]
+		if di[0] and (it["x"] - LogicaRunner.X_CORREDOR) / v <= l.duracion_salto * 0.5 + l.impulso_s + float(di[1]):
+			l.tocar()
+			l.soltar()
+			return
+		break
+	if o.is_empty():
+		return
+	if not decisiones.has(o["sid"]):
+		var salta: bool = rng.randf() < b[2] if o["tipo"] == "aereo_alto" else rng.randf() >= b[1]
+		decisiones[o["sid"]] = [salta, rng.randfn(0.0, b[0])]
+	var d: Array = decisiones[o["sid"]]
+	if not d[0]:
+		return
+	var c := l.caja_x(o)
+	var t_centro := ((c.x + c.y) * 0.5 - LogicaRunner.X_CORREDOR) / v
+	if t_centro <= objetivo + float(d[1]):
+		l.tocar()
+		l.soltar()
+
+
+func _llega_humano(ruta: String, semilla: int) -> Array:
+	var l := _logica(ruta, semilla)
+	l.auto_salto_activo = false
+	var perfil := str(_nivel(ruta)["perfil"])
+	var rng := RandomNumberGenerator.new()
+	rng.seed = semilla * 7919 + 13
+	var decisiones := {}
+	var dt := 1.0 / 30.0
+	while l.corriendo() and not l.meta_alcanzada and l.t < l.meta_s + 5.0:
+		_bot_humano(l, HUMANO[perfil], rng, decisiones)
+		l.avanzar(dt)
+	return [l.meta_alcanzada, l.t]
+
+
+## % de llegada a la meta al primer intento del jugador humano simulado, frente a la meta de HE-124.
+func _simular_humanos(carreras: int, imprimir: bool) -> void:
+	var solo := ""
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--perfil="):
+			solo = arg.trim_prefix("--perfil=")
+	for perfil in PERFILES:
+		if solo != "" and perfil != solo:
+			continue
+		for z in 5:
+			var ruta := _ruta(z, perfil)
+			var llegan := 0
+			for i in carreras:
+				if _llega_humano(ruta, 1000 + i)[0]:
+					llegan += 1
+			var tasa := float(llegan) / carreras
+			var linea := "humano simulado %s z%d: llega a la meta %d %% (meta %d %%, %d carreras)" % [perfil, z + 1, roundi(tasa * 100.0), roundi(META_LLEGADA[perfil] * 100.0), carreras]
+			if imprimir:
+				print(linea)
+			else:
+				_resumen.append(linea)
+				_chequear(absf(tasa - META_LLEGADA[perfil]) <= TOLERANCIA_LLEGADA, linea)
+
+
 func _calibrar() -> void:
 	var salida := {"brote": [], "estrella": []}
 	for perfil in ["brote", "estrella"]:
@@ -556,8 +649,8 @@ func _toque(posicion: Vector2, presionado: bool) -> void:
 	e.pressed = presionado
 	e.position = posicion
 	e.global_position = posicion
-	Input.parse_input_event(e)
-	Input.flush_buffered_events()
+	# Coordenadas locales del viewport: en headless la ventana no mide 1280×720 y push_input sin `true` re-escala.
+	root.push_input(e, true)
 
 
 func _motor(ruta: String, hermano: String, planeta := "animalia") -> Node:
@@ -592,6 +685,7 @@ func _probar_escena() -> void:
 	_toque(Vector2(176, 64), false)
 	await process_frame
 	_chequear(m.logica.fase_salto == "suelo", "tocar a Cometa no hace saltar")
+	await create_timer(0.6).timeout
 	var t0 := Time.get_ticks_msec()
 	_toque(Vector2(900, 400), true)
 	_chequear(m.logica.fase_salto == "impulso" and Time.get_ticks_msec() - t0 < 100, "tocar en cualquier otra parte salta en el mismo cuadro")
@@ -600,13 +694,11 @@ func _probar_escena() -> void:
 	var tecla := InputEventKey.new()
 	tecla.keycode = KEY_SPACE
 	tecla.pressed = true
-	Input.parse_input_event(tecla)
-	Input.flush_buffered_events()
+	root.push_input(tecla, true)
 	_chequear(m.logica.fase_salto == "impulso", "en PC, espacio salta")
 	tecla = tecla.duplicate()
 	tecla.pressed = false
-	Input.parse_input_event(tecla)
-	Input.flush_buffered_events()
+	root.push_input(tecla, true)
 	# Derrota → gag → cartel → reintento de un toque; regalo tras 3 (Sofía).
 	for k in 3:
 		await create_timer(0.8).timeout

@@ -124,7 +124,7 @@
       "aereo_alto",
       "aereo_bajo"
     ],
-    "p": 0.26
+    "p": 0.2
   },
   "obstaculos_blandos": false,
   "corazones": 1,

@@ -42,8 +42,8 @@
       "id": "hongo_gigante",
       "dibujo": "hongo_gigante",
       "tamano": [
-        90,
-        90
+        85,
+        75
       ],
       "tipo": "suelo"
     },
@@ -147,17 +147,17 @@
         "segundos_a_max": null,
         "inicio_libre_s": 1.5,
         "salto": {
-          "duracion_s": 0.9,
-          "altura": 240,
+          "duracion_s": 1.0,
+          "altura": 250,
           "impulso_s": 0.06,
-          "imantado_s": 1.2,
-          "imantado_max_s": 0.8,
+          "imantado_s": 2.0,
+          "imantado_max_s": 1.6,
           "amable_px": 0,
           "en_cola_ms": 150,
           "variable": null
         },
         "huecos": {
-          "min_s": 3.5,
+          "min_s": 5.0,
           "factor_max": 1.5,
           "grupo_max": 1,
           "repetidos_max": 2
@@ -200,8 +200,8 @@
             "id": "hongo",
             "dibujo": "hongo",
             "tamano": [
-              80,
-              80
+              75,
+              65
             ],
             "tipo": "suelo"
           },
@@ -231,9 +231,9 @@
           "variable": null
         },
         "huecos": {
-          "min_s": 1.45,
+          "min_s": 2.1,
           "factor_max": 1.5,
-          "grupo_max": 2,
+          "grupo_max": 1,
           "repetidos_max": 2
         },
         "aereos": {
@@ -241,7 +241,7 @@
           "tipos": [
             "aereo_alto"
           ],
-          "p": 0.22
+          "p": 0.08
         },
         "obstaculos_blandos": false,
         "coleccionables": {
@@ -281,8 +281,8 @@
             "id": "hongo_gigante",
             "dibujo": "hongo_gigante",
             "tamano": [
-              90,
-              90
+              85,
+              75
             ],
             "tipo": "suelo"
           },
@@ -331,9 +331,9 @@
           "variable": null
         },
         "huecos": {
-          "min_s": 1.0,
+          "min_s": 1.1,
           "factor_max": 1.5,
-          "grupo_max": 3,
+          "grupo_max": 2,
           "repetidos_max": 2
         },
         "aereos": {
@@ -342,7 +342,7 @@
             "aereo_alto",
             "aereo_bajo"
           ],
-          "p": 0.24
+          "p": 0.18
         },
         "obstaculos_blandos": false,
         "coleccionables": {

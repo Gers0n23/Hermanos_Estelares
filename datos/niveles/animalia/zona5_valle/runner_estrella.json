@@ -116,7 +116,8 @@
     "min_s": 0.95,
     "factor_max": 1.5,
     "grupo_max": 3,
-    "repetidos_max": 2
+    "repetidos_max": 2,
+    "margen_ventana_s": 0.26
   },
   "aereos": {
     "desde_s": 0,
@@ -124,17 +125,17 @@
       "aereo_alto",
       "aereo_bajo"
     ],
-    "p": 0.26
+    "p": 0.2
   },
   "obstaculos_blandos": false,
   "corazones": 1,
   "invulnerable_golpe_s": 1.0,
   "burbuja": {
     "inicial": false,
-    "cada_s": 70,
+    "cada_s": 25,
     "invulnerable_s": 1.0
   },
-  "meta_s": 120,
+  "meta_s": 34,
   "tramo_record_s": 90,
   "banderita_mitad": false,
   "regalo_tras_derrotas": 3,
@@ -182,7 +183,7 @@
     "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav"
   },
   "umbrales_puntaje": {
-    "dos": 1980,
-    "tres": 2550
+    "dos": 540,
+    "tres": 700
   }
 }

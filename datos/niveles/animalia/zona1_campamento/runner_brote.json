@@ -90,17 +90,18 @@
     "variable": null
   },
   "huecos": {
-    "min_s": 1.7,
+    "min_s": 2.2,
     "factor_max": 1.5,
     "grupo_max": 1,
-    "repetidos_max": 2
+    "repetidos_max": 2,
+    "margen_ventana_s": 0.32
   },
   "aereos": null,
   "obstaculos_blandos": false,
   "corazones": 2,
   "invulnerable_golpe_s": 1.0,
   "burbuja": null,
-  "meta_s": 75,
+  "meta_s": 40,
   "tramo_record_s": 45,
   "banderita_mitad": true,
   "regalo_tras_derrotas": 2,
@@ -148,7 +149,7 @@
     "mitad": "voces/animalia/runner/banderita_mitad.wav"
   },
   "umbrales_puntaje": {
-    "dos": 1100,
-    "tres": 1420
+    "dos": 600,
+    "tres": 770
   }
 }

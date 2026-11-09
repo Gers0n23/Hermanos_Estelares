@@ -30,7 +30,7 @@ SUELO = {
     "hojas": [90, 50], "arbusto": [90, 70], "charquito": [100, 30], "tronco_goma": [90, 55],
     "arbusto_florido": [90, 70], "fardo": [80, 70], "cono": [60, 70], "manguera": [90, 45],
     "tronco": [90, 60], "piedra": [70, 55], "cerca_flores": [80, 65], "charco": [110, 30],
-    "nenufar": [90, 35], "raiz": [100, 50], "hongo": [80, 80], "hongo_gigante": [90, 90],
+    "nenufar": [90, 35], "raiz": [100, 50], "hongo": [75, 65], "hongo_gigante": [85, 75],
     "caja": [75, 75], "hueso_juguete": [90, 40], "roca_esponja": [80, 60],
 }
 # Aéreos: "altura" = borde de abajo del dibujo sobre el suelo. Alto: pasa por arriba si no saltas
@@ -106,32 +106,35 @@ TEMAS = {
 PARAMS = {
     "semilla": {
         "velocidad": [240] * 5, "velocidad_max": [240] * 5, "segundos_a_max": [None] * 5,
-        "min_s": [3.5] * 5, "grupo_max": [1] * 5, "meta_s": [60, 60, 70, 75, 80],
+        "min_s": [5.0] * 5, "grupo_max": [1] * 5, "meta_s": [40, 40, 42, 42, 44],
         "aereos": [None] * 5, "atardecer_en": [0.7] * 5,
     },
     "brote": {
         "velocidad": [400, 410, 425, 440, 450], "velocidad_max": [620, 640, 660, 680, 700], "segundos_a_max": [120] * 5,
-        "min_s": [1.7, 1.65, 1.55, 1.45, 1.4], "grupo_max": [1, 1, 2, 2, 2], "meta_s": [75, 80, 85, 90, 95],
-        "aereos": [None, None, {"desde_s": 0, "tipos": ["aereo_alto"], "p": 0.2},
-                   {"desde_s": 0, "tipos": ["aereo_alto"], "p": 0.22},
-                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.25}],
+        "min_s": [2.2, 2.1, 2.15, 2.1, 1.9], "grupo_max": [1, 1, 2, 1, 2], "meta_s": [40, 42, 40, 42, 42],
+        "aereos": [None, None, {"desde_s": 0, "tipos": ["aereo_alto"], "p": 0.08},
+                   {"desde_s": 0, "tipos": ["aereo_alto"], "p": 0.08},
+                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.1}],
         "atardecer_en": [0.7] * 5,
     },
     "estrella": {
         "velocidad": [560, 575, 590, 605, 620], "velocidad_max": [1000, 1025, 1050, 1075, 1100],
         "segundos_a_max": [120, 115, 110, 105, 100],
-        "min_s": [1.2, 1.15, 1.05, 1.0, 0.95], "grupo_max": [2, 2, 2, 3, 3], "meta_s": [90, 95, 105, 110, 120],
-        "aereos": [{"desde_s": 40, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.2},
-                   {"desde_s": 40, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.2},
-                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.22},
-                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.24},
-                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.26}],
+        "min_s": [1.2, 1.15, 1.05, 1.1, 0.95], "grupo_max": [2, 2, 2, 2, 3], "meta_s": [30, 32, 32, 33, 34],
+        "aereos": [{"desde_s": 15, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.15},
+                   {"desde_s": 15, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.15},
+                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.16},
+                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.18},
+                   {"desde_s": 0, "tipos": ["aereo_alto", "aereo_bajo"], "p": 0.2}],
         "atardecer_en": [0.7, 0.7, 0.7, 0.7, 0.5],
     },
 }
 
+# Margen humano de la ventana de salto de un GRUPO (calibrado con el jugador simulado, ver qa_test_runner.gd).
+MARGEN_GRUPO = {"semilla": 0.1, "brote": 0.32, "estrella": 0.26}
+
 SALTO = {
-    "semilla": {"duracion_s": 0.9, "altura": 240, "impulso_s": 0.06, "imantado_s": 1.2, "imantado_max_s": 0.8,
+    "semilla": {"duracion_s": 1.0, "altura": 250, "impulso_s": 0.06, "imantado_s": 2.0, "imantado_max_s": 1.6,
                 "amable_px": 0, "en_cola_ms": 150, "variable": None},
     "brote": {"duracion_s": 0.8, "altura": 210, "impulso_s": 0.05, "imantado_s": 0, "imantado_max_s": 0,
               "amable_px": 12, "en_cola_ms": 150, "variable": None},
@@ -172,7 +175,7 @@ POLITICA = {
                  "tramo_record_s": 90, "mostrar_puntaje": "numero", "ayuda_idle_s": None, "inicio_libre_s": 2.5,
                  "gag_s": 2.5},
 }
-BURBUJA_ESTRELLA_CADA = [55, 55, 55, 70, 70]
+BURBUJA_ESTRELLA_CADA = [25, 25, 25, 25, 25]
 
 # Umbrales de estrellitas (puntaje AL CRUZAR LA META; el tramo del récord solo cuenta para el récord).
 # Calibrados con el bot perfecto del arnés (puntaje "perfecto" P en la meta, semilla 1..20):
@@ -251,7 +254,8 @@ def nivel(perfil, z, umbrales):
         "segundos_a_max": p["segundos_a_max"][z],
         "inicio_libre_s": pol["inicio_libre_s"],
         "salto": salto,
-        "huecos": {"min_s": p["min_s"][z], "factor_max": 1.5, "grupo_max": p["grupo_max"][z], "repetidos_max": 2},
+        "huecos": {"min_s": p["min_s"][z], "factor_max": 1.5, "grupo_max": p["grupo_max"][z], "repetidos_max": 2,
+                   "margen_ventana_s": MARGEN_GRUPO[perfil]},
         "aereos": p["aereos"][z],
         "obstaculos_blandos": False,
         "corazones": pol["corazones"],
