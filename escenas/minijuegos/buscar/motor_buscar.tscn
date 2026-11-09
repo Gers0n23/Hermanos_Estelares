@@ -42,9 +42,9 @@ mouse_filter = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 1168.0
+offset_left = 1124.0
 offset_top = 236.0
-offset_right = 1216.0
+offset_right = 1172.0
 offset_bottom = 540.0
 script = ExtResource("2_barra")
 

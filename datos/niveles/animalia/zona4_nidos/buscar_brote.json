@@ -1,0 +1,1165 @@
+{
+  "id_nivel": "animalia_z4_buscar_brote",
+  "motor": "buscar",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      2560.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#86CDE8",
+        "#D9F2E4"
+      ],
+      "lejos": [
+        {
+          "y": 300.0,
+          "color": "#6FB77A",
+          "amp": 60,
+          "ondas": 4
+        },
+        {
+          "y": 340.0,
+          "color": "#5DA86A",
+          "amp": 40,
+          "ondas": 6,
+          "fase": 2.0
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#6DB65E"
+      }
+    }
+  },
+  "objetos": [
+    {
+      "id": "helecho_0",
+      "tipo": "helecho",
+      "pos": [
+        347.0,
+        459.0
+      ],
+      "escala": 0.69,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "roca_1",
+      "tipo": "roca",
+      "pos": [
+        479.0,
+        517.0
+      ],
+      "escala": 0.59,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbol_2",
+      "tipo": "arbol",
+      "pos": [
+        598.0,
+        531.0
+      ],
+      "escala": 0.68,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "hongo_3",
+      "tipo": "hongo",
+      "pos": [
+        787.0,
+        448.0
+      ],
+      "escala": 0.67,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbol_4",
+      "tipo": "arbol",
+      "pos": [
+        899.0,
+        499.0
+      ],
+      "escala": 0.63,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "tronco_hueco_5",
+      "tipo": "tronco_hueco",
+      "pos": [
+        1092.0,
+        534.0
+      ],
+      "escala": 0.7,
+      "espejo": true,
+      "escondite": true,
+      "pasos": 1,
+      "reaccion": "abrir",
+      "sonido": "sfx/ui/abrir.ogg"
+    },
+    {
+      "id": "arbusto_6",
+      "tipo": "arbusto",
+      "pos": [
+        1232.0,
+        455.0
+      ],
+      "escala": 0.67,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "helecho_7",
+      "tipo": "helecho",
+      "pos": [
+        1340.0,
+        513.0
+      ],
+      "escala": 0.73,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "hongo_8",
+      "tipo": "hongo",
+      "pos": [
+        1500.0,
+        535.0
+      ],
+      "escala": 0.69,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbol_9",
+      "tipo": "arbol",
+      "pos": [
+        1660.0,
+        449.0
+      ],
+      "escala": 0.62,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_10",
+      "tipo": "arbol",
+      "pos": [
+        1774.0,
+        494.0
+      ],
+      "escala": 0.64,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_11",
+      "tipo": "arbusto",
+      "pos": [
+        1934.0,
+        548.0
+      ],
+      "escala": 0.65,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "arbusto_12",
+      "tipo": "arbusto",
+      "pos": [
+        2049.0,
+        442.0
+      ],
+      "escala": 0.66,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "arbol_13",
+      "tipo": "arbol",
+      "pos": [
+        2210.0,
+        513.0
+      ],
+      "escala": 0.67,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        736.0,
+        226.0
+      ],
+      "escala": 0.65,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nube_1",
+      "tipo": "nube",
+      "pos": [
+        1743.0,
+        192.0
+      ],
+      "escala": 0.65,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        646.0,
+        375.0
+      ],
+      "escala": 0.61,
+      "z": 532.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_1",
+      "tipo": "nido",
+      "pos": [
+        855.0,
+        354.0
+      ],
+      "escala": 0.57,
+      "z": 500.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_2",
+      "tipo": "nido",
+      "pos": [
+        1617.0,
+        306.0
+      ],
+      "escala": 0.56,
+      "z": 450.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_3",
+      "tipo": "nido",
+      "pos": [
+        1819.0,
+        347.0
+      ],
+      "escala": 0.58,
+      "z": 495.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nido_4",
+      "tipo": "nido",
+      "pos": [
+        2257.0,
+        359.0
+      ],
+      "escala": 0.6,
+      "z": 514.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "mono",
+      "nombre": "Mono",
+      "palabra": "MONO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#A0663C",
+        "color2": "#F2D2B0",
+        "orejas": "redondas",
+        "cola": "larga",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.4,
+      "nombre_voz": "voces/animalia/nombres/mono.wav",
+      "escondites": [
+        {
+          "pos": [
+            1475.0,
+            532.0
+          ],
+          "tamano": 100.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1434.0,
+            432.0,
+            50.0,
+            100.0
+          ],
+          "detras_de": "hongo_8"
+        },
+        {
+          "pos": [
+            928.0,
+            445.0
+          ],
+          "tamano": 100.0,
+          "espejo": true,
+          "visible": 0.47,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            914.0,
+            389.0,
+            55.0,
+            56.0
+          ],
+          "detras_de": "hongo_3"
+        },
+        {
+          "pos": [
+            2257.0,
+            415.5
+          ],
+          "tamano": 100.0,
+          "espejo": false,
+          "visible": 0.69,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2216.0,
+            315.0,
+            82.0,
+            100.0
+          ],
+          "detras_de": "nido_4"
+        }
+      ]
+    },
+    {
+      "id": "loro",
+      "nombre": "Loro",
+      "palabra": "LORO",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#36B866",
+        "color3": "#FFC83A",
+        "pico": "curvo",
+        "cola_larga": 1.0
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.7,
+      "nombre_voz": "voces/animalia/nombres/loro.wav",
+      "escondites": [
+        {
+          "pos": [
+            1092.0,
+            530.0
+          ],
+          "tamano": 90.0,
+          "espejo": true,
+          "visible": 0.93,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1045.0,
+            450.0,
+            89.0,
+            80.0
+          ],
+          "dentro_de": "tronco_hueco_5"
+        },
+        {
+          "pos": [
+            671.0,
+            229.5
+          ],
+          "tamano": 90.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            629.0,
+            139.0,
+            79.0,
+            90.0
+          ],
+          "detras_de": "nube_0"
+        },
+        {
+          "pos": [
+            2257.0,
+            374.5
+          ],
+          "tamano": 90.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2215.0,
+            284.0,
+            89.0,
+            90.0
+          ],
+          "detras_de": "nido_4"
+        }
+      ]
+    },
+    {
+      "id": "buho",
+      "nombre": "Búho",
+      "palabra": "BÚHO",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#A8835E",
+        "color2": "#E8D2B0",
+        "color3": "#FFB347",
+        "pico": "corto",
+        "orejas": "punta",
+        "patron": "plumas"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.8,
+      "nombre_voz": "voces/animalia/nombres/buho.wav",
+      "escondites": [
+        {
+          "pos": [
+            1819.0,
+            361.0
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.56,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1783.0,
+            266.0,
+            78.0,
+            95.0
+          ],
+          "detras_de": "nido_3"
+        },
+        {
+          "pos": [
+            979.0,
+            380.5
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            969.0,
+            285.0,
+            52.0,
+            95.0
+          ],
+          "detras_de": "arbol_4"
+        },
+        {
+          "pos": [
+            801.5,
+            232.0
+          ],
+          "tamano": 95.0,
+          "espejo": true,
+          "visible": 0.55,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            765.0,
+            137.0,
+            78.0,
+            95.0
+          ],
+          "detras_de": "nube_0"
+        }
+      ]
+    },
+    {
+      "id": "gatito",
+      "nombre": "Gatito",
+      "palabra": "GATITO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#F4A259",
+        "color2": "#FFE8CC",
+        "orejas": "punta",
+        "cola": "larga",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/gatito.wav",
+      "escondites": [
+        {
+          "pos": [
+            855.0,
+            410.5
+          ],
+          "tamano": 100.0,
+          "espejo": true,
+          "visible": 0.66,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            817.0,
+            311.0,
+            76.0,
+            100.0
+          ],
+          "detras_de": "nido_1"
+        },
+        {
+          "pos": [
+            1617.0,
+            362.5
+          ],
+          "tamano": 100.0,
+          "espejo": true,
+          "visible": 0.67,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1579.0,
+            263.0,
+            76.0,
+            100.0
+          ],
+          "detras_de": "nido_2"
+        },
+        {
+          "pos": [
+            2308.5,
+            386.0
+          ],
+          "tamano": 100.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2275.0,
+            286.0,
+            71.0,
+            100.0
+          ],
+          "detras_de": "arbol_13"
+        }
+      ]
+    },
+    {
+      "id": "perezoso",
+      "nombre": "Perezoso",
+      "palabra": "PEREZOSO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#B9A07E",
+        "color2": "#E8DCC8",
+        "orejas": "ninguna",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.7,
+      "nombre_voz": "voces/animalia/nombres/perezoso.wav",
+      "escondites": [
+        {
+          "pos": [
+            1092.0,
+            530.0
+          ],
+          "tamano": 100.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1061.0,
+            452.0,
+            62.0,
+            78.0
+          ],
+          "dentro_de": "tronco_hueco_5"
+        },
+        {
+          "pos": [
+            687.0,
+            401.5
+          ],
+          "tamano": 100.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            663.0,
+            302.0,
+            55.0,
+            100.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            981.0,
+            383.0
+          ],
+          "tamano": 100.0,
+          "espejo": true,
+          "visible": 0.55,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            957.0,
+            283.0,
+            55.0,
+            100.0
+          ],
+          "detras_de": "arbol_4"
+        }
+      ]
+    },
+    {
+      "id": "pony",
+      "nombre": "Pony",
+      "palabra": "PONY",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#F7A8C8",
+        "color2": "#FFE3EE",
+        "orejas": "caballo",
+        "hocico": "largo",
+        "cuello": 0.35,
+        "crin": true,
+        "color_crin": "#B57EDC"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.2,
+      "nombre_voz": "voces/animalia/nombres/pony.wav",
+      "escondites": [
+        {
+          "pos": [
+            1660.0,
+            445.0
+          ],
+          "tamano": 110.0,
+          "espejo": true,
+          "visible": 0.61,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1602.0,
+            341.0,
+            116.0,
+            104.0
+          ],
+          "detras_de": "arbol_9"
+        },
+        {
+          "pos": [
+            1869.0,
+            545.0
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1811.0,
+            435.0,
+            96.0,
+            110.0
+          ],
+          "detras_de": "arbusto_11"
+        },
+        {
+          "pos": [
+            1767.0,
+            490.0
+          ],
+          "tamano": 110.0,
+          "espejo": false,
+          "visible": 0.57,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1709.0,
+            386.0,
+            116.0,
+            104.0
+          ],
+          "detras_de": "arbol_10"
+        }
+      ]
+    },
+    {
+      "id": "tucan",
+      "nombre": "Tucán",
+      "palabra": "TUCÁN",
+      "aspecto": {
+        "forma": "ave",
+        "color": "#3B3F55",
+        "color2": "#FFFFFF",
+        "color3": "#FF8A3D",
+        "pico": "grande"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/tucan.wav",
+      "escondites": [
+        {
+          "pos": [
+            899.0,
+            301.5
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.56,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            843.0,
+            213.0,
+            106.0,
+            64.0
+          ],
+          "detras_de": "arbol_4"
+        },
+        {
+          "pos": [
+            688.5,
+            399.0
+          ],
+          "tamano": 95.0,
+          "espejo": true,
+          "visible": 0.56,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            664.0,
+            310.0,
+            81.0,
+            89.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            855.0,
+            407.5
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.67,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            799.0,
+            319.0,
+            106.0,
+            89.0
+          ],
+          "detras_de": "nido_1"
+        }
+      ]
+    },
+    {
+      "id": "koala",
+      "nombre": "Koala",
+      "palabra": "KOALA",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#A9ADBB",
+        "color2": "#E6E8EF",
+        "orejas": "grandes",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.9,
+      "nombre_voz": "voces/animalia/nombres/koala.wav",
+      "escondites": [
+        {
+          "pos": [
+            1092.0,
+            530.0
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1053.0,
+            451.0,
+            77.0,
+            79.0
+          ],
+          "dentro_de": "tronco_hueco_5"
+        },
+        {
+          "pos": [
+            2210.0,
+            302.0
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2171.0,
+            207.0,
+            77.0,
+            53.0
+          ],
+          "detras_de": "arbol_13"
+        },
+        {
+          "pos": [
+            1819.0,
+            400.5
+          ],
+          "tamano": 95.0,
+          "espejo": false,
+          "visible": 0.65,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1780.0,
+            306.0,
+            77.0,
+            95.0
+          ],
+          "detras_de": "nido_3"
+        }
+      ]
+    },
+    {
+      "id": "burrito",
+      "nombre": "Burrito",
+      "palabra": "BURRITO",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#9AA0B5",
+        "color2": "#E6E6E6",
+        "orejas": "largas",
+        "hocico": "largo",
+        "cuello": 0.3
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.8,
+      "nombre_voz": "voces/animalia/nombres/burrito.wav",
+      "escondites": [
+        {
+          "pos": [
+            414.5,
+            456.0
+          ],
+          "tamano": 105.0,
+          "espejo": true,
+          "visible": 0.56,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            387.0,
+            357.0,
+            76.0,
+            99.0
+          ],
+          "detras_de": "helecho_0"
+        },
+        {
+          "pos": [
+            618.5,
+            527.0
+          ],
+          "tamano": 105.0,
+          "espejo": true,
+          "visible": 0.63,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            569.0,
+            451.0,
+            98.0,
+            76.0
+          ],
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            1646.5,
+            445.0
+          ],
+          "tamano": 105.0,
+          "espejo": false,
+          "visible": 0.59,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1598.0,
+            358.0,
+            98.0,
+            88.0
+          ],
+          "detras_de": "arbol_9"
+        }
+      ],
+      "saludo": "¡Yo soy el burrito, no el pony!"
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            280.0,
+            456.0
+          ],
+          "tamano": 70.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            254.0,
+            386.0,
+            40.0,
+            70.0
+          ],
+          "detras_de": "helecho_0"
+        },
+        {
+          "pos": [
+            2229.0,
+            509.0
+          ],
+          "tamano": 70.0,
+          "espejo": false,
+          "visible": 0.57,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2226.0,
+            439.0,
+            29.0,
+            70.0
+          ],
+          "detras_de": "arbol_13"
+        },
+        {
+          "pos": [
+            1617.0,
+            310.0
+          ],
+          "tamano": 70.0,
+          "espejo": true,
+          "visible": 0.55,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1591.0,
+            240.0,
+            52.0,
+            70.0
+          ],
+          "detras_de": "nido_2"
+        }
+      ],
+      "marca_especial": "animalia_huevo_z4"
+    }
+  ],
+  "objetivos": [
+    "mono",
+    "loro",
+    "buho",
+    "gatito",
+    "perezoso",
+    "pony",
+    "tucan",
+    "koala"
+  ],
+  "objetivos_por_partida": 7,
+  "objetivos_fijos": [],
+  "senuelos": [
+    "burrito"
+  ],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "uno",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": true,
+  "visible_min": 0.45,
+  "tamano_animal": 100.0,
+  "zona_toque_min_px": 96,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": true,
+  "tiempo_par_s": 150.0,
+  "sol": {
+    "factor_par": 2.2,
+    "minimo_reintento_s": 60
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 3,
+  "ayuda_idle_s": [
+    12,
+    20
+  ],
+  "pistas_cuestan_estrellita": false,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "umbrales_puntaje": {
+    "dos": 1900,
+    "tres": 3000
+  },
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/brote/intro.wav",
+    "instruccion": "voces/animalia/buscar/brote/instruccion.wav",
+    "ya_encontrado": "voces/animalia/buscar/brote/ya_encontrado.wav",
+    "derrota_gag": "voces/animalia/buscar/brote/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/brote/regalo.wav",
+    "record": "voces/animalia/buscar/brote/record.wav",
+    "primer_record": "voces/animalia/buscar/brote/primer_record.wav",
+    "descansar": "voces/animalia/buscar/brote/descansar.wav",
+    "cuenta_toby": "voces/animalia/buscar/brote/z4_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/brote/victoria_01.wav",
+      "voces/animalia/buscar/brote/victoria_02.wav"
+    ],
+    "busca": {
+      "mono": "voces/animalia/buscar/brote/busca_mono.wav",
+      "loro": "voces/animalia/buscar/brote/busca_loro.wav",
+      "buho": "voces/animalia/buscar/brote/busca_buho.wav",
+      "gatito": "voces/animalia/buscar/brote/busca_gatito.wav",
+      "perezoso": "voces/animalia/buscar/brote/busca_perezoso.wav",
+      "pony": "voces/animalia/buscar/brote/busca_pony.wav",
+      "tucan": "voces/animalia/buscar/brote/busca_tucan.wav",
+      "koala": "voces/animalia/buscar/brote/busca_koala.wav"
+    },
+    "senuelo": {
+      "burrito": "voces/animalia/buscar/senuelos/burrito.wav"
+    },
+    "secreto": {
+      "huevito": "voces/animalia/buscar/secretos/huevito.wav"
+    }
+  }
+}

@@ -1,0 +1,826 @@
+{
+  "id_nivel": "animalia_z3_buscar_semilla",
+  "motor": "buscar",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona3_pradera",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      1280.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#9FD8F2",
+        "#FFF4D6"
+      ],
+      "lejos": [
+        {
+          "y": 330.0,
+          "color": "#E3D58A",
+          "amp": 30,
+          "ondas": 2
+        },
+        {
+          "y": 360.0,
+          "color": "#D2C76C",
+          "amp": 20,
+          "ondas": 5
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#C9D46A",
+        "color2": "#AEBB52"
+      }
+    }
+  },
+  "objetos": [
+    {
+      "id": "roca_0",
+      "tipo": "roca",
+      "pos": [
+        330.0,
+        458.0
+      ],
+      "escala": 0.73,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "roca_1",
+      "tipo": "roca",
+      "pos": [
+        402.0,
+        495.0
+      ],
+      "escala": 0.73,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "acacia_2",
+      "tipo": "acacia",
+      "pos": [
+        459.0,
+        550.0
+      ],
+      "escala": 0.74,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_3",
+      "tipo": "arbusto",
+      "pos": [
+        541.0,
+        452.0
+      ],
+      "escala": 0.72,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "pasto_alto_4",
+      "tipo": "pasto_alto",
+      "pos": [
+        596.0,
+        509.0
+      ],
+      "escala": 0.81,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "camion_5",
+      "tipo": "camion",
+      "pos": [
+        670.0,
+        544.0
+      ],
+      "escala": 0.79,
+      "espejo": true,
+      "reaccion": "chorro",
+      "sonido": "sfx/ui/fuuush.ogg"
+    },
+    {
+      "id": "acacia_6",
+      "tipo": "acacia",
+      "pos": [
+        738.0,
+        447.0
+      ],
+      "escala": 0.7,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "pasto_alto_7",
+      "tipo": "pasto_alto",
+      "pos": [
+        816.0,
+        511.0
+      ],
+      "escala": 0.73,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_8",
+      "tipo": "arbusto",
+      "pos": [
+        893.0,
+        531.0
+      ],
+      "escala": 0.76,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "tronco_9",
+      "tipo": "tronco",
+      "pos": [
+        935.0,
+        450.0
+      ],
+      "escala": 0.75,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        566.0,
+        213.0
+      ],
+      "escala": 0.8,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        511.0,
+        356.0
+      ],
+      "escala": 0.67,
+      "z": 551.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "elefante",
+      "nombre": "Elefante",
+      "palabra": "ELEFANTE",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#9FA6BF",
+        "color2": "#D9DCE8",
+        "orejas": "elefante",
+        "hocico": "trompa",
+        "patas_gruesas": true,
+        "largo": 1.1
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.45,
+      "nombre_voz": "voces/animalia/nombres/elefante.wav",
+      "escondites": [
+        {
+          "pos": [
+            368.5,
+            506.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            260.0,
+            375.0,
+            216.0,
+            131.0
+          ],
+          "detras_de": "pasto_alto_4"
+        },
+        {
+          "pos": [
+            574.0,
+            508.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            466.0,
+            340.0,
+            216.0,
+            168.0
+          ],
+          "detras_de": "pasto_alto_7"
+        },
+        {
+          "pos": [
+            791.5,
+            541.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            683.0,
+            373.0,
+            216.0,
+            168.0
+          ],
+          "detras_de": "camion_5"
+        }
+      ]
+    },
+    {
+      "id": "cebra",
+      "nombre": "Cebra",
+      "palabra": "CEBRA",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#FFFFFF",
+        "color2": "#F2F2F2",
+        "orejas": "caballo",
+        "hocico": "largo",
+        "cuello": 0.4,
+        "crin": true,
+        "color_crin": "#3B3F55",
+        "patron": "rayas",
+        "color_patron": "#3B3F55"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.9,
+      "nombre_voz": "voces/animalia/nombres/cebra.wav",
+      "escondites": [
+        {
+          "pos": [
+            788.0,
+            541.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            693.0,
+            357.0,
+            191.0,
+            184.0
+          ],
+          "detras_de": "camion_5"
+        },
+        {
+          "pos": [
+            411.5,
+            546.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.95,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            316.0,
+            382.0,
+            191.0,
+            164.0
+          ],
+          "detras_de": "acacia_2"
+        },
+        {
+          "pos": [
+            764.0,
+            447.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            669.0,
+            263.0,
+            191.0,
+            184.0
+          ],
+          "detras_de": "tronco_9"
+        }
+      ],
+      "saludo": "¡Yo soy la cebra, no el caballo!"
+    },
+    {
+      "id": "jirafa",
+      "nombre": "Jirafa",
+      "palabra": "JIRAFA",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#FFC857",
+        "color2": "#FFE8A8",
+        "orejas": "caballo",
+        "cuernos": "jirafa",
+        "cuello": 1.2,
+        "patron": "manchas",
+        "color_patron": "#C97B3A",
+        "alto_patas": 1.3
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.0,
+      "nombre_voz": "voces/animalia/nombres/jirafa.wav",
+      "escondites": [
+        {
+          "pos": [
+            665.0,
+            449.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.86,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            597.0,
+            275.0,
+            136.0,
+            174.0
+          ],
+          "detras_de": "arbusto_3"
+        },
+        {
+          "pos": [
+            335.0,
+            506.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.83,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            267.0,
+            373.0,
+            106.0,
+            133.0
+          ],
+          "detras_de": "pasto_alto_4"
+        },
+        {
+          "pos": [
+            670.0,
+            500.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            602.0,
+            326.0,
+            136.0,
+            143.0
+          ],
+          "detras_de": "camion_5"
+        }
+      ]
+    },
+    {
+      "id": "caballo",
+      "nombre": "Caballo",
+      "palabra": "CABALLO",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#A0663C",
+        "color2": "#E8C9A8",
+        "orejas": "caballo",
+        "hocico": "largo",
+        "cuello": 0.45,
+        "crin": true,
+        "alto_patas": 1.3
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.8,
+      "nombre_voz": "voces/animalia/nombres/caballo.wav",
+      "escondites": [
+        {
+          "pos": [
+            935.0,
+            417.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.77,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            848.0,
+            233.0,
+            174.0,
+            143.0
+          ],
+          "detras_de": "tronco_9"
+        },
+        {
+          "pos": [
+            585.0,
+            508.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            498.0,
+            324.0,
+            174.0,
+            184.0
+          ],
+          "detras_de": "pasto_alto_7"
+        },
+        {
+          "pos": [
+            686.5,
+            449.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            600.0,
+            265.0,
+            174.0,
+            184.0
+          ],
+          "detras_de": "arbusto_3"
+        }
+      ]
+    },
+    {
+      "id": "oveja",
+      "nombre": "Oveja",
+      "palabra": "OVEJA",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#FFFFFF",
+        "color2": "#3B3F55",
+        "orejas": "redondas",
+        "cola": "pompon",
+        "patron": "manchas_claras"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.0,
+      "nombre_voz": "voces/animalia/nombres/oveja.wav",
+      "escondites": [
+        {
+          "pos": [
+            676.5,
+            449.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            623.0,
+            289.0,
+            107.0,
+            160.0
+          ],
+          "detras_de": "arbusto_3"
+        },
+        {
+          "pos": [
+            995.5,
+            528.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            942.0,
+            368.0,
+            107.0,
+            160.0
+          ],
+          "detras_de": "arbusto_8"
+        },
+        {
+          "pos": [
+            422.0,
+            546.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            368.0,
+            386.0,
+            107.0,
+            160.0
+          ],
+          "detras_de": "acacia_2"
+        }
+      ]
+    },
+    {
+      "id": "triceratops",
+      "nombre": "Trice",
+      "palabra": "TRICE",
+      "aspecto": {
+        "forma": "dino_cuernos",
+        "color": "#B57EDC",
+        "color2": "#E6CCF5",
+        "cuernos": "tri",
+        "patas_gruesas": true,
+        "hocico": "normal"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.6,
+      "nombre_voz": "voces/animalia/nombres/triceratops.wav",
+      "escondites": [
+        {
+          "pos": [
+            509.0,
+            546.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.89,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            407.0,
+            382.0,
+            205.0,
+            164.0
+          ],
+          "detras_de": "acacia_2"
+        },
+        {
+          "pos": [
+            564.5,
+            508.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.83,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            473.0,
+            324.0,
+            194.0,
+            184.0
+          ],
+          "detras_de": "pasto_alto_7"
+        },
+        {
+          "pos": [
+            990.0,
+            528.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            888.0,
+            344.0,
+            205.0,
+            184.0
+          ],
+          "detras_de": "arbusto_8"
+        }
+      ]
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            423.5,
+            506.0
+          ],
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.89,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            382.0,
+            394.0,
+            69.0,
+            112.0
+          ],
+          "detras_de": "pasto_alto_4"
+        },
+        {
+          "pos": [
+            511.0,
+            344.0
+          ],
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            470.0,
+            232.0,
+            83.0,
+            93.0
+          ],
+          "detras_de": "nido_0"
+        },
+        {
+          "pos": [
+            756.0,
+            447.0
+          ],
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            714.0,
+            335.0,
+            83.0,
+            100.0
+          ],
+          "detras_de": "tronco_9"
+        }
+      ],
+      "marca_especial": "animalia_huevo_z3"
+    }
+  ],
+  "objetivos": [
+    "elefante",
+    "cebra",
+    "jirafa",
+    "caballo",
+    "oveja",
+    "triceratops"
+  ],
+  "objetivos_por_partida": 6,
+  "objetivos_fijos": [],
+  "senuelos": [],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "libre",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": false,
+  "visible_min": 0.75,
+  "tamano_animal": 160.0,
+  "zona_toque_min_px": 160,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": false,
+  "tiempo_par_s": 40.0,
+  "sol": {
+    "factor_par": 3.0,
+    "minimo_reintento_s": 60
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "todos_asoman": true,
+    "sin_sol": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [
+    6,
+    10
+  ],
+  "pistas_cuestan_estrellita": false,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "escenas": 2,
+  "ruido_semilla_s": [
+    5,
+    8
+  ],
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/semilla/intro.wav",
+    "instruccion": "voces/animalia/buscar/semilla/instruccion.wav",
+    "otra_vez": "voces/animalia/buscar/semilla/otra_vez.wav",
+    "derrota_gag": "voces/animalia/buscar/semilla/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/semilla/regalo.wav",
+    "ayuda_fuerte": "voces/animalia/buscar/semilla/ayuda_fuerte.wav",
+    "cuenta_toby": "voces/animalia/buscar/semilla/z3_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/semilla/victoria_01.wav",
+      "voces/animalia/buscar/semilla/victoria_02.wav"
+    ],
+    "busca": {
+      "elefante": "voces/animalia/buscar/semilla/llama_elefante.wav",
+      "cebra": "voces/animalia/buscar/semilla/llama_cebra.wav",
+      "jirafa": "voces/animalia/buscar/semilla/llama_jirafa.wav",
+      "caballo": "voces/animalia/buscar/semilla/llama_caballo.wav",
+      "oveja": "voces/animalia/buscar/semilla/llama_oveja.wav",
+      "triceratops": "voces/animalia/buscar/semilla/llama_triceratops.wav"
+    },
+    "secreto": {
+      "huevito": "voces/animalia/buscar/secretos/huevito.wav"
+    }
+  }
+}
