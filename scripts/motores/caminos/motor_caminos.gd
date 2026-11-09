@@ -178,7 +178,18 @@ func _ready() -> void:
 	else:
 		_retomar_parcial()
 		_cargar_tablero(_i)
-		_voz("intro")
+		_presentar()
+
+
+## Intro de la estación y, la primera vez de cada hermano, la presentación de la nube (HE-124).
+func _presentar() -> void:
+	_voz("intro")
+	if presentacion_vista("caminos_nube") or limite_tormenta() <= 0.0:
+		return
+	await _esperar_voz_libre(8.0)
+	if is_inside_tree():
+		marcar_presentacion_vista("caminos_nube")
+		_voz("nube_presenta")
 
 
 ## Semilla del azar (giros y espejos): los arneses la fijan antes de entrar al árbol.
@@ -1328,10 +1339,10 @@ func _dibujar_hud() -> void:
 		_hud.draw_circle(Vector2(x1, y), 9, Color(1, 1, 1, 0.8))
 		var u := clampf(_t_tablero / limite, 0.0, 1.0)
 		var gris := 0.0 if _perfil == "semilla" else 0.35 + 0.5 * u
-		Dibujo.nube(_hud, Vector2(lerpf(x0, x1, u), y), 46.0, gris, _t)
+		Dibujo.nube(_hud, Vector2(lerpf(x0, x1, u), y), 46.0, gris, _t, _perfil == "semilla")
 	# Racha (Brote y Estrella).
 	if _perfil != "semilla" and turnos == null and logica.racha >= 2 and _fuente != null:
-		_texto(_hud, "×%d" % logica.racha, Vector2(1224, 610), 30, Color("#E8589C"))
+		_texto(_hud, "×%d" % logica.racha, Vector2(1224, 118), 30, Color("#E8589C"))
 
 
 func _dibujar_fin() -> void:

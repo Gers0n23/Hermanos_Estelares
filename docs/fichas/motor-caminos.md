@@ -448,3 +448,30 @@ Debe demostrar:
    domine el puzle?
 5. **[Abierta] Tablero compartido en equipo**: ¿les gusta que los hermanos armen **un mismo** tablero (más
    cooperativo, pero uno puede estorbar al otro) o cada uno arma su par en un tablero separado?
+
+## 17. Estado de implementación (HE-117, 09-Nov-2026)
+
+**Hecho y verificado** (arnés `herramientas/qa_test_caminos.gd`: 971 OK, 0 fallos, headless Godot 4.7.1):
+
+- Código: `scripts/motores/caminos/` (lógica, dibujo, motor) y `escenas/minijuegos/caminos/motor_caminos.tscn`.
+- Niveles: 17 archivos `caminos_*.json` en `datos/niveles/animalia/zona*/`, generados con
+  `herramientas/generar_niveles_caminos.py` (el solver `herramientas/solver_caminos.py` garantiza solución
+  única y que se llene todo el tablero). No se editan a mano.
+- Derrota real (política del PO del 05-Nov, cierra la pregunta §16.1): la nube de tormenta llega a los
+  3 × / 2,2 × / 1,6 × el tiempo par del tablero (Semilla / Brote / Estrella). Perder solo repite el tablero
+  y deja intactos los ya resueltos. Ayudas: regalo de un camino tras 2/2/3 derrotas; Maxi recibe ayuda
+  fuerte tras 3 (todos los caminos menos uno, sin tormenta); Nicole y Sofía, descanso tras 3/4.
+- Presentación de la nube la primera vez de cada hermano (`caminos_nube`, HE-124). En Semilla la nube es
+  "dormilona" (ojos cerrados, nunca se pone gris): el reloj existe, pero sin amenaza visual.
+- El contador de racha (×N) pasó de abajo a arriba a la derecha del HUD.
+- Voces: `herramientas/guion_voces_caminos.py` escribe `assets/audio/voces/animalia/caminos/lineas_tts.tsv`
+  (148 líneas, Toby). Textos provisionales hasta la revisión del guionista (HE-112). El motor solo
+  reproduce los archivos que existen, así que funciona sin los OGG.
+
+**Sin verificar todavía:**
+
+- No hay simulación de jugador humano para este motor (es un puzle, no reflejos): la tasa de victoria al
+  primer intento (meta HE-124: 90 / 75 / 60 %) no está medida. Los factores de tormenta son una estimación
+  y se ajustan en el playtest. Si Sofía pierde más de 1 de cada 3 tableros de z4–z5, sube a 1,8 ×.
+- Siguen abiertas las preguntas §16.2 a §16.5.
+- Falta grabar las voces (TTS local).

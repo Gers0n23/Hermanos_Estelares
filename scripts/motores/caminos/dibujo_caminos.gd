@@ -957,7 +957,7 @@ static func puente(ci: CanvasItem, c: Vector2, lado: float) -> void:
 
 
 ## Nubecita del relojito (0 blanca, 1 gris de tormenta).
-static func nube(ci: CanvasItem, c: Vector2, s: float, gris: float, t: float) -> void:
+static func nube(ci: CanvasItem, c: Vector2, s: float, gris: float, t: float, dormida := false) -> void:
 	var color := Color("#FFFFFF").lerp(Color("#8C93A8"), gris)
 	var puntos := [Vector2(-0.5, 0.1), Vector2(-0.15, -0.2), Vector2(0.25, -0.15), Vector2(0.55, 0.1), Vector2(0.0, 0.2)]
 	for p in puntos:
@@ -965,8 +965,15 @@ static func nube(ci: CanvasItem, c: Vector2, s: float, gris: float, t: float) ->
 	for p in puntos:
 		ci.draw_circle(c + p * s, s * 0.32, color)
 	for k in 2:
-		ci.draw_circle(c + Vector2((k * 2 - 1) * s * 0.18, s * 0.02), s * 0.05, TINTA)
-	ci.draw_arc(c + Vector2(0, s * 0.08), s * 0.1, 0.3, PI - 0.3, 8, TINTA, 2.5, true)
+		var ojo := c + Vector2((k * 2 - 1) * s * 0.18, s * 0.02)
+		if dormida:
+			ci.draw_arc(ojo, s * 0.06, 0.2, PI - 0.2, 8, TINTA, 2.5, true)
+		else:
+			ci.draw_circle(ojo, s * 0.05, TINTA)
+	if dormida:
+		ci.draw_circle(c + Vector2(0, s * 0.14), s * 0.04 + s * 0.02 * sin(t * 2.0), TINTA)
+	else:
+		ci.draw_arc(c + Vector2(0, s * 0.08), s * 0.1, 0.3, PI - 0.3, 8, TINTA, 2.5, true)
 
 
 ## Paraguas de hoja sobre un animal sin casa (tormenta).
