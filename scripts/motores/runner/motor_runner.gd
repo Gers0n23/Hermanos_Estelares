@@ -867,7 +867,7 @@ func _dibujar_corredor() -> void:
 	if id == "tres_dinos" and (_fase == "corriendo" or _fase == "intro" or _fase == "fiesta_meta"):
 		# Los tres dinos en fila: saltan en cadena con el mismo toque (solo dibujo).
 		for q in [2, 1]:
-			var retraso := q * 0.13
+			var retraso: float = q * 0.13
 			var yq := _altura_en(logica.t_aire - retraso) if logica.fase_salto == "aire" else 0.0
 			var pq := Vector2(pies.x - q * 120.0, _suelo - yq)
 			var otra := pose.duplicate()
@@ -989,7 +989,7 @@ func _dibujar_corazones() -> void:
 		else:
 			_hud.draw_polyline(Dibujos.corazon_pts(c, lado * 0.9) + PackedVector2Array([Dibujos.corazon_pts(c, lado * 0.9)[0]]), Color(1, 1, 1, 0.65), 3.0, true)
 	for cv in _corazones_volando:
-		var a := 1.0 - cv["t"] / 1.4
+		var a: float = 1.0 - cv["t"] / 1.4
 		_hud.draw_set_transform(cv["pos"], sin(cv["t"] * 8.0) * 0.6, Vector2.ONE)
 		_hud.draw_colored_polygon(Dibujos.corazon_pts(Vector2.ZERO, lado * 0.8), Color(ROSA_CORAZON, a))
 		_hud.draw_set_transform_matrix(Transform2D.IDENTITY)

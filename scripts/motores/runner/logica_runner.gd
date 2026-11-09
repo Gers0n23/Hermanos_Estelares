@@ -63,6 +63,8 @@ var hueco_min_s := 1.5
 var factor_max := 1.5
 var grupo_max := 1
 var repetidos_max := 2
+## Margen humano (s) que debe sobrar en la ventana de salto de un grupo; si no, el grupo se achica.
+var margen_ventana := MARGEN_VENTANA_S
 var aereos: Dictionary = {}
 var blandos := false
 var burbuja_cfg: Dictionary = {}
@@ -183,6 +185,7 @@ func aplicar_parametros(nivel: Dictionary) -> void:
 	factor_max = maxf(1.0, float(h.get("factor_max", 1.5)))
 	grupo_max = clampi(int(h.get("grupo_max", 1)), 1, 3)
 	repetidos_max = maxi(1, int(h.get("repetidos_max", 2)))
+	margen_ventana = float(h.get("margen_ventana_s", MARGEN_VENTANA_S))
 	aereos = nivel.get("aereos", {}) if nivel.get("aereos", null) is Dictionary else {}
 	blandos = bool(nivel.get("obstaculos_blandos", false))
 	burbuja_cfg = nivel.get("burbuja", {}) if nivel.get("burbuja", null) is Dictionary else {}
@@ -560,7 +563,7 @@ func es_saltable(d: Dictionary, n: int, v: float) -> bool:
 	var ventana := duracion_salto * sqrt(1.0 - arriba / altura_salto)
 	var ancho_caja := caja_x_ancho(float(tam[0]), n)
 	var cruce := (ancho_caja + corredor_ancho * corredor_caja.x) / maxf(1.0, v)
-	return ventana - cruce >= MARGEN_VENTANA_S
+	return ventana - cruce >= (MARGEN_VENTANA_S if n == 1 else margen_ventana)
 
 
 # --- Cajas ---
@@ -744,7 +747,8 @@ func _quizas_item(fin_x: float, hueco_px: float, hueco_s: float) -> void:
 		_proximo_item_s = _sortear_item_s()
 	var ids: Array = item_cfg.get("ids", [item_cfg.get("id", "item")])
 	var id := "burbuja" if tipo == "burbuja" else str(ids[rng.randi() % ids.size()])
-	items.append({"id": id, "tipo": tipo, "x": fin_x + hueco_px * 0.5, "altura": altura, "radio": radio, "tomado": false})
+	_sid += 1
+	items.append({"sid": _sid, "id": id, "tipo": tipo, "x": fin_x + hueco_px * 0.5, "altura": altura, "radio": radio, "tomado": false})
 
 
 # ---------------------------------------------------------------------------
@@ -771,13 +775,13 @@ func _hitos_de_carrera() -> void:
 		meta_alcanzada = true
 		puntos += float(puntos_cfg.get("meta", 200))
 		corazones = maxi(corazones, corazones_max)
+		# El estado cambia ANTES de avisar: quien escucha `meta` ya sabe si sigue el tramo del récord.
+		estado = "terminado" if tramo_s == 0.0 else "tramo"
+		t_tramo = 0.0
 		meta.emit()
-		if tramo_s == 0.0:
-			estado = "terminado"
+		if estado == "terminado":
 			fin_carrera.emit(int(puntos), "meta")
 			return
-		estado = "tramo"
-		t_tramo = 0.0
 	if estado == "tramo" and tramo_s > 0.0 and t_tramo >= tramo_s:
 		puntos += float(puntos_cfg.get("final", 300))
 		estado = "terminado"

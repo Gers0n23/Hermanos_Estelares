@@ -50,8 +50,8 @@
       "id": "hongo",
       "dibujo": "hongo",
       "tamano": [
-        80,
-        80
+        75,
+        65
       ],
       "tipo": "suelo"
     },
@@ -110,10 +110,11 @@
     "variable": null
   },
   "huecos": {
-    "min_s": 1.4,
+    "min_s": 1.9,
     "factor_max": 1.5,
     "grupo_max": 2,
-    "repetidos_max": 2
+    "repetidos_max": 2,
+    "margen_ventana_s": 0.32
   },
   "aereos": {
     "desde_s": 0,
@@ -121,13 +122,13 @@
       "aereo_alto",
       "aereo_bajo"
     ],
-    "p": 0.25
+    "p": 0.1
   },
   "obstaculos_blandos": false,
   "corazones": 2,
   "invulnerable_golpe_s": 1.0,
   "burbuja": null,
-  "meta_s": 95,
+  "meta_s": 42,
   "tramo_record_s": 45,
   "banderita_mitad": true,
   "regalo_tras_derrotas": 2,
@@ -173,5 +174,9 @@
     "primer_record": "voces/animalia/runner/primer_record.wav",
     "aereo_presenta": "voces/animalia/runner/aereo_presenta.wav",
     "mitad": "voces/animalia/runner/banderita_mitad.wav"
+  },
+  "umbrales_puntaje": {
+    "dos": 580,
+    "tres": 750
   }
 }
