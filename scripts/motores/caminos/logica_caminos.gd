@@ -108,7 +108,7 @@ func configurar(celdas: Array, sol: Dictionary = {}) -> void:
 	pares.sort()
 	solucion.clear()
 	for p in sol:
-		var lista: Array[int] = []
+		var lista := []
 		for xy in sol[p]:
 			lista.append(int(xy[0]) + int(xy[1]) * ancho)
 		solucion[str(p)] = lista
@@ -123,7 +123,7 @@ func reiniciar() -> void:
 	trazos.clear()
 	llegadas_contadas.clear()
 	for p in pares:
-		caminos[p] = [] as Array[int]
+		caminos[p] = []
 		llegado[p] = false
 		trazos[p] = 0
 	trazo_par = ""
@@ -329,7 +329,7 @@ func empezar(i: int, par_forzado := "") -> String:
 		var tenia := (caminos[p] as Array).size() > 1
 		if llegado[p]:
 			_romper_racha()
-		caminos[p] = [i] as Array[int]
+		caminos[p] = [i]
 		llegado[p] = false
 		if tenia:
 			camino_cambio.emit(p)
@@ -457,7 +457,7 @@ func _cortar(q: String, n: int, quien: String) -> bool:
 	if llegado[q]:
 		llegado[q] = false
 	_romper_racha()
-	caminos[q] = c.slice(0, k) as Array[int]
+	caminos[q] = c.slice(0, k)
 	camino_cortado.emit(q, n)
 	camino_cambio.emit(q)
 	return true
@@ -484,7 +484,7 @@ func _restaurar_cortes() -> void:
 				break
 		var actual: Array = caminos[q]
 		if largo > actual.size():
-			caminos[q] = original.slice(0, largo) as Array[int]
+			caminos[q] = original.slice(0, largo)
 			if largo == original.size() and original[-1] == _meta_de_lista(q, original):
 				llegado[q] = true
 			camino_cambio.emit(q)
@@ -509,7 +509,7 @@ func _truncar(p: String, k: int) -> void:
 		if llegado[p]:
 			llegado[p] = false
 			_romper_racha()
-		caminos[p] = c.slice(0, k + 1) as Array[int]
+		caminos[p] = c.slice(0, k + 1)
 
 
 ## Dedo rápido: el camino ortogonal más corto (BFS) desde la cabeza hasta `destino`, de hasta `atraso_max`
@@ -626,7 +626,7 @@ func barrer() -> void:
 			continue
 		if (caminos[p] as Array).size() > 0:
 			hubo = true
-		caminos[p] = [] as Array[int]
+		caminos[p] = []
 		llegado[p] = false
 	trazo_par = ""
 	_cortes.clear()
@@ -638,7 +638,7 @@ func barrer() -> void:
 
 ## Borra el camino de un par (válvula de Toby, gag del equipo). Si estaba llegado, deja de estarlo.
 func borrar_camino(p: String) -> void:
-	caminos[p] = [] as Array[int]
+	caminos[p] = []
 	llegado[p] = false
 	fijos.erase(p)
 	if trazo_par == p:
@@ -691,7 +691,7 @@ func colocar_solucion(p: String) -> bool:
 				var ks := s.find(celda)
 				if _eje_lista(s, ks) != _eje_en(q, k):
 					continue
-			caminos[q] = c.slice(0, k) as Array[int]
+			caminos[q] = c.slice(0, k)
 			if llegado[q]:
 				llegado[q] = false
 			fijos.erase(q)
@@ -699,7 +699,7 @@ func colocar_solucion(p: String) -> bool:
 			camino_cambio.emit(q)
 			break
 	trazos[p] = maxi(1, int(trazos.get(p, 0)))
-	caminos[p] = s.duplicate() as Array[int]
+	caminos[p] = s.duplicate()
 	llegado[p] = false
 	camino_cambio.emit(p)
 	llegado[p] = true
@@ -748,13 +748,13 @@ func colocar_ruta(p: String, ruta: Array[int]) -> void:
 		var c: Array = caminos[q]
 		for k in range(1, c.size()):
 			if ruta.has(c[k]):
-				caminos[q] = c.slice(0, k) as Array[int]
+				caminos[q] = c.slice(0, k)
 				llegado[q] = false
 				camino_cortado.emit(q, c[k])
 				camino_cambio.emit(q)
 				break
 	trazos[p] = maxi(1, int(trazos.get(p, 0)))
-	caminos[p] = ruta.duplicate() as Array[int]
+	caminos[p] = ruta.duplicate()
 	camino_cambio.emit(p)
 	llegado[p] = true
 	_al_llegar(p)
@@ -820,7 +820,9 @@ func _buscar(pendientes: Array[String], ocupadas: Dictionary, profundidad: int) 
 	while x != -1:
 		nuevas[x] = p
 		x = previo[x]
-	var resto: Array[String] = pendientes.slice(1)
+	var resto: Array[String] = []
+	for q in pendientes.slice(1):
+		resto.append(q)
 	return _buscar(resto, nuevas, profundidad + 1)
 
 

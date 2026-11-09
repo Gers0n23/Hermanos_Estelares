@@ -241,7 +241,7 @@ class _Busqueda:
     def completo(self):
         if not self.llenar:
             return True
-        if any(o is None for o in self.occ):
+        if any(o is None for i, o in enumerate(self.occ) if i not in self.t.puentes):
             return False
         return all(v[0] is not None and v[1] is not None for v in self.occ_p.values())
 
@@ -393,7 +393,7 @@ def validar_nivel(ruta):
         if errores:
             problemas.append("%s: %s" % (tab["id"], "; ".join(errores[:3])))
             continue
-        if llenar:
+        if llenar and tab.get("solucion_unica", True):
             n, _, agotado = contar_soluciones(filas, True, 2, 2_000_000)
             if n != 1 or agotado:
                 problemas.append("%s: %s" % (tab["id"], "sin agotar: %d soluciones" % n if not agotado else "busqueda agotada"))

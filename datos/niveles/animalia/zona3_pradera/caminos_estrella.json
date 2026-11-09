@@ -1,0 +1,545 @@
+{
+  "id_nivel": "animalia_z3_caminos_estrella",
+  "motor": "caminos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona3_pradera",
+  "tema": "La Pradera de las Jirafas",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#F3E6A0",
+    "suelo": "#D9C46A",
+    "zona": 3
+  },
+  "llenar": true,
+  "casas": "habitat",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": false,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "f#E.....",
+        ".Fc.....",
+        "...g....",
+        "........",
+        ".D.+..e.",
+        "....C.G#",
+        ".b....BA",
+        "d#....a."
+      ],
+      "pares": {
+        "A": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "guanaco",
+          "casa": "estepa",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "condor",
+          "casa": "cumbre",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "alpaca",
+          "casa": "bofedal",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "panda",
+          "casa": "bambu",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 85,
+      "solucion": {
+        "A": [[7, 6], [7, 7], [6, 7]],
+        "B": [[6, 6], [5, 6], [5, 7], [4, 7], [4, 6], [3, 6], [3, 7], [2, 7], [2, 6], [2, 5], [1, 5], [1, 6]],
+        "C": [[4, 5], [3, 5], [3, 4], [3, 3], [4, 3], [5, 3], [6, 3], [6, 2], [6, 1], [5, 1], [5, 2], [4, 2], [4, 1], [3, 1], [2, 1]],
+        "D": [[1, 4], [1, 3], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7]],
+        "E": [[2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [6, 4]],
+        "F": [[1, 1], [1, 2], [0, 2], [0, 1], [0, 0]],
+        "G": [[6, 5], [5, 5], [5, 4], [4, 4], [3, 4], [2, 4], [2, 3], [2, 2], [3, 2]]
+      },
+      "solucion_unica": false
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "..#...e.",
+        "..#...G.",
+        "..D.g...",
+        ".B..A.E.",
+        ".a+...#C",
+        ".d.b....",
+        "........",
+        "f.....Fc"
+      ],
+      "pares": {
+        "A": {
+          "animal": "guanaco",
+          "casa": "estepa",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "huemul",
+          "casa": "cordillera_nevada",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "alpaca",
+          "casa": "bofedal",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "panda",
+          "casa": "bambu",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 85,
+      "solucion": {
+        "A": [[4, 3], [5, 3], [5, 4], [4, 4], [3, 4], [2, 4], [1, 4]],
+        "B": [[1, 3], [1, 2], [1, 1], [1, 0], [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 6], [2, 6], [3, 6], [3, 5]],
+        "C": [[7, 4], [7, 5], [7, 6], [7, 7]],
+        "D": [[2, 2], [3, 2], [3, 3], [2, 3], [2, 4], [2, 5], [1, 5]],
+        "E": [[6, 3], [7, 3], [7, 2], [7, 1], [7, 0], [6, 0]],
+        "F": [[6, 7], [6, 6], [6, 5], [5, 5], [4, 5], [4, 6], [5, 6], [5, 7], [4, 7], [3, 7], [2, 7], [1, 7], [0, 7]],
+        "G": [[6, 1], [6, 2], [5, 2], [5, 1], [5, 0], [4, 0], [3, 0], [3, 1], [4, 1], [4, 2]]
+      },
+      "solucion_unica": false
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        "...CA.a#",
+        "..c..B.b",
+        "f#e+.E..",
+        "........",
+        "..d#.DGF",
+        ".....g..",
+        "........",
+        "........"
+      ],
+      "pares": {
+        "A": {
+          "animal": "guanaco",
+          "casa": "estepa",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "panda",
+          "casa": "bambu",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "condor",
+          "casa": "cumbre",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "alpaca",
+          "casa": "bofedal",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 85,
+      "solucion": {
+        "A": [[4, 0], [5, 0], [6, 0]],
+        "B": [[5, 1], [4, 1], [3, 1], [3, 2], [3, 3], [4, 3], [5, 3], [6, 3], [7, 3], [7, 2], [6, 2], [6, 1], [7, 1]],
+        "C": [[3, 0], [2, 0], [1, 0], [0, 0], [0, 1], [1, 1], [2, 1]],
+        "D": [[5, 4], [4, 4], [4, 5], [3, 5], [2, 5], [1, 5], [1, 4], [1, 3], [2, 3], [2, 4]],
+        "E": [[5, 2], [4, 2], [3, 2], [2, 2]],
+        "F": [[7, 4], [7, 5], [7, 6], [7, 7], [6, 7], [6, 6], [5, 6], [5, 7], [4, 7], [4, 6], [3, 6], [3, 7], [2, 7], [2, 6], [1, 6], [1, 7], [0, 7], [0, 6], [0, 5], [0, 4], [0, 3], [0, 2]],
+        "G": [[6, 4], [6, 5], [5, 5]]
+      },
+      "solucion_unica": false
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        "......d.",
+        "..a...B.",
+        "..E.....",
+        "b..#A.C.",
+        "#.+..D#.",
+        "...G..c.",
+        "....g.F.",
+        "..e.f..."
+      ],
+      "pares": {
+        "A": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "panda",
+          "casa": "bambu",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "guanaco",
+          "casa": "estepa",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "huemul",
+          "casa": "cordillera_nevada",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "alpaca",
+          "casa": "bofedal",
+          "color": "#FF7EB6"
+        }
+      },
+      "tiempo_par_s": 85,
+      "solucion": {
+        "A": [[4, 3], [4, 4], [3, 4], [2, 4], [1, 4], [1, 3], [1, 2], [1, 1], [2, 1]],
+        "B": [[6, 1], [5, 1], [5, 0], [4, 0], [4, 1], [4, 2], [3, 2], [3, 1], [3, 0], [2, 0], [1, 0], [0, 0], [0, 1], [0, 2], [0, 3]],
+        "C": [[6, 3], [7, 3], [7, 4], [7, 5], [6, 5]],
+        "D": [[5, 4], [5, 3], [5, 2], [6, 2], [7, 2], [7, 1], [7, 0], [6, 0]],
+        "E": [[2, 2], [2, 3], [2, 4], [2, 5], [1, 5], [0, 5], [0, 6], [0, 7], [1, 7], [1, 6], [2, 6], [3, 6], [3, 7], [2, 7]],
+        "F": [[6, 6], [7, 6], [7, 7], [6, 7], [5, 7], [4, 7]],
+        "G": [[3, 5], [4, 5], [5, 5], [5, 6], [4, 6]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "alpaca": {
+      "nombre": "alpaca",
+      "huella": "pezuna",
+      "tono": 1.1,
+      "dibujo": {
+        "cuerpo": "#F3E3C3",
+        "detalle": "#FFF8EA",
+        "oscuro": "#B8A07A",
+        "cabeza": "alargada",
+        "orejas": "punta",
+        "hocico": "morro",
+        "extras": [
+          "copete"
+        ]
+      }
+    },
+    "camello": {
+      "nombre": "camello",
+      "huella": "pezuna",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#D9A35F",
+        "detalle": "#F0D2A4",
+        "oscuro": "#9A6A34",
+        "cabeza": "alargada",
+        "orejas": "pequenas",
+        "hocico": "morro",
+        "extras": [
+          "jorobita"
+        ]
+      }
+    },
+    "condor": {
+      "nombre": "cóndor",
+      "huella": "plumita",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#2B2B2B",
+        "detalle": "#FFFFFF",
+        "oscuro": "#D98A8A",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_curvo",
+        "extras": [
+          "golilla",
+          "cabeza_rosada"
+        ]
+      }
+    },
+    "guanaco": {
+      "nombre": "guanaco",
+      "huella": "pezuna",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#D49A5E",
+        "detalle": "#F2DCC0",
+        "oscuro": "#8A8A8A",
+        "cabeza": "alargada",
+        "orejas": "punta",
+        "hocico": "morro",
+        "extras": [
+          "cara_gris"
+        ]
+      }
+    },
+    "huemul": {
+      "nombre": "huemul",
+      "huella": "pezuna",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#9C7A55",
+        "detalle": "#E2CFB4",
+        "oscuro": "#5A4028",
+        "cabeza": "alargada",
+        "orejas": "punta",
+        "hocico": "morro",
+        "extras": [
+          "astas"
+        ]
+      }
+    },
+    "jirafa": {
+      "nombre": "jirafa",
+      "huella": "pezuna",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#F6C35B",
+        "detalle": "#FFE7A8",
+        "oscuro": "#B9772E",
+        "cabeza": "alargada",
+        "orejas": "laterales",
+        "hocico": "morro",
+        "extras": [
+          "osiconos",
+          "manchas"
+        ]
+      }
+    },
+    "panda": {
+      "nombre": "panda",
+      "huella": "pata",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#FFFFFF",
+        "detalle": "#FFFFFF",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "redondas_oscuras",
+        "hocico": "nariz",
+        "extras": [
+          "antifaz_panda"
+        ]
+      }
+    },
+    "pudu": {
+      "nombre": "pudú",
+      "huella": "pezuna",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#A0683A",
+        "detalle": "#E0B88A",
+        "oscuro": "#5A3A1E",
+        "cabeza": "redonda",
+        "orejas": "redondas",
+        "hocico": "nariz",
+        "extras": [
+          "cuernitos",
+          "mejillas"
+        ]
+      }
+    },
+    "acacia": {
+      "nombre": "la acacia",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#7DB04A",
+        "color2": "#8A5A36",
+        "variante": "acacia"
+      }
+    },
+    "bambu": {
+      "nombre": "el bambú",
+      "dibujo": {
+        "tipo": "bambu",
+        "color": "#7FC85A",
+        "color2": "#4E8F3A",
+        "variante": ""
+      }
+    },
+    "bofedal": {
+      "nombre": "el bofedal del altiplano",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#6CC0A8",
+        "color2": "#C8E07A",
+        "variante": "bofedal"
+      }
+    },
+    "bosque_lluvioso": {
+      "nombre": "el bosque lluvioso",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#2E8A4A",
+        "color2": "#5CC8F0",
+        "variante": "lluvioso"
+      }
+    },
+    "cordillera_nevada": {
+      "nombre": "la cordillera nevada",
+      "dibujo": {
+        "tipo": "montana",
+        "color": "#7A8AA0",
+        "color2": "#FFFFFF",
+        "variante": "nevada"
+      }
+    },
+    "cumbre": {
+      "nombre": "la cumbre",
+      "dibujo": {
+        "tipo": "montana",
+        "color": "#8A7A6A",
+        "color2": "#FFFFFF",
+        "variante": "cumbre"
+      }
+    },
+    "desierto": {
+      "nombre": "el desierto",
+      "dibujo": {
+        "tipo": "arena",
+        "color": "#F2C878",
+        "color2": "#7FB86A",
+        "variante": "desierto"
+      }
+    },
+    "estepa": {
+      "nombre": "la estepa patagónica",
+      "dibujo": {
+        "tipo": "pasto",
+        "color": "#D8C88A",
+        "color2": "#A8B87A",
+        "variante": "estepa"
+      }
+    }
+  },
+  "puntos": {
+    "llegada": 100,
+    "racha_max": 5,
+    "tablero": 300,
+    "sin_borrones": 300,
+    "por_segundo": 10
+  },
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": {
+    "trazos_de_mas": 1,
+    "intentos_casa": 0
+  },
+  "tiempo_par": true,
+  "tormenta": {
+    "factor_par": 1.6
+  },
+  "regalo_tras_derrotas": 3,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "ayuda_idle_s": [],
+  "valvula_s": 0,
+  "pistas_cuestan_estrellita": true,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona3/estrella_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona3/estrella_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_estrella_01.wav",
+      "voces/animalia/caminos/comun/victoria_estrella_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_estrella.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_estrella.wav",
+    "nombres": {
+      "alpaca": "voces/animalia/nombres/alpaca.wav",
+      "camello": "voces/animalia/nombres/camello.wav",
+      "condor": "voces/animalia/nombres/condor.wav",
+      "guanaco": "voces/animalia/nombres/guanaco.wav",
+      "huemul": "voces/animalia/nombres/huemul.wav",
+      "jirafa": "voces/animalia/nombres/jirafa.wav",
+      "panda": "voces/animalia/nombres/panda.wav",
+      "pudu": "voces/animalia/nombres/pudu.wav"
+    },
+    "descansar": "voces/animalia/caminos/comun/descansar.wav",
+    "faltan_flores": "voces/animalia/caminos/comun/faltan_flores.wav",
+    "record": "voces/animalia/caminos/comun/record.wav",
+    "primer_record": "voces/animalia/caminos/comun/primer_record.wav",
+    "sin_borrones": "voces/animalia/caminos/comun/sin_borrones.wav",
+    "casa_ajena": [
+      "voces/animalia/caminos/comun/casa_ajena_01.wav",
+      "voces/animalia/caminos/comun/casa_ajena_02.wav"
+    ],
+    "pista_usada": "voces/animalia/caminos/comun/pista_usada.wav",
+    "habitats": {
+      "acacia": "voces/animalia/caminos/habitats/acacia.wav",
+      "bambu": "voces/animalia/caminos/habitats/bambu.wav",
+      "bofedal": "voces/animalia/caminos/habitats/bofedal.wav",
+      "bosque_lluvioso": "voces/animalia/caminos/habitats/bosque_lluvioso.wav",
+      "cordillera_nevada": "voces/animalia/caminos/habitats/cordillera_nevada.wav",
+      "cumbre": "voces/animalia/caminos/habitats/cumbre.wav",
+      "desierto": "voces/animalia/caminos/habitats/desierto.wav",
+      "estepa": "voces/animalia/caminos/habitats/estepa.wav"
+    }
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "id_nivel": "animalia_z1_caminos_semilla",
+  "motor": "caminos",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "tema": "El Campamento de Toby",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#BFE59A",
+    "suelo": "#8CCB6A",
+    "zona": 1
+  },
+  "llenar": false,
+  "casas": "color",
+  "cortar_ajenos": false,
+  "animal_bajo_dedo": true,
+  "iman_casa": 1,
+  "empezar_desde_casa": false,
+  "histeresis": 0.25,
+  "atraso_max_celdas": 4,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "A..a",
+        "B..b",
+        "...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "gallina",
+          "casa": "gallinero",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "vaca",
+          "casa": "granero",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 15,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[0, 1], [1, 1], [2, 1], [3, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "A..a",
+        "....",
+        "B..b"
+      ],
+      "pares": {
+        "A": {
+          "animal": "pato",
+          "casa": "laguna",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "gato",
+          "casa": "canasto",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 15,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[0, 2], [1, 2], [2, 2], [3, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        "A..a",
+        "b..B",
+        "...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "perro",
+          "casa": "casita_perro",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "gallina",
+          "casa": "gallinero",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 15,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[3, 1], [2, 1], [1, 1], [0, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        "....",
+        "b..B",
+        "A..a"
+      ],
+      "pares": {
+        "A": {
+          "animal": "vaca",
+          "casa": "granero",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "gato",
+          "casa": "canasto",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 15,
+      "solucion": {
+        "A": [[0, 2], [1, 2], [2, 2], [3, 2]],
+        "B": [[3, 1], [2, 1], [1, 1], [0, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t5",
+      "celdas": [
+        "....",
+        "B..b",
+        "A..a"
+      ],
+      "pares": {
+        "A": {
+          "animal": "pato",
+          "casa": "laguna",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "perro",
+          "casa": "casita_perro",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 15,
+      "solucion": {
+        "A": [[0, 2], [1, 2], [2, 2], [3, 2]],
+        "B": [[0, 1], [1, 1], [2, 1], [3, 1]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "gallina": {
+      "nombre": "gallina",
+      "huella": "ave",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#FFFFFF",
+        "detalle": "#FFB52E",
+        "oscuro": "#E8434B",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico",
+        "extras": [
+          "cresta"
+        ]
+      }
+    },
+    "gato": {
+      "nombre": "gato",
+      "huella": "pata",
+      "tono": 1.1,
+      "dibujo": {
+        "cuerpo": "#F2A65A",
+        "detalle": "#FFE7CC",
+        "oscuro": "#C9742E",
+        "cabeza": "redonda",
+        "orejas": "punta",
+        "hocico": "nariz",
+        "extras": [
+          "rayas",
+          "bigotes"
+        ]
+      }
+    },
+    "pato": {
+      "nombre": "pato",
+      "huella": "pato",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#FFD84A",
+        "detalle": "#FF9F2E",
+        "oscuro": "#C98A10",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_pato",
+        "extras": [
+          "penacho"
+        ]
+      }
+    },
+    "perro": {
+      "nombre": "perro",
+      "huella": "pata",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#C98A4B",
+        "detalle": "#F6E3C6",
+        "oscuro": "#7A4A26",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mancha_ojo"
+        ]
+      }
+    },
+    "vaca": {
+      "nombre": "vaca",
+      "huella": "pezuna",
+      "tono": 0.7,
+      "dibujo": {
+        "cuerpo": "#FFFFFF",
+        "detalle": "#F7B7C4",
+        "oscuro": "#3A3A3A",
+        "cabeza": "ancha",
+        "orejas": "laterales",
+        "hocico": "morro",
+        "extras": [
+          "manchas",
+          "cuernos"
+        ]
+      }
+    },
+    "canasto": {
+      "nombre": "el canasto",
+      "dibujo": {
+        "tipo": "canasto",
+        "color": "#D9A35F",
+        "color2": "#FF9CC0",
+        "variante": ""
+      }
+    },
+    "casita_perro": {
+      "nombre": "la casita",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#E8434B",
+        "color2": "#F6E3C6",
+        "variante": ""
+      }
+    },
+    "gallinero": {
+      "nombre": "el gallinero",
+      "dibujo": {
+        "tipo": "gallinero",
+        "color": "#E8A23A",
+        "color2": "#FFF1C8",
+        "variante": ""
+      }
+    },
+    "granero": {
+      "nombre": "el granero",
+      "dibujo": {
+        "tipo": "granero",
+        "color": "#C8463C",
+        "color2": "#FFFFFF",
+        "variante": ""
+      }
+    },
+    "laguna": {
+      "nombre": "la laguna",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#5CC8F0",
+        "color2": "#9BE07A",
+        "variante": "laguna"
+      }
+    }
+  },
+  "puntos": null,
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": null,
+  "tiempo_par": false,
+  "tormenta": {
+    "factor_par": 3.0
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "caminos_regalados": "todos_menos_uno",
+    "sin_tormenta": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [6, 10],
+  "valvula_s": 6,
+  "pistas_cuestan_estrellita": false,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona1/semilla_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona1/semilla_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_semilla_01.wav",
+      "voces/animalia/caminos/comun/victoria_semilla_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_semilla.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_semilla.wav",
+    "nombres": {
+      "gallina": "voces/animalia/nombres/gallina.wav",
+      "gato": "voces/animalia/nombres/gato.wav",
+      "pato": "voces/animalia/nombres/pato.wav",
+      "perro": "voces/animalia/nombres/perro.wav",
+      "vaca": "voces/animalia/nombres/vaca.wav"
+    },
+    "guia": "voces/animalia/caminos/comun/guia_semilla.wav",
+    "ayuda_fuerte": "voces/animalia/caminos/comun/ayuda_fuerte.wav",
+    "valvula": "voces/animalia/caminos/comun/valvula_sopla.wav"
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "id_nivel": "animalia_z1_caminos_equipo",
+  "motor": "caminos",
+  "modo_juego": "equipo",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "tema": "Cada quien a su casa en equipo: un tablero compartido",
+  "nota": "motor-caminos.md §12.2 y modo-equipo.md §11.4 (dev-godot HE-117, 05-Nov-2026). Un tablero 6x6 con 5 pares y sin llenado; los caminos llegados quedan fijos; tope por turno M1 N1 S2; segundos_por_turno N45 S40 sin llegar -> fallo que pasa el turno. PROVISIONAL: calibrar pasos_rival con el simulador.",
+  "fondo": {
+    "cielo": "#BFE59A",
+    "suelo": "#8CCB6A",
+    "zona": 1
+  },
+  "llenar": false,
+  "casas": "color",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": true,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "C.cD..",
+        "b..Ed.",
+        "A....e",
+        "..a...",
+        "..B...",
+        "......"
+      ],
+      "pares": {
+        "A": {
+          "animal": "vaca",
+          "casa": "granero",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "perrito",
+          "casa": "casita_perro",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "gatito",
+          "casa": "canasto",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "pato",
+          "casa": "laguna",
+          "color": "#FF8A3D"
+        }
+      },
+      "tiempo_par_s": 0,
+      "solucion": {
+        "A": [[0, 2], [0, 3], [0, 4], [0, 5], [1, 5], [2, 5], [3, 5], [3, 4], [3, 3], [2, 3]],
+        "B": [[2, 4], [1, 4], [1, 3], [1, 2], [1, 1], [0, 1]],
+        "C": [[0, 0], [1, 0], [2, 0]],
+        "D": [[3, 0], [4, 0], [4, 1]],
+        "E": [[3, 1], [3, 2], [4, 2], [5, 2]]
+      }
+    }
+  ],
+  "catalogo": {
+    "vaca": {
+      "nombre": "vaca",
+      "huella": "pezuna",
+      "tono": 0.7,
+      "dibujo": {
+        "cuerpo": "#FFFFFF",
+        "detalle": "#F7B7C4",
+        "oscuro": "#3A3A3A",
+        "cabeza": "ancha",
+        "orejas": "laterales",
+        "hocico": "morro",
+        "extras": [
+          "manchas",
+          "cuernos"
+        ]
+      }
+    },
+    "perrito": {
+      "nombre": "perrito",
+      "huella": "pata",
+      "tono": 1.25,
+      "dibujo": {
+        "cuerpo": "#E3AA6A",
+        "detalle": "#FFF1DD",
+        "oscuro": "#8A5530",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "gatito": {
+      "nombre": "gatito",
+      "huella": "pata",
+      "tono": 1.4,
+      "dibujo": {
+        "cuerpo": "#C8C0D8",
+        "detalle": "#FFF4FA",
+        "oscuro": "#8E86A8",
+        "cabeza": "redonda",
+        "orejas": "punta",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes",
+          "mejillas",
+          "lazo"
+        ]
+      }
+    },
+    "pony": {
+      "nombre": "pony",
+      "huella": "pezuna",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#FFC4DD",
+        "detalle": "#FFF0F6",
+        "oscuro": "#B565D8",
+        "cabeza": "alargada",
+        "orejas": "caballo",
+        "hocico": "morro",
+        "extras": [
+          "melena",
+          "flequillo"
+        ]
+      }
+    },
+    "pato": {
+      "nombre": "pato",
+      "huella": "pato",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#FFD84A",
+        "detalle": "#FF9F2E",
+        "oscuro": "#C98A10",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_pato",
+        "extras": [
+          "penacho"
+        ]
+      }
+    },
+    "granero": {
+      "nombre": "el granero",
+      "dibujo": {
+        "tipo": "granero",
+        "color": "#C8463C",
+        "color2": "#FFFFFF",
+        "variante": ""
+      }
+    },
+    "casita_perro": {
+      "nombre": "la casita",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#E8434B",
+        "color2": "#F6E3C6",
+        "variante": ""
+      }
+    },
+    "canasto": {
+      "nombre": "el canasto",
+      "dibujo": {
+        "tipo": "canasto",
+        "color": "#D9A35F",
+        "color2": "#FF9CC0",
+        "variante": ""
+      }
+    },
+    "establo": {
+      "nombre": "el establo",
+      "dibujo": {
+        "tipo": "establo",
+        "color": "#B5723E",
+        "color2": "#F2D3A0",
+        "variante": ""
+      }
+    },
+    "laguna": {
+      "nombre": "la laguna",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#5CC8F0",
+        "color2": "#9BE07A",
+        "variante": "laguna"
+      }
+    }
+  },
+  "puntos": null,
+  "tormenta": null,
+  "regalo_tras_derrotas": 0,
+  "equipo": {
+    "rival": "coleccionauta",
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "maxi_mueve_rival": false,
+    "racha_retrocede_rival": 0,
+    "semilla_auto_s": 20,
+    "aciertos_max_turno": {
+      "semilla": 1,
+      "brote": 1,
+      "estrella": 2
+    },
+    "segundos_por_turno": {
+      "brote": 45,
+      "estrella": 40
+    },
+    "llegados_fijos": true,
+    "composiciones": {
+      "maxi+nicole": {
+        "pasos_rival": 6
+      },
+      "maxi+sofia": {
+        "pasos_rival": 6
+      },
+      "nicole+sofia": {
+        "pasos_rival": 5
+      },
+      "maxi+nicole+sofia": {
+        "pasos_rival": 6
+      }
+    }
+  },
+  "lineas_voz": {
+    "intro_ronda": "voces/animalia/caminos/equipo/intro.wav",
+    "maxi_regalito": "voces/animalia/caminos/equipo/maxi_regalito.wav",
+    "maxi_brilla": "voces/animalia/caminos/equipo/maxi_brilla.wav",
+    "victoria_equipo": "voces/animalia/caminos/equipo/victoria.wav",
+    "derrota_gag_equipo": [
+      "voces/animalia/caminos/equipo/coleccionauta_aspira.wav",
+      "voces/animalia/caminos/equipo/coleccionauta_estornuda.wav",
+      "voces/animalia/caminos/equipo/toby_otra_vez.wav"
+    ],
+    "logro_comun": {
+      "1": "voces/animalia/caminos/equipo/logro_1.wav",
+      "2": "voces/animalia/caminos/equipo/logro_2.wav",
+      "3": "voces/animalia/caminos/equipo/logro_3.wav",
+      "4": "voces/animalia/caminos/equipo/logro_4.wav"
+    },
+    "nos_alcanzo": "voces/nucleo/equipo/nos_alcanzo.wav",
+    "le_toca": {
+      "maxi": [
+        "voces/nucleo/equipo/le_toca_maxi_01.wav",
+        "voces/nucleo/equipo/le_toca_maxi_02.wav",
+        "voces/nucleo/equipo/le_toca_maxi_03.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/le_toca_nicole_01.wav",
+        "voces/nucleo/equipo/le_toca_nicole_02.wav",
+        "voces/nucleo/equipo/le_toca_nicole_03.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/le_toca_sofia_01.wav",
+        "voces/nucleo/equipo/le_toca_sofia_02.wav",
+        "voces/nucleo/equipo/le_toca_sofia_03.wav"
+      ]
+    },
+    "te_toca_recordatorio": {
+      "maxi": "voces/nucleo/equipo/te_toca_maxi.wav",
+      "nicole": "voces/nucleo/equipo/te_toca_nicole.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia.wav"
+    },
+    "te_toca_recordatorio_ventanita": {
+      "nicole": "voces/nucleo/equipo/te_toca_nicole_ventanita.wav",
+      "sofia": "voces/nucleo/equipo/te_toca_sofia_ventanita.wav"
+    },
+    "sube_ventanita": {
+      "nicole": "voces/nucleo/equipo/sube_ventanita_nicole.wav",
+      "sofia": "voces/nucleo/equipo/sube_ventanita_sofia.wav"
+    },
+    "maxi_ayuda": "voces/nucleo/equipo/maxi_ayuda.wav",
+    "animo_hermanos": {
+      "maxi": [
+        "voces/nucleo/equipo/animo_maxi_01.wav",
+        "voces/nucleo/equipo/animo_maxi_02.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/animo_nicole_01.wav",
+        "voces/nucleo/equipo/animo_nicole_02.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/animo_sofia_01.wav",
+        "voces/nucleo/equipo/animo_sofia_02.wav"
+      ]
+    },
+    "rival_avanza": [
+      "voces/nucleo/equipo/coleccionauta/avanza_01.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_02.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_03.wav",
+      "voces/nucleo/equipo/coleccionauta/avanza_04.wav"
+    ],
+    "rival_embobado": [
+      "voces/nucleo/equipo/coleccionauta/embobado_01.wav",
+      "voces/nucleo/equipo/coleccionauta/embobado_02.wav",
+      "voces/nucleo/equipo/coleccionauta/embobado_03.wav"
+    ],
+    "rival_retrocede": [
+      "voces/nucleo/equipo/coleccionauta/retrocede_01.wav",
+      "voces/nucleo/equipo/coleccionauta/retrocede_02.wav"
+    ],
+    "rival_vuelve": "voces/nucleo/equipo/coleccionauta/vuelve.wav",
+    "nombres": {
+      "vaca": "voces/animalia/nombres/vaca.wav",
+      "perrito": "voces/animalia/nombres/perrito.wav",
+      "gatito": "voces/animalia/nombres/gatito.wav",
+      "pony": "voces/animalia/nombres/pony.wav",
+      "pato": "voces/animalia/nombres/pato.wav"
+    }
+  }
+}

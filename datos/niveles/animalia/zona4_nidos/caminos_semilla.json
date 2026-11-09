@@ -1,0 +1,365 @@
+{
+  "id_nivel": "animalia_z4_caminos_semilla",
+  "motor": "caminos",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona4_nidos",
+  "tema": "El Árbol de los Nidos",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#A9DB9A",
+    "suelo": "#5FAE5A",
+    "zona": 4
+  },
+  "llenar": false,
+  "casas": "color",
+  "cortar_ajenos": false,
+  "animal_bajo_dedo": true,
+  "iman_casa": 1,
+  "empezar_desde_casa": false,
+  "histeresis": 0.25,
+  "atraso_max_celdas": 4,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "BAC..",
+        "...a.",
+        "b...c",
+        "....."
+      ],
+      "pares": {
+        "A": {
+          "animal": "carnotauro",
+          "casa": "cueva",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "spinosaurio",
+          "casa": "rio",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "triceratops",
+          "casa": "pradera_flores",
+          "color": "#36B866"
+        }
+      },
+      "tiempo_par_s": 22,
+      "solucion": {
+        "A": [[1, 0], [1, 1], [2, 1], [3, 1]],
+        "B": [[0, 0], [0, 1], [0, 2]],
+        "C": [[2, 0], [3, 0], [4, 0], [4, 1], [4, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "ABC..",
+        ".....",
+        "a.c..",
+        "....b"
+      ],
+      "pares": {
+        "A": {
+          "animal": "braquiosaurio",
+          "casa": "arboles_altos",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "trex",
+          "casa": "volcan",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "spinosaurio",
+          "casa": "rio",
+          "color": "#36B866"
+        }
+      },
+      "tiempo_par_s": 22,
+      "solucion": {
+        "A": [[0, 0], [0, 1], [0, 2]],
+        "B": [[1, 0], [1, 1], [1, 2], [1, 3], [2, 3], [3, 3], [4, 3]],
+        "C": [[2, 0], [2, 1], [2, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        "ACB.b",
+        "..c..",
+        "....a",
+        "....."
+      ],
+      "pares": {
+        "A": {
+          "animal": "braquiosaurio",
+          "casa": "arboles_altos",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "triceratops",
+          "casa": "pradera_flores",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "trex",
+          "casa": "volcan",
+          "color": "#36B866"
+        }
+      },
+      "tiempo_par_s": 22,
+      "solucion": {
+        "A": [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2]],
+        "B": [[2, 0], [3, 0], [4, 0]],
+        "C": [[1, 0], [1, 1], [2, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        "ABC..",
+        ".....",
+        "a.c..",
+        "..b.."
+      ],
+      "pares": {
+        "A": {
+          "animal": "spinosaurio",
+          "casa": "rio",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "triceratops",
+          "casa": "pradera_flores",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "carnotauro",
+          "casa": "cueva",
+          "color": "#36B866"
+        }
+      },
+      "tiempo_par_s": 22,
+      "solucion": {
+        "A": [[0, 0], [0, 1], [0, 2]],
+        "B": [[1, 0], [1, 1], [1, 2], [1, 3], [2, 3]],
+        "C": [[2, 0], [2, 1], [2, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t5",
+      "celdas": [
+        "BCa.A",
+        "....c",
+        "...b.",
+        "....."
+      ],
+      "pares": {
+        "A": {
+          "animal": "braquiosaurio",
+          "casa": "arboles_altos",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "trex",
+          "casa": "volcan",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "carnotauro",
+          "casa": "cueva",
+          "color": "#36B866"
+        }
+      },
+      "tiempo_par_s": 22,
+      "solucion": {
+        "A": [[4, 0], [3, 0], [2, 0]],
+        "B": [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [3, 2]],
+        "C": [[1, 0], [1, 1], [2, 1], [3, 1], [4, 1]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "braquiosaurio": {
+      "nombre": "braquiosaurio",
+      "huella": "dino",
+      "tono": 0.6,
+      "dibujo": {
+        "cuerpo": "#8FCB6A",
+        "detalle": "#D9F2B8",
+        "oscuro": "#5E9C43",
+        "cabeza": "dino",
+        "orejas": "ninguna",
+        "hocico": "dino",
+        "extras": [
+          "manchas",
+          "cuello"
+        ]
+      }
+    },
+    "carnotauro": {
+      "nombre": "carnotauro",
+      "huella": "dino",
+      "tono": 0.7,
+      "dibujo": {
+        "cuerpo": "#E2725B",
+        "detalle": "#FFD2C2",
+        "oscuro": "#B04A36",
+        "cabeza": "dino",
+        "orejas": "ninguna",
+        "hocico": "dino",
+        "extras": [
+          "cuernitos"
+        ]
+      }
+    },
+    "spinosaurio": {
+      "nombre": "spinosaurio",
+      "huella": "dino",
+      "tono": 0.65,
+      "dibujo": {
+        "cuerpo": "#4FA3C7",
+        "detalle": "#CDEBF5",
+        "oscuro": "#2E7395",
+        "cabeza": "dino",
+        "orejas": "ninguna",
+        "hocico": "dino",
+        "extras": [
+          "vela"
+        ]
+      }
+    },
+    "trex": {
+      "nombre": "T-rex",
+      "huella": "dino",
+      "tono": 0.5,
+      "dibujo": {
+        "cuerpo": "#7BC86C",
+        "detalle": "#E8F5C8",
+        "oscuro": "#4D9441",
+        "cabeza": "dino",
+        "orejas": "ninguna",
+        "hocico": "dino",
+        "extras": [
+          "dientes_dino"
+        ]
+      }
+    },
+    "triceratops": {
+      "nombre": "triceratops",
+      "huella": "dino",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#F2A04A",
+        "detalle": "#FFE0B0",
+        "oscuro": "#C46F25",
+        "cabeza": "dino",
+        "orejas": "ninguna",
+        "hocico": "pico_dino",
+        "extras": [
+          "volante",
+          "cuernos_tri"
+        ]
+      }
+    },
+    "arboles_altos": {
+      "nombre": "los árboles altos",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#4FA35A",
+        "color2": "#8A5A36",
+        "variante": "altos"
+      }
+    },
+    "cueva": {
+      "nombre": "la cueva",
+      "dibujo": {
+        "tipo": "cueva",
+        "color": "#9A8A7A",
+        "color2": "#3A2E28",
+        "variante": ""
+      }
+    },
+    "pradera_flores": {
+      "nombre": "la pradera de flores",
+      "dibujo": {
+        "tipo": "pasto",
+        "color": "#8CCB6A",
+        "color2": "#FF7EB6",
+        "variante": "flores"
+      }
+    },
+    "rio": {
+      "nombre": "el río",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#4FA3E0",
+        "color2": "#8CCB6A",
+        "variante": "rio"
+      }
+    },
+    "volcan": {
+      "nombre": "el volcán",
+      "dibujo": {
+        "tipo": "montana",
+        "color": "#A0674A",
+        "color2": "#FF8A3D",
+        "variante": "volcan"
+      }
+    }
+  },
+  "puntos": null,
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": null,
+  "tiempo_par": false,
+  "tormenta": {
+    "factor_par": 3.0
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "caminos_regalados": "todos_menos_uno",
+    "sin_tormenta": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [6, 10],
+  "valvula_s": 6,
+  "pistas_cuestan_estrellita": false,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona4/semilla_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona4/semilla_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_semilla_01.wav",
+      "voces/animalia/caminos/comun/victoria_semilla_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_semilla.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_semilla.wav",
+    "nombres": {
+      "braquiosaurio": "voces/animalia/nombres/braquiosaurio.wav",
+      "carnotauro": "voces/animalia/nombres/carnotauro.wav",
+      "spinosaurio": "voces/animalia/nombres/spinosaurio.wav",
+      "trex": "voces/animalia/nombres/trex.wav",
+      "triceratops": "voces/animalia/nombres/triceratops.wav"
+    },
+    "guia": "voces/animalia/caminos/comun/guia_semilla.wav",
+    "ayuda_fuerte": "voces/animalia/caminos/comun/ayuda_fuerte.wav",
+    "valvula": "voces/animalia/caminos/comun/valvula_sopla.wav"
+  }
+}
