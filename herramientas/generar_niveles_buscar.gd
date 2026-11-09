@@ -29,8 +29,8 @@ const PERFILES := ["semilla", "brote", "estrella"]
 const P := {
 	"semilla": {
 		"ancho": [1280, 1280, 1280, 1280, 1280], "alto": [720, 720, 720, 720, 720],
-		"objetivos": [5, 5, 6, 6, 7], "visible": [0.80, 0.80, 0.75, 0.75, 0.70],
-		"tamano": [200, 190, 180, 170, 160], "objetos": [8, 9, 10, 10, 11], "abribles": [0, 0, 0, 0, 0],
+		"objetivos": [5, 5, 6, 6, 7], "visible": [0.80, 0.75, 0.75, 0.75, 0.70],
+		"tamano": [180, 160, 160, 160, 160], "objetos": [8, 11, 10, 10, 11], "abribles": [0, 0, 0, 0, 0],
 		"dos_pasos": [0, 0, 0, 0, 0], "senuelos": [0, 0, 0, 0, 0], "camuflaje": [false, false, false, false, false],
 		"par": [35, 37, 40, 42, 45], "lupa": [false, false, false, false, false],
 	},
@@ -285,6 +285,7 @@ func _generar(zi: int, perfil: String) -> void:
 	var por_id := {}
 	# Composicion con semilla fija; si algun animal queda con menos de 2 escondites se prueba la siguiente
 	# semilla (siempre la misma secuencia: el resultado es reproducible).
+	var reparto_ok := false
 	for intento in 40:
 		rng.seed = hash("%s%s%d" % [zona, perfil, intento]) & 0x7fffffff
 		_rechazos.clear()
@@ -298,11 +299,15 @@ func _generar(zi: int, perfil: String) -> void:
 			por_id[id] = _escondites_para(id, objetos, tam, visible, W, H, perfil, zi, aceptadas)
 			if por_id[id].size() < 2:
 				ok = false
+		reparto_ok = ok
 		if ok and not _factible(perfil, objetos, por_id, pool, n_obj, FIJOS.get(perfil, [[], [], [], [], []])[zi], senuelos, secretos):
 			ok = false
-			print("  %s/%s intento %d: sorteo no factible, otra composicion" % [zona, perfil, intento])
+			reparto_ok = false
 		if ok:
 			break
+	if not reparto_ok:
+		push_error("generar: %s/%s: ninguna composicion permite repartir a todos sin pisarse" % [zona, perfil])
+		_fallas += 1
 	var animales: Array = []
 	for id in en_escena:
 		var d: Dictionary = CAT[id]
@@ -385,23 +390,12 @@ func _factible(perfil: String, objetos: Array, por_id: Dictionary, pool: Array, 
 		l.avisar_sorteo = false
 		l.configurar(nivel, 500 + semilla)
 		if not l.ultimo_sorteo_unico:
-			var piezas := {}
-			for id in l.en_escena():
-				var ps := []
-				for e in l.escondites_de(id):
-					ps.append(l.pieza_de(e))
-				piezas[id] = ps
-			print("DBG 1a escena falla %s" % [piezas])
 			return false
 		for id in l.objetivos.duplicate():
 			l.encontrados.append(id)
 		l.estado = "ronda"
 		l.siguiente_ronda_escena()
 		if not l.ultimo_sorteo_unico:
-			var cuenta := {}
-			for id in l.en_escena():
-				cuenta[id] = l.escondites_de(id).size()
-			print("DBG 2a escena falla s=%d obj=%s %s" % [semilla, l.objetivos, cuenta])
 			return false
 	return true
 
@@ -451,7 +445,7 @@ func _agua_rect(zona: String, W: float, H: float) -> Rect2:
 	if zona == "zona2_laguna":
 		if W <= 1280:
 			# Maxi: una pantalla; la laguna atras y las piezas de la orilla delante.
-			return Rect2(W * 0.25, suelo + 22, W * 0.5, 110)
+			return Rect2(W * 0.3, suelo + 22, W * 0.45, 150)
 		return Rect2(W * 0.2, suelo + 30, W * 0.6, H - suelo - 170)
 	if zona == "zona5_valle":
 		return Rect2(W * 0.62, suelo + 40, W * 0.28, H - suelo - 190)
@@ -735,12 +729,6 @@ func _probar(id: String, obj: Dictionary, ancla: Dictionary, t: float, objetivo:
 		_rechazos["toby"] = _rechazos.get("toby", 0) + 1
 		return {}
 	var visible_caja: Rect2 = m["caja"]
-	# Un escondite que pisa lo visible de otro animal en otra pieza dejaria al sorteo sin salida (Maxi tiene
-	# una sola pantalla): se descarta aqui, asi el sorteo solo tiene que repartir piezas.
-	for prev in aceptadas:
-		if prev["id"] != id and prev["pieza"] != obj["id"] and LogicaBuscar.se_pisan(prev["caja"], visible_caja):
-			_rechazos["pisa"] = _rechazos.get("pisa", 0) + 1
-			return {}
 	# `caja` (lo visible): el sorteo nunca junta en una partida dos escondites que se pisen.
 	var esc := {"pos": [snappedf(pie.x, 0.5), snappedf(pie.y, 0.5)], "tamano": t, "espejo": espejo,
 		"visible": snappedf(f, 0.01), "asoma": [d.x, d.y],

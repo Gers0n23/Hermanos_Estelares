@@ -229,63 +229,63 @@
       "escondites": [
         {
           "pos": [
-            367.5,
-            495.0
+            479.5,
+            415.5
           ],
           "tamano": 120.0,
-          "espejo": true,
+          "espejo": false,
           "visible": 0.7,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            322.0,
-            375.0,
-            91.0,
-            120.0
-          ],
-          "detras_de": "roca_1"
-        },
-        {
-          "pos": [
-            620.0,
-            382.0
-          ],
-          "tamano": 120.0,
-          "espejo": true,
-          "visible": 0.7,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            600.0,
-            262.0,
+            434.0,
+            295.0,
             66.0,
             120.0
           ],
-          "detras_de": "nido_0"
+          "detras_de": "arbol_2"
         },
         {
           "pos": [
-            1377.0,
-            407.5
+            1560.5,
+            540.0
           ],
           "tamano": 120.0,
           "espejo": false,
-          "visible": 0.62,
+          "visible": 0.7,
           "asoma": [
-            0.0,
-            -1.0
+            -1.0,
+            0.0
           ],
           "caja": [
-            1332.0,
-            287.0,
+            1515.0,
+            420.0,
             66.0,
-            80.0
+            120.0
           ],
-          "detras_de": "carretilla_9"
+          "detras_de": "arbusto_11"
+        },
+        {
+          "pos": [
+            946.5,
+            492.0
+          ],
+          "tamano": 120.0,
+          "espejo": true,
+          "visible": 0.67,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            926.0,
+            372.0,
+            66.0,
+            120.0
+          ],
+          "detras_de": "regadera_4"
         }
       ]
     },
@@ -406,6 +406,26 @@
         },
         {
           "pos": [
+            1399.0,
+            500.0
+          ],
+          "tamano": 120.0,
+          "espejo": false,
+          "visible": 0.7,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1346.0,
+            380.0,
+            83.0,
+            120.0
+          ],
+          "detras_de": "gallinero_10"
+        },
+        {
+          "pos": [
             1503.0,
             438.0
           ],
@@ -423,26 +443,6 @@
             120.0
           ],
           "detras_de": "carretilla_9"
-        },
-        {
-          "pos": [
-            435.0,
-            461.5
-          ],
-          "tamano": 120.0,
-          "espejo": false,
-          "visible": 0.64,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            382.0,
-            342.0,
-            89.0,
-            87.0
-          ],
-          "detras_de": "roca_1"
         }
       ]
     },
@@ -466,6 +466,26 @@
       "escondites": [
         {
           "pos": [
+            292.0,
+            393.0
+          ],
+          "tamano": 156.0,
+          "espejo": true,
+          "visible": 0.62,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            218.0,
+            237.0,
+            148.0,
+            113.0
+          ],
+          "detras_de": "arbusto_0"
+        },
+        {
+          "pos": [
             1010.5,
             442.0
           ],
@@ -486,43 +506,23 @@
         },
         {
           "pos": [
-            1627.0,
-            497.0
+            909.0,
+            497.5
           ],
           "tamano": 156.0,
           "espejo": false,
-          "visible": 0.62,
+          "visible": 0.65,
           "asoma": [
             0.0,
             -1.0
           ],
           "caja": [
-            1553.0,
-            341.0,
+            835.0,
+            342.0,
             148.0,
-            113.0
+            104.0
           ],
-          "detras_de": "arbusto_11"
-        },
-        {
-          "pos": [
-            625.5,
-            536.0
-          ],
-          "tamano": 156.0,
-          "espejo": false,
-          "visible": 0.7,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            593.0,
-            397.0,
-            107.0,
-            139.0
-          ],
-          "detras_de": "arbol_2"
+          "detras_de": "fardo_5"
         }
       ]
     },
@@ -543,8 +543,8 @@
       "escondites": [
         {
           "pos": [
-            992.5,
-            532.0
+            800.5,
+            456.0
           ],
           "tamano": 108.0,
           "espejo": false,
@@ -554,52 +554,52 @@
             0.0
           ],
           "caja": [
-            978.0,
-            449.0,
-            78.0,
-            83.0
+            758.0,
+            373.0,
+            106.0,
+            74.0
           ],
-          "detras_de": "fardo_5"
+          "detras_de": "arbusto_3"
         },
         {
           "pos": [
-            1216.0,
-            536.0
+            1378.5,
+            500.0
           ],
           "tamano": 108.0,
           "espejo": false,
-          "visible": 0.7,
+          "visible": 0.77,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            1153.0,
-            453.0,
-            113.0,
+            1315.0,
+            417.0,
+            92.0,
             83.0
           ],
-          "detras_de": "balde_8"
+          "detras_de": "gallinero_10"
         },
         {
           "pos": [
-            1530.5,
-            540.0
+            1311.5,
+            496.0
           ],
           "tamano": 108.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.7,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            1467.0,
-            457.0,
+            1276.0,
+            413.0,
             99.0,
             83.0
           ],
-          "detras_de": "arbusto_11"
+          "detras_de": "carpa_7"
         }
       ]
     },
@@ -619,28 +619,28 @@
       "escondites": [
         {
           "pos": [
-            833.5,
-            532.0
+            791.0,
+            474.0
           ],
           "tamano": 96.0,
-          "espejo": true,
+          "espejo": false,
           "visible": 0.7,
           "asoma": [
-            -1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            783.0,
-            436.0,
-            56.0,
-            96.0
+            746.0,
+            378.0,
+            95.0,
+            69.0
           ],
-          "detras_de": "fardo_5"
+          "detras_de": "regadera_4"
         },
         {
           "pos": [
-            1226.5,
-            536.0
+            1538.0,
+            540.0
           ],
           "tamano": 96.0,
           "espejo": false,
@@ -650,32 +650,32 @@
             0.0
           ],
           "caja": [
-            1176.0,
-            440.0,
-            101.0,
+            1487.0,
+            444.0,
+            90.0,
             96.0
           ],
-          "detras_de": "balde_8"
+          "detras_de": "arbusto_11"
         },
         {
           "pos": [
-            550.0,
-            536.0
+            369.0,
+            495.0
           ],
           "tamano": 96.0,
-          "espejo": true,
-          "visible": 0.75,
+          "espejo": false,
+          "visible": 0.7,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            500.0,
-            440.0,
+            319.0,
+            399.0,
             101.0,
             96.0
           ],
-          "detras_de": "arbol_2"
+          "detras_de": "roca_1"
         }
       ]
     },
@@ -694,43 +694,23 @@
       "escondites": [
         {
           "pos": [
-            544.0,
-            536.0
+            990.5,
+            532.0
           ],
           "tamano": 84.0,
-          "espejo": false,
-          "visible": 0.71,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            513.0,
-            452.0,
-            41.0,
-            84.0
-          ],
-          "detras_de": "arbol_2"
-        },
-        {
-          "pos": [
-            371.0,
-            495.0
-          ],
-          "tamano": 84.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.7,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            340.0,
-            411.0,
-            55.0,
+            977.0,
+            448.0,
+            45.0,
             84.0
           ],
-          "detras_de": "roca_1"
+          "detras_de": "fardo_5"
         },
         {
           "pos": [
@@ -751,6 +731,26 @@
             84.0
           ],
           "detras_de": "carretilla_9"
+        },
+        {
+          "pos": [
+            1301.0,
+            496.0
+          ],
+          "tamano": 84.0,
+          "espejo": true,
+          "visible": 0.7,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1280.0,
+            412.0,
+            52.0,
+            84.0
+          ],
+          "detras_de": "carpa_7"
         }
       ],
       "marca_especial": "animalia_huevo_z1"

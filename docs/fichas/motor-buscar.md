@@ -419,3 +419,30 @@ Debe demostrar:
 4. **[Abierta] Sonidos "hechos con la boca"** de los objetos: ¿los graban los niños? Sería un lindo regalo
    dentro del regalo (como en Hidden Folks).
 5. **[Abierta] Foto de grupo al final**: ¿va al álbum de recuerdos como estampita o queda solo como celebración?
+
+## 17. Estado de implementación (HE-118, 09-Nov-2026)
+
+**Hecho y verificado** (arnés `herramientas/qa_test_buscar.gd`: 338 OK, 0 fallos, headless Godot 4.7.1):
+
+- Código: `scripts/motores/buscar/` (geometría, lógica, dibujos, motor) y `escenas/minijuegos/buscar/motor_buscar.tscn`.
+- Niveles: 16 archivos `buscar_*.json` en `datos/niveles/animalia/zona*/` (15 + equipo), generados con
+  `godot --headless --path . --script herramientas/generar_niveles_buscar.gd`. No se editan a mano.
+- Derrota real (HE-124): el sol se pone a los 3 × / 2,2 × / 1,6 × el tiempo par. Al reintentar, los
+  encontrados quedan y los que faltan se cambian de escondite. Regalo tras 2 / 2 / 3 derrotas; Maxi tiene ayuda fuerte.
+- El huevito de Dinito (secreto) lleva `marca_especial` `animalia_huevo_zN` para el nidito del mapa (HE-120).
+- Voces: el generador escribe `assets/audio/voces/animalia/buscar/lineas_tts.tsv` (223 líneas, provisorias hasta HE-112).
+
+**Ajustes del 09-Nov a la pantalla única de Maxi** (el generador entregaba niveles donde el sorteo no podía
+separar a todos los animales sin que sus partes visibles se pisaran):
+
+- El generador ahora comprueba que el sorteo sea posible (20 partidas, también la 2.ª escena) y **cuenta como
+  falla** cuando ninguna de las 40 composiciones sirve. Antes guardaba la última en silencio.
+- "Pisarse" pasa a ser compartir más del 30 % de la parte visible menor (`LogicaBuscar.se_pisan`). Un roce
+  en el borde no impide tocar a cada uno en su centro, y el arnés lo comprueba.
+- Tamaño de los animales de Semilla: 180 / 160 / 160 / 160 / 160 px (antes 200 / 190 / 180 / 170 / 160).
+  Siguen siendo mucho más grandes que los de Brote (120 a 96 px).
+- z2 (laguna) de Semilla: visibilidad mínima de 75 % (antes 80 %), 11 piezas (antes 9) y una laguna más
+  angosta y alta (45 % × 150 px), para dejar orilla a los animales de tierra.
+
+**Sin verificar todavía:** no hay simulación de jugador humano para este motor (es búsqueda visual), así que
+la tasa de victoria al primer intento (meta HE-124) se mide en el playtest. Faltan las voces (TTS local).

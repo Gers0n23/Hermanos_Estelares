@@ -43,95 +43,35 @@
   },
   "objetos": [
     {
-      "id": "arbusto_0",
-      "tipo": "arbusto",
-      "pos": [
-        334.0,
-        444.0
-      ],
-      "escala": 0.76,
-      "espejo": false,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "arbol_1",
-      "tipo": "arbol",
-      "pos": [
-        382.0,
-        495.0
-      ],
-      "escala": 0.76,
-      "espejo": false,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "hongo_2",
+      "id": "hongo_0",
       "tipo": "hongo",
       "pos": [
-        430.0,
-        551.0
+        325.0,
+        441.0
       ],
-      "escala": 0.91,
-      "espejo": true,
+      "escala": 0.85,
+      "espejo": false,
       "reaccion": "rebotar",
       "sonido": "sfx/ui/polvo_boing.ogg"
     },
     {
-      "id": "helecho_3",
+      "id": "helecho_1",
       "tipo": "helecho",
       "pos": [
-        488.0,
-        447.0
-      ],
-      "escala": 0.88,
-      "espejo": true,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "hongo_4",
-      "tipo": "hongo",
-      "pos": [
-        552.0,
-        506.0
+        425.0,
+        515.0
       ],
       "escala": 0.8,
       "espejo": true,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "arbol_5",
-      "tipo": "arbol",
-      "pos": [
-        610.0,
-        543.0
-      ],
-      "escala": 0.76,
-      "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "roca_6",
-      "tipo": "roca",
-      "pos": [
-        676.0,
-        445.0
-      ],
-      "escala": 0.84,
-      "espejo": true,
-      "reaccion": "rebotar",
-      "sonido": "sfx/ui/polvo_boing.ogg"
-    },
-    {
-      "id": "arbol_7",
+      "id": "arbol_2",
       "tipo": "arbol",
       "pos": [
-        712.0,
-        498.0
+        480.0,
+        529.0
       ],
       "escala": 0.78,
       "espejo": false,
@@ -139,72 +79,86 @@
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "helecho_8",
-      "tipo": "helecho",
+      "id": "arbol_3",
+      "tipo": "arbol",
       "pos": [
-        786.0,
-        540.0
+        582.0,
+        439.0
       ],
-      "escala": 0.89,
+      "escala": 0.76,
       "espejo": false,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "arbusto_9",
-      "tipo": "arbusto",
+      "id": "arbol_4",
+      "tipo": "arbol",
       "pos": [
-        832.0,
-        459.0
+        654.0,
+        514.0
       ],
-      "escala": 0.86,
+      "escala": 0.73,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "roca_5",
+      "tipo": "roca",
+      "pos": [
+        712.0,
+        547.0
+      ],
+      "escala": 0.7,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbol_6",
+      "tipo": "arbol",
+      "pos": [
+        798.0,
+        441.0
+      ],
+      "escala": 0.67,
       "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "arbol_10",
-      "tipo": "arbol",
+      "id": "helecho_7",
+      "tipo": "helecho",
       "pos": [
-        887.0,
-        494.0
+        884.0,
+        500.0
       ],
-      "escala": 0.83,
-      "espejo": false,
+      "escala": 0.87,
+      "espejo": true,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
     {
-      "id": "arbol_11",
-      "tipo": "arbol",
+      "id": "arbusto_8",
+      "tipo": "arbusto",
       "pos": [
-        945.0,
+        947.0,
         549.0
       ],
-      "escala": 0.82,
-      "espejo": false,
+      "escala": 0.76,
+      "espejo": true,
       "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
     },
     {
       "id": "nube_0",
       "tipo": "nube",
       "pos": [
-        490.0,
-        226.0
+        687.0,
+        203.0
       ],
-      "escala": 0.88,
-      "reaccion": "puf",
-      "sonido": "sfx/ui/puf.ogg"
-    },
-    {
-      "id": "nube_1",
-      "tipo": "nube",
-      "pos": [
-        747.0,
-        213.0
-      ],
-      "escala": 0.86,
+      "escala": 0.82,
       "reaccion": "puf",
       "sonido": "sfx/ui/puf.ogg"
     },
@@ -212,11 +166,11 @@
       "id": "nido_0",
       "tipo": "nido",
       "pos": [
-        329.0,
-        320.0
+        425.0,
+        350.0
       ],
-      "escala": 0.68,
-      "z": 496.0,
+      "escala": 0.7,
+      "z": 530.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -224,11 +178,11 @@
       "id": "nido_1",
       "tipo": "nido",
       "pos": [
-        663.0,
-        368.0
+        635.0,
+        264.0
       ],
       "escala": 0.68,
-      "z": 544.0,
+      "z": 440.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -236,11 +190,11 @@
       "id": "nido_2",
       "tipo": "nido",
       "pos": [
-        767.0,
-        319.0
+        603.0,
+        346.0
       ],
-      "escala": 0.7,
-      "z": 499.0,
+      "escala": 0.66,
+      "z": 515.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     },
@@ -248,23 +202,11 @@
       "id": "nido_3",
       "tipo": "nido",
       "pos": [
-        829.0,
-        303.0
+        751.0,
+        287.0
       ],
-      "escala": 0.75,
-      "z": 495.0,
-      "reaccion": "sacudir",
-      "sonido": "sfx/ui/polvo.ogg"
-    },
-    {
-      "id": "nido_4",
-      "tipo": "nido",
-      "pos": [
-        1002.0,
-        360.0
-      ],
-      "escala": 0.74,
-      "z": 550.0,
+      "escala": 0.6,
+      "z": 442.0,
       "reaccion": "sacudir",
       "sonido": "sfx/ui/polvo.ogg"
     }
@@ -288,10 +230,50 @@
       "escondites": [
         {
           "pos": [
-            339.5,
-            548.0
+            798.5,
+            510.0
           ],
-          "tamano": 170.0,
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            733.0,
+            350.0,
+            124.0,
+            160.0
+          ],
+          "detras_de": "arbol_4"
+        },
+        {
+          "pos": [
+            646.0,
+            544.0
+          ],
+          "tamano": 160.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            580.0,
+            384.0,
+            95.0,
+            160.0
+          ],
+          "detras_de": "roca_5"
+        },
+        {
+          "pos": [
+            830.5,
+            546.0
+          ],
+          "tamano": 160.0,
           "espejo": true,
           "visible": 0.85,
           "asoma": [
@@ -299,32 +281,12 @@
             0.0
           ],
           "caja": [
-            270.0,
-            378.0,
-            140.0,
-            170.0
+            765.0,
+            386.0,
+            132.0,
+            160.0
           ],
-          "detras_de": "hongo_2"
-        },
-        {
-          "pos": [
-            1002.0,
-            355.0
-          ],
-          "tamano": 170.0,
-          "espejo": true,
-          "visible": 0.85,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            932.0,
-            185.0,
-            140.0,
-            170.0
-          ],
-          "detras_de": "nido_4"
+          "detras_de": "arbusto_8"
         }
       ]
     },
@@ -345,50 +307,10 @@
       "escondites": [
         {
           "pos": [
-            329.0,
-            329.5
+            405.5,
+            314.5
           ],
-          "tamano": 162.0,
-          "espejo": false,
-          "visible": 0.87,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            234.0,
-            178.0,
-            180.0,
-            151.0
-          ],
-          "detras_de": "nido_0"
-        },
-        {
-          "pos": [
-            663.0,
-            377.5
-          ],
-          "tamano": 162.0,
-          "espejo": true,
-          "visible": 0.87,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            578.0,
-            226.0,
-            180.0,
-            151.0
-          ],
-          "detras_de": "nido_1"
-        },
-        {
-          "pos": [
-            809.5,
-            413.5
-          ],
-          "tamano": 162.0,
+          "tamano": 152.0,
           "espejo": false,
           "visible": 0.86,
           "asoma": [
@@ -396,12 +318,52 @@
             0.0
           ],
           "caja": [
-            714.0,
-            262.0,
-            159.0,
-            151.0
+            316.0,
+            173.0,
+            169.0,
+            134.0
           ],
-          "detras_de": "arbol_11"
+          "detras_de": "arbol_3"
+        },
+        {
+          "pos": [
+            603.0,
+            338.0
+          ],
+          "tamano": 152.0,
+          "espejo": false,
+          "visible": 0.87,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            543.0,
+            196.0,
+            139.0,
+            118.0
+          ],
+          "detras_de": "nido_2"
+        },
+        {
+          "pos": [
+            911.0,
+            340.0
+          ],
+          "tamano": 152.0,
+          "espejo": true,
+          "visible": 0.86,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            851.0,
+            198.0,
+            149.0,
+            142.0
+          ],
+          "detras_de": "arbol_6"
         }
       ]
     },
@@ -422,10 +384,30 @@
       "escondites": [
         {
           "pos": [
-            809.5,
-            417.5
+            425.0,
+            343.5
           ],
-          "tamano": 170.0,
+          "tamano": 160.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            376.0,
+            183.0,
+            99.0,
+            133.0
+          ],
+          "detras_de": "nido_0"
+        },
+        {
+          "pos": [
+            390.5,
+            318.5
+          ],
+          "tamano": 160.0,
           "espejo": false,
           "visible": 0.85,
           "asoma": [
@@ -433,39 +415,19 @@
             0.0
           ],
           "caja": [
-            757.0,
-            248.0,
-            105.0,
-            170.0
+            341.0,
+            158.0,
+            99.0,
+            160.0
           ],
-          "detras_de": "arbol_11"
+          "detras_de": "arbol_3"
         },
         {
           "pos": [
-            482.0,
-            427.5
+            603.0,
+            335.0
           ],
-          "tamano": 170.0,
-          "espejo": true,
-          "visible": 0.85,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            429.0,
-            257.0,
-            105.0,
-            170.0
-          ],
-          "detras_de": "arbol_5"
-        },
-        {
-          "pos": [
-            663.0,
-            364.5
-          ],
-          "tamano": 170.0,
+          "tamano": 160.0,
           "espejo": false,
           "visible": 0.85,
           "asoma": [
@@ -473,12 +435,12 @@
             -1.0
           ],
           "caja": [
-            610.0,
-            194.0,
-            105.0,
+            554.0,
+            175.0,
+            99.0,
             142.0
           ],
-          "detras_de": "nido_1"
+          "detras_de": "nido_2"
         }
       ]
     },
@@ -501,30 +463,50 @@
       "escondites": [
         {
           "pos": [
-            1002.0,
-            362.0
+            751.0,
+            296.5
           ],
-          "tamano": 162.0,
-          "espejo": false,
-          "visible": 0.86,
+          "tamano": 152.0,
+          "espejo": true,
+          "visible": 0.85,
           "asoma": [
             0.0,
             -1.0
           ],
           "caja": [
-            931.0,
-            200.0,
-            141.0,
-            126.0
+            685.0,
+            144.0,
+            133.0,
+            152.0
           ],
-          "detras_de": "nido_4"
+          "detras_de": "nido_3"
         },
         {
           "pos": [
-            478.0,
-            423.5
+            603.0,
+            348.5
           ],
-          "tamano": 162.0,
+          "tamano": 152.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            553.0,
+            196.0,
+            116.0,
+            118.0
+          ],
+          "detras_de": "nido_2"
+        },
+        {
+          "pos": [
+            396.5,
+            314.5
+          ],
+          "tamano": 152.0,
           "espejo": true,
           "visible": 0.85,
           "asoma": [
@@ -532,32 +514,12 @@
             0.0
           ],
           "caja": [
-            407.0,
-            261.0,
-            106.0,
-            162.0
+            330.0,
+            162.0,
+            99.0,
+            152.0
           ],
-          "detras_de": "arbol_5"
-        },
-        {
-          "pos": [
-            329.0,
-            327.5
-          ],
-          "tamano": 162.0,
-          "espejo": false,
-          "visible": 0.86,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            258.0,
-            166.0,
-            141.0,
-            162.0
-          ],
-          "detras_de": "nido_0"
+          "detras_de": "arbol_3"
         }
       ]
     },
@@ -578,63 +540,63 @@
       "escondites": [
         {
           "pos": [
-            329.0,
-            330.0
+            343.5,
+            395.0
           ],
-          "tamano": 153.0,
-          "espejo": true,
-          "visible": 0.86,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            249.0,
-            177.0,
-            152.0,
-            153.0
-          ],
-          "detras_de": "nido_0"
-        },
-        {
-          "pos": [
-            1002.0,
-            367.0
-          ],
-          "tamano": 153.0,
-          "espejo": true,
-          "visible": 0.86,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            922.0,
-            214.0,
-            152.0,
-            153.0
-          ],
-          "detras_de": "nido_4"
-        },
-        {
-          "pos": [
-            483.0,
-            419.0
-          ],
-          "tamano": 153.0,
-          "espejo": true,
+          "tamano": 144.0,
+          "espejo": false,
           "visible": 0.85,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            403.0,
-            266.0,
-            116.0,
-            153.0
+            276.0,
+            251.0,
+            134.0,
+            144.0
           ],
-          "detras_de": "arbol_5"
+          "detras_de": "arbol_2"
+        },
+        {
+          "pos": [
+            783.0,
+            393.5
+          ],
+          "tamano": 144.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            716.0,
+            249.0,
+            134.0,
+            144.0
+          ],
+          "detras_de": "arbol_4"
+        },
+        {
+          "pos": [
+            425.0,
+            356.5
+          ],
+          "tamano": 144.0,
+          "espejo": false,
+          "visible": 0.86,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            358.0,
+            212.0,
+            143.0,
+            144.0
+          ],
+          "detras_de": "nido_0"
         }
       ]
     },
@@ -656,30 +618,30 @@
       "escondites": [
         {
           "pos": [
-            348.0,
-            548.0
+            970.0,
+            437.0
           ],
-          "tamano": 195.0,
+          "tamano": 184.0,
           "espejo": true,
           "visible": 0.85,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            268.0,
-            353.0,
-            143.0,
-            195.0
+            894.0,
+            253.0,
+            151.0,
+            184.0
           ],
-          "detras_de": "hongo_2"
+          "detras_de": "arbol_6"
         },
         {
           "pos": [
-            867.0,
-            545.0
+            614.0,
+            544.0
           ],
-          "tamano": 195.0,
+          "tamano": 184.0,
           "espejo": true,
           "visible": 0.85,
           "asoma": [
@@ -687,12 +649,32 @@
             0.0
           ],
           "caja": [
-            787.0,
-            350.0,
-            134.0,
-            195.0
+            538.0,
+            360.0,
+            135.0,
+            184.0
           ],
-          "detras_de": "arbol_11"
+          "detras_de": "roca_5"
+        },
+        {
+          "pos": [
+            852.0,
+            546.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            776.0,
+            362.0,
+            151.0,
+            184.0
+          ],
+          "detras_de": "arbusto_8"
         }
       ]
     },
@@ -711,10 +693,50 @@
       "escondites": [
         {
           "pos": [
-            663.0,
-            357.0
+            425.0,
+            336.5
           ],
-          "tamano": 119.0,
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.85,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            384.0,
+            224.0,
+            83.0,
+            93.0
+          ],
+          "detras_de": "nido_0"
+        },
+        {
+          "pos": [
+            629.5,
+            544.0
+          ],
+          "tamano": 112.0,
+          "espejo": true,
+          "visible": 0.85,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            588.0,
+            432.0,
+            78.0,
+            112.0
+          ],
+          "detras_de": "roca_5"
+        },
+        {
+          "pos": [
+            635.0,
+            251.5
+          ],
+          "tamano": 112.0,
           "espejo": true,
           "visible": 0.85,
           "asoma": [
@@ -722,52 +744,12 @@
             -1.0
           ],
           "caja": [
-            619.0,
-            238.0,
-            88.0,
-            99.0
+            594.0,
+            139.0,
+            83.0,
+            93.0
           ],
           "detras_de": "nido_1"
-        },
-        {
-          "pos": [
-            984.0,
-            537.0
-          ],
-          "tamano": 119.0,
-          "espejo": true,
-          "visible": 0.77,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            964.0,
-            418.0,
-            63.0,
-            119.0
-          ],
-          "detras_de": "helecho_8"
-        },
-        {
-          "pos": [
-            353.0,
-            548.0
-          ],
-          "tamano": 119.0,
-          "espejo": false,
-          "visible": 0.85,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            309.0,
-            429.0,
-            88.0,
-            119.0
-          ],
-          "detras_de": "hongo_2"
         }
       ],
       "marca_especial": "animalia_huevo_z4"
@@ -791,7 +773,7 @@
   "tarjetas_visibles": 3,
   "mostrar_palabra": false,
   "visible_min": 0.75,
-  "tamano_animal": 170.0,
+  "tamano_animal": 160.0,
   "zona_toque_min_px": 160,
   "margen_toque_px": 24,
   "umbral_arrastre_px": 16,

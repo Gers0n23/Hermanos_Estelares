@@ -394,20 +394,20 @@
         },
         {
           "pos": [
-            1266.0,
+            1520.0,
             503.0
           ],
           "tamano": 121.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.6,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            1202.0,
+            1456.0,
             382.0,
-            106.0,
+            127.0,
             121.0
           ],
           "detras_de": "arbusto_7"
@@ -435,26 +435,6 @@
       "escondites": [
         {
           "pos": [
-            767.0,
-            444.5
-          ],
-          "tamano": 110.0,
-          "espejo": false,
-          "visible": 0.98,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            718.0,
-            334.0,
-            98.0,
-            110.0
-          ],
-          "dentro_de": "carpa_3"
-        },
-        {
-          "pos": [
             1472.0,
             545.0
           ],
@@ -475,23 +455,43 @@
         },
         {
           "pos": [
-            1019.0,
-            527.0
+            767.0,
+            444.5
           ],
           "tamano": 110.0,
           "espejo": false,
+          "visible": 0.98,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            718.0,
+            334.0,
+            98.0,
+            110.0
+          ],
+          "dentro_de": "carpa_3"
+        },
+        {
+          "pos": [
+            1259.0,
+            503.0
+          ],
+          "tamano": 110.0,
+          "espejo": true,
           "visible": 0.6,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            970.0,
-            417.0,
-            82.0,
+            1210.0,
+            393.0,
+            93.0,
             110.0
           ],
-          "detras_de": "fardo_5"
+          "detras_de": "arbusto_7"
         }
       ],
       "pista": {
@@ -519,6 +519,46 @@
       "escondites": [
         {
           "pos": [
+            452.0,
+            499.0
+          ],
+          "tamano": 132.0,
+          "espejo": false,
+          "visible": 0.68,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            379.0,
+            374.0,
+            145.0,
+            125.0
+          ],
+          "detras_de": "regadera_1"
+        },
+        {
+          "pos": [
+            1141.0,
+            450.0
+          ],
+          "tamano": 132.0,
+          "espejo": false,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1069.0,
+            325.0,
+            145.0,
+            125.0
+          ],
+          "detras_de": "carretilla_6"
+        },
+        {
+          "pos": [
             2117.5,
             499.0
           ],
@@ -536,46 +576,6 @@
             125.0
           ],
           "detras_de": "carpa_13"
-        },
-        {
-          "pos": [
-            1811.0,
-            486.0
-          ],
-          "tamano": 132.0,
-          "espejo": true,
-          "visible": 0.6,
-          "asoma": [
-            0.0,
-            -1.0
-          ],
-          "caja": [
-            1738.0,
-            361.0,
-            145.0,
-            73.0
-          ],
-          "detras_de": "roca_10"
-        },
-        {
-          "pos": [
-            626.0,
-            544.0
-          ],
-          "tamano": 132.0,
-          "espejo": false,
-          "visible": 0.7,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            553.0,
-            427.0,
-            145.0,
-            117.0
-          ],
-          "detras_de": "arbol_2"
         }
       ],
       "pista": {
@@ -600,6 +600,46 @@
       "escondites": [
         {
           "pos": [
+            1745.0,
+            511.0
+          ],
+          "tamano": 88.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1709.0,
+            423.0,
+            72.0,
+            88.0
+          ],
+          "detras_de": "roca_10"
+        },
+        {
+          "pos": [
+            1878.0,
+            545.0
+          ],
+          "tamano": 88.0,
+          "espejo": true,
+          "visible": 0.6,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1842.0,
+            457.0,
+            68.0,
+            88.0
+          ],
+          "detras_de": "arbusto_11"
+        },
+        {
+          "pos": [
             1017.0,
             527.0
           ],
@@ -617,46 +657,6 @@
             88.0
           ],
           "detras_de": "fardo_5"
-        },
-        {
-          "pos": [
-            593.5,
-            544.0
-          ],
-          "tamano": 88.0,
-          "espejo": true,
-          "visible": 0.65,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            557.0,
-            456.0,
-            52.0,
-            88.0
-          ],
-          "detras_de": "arbol_2"
-        },
-        {
-          "pos": [
-            1761.5,
-            511.0
-          ],
-          "tamano": 88.0,
-          "espejo": false,
-          "visible": 0.6,
-          "asoma": [
-            -1.0,
-            0.0
-          ],
-          "caja": [
-            1725.0,
-            423.0,
-            52.0,
-            88.0
-          ],
-          "detras_de": "roca_10"
         }
       ],
       "pista": {
@@ -760,18 +760,18 @@
       "escondites": [
         {
           "pos": [
-            1594.5,
+            1737.5,
             444.0
           ],
           "tamano": 77.0,
           "espejo": false,
           "visible": 0.64,
           "asoma": [
-            -1.0,
+            1.0,
             0.0
           ],
           "caja": [
-            1566.0,
+            1731.0,
             367.0,
             35.0,
             77.0
@@ -784,7 +784,7 @@
             450.0
           ],
           "tamano": 77.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.6,
           "asoma": [
             -1.0,
