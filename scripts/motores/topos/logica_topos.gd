@@ -870,3 +870,13 @@ func bajar_todos() -> void:
 ## Ronda terminada desde afuera (p. ej. el equipo ganó): no emite nada.
 func detener() -> void:
 	estado = "terminada"
+
+
+## Todos bajan suave sin contar escape (fin de turno en equipo: "durante el pase no asoma nadie").
+func esconder_todos() -> void:
+	for i in madrigueras.size():
+		var m: Dictionary = madrigueras[i]
+		if m["estado"] == "aviso":
+			madrigueras[i] = _madriguera_vacia(i)
+		elif m["estado"] in ["subiendo", "arriba"] and not m["tocado"]:
+			_bajar(m, T_BAJAR)

@@ -134,8 +134,8 @@
     "meta": 500
   },
   "umbrales_puntaje": {
-    "dos": 10800,
-    "tres": 12800
+    "dos": 13200,
+    "tres": 15050
   },
   "regalo_tras_derrotas": {
     "derrotas": 3,
