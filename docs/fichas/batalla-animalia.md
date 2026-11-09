@@ -1065,3 +1065,23 @@ Ya está en disco, con el mismo esquema que `arcoiris_final.json`. Resumen de lo
    anima el motor.
 6. **`scrum-master`**: esta ficha suma el motor `cortar` (Fruit Ninja) al registro de mecánicas de
    referencia, en un solo lugar: el jefe de Animalia.
+
+## 18. Estado de implementación del motor `cortar` (09-Nov-2026)
+
+**Hecho y verificado** (arnés `herramientas/qa_test_cortar.gd`: 103 OK, 0 fallos, headless Godot 4.7.1, con
+guardado aislado y el del PO intacto):
+
+- Código: `scripts/motores/cortar/` (lógica, burbuja, dibujo, Toby, Coleccionauta, motor) y
+  `escenas/minijuegos/cortar/motor_cortar.tscn`. Nivel: `datos/niveles/animalia/batalla/burbujeada_equipo.json`.
+- Lo que cubre el arnés: parábolas, trazo que revienta varias burbujas, calcetín con hitbox reducida, frascos
+  (M5 N2 S2 / M7 N3 S3), un bot que gana las 3 oleadas y otro que **pierde** (gags, Toby ayuda, descanso, se
+  conserva el 30 %), retomar (frascos 5 / 9 / 13, casos A y B) y revancha.
+- Capturas: `herramientas/capturar_cortar.gd` (con ventana; en la nube, con `xvfb-run`). Se arregló el 09-Nov:
+  no cargaba el nivel y configuraba los turnos antes del `_ready` del motor.
+
+**Pendiente:**
+
+- UX: al empezar el turno de Maxi, su retrato grande tapa un momento la burbuja que tiene que tocar (captura
+  `1_maxi_flota`). Que `experto-ux-parvulo` decida si se achica o se corre el retrato.
+- La integración en `batalla.gd` (HE-69 y HE-121) y la batalla de Animalia completa.
+- Las voces (TTS local) y la calibración en el playtest.
