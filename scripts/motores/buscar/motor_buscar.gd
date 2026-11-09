@@ -1127,9 +1127,9 @@ func _dibujar_juego() -> void:
 	# Lo que sigue va en pantalla.
 	_juego.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if tarde > 0.0:
-		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(1.0, 0.55, 0.25, 0.16 * tarde))
+		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(1.0, 0.6, 0.35, 0.07 * tarde))
 	if _fase == "perdio":
-		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(0.15, 0.1, 0.35, minf(0.28, _gag_t * 0.4)))
+		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(0.25, 0.15, 0.45, minf(0.22, _gag_t * 0.4)))
 	if not _borde_pista.is_empty():
 		var lado: Vector2 = _borde_pista["lado"]
 		var a2 := 0.6 * (1.0 - float(_borde_pista["t"]) / 2.0)

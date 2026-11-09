@@ -84,6 +84,11 @@ var estado := "jugando"  ## jugando | perdio | ronda | gano
 var asomados: Dictionary = {}  ## id -> 0-1 (ayudas: el animal asoma)
 var tope_turno_equipo := false
 
+## false si el ultimo sorteo no pudo separar a todos (lo revisan el generador y el arnes).
+var ultimo_sorteo_unico := true
+## Avisar por consola cuando el sorteo no es unico (el generador lo apaga mientras prueba composiciones).
+var avisar_sorteo := true
+
 var _medidas: Dictionary = {}  ## cache: "id:indice:abierto" -> medida
 
 
@@ -267,9 +272,12 @@ func sortear_escondites(ids: Array, previos: Dictionary) -> void:
 	var orden: Array = ids.duplicate()
 	_barajar(orden)
 	var resultado := {}
+	ultimo_sorteo_unico = true
 	if not _sortear_rec(orden, 0, ocupadas, previos, resultado, true):
 		if not _sortear_rec(orden, 0, ocupadas, {}, resultado, true):
-			push_warning("logica_buscar: no hay escondites distintos para todos en %s" % nivel.get("id_nivel", "?"))
+			ultimo_sorteo_unico = false
+			if avisar_sorteo:
+				push_warning("logica_buscar: no hay escondites distintos para todos en %s" % nivel.get("id_nivel", "?"))
 			_sortear_rec(orden, 0, {}, {}, resultado, false)
 	for id in resultado:
 		asignacion[id] = resultado[id]
@@ -316,9 +324,18 @@ func caja_escondite(esc: Dictionary) -> Rect2:
 func _pisa(caja: Rect2, ocupadas: Dictionary) -> bool:
 	for clave in ocupadas:
 		var v = ocupadas[clave]
-		if v is Rect2 and (v as Rect2).grow(-6).intersects(caja.grow(-6)):
+		if v is Rect2 and se_pisan(v, caja):
 			return true
 	return false
+
+
+## Dos partes visibles "se pisan" si comparten mas del 30 % de la menor: un roce en el borde no impide tocar
+## a cada animal en su centro (lo comprueba el arnes).
+static func se_pisan(a: Rect2, b: Rect2) -> bool:
+	var i := a.intersection(b)
+	if not i.has_area():
+		return false
+	return i.get_area() > 0.3 * minf(a.get_area(), b.get_area())
 
 
 func fijar_escondite(id: String, indice: int) -> void:

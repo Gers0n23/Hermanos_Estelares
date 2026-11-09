@@ -285,7 +285,7 @@ func _generar(zi: int, perfil: String) -> void:
 	var por_id := {}
 	# Composicion con semilla fija; si algun animal queda con menos de 2 escondites se prueba la siguiente
 	# semilla (siempre la misma secuencia: el resultado es reproducible).
-	for intento in 12:
+	for intento in 40:
 		rng.seed = hash("%s%s%d" % [zona, perfil, intento]) & 0x7fffffff
 		_rechazos.clear()
 		objetos = _componer(zona, perfil, zi, W, H, tam, n_piezas + intento / 3, int(_v(perfil, "abribles", zi)), int(_v(perfil, "dos_pasos", zi)))
@@ -298,6 +298,9 @@ func _generar(zi: int, perfil: String) -> void:
 			por_id[id] = _escondites_para(id, objetos, tam, visible, W, H, perfil, zi, aceptadas)
 			if por_id[id].size() < 2:
 				ok = false
+		if ok and not _factible(perfil, objetos, por_id, pool, n_obj, FIJOS.get(perfil, [[], [], [], [], []])[zi], senuelos, secretos):
+			ok = false
+			print("  %s/%s intento %d: sorteo no factible, otra composicion" % [zona, perfil, intento])
 		if ok:
 			break
 	var animales: Array = []
@@ -367,6 +370,40 @@ func _generar(zi: int, perfil: String) -> void:
 		nivel["umbrales_puntaje"] = _umbrales(perfil, zi, n_obj, int(_v(perfil, "dos_pasos", zi)), par)
 	nivel["lineas_voz"] = _voces(zi, perfil, pool, senuelos, secretos)
 	_guardar(RAIZ + zona + "/buscar_%s.json" % perfil, nivel)
+
+
+## El sorteo del juego separa a todos (sin piezas compartidas ni cajas pisadas) en 20 partidas, tambien en
+## la 2.a escena de Maxi y tras un reintento.
+func _factible(perfil: String, objetos: Array, por_id: Dictionary, pool: Array, n: int, fijos: Array, senuelos: Array, secretos: Array) -> bool:
+	var animales: Array = []
+	for id in por_id:
+		animales.append({"id": id, "aspecto": CAT[id]["aspecto"], "escondites": por_id[id]})
+	var nivel := {"perfil": perfil, "objetos": objetos, "animales": animales, "objetivos": pool, "objetivos_por_partida": n,
+		"objetivos_fijos": fijos, "senuelos": senuelos, "secretos": secretos, "escenas": 2 if perfil == "semilla" else 1}
+	for semilla in 20:
+		var l := LogicaBuscar.new()
+		l.avisar_sorteo = false
+		l.configurar(nivel, 500 + semilla)
+		if not l.ultimo_sorteo_unico:
+			var piezas := {}
+			for id in l.en_escena():
+				var ps := []
+				for e in l.escondites_de(id):
+					ps.append(l.pieza_de(e))
+				piezas[id] = ps
+			print("DBG 1a escena falla %s" % [piezas])
+			return false
+		for id in l.objetivos.duplicate():
+			l.encontrados.append(id)
+		l.estado = "ronda"
+		l.siguiente_ronda_escena()
+		if not l.ultimo_sorteo_unico:
+			var cuenta := {}
+			for id in l.en_escena():
+				cuenta[id] = l.escondites_de(id).size()
+			print("DBG 2a escena falla s=%d obj=%s %s" % [semilla, l.objetivos, cuenta])
+			return false
+	return true
 
 
 func _opciones(id: String, objetos: Array) -> int:
@@ -619,7 +656,9 @@ func _anclas(obj: Dictionary, id: String, t: float) -> Array:
 
 
 func _escondites_para(id: String, objetos: Array, tam: float, vis_min: float, W: float, H: float, perfil: String, zi: int, aceptadas: Array) -> Array:
-	var t := snappedf(tam * float(CAT[id]["rel"]), 1)
+	# Semilla: la escena es una sola pantalla; los grandes (caballo, elefante, braquio) se topan en 1,15.
+	var rel := minf(float(CAT[id]["rel"]), 1.15) if W <= 1280 else float(CAT[id]["rel"])
+	var t := snappedf(tam * rel, 1)
 	var objetivo := minf(vis_min + 0.1, 0.93)
 	var candidatos := objetos.filter(func(o) -> bool: return _habitat_ok(id, o))
 	_mezclar(candidatos)
@@ -689,13 +728,19 @@ func _probar(id: String, obj: Dictionary, ancla: Dictionary, t: float, objetivo:
 	if caja_animal.position.x < 20 or caja_animal.end.x > W - 20 or caja_animal.position.y < 10:
 		_rechazos["fuera"] = _rechazos.get("fuera", 0) + 1
 		return {}
-	if zona.end.y > H - 130.0 or zona.position.x < 140 or zona.position.y < 112 or zona.end.x > W - 130:
+	if zona.end.y > H - 130.0 or zona.position.x < 140 or zona.position.y < 112 or zona.end.x > W - 160:
 		_rechazos["ui"] = _rechazos.get("ui", 0) + 1
 		return {}
 	if zona.position.x < 230 and zona.end.y > 380:
 		_rechazos["toby"] = _rechazos.get("toby", 0) + 1
 		return {}
 	var visible_caja: Rect2 = m["caja"]
+	# Un escondite que pisa lo visible de otro animal en otra pieza dejaria al sorteo sin salida (Maxi tiene
+	# una sola pantalla): se descarta aqui, asi el sorteo solo tiene que repartir piezas.
+	for prev in aceptadas:
+		if prev["id"] != id and prev["pieza"] != obj["id"] and LogicaBuscar.se_pisan(prev["caja"], visible_caja):
+			_rechazos["pisa"] = _rechazos.get("pisa", 0) + 1
+			return {}
 	# `caja` (lo visible): el sorteo nunca junta en una partida dos escondites que se pisen.
 	var esc := {"pos": [snappedf(pie.x, 0.5), snappedf(pie.y, 0.5)], "tamano": t, "espejo": espejo,
 		"visible": snappedf(f, 0.01), "asoma": [d.x, d.y],

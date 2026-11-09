@@ -137,8 +137,9 @@ static func dibujar_fondo(lienzo, fondo: Dictionary, tamano: Vector2, t: float, 
 	var arriba := col(cielo[0], Color("#9ED8F5"))
 	var abajo := col(cielo[1] if cielo.size() > 1 else cielo[0], Color("#E8F7FF"))
 	if tarde > 0.0:
-		arriba = arriba.lerp(Color("#F39A6B"), tarde * 0.55)
-		abajo = abajo.lerp(Color("#FFD38A"), tarde * 0.6)
+		# Atardecer tierno (lavanda arriba, durazno en el horizonte): azul -> naranja directo se ve gris.
+		arriba = arriba.lerp(Color("#B58CDB"), tarde * 0.7)
+		abajo = abajo.lerp(Color("#FFB26B"), tarde * 0.75)
 	var franjas := 8
 	for i in franjas:
 		var y0 := tamano.y * i / franjas

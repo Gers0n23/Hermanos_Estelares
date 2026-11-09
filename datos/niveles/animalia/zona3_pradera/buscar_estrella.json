@@ -736,21 +736,21 @@
         },
         {
           "pos": [
-            444.0,
+            320.5,
             455.0
           ],
           "tamano": 95.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.41,
           "asoma": [
-            1.0,
+            -1.0,
             0.0
           ],
           "caja": [
-            422.0,
-            371.0,
-            71.0,
-            84.0
+            271.0,
+            360.0,
+            66.0,
+            95.0
           ],
           "detras_de": "arbusto_0"
         },
@@ -802,63 +802,63 @@
       "escondites": [
         {
           "pos": [
-            2501.0,
-            505.0
+            1479.0,
+            493.0
           ],
           "tamano": 110.0,
           "espejo": false,
-          "visible": 0.46,
+          "visible": 0.74,
           "asoma": [
             -1.0,
             0.0
           ],
           "caja": [
-            2460.0,
-            401.0,
+            1438.0,
+            389.0,
             81.0,
             104.0
           ],
-          "detras_de": "pasto_alto_13"
+          "detras_de": "acacia_7"
         },
         {
           "pos": [
-            867.5,
-            453.0
+            665.0,
+            528.0
           ],
           "tamano": 110.0,
           "espejo": false,
-          "visible": 0.4,
+          "visible": 0.48,
           "asoma": [
-            1.0,
-            0.0
+            0.0,
+            -1.0
           ],
           "caja": [
-            859.0,
-            349.0,
-            50.0,
-            104.0
+            624.0,
+            424.0,
+            81.0,
+            61.0
           ],
-          "detras_de": "hongo_3"
+          "detras_de": "tronco_2"
         },
         {
           "pos": [
-            1879.0,
-            439.0
+            503.0,
+            499.0
           ],
           "tamano": 110.0,
           "espejo": true,
-          "visible": 0.4,
+          "visible": 0.74,
           "asoma": [
             1.0,
             0.0
           ],
           "caja": [
-            1838.0,
-            335.0,
+            462.0,
+            395.0,
             81.0,
             104.0
           ],
-          "detras_de": "pasto_alto_9"
+          "detras_de": "acacia_1"
         }
       ],
       "pista": {
@@ -970,48 +970,8 @@
       "escondites": [
         {
           "pos": [
-            503.0,
-            499.0
-          ],
-          "tamano": 84.0,
-          "espejo": true,
-          "visible": 0.74,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            459.0,
-            415.0,
-            88.0,
-            84.0
-          ],
-          "detras_de": "acacia_1"
-        },
-        {
-          "pos": [
-            862.0,
+            869.5,
             453.0
-          ],
-          "tamano": 84.0,
-          "espejo": true,
-          "visible": 0.4,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            862.0,
-            402.0,
-            44.0,
-            51.0
-          ],
-          "detras_de": "hongo_3"
-        },
-        {
-          "pos": [
-            2273.0,
-            543.0
           ],
           "tamano": 84.0,
           "espejo": false,
@@ -1021,12 +981,52 @@
             0.0
           ],
           "caja": [
-            2253.0,
+            860.0,
+            369.0,
+            54.0,
+            84.0
+          ],
+          "detras_de": "hongo_3"
+        },
+        {
+          "pos": [
+            2266.5,
+            543.0
+          ],
+          "tamano": 84.0,
+          "espejo": true,
+          "visible": 0.4,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2247.0,
             459.0,
             64.0,
             84.0
           ],
           "detras_de": "arbusto_11"
+        },
+        {
+          "pos": [
+            1479.0,
+            493.0
+          ],
+          "tamano": 84.0,
+          "espejo": false,
+          "visible": 0.74,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1435.0,
+            409.0,
+            88.0,
+            84.0
+          ],
+          "detras_de": "acacia_7"
         }
       ],
       "pista": {
@@ -1343,8 +1343,8 @@
         },
         {
           "pos": [
-            716.0,
-            537.0
+            2077.5,
+            492.0
           ],
           "tamano": 95.0,
           "espejo": true,
@@ -1354,12 +1354,12 @@
             0.0
           ],
           "caja": [
-            667.0,
-            442.0,
+            2029.0,
+            397.0,
             98.0,
             95.0
           ],
-          "detras_de": "tronco_2"
+          "detras_de": "pasto_alto_10"
         }
       ],
       "saludo": "¡Es mi pijama, no soy cebra!"
@@ -1399,11 +1399,31 @@
         },
         {
           "pos": [
+            861.5,
+            453.0
+          ],
+          "tamano": 53.0,
+          "espejo": false,
+          "visible": 0.41,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            859.0,
+            415.0,
+            22.0,
+            38.0
+          ],
+          "detras_de": "hongo_3"
+        },
+        {
+          "pos": [
             2488.5,
             505.0
           ],
           "tamano": 53.0,
-          "espejo": false,
+          "espejo": true,
           "visible": 0.43,
           "asoma": [
             -1.0,
@@ -1416,26 +1436,6 @@
             53.0
           ],
           "detras_de": "pasto_alto_13"
-        },
-        {
-          "pos": [
-            444.5,
-            455.0
-          ],
-          "tamano": 53.0,
-          "espejo": true,
-          "visible": 0.4,
-          "asoma": [
-            1.0,
-            0.0
-          ],
-          "caja": [
-            433.0,
-            405.0,
-            30.0,
-            50.0
-          ],
-          "detras_de": "arbusto_0"
         }
       ],
       "marca_especial": "animalia_huevo_z3"
