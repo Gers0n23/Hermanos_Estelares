@@ -17,10 +17,17 @@ extends Node
 ## (presentacion del boton "¡Juntos!", intros de trucos, cinematicas vistas por familia, niveles de equipo
 ## ganados, records de equipo y batallas) y, por hermano, `equipo_premiado` en cada planeta. Nunca guarda
 ## pares, aciertos ni fallos por hermano en equipo (R2 de la ficha).
+## HE-81 (07-Nov-2026, motor-lanzar.md §13.4, batalla-animalia.md §8.3) suma dentro de `equipo` el estado
+## FAMILIAR de la ceremonia de partida de cada planeta (`partidas.<planeta>` = pasos, hecha, ceremonia,
+## forzada) y los caminos encendidos del Mapa Estelar (`rumbos`). Sin subir version (lo pide la ficha):
+## `_completar_v3()` los agrega en cada carga a los guardados v3 que no los traen, y se reescribe el archivo
+## una sola vez. Nada de esto es por hermano.
 
 signal progreso_actualizado(id_perfil: String)
 ## Cambio en los recuerdos encontrados/vistos (el boton del album se re-dibuja con esto).
 signal recuerdos_actualizados
+## Cambio en el estado familiar de la partida de un planeta (paso hecho, partida completada o forzada).
+signal partida_actualizada(planeta_id: String)
 
 const RUTA_GUARDADO := "user://progreso.json"
 ## Guardado aparte para los arneses y capturas de `herramientas/` (decision del PO, 03-Oct-2026):
@@ -120,7 +127,9 @@ func cargar() -> void:
 	var tenia_version: bool = resultado.has("version")
 	var version_en_disco: int = int(resultado.get("version", 1))
 	_datos = _migrar_datos(resultado)
-	if not tenia_version or version_en_disco != VERSION_ACTUAL:
+	var completado_v3 := _completar_v3(_datos)
+	# Un guardado de una version FUTURA no se reescribe al cargar (se perderia su marca de version).
+	if version_en_disco <= VERSION_ACTUAL and (not tenia_version or version_en_disco != VERSION_ACTUAL or completado_v3):
 		# El archivo en disco quedaba en un esquema viejo (o sin marcar version): se
 		# reescribe de inmediato con los datos ya migrados para que la proxima carga
 		# no tenga que volver a migrar nada (stack §7: la migracion pasa una sola vez
@@ -164,6 +173,8 @@ func _crear_equipo_por_defecto() -> Dictionary:
 		"cinematicas_vistas": [],
 		"planetas": {},
 		"batallas": {},
+		"partidas": {},
+		"rumbos": [],
 	}
 
 
@@ -252,6 +263,48 @@ func _migrar_v2_a_v3(datos: Dictionary) -> Dictionary:
 							planeta["equipo_premiado"] = []
 	datos["version"] = 3
 	return datos
+
+
+## Completa un guardado v3 hecho antes de que existieran claves que la ficha agrego "sin subir version"
+## (HE-81: `equipo.partidas` y `equipo.rumbos`). Idempotente: solo AGREGA lo que falta o repara un tipo
+## invalido (sin borrar partidas ya guardadas). Devuelve true si cambio algo (y entonces `cargar()` reescribe
+## el archivo una vez). Una version futura se deja tal cual.
+func _completar_v3(datos: Dictionary) -> bool:
+	if int(datos.get("version", VERSION_ACTUAL)) > VERSION_ACTUAL:
+		return false
+	var cambio := false
+	if not datos.get("equipo", null) is Dictionary:
+		datos["equipo"] = _crear_equipo_por_defecto()
+		return true
+	var equipo: Dictionary = datos["equipo"]
+	if not equipo.get("partidas", null) is Dictionary:
+		equipo["partidas"] = {}
+		cambio = true
+	if not equipo.get("rumbos", null) is Array:
+		equipo["rumbos"] = []
+		cambio = true
+	for planeta_id in (equipo["partidas"] as Dictionary).keys():
+		if _normalizar_partida(equipo["partidas"], str(planeta_id)):
+			cambio = true
+	return cambio
+
+
+## Deja `partidas[planeta_id]` con sus 4 claves y tipos validos, conservando lo que ya traia. True si cambio.
+func _normalizar_partida(partidas: Dictionary, planeta_id: String) -> bool:
+	var cambio := false
+	if not partidas.get(planeta_id, null) is Dictionary:
+		partidas[planeta_id] = {}
+		cambio = true
+	var partida: Dictionary = partidas[planeta_id]
+	if not partida.get("pasos", null) is Array:
+		partida["pasos"] = []
+		cambio = true
+	for clave in ["hecha", "ceremonia", "forzada"]:
+		if not partida.get(clave, null) is bool:
+			var valor = partida.get(clave, null)
+			partida[clave] = (valor is int or valor is float) and valor != 0
+			cambio = true
+	return cambio
 
 
 # ---------------------------------------------------------------------------
@@ -593,9 +646,11 @@ func _equipo() -> Dictionary:
 	for clave in ["trucos_presentados", "cinematicas_vistas"]:
 		if not equipo.get(clave, null) is Array:
 			equipo[clave] = []
-	for clave in ["planetas", "batallas"]:
+	for clave in ["planetas", "batallas", "partidas"]:
 		if not equipo.get(clave, null) is Dictionary:
 			equipo[clave] = {}
+	if not equipo.get("rumbos", null) is Array:
+		equipo["rumbos"] = []
 	return equipo
 
 
@@ -778,14 +833,65 @@ func batalla_ganada(id_batalla: String) -> bool:
 	return batalla is Dictionary and bool(batalla.get("ganada", false))
 
 
-func guardar_parcial_batalla(id_batalla: String, id_ronda: String, estado: Dictionary) -> void:
-	_batalla(id_batalla)["parcial"] = {"ronda": id_ronda, "estado": estado}
+## M4 (§14.6): el parcial de la ronda en curso; `estado` es del motor y el nucleo no lo interpreta, salvo una
+## clave generica opcional: `"etapa"` (int >= 1) para rondas de varias etapas (la Torre, motor-lanzar §12 y §25;
+## PO 05-Nov-2026, R17 = A: guardado entre etapas). Se copia a `parcial.etapa` y protege la regla "al retomar
+## se vuelve a la etapa guardada, nunca a una ganada": un parcial de la MISMA ronda con una etapa menor que la
+## ya guardada se rechaza (devuelve false, sin tocar el archivo). Sin etapa en el estado, `parcial.etapa` = 0.
+func guardar_parcial_batalla(id_batalla: String, id_ronda: String, estado: Dictionary) -> bool:
+	var batalla := _batalla(id_batalla)
+	var etapa := maxi(0, int(estado.get("etapa", 0)))
+	var anterior = batalla.get("parcial", {})
+	if anterior is Dictionary and str(anterior.get("ronda", "")) == id_ronda and etapa < int(anterior.get("etapa", 0)):
+		push_warning("Progreso.guardar_parcial_batalla: etapa %d < %d ya guardada en '%s'; se ignora" % [etapa, int(anterior.get("etapa", 0)), id_ronda])
+		return false
+	batalla["parcial"] = {"ronda": id_ronda, "etapa": etapa, "estado": estado}
 	guardar()
+	return true
 
 
 func obtener_parcial_batalla(id_batalla: String) -> Dictionary:
 	var parcial = _batalla(id_batalla).get("parcial", {})
 	return parcial if parcial is Dictionary else {}
+
+
+## Etapa guardada de la ronda en curso (0 = sin parcial, otra ronda o una ronda sin etapas). Sirve, p. ej., para
+## que el hito del mapa de batalla muestre cuanto falta sin numeros. Guardados viejos sin `etapa`: la lee del estado.
+func obtener_etapa_parcial_batalla(id_batalla: String, id_ronda: String) -> int:
+	var parcial := obtener_parcial_batalla(id_batalla)
+	if str(parcial.get("ronda", "")) != id_ronda:
+		return 0
+	var estado = parcial.get("estado", {})
+	var del_estado := int(estado.get("etapa", 0)) if estado is Dictionary else 0
+	return maxi(0, int(parcial.get("etapa", del_estado)))
+
+
+## Revancha (motor-lanzar §11 y §13.3): `equipo.batallas.<id>.revanchas.<id_ronda>` = {estrellitas, record}.
+## Sin subir version: se crea al escribir. Guarda el maximo de estrellitas y el record si mejora (menor y >= 0;
+## record = recursos usados, -1 = sin record). Guarda una sola vez.
+func registrar_revancha_batalla(id_batalla: String, id_ronda: String, estrellitas: int, record: int) -> Dictionary:
+	var batalla := _batalla(id_batalla)
+	if not batalla.get("revanchas", null) is Dictionary:
+		batalla["revanchas"] = {}
+	var previa := obtener_revancha_batalla(id_batalla, id_ronda)
+	var record_previo := int(previa["record"])
+	var resultado := {"estrellitas_nuevas": estrellitas > int(previa["estrellitas"]),
+		"record_nuevo": record >= 0 and (record_previo < 0 or record < record_previo),
+		"primer_record": record >= 0 and record_previo < 0}
+	batalla["revanchas"][id_ronda] = {
+		"estrellitas": maxi(int(previa["estrellitas"]), clampi(estrellitas, 0, 3)),
+		"record": record if resultado["record_nuevo"] else record_previo}
+	guardar()
+	return resultado
+
+
+## {"estrellitas": int, "record": int} (0 y -1 si nunca se jugo).
+func obtener_revancha_batalla(id_batalla: String, id_ronda: String) -> Dictionary:
+	var revanchas = _batalla(id_batalla).get("revanchas", {})
+	var r = revanchas.get(id_ronda, {}) if revanchas is Dictionary else {}
+	if not r is Dictionary:
+		r = {}
+	return {"estrellitas": int(r.get("estrellitas", 0)), "record": int(r.get("record", -1))}
 
 
 func borrar_parcial_batalla(id_batalla: String) -> void:
@@ -804,3 +910,166 @@ func modo_equipo_desbloqueado() -> bool:
 		if batalla is Dictionary and bool(batalla.get("ganada", false)):
 			return true
 	return false
+
+
+# ---------------------------------------------------------------------------
+# Partida de cada planeta y rumbos del Mapa Estelar (HE-81; motor-lanzar.md §13.4, batalla-animalia.md §8)
+# ---------------------------------------------------------------------------
+# Estado de la FAMILIA, generico por id de planeta: el nucleo nunca sabe de Arcoiris ni de Animalia. Con un
+# hermano con la pieza (su zona 3) y la batalla ganada, la ceremonia instala la pieza y la nave queda lista
+# PARA TODOS; la llave de la zona de padres (`forzar_partida`) hace lo mismo sin batalla ni ceremonia. Un
+# rumbo es "<origen>>destino" (p. ej. "arcoiris>animalia"). Leer nunca crea entradas en el guardado.
+
+const PARTIDA_VACIA := {"pasos": [], "hecha": false, "ceremonia": false, "forzada": false}
+
+
+## Entrada de escritura (la crea si falta).
+func _partida(planeta_id: String) -> Dictionary:
+	var partidas: Dictionary = _equipo()["partidas"]
+	_normalizar_partida(partidas, planeta_id)
+	return partidas[planeta_id]
+
+
+## Entrada de lectura: la guardada o una vacia, sin tocar `_datos`.
+func _leer_partida(planeta_id: String) -> Dictionary:
+	var partida = _equipo()["partidas"].get(planeta_id, null)
+	return partida if partida is Dictionary else PARTIDA_VACIA
+
+
+## Copia de {pasos, hecha, ceremonia, forzada} (valores vacios si nunca se empezo).
+func obtener_partida(planeta_id: String) -> Dictionary:
+	var partida := _leer_partida(planeta_id)
+	return {"pasos": (partida.get("pasos", []) as Array).duplicate() if partida.get("pasos", null) is Array else [],
+		"hecha": bool(partida.get("hecha", false)), "ceremonia": bool(partida.get("ceremonia", false)),
+		"forzada": bool(partida.get("forzada", false))}
+
+
+## Pasos de la ceremonia ya hechos, en el orden en que se hicieron ("tanque", "ala", "ruta", "despedida",
+## "llamada"; los ids los decide la escena de partida, no `Progreso`).
+func pasos_partida(planeta_id: String) -> Array:
+	return obtener_partida(planeta_id)["pasos"]
+
+
+func paso_partida_hecho(planeta_id: String, paso: String) -> bool:
+	return paso in pasos_partida(planeta_id)
+
+
+## Guarda al terminar cada paso (cierre_arcoiris.md §16.3). Idempotente: un paso repetido no se duplica.
+func marcar_paso_partida(planeta_id: String, paso: String) -> void:
+	if planeta_id == "" or paso == "":
+		push_warning("Progreso.marcar_paso_partida: planeta '%s' o paso '%s' vacio" % [planeta_id, paso])
+		return
+	var partida := _partida(planeta_id)
+	if paso in partida["pasos"]:
+		return
+	partida["pasos"].append(paso)
+	guardar()
+	partida_actualizada.emit(planeta_id)
+
+
+## Retomar (cierre_arcoiris.md §16.3): el primer id de `orden` que todavia no se hizo; "" si estan todos.
+## `orden` es la lista de pasos de la escena (p. ej. `datos/partidas/<planeta>.json` -> "pasos").
+func primer_paso_pendiente(planeta_id: String, orden: Array) -> String:
+	var hechos := pasos_partida(planeta_id)
+	for paso in orden:
+		if str(paso) not in hechos:
+			return str(paso)
+	return ""
+
+
+## true = la pieza esta instalada y la nave lista para TODOS (por la ceremonia o por la llave de padres).
+## Con esto el Mapa Estelar abre el planeta siguiente (`viaje_siguiente_requiere`) y dibuja la pieza.
+func partida_hecha(planeta_id: String) -> bool:
+	return bool(_leer_partida(planeta_id).get("hecha", false))
+
+
+## true = la ceremonia se vio completa (la llave de padres no la consume).
+func ceremonia_hecha(planeta_id: String) -> bool:
+	return bool(_leer_partida(planeta_id).get("ceremonia", false))
+
+
+## true = la llave de padres la marco hecha sin batalla.
+func partida_forzada(planeta_id: String) -> bool:
+	return bool(_leer_partida(planeta_id).get("forzada", false))
+
+
+## Al terminar la ceremonia: hecha = true, ceremonia = true y enciende `rumbo` ("" = sin rumbo, p. ej. el
+## ultimo planeta). Idempotente; guarda una sola vez. Para saber si hay "¡rumbo nuevo!", la escena consulta
+## `rumbo_encendido(rumbo)` ANTES de llamar (despues de la llave ya estaba encendido: sin rama del Mapa).
+func completar_partida(planeta_id: String, rumbo: String) -> void:
+	if planeta_id == "":
+		push_warning("Progreso.completar_partida: planeta vacio")
+		return
+	var partida := _partida(planeta_id)
+	var cambio := not bool(partida["hecha"]) or not bool(partida["ceremonia"])
+	partida["hecha"] = true
+	partida["ceremonia"] = true
+	cambio = _encender_rumbo(rumbo) or cambio
+	if cambio:
+		guardar()
+		partida_actualizada.emit(planeta_id)
+
+
+## Llave de la zona de padres ("Instalar el ala sin la batalla", detras del candado adulto, GDD §6.7):
+## hecha = true, forzada = true y enciende `rumbo`, SIN batalla ni ceremonia (`ceremonia` sigue en false: si
+## despues ganan la batalla, la ceremonia se juega una vez). Si la partida ya estaba hecha no cambia nada
+## (no hay nada que forzar). Guarda una sola vez.
+func forzar_partida(planeta_id: String, rumbo: String) -> void:
+	if planeta_id == "":
+		push_warning("Progreso.forzar_partida: planeta vacio")
+		return
+	if partida_hecha(planeta_id):
+		if _encender_rumbo(rumbo):
+			guardar()
+			partida_actualizada.emit(planeta_id)
+		return
+	var partida := _partida(planeta_id)
+	partida["hecha"] = true
+	partida["forzada"] = true
+	_encender_rumbo(rumbo)
+	guardar()
+	partida_actualizada.emit(planeta_id)
+
+
+## Caminos encendidos del Mapa Estelar, en el orden en que se encendieron (copia).
+func rumbos() -> Array:
+	return (_equipo()["rumbos"] as Array).duplicate()
+
+
+func rumbo_encendido(rumbo: String) -> bool:
+	return rumbo != "" and rumbo in _equipo()["rumbos"]
+
+
+## Agrega el rumbo sin guardar. True si era nuevo.
+func _encender_rumbo(rumbo: String) -> bool:
+	if rumbo == "" or rumbo_encendido(rumbo):
+		return false
+	if not ">" in rumbo:
+		push_warning("Progreso: rumbo '%s' sin el formato origen>destino" % rumbo)
+	_equipo()["rumbos"].append(rumbo)
+	return true
+
+
+## true si algun hermano ya gano la pieza de nave de ese planeta (su zona 3).
+func alguien_tiene_pieza_nave(planeta_id: String) -> bool:
+	for id in obtener_ids_perfiles():
+		if tiene_pieza_nave(str(id), planeta_id):
+			return true
+	return false
+
+
+## La ceremonia esta para jugarse: un hermano con la pieza + la batalla ganada + la ceremonia sin ver (la
+## llave de padres no la consume, asi que despues de `forzar_partida` sigue disponible una vez).
+func partida_disponible(planeta_id: String, id_batalla: String) -> bool:
+	return batalla_ganada(id_batalla) and alguien_tiene_pieza_nave(planeta_id) and not ceremonia_hecha(planeta_id)
+
+
+## Estado del hito de la batalla del mapa del planeta (el Claro de Arcoiris, el Campamento de Animalia),
+## los 3 estados de motor-lanzar §13.4: "mochila" (batalla sin ganar) -> "partida" (`partida_disponible`)
+## -> "revancha" (ganada y ceremonia vista). La batalla solo existe tras la primera pieza (zona 3), asi que
+## ganada implica un hermano con la pieza. Tras la llave de padres, si ganan la batalla el hito ofrece la
+## ceremonia una vez antes de la revancha (m8).
+func estado_hito_batalla(id_batalla: String, planeta_id: String) -> String:
+	if not batalla_ganada(id_batalla):
+		return "mochila"
+	return "revancha" if ceremonia_hecha(planeta_id) else "partida"

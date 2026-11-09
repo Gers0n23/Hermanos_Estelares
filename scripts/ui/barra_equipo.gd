@@ -193,6 +193,11 @@ func _estrella(centro: Vector2, radio: float, color: Color) -> void:
 # Lo que pide el gestor
 # ---------------------------------------------------------------------------
 
+## Id del retrato que esta al centro (puerta o pase), o "" si ninguno.
+func en_centro() -> String:
+	return _en_centro
+
+
 ## Quien juega ahora (o "" en el pase).
 func fijar_actual(id: String) -> void:
 	_actual = id

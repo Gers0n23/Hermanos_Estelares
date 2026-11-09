@@ -10,6 +10,14 @@
   "destellos_reto_dorado": 0,
   "destellos_equipo_por_hermano": 50,
   "nota_equipo": "PO 06-Oct-2026 (modo-equipo.md §7.1, §11.2): 50 destellos por hermano la primera vez que gana cada nivel de equipo; no marca estaciones individuales. Solo las estaciones con nivel_equipo despiertan en modo equipo (v1: las 5 de Parejas). disenador-niveles 07-Oct-2026.",
+  "viaje_siguiente_requiere": {
+    "partida": "arcoiris"
+  },
+  "nota_viaje": "HE-82 (motor-lanzar.md §13.4, PO 13-Oct-2026): el Mapa Estelar abre Animalia para CUALQUIER hermano cuando Progreso.partida_hecha(\"arcoiris\") (ceremonia de partida o llave de padres). Antes, Animalia se ve lejana, sin candado: al tocarla late, suena una de voz_destino_espera (alternadas, maximo una por visita) y una flechita de luz vuelve a Arcoiris (M9).",
+  "voz_destino_espera": [
+    "voces/arcoiris/despegue/mapa_animalia_antes_01.wav",
+    "voces/arcoiris/despegue/mapa_animalia_antes_02.wav"
+  ],
   "batalla": {
     "id": "arcoiris_batalla_final",
     "datos": "res://datos/batallas/arcoiris_final.json",
@@ -18,10 +26,19 @@
     "condicion": "primer_hermano",
     "posicion": [260, 380],
     "voz_hito": ["voces/arcoiris/batalla/hito_01.wav", "voces/arcoiris/batalla/hito_02.wav"],
-    "nota_voz_hito": "variantes al azar sin repetir la anterior, como maximo una vez por visita al mapa (docs/guiones/voces-batalla-arcoiris.md §2 y §10.1: arcoiris_batalla_hito_01/_02, Coleccionauta, grabacion casera de papa). Al TOCAR el hito suena nucleo_batalla_hito (Cometa, voces/nucleo/batalla/hito.wav), que es otra clave."
+    "nota_voz_hito": "variantes al azar sin repetir la anterior, como maximo una vez por visita al mapa (docs/guiones/voces-batalla-arcoiris.md §2 y §10.1: arcoiris_batalla_hito_01/_02, Coleccionauta, grabacion casera de papa). Al TOCAR el hito suena nucleo_batalla_hito (Cometa, voces/nucleo/batalla/hito.wav), que es otra clave.",
+    "tras_ganar": {
+      "partida": {
+        "escena": "res://escenas/planetas/arcoiris/partida_arcoiris.tscn",
+        "rumbo": "arcoiris>animalia"
+      },
+      "revancha": true
+    },
+    "nota_tras_ganar": "HE-82: hito del Claro con 3 estados segun Progreso.estado_hito_batalla(id, \"arcoiris\"): mochila (sin ganar) -> partida (abre tras_ganar.partida.escena, que retoma en el primer paso pendiente) -> revancha (la Torre otra vez). La escena de partida es de HE-84/HE-85."
   },
   "nota_destellos": "PROVISIONAL (disenador-niveles HE-40 §2.3, 28-Sep-2026): cada estacion da 100 destellos la primera vez, igual para los tres hermanos; los retos dorados dan 0 (su premio es cosmetico). Las aperturas cuentan estaciones, nunca destellos.",
   "pieza_nave": {
+    "id": "ala_izquierda",
     "zonas": [
       1,
       2,

@@ -1,0 +1,138 @@
+{
+  "id": "animalia_batalla_final",
+  "planeta_id": "animalia",
+  "nota": "disenador-mecanicas 05-Nov-2026 (HE-115). Ficha: docs/fichas/batalla-animalia.md. Mismo esquema que arcoiris_final.json (modo-equipo.md §14.9, motor-lanzar.md §13.3 y §25.18.6) con 4 campos opcionales nuevos que batalla.gd debe aceptar (ficha §13): 'epilogo': null, 'cinematica_antes_epilogo': null, 'recuerdo_momento': null y 'regalo_hangar'; y por ronda 'interludio' (id del momento del pop de la carroza). Informativos que batalla.gd ignora: 'motor', 'carroza', 'resumen', 'duracion' y 'premio'. La FUENTE DE VERDAD de cantidades, topes, pasos_rival, frascos y metas es el nivel de cada ronda (datos/niveles/animalia/batalla/, los crea disenador-niveles). TODOS los numeros son valores de partida: los fija el simulador (herramientas/simular_equipo.py, ficha §6) antes de HE-121.",
+  "minimo_hermanos": 3,
+  "orden": "maxi_intercalado",
+  "destellos_por_hermano": 100,
+  "nota_destellos": "[Decision del equipo 05-Nov] Igual que Arcoiris: 100 por hermano, una sola vez. Las rondas sueltas dan 0 (destellos_fijos = 0).",
+  "recuerdo_momento": null,
+  "regalo_hangar": "foto_desfile",
+  "nota_premio": "[Decision del equipo 05-Nov] Sin foto nueva del album familiar (ya tiene 10, el tope de album-recuerdos.md). El premio de recuerdo es la 'foto del desfile': ilustracion estatica de los tres con Toby, el desfile y el Coleccionauta, que se cuelga en el rincon de regalos del hangar (hangar-nave.md §8.2).",
+  "desbloquea": { "revancha_jefe": true, "partida": true },
+  "cinematica_entrada": "entrada",
+  "cinematica_antes_epilogo": null,
+  "cinematica_cierre": ["cierre_a"],
+  "pausa_antes_ronda_1": false,
+  "pausa_entre_rondas": true,
+  "retomar_empieza": "maxi",
+  "rondas": [
+    {
+      "id": "coro",
+      "color": "naranja",
+      "carroza": "corralito",
+      "motor": "topos",
+      "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+      "nivel": "res://datos/niveles/animalia/batalla/topos_equipo.json",
+      "interludio": "pop_corralito",
+      "voz_pausa": null,
+      "resumen": {
+        "cantidad": "16 pedidos en un claro de 6 madrigueras",
+        "por_turno": { "semilla": "1 pedido que no se esconde", "brote": "tope 3, el escape corta", "estrella": "tope 4, el escape corta" },
+        "pasos_rival": 4,
+        "ganar_al_primer_intento_meta": [0.8, 0.9],
+        "turnos_tipicos": "~11 (Maxi 6, Nicole 3, Sofia 2)",
+        "minutos": { "tipico": 3.0, "p80": 3.8 }
+      }
+    },
+    {
+      "id": "escondite",
+      "color": "azul",
+      "carroza": "laguna",
+      "motor": "buscar",
+      "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+      "nivel": "res://datos/niveles/animalia/batalla/buscar_equipo.json",
+      "interludio": "pop_laguna",
+      "voz_pausa": "voces/animalia/batalla/pausa_01.wav",
+      "resumen": {
+        "cantidad": "10 animales en una escena de 2560x720",
+        "por_turno": { "semilla": "1 animal que asoma y hace ruido", "brote": "tope 1, 30 s", "estrella": "tope 2, 35 s" },
+        "pasos_rival": 3,
+        "ganar_al_primer_intento_meta": [0.8, 0.9],
+        "turnos_tipicos": "~10 (Maxi 5, Nicole 3, Sofia 2)",
+        "minutos": { "tipico": 4.0, "p80": 4.8 }
+      }
+    },
+    {
+      "id": "casas",
+      "color": "amarillo",
+      "carroza": "pradera",
+      "motor": "caminos",
+      "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+      "nivel": "res://datos/niveles/animalia/batalla/caminos_equipo.json",
+      "interludio": "pop_pradera",
+      "voz_pausa": "voces/animalia/batalla/pausa_02.wav",
+      "resumen": {
+        "cantidad": "2 tableros compartidos de 6x6 (5 + 4 pares), sin llenado, caminos llegados fijos",
+        "por_turno": { "semilla": "1 animal (el par mas corto) bajo el dedo", "brote": "tope 1, 40 s", "estrella": "tope 2, 45 s" },
+        "pasos_rival": 3,
+        "ganar_al_primer_intento_meta": [0.8, 0.9],
+        "turnos_tipicos": "~10 (Maxi 5, Nicole 3, Sofia 2)",
+        "minutos": { "tipico": 4.3, "p80": 5.0 }
+      }
+    },
+    {
+      "id": "postas",
+      "color": "verde",
+      "carroza": "toby",
+      "motor": "runner",
+      "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+      "nivel": "res://datos/niveles/animalia/batalla/runner_equipo.json",
+      "interludio": "pop_toby",
+      "voz_pausa": "voces/animalia/batalla/pausa_03.wav",
+      "resumen": {
+        "cantidad": "carrera de postas: 28 obstaculos limpios hasta la meta",
+        "por_turno": { "semilla": "tope 2 (obstaculos blandos, salto imantado)", "brote": "tope 5, el choque corta", "estrella": "tope 8, el choque corta" },
+        "pasos_rival": 4,
+        "ganar_al_primer_intento_meta": [0.8, 0.9],
+        "turnos_tipicos": "~10 (Maxi 5, Nicole 3, Sofia 2)",
+        "minutos": { "tipico": 3.2, "p80": 4.0 }
+      }
+    },
+    {
+      "id": "burbujeada",
+      "jefe": true,
+      "color": null,
+      "carroza": null,
+      "motor": "cortar",
+      "escena": "res://escenas/minijuegos/cortar/motor_cortar.tscn",
+      "nivel": "res://datos/niveles/animalia/batalla/burbujeada_equipo.json",
+      "presentacion": "presenta_burbujeada",
+      "revancha": true,
+      "voz_pausa": "voces/animalia/batalla/pausa_antes_jefe.wav",
+      "momentos": {
+        "fin_oleada": "desde_2a",
+        "gran_estornudo": "desde_2a",
+        "retomar_burbujeada": "desde_1a",
+        "presenta_calcetin": "una_vez",
+        "presenta_siesta": "una_vez",
+        "presenta_trompeta": "una_vez",
+        "presenta_combo": "una_vez"
+      },
+      "resumen": {
+        "referencia": "Fruit Ninja (Halfbrick): cortar con el trazo objetos lanzados en arco; bomba = calcetin; bananas = burbuja de la siesta y burbuja trompeta",
+        "oleadas": 3,
+        "meta_animales": [31, 33, 38],
+        "frascos_por_oleada": { "intento_1": 9, "desde_1a_derrota": 13, "reparto_9": "M5 N2 S2", "reparto_13": "M7 N3 S3" },
+        "ganar_al_primer_intento_meta": { "o1": [0.6, 0.75], "o2": [0.45, 0.6], "o3": [0.3, 0.4], "en_3_intentos_cada_oleada": 0.95 },
+        "minutos": { "tipico": 9.0, "p80": 12.0 }
+      }
+    }
+  ],
+  "epilogo": null,
+  "duracion": {
+    "meta_min": { "por_ronda": 5, "jefe": 12 },
+    "estimado_min": { "tipico": 26, "p80": 34 },
+    "sesiones": "2-3 (el caso normal). Pausa con pregunta tras cada ronda de carroza y antes del jefe; entre oleadas no hay pregunta (patron de la Torre).",
+    "supuestos": "pase real 8-12 s; tanda de Maxi ~4 s; tandas de Nicole ~7 s y de Sofia ~6 s; cinematica de entrada <= 12 s; interludios <= 4 s; presentacion del jefe <= 12 s; fin de oleada ~5 s; gran estornudo ~12 s; cierre_a <= 20 s."
+  },
+  "premio": {
+    "destellos_por_hermano": 100,
+    "regalo_hangar": "foto_desfile",
+    "foto_familiar": false,
+    "pieza_nave": false,
+    "instala_pieza": true,
+    "pieza_que_instala": "ala_derecha",
+    "nota": "El ala derecha se gana en la zona 3 (llega floja al hangar, opcion A de hangar-nave.md §5.4) y se asegura en la ceremonia de partida, que abre el rumbo animalia>melodia para toda la familia."
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "id_nivel": "animalia_z2_topos_estrella",
+  "motor": "topos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona2_laguna",
+  "fondo_tema": "laguna",
+  "fondo": "",
+  "tema": "Laguna y costa de Chile",
+  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p40 (20 -> 28 por ronda), 2 rondas de 60 s, regalo tras 3 derrotas (meta x 0,85), descanso tras 4 y pista con costo. Umbrales: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+  "madrigueras": 6,
+  "modo": "tandas",
+  "asomados": 5,
+  "asomados_min": 2,
+  "asomados_max": 5,
+  "intervalo_pedido_s": 1.4,
+  "t_arriba_s": 1.45,
+  "variacion_t_arriba": 0.25,
+  "aviso_s": 0.08,
+  "pausa_entre_pedidos": 0.5,
+  "pedidos": null,
+  "duracion_s": 60,
+  "rondas": 2,
+  "meta": 26,
+  "meta_ficha": 22,
+  "repetir_sonido": "no",
+  "ondas_visibles": "completas",
+  "animales": [
+    {
+      "id": "lobo_marino",
+      "sonido": "sfx/animalia/animales/lobo_marino.ogg",
+      "nombre_voz": "voces/animalia/nombres/lobo_marino.wav"
+    },
+    {
+      "id": "pinguino",
+      "sonido": "sfx/animalia/animales/pinguino.ogg",
+      "nombre_voz": "voces/animalia/nombres/pinguino.wav",
+      "palabra": "PINGÜINO"
+    },
+    {
+      "id": "pato",
+      "sonido": "sfx/animalia/animales/pato.ogg",
+      "nombre_voz": "voces/animalia/nombres/pato.wav",
+      "palabra": "PATO"
+    },
+    {
+      "id": "ganso",
+      "sonido": "sfx/animalia/animales/ganso.ogg",
+      "nombre_voz": "voces/animalia/nombres/ganso.wav",
+      "palabra": "GANSO"
+    },
+    {
+      "id": "flamenco",
+      "sonido": "sfx/animalia/animales/flamenco.ogg",
+      "nombre_voz": "voces/animalia/nombres/flamenco.wav"
+    },
+    {
+      "id": "huillin",
+      "sonido": "sfx/animalia/animales/huillin.ogg",
+      "nombre_voz": "voces/animalia/nombres/huillin.wav"
+    },
+    {
+      "id": "ballena",
+      "sonido": "sfx/animalia/animales/ballena.ogg",
+      "nombre_voz": "voces/animalia/nombres/ballena.wav",
+      "palabra": "BALLENA"
+    }
+  ],
+  "similares": [
+    [
+      "pato",
+      "ganso"
+    ]
+  ],
+  "p_similar": 0.2,
+  "pedido_escrito": {
+    "p": 0.0,
+    "tipo": "palabra"
+  },
+  "pedido_doble": {
+    "p": 0.0,
+    "separacion_s": 0.4
+  },
+  "toby_dorado": {
+    "cada_s": 12,
+    "puntos": 300
+  },
+  "impostor": null,
+  "puntos": {
+    "acierto": 100,
+    "racha_max": 5,
+    "rapidito": 50,
+    "rapidito_fraccion": 0.4,
+    "doble": 200,
+    "meta": 500
+  },
+  "umbrales_puntaje": {
+    "dos": 17400,
+    "tres": 19900
+  },
+  "regalo_tras_derrotas": {
+    "derrotas": 3,
+    "meta_factor": 0.85
+  },
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "max_estrellitas_tras_derrota": 2,
+  "pistas_cuestan_estrellita": true,
+  "pista_pedidos": 3,
+  "lineas_voz": {
+    "intro": "voces/animalia/topos/estrella/z2_intro.wav",
+    "instruccion": "voces/animalia/topos/estrella/instruccion.wav",
+    "meta_llena": "voces/animalia/topos/estrella/meta_llena.wav",
+    "victoria": [
+      "voces/animalia/topos/estrella/victoria_01.wav",
+      "voces/animalia/topos/estrella/victoria_02.wav",
+      "voces/animalia/topos/estrella/victoria_03.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/topos/estrella/derrota_gag_01.wav",
+      "voces/animalia/topos/estrella/derrota_gag_02.wav"
+    ],
+    "regalo": "voces/animalia/topos/estrella/regalo.wav",
+    "toby_dorado": [
+      "voces/animalia/topos/estrella/toby_dorado_01.wav",
+      "voces/animalia/topos/estrella/toby_dorado_02.wav"
+    ],
+    "toby_dorado_presenta": "voces/animalia/topos/estrella/toby_dorado_presenta.wav",
+    "toby_tocado": "voces/animalia/topos/estrella/toby_tocado.wav",
+    "ronda_2": "voces/animalia/topos/estrella/ronda_2.wav",
+    "descansar": "voces/animalia/topos/estrella/descansar.wav",
+    "record": "voces/animalia/topos/estrella/record.wav",
+    "primer_record": "voces/animalia/topos/estrella/primer_record.wav",
+    "pista_usada": "voces/animalia/topos/estrella/pista_usada.wav"
+  }
+}

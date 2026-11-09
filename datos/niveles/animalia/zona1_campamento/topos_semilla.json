@@ -1,0 +1,113 @@
+{
+  "id_nivel": "animalia_z1_topos_semilla",
+  "motor": "topos",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona1_campamento",
+  "fondo_tema": "campamento",
+  "fondo": "",
+  "tema": "El corralito",
+  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1 y §10: reloj, escape a los t_arriba_s y meta al p10 (Maxi pierde, pero suave). Tocar al equivocado no es fallo (celebra). PROVISIONAL hasta el playtest.",
+  "madrigueras": 3,
+  "modo": "tandas",
+  "asomados": 2,
+  "t_arriba_s": 6.0,
+  "aviso_s": 0.15,
+  "pausa_entre_pedidos": 0.9,
+  "pedidos": null,
+  "duracion_s": 45,
+  "rondas": 1,
+  "meta": 4,
+  "meta_ficha": 5,
+  "repetir_sonido": "cada_3s",
+  "ondas_visibles": "completas",
+  "animales": [
+    {
+      "id": "vaca",
+      "sonido": "sfx/animalia/animales/vaca.ogg",
+      "nombre_voz": "voces/animalia/nombres/vaca.wav"
+    },
+    {
+      "id": "perro",
+      "sonido": "sfx/animalia/animales/perro.ogg",
+      "nombre_voz": "voces/animalia/nombres/perro.wav"
+    },
+    {
+      "id": "gato",
+      "sonido": "sfx/animalia/animales/gato.ogg",
+      "nombre_voz": "voces/animalia/nombres/gato.wav"
+    },
+    {
+      "id": "pato",
+      "sonido": "sfx/animalia/animales/pato.ogg",
+      "nombre_voz": "voces/animalia/nombres/pato.wav"
+    },
+    {
+      "id": "caballo",
+      "sonido": "sfx/animalia/animales/caballo.ogg",
+      "nombre_voz": "voces/animalia/nombres/caballo.wav"
+    },
+    {
+      "id": "gallo",
+      "sonido": "sfx/animalia/animales/gallo.ogg",
+      "nombre_voz": "voces/animalia/nombres/gallo.wav"
+    }
+  ],
+  "similares": [],
+  "p_similar": 0.0,
+  "pedido_escrito": {
+    "p": 0.0,
+    "tipo": "palabra"
+  },
+  "pedido_doble": {
+    "p": 0.0,
+    "separacion_s": 0.4
+  },
+  "toby_dorado": {
+    "cada_s": "una_vez",
+    "puntos": 0
+  },
+  "impostor": null,
+  "sorpresa": null,
+  "ayuda_idle_s": [
+    3,
+    5
+  ],
+  "regalo_tras_derrotas": {
+    "derrotas": 2,
+    "meta_factor": 0.7
+  },
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "t_arriba_s": null,
+    "pedidos": 6,
+    "ayuda_idle_s": [
+      2,
+      4
+    ]
+  },
+  "descanso_tras_derrotas": null,
+  "pistas_cuestan_estrellita": false,
+  "lineas_voz": {
+    "intro": "voces/animalia/topos/semilla/z1_intro.wav",
+    "instruccion": "voces/animalia/topos/semilla/instruccion.wav",
+    "meta_llena": "voces/animalia/topos/semilla/meta_llena.wav",
+    "victoria": [
+      "voces/animalia/topos/semilla/victoria_01.wav",
+      "voces/animalia/topos/semilla/victoria_02.wav",
+      "voces/animalia/topos/semilla/victoria_03.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/topos/semilla/derrota_gag_01.wav",
+      "voces/animalia/topos/semilla/derrota_gag_02.wav"
+    ],
+    "regalo": "voces/animalia/topos/semilla/regalo.wav",
+    "toby_dorado": [
+      "voces/animalia/topos/semilla/toby_dorado_01.wav",
+      "voces/animalia/topos/semilla/toby_dorado_02.wav"
+    ],
+    "toby_dorado_presenta": "voces/animalia/topos/semilla/toby_dorado_presenta.wav",
+    "toby_tocado": "voces/animalia/topos/semilla/toby_tocado.wav",
+    "ayuda_fuerte": "voces/animalia/topos/semilla/ayuda_fuerte.wav"
+  }
+}

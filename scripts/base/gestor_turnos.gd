@@ -20,8 +20,13 @@ extends Node
 ##   un turno de Maxi) y despues hay 400 ms de bloqueo. Recordatorio "¡te toca!" a los 10 s, maximo 2.
 ## - M2: en turnos semilla, `semilla_auto_s` sin ningun toque pide la jugada automatica al motor.
 ##
-## Fuera de alcance de HE-59 (van en HE-69 / HE-76): modo sin puerta (`confirmar_turno: false`, epilogo),
-## `rival: null` de la Torre, `terminar_turno_sin_recursos()` y `reiniciar_rival(forzar_id)` completo.
+## MODO SIN PISTA (HE-76; motor-lanzar.md §13.2 y modo-equipo.md §11.4): `"rival": null` + `"confirmar_turno":
+## true` en el bloque `equipo` del nivel. Puerta, pase (pasos 0, 2, 3, 4 y 5), porras, "¡le toca a…!", Cometa
+## y `semilla_auto_s` como siempre; sin galletas, rival, salto, retroceso, resbalon ni guirnalda. El reloj lo
+## lleva el motor (sus recursos): cuando se gastan sin ganar llama `terminar_turno_sin_recursos(siguiente)`,
+## que termina en `rival_llego` ("el equipo perdio este intento"). El gestor no sabe que recurso es.
+##
+## Fuera de alcance (HE-69): modo sin puerta (`confirmar_turno: false`, epilogo).
 
 signal turno_iniciado(id_hermano: String, perfil: String)
 signal rival_movido(posicion: int)
@@ -88,6 +93,7 @@ var _sono_guardala := false
 
 var _auto_t := 0.0
 var _auto_pedida := false
+var _sin_pista := false
 var _ultimas_voces := {}
 
 var _capa: Control
@@ -117,6 +123,7 @@ func configurar(equipo: Array[String], config: Dictionary, perfiles: Dictionary,
 	var topes = config.get("aciertos_max_turno", {})
 	_topes = topes if topes is Dictionary else {}
 	_motor = get_parent()
+	_sin_pista = config.has("rival") and config["rival"] == null and bool(config.get("confirmar_turno", true))
 	_ciclo = construir_ciclo(_equipo, _perfiles, str(config.get("orden", "maxi_intercalado")))
 	_crear_ui(capa_ui, int(config.get("record_pasos", -1)))
 
@@ -164,6 +171,8 @@ func _crear_ui(capa_ui: Node, record_pasos: int) -> void:
 	_capa.add_child(_velo)
 	pista = PistaRival.new()
 	pista.name = "pista_rival"
+	# Sin pista solo queda Cometa (tocable, repite) en la franja de arriba: la pista nunca se dibuja.
+	pista.sin_pista = _sin_pista
 	_capa.add_child(pista)
 	pista.configurar(_pasos_rival, record_pasos)
 	meta = MetaTurno.new()
@@ -211,6 +220,11 @@ func entrada_bloqueada() -> bool:
 	return _bloqueada
 
 
+## true con `"rival": null` + `"confirmar_turno": true` (la Torre): sin pista, salto, retroceso ni resbalon.
+func sin_pista() -> bool:
+	return _sin_pista
+
+
 func turno_activo() -> bool:
 	return _turno_activo
 
@@ -231,7 +245,10 @@ func tope_de(perfil: String) -> int:
 	return int(_topes.get(perfil, 0))
 
 
+## Sin pista devuelve Vector2.INF: la base usa `ancla_rival_motor()` (el rival vive en la escena del motor).
 func posicion_boca_rival() -> Vector2:
+	if _sin_pista:
+		return Vector2.INF
 	return pista.boca_global() if pista != null else Vector2(640, 60)
 
 
@@ -280,10 +297,17 @@ func notificar_acierto() -> void:
 		pista.fraccion_cinta = float(_aciertos_equipo) / _aciertos_totales
 	barra.aplaudir(_actual)
 	barra.gesto(_actual)
-	pista.cara_ay_no()
-	_voz_rival_par()
 	var perfil := perfil_actual()
 	var tope := tope_de(perfil)
+	if _sin_pista:
+		# Sin rival en la pista: ni su cara, ni su voz, ni guirnalda, ni racha. Solo el tope (si lo hay).
+		if tope > 0 and _aciertos_turno >= tope:
+			_esperando_confirmacion = true
+			_bloquear(true)
+			tope_alcanzado.emit()
+		return
+	pista.cara_ay_no()
+	_voz_rival_par()
 	if tope > 0:
 		if perfil != "semilla":
 			var n: int = meta.encender()
@@ -341,6 +365,54 @@ func terminar_turno(con_fallo: bool) -> void:
 	_pase(con_fallo, false)
 
 
+## El turno gasto el ultimo recurso del equipo y no gano (motor-lanzar §8.3 y §13.2): paso 0 (si el saliente
+## era semilla) -> paso 2 (el retrato del siguiente al centro, sin salto del rival) -> `rival_llego()`. Sin
+## pista significa "el equipo perdio este intento"; la derrota-gag la orquesta minijuego_base, como siempre.
+## `siguiente_id` != "" fija quien queda al centro (el que abre el proximo intento); si es el mismo que acaba
+## de jugar, su retrato no cruza la barra: sube al centro desde su ventanita y da un saltito.
+func terminar_turno_sin_recursos(siguiente_id: String = "") -> void:
+	if _detenido:
+		return
+	if not _turno_activo and not _esperando_confirmacion:
+		return
+	_turno_activo = false
+	_esperando_confirmacion = false
+	_bloquear(true)
+	turno_cerrado.emit(_actual, false)
+	_id_pase += 1
+	var id := _id_pase
+	var saliente := _actual
+	if str(_perfiles.get(saliente, "")) == "semilla":
+		barra.ritual_fin_semilla(saliente)
+		_decir("porras_fin_maxi")
+		await _esperar(1.2)
+		if id != _id_pase:
+			return
+	meta.retirar()
+	if siguiente_id != "" and siguiente_id in _ciclo:
+		_actual = siguiente_id
+		_indice = _ciclo.find(siguiente_id)
+	else:
+		_indice = (_indice + 1) % maxi(1, _ciclo.size())
+		_actual = _ciclo[_indice]
+	barra.volar_al_centro(_actual)
+	_velo_a(1.0)
+	if _actual == saliente:
+		await _esperar(0.6)
+		if id != _id_pase:
+			return
+		barra.saltar_centro()
+	else:
+		_sfx(SFX_FIUU)
+		if not _sin_pista:
+			pista.embobado()
+	await _esperar(0.6)
+	if id != _id_pase:
+		return
+	_detenido = true
+	rival_llego.emit()
+
+
 ## B2.1: respuesta del motor a `tope_alcanzado` cuando no queda nada en vuelo. Paso 0b si el perfil no es
 ## semilla (turno perfecto: retroceso y, en el pase, resbalon); si es semilla, su celebracion de siempre.
 func confirmar_turno_estable() -> void:
@@ -348,7 +420,8 @@ func confirmar_turno_estable() -> void:
 		return
 	_esperando_confirmacion = false
 	_turno_activo = false
-	var perfecto := perfil_actual() != "semilla"
+	# Sin pista no hay turno perfecto (no hay rival que retroceda ni resbale): pase normal.
+	var perfecto := perfil_actual() != "semilla" and not _sin_pista
 	_voz_0b = ""
 	turno_cerrado.emit(_actual, perfecto)
 	if not perfecto:
@@ -402,19 +475,37 @@ func encolar_voz_0b(ruta: String) -> void:
 
 
 ## Tras "¡otra vez!": el rival vuelve a la galleta 0 y se abre la puerta del hermano que ya estaba al centro.
+## Con `forzar_id` != "" (motor-lanzar §8.1, §25.3): lleva antes a ese hermano al centro y REINICIA EL CICLO
+## del orden desde el (el siguiente es el que le sigue en el orden). La Torre lo llama al empezar cada intento
+## y cada etapa con el id del semilla. Corta cualquier turno o pase en curso. Sin pista no mueve a nadie.
 func reiniciar_rival(forzar_id: String = "") -> void:
 	_detenido = false
+	_turno_activo = false
+	_esperando_confirmacion = false
+	_en_puerta = false
+	_bloquear(true)
+	var al_centro: String = barra.en_centro()
 	if forzar_id != "" and forzar_id in _ciclo:
 		_actual = forzar_id
 		_indice = _ciclo.find(forzar_id)
+	elif _actual == "" and not _ciclo.is_empty():
+		_actual = _ciclo[0]
+		_indice = 0
 	_pos_rival = 0
-	rival_movido.emit(0)
-	pista.volver_a_cero()
-	_decir("rival_vuelve")
-	barra.centrar_de_nuevo()
+	if not _sin_pista:
+		rival_movido.emit(0)
+		pista.volver_a_cero()
+		_decir("rival_vuelve")
+	if al_centro == _actual:
+		barra.centrar_de_nuevo()
+	else:
+		meta.retirar()
+		barra.volar_al_centro(_actual)
+		_sfx(SFX_FIUU)
+	_velo_a(1.0)
 	_id_pase += 1
 	var id := _id_pase
-	await _esperar(0.8)
+	await _esperar(0.8 if not _sin_pista else 0.6)
 	if id != _id_pase:
 		return
 	_decir_le_toca(_actual, false)
@@ -445,7 +536,7 @@ func _pase(con_fallo: bool, perfecto: bool) -> void:
 	var id := _id_pase
 	var saliente := _actual
 	var perfil_saliente := str(_perfiles.get(saliente, ""))
-	var resbala := perfecto or (bool(_config.get("resbalon_tras_racha", false)) and _retrocesos_turno > 0)
+	var resbala := not _sin_pista and (perfecto or (bool(_config.get("resbalon_tras_racha", false)) and _retrocesos_turno > 0))
 	if con_fallo:
 		meta.apagar_despacio()
 	# Paso 0: solo tras un turno de Maxi (ritual, M3.3).
@@ -471,7 +562,9 @@ func _pase(con_fallo: bool, perfecto: bool) -> void:
 	_sfx(SFX_FIUU)
 	_decir_le_toca(_actual, arrastre)
 	var llego := false
-	if resbala:
+	if _sin_pista:
+		pass
+	elif resbala:
 		rival_resbalo.emit()
 		pista.resbalar()
 		_sfx(SFX_PLOF, 1.0, -6.0)
@@ -538,7 +631,7 @@ func _iniciar_turno() -> void:
 	barra.fijar_actual(_actual)
 	var perfil := perfil_actual()
 	var tope := tope_de(perfil)
-	if tope > 0 and perfil != "semilla":
+	if tope > 0 and perfil != "semilla" and not _sin_pista:
 		var ancla := Vector2.INF
 		if _motor != null and _motor.has_method("ancla_meta_turno"):
 			ancla = _motor.ancla_meta_turno()

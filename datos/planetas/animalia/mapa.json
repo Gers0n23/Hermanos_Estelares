@@ -1,0 +1,438 @@
+{
+  "planeta_id": "animalia",
+  "nombre": "Planeta Animalia",
+  "estado": "HE-120 (05-Nov-2026): implementado desde el borrador de docs/fichas/planeta-animalia-zonas.md §9. Cada estacion despierta sola cuando existen la escena de su motor y el nivel de ese hermano.",
+  "fondo": "res://assets/anclas/planeta_animalia_referencia.png",
+  "paisaje": "res://scripts/planetas/animalia/paisaje_animalia.gd",
+  "nota_paisaje": "Mapa visto desde el suelo, como Arcoiris (PO 17-Oct-2026; pedido del PO 05-Nov-2026). Hitos: carpa, nenufar, acacia, arbol de nidos, volcan. Sin mariposas. Zonas dormidas con zzz; las completadas suman su grupo al desfile del sendero. Cada posicion es el centro de la caja de 180 px de su hito.",
+  "anfitrion": "res://assets/sprites/personajes/toby_provisional.png",
+  "nota_anfitrion": "Recorte PROVISIONAL de Toby (assets/sprites/personajes/leeme.md); la ficha pide toby_base.png cuando disenador-personajes lo entregue (HE-114).",
+  "nota": "Regla del PO 27-Sep-2026: la zona siguiente (y la secreta) se abre al completar TODAS las estaciones jugables de la anterior; los retos dorados no cuentan.",
+  "destellos_por_estacion": 100,
+  "destellos_reto_dorado": 0,
+  "destellos_equipo_por_hermano": 50,
+  "nota_equipo": "HE-D6 (decision delegada 05-Nov-2026): v1 de equipo en las 5 estaciones de Quien habla (motor-topos.md 12.2).",
+  "viaje_siguiente_requiere": {
+    "partida": "animalia"
+  },
+  "voz_destino_espera": [
+    "voces/animalia/despegue/mapa_melodia_antes_01.wav",
+    "voces/animalia/despegue/mapa_melodia_antes_02.wav"
+  ],
+  "batalla": {
+    "id": "animalia_batalla_final",
+    "datos": "res://datos/batallas/animalia_final.json",
+    "escena": "res://escenas/nucleo/batalla.tscn",
+    "aparece_tras_zona": 3,
+    "condicion": "primer_hermano",
+    "posicion": [
+      600,
+      630
+    ],
+    "voz_hito": [
+      "voces/animalia/batalla/hito_01.wav",
+      "voces/animalia/batalla/hito_02.wav"
+    ],
+    "tras_ganar": {
+      "partida": {
+        "escena": "res://escenas/planetas/animalia/partida_animalia.tscn",
+        "rumbo": "animalia>melodia"
+      },
+      "revancha": true
+    },
+    "nota": "Bloque de docs/fichas/batalla-animalia.md §8.4 (HE-115). El hito del Campamento (mochila-torre con las burbujas de las carrozas -> nave de partida -> la Burbujeada otra vez) lo dibuja paisaje_animalia.gd cuando CUALQUIER hermano completo la zona 3; hoy responde al toque (latido, sonido y voz) y la escena de batalla se conecta en HE-121."
+  },
+  "pieza_nave": {
+    "id": "ala_derecha",
+    "zonas": [
+      1,
+      2,
+      3
+    ],
+    "posicion": [
+      1170,
+      64
+    ],
+    "nota": "Silueta del ala que se pinta un tercio por zona (HE-A6: ala derecha verde selva con huellita). Al completar la zona 3, paisaje_animalia.gd marca Progreso.desbloquear_pieza_nave(hermano, animalia)."
+  },
+  "juegos": {
+    "quien_habla": {
+      "nombre": "¿Quién habla?",
+      "icono": "animalia_quien_habla",
+      "voz": "voces/animalia/mapa/juego_quien_habla.wav"
+    },
+    "casa": {
+      "nombre": "Cada quien a su casa",
+      "icono": "animalia_casa",
+      "voz": "voces/animalia/mapa/juego_casa.wav"
+    },
+    "escondite": {
+      "nombre": "Escondite animal",
+      "icono": "animalia_escondite",
+      "voz": "voces/animalia/mapa/juego_escondite.wav"
+    },
+    "carrera": {
+      "nombre": "Carrera de Toby",
+      "icono": "animalia_carrera",
+      "voz": "voces/animalia/mapa/juego_carrera.wav"
+    }
+  },
+  "voces": {
+    "bienvenida": "voces/animalia/mapa/bienvenida.wav",
+    "zona_dormida": [
+      "voces/animalia/mapa/zona_dormida.wav",
+      "voces/animalia/mapa/zona_dormida_02.wav"
+    ],
+    "zona_abierta": "voces/animalia/mapa/zona_abierta.wav",
+    "secreta_lejana": "voces/animalia/mapa/secreta_lejana.wav",
+    "secreta_revelada": "voces/animalia/mapa/secreta_revelada.wav",
+    "estacion_pronto": "voces/animalia/mapa/estacion_pronto.wav",
+    "equipo_llegada": "voces/animalia/mapa/equipo_llegada.wav",
+    "estacion_sin_equipo": "voces/animalia/mapa/equipo_estacion_pronto.wav",
+    "cometa_vamos": "voces/animalia/mapa/cometa_vamos.wav",
+    "todo_listo": "voces/animalia/mapa/todo_listo.wav",
+    "dorado_disponible": "voces/animalia/mapa/dorado_disponible.wav",
+    "dorado_entrar": "voces/animalia/mapa/dorado_entrar.wav",
+    "estacion_repetida": [
+      "voces/animalia/mapa/estacion_repetida_01.wav",
+      "voces/animalia/mapa/estacion_repetida_02.wav",
+      "voces/animalia/mapa/estacion_repetida_03.wav"
+    ],
+    "planeta_completo": "voces/animalia/mapa/planeta_completo.wav",
+    "desfile_empieza": "voces/animalia/mapa/desfile_empieza.wav",
+    "dinito_nace": "voces/animalia/mapa/dinito_nace.wav"
+  },
+  "zonas": [
+    {
+      "id": "zona1_campamento",
+      "numero": 1,
+      "nombre": "El Campamento de Toby",
+      "bandas": [
+        "naranja"
+      ],
+      "posicion": [
+        330,
+        556
+      ],
+      "secreta": false,
+      "recuerdo": "hueso_silbato",
+      "desfile": [
+        "vaca",
+        "perro",
+        "gato",
+        "pato",
+        "caballo",
+        "pony"
+      ],
+      "voz_llegada": "voces/animalia/mapa/zona_1_llegada.wav",
+      "voz_completada": "voces/animalia/mapa/zona_1_completada.wav",
+      "voz_regalo": "voces/animalia/mapa/zona_1_regalo.wav",
+      "estaciones": [
+        {
+          "juego": "quien_habla",
+          "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona1_campamento/topos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona1_campamento/topos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona1_campamento/topos_estrella.json"
+          },
+          "nivel_equipo": "res://datos/niveles/animalia/zona1_campamento/topos_equipo.json"
+        },
+        {
+          "juego": "casa",
+          "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona1_campamento/caminos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona1_campamento/caminos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona1_campamento/caminos_estrella.json"
+          }
+        },
+        {
+          "juego": "escondite",
+          "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona1_campamento/buscar_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona1_campamento/buscar_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona1_campamento/buscar_estrella.json"
+          }
+        },
+        {
+          "juego": "carrera",
+          "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona1_campamento/runner_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona1_campamento/runner_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona1_campamento/runner_estrella.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zona2_laguna",
+      "numero": 2,
+      "nombre": "La Laguna de los Nenúfares",
+      "bandas": [
+        "azul"
+      ],
+      "posicion": [
+        560,
+        420
+      ],
+      "secreta": false,
+      "recuerdo": "flor_nenufar",
+      "desfile": [
+        "pato",
+        "flamenco",
+        "hipopotamo",
+        "lobo_marino",
+        "pinguino",
+        "perrito_bombero"
+      ],
+      "voz_llegada": "voces/animalia/mapa/zona_2_llegada.wav",
+      "voz_completada": "voces/animalia/mapa/zona_2_completada.wav",
+      "voz_abierta": "voces/animalia/mapa/zona_2_abierta.wav",
+      "voz_regalo": "voces/animalia/mapa/zona_2_regalo.wav",
+      "estaciones": [
+        {
+          "juego": "quien_habla",
+          "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona2_laguna/topos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona2_laguna/topos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona2_laguna/topos_estrella.json"
+          },
+          "nivel_equipo": "res://datos/niveles/animalia/zona2_laguna/topos_equipo.json"
+        },
+        {
+          "juego": "casa",
+          "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona2_laguna/caminos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona2_laguna/caminos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona2_laguna/caminos_estrella.json"
+          }
+        },
+        {
+          "juego": "escondite",
+          "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona2_laguna/buscar_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona2_laguna/buscar_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona2_laguna/buscar_estrella.json"
+          }
+        },
+        {
+          "juego": "carrera",
+          "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona2_laguna/runner_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona2_laguna/runner_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona2_laguna/runner_estrella.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zona3_pradera",
+      "numero": 3,
+      "nombre": "La Pradera de las Jirafas",
+      "bandas": [
+        "amarillo"
+      ],
+      "posicion": [
+        800,
+        556
+      ],
+      "secreta": false,
+      "recuerdo": "herradura_dorada",
+      "desfile": [
+        "jirafa",
+        "jirafita",
+        "cebra",
+        "elefante",
+        "alpaca",
+        "huemul",
+        "triceratops"
+      ],
+      "voz_llegada": "voces/animalia/mapa/zona_3_llegada.wav",
+      "voz_completada": "voces/animalia/mapa/zona_3_completada.wav",
+      "voz_abierta": "voces/animalia/mapa/zona_3_abierta.wav",
+      "voz_regalo": "voces/animalia/mapa/zona_3_regalo.wav",
+      "estaciones": [
+        {
+          "juego": "quien_habla",
+          "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona3_pradera/topos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona3_pradera/topos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona3_pradera/topos_estrella.json"
+          },
+          "nivel_equipo": "res://datos/niveles/animalia/zona3_pradera/topos_equipo.json"
+        },
+        {
+          "juego": "casa",
+          "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona3_pradera/caminos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona3_pradera/caminos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona3_pradera/caminos_estrella.json"
+          }
+        },
+        {
+          "juego": "escondite",
+          "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona3_pradera/buscar_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona3_pradera/buscar_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona3_pradera/buscar_estrella.json"
+          }
+        },
+        {
+          "juego": "carrera",
+          "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona3_pradera/runner_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona3_pradera/runner_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona3_pradera/runner_estrella.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zona4_nidos",
+      "numero": 4,
+      "nombre": "El Árbol de los Nidos",
+      "bandas": [
+        "verde"
+      ],
+      "posicion": [
+        962,
+        300
+      ],
+      "secreta": false,
+      "recuerdo": "pluma_tucan",
+      "desfile": [
+        "mono",
+        "tucan",
+        "loro",
+        "buho",
+        "perezoso",
+        "condor",
+        "braquiosaurio"
+      ],
+      "voz_llegada": "voces/animalia/mapa/zona_4_llegada.wav",
+      "voz_completada": "voces/animalia/mapa/zona_4_completada.wav",
+      "voz_abierta": "voces/animalia/mapa/zona_4_abierta.wav",
+      "voz_regalo": "voces/animalia/mapa/zona_4_regalo.wav",
+      "estaciones": [
+        {
+          "juego": "quien_habla",
+          "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona4_nidos/topos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona4_nidos/topos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona4_nidos/topos_estrella.json"
+          },
+          "nivel_equipo": "res://datos/niveles/animalia/zona4_nidos/topos_equipo.json"
+        },
+        {
+          "juego": "casa",
+          "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona4_nidos/caminos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona4_nidos/caminos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona4_nidos/caminos_estrella.json"
+          }
+        },
+        {
+          "juego": "escondite",
+          "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona4_nidos/buscar_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona4_nidos/buscar_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona4_nidos/buscar_estrella.json"
+          }
+        },
+        {
+          "juego": "carrera",
+          "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona4_nidos/runner_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona4_nidos/runner_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona4_nidos/runner_estrella.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zona5_valle",
+      "numero": 5,
+      "nombre": "El Valle de los Dinosaurios",
+      "bandas": [
+        "violeta",
+        "brillo"
+      ],
+      "posicion": [
+        1128,
+        236
+      ],
+      "secreta": true,
+      "recuerdo": "huevito_dino",
+      "desfile": [
+        "trex",
+        "spinosaurio",
+        "carnotauro",
+        "dinito",
+        "pony_estelar"
+      ],
+      "voz_llegada": "voces/animalia/mapa/zona_5_llegada.wav",
+      "voz_completada": "voces/animalia/mapa/zona_5_completada.wav",
+      "voz_regalo": "voces/animalia/mapa/zona_5_regalo.wav",
+      "estaciones": [
+        {
+          "juego": "quien_habla",
+          "escena": "res://escenas/minijuegos/topos/motor_topos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona5_valle/topos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona5_valle/topos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona5_valle/topos_estrella.json"
+          },
+          "nivel_equipo": "res://datos/niveles/animalia/zona5_valle/topos_equipo.json"
+        },
+        {
+          "juego": "casa",
+          "escena": "res://escenas/minijuegos/caminos/motor_caminos.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona5_valle/caminos_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona5_valle/caminos_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona5_valle/caminos_estrella.json"
+          },
+          "niveles_dorados": {
+            "sofia": "res://datos/niveles/animalia/zona5_valle/caminos_estrella_dorado.json"
+          }
+        },
+        {
+          "juego": "escondite",
+          "escena": "res://escenas/minijuegos/buscar/motor_buscar.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona5_valle/buscar_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona5_valle/buscar_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona5_valle/buscar_estrella.json"
+          }
+        },
+        {
+          "juego": "carrera",
+          "escena": "res://escenas/minijuegos/runner/motor_runner.tscn",
+          "niveles": {
+            "maxi": "res://datos/niveles/animalia/zona5_valle/runner_semilla.json",
+            "nicole": "res://datos/niveles/animalia/zona5_valle/runner_brote.json",
+            "sofia": "res://datos/niveles/animalia/zona5_valle/runner_estrella.json"
+          },
+          "niveles_dorados": {
+            "sofia": "res://datos/niveles/animalia/zona5_valle/runner_estrella_dorado.json"
+          }
+        }
+      ]
+    }
+  ]
+}

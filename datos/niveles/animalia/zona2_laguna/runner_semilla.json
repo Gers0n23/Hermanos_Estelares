@@ -1,0 +1,142 @@
+{
+  "id_nivel": "animalia_z2_runner_semilla",
+  "motor": "runner",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona2_laguna",
+  "tema": "Corre el spinosaurio por la laguna: cada charquito salpica; meta: el muelle",
+  "nota": "dev-godot HE-119 (05-Nov-2026): generado por herramientas/generar_niveles_runner.py. Numeros de planeta-animalia-zonas.md §4.4 y de motor-runner.md [HE-124] (politica de derrota del PO del 05-Nov-2026: corazones, regalo, ayuda fuerte, descanso). PROVISIONAL hasta la maqueta HE-110 y el playtest.",
+  "escenario": {
+    "id": "laguna",
+    "noche": false
+  },
+  "fondo": {
+    "parallax": [
+      0.2,
+      0.5,
+      1.0
+    ],
+    "atardecer_en": 0.7
+  },
+  "corredor": {
+    "alto": 170,
+    "ancho": 130,
+    "caja": [
+      0.6,
+      0.75
+    ],
+    "id": "spino"
+  },
+  "obstaculos": [
+    {
+      "id": "charquito",
+      "dibujo": "charquito",
+      "tamano": [
+        100,
+        30
+      ],
+      "tipo": "suelo"
+    },
+    {
+      "id": "tronco_goma",
+      "dibujo": "tronco_goma",
+      "tamano": [
+        90,
+        55
+      ],
+      "tipo": "suelo"
+    }
+  ],
+  "caja_obstaculo": [
+    0.7,
+    0.8
+  ],
+  "coleccionables": {
+    "ids": [
+      "huevito"
+    ],
+    "puntos": 25,
+    "radio": 22,
+    "cada_s": [
+      3,
+      6
+    ]
+  },
+  "meta": {
+    "dibujo": "muelle"
+  },
+  "velocidad": 240,
+  "velocidad_max": 240,
+  "segundos_a_max": null,
+  "inicio_libre_s": 3.0,
+  "salto": {
+    "duracion_s": 1.0,
+    "altura": 250,
+    "impulso_s": 0.06,
+    "imantado_s": 2.0,
+    "imantado_max_s": 1.6,
+    "amable_px": 0,
+    "en_cola_ms": 150,
+    "variable": null
+  },
+  "huecos": {
+    "min_s": 5.0,
+    "factor_max": 1.5,
+    "grupo_max": 1,
+    "repetidos_max": 2,
+    "margen_ventana_s": 0.1
+  },
+  "aereos": null,
+  "obstaculos_blandos": false,
+  "corazones": 3,
+  "invulnerable_golpe_s": 1.0,
+  "burbuja": null,
+  "meta_s": 40,
+  "tramo_record_s": null,
+  "banderita_mitad": true,
+  "regalo_tras_derrotas": 2,
+  "regalo": {
+    "tipo": "corazon_extra",
+    "corazones": 1
+  },
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "obstaculos_blandos": true
+  },
+  "descanso_tras_derrotas": null,
+  "gag_derrota_s": 1.5,
+  "puntos": {
+    "por_segundo": 10,
+    "racha_saltos": 5,
+    "racha": 50,
+    "meta": 200,
+    "final": 300
+  },
+  "hito_cada": 100,
+  "mostrar_puntaje": "no",
+  "ayuda_idle_s": [
+    5,
+    12
+  ],
+  "lineas_voz": {
+    "intro": "voces/animalia/runner/intro_semilla_z2.wav",
+    "largada": "voces/animalia/runner/largada.wav",
+    "meta": [
+      "voces/animalia/runner/meta_maxi_01.wav",
+      "voces/animalia/runner/meta_maxi_02.wav"
+    ],
+    "derrota_gag": [
+      "voces/animalia/runner/hojas_maxi_01.wav",
+      "voces/animalia/runner/hojas_maxi_02.wav"
+    ],
+    "regalo": "voces/animalia/runner/regalo_corazon.wav",
+    "victoria": "voces/animalia/runner/victoria_semilla.wav",
+    "burbuja_presenta": "voces/animalia/runner/burbuja_presenta.wav",
+    "corazon_menos": [
+      "voces/animalia/runner/uy_01.wav",
+      "voces/animalia/runner/uy_02.wav"
+    ],
+    "ayuda_fuerte": "voces/animalia/runner/ayuda_fuerte_maxi.wav",
+    "mitad": "voces/animalia/runner/banderita_mitad_maxi.wav"
+  }
+}
