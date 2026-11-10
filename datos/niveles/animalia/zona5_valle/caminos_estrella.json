@@ -1,0 +1,573 @@
+{
+  "id_nivel": "animalia_z5_caminos_estrella",
+  "motor": "caminos",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona5_valle",
+  "tema": "El Valle de los Dinosaurios",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#E8D2B8",
+    "suelo": "#C49A74",
+    "zona": 5
+  },
+  "llenar": true,
+  "casas": "habitat",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": false,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "....b.B#c",
+        ".#E+...C.",
+        ".FH.ef...",
+        ".D.+.h...",
+        "..i......",
+        ".........",
+        ".........",
+        "Ad.......",
+        ".a##g.GI."
+      ],
+      "pares": {
+        "A": {
+          "animal": "castor",
+          "casa": "represa",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "huemul",
+          "casa": "cordillera_nevada",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#FF7EB6"
+        },
+        "H": {
+          "animal": "milodon",
+          "casa": "cueva_milodon",
+          "color": "#5CC8F0"
+        },
+        "I": {
+          "animal": "perrito",
+          "casa": "carpa_toby",
+          "color": "#A0673F"
+        }
+      },
+      "tiempo_par_s": 120,
+      "solucion": {
+        "A": [[0, 7], [0, 8], [1, 8]],
+        "B": [[6, 0], [5, 0], [4, 0]],
+        "C": [[7, 1], [8, 1], [8, 0]],
+        "D": [[1, 3], [0, 3], [0, 4], [1, 4], [1, 5], [0, 5], [0, 6], [1, 6], [1, 7]],
+        "E": [[2, 1], [3, 1], [4, 1], [4, 2]],
+        "F": [[1, 2], [0, 2], [0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [4, 4], [4, 5], [4, 6], [5, 6], [5, 5], [5, 4], [6, 4], [6, 3], [7, 3], [7, 4], [7, 5], [6, 5], [6, 6], [7, 6], [8, 6], [8, 5], [8, 4], [8, 3], [8, 2], [7, 2], [6, 2], [6, 1], [5, 1], [5, 2]],
+        "G": [[6, 8], [5, 8], [4, 8]],
+        "H": [[2, 2], [2, 3], [3, 3], [4, 3], [5, 3]],
+        "I": [[7, 8], [8, 8], [8, 7], [7, 7], [6, 7], [5, 7], [4, 7], [3, 7], [2, 7], [2, 6], [3, 6], [3, 5], [2, 5], [2, 4]]
+      },
+      "solucion_unica": false
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "..F.....i",
+        "...IG#E.b",
+        "....+h#..",
+        ".....gA.B",
+        "f.......#",
+        "C....H.+a",
+        "........#",
+        ".......Dd",
+        "ce......."
+      ],
+      "pares": {
+        "A": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "milodon",
+          "casa": "cueva_milodon",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "castor",
+          "casa": "represa",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "pudu",
+          "casa": "bosque_lluvioso",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "koala",
+          "casa": "eucalipto",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#FF7EB6"
+        },
+        "H": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#5CC8F0"
+        },
+        "I": {
+          "animal": "perrito",
+          "casa": "carpa_toby",
+          "color": "#A0673F"
+        }
+      },
+      "tiempo_par_s": 120,
+      "solucion": {
+        "A": [[6, 3], [6, 4], [6, 5], [7, 5], [8, 5]],
+        "B": [[8, 3], [8, 2], [8, 1]],
+        "C": [[0, 5], [0, 6], [0, 7], [0, 8]],
+        "D": [[7, 7], [7, 8], [8, 8], [8, 7]],
+        "E": [[6, 1], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6], [6, 6], [5, 6], [5, 7], [6, 7], [6, 8], [5, 8], [4, 8], [4, 7], [3, 7], [3, 8], [2, 8], [2, 7], [2, 6], [1, 6], [1, 7], [1, 8]],
+        "F": [[2, 0], [2, 1], [2, 2], [1, 2], [1, 1], [1, 0], [0, 0], [0, 1], [0, 2], [0, 3], [0, 4]],
+        "G": [[4, 1], [4, 2], [4, 3], [5, 3]],
+        "H": [[5, 5], [5, 4], [4, 4], [4, 5], [4, 6], [3, 6], [3, 5], [2, 5], [1, 5], [1, 4], [1, 3], [2, 3], [2, 4], [3, 4], [3, 3], [3, 2], [4, 2], [5, 2]],
+        "I": [[3, 1], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]]
+      },
+      "solucion_unica": false
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        ".....gb..",
+        ".........",
+        ".........",
+        "Gh#f..d#.",
+        "H.A.+.#C.",
+        ".....Fc.B",
+        "..D+.#i.I",
+        "..Eae....",
+        "........."
+      ],
+      "pares": {
+        "A": {
+          "animal": "flamenco",
+          "casa": "salar",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "castor",
+          "casa": "represa",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "perrito",
+          "casa": "carpa_toby",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "huemul",
+          "casa": "cordillera_nevada",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "ballena",
+          "casa": "mar",
+          "color": "#FF8A3D"
+        },
+        "F": {
+          "animal": "koala",
+          "casa": "eucalipto",
+          "color": "#9B5DE5"
+        },
+        "G": {
+          "animal": "camello",
+          "casa": "desierto",
+          "color": "#FF7EB6"
+        },
+        "H": {
+          "animal": "milodon",
+          "casa": "cueva_milodon",
+          "color": "#5CC8F0"
+        },
+        "I": {
+          "animal": "pinguino",
+          "casa": "cueva_costa",
+          "color": "#A0673F"
+        }
+      },
+      "tiempo_par_s": 120,
+      "solucion": {
+        "A": [[2, 4], [2, 5], [3, 5], [3, 6], [3, 7]],
+        "B": [[8, 5], [8, 4], [8, 3], [8, 2], [7, 2], [6, 2], [6, 1], [7, 1], [8, 1], [8, 0], [7, 0], [6, 0]],
+        "C": [[7, 4], [7, 5], [6, 5]],
+        "D": [[2, 6], [3, 6], [4, 6], [4, 5], [4, 4], [4, 3], [5, 3], [6, 3]],
+        "E": [[2, 7], [1, 7], [1, 6], [1, 5], [0, 5], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [4, 7]],
+        "F": [[5, 5], [5, 4], [4, 4], [3, 4], [3, 3]],
+        "G": [[0, 3], [0, 2], [0, 1], [0, 0], [1, 0], [1, 1], [1, 2], [2, 2], [2, 1], [2, 0], [3, 0], [3, 1], [3, 2], [4, 2], [5, 2], [5, 1], [4, 1], [4, 0], [5, 0]],
+        "H": [[0, 4], [1, 4], [1, 3]],
+        "I": [[8, 6], [8, 7], [8, 8], [7, 8], [6, 8], [5, 8], [5, 7], [6, 7], [7, 7], [7, 6], [6, 6]]
+      },
+      "solucion_unica": false
+    }
+  ],
+  "catalogo": {
+    "ballena": {
+      "nombre": "ballena",
+      "huella": "burbuja",
+      "tono": 0.5,
+      "dibujo": {
+        "cuerpo": "#5C8FD6",
+        "detalle": "#DDEBFA",
+        "oscuro": "#3A6AB0",
+        "cabeza": "ancha",
+        "orejas": "ninguna",
+        "hocico": "sonrisa",
+        "extras": [
+          "chorro"
+        ]
+      }
+    },
+    "camello": {
+      "nombre": "camello",
+      "huella": "pezuna",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#D9A35F",
+        "detalle": "#F0D2A4",
+        "oscuro": "#9A6A34",
+        "cabeza": "alargada",
+        "orejas": "pequenas",
+        "hocico": "morro",
+        "extras": [
+          "jorobita"
+        ]
+      }
+    },
+    "castor": {
+      "nombre": "castor",
+      "huella": "pata",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#8A5A36",
+        "detalle": "#D2A47C",
+        "oscuro": "#5A3A1E",
+        "cabeza": "redonda",
+        "orejas": "pequenas",
+        "hocico": "nariz",
+        "extras": [
+          "dientes"
+        ]
+      }
+    },
+    "flamenco": {
+      "nombre": "flamenco",
+      "huella": "ave",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#FF8FB1",
+        "detalle": "#FFD0DE",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_curvo",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "huemul": {
+      "nombre": "huemul",
+      "huella": "pezuna",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#9C7A55",
+        "detalle": "#E2CFB4",
+        "oscuro": "#5A4028",
+        "cabeza": "alargada",
+        "orejas": "punta",
+        "hocico": "morro",
+        "extras": [
+          "astas"
+        ]
+      }
+    },
+    "koala": {
+      "nombre": "koala",
+      "huella": "pata",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#A9B0BA",
+        "detalle": "#E8ECF0",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "grandes",
+        "hocico": "nariz_grande",
+        "extras": []
+      }
+    },
+    "milodon": {
+      "nombre": "milodón",
+      "huella": "pata",
+      "tono": 0.5,
+      "dibujo": {
+        "cuerpo": "#8C6B4A",
+        "detalle": "#C8A882",
+        "oscuro": "#5A4430",
+        "cabeza": "ancha",
+        "orejas": "pequenas",
+        "hocico": "morro",
+        "extras": [
+          "pelaje"
+        ]
+      }
+    },
+    "perrito": {
+      "nombre": "perrito",
+      "huella": "pata",
+      "tono": 1.25,
+      "dibujo": {
+        "cuerpo": "#E3AA6A",
+        "detalle": "#FFF1DD",
+        "oscuro": "#8A5530",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "pinguino": {
+      "nombre": "pingüino de Humboldt",
+      "huella": "pato",
+      "tono": 1.1,
+      "dibujo": {
+        "cuerpo": "#2B3350",
+        "detalle": "#FFFFFF",
+        "oscuro": "#F28C8C",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico",
+        "extras": [
+          "cara_blanca"
+        ]
+      }
+    },
+    "pudu": {
+      "nombre": "pudú",
+      "huella": "pezuna",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#A0683A",
+        "detalle": "#E0B88A",
+        "oscuro": "#5A3A1E",
+        "cabeza": "redonda",
+        "orejas": "redondas",
+        "hocico": "nariz",
+        "extras": [
+          "cuernitos",
+          "mejillas"
+        ]
+      }
+    },
+    "bosque_lluvioso": {
+      "nombre": "el bosque lluvioso",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#2E8A4A",
+        "color2": "#5CC8F0",
+        "variante": "lluvioso"
+      }
+    },
+    "carpa_toby": {
+      "nombre": "la carpa de Toby",
+      "dibujo": {
+        "tipo": "carpa",
+        "color": "#FF8A3D",
+        "color2": "#FFD84A",
+        "variante": ""
+      }
+    },
+    "cordillera_nevada": {
+      "nombre": "la cordillera nevada",
+      "dibujo": {
+        "tipo": "montana",
+        "color": "#7A8AA0",
+        "color2": "#FFFFFF",
+        "variante": "nevada"
+      }
+    },
+    "cueva_costa": {
+      "nombre": "la cueva de la costa",
+      "dibujo": {
+        "tipo": "cueva",
+        "color": "#C9B08A",
+        "color2": "#2E3A4A",
+        "variante": "costa"
+      }
+    },
+    "cueva_milodon": {
+      "nombre": "la cueva del milodón",
+      "dibujo": {
+        "tipo": "cueva",
+        "color": "#A89A8A",
+        "color2": "#2E2620",
+        "variante": "milodon"
+      }
+    },
+    "desierto": {
+      "nombre": "el desierto",
+      "dibujo": {
+        "tipo": "arena",
+        "color": "#F2C878",
+        "color2": "#7FB86A",
+        "variante": "desierto"
+      }
+    },
+    "eucalipto": {
+      "nombre": "el eucalipto",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#8AB8A0",
+        "color2": "#B8A08A",
+        "variante": "eucalipto"
+      }
+    },
+    "mar": {
+      "nombre": "el mar abierto",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#2E6FC0",
+        "color2": "#DDEBFA",
+        "variante": "mar"
+      }
+    },
+    "represa": {
+      "nombre": "la represa",
+      "dibujo": {
+        "tipo": "represa",
+        "color": "#8A5A36",
+        "color2": "#4FA3E0",
+        "variante": ""
+      }
+    },
+    "salar": {
+      "nombre": "el salar",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#F2F4F8",
+        "color2": "#FF9CC0",
+        "variante": "salar"
+      }
+    }
+  },
+  "puntos": {
+    "llegada": 100,
+    "racha_max": 5,
+    "tablero": 300,
+    "sin_borrones": 300,
+    "por_segundo": 10
+  },
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": {
+    "trazos_de_mas": 1,
+    "intentos_casa": 0
+  },
+  "tiempo_par": true,
+  "tormenta": {
+    "factor_par": 1.6
+  },
+  "regalo_tras_derrotas": 3,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "ayuda_idle_s": [],
+  "valvula_s": 0,
+  "pistas_cuestan_estrellita": true,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona5/estrella_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona5/estrella_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_estrella_01.wav",
+      "voces/animalia/caminos/comun/victoria_estrella_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_estrella.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_estrella.wav",
+    "nombres": {
+      "ballena": "voces/animalia/nombres/ballena.wav",
+      "camello": "voces/animalia/nombres/camello.wav",
+      "castor": "voces/animalia/nombres/castor.wav",
+      "flamenco": "voces/animalia/nombres/flamenco.wav",
+      "huemul": "voces/animalia/nombres/huemul.wav",
+      "koala": "voces/animalia/nombres/koala.wav",
+      "milodon": "voces/animalia/nombres/milodon.wav",
+      "perrito": "voces/animalia/nombres/perrito.wav",
+      "pinguino": "voces/animalia/nombres/pinguino.wav",
+      "pudu": "voces/animalia/nombres/pudu.wav"
+    },
+    "descansar": "voces/animalia/caminos/comun/descansar.wav",
+    "faltan_flores": "voces/animalia/caminos/comun/faltan_flores.wav",
+    "record": "voces/animalia/caminos/comun/record.wav",
+    "primer_record": "voces/animalia/caminos/comun/primer_record.wav",
+    "sin_borrones": "voces/animalia/caminos/comun/sin_borrones.wav",
+    "casa_ajena": [
+      "voces/animalia/caminos/comun/casa_ajena_01.wav",
+      "voces/animalia/caminos/comun/casa_ajena_02.wav"
+    ],
+    "pista_usada": "voces/animalia/caminos/comun/pista_usada.wav",
+    "habitats": {
+      "bosque_lluvioso": "voces/animalia/caminos/habitats/bosque_lluvioso.wav",
+      "carpa_toby": "voces/animalia/caminos/habitats/carpa_toby.wav",
+      "cordillera_nevada": "voces/animalia/caminos/habitats/cordillera_nevada.wav",
+      "cueva_costa": "voces/animalia/caminos/habitats/cueva_costa.wav",
+      "cueva_milodon": "voces/animalia/caminos/habitats/cueva_milodon.wav",
+      "desierto": "voces/animalia/caminos/habitats/desierto.wav",
+      "eucalipto": "voces/animalia/caminos/habitats/eucalipto.wav",
+      "mar": "voces/animalia/caminos/habitats/mar.wav",
+      "represa": "voces/animalia/caminos/habitats/represa.wav",
+      "salar": "voces/animalia/caminos/habitats/salar.wav"
+    }
+  }
+}

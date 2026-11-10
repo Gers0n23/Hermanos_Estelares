@@ -1,0 +1,1293 @@
+{
+  "id_nivel": "animalia_z2_buscar_estrella",
+  "motor": "buscar",
+  "perfil": "estrella",
+  "planeta": "animalia",
+  "zona": "zona2_laguna",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      2560.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#8ED1F7",
+        "#E8F8FF"
+      ],
+      "lejos": [
+        {
+          "y": 320.0,
+          "color": "#A9DDB0",
+          "amp": 40,
+          "ondas": 3
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#86C870"
+      },
+      "agua": [
+        {
+          "rect": [
+            512.0,
+            410.0,
+            1536.0,
+            170.0
+          ],
+          "color": "#5CC8F0"
+        }
+      ]
+    }
+  },
+  "objetos": [
+    {
+      "id": "arbol_0",
+      "tipo": "arbol",
+      "pos": [
+        326.0,
+        451.0
+      ],
+      "escala": 0.63,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "flor_gigante_1",
+      "tipo": "flor_gigante",
+      "pos": [
+        557.0,
+        400.0
+      ],
+      "escala": 0.59,
+      "espejo": true,
+      "escondite": true,
+      "pasos": 1,
+      "reaccion": "abrir",
+      "sonido": "sfx/ui/abrir.ogg"
+    },
+    {
+      "id": "roca_2",
+      "tipo": "roca",
+      "pos": [
+        739.0,
+        400.0
+      ],
+      "escala": 0.6,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "roca_3",
+      "tipo": "roca",
+      "pos": [
+        1021.0,
+        400.0
+      ],
+      "escala": 0.6,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "helecho_4",
+      "tipo": "helecho",
+      "pos": [
+        1144.0,
+        400.0
+      ],
+      "escala": 0.6,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "tronco_5",
+      "tipo": "tronco",
+      "pos": [
+        1383.0,
+        400.0
+      ],
+      "escala": 0.63,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "arbusto_6",
+      "tipo": "arbusto",
+      "pos": [
+        1631.0,
+        400.0
+      ],
+      "escala": 0.57,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbusto_7",
+      "tipo": "arbusto",
+      "pos": [
+        1831.0,
+        400.0
+      ],
+      "escala": 0.67,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg",
+      "flores": true
+    },
+    {
+      "id": "arbusto_8",
+      "tipo": "arbusto",
+      "pos": [
+        2017.0,
+        400.0
+      ],
+      "escala": 0.61,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "tronco_hueco_9",
+      "tipo": "tronco_hueco",
+      "pos": [
+        2169.0,
+        439.0
+      ],
+      "escala": 0.57,
+      "espejo": false,
+      "escondite": true,
+      "pasos": 1,
+      "reaccion": "abrir",
+      "sonido": "sfx/ui/abrir.ogg"
+    },
+    {
+      "id": "nenufar_a0",
+      "tipo": "nenufar",
+      "pos": [
+        753.0,
+        487.0
+      ],
+      "escala": 0.66,
+      "espejo": false,
+      "reaccion": "salpicar",
+      "sonido": "sfx/ui/blup.ogg"
+    },
+    {
+      "id": "bote_a1",
+      "tipo": "bote",
+      "pos": [
+        1279.0,
+        538.0
+      ],
+      "escala": 0.61,
+      "espejo": true,
+      "reaccion": "salpicar",
+      "sonido": "sfx/ui/blup.ogg"
+    },
+    {
+      "id": "juncos_a2",
+      "tipo": "juncos",
+      "pos": [
+        1809.0,
+        470.0
+      ],
+      "escala": 0.66,
+      "espejo": false,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        736.0,
+        220.0
+      ],
+      "escala": 0.67,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nube_1",
+      "tipo": "nube",
+      "pos": [
+        1852.0,
+        216.0
+      ],
+      "escala": 0.57,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        370.0,
+        306.0
+      ],
+      "escala": 0.57,
+      "z": 452.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "pinguino",
+      "nombre": "Pingüino",
+      "palabra": "PINGÜINO",
+      "aspecto": {
+        "forma": "pinguino",
+        "color": "#3B3F55",
+        "color2": "#FFFFFF",
+        "color3": "#FFB347",
+        "patron": "panza"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.1,
+      "nombre_voz": "voces/animalia/nombres/pinguino.wav",
+      "escondites": [
+        {
+          "pos": [
+            2169.0,
+            435.5
+          ],
+          "tamano": 80.0,
+          "espejo": false,
+          "visible": 0.83,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2142.0,
+            373.0,
+            55.0,
+            62.0
+          ],
+          "dentro_de": "tronco_hueco_9"
+        },
+        {
+          "pos": [
+            557.0,
+            396.5
+          ],
+          "tamano": 80.0,
+          "espejo": false,
+          "visible": 0.5,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            530.0,
+            316.0,
+            55.0,
+            80.0
+          ],
+          "dentro_de": "flor_gigante_1"
+        },
+        {
+          "pos": [
+            2102.0,
+            397.0
+          ],
+          "tamano": 80.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2084.0,
+            317.0,
+            46.0,
+            67.0
+          ],
+          "detras_de": "arbusto_8"
+        }
+      ],
+      "pista": {
+        "texto": "El pájaro que no vuela y nada",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_pinguino.wav"
+      }
+    },
+    {
+      "id": "lobo_marino",
+      "nombre": "Lobo Marino",
+      "palabra": "LOBO MARINO",
+      "aspecto": {
+        "forma": "foca",
+        "color": "#8C7A6B",
+        "color2": "#C9B49E"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.7,
+      "nombre_voz": "voces/animalia/nombres/lobo_marino.wav",
+      "escondites": [
+        {
+          "pos": [
+            2083.5,
+            397.0
+          ],
+          "tamano": 92.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2058.0,
+            305.0,
+            56.0,
+            92.0
+          ],
+          "detras_de": "arbusto_8"
+        },
+        {
+          "pos": [
+            1279.0,
+            535.0
+          ],
+          "tamano": 92.0,
+          "espejo": false,
+          "visible": 0.55,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1253.0,
+            443.0,
+            56.0,
+            56.0
+          ],
+          "detras_de": "bote_a1"
+        },
+        {
+          "pos": [
+            781.0,
+            397.0
+          ],
+          "tamano": 92.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            766.0,
+            305.0,
+            48.0,
+            92.0
+          ],
+          "detras_de": "roca_2"
+        }
+      ],
+      "pista": {
+        "texto": "El que aplaude con sus aletas",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_lobo_marino.wav"
+      }
+    },
+    {
+      "id": "cisne",
+      "nombre": "Cisne",
+      "palabra": "CISNE",
+      "aspecto": {
+        "forma": "nadador",
+        "color": "#FFFFFF",
+        "color3": "#E8434B",
+        "pico": "pato",
+        "cuello": 1.0
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.3,
+      "nombre_voz": "voces/animalia/nombres/cisne.wav",
+      "escondites": [
+        {
+          "pos": [
+            753.0,
+            484.0
+          ],
+          "tamano": 92.0,
+          "espejo": false,
+          "visible": 0.54,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            708.0,
+            392.0,
+            95.0,
+            72.0
+          ],
+          "detras_de": "nenufar_a0"
+        },
+        {
+          "pos": [
+            1863.5,
+            467.0
+          ],
+          "tamano": 92.0,
+          "espejo": true,
+          "visible": 0.48,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1852.0,
+            385.0,
+            56.0,
+            82.0
+          ],
+          "detras_de": "juncos_a2"
+        },
+        {
+          "pos": [
+            1324.0,
+            535.0
+          ],
+          "tamano": 92.0,
+          "espejo": true,
+          "visible": 0.46,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1273.0,
+            443.0,
+            95.0,
+            87.0
+          ],
+          "detras_de": "bote_a1"
+        }
+      ],
+      "pista": {
+        "texto": "El cisne de cuello negro",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_cisne.wav"
+      }
+    },
+    {
+      "id": "flamenco",
+      "nombre": "Flamenco",
+      "palabra": "FLAMENCO",
+      "aspecto": {
+        "forma": "zancuda",
+        "color": "#FF8FB8",
+        "color3": "#3B3F55",
+        "alto_patas": 1.2
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.5,
+      "nombre_voz": "voces/animalia/nombres/flamenco.wav",
+      "escondites": [
+        {
+          "pos": [
+            708.5,
+            397.0
+          ],
+          "tamano": 101.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            679.0,
+            296.0,
+            38.0,
+            51.0
+          ],
+          "detras_de": "roca_2"
+        },
+        {
+          "pos": [
+            1093.5,
+            397.0
+          ],
+          "tamano": 101.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1068.0,
+            296.0,
+            55.0,
+            101.0
+          ],
+          "detras_de": "helecho_4"
+        },
+        {
+          "pos": [
+            1831.0,
+            357.5
+          ],
+          "tamano": 101.0,
+          "espejo": true,
+          "visible": 0.46,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1801.0,
+            257.0,
+            68.0,
+            51.0
+          ],
+          "detras_de": "arbusto_7"
+        }
+      ],
+      "pista": {
+        "texto": "El pájaro rosado de patas largas",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_flamenco.wav"
+      }
+    },
+    {
+      "id": "huillin",
+      "nombre": "Huillín",
+      "palabra": "HUILLÍN",
+      "aspecto": {
+        "forma": "foca",
+        "color": "#7A5A3A",
+        "color2": "#C9A27A",
+        "orejas": "chicas"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.4,
+      "nombre_voz": "voces/animalia/nombres/huillin.wav",
+      "escondites": [
+        {
+          "pos": [
+            1297.0,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1269.0,
+            321.0,
+            40.0,
+            76.0
+          ],
+          "detras_de": "tronco_5",
+          "camuflaje": true,
+          "mezcla": 0.45
+        },
+        {
+          "pos": [
+            1196.0,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1177.0,
+            321.0,
+            46.0,
+            76.0
+          ],
+          "detras_de": "helecho_4",
+          "camuflaje": true,
+          "mezcla": 0.45
+        },
+        {
+          "pos": [
+            976.0,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            948.0,
+            321.0,
+            40.0,
+            76.0
+          ],
+          "detras_de": "roca_3",
+          "camuflaje": true,
+          "mezcla": 0.45
+        }
+      ],
+      "pista": {
+        "texto": "Una nutria café de Chile",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_huillin.wav"
+      }
+    },
+    {
+      "id": "coipo",
+      "nombre": "Coipo",
+      "palabra": "COIPO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#8A6A4A",
+        "color2": "#E8434B",
+        "orejas": "redondas",
+        "cola": "larga"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.2,
+      "nombre_voz": "voces/animalia/nombres/coipo.wav",
+      "escondites": [
+        {
+          "pos": [
+            1021.0,
+            367.5
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1007.0,
+            292.0,
+            45.0,
+            42.0
+          ],
+          "detras_de": "roca_3",
+          "camuflaje": true,
+          "mezcla": 0.45
+        },
+        {
+          "pos": [
+            1569.0,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1538.0,
+            321.0,
+            59.0,
+            76.0
+          ],
+          "detras_de": "arbusto_6",
+          "camuflaje": true,
+          "mezcla": 0.45
+        },
+        {
+          "pos": [
+            304.5,
+            447.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.49,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            273.0,
+            371.0,
+            38.0,
+            76.0
+          ],
+          "detras_de": "arbol_0",
+          "camuflaje": true,
+          "mezcla": 0.45
+        }
+      ],
+      "pista": {
+        "texto": "Un roedor de dientes naranjos",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_coipo.wav"
+      }
+    },
+    {
+      "id": "pato",
+      "nombre": "Pato",
+      "palabra": "PATO",
+      "aspecto": {
+        "forma": "nadador",
+        "color": "#FFFFFF",
+        "color3": "#FF9F1C",
+        "pico": "pato",
+        "cuello": 0.2
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.3,
+      "nombre_voz": "voces/animalia/nombres/pato.wav",
+      "escondites": [
+        {
+          "pos": [
+            1279.0,
+            524.5
+          ],
+          "tamano": 76.0,
+          "espejo": false,
+          "visible": 0.5,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1234.0,
+            466.0,
+            89.0,
+            36.0
+          ],
+          "detras_de": "bote_a1"
+        },
+        {
+          "pos": [
+            1568.0,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1523.0,
+            365.0,
+            65.0,
+            32.0
+          ],
+          "detras_de": "arbusto_6"
+        },
+        {
+          "pos": [
+            781.5,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": false,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            772.0,
+            339.0,
+            55.0,
+            58.0
+          ],
+          "detras_de": "roca_2"
+        }
+      ],
+      "pista": {
+        "texto": "Un pato blanco de pico naranjo",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_pato.wav"
+      }
+    },
+    {
+      "id": "garza",
+      "nombre": "Garza",
+      "palabra": "GARZA",
+      "aspecto": {
+        "forma": "zancuda",
+        "color": "#FFFFFF",
+        "color3": "#FFB347",
+        "alto_patas": 1.1
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.3,
+      "nombre_voz": "voces/animalia/nombres/garza.wav",
+      "escondites": [
+        {
+          "pos": [
+            2077.0,
+            397.0
+          ],
+          "tamano": 97.0,
+          "espejo": false,
+          "visible": 0.46,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            2077.0,
+            300.0,
+            30.0,
+            97.0
+          ],
+          "detras_de": "arbusto_8"
+        },
+        {
+          "pos": [
+            753.0,
+            484.0
+          ],
+          "tamano": 97.0,
+          "espejo": false,
+          "visible": 0.91,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            719.0,
+            387.0,
+            64.0,
+            65.0
+          ],
+          "detras_de": "nenufar_a0"
+        },
+        {
+          "pos": [
+            1631.0,
+            369.5
+          ],
+          "tamano": 97.0,
+          "espejo": false,
+          "visible": 0.46,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1597.0,
+            273.0,
+            64.0,
+            48.0
+          ],
+          "detras_de": "arbusto_6"
+        }
+      ],
+      "pista": {
+        "texto": "Un pájaro blanco de patas largas",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_garza.wav"
+      }
+    },
+    {
+      "id": "tortuga",
+      "nombre": "Tortuga",
+      "palabra": "TORTUGA",
+      "aspecto": {
+        "forma": "tortuga",
+        "color": "#7CC47F",
+        "color2": "#B9864C",
+        "patron": "caparazon",
+        "color_patron": "#8A5A32"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 1.2,
+      "nombre_voz": "voces/animalia/nombres/tortuga.wav",
+      "escondites": [
+        {
+          "pos": [
+            1753.5,
+            397.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1709.0,
+            344.0,
+            55.0,
+            53.0
+          ],
+          "detras_de": "arbusto_7"
+        },
+        {
+          "pos": [
+            1383.0,
+            372.0
+          ],
+          "tamano": 76.0,
+          "espejo": true,
+          "visible": 0.37,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            1338.0,
+            316.0,
+            89.0,
+            22.0
+          ],
+          "detras_de": "tronco_5"
+        },
+        {
+          "pos": [
+            1770.0,
+            467.0
+          ],
+          "tamano": 76.0,
+          "espejo": false,
+          "visible": 0.52,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1726.0,
+            411.0,
+            40.0,
+            56.0
+          ],
+          "detras_de": "juncos_a2"
+        }
+      ],
+      "pista": {
+        "texto": "La que lleva su casa en la espalda",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_tortuga.wav"
+      }
+    },
+    {
+      "id": "gerbo",
+      "nombre": "Gerbo",
+      "palabra": "GERBO",
+      "aspecto": {
+        "forma": "sentado",
+        "color": "#E3B27A",
+        "color2": "#FFF1DC",
+        "orejas": "redondas",
+        "cola": "larga"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/gerbo.wav",
+      "escondites": [
+        {
+          "pos": [
+            2169.0,
+            435.5
+          ],
+          "tamano": 67.0,
+          "espejo": true,
+          "visible": 0.95,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2141.0,
+            372.0,
+            55.0,
+            63.0
+          ],
+          "dentro_de": "tronco_hueco_9"
+        },
+        {
+          "pos": [
+            557.0,
+            396.5
+          ],
+          "tamano": 67.0,
+          "espejo": false,
+          "visible": 0.51,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            529.0,
+            344.0,
+            55.0,
+            52.0
+          ],
+          "dentro_de": "flor_gigante_1"
+        },
+        {
+          "pos": [
+            1021.0,
+            366.5
+          ],
+          "tamano": 67.0,
+          "espejo": false,
+          "visible": 0.43,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            993.0,
+            299.0,
+            40.0,
+            33.0
+          ],
+          "detras_de": "roca_3"
+        }
+      ],
+      "pista": {
+        "texto": "Un ratoncito dorado de cola larga",
+        "voz": "voces/animalia/buscar/estrella/z2_pista_gerbo.wav"
+      }
+    },
+    {
+      "id": "ganso",
+      "nombre": "Ganso",
+      "palabra": "GANSO",
+      "aspecto": {
+        "forma": "nadador",
+        "color": "#E6E6E6",
+        "color3": "#FF9F1C",
+        "pico": "pato",
+        "cuello": 0.6
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.9,
+      "nombre_voz": "voces/animalia/nombres/ganso.wav",
+      "escondites": [
+        {
+          "pos": [
+            1303.5,
+            397.0
+          ],
+          "tamano": 84.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1254.0,
+            320.0,
+            44.0,
+            77.0
+          ],
+          "detras_de": "tronco_5"
+        },
+        {
+          "pos": [
+            1202.0,
+            397.0
+          ],
+          "tamano": 84.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            1186.0,
+            358.0,
+            66.0,
+            39.0
+          ],
+          "detras_de": "helecho_4"
+        },
+        {
+          "pos": [
+            326.0,
+            447.0
+          ],
+          "tamano": 84.0,
+          "espejo": false,
+          "visible": 0.57,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            277.0,
+            370.0,
+            99.0,
+            77.0
+          ],
+          "detras_de": "arbol_0"
+        }
+      ],
+      "saludo": "¡Soy el ganso, no el cisne!"
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            557.0,
+            396.5
+          ],
+          "tamano": 59.0,
+          "espejo": false,
+          "visible": 0.66,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            535.0,
+            347.0,
+            44.0,
+            49.0
+          ],
+          "dentro_de": "flor_gigante_1"
+        },
+        {
+          "pos": [
+            2169.0,
+            435.5
+          ],
+          "tamano": 59.0,
+          "espejo": false,
+          "visible": 1.0,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            2147.0,
+            377.0,
+            44.0,
+            59.0
+          ],
+          "dentro_de": "tronco_hueco_9"
+        },
+        {
+          "pos": [
+            1758.0,
+            397.0
+          ],
+          "tamano": 59.0,
+          "espejo": true,
+          "visible": 0.45,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            1736.0,
+            338.0,
+            27.0,
+            59.0
+          ],
+          "detras_de": "arbusto_7"
+        }
+      ],
+      "marca_especial": "animalia_huevo_z2"
+    }
+  ],
+  "objetivos": [
+    "pinguino",
+    "lobo_marino",
+    "cisne",
+    "flamenco",
+    "huillin",
+    "coipo",
+    "pato",
+    "garza",
+    "tortuga",
+    "gerbo"
+  ],
+  "objetivos_por_partida": 9,
+  "objetivos_fijos": [],
+  "senuelos": [
+    "ganso"
+  ],
+  "secretos": [
+    "huevito"
+  ],
+  "modo_lista": "tarjetas",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": false,
+  "visible_min": 0.35,
+  "tamano_animal": 84.0,
+  "zona_toque_min_px": 64,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": true,
+  "tiempo_par_s": 170.0,
+  "sol": {
+    "factor_par": 1.6,
+    "minimo_reintento_s": 45
+  },
+  "regalo_tras_derrotas": 3,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 4,
+  "ayuda_idle_s": null,
+  "pistas_cuestan_estrellita": true,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "umbrales_puntaje": {
+    "dos": 2600,
+    "tres": 4000
+  },
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/estrella/intro.wav",
+    "instruccion": "voces/animalia/buscar/estrella/instruccion.wav",
+    "derrota_gag": "voces/animalia/buscar/estrella/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/estrella/regalo.wav",
+    "pista_usada": "voces/animalia/buscar/estrella/pista_usada.wav",
+    "record": "voces/animalia/buscar/estrella/record.wav",
+    "primer_record": "voces/animalia/buscar/estrella/primer_record.wav",
+    "descansar": "voces/animalia/buscar/estrella/descansar.wav",
+    "presenta_lupa": "voces/animalia/buscar/estrella/presenta_lupa.wav",
+    "presenta_radar": "voces/animalia/buscar/estrella/presenta_radar.wav",
+    "cuenta_toby": "voces/animalia/buscar/estrella/z2_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/estrella/victoria_01.wav",
+      "voces/animalia/buscar/estrella/victoria_02.wav"
+    ],
+    "senuelo": {
+      "ganso": "voces/animalia/buscar/senuelos/ganso.wav"
+    },
+    "secreto": {
+      "huevito": "voces/animalia/buscar/secretos/huevito.wav"
+    }
+  }
+}

@@ -583,6 +583,7 @@ func _al_encontrar(id: String, puntos: int, racha: int, ojo: bool) -> void:
 	var animal: Dictionary = logica.animales.get(id, {})
 	reproducir_sfx(str(animal.get("sonido", SFX_ANIMAL)), float(animal.get("tono", 1.0)), -2.0)
 	_decir(str(animal.get("nombre_voz", "")))
+	_marcar_especial(id)
 	_toby_salto = 1.0
 	_t_quieto = 0.0
 	_ayuda_paso = 0
@@ -620,7 +621,16 @@ func _al_secreto(id: String) -> void:
 	reproducir_sfx(str(animal.get("sonido", SFX_ANIMAL)), float(animal.get("tono", 1.4)))
 	_decir(_linea_voz("secreto", id), true)
 	_estallido(logica.medida(id)["centro"], 10, true)
+	_marcar_especial(id)
 	secreto_encontrado.emit(id)
+
+
+## Datos (HE-120): un animal con `marca_especial` (el huevito de Dinito) deja esa marca en el hermano que lo
+## toco; el mapa la lee con `Progreso.especial_conocido`. Sin guardado (prueba) o en equipo no marca nada.
+func _marcar_especial(id: String) -> void:
+	var marca := str(logica.animales.get(id, {}).get("marca_especial", ""))
+	if marca != "" and turnos == null:
+		marcar_presentacion_vista(marca)
 
 
 func _al_objeto(id: String) -> void:
@@ -1117,9 +1127,9 @@ func _dibujar_juego() -> void:
 	# Lo que sigue va en pantalla.
 	_juego.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if tarde > 0.0:
-		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(1.0, 0.55, 0.25, 0.16 * tarde))
+		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(1.0, 0.6, 0.35, 0.07 * tarde))
 	if _fase == "perdio":
-		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(0.15, 0.1, 0.35, minf(0.28, _gag_t * 0.4)))
+		_juego.draw_rect(Rect2(Vector2.ZERO, PANTALLA), Color(0.25, 0.15, 0.45, minf(0.22, _gag_t * 0.4)))
 	if not _borde_pista.is_empty():
 		var lado: Vector2 = _borde_pista["lado"]
 		var a2 := 0.6 * (1.0 - float(_borde_pista["t"]) / 2.0)

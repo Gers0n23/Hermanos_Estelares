@@ -415,8 +415,28 @@ def poner_puente(segs, w, h, rng, puentes, minimo):
     return None
 
 
-def tablero_con_llenado(w, h, pares, rocas, n_puentes, rng, minimo=3, intentos=4000, max_nodos=300000):
-    for intento in range(intentos):
+def se_toca(segs, w, puentes):
+    """True si algún camino se toca a sí mismo (dos celdas no consecutivas vecinas). Las soluciones únicas de
+    Flow Free casi nunca lo hacen: filtrarlo antes del solver sube mucho la tasa de tableros únicos."""
+    for s in segs:
+        pos = {c: k for k, c in enumerate(s) if c not in puentes}
+        for c, k in pos.items():
+            x, y = c % w, c // w
+            for n in (c + 1 if x < w - 1 else -1, c + w):
+                if n in pos and abs(pos[n] - k) > 1:
+                    return True
+    return False
+
+
+def tablero_con_llenado(w, h, pares, rocas, n_puentes, rng, minimo=3, segundos=90.0, max_nodos=300000):
+    """Busca un tablero con solución única durante `segundos`. Si no aparece (tableros grandes con puentes),
+    se queda con el candidato válido que tenga menos soluciones alternativas encontradas (se marca unica=False)."""
+    import time
+    t0 = time.time()
+    mejor = None
+    intento = 0
+    while time.time() - t0 < segundos or mejor is None:
+        intento += 1
         camino = hamiltoniano(w, h, rng)
         k0 = pares - n_puentes + rng.randint(0, n_puentes)
         segs = cortar(camino, k0, minimo, rng)
@@ -432,34 +452,29 @@ def tablero_con_llenado(w, h, pares, rocas, n_puentes, rng, minimo=3, intentos=4
             segs = nuevos
         if not ok or len(segs) != pares:
             continue
-        # rocas: recortar una punta de tramos largos
         celdas_roca = set()
         for _ in range(rocas):
-            largos = [s for s in segs if len(s) > minimo and s[0] not in puentes and s[-1] not in puentes]
+            largos = [s for s in segs if len(s) > minimo and s[0] not in puentes and s[-1] not in puentes
+                      and s[1] not in puentes and s[-2] not in puentes]
             if not largos:
                 ok = False
                 break
             s = rng.choice(largos)
-            punta = rng.choice([0, -1])
-            if s[punta] in puentes or (s[1] if punta == 0 else s[-2]) in puentes:
-                ok = False
-                break
-            celdas_roca.add(s.pop(punta))
-        if not ok:
+            celdas_roca.add(s.pop(rng.choice([0, -1])))
+        if not ok or any(len(s) < minimo for s in segs):
             continue
-        if any(len(s) < minimo for s in segs):
-            continue
-        # en un puente nunca empieza ni termina un camino
         if any(s[0] in puentes or s[-1] in puentes for s in segs):
             continue
         filas, sol = _escribir(w, h, segs, celdas_roca, puentes, rng)
+        t = Tablero(filas)
+        sol_xy = a_xy(t, sol)
+        assert not validar_solucion(filas, sol_xy, True), validar_solucion(filas, sol_xy, True)
         n, sols, agotado = contar_soluciones(filas, True, 2, max_nodos)
         if n == 1 and not agotado:
-            t = Tablero(filas)
-            sol_xy = a_xy(t, sols[0])
-            assert not validar_solucion(filas, sol_xy, True)
-            return filas, sol_xy, intento
-    raise RuntimeError("no se encontro tablero unico %dx%d %d pares" % (w, h, pares))
+            return filas, a_xy(t, sols[0]), True
+        if mejor is None:
+            mejor = (filas, sol_xy)
+    return mejor[0], mejor[1], False
 
 
 def _escribir(w, h, segs, rocas, puentes, rng):
@@ -695,9 +710,11 @@ def armar_nivel(perfil, zona, rng, dorado=False):
     usados = set()
     for t_i, elenco in enumerate(reparto):
         if llenar:
-            filas, sol, _ = tablero_con_llenado(w, h, pares, rocas, puentes, rng)
+            presupuesto = 25.0 if w <= 6 else (60.0 if w == 7 else 45.0)
+            filas, sol, unica = tablero_con_llenado(w, h, pares, rocas, puentes, rng, segundos=presupuesto)
         else:
             filas, sol, _ = tablero_sin_llenado(w, h, pares, forma, rng, rocas, usados=usados)
+            unica = True
         pares_json = {}
         for k, (animal, casa) in enumerate(elenco):
             pares_json[LETRAS[k]] = {"animal": animal, "casa": casa, "color": COLORES[k]}
@@ -707,6 +724,7 @@ def armar_nivel(perfil, zona, rng, dorado=False):
             "pares": pares_json,
             "tiempo_par_s": par,
             "solucion": sol,
+            "solucion_unica": unica,
         })
         print("  %s z%d t%d listo %dx%d" % (perfil, zona, t_i + 1, w, h), flush=True)
     animales_usados = sorted({a for e in reparto for a, _ in e})
@@ -726,8 +744,8 @@ def armar_nivel(perfil, zona, rng, dorado=False):
         "zona": zona_id,
         "tema": NOMBRE_ZONA[zona],
         "nota": ("Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). "
-                 "Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica; sin llenado: "
-                 "la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el "
+                 "Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; "
+                 "sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el "
                  "playtest: disenador-niveles puede afinar tiempos y umbrales."),
         "fondo": {"cielo": fondo1, "suelo": fondo2, "zona": zona},
         "llenar": llenar,

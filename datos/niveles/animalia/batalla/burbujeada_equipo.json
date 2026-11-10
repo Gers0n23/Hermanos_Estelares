@@ -1,0 +1,370 @@
+{
+  "id_nivel": "animalia_batalla_burbujeada_equipo",
+  "motor": "cortar",
+  "modo_juego": "equipo",
+  "planeta": "animalia",
+  "zona": "batalla",
+  "perfil": "brote",
+  "nota": "dev-godot 08-Nov-2026 (HE-121). Contrato de docs/fichas/batalla-animalia.md §5.10 con los valores de partida de la ficha (metas 31/33/38). PROVISIONAL: la calibracion final (60-75 / 45-60 / 30-40 % al 1.er intento) la fija disenador-niveles con la extension --cortar del simulador (§6.2). 'perfil' solo lo usa el motor en solitario (arnes). 'duraciones' y 'revancha' son campos del motor (ver §5.11 de la ficha). Voces: rutas del §10, sin audio todavia (assets/audio/voces/animalia/batalla/lineas_tts.tsv); el motor sigue sin voz si faltan.",
+  "semilla": 2511,
+  "zona_juego": [
+    140,
+    110,
+    1000,
+    490
+  ],
+  "pasto_y": 610,
+  "apice_y": [
+    190,
+    330
+  ],
+  "salida_x": [
+    220,
+    1060
+  ],
+  "deriva_x_px": [
+    -200,
+    200
+  ],
+  "bamboleo": {
+    "px": 6,
+    "hz": 2.0
+  },
+  "boca_rival": [
+    1160,
+    300
+  ],
+  "salida_liberados": [
+    60,
+    560
+  ],
+  "trazo": {
+    "estela_ms": 150,
+    "un_solo_dedo": true
+  },
+  "combo": {
+    "min_trazo": 3,
+    "libera_extra": 1
+  },
+  "frascos": {
+    "intento_1": 9,
+    "desde_derrota_1": 13,
+    "retomar_valores": [
+      5,
+      9,
+      13
+    ]
+  },
+  "conservar_al_reintentar": 0.3,
+  "toby_ayuda": {
+    "desde_derrota": 2,
+    "revienta": 3
+  },
+  "ofrecer_descanso_desde_derrota": 3,
+  "gags": [
+    "burbuja_gorro",
+    "estornudo_jabon",
+    "calcetin_volador"
+  ],
+  "duraciones": {
+    "presentacion_s": 12,
+    "fin_oleada_s": 5,
+    "gran_estornudo_s": 12,
+    "retomar_s": 5
+  },
+  "oleadas": [
+    {
+      "id": "o1",
+      "meta": 31,
+      "pool": {
+        "vaca": 3,
+        "perro": 3,
+        "gato": 3,
+        "pato": 4,
+        "caballo": 3,
+        "pony": 3,
+        "gallina": 3,
+        "flamenco": 3,
+        "pinguino": 3,
+        "perrito_bombero": 3
+      }
+    },
+    {
+      "id": "o2",
+      "meta": 33,
+      "pool": {
+        "jirafa": 4,
+        "jirafita": 3,
+        "cebra": 4,
+        "elefante": 4,
+        "alpaca": 3,
+        "huemul": 3,
+        "triceratops": 4,
+        "hipopotamo": 3,
+        "lobo_marino": 3,
+        "gatito": 2
+      }
+    },
+    {
+      "id": "o3",
+      "meta": 38,
+      "pool": {
+        "mono": 4,
+        "tucan": 4,
+        "loro": 4,
+        "buho": 3,
+        "perezoso": 3,
+        "braquiosaurio": 4,
+        "pony": 4,
+        "perrito": 4,
+        "triceratops": 4,
+        "jirafa": 4
+      }
+    }
+  ],
+  "perfiles": {
+    "semilla": {
+      "soplidos": 1,
+      "burbujas": 1,
+      "diametro": 200,
+      "sube_s": 1.2,
+      "flota": true,
+      "hitbox": "zona",
+      "justo_ahi_px": 150,
+      "preferidos": [
+        "triceratops",
+        "braquiosaurio",
+        "perrito_bombero"
+      ]
+    },
+    "brote": {
+      "soplidos": 2,
+      "burbujas": [
+        3,
+        3,
+        4
+      ],
+      "intervalo_s": [
+        0.6,
+        0.55,
+        0.5
+      ],
+      "pausa_soplidos_s": 0.8,
+      "vuelo_s": [
+        2.6,
+        2.4,
+        2.2
+      ],
+      "diametro": [
+        140,
+        136,
+        130
+      ],
+      "hitbox_extra_px": 15,
+      "calcetin": {
+        "p": [
+          0,
+          0.25,
+          0.35
+        ],
+        "max_tanda": [
+          0,
+          1,
+          1
+        ],
+        "efecto": "escapa_soplido",
+        "hitbox_menos_px": 8
+      },
+      "preferidos": [
+        "pony",
+        "gatito",
+        "jirafa"
+      ]
+    },
+    "estrella": {
+      "soplidos": 2,
+      "burbujas": [
+        5,
+        6,
+        7
+      ],
+      "intervalo_s": [
+        0.35,
+        0.3,
+        0.25
+      ],
+      "pausa_soplidos_s": 0.6,
+      "vuelo_s": [
+        1.9,
+        1.7,
+        1.5
+      ],
+      "diametro": [
+        110,
+        104,
+        96
+      ],
+      "hitbox_extra_px": 10,
+      "calcetin": {
+        "p": [
+          0.35,
+          0.5,
+          0.6
+        ],
+        "max_tanda": [
+          1,
+          1,
+          2
+        ],
+        "efecto": "corta_turno",
+        "hitbox_menos_px": 8
+      },
+      "siesta": {
+        "por_intento": [
+          0,
+          1,
+          1
+        ],
+        "factor": 0.5,
+        "dura_s": 4
+      },
+      "trompeta": {
+        "por_intento": [
+          0,
+          0,
+          1
+        ],
+        "extra": 4,
+        "dura_s": 3
+      },
+      "preferidos": [
+        "perrito",
+        "gatito",
+        "pony"
+      ]
+    }
+  },
+  "revancha": {
+    "sobrantes_tres": 2,
+    "record": "frascos_usados_menor",
+    "estrellitas_y_record_solo_con": "maxi+nicole+sofia",
+    "hueco_guardado": "burbujeada_revancha"
+  },
+  "equipo": {
+    "rival": null,
+    "confirmar_turno": true,
+    "orden": "maxi_intercalado",
+    "puerta_tras_semilla": "arrastre",
+    "bloqueo_tras_puerta_ms": 400,
+    "ms_volteo_equipo": 1200,
+    "semilla_auto_s": 20,
+    "composiciones": {
+      "maxi+nicole+sofia": {
+        "frascos": [
+          9,
+          13
+        ]
+      },
+      "maxi+nicole": {
+        "frascos": [
+          9,
+          13
+        ]
+      },
+      "maxi+sofia": {
+        "frascos": [
+          9,
+          13
+        ]
+      },
+      "nicole+sofia": {
+        "frascos": [
+          8,
+          12
+        ],
+        "retomar_valores": [
+          4,
+          8,
+          12
+        ]
+      }
+    }
+  },
+  "lineas_voz": {
+    "presentacion": [
+      "voces/animalia/batalla/presenta_01.wav",
+      "voces/animalia/batalla/presenta_02.wav"
+    ],
+    "intro": "voces/animalia/batalla/presenta_02.wav",
+    "repetir_equipo": "voces/animalia/batalla/presenta_02.wav",
+    "revancha_intro": "voces/animalia/batalla/revancha_intro.wav",
+    "instruccion": {
+      "semilla": "voces/animalia/batalla/instruccion_semilla.wav",
+      "brote": "voces/animalia/batalla/instruccion_brote.wav",
+      "estrella": "voces/animalia/batalla/instruccion_estrella.wav"
+    },
+    "regalito_maxi": "voces/animalia/batalla/regalito_maxi.wav",
+    "justo_ahi_maxi": "voces/animalia/batalla/justo_ahi_maxi.wav",
+    "ya_voy_maxi": "voces/animalia/batalla/ya_voy_maxi.wav",
+    "presenta_calcetin": "voces/animalia/batalla/presenta_calcetin.wav",
+    "presenta_combo": "voces/animalia/batalla/presenta_combo.wav",
+    "presenta_siesta": "voces/animalia/batalla/presenta_siesta.wav",
+    "presenta_trompeta": "voces/animalia/batalla/presenta_trompeta.wav",
+    "calcetin_toby": [
+      "voces/animalia/batalla/calcetin_toby_01.wav",
+      "voces/animalia/batalla/calcetin_toby_02.wav",
+      "voces/animalia/batalla/calcetin_rival.wav"
+    ],
+    "escapo": [
+      "voces/animalia/batalla/escapo_01.wav",
+      "voces/animalia/batalla/escapo_02.wav"
+    ],
+    "fin_oleada": {
+      "o1": "voces/animalia/batalla/fin_oleada_1.wav",
+      "o2": "voces/animalia/batalla/fin_oleada_2.wav"
+    },
+    "pero_tengo_mas": "voces/animalia/batalla/pero_tengo_mas.wav",
+    "gran_estornudo": [
+      "voces/animalia/batalla/gran_estornudo_01.wav",
+      "voces/animalia/batalla/gran_estornudo_02.wav"
+    ],
+    "derrota_gag_equipo": {
+      "burbuja_gorro": [
+        "voces/animalia/batalla/derrota_burbuja_gorro.wav",
+        "voces/animalia/batalla/derrota_cierre.wav"
+      ],
+      "estornudo_jabon": [
+        "voces/animalia/batalla/derrota_estornudo_jabon.wav",
+        "voces/animalia/batalla/derrota_cierre.wav"
+      ],
+      "calcetin_volador": [
+        "voces/animalia/batalla/derrota_calcetin_volador.wav",
+        "voces/animalia/batalla/derrota_cierre.wav"
+      ]
+    },
+    "logro_comun": {
+      "1": "voces/animalia/batalla/logro_burbujeada.wav"
+    },
+    "nos_alcanzo": "voces/animalia/batalla/logro_burbujeada_0.wav",
+    "ayuda_jabon": "voces/animalia/batalla/ayuda_jabon.wav",
+    "ayuda_toby": "voces/animalia/batalla/ayuda_toby.wav",
+    "ofrece_descanso": "voces/animalia/batalla/ofrece_descanso.wav",
+    "retomar": "voces/animalia/batalla/retomar.wav",
+    "encontre_frascos": "voces/animalia/batalla/encontre_frascos.wav",
+    "porras_fin_maxi": "voces/arcoiris/emparejar/equipo/porras_fin_maxi.wav",
+    "le_toca": {
+      "maxi": [
+        "voces/nucleo/equipo/le_toca_maxi_01.wav",
+        "voces/nucleo/equipo/le_toca_maxi_02.wav"
+      ],
+      "nicole": [
+        "voces/nucleo/equipo/le_toca_nicole_01.wav",
+        "voces/nucleo/equipo/le_toca_nicole_02.wav"
+      ],
+      "sofia": [
+        "voces/nucleo/equipo/le_toca_sofia_01.wav",
+        "voces/nucleo/equipo/le_toca_sofia_02.wav"
+      ]
+    }
+  }
+}

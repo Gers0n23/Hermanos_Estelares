@@ -275,6 +275,8 @@ func _actualizar_batalla() -> void:
 			if _zona_completa_de(progreso, id, datos_zona):
 				_batalla_visible = true
 				break
+	if progreso != null and bool(progreso.get("modo_dios")):
+		_batalla_visible = true
 	_hito_batalla.visible = _batalla_visible
 	if not _batalla_visible or progreso == null:
 		return

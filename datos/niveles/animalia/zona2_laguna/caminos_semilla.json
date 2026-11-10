@@ -1,0 +1,327 @@
+{
+  "id_nivel": "animalia_z2_caminos_semilla",
+  "motor": "caminos",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona2_laguna",
+  "tema": "La Laguna de los Nenúfares",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#B9E6E0",
+    "suelo": "#7CC8C0",
+    "zona": 2
+  },
+  "llenar": false,
+  "casas": "color",
+  "cortar_ajenos": false,
+  "animal_bajo_dedo": true,
+  "iman_casa": 1,
+  "empezar_desde_casa": false,
+  "histeresis": 0.25,
+  "atraso_max_celdas": 4,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "....",
+        "b..B",
+        "A..a"
+      ],
+      "pares": {
+        "A": {
+          "animal": "perrito_bombero",
+          "casa": "cuartel",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pato",
+          "casa": "laguna",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 18,
+      "solucion": {
+        "A": [[0, 2], [1, 2], [2, 2], [3, 2]],
+        "B": [[3, 1], [2, 1], [1, 1], [0, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "A..a",
+        "....",
+        "B..b"
+      ],
+      "pares": {
+        "A": {
+          "animal": "hipopotamo",
+          "casa": "charco_barro",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "tortuga",
+          "casa": "arena",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 18,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[0, 2], [1, 2], [2, 2], [3, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        "B..b",
+        "A..a",
+        "...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "perro",
+          "casa": "casita_perro",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pato",
+          "casa": "laguna",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 18,
+      "solucion": {
+        "A": [[0, 1], [1, 1], [2, 1], [3, 1]],
+        "B": [[0, 0], [1, 0], [2, 0], [3, 0]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        "A..a",
+        "....",
+        "b..B"
+      ],
+      "pares": {
+        "A": {
+          "animal": "perro",
+          "casa": "casita_perro",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "tortuga",
+          "casa": "arena",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 18,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[3, 2], [2, 2], [1, 2], [0, 2]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t5",
+      "celdas": [
+        "A..a",
+        "B..b",
+        "...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "perrito_bombero",
+          "casa": "cuartel",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "hipopotamo",
+          "casa": "charco_barro",
+          "color": "#3D7BE0"
+        }
+      },
+      "tiempo_par_s": 18,
+      "solucion": {
+        "A": [[0, 0], [1, 0], [2, 0], [3, 0]],
+        "B": [[0, 1], [1, 1], [2, 1], [3, 1]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "hipopotamo": {
+      "nombre": "hipopótamo",
+      "huella": "pezuna",
+      "tono": 0.6,
+      "dibujo": {
+        "cuerpo": "#A99BC8",
+        "detalle": "#E2C2DC",
+        "oscuro": "#6E6090",
+        "cabeza": "ancha",
+        "orejas": "pequenas",
+        "hocico": "morro",
+        "extras": []
+      }
+    },
+    "pato": {
+      "nombre": "pato",
+      "huella": "pato",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#FFD84A",
+        "detalle": "#FF9F2E",
+        "oscuro": "#C98A10",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "pico_pato",
+        "extras": [
+          "penacho"
+        ]
+      }
+    },
+    "perrito_bombero": {
+      "nombre": "perrito bombero",
+      "huella": "pata",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#FFFFFF",
+        "detalle": "#F4F4F4",
+        "oscuro": "#2B2B2B",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "manchas",
+          "casco_bombero"
+        ]
+      }
+    },
+    "perro": {
+      "nombre": "perro",
+      "huella": "pata",
+      "tono": 1.0,
+      "dibujo": {
+        "cuerpo": "#C98A4B",
+        "detalle": "#F6E3C6",
+        "oscuro": "#7A4A26",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mancha_ojo"
+        ]
+      }
+    },
+    "tortuga": {
+      "nombre": "tortuga",
+      "huella": "pata",
+      "tono": 0.8,
+      "dibujo": {
+        "cuerpo": "#9BD45E",
+        "detalle": "#D8EFA0",
+        "oscuro": "#4E7D2B",
+        "cabeza": "redonda",
+        "orejas": "ninguna",
+        "hocico": "nariz",
+        "extras": [
+          "caparazon"
+        ]
+      }
+    },
+    "arena": {
+      "nombre": "la arena",
+      "dibujo": {
+        "tipo": "arena",
+        "color": "#F6D98A",
+        "color2": "#5CC8F0",
+        "variante": "playa"
+      }
+    },
+    "casita_perro": {
+      "nombre": "la casita",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#E8434B",
+        "color2": "#F6E3C6",
+        "variante": ""
+      }
+    },
+    "charco_barro": {
+      "nombre": "el charco de barro",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#9A6A44",
+        "color2": "#7FBF5A",
+        "variante": "barro"
+      }
+    },
+    "cuartel": {
+      "nombre": "el cuartel de bomberos",
+      "dibujo": {
+        "tipo": "cuartel",
+        "color": "#E8434B",
+        "color2": "#FFD84A",
+        "variante": ""
+      }
+    },
+    "laguna": {
+      "nombre": "la laguna",
+      "dibujo": {
+        "tipo": "agua",
+        "color": "#5CC8F0",
+        "color2": "#9BE07A",
+        "variante": "laguna"
+      }
+    }
+  },
+  "puntos": null,
+  "umbrales_puntaje": null,
+  "umbrales_estrellitas": null,
+  "tiempo_par": false,
+  "tormenta": {
+    "factor_par": 3.0
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "caminos_regalados": "todos_menos_uno",
+    "sin_tormenta": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [6, 10],
+  "valvula_s": 6,
+  "pistas_cuestan_estrellita": false,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona2/semilla_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona2/semilla_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_semilla_01.wav",
+      "voces/animalia/caminos/comun/victoria_semilla_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_semilla.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_semilla.wav",
+    "nombres": {
+      "hipopotamo": "voces/animalia/nombres/hipopotamo.wav",
+      "pato": "voces/animalia/nombres/pato.wav",
+      "perrito_bombero": "voces/animalia/nombres/perrito_bombero.wav",
+      "perro": "voces/animalia/nombres/perro.wav",
+      "tortuga": "voces/animalia/nombres/tortuga.wav"
+    },
+    "guia": "voces/animalia/caminos/comun/guia_semilla.wav",
+    "ayuda_fuerte": "voces/animalia/caminos/comun/ayuda_fuerte.wav",
+    "valvula": "voces/animalia/caminos/comun/valvula_sopla.wav"
+  }
+}

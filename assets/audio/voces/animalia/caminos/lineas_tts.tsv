@@ -1,0 +1,153 @@
+# Voces de «Cada quien a su casa» (motor caminos, Planeta Animalia; HE-117). Toby es la voz de los juegos.
+# Textos PROVISIONALES de dev-godot hasta la revisión de guionista (HE-112). Generado por herramientas/guion_voces_caminos.py.
+# Formato: ruta relativa a assets/audio/ <TAB> texto. La directiva '# personaje: <id>' elige la voz.
+# Los nombres (voces/animalia/nombres/) son compartidos con los otros juegos de Animalia: no duplicar al grabar.
+# personaje: toby
+voces/animalia/caminos/comun/ayuda_fuerte.wav	¡Hagámoslo juntos! Yo llevé a casi todos. ¡Falta uno!
+voces/animalia/caminos/comun/casa_ajena_01.wav	¡Aquí no vivo yo!
+voces/animalia/caminos/comun/casa_ajena_02.wav	¡Esa no es mi casa!
+voces/animalia/caminos/comun/casa_late.wav	Mira la casita que brilla.
+voces/animalia/caminos/comun/descansar.wav	¿Descansamos un ratito? Puedes volver cuando quieras.
+voces/animalia/caminos/comun/faltan_flores.wav	¡Faltan flores! Haz que el camino pase por todas las baldosas.
+voces/animalia/caminos/comun/guia_semilla.wav	¡Por aquí! Llévalo a su casita.
+voces/animalia/caminos/comun/nube_presenta_brote.wav	¿Ves la nube? ¡Lleva a todos a su casa antes de que llegue la lluvia!
+voces/animalia/caminos/comun/nube_presenta_estrella.wav	La nube trae una tormenta de risa. ¡Termina el tablero antes de que llegue!
+voces/animalia/caminos/comun/nube_presenta_semilla.wav	Mira la nubecita dormilona. ¡Llevemos a los animalitos antes de que despierte!
+voces/animalia/caminos/comun/otra_vez.wav	¡Otra vez!
+voces/animalia/caminos/comun/pista_usada.wav	¡Sniff, sniff! El camino va por aquí.
+voces/animalia/caminos/comun/primer_record.wav	¡Tu primer récord! Aquí queda tu banderita.
+voces/animalia/caminos/comun/record.wav	¡Récord nuevo! ¡Guau, guau!
+voces/animalia/caminos/comun/regalo.wav	¡Te regalo un camino! Olfateé por dónde va.
+voces/animalia/caminos/comun/sin_borrones.wav	¡Sin borrones!
+voces/animalia/caminos/comun/tablero_listo_01.wav	¡Todos en casa!
+voces/animalia/caminos/comun/tablero_listo_02.wav	¡Guau, qué bien!
+voces/animalia/caminos/comun/tablero_listo_03.wav	¡Otro más! ¡Vamos!
+voces/animalia/caminos/comun/tormenta_brote.wav	¡Ay, la tormenta de risa! ¡Nos mojamos todos! ¡Ja, ja!
+voces/animalia/caminos/comun/tormenta_estrella.wav	¡La tormenta de risa! ¡Quedé empapado! Otra vez, ¡tú puedes!
+voces/animalia/caminos/comun/tormenta_semilla.wav	¡Uy, llovieron burbujas! ¡Plop, plop! ¡Juguemos otra vez!
+voces/animalia/caminos/comun/valvula_sopla.wav	¡Fuuu! Te abrí el camino.
+voces/animalia/caminos/comun/victoria_brote_01.wav	¡Bravísimo, Nicole! ¡Cada quien llegó a su casa!
+voces/animalia/caminos/comun/victoria_brote_02.wav	¡Qué caminos tan lindos, Nicole!
+voces/animalia/caminos/comun/victoria_estrella_01.wav	¡Increíble, Sofía! ¡Resolviste todos los tableros!
+voces/animalia/caminos/comun/victoria_estrella_02.wav	¡Guau! ¡Eres una experta en caminos, Sofía!
+voces/animalia/caminos/comun/victoria_semilla_01.wav	¡Bravo, Maxi! ¡Todos los animalitos están en su casita!
+voces/animalia/caminos/comun/victoria_semilla_02.wav	¡Guau, guau! ¡Lo lograste, Maxi!
+voces/animalia/caminos/equipo/coleccionauta_aspira.wav	¡Sluuurp! ¡Huellitas para mi colección!
+voces/animalia/caminos/equipo/coleccionauta_estornuda.wav	¡Achís! ¡Uy, se me escaparon!
+voces/animalia/caminos/equipo/intro.wav	¡Juntos! Un solo tablero para todos. Cada uno lleva animales a su casa, ¡sin estorbarse!
+voces/animalia/caminos/equipo/logro_1.wav	¡Igual llevamos a un animal a su casa!
+voces/animalia/caminos/equipo/logro_2.wav	¡Igual llevamos a 2 animales a su casa!
+voces/animalia/caminos/equipo/logro_3.wav	¡Igual llevamos a 3 animales a su casa!
+voces/animalia/caminos/equipo/logro_4.wav	¡Igual llevamos a 4 animales a su casa!
+voces/animalia/caminos/equipo/maxi_brilla.wav	Maxi, lleva al que brilla.
+voces/animalia/caminos/equipo/maxi_regalito.wav	¡Mira, Maxi, tu animalito se fue solito a su casa!
+voces/animalia/caminos/equipo/toby_otra_vez.wav	¡No importa! ¡Otra vez, todos juntos!
+voces/animalia/caminos/equipo/victoria.wav	¡Lo hicieron juntos! ¡Todos los animales en casa!
+voces/animalia/caminos/habitats/acacia.wav	La acacia: un árbol de copa plana en la sabana de África.
+voces/animalia/caminos/habitats/bambu.wav	El bambú: tallos largos y verdes que crecen muy rápido.
+voces/animalia/caminos/habitats/bananero.wav	El bananero: una planta de hojas enormes que da plátanos.
+voces/animalia/caminos/habitats/barranco.wav	El barranco: una pared de tierra con hoyitos para hacer nidos.
+voces/animalia/caminos/habitats/bofedal.wav	El bofedal: un pasto mojadito y verde, arriba en el altiplano.
+voces/animalia/caminos/habitats/bosque_lluvioso.wav	El bosque lluvioso: árboles muy verdes donde llueve casi todo el año.
+voces/animalia/caminos/habitats/carpa_toby.wav	¡La carpa de Toby! Mi casita del campamento.
+voces/animalia/caminos/habitats/cordillera_nevada.wav	La cordillera nevada: montañas altas con nieve, en el sur de Chile.
+voces/animalia/caminos/habitats/cueva_costa.wav	La cueva de la costa: un hueco fresquito en las rocas junto al mar.
+voces/animalia/caminos/habitats/cueva_milodon.wav	La cueva del milodón: una cueva enorme de la Patagonia donde encontraron sus huellas.
+voces/animalia/caminos/habitats/cumbre.wav	La cumbre: la punta más alta de la montaña, donde el viento sopla fuerte.
+voces/animalia/caminos/habitats/desierto.wav	El desierto: arena caliente y casi nada de lluvia.
+voces/animalia/caminos/habitats/estepa.wav	La estepa patagónica: pasto seco y mucho viento en el sur.
+voces/animalia/caminos/habitats/eucalipto.wav	El eucalipto: un árbol de hojas que huelen fuerte, de Australia.
+voces/animalia/caminos/habitats/humedal.wav	El humedal: agua tranquila con juncos donde nadan aves elegantes.
+voces/animalia/caminos/habitats/mar.wav	El mar abierto: agua profunda y azul, ¡lejos, lejos de la orilla!
+voces/animalia/caminos/habitats/nido_musgo.wav	El nido de musgo: una camita suave y redonda escondida en el bosque.
+voces/animalia/caminos/habitats/represa.wav	La represa: una pared de palitos y troncos que frena el agua del río.
+voces/animalia/caminos/habitats/rio_bosque.wav	El río del bosque: agua fría que corre entre árboles del sur de Chile.
+voces/animalia/caminos/habitats/roquerio.wav	El roquerío: rocas junto al mar donde los lobos marinos toman sol.
+voces/animalia/caminos/habitats/salar.wav	El salar: un lago blanco de sal en el desierto del norte de Chile.
+voces/animalia/caminos/habitats/selva_tropical.wav	La selva tropical: calor, lluvia y árboles gigantes llenos de frutas.
+voces/animalia/caminos/habitats/tempano.wav	El témpano: un pedazo grande de hielo que flota en el mar helado.
+voces/animalia/caminos/habitats/tronco_roble.wav	El tronco de roble: un árbol viejo y duro del bosque del sur.
+voces/animalia/caminos/zona1/brote_instruccion.wav	Arrastra desde cada animal hasta su casa. Los caminos no se pueden cruzar.
+voces/animalia/caminos/zona1/brote_intro.wav	¡Guau, guau! En el campamento cada animal quiere volver a su casa del mismo color. ¡Ayúdalos, Nicole!
+voces/animalia/caminos/zona1/estrella_instruccion.wav	Une cada animal con su casa sin cruzar caminos y llena todo el tablero. Los puentes se cruzan derechito.
+voces/animalia/caminos/zona1/estrella_intro.wav	¡Guau! Sofía, en el campamento cada animal tiene que llegar a su casa sin cruzar caminos. ¡Y que florezcan todas las baldosas!
+voces/animalia/caminos/zona1/semilla_instruccion.wav	Toca un animalito y arrástralo hasta su casita.
+voces/animalia/caminos/zona1/semilla_intro.wav	¡Guau! Los animalitos de el campamento se perdieron. ¡Llévalos a su casita!
+voces/animalia/caminos/zona2/brote_instruccion.wav	Arrastra desde cada animal hasta su casa. Los caminos no se pueden cruzar.
+voces/animalia/caminos/zona2/brote_intro.wav	¡Guau, guau! En la laguna cada animal quiere volver a su casa del mismo color. ¡Ayúdalos, Nicole!
+voces/animalia/caminos/zona2/estrella_instruccion.wav	Une cada animal con su hogar de verdad: ¿dónde vive cada uno? No se cruzan los caminos y se llena todo el tablero.
+voces/animalia/caminos/zona2/estrella_intro.wav	¡Guau! Sofía, en la laguna cada animal tiene que llegar a su casa sin cruzar caminos. ¡Y que florezcan todas las baldosas!
+voces/animalia/caminos/zona2/semilla_instruccion.wav	Toca un animalito y arrástralo hasta su casita.
+voces/animalia/caminos/zona2/semilla_intro.wav	¡Guau! Los animalitos de la laguna se perdieron. ¡Llévalos a su casita!
+voces/animalia/caminos/zona3/brote_instruccion.wav	Lleva a cada animal a su casa y haz que florezcan todas las baldosas.
+voces/animalia/caminos/zona3/brote_intro.wav	¡Guau, guau! En la pradera cada animal quiere volver a su casa del mismo color. ¡Ayúdalos, Nicole!
+voces/animalia/caminos/zona3/estrella_instruccion.wav	Une cada animal con su hogar de verdad: ¿dónde vive cada uno? No se cruzan los caminos y se llena todo el tablero.
+voces/animalia/caminos/zona3/estrella_intro.wav	¡Guau! Sofía, en la pradera cada animal tiene que llegar a su casa sin cruzar caminos. ¡Y que florezcan todas las baldosas!
+voces/animalia/caminos/zona3/semilla_instruccion.wav	Toca un animalito y arrástralo hasta su casita.
+voces/animalia/caminos/zona3/semilla_intro.wav	¡Guau! Los animalitos de la pradera se perdieron. ¡Llévalos a su casita!
+voces/animalia/caminos/zona4/brote_instruccion.wav	Lleva a cada animal a su casa y haz que florezcan todas las baldosas.
+voces/animalia/caminos/zona4/brote_intro.wav	¡Guau, guau! En el árbol de los nidos cada animal quiere volver a su casa del mismo color. ¡Ayúdalos, Nicole!
+voces/animalia/caminos/zona4/estrella_instruccion.wav	Une cada animal con su hogar de verdad: ¿dónde vive cada uno? No se cruzan los caminos y se llena todo el tablero.
+voces/animalia/caminos/zona4/estrella_intro.wav	¡Guau! Sofía, en el árbol de los nidos cada animal tiene que llegar a su casa sin cruzar caminos. ¡Y que florezcan todas las baldosas!
+voces/animalia/caminos/zona4/semilla_instruccion.wav	Toca un animalito y arrástralo hasta su casita.
+voces/animalia/caminos/zona4/semilla_intro.wav	¡Guau! Los animalitos de el árbol de los nidos se perdieron. ¡Llévalos a su casita!
+voces/animalia/caminos/zona5/brote_instruccion.wav	Lleva a cada animal a su casa y haz que florezcan todas las baldosas.
+voces/animalia/caminos/zona5/brote_intro.wav	¡Guau, guau! En el valle de los dinosaurios cada animal quiere volver a su casa del mismo color. ¡Ayúdalos, Nicole!
+voces/animalia/caminos/zona5/estrella_instruccion.wav	Une cada animal con su hogar de verdad: ¿dónde vive cada uno? No se cruzan los caminos y se llena todo el tablero.
+voces/animalia/caminos/zona5/estrella_intro.wav	¡Guau! Sofía, en el valle de los dinosaurios cada animal tiene que llegar a su casa sin cruzar caminos. ¡Y que florezcan todas las baldosas!
+voces/animalia/caminos/zona5/semilla_instruccion.wav	Toca un animalito y arrástralo hasta su casita.
+voces/animalia/caminos/zona5/semilla_intro.wav	¡Guau! Los animalitos de el valle de los dinosaurios se perdieron. ¡Llévalos a su casita!
+voces/animalia/nombres/alpaca.wav	¡Alpaca!
+voces/animalia/nombres/ballena.wav	¡Ballena!
+voces/animalia/nombres/braquiosaurio.wav	¡Braquiosaurio!
+voces/animalia/nombres/buho.wav	¡Búho!
+voces/animalia/nombres/caballo.wav	¡Caballo!
+voces/animalia/nombres/camello.wav	¡Camello!
+voces/animalia/nombres/carnotauro.wav	¡Carnotauro!
+voces/animalia/nombres/carpintero.wav	¡Carpintero negro!
+voces/animalia/nombres/castor.wav	¡Castor!
+voces/animalia/nombres/cebra.wav	¡Cebra!
+voces/animalia/nombres/cisne.wav	¡Cisne!
+voces/animalia/nombres/cisne_cuello_negro.wav	¡Cisne de cuello negro!
+voces/animalia/nombres/condor.wav	¡Cóndor!
+voces/animalia/nombres/conejo.wav	¡Conejo!
+voces/animalia/nombres/cuy.wav	¡Cuy!
+voces/animalia/nombres/elefante.wav	¡Elefante!
+voces/animalia/nombres/flamenco.wav	¡Flamenco!
+voces/animalia/nombres/gallina.wav	¡Gallina!
+voces/animalia/nombres/gatito.wav	¡Gatito!
+voces/animalia/nombres/gato.wav	¡Gato!
+voces/animalia/nombres/gerbo.wav	¡Gerbo!
+voces/animalia/nombres/guanaco.wav	¡Guanaco!
+voces/animalia/nombres/hipopotamo.wav	¡Hipopótamo!
+voces/animalia/nombres/huemul.wav	¡Huemul!
+voces/animalia/nombres/huevito.wav	¡Huevito!
+voces/animalia/nombres/huillin.wav	¡Huillín!
+voces/animalia/nombres/jirafa.wav	¡Jirafa!
+voces/animalia/nombres/jirafita.wav	¡Jirafita!
+voces/animalia/nombres/koala.wav	¡Koala!
+voces/animalia/nombres/lobo_marino.wav	¡Lobo marino!
+voces/animalia/nombres/loro.wav	¡Loro!
+voces/animalia/nombres/milodon.wav	¡Milodón!
+voces/animalia/nombres/monito_del_monte.wav	¡Monito del monte!
+voces/animalia/nombres/mono.wav	¡Mono!
+voces/animalia/nombres/oso_polar.wav	¡Oso polar!
+voces/animalia/nombres/panda.wav	¡Panda!
+voces/animalia/nombres/patito.wav	¡Patito!
+voces/animalia/nombres/pato.wav	¡Pato!
+voces/animalia/nombres/perezoso.wav	¡Perezoso!
+voces/animalia/nombres/perrito.wav	¡Perrito!
+voces/animalia/nombres/perrito_bombero.wav	¡Perrito bombero!
+voces/animalia/nombres/perro.wav	¡Perro!
+voces/animalia/nombres/pinguino.wav	¡Pingüino de Humboldt!
+voces/animalia/nombres/pollito.wav	¡Pollito!
+voces/animalia/nombres/pony.wav	¡Pony!
+voces/animalia/nombres/pony_estelar.wav	¡Pony estelar!
+voces/animalia/nombres/pudu.wav	¡Pudú!
+voces/animalia/nombres/spinosaurio.wav	¡Spinosaurio!
+voces/animalia/nombres/tortuga.wav	¡Tortuga!
+voces/animalia/nombres/trex.wav	¡T-rex!
+voces/animalia/nombres/tricahue.wav	¡Tricahue!
+voces/animalia/nombres/triceratops.wav	¡Triceratops!
+voces/animalia/nombres/tucan.wav	¡Tucán!
+voces/animalia/nombres/vaca.wav	¡Vaca!

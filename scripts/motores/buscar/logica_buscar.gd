@@ -84,6 +84,11 @@ var estado := "jugando"  ## jugando | perdio | ronda | gano
 var asomados: Dictionary = {}  ## id -> 0-1 (ayudas: el animal asoma)
 var tope_turno_equipo := false
 
+## false si el ultimo sorteo no pudo separar a todos (lo revisan el generador y el arnes).
+var ultimo_sorteo_unico := true
+## Avisar por consola cuando el sorteo no es unico (el generador lo apaga mientras prueba composiciones).
+var avisar_sorteo := true
+
 var _medidas: Dictionary = {}  ## cache: "id:indice:abierto" -> medida
 
 
@@ -259,14 +264,20 @@ func esta_dentro(id: String) -> bool:
 func sortear_escondites(ids: Array, previos: Dictionary) -> void:
 	var ocupadas := {}
 	for otro in asignacion:
-		if not otro in ids and not otro in encontrados:
+		if not otro in ids and not otro in encontrados and animales.has(otro):
 			ocupadas[pieza_de(escondite(otro))] = true
+			var caja_otro := caja_escondite(escondite(otro))
+			if caja_otro.has_area():
+				ocupadas["caja:" + otro] = caja_otro
 	var orden: Array = ids.duplicate()
 	_barajar(orden)
 	var resultado := {}
+	ultimo_sorteo_unico = true
 	if not _sortear_rec(orden, 0, ocupadas, previos, resultado, true):
 		if not _sortear_rec(orden, 0, ocupadas, {}, resultado, true):
-			push_warning("logica_buscar: no hay escondites distintos para todos en %s" % nivel.get("id_nivel", "?"))
+			ultimo_sorteo_unico = false
+			if avisar_sorteo:
+				push_warning("logica_buscar: no hay escondites distintos para todos en %s" % nivel.get("id_nivel", "?"))
 			_sortear_rec(orden, 0, {}, {}, resultado, false)
 	for id in resultado:
 		asignacion[id] = resultado[id]
@@ -280,19 +291,51 @@ func _sortear_rec(orden: Array, i: int, ocupadas: Dictionary, previos: Dictionar
 	var opciones: Array = range(escondites_de(id).size())
 	_barajar(opciones)
 	for k in opciones:
-		var pieza := pieza_de(escondites_de(id)[k])
+		var esc: Dictionary = escondites_de(id)[k]
+		var pieza := pieza_de(esc)
 		if unico and ocupadas.has(pieza):
+			continue
+		var caja := caja_escondite(esc)
+		if unico and caja.has_area() and _pisa(caja, ocupadas):
 			continue
 		if previos.has(id) and k == int(previos[id]) and escondites_de(id).size() > 1 and unico:
 			# Solo se acepta repetir si de verdad no hay otra pieza libre (lo resuelve la segunda pasada).
 			continue
 		resultado[id] = k
 		ocupadas[pieza] = true
+		if caja.has_area():
+			ocupadas["caja:" + id] = caja
 		if _sortear_rec(orden, i + 1, ocupadas, previos, resultado, unico):
 			return true
 		ocupadas.erase(pieza)
+		ocupadas.erase("caja:" + id)
 		resultado.erase(id)
 	return false
+
+
+## Caja de la parte visible declarada por el generador (vacia si el escondite no la trae).
+func caja_escondite(esc: Dictionary) -> Rect2:
+	var c = esc.get("caja", [])
+	if c is Array and c.size() >= 4:
+		return Rect2(float(c[0]), float(c[1]), float(c[2]), float(c[3]))
+	return Rect2()
+
+
+func _pisa(caja: Rect2, ocupadas: Dictionary) -> bool:
+	for clave in ocupadas:
+		var v = ocupadas[clave]
+		if v is Rect2 and se_pisan(v, caja):
+			return true
+	return false
+
+
+## Dos partes visibles "se pisan" si comparten mas del 30 % de la menor: un roce en el borde no impide tocar
+## a cada animal en su centro (lo comprueba el arnes).
+static func se_pisan(a: Rect2, b: Rect2) -> bool:
+	var i := a.intersection(b)
+	if not i.has_area():
+		return false
+	return i.get_area() > 0.3 * minf(a.get_area(), b.get_area())
 
 
 func fijar_escondite(id: String, indice: int) -> void:

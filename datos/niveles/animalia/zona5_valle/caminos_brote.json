@@ -1,0 +1,428 @@
+{
+  "id_nivel": "animalia_z5_caminos_brote",
+  "motor": "caminos",
+  "perfil": "brote",
+  "planeta": "animalia",
+  "zona": "zona5_valle",
+  "tema": "El Valle de los Dinosaurios",
+  "nota": "Generado por herramientas/generar_niveles_caminos.py (dev-godot, HE-117, 05-Nov-2026). Tableros con solucion validada por herramientas/solver_caminos.py (con llenado: unica si solucion_unica; si no, valida; sin llenado: la de menor largo total, unica). Politica de derrota del PO 05-Nov-2026. PROVISIONAL hasta el playtest: disenador-niveles puede afinar tiempos y umbrales.",
+  "fondo": {
+    "cielo": "#E8D2B8",
+    "suelo": "#C49A74",
+    "zona": 5
+  },
+  "llenar": true,
+  "casas": "color",
+  "cortar_ajenos": true,
+  "animal_bajo_dedo": false,
+  "iman_casa": 0,
+  "empezar_desde_casa": true,
+  "histeresis": 0.35,
+  "atraso_max_celdas": 3,
+  "transformar": true,
+  "orden_tableros": "fijo",
+  "tableros": [
+    {
+      "id": "t1",
+      "celdas": [
+        "......",
+        "EB..D.",
+        ".ab..d",
+        ".#..e#",
+        ".c....",
+        "....AC"
+      ],
+      "pares": {
+        "A": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "perrito",
+          "casa": "casita_perro",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "gatito",
+          "casa": "canasto",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "caballo",
+          "casa": "pradera",
+          "color": "#FF8A3D"
+        }
+      },
+      "tiempo_par_s": 80,
+      "solucion": {
+        "A": [[4, 5], [3, 5], [2, 5], [1, 5], [0, 5], [0, 4], [0, 3], [0, 2], [1, 2]],
+        "B": [[1, 1], [2, 1], [2, 2]],
+        "C": [[5, 5], [5, 4], [4, 4], [3, 4], [3, 3], [2, 3], [2, 4], [1, 4]],
+        "D": [[4, 1], [4, 0], [5, 0], [5, 1], [5, 2]],
+        "E": [[0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [3, 1], [3, 2], [4, 2], [4, 3]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t2",
+      "celdas": [
+        "Ca.b..",
+        "...#D.",
+        "......",
+        "...AB.",
+        ".#eEd.",
+        ".c...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "perrito",
+          "casa": "casita_perro",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "caballo",
+          "casa": "pradera",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "gatito",
+          "casa": "canasto",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#FF8A3D"
+        }
+      },
+      "tiempo_par_s": 80,
+      "solucion": {
+        "A": [[3, 3], [2, 3], [1, 3], [1, 2], [1, 1], [1, 0]],
+        "B": [[4, 3], [4, 2], [3, 2], [2, 2], [2, 1], [2, 0], [3, 0]],
+        "C": [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 5]],
+        "D": [[4, 1], [4, 0], [5, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [4, 5], [4, 4]],
+        "E": [[3, 4], [3, 5], [2, 5], [2, 4]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t3",
+      "celdas": [
+        ".....b",
+        ".E.e##",
+        "......",
+        "CD..d.",
+        ".A.aB.",
+        "...c.."
+      ],
+      "pares": {
+        "A": {
+          "animal": "jirafa",
+          "casa": "acacia",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "perrito",
+          "casa": "casita_perro",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "caballo",
+          "casa": "pradera",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "gatito",
+          "casa": "canasto",
+          "color": "#FF8A3D"
+        }
+      },
+      "tiempo_par_s": 80,
+      "solucion": {
+        "A": [[1, 4], [2, 4], [3, 4]],
+        "B": [[4, 4], [4, 5], [5, 5], [5, 4], [5, 3], [5, 2], [4, 2], [3, 2], [2, 2], [1, 2], [0, 2], [0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],
+        "C": [[0, 3], [0, 4], [0, 5], [1, 5], [2, 5], [3, 5]],
+        "D": [[1, 3], [2, 3], [3, 3], [4, 3]],
+        "E": [[1, 1], [2, 1], [3, 1]]
+      },
+      "solucion_unica": true
+    },
+    {
+      "id": "t4",
+      "celdas": [
+        ".E....",
+        "ea..b.",
+        "#..#dB",
+        "...A.c",
+        "......",
+        "DC...."
+      ],
+      "pares": {
+        "A": {
+          "animal": "pony_estelar",
+          "casa": "nube_estrellas",
+          "color": "#E8434B"
+        },
+        "B": {
+          "animal": "pony",
+          "casa": "establo",
+          "color": "#3D7BE0"
+        },
+        "C": {
+          "animal": "caballo",
+          "casa": "pradera",
+          "color": "#36B866"
+        },
+        "D": {
+          "animal": "perrito",
+          "casa": "casita_perro",
+          "color": "#FFC83A"
+        },
+        "E": {
+          "animal": "gatito",
+          "casa": "canasto",
+          "color": "#FF8A3D"
+        }
+      },
+      "tiempo_par_s": 80,
+      "solucion": {
+        "A": [[3, 3], [2, 3], [2, 2], [1, 2], [1, 1]],
+        "B": [[5, 2], [5, 1], [5, 0], [4, 0], [3, 0], [2, 0], [2, 1], [3, 1], [4, 1]],
+        "C": [[1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [5, 4], [5, 3]],
+        "D": [[0, 5], [0, 4], [0, 3], [1, 3], [1, 4], [2, 4], [3, 4], [4, 4], [4, 3], [4, 2]],
+        "E": [[1, 0], [0, 0], [0, 1]]
+      },
+      "solucion_unica": true
+    }
+  ],
+  "catalogo": {
+    "caballo": {
+      "nombre": "caballo",
+      "huella": "pezuna",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#A86B3C",
+        "detalle": "#E8C8A8",
+        "oscuro": "#4A2E1E",
+        "cabeza": "alargada",
+        "orejas": "caballo",
+        "hocico": "morro",
+        "extras": [
+          "melena"
+        ]
+      }
+    },
+    "gatito": {
+      "nombre": "gatito",
+      "huella": "pata",
+      "tono": 1.4,
+      "dibujo": {
+        "cuerpo": "#C8C0D8",
+        "detalle": "#FFF4FA",
+        "oscuro": "#8E86A8",
+        "cabeza": "redonda",
+        "orejas": "punta",
+        "hocico": "nariz",
+        "extras": [
+          "bigotes",
+          "mejillas",
+          "lazo"
+        ]
+      }
+    },
+    "jirafa": {
+      "nombre": "jirafa",
+      "huella": "pezuna",
+      "tono": 0.9,
+      "dibujo": {
+        "cuerpo": "#F6C35B",
+        "detalle": "#FFE7A8",
+        "oscuro": "#B9772E",
+        "cabeza": "alargada",
+        "orejas": "laterales",
+        "hocico": "morro",
+        "extras": [
+          "osiconos",
+          "manchas"
+        ]
+      }
+    },
+    "perrito": {
+      "nombre": "perrito",
+      "huella": "pata",
+      "tono": 1.25,
+      "dibujo": {
+        "cuerpo": "#E3AA6A",
+        "detalle": "#FFF1DD",
+        "oscuro": "#8A5530",
+        "cabeza": "redonda",
+        "orejas": "caidas",
+        "hocico": "nariz",
+        "extras": [
+          "mejillas"
+        ]
+      }
+    },
+    "pony": {
+      "nombre": "pony",
+      "huella": "pezuna",
+      "tono": 1.2,
+      "dibujo": {
+        "cuerpo": "#FFC4DD",
+        "detalle": "#FFF0F6",
+        "oscuro": "#B565D8",
+        "cabeza": "alargada",
+        "orejas": "caballo",
+        "hocico": "morro",
+        "extras": [
+          "melena",
+          "flequillo"
+        ]
+      }
+    },
+    "pony_estelar": {
+      "nombre": "pony estelar",
+      "huella": "pezuna",
+      "tono": 1.3,
+      "dibujo": {
+        "cuerpo": "#E9E4FF",
+        "detalle": "#FFFFFF",
+        "oscuro": "#5A6CF0",
+        "cabeza": "alargada",
+        "orejas": "caballo",
+        "hocico": "morro",
+        "extras": [
+          "melena",
+          "flequillo",
+          "estrellas"
+        ]
+      }
+    },
+    "acacia": {
+      "nombre": "la acacia",
+      "dibujo": {
+        "tipo": "arbol",
+        "color": "#7DB04A",
+        "color2": "#8A5A36",
+        "variante": "acacia"
+      }
+    },
+    "canasto": {
+      "nombre": "el canasto",
+      "dibujo": {
+        "tipo": "canasto",
+        "color": "#D9A35F",
+        "color2": "#FF9CC0",
+        "variante": ""
+      }
+    },
+    "casita_perro": {
+      "nombre": "la casita",
+      "dibujo": {
+        "tipo": "casita",
+        "color": "#E8434B",
+        "color2": "#F6E3C6",
+        "variante": ""
+      }
+    },
+    "establo": {
+      "nombre": "el establo",
+      "dibujo": {
+        "tipo": "establo",
+        "color": "#B5723E",
+        "color2": "#F2D3A0",
+        "variante": ""
+      }
+    },
+    "nube_estrellas": {
+      "nombre": "la nube de estrellas",
+      "dibujo": {
+        "tipo": "nube",
+        "color": "#F4F0FF",
+        "color2": "#FFD84A",
+        "variante": ""
+      }
+    },
+    "pradera": {
+      "nombre": "la pradera",
+      "dibujo": {
+        "tipo": "pasto",
+        "color": "#8CCB6A",
+        "color2": "#FFD84A",
+        "variante": "pradera"
+      }
+    }
+  },
+  "puntos": {
+    "llegada": 100,
+    "racha_max": 5,
+    "tablero": 300,
+    "sin_borrones": 300,
+    "por_segundo": 10
+  },
+  "umbrales_puntaje": {
+    "dos": 7300,
+    "tres": 11700
+  },
+  "umbrales_estrellitas": null,
+  "tiempo_par": true,
+  "tormenta": {
+    "factor_par": 2.2
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": null,
+  "descanso_tras_derrotas": 3,
+  "ayuda_idle_s": [
+    15
+  ],
+  "valvula_s": 0,
+  "pistas_cuestan_estrellita": false,
+  "guardado_parcial": true,
+  "lineas_voz": {
+    "intro": "voces/animalia/caminos/zona5/brote_intro.wav",
+    "instruccion": "voces/animalia/caminos/zona5/brote_instruccion.wav",
+    "tablero_listo": [
+      "voces/animalia/caminos/comun/tablero_listo_01.wav",
+      "voces/animalia/caminos/comun/tablero_listo_02.wav",
+      "voces/animalia/caminos/comun/tablero_listo_03.wav"
+    ],
+    "victoria": [
+      "voces/animalia/caminos/comun/victoria_brote_01.wav",
+      "voces/animalia/caminos/comun/victoria_brote_02.wav"
+    ],
+    "derrota_gag": "voces/animalia/caminos/comun/tormenta_brote.wav",
+    "otra_vez": "voces/animalia/caminos/comun/otra_vez.wav",
+    "regalo": "voces/animalia/caminos/comun/regalo.wav",
+    "nube_presenta": "voces/animalia/caminos/comun/nube_presenta_brote.wav",
+    "nombres": {
+      "caballo": "voces/animalia/nombres/caballo.wav",
+      "gatito": "voces/animalia/nombres/gatito.wav",
+      "jirafa": "voces/animalia/nombres/jirafa.wav",
+      "perrito": "voces/animalia/nombres/perrito.wav",
+      "pony": "voces/animalia/nombres/pony.wav",
+      "pony_estelar": "voces/animalia/nombres/pony_estelar.wav"
+    },
+    "descansar": "voces/animalia/caminos/comun/descansar.wav",
+    "faltan_flores": "voces/animalia/caminos/comun/faltan_flores.wav",
+    "record": "voces/animalia/caminos/comun/record.wav",
+    "primer_record": "voces/animalia/caminos/comun/primer_record.wav",
+    "sin_borrones": "voces/animalia/caminos/comun/sin_borrones.wav",
+    "casa_late": "voces/animalia/caminos/comun/casa_late.wav"
+  }
+}

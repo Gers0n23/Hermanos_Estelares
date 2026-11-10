@@ -33,6 +33,11 @@ const RUTA_GUARDADO := "user://progreso.json"
 ## Guardado aparte para los arneses y capturas de `herramientas/` (decision del PO, 03-Oct-2026):
 ## asi una prueba nunca pisa el progreso real de los ninos, aunque el juego este abierto.
 const RUTA_GUARDADO_PRUEBAS := "user://progreso_pruebas.json"
+## Guardado del modo dios (decision del PO 10-Nov-2026): el PO prueba juegos bloqueados y etapas finales
+## sin tocar el progreso real de los ninos. Se borra desde Ajustes.
+const RUTA_GUARDADO_DIOS := "user://progreso_dios.json"
+## PIN de 4 digitos que pide Ajustes para entrar al modo dios. Cambiarlo aqui.
+const PIN_MODO_DIOS := "2468"
 
 ## Version actual del formato de guardado. Subir este numero + agregar una funcion
 ## `_migrar_v<N>_a_v<N+1>(datos: Dictionary) -> Dictionary` es todo lo que hace falta
@@ -72,6 +77,10 @@ var equipo_activo: Array[String] = []
 ## Solo builds de depuracion (F5 en la seleccion): muestra "¡Juntos!" sin haber ganado la batalla, para
 ## que el PO pueda revisar el modo equipo antes de que exista la batalla (HE-69). Nunca se guarda.
 var forzar_modo_equipo_depuracion := false
+## Modo dios (Ajustes + PIN): todo el juego abierto (planetas, zonas, dorados, "¡Juntos!", hito de batalla)
+## sobre `RUTA_GUARDADO_DIOS`. Vive solo en memoria: al cerrar la app se vuelve al guardado real.
+var modo_dios := false
+var _insignia_dios: CanvasLayer
 
 
 ## En `_init` y no en `_ready` (06-Oct-2026): con `--script`, el `_initialize()` del arnés corre ANTES
@@ -94,6 +103,68 @@ func _corre_desde_herramienta() -> bool:
 			return true
 	var bucle := Engine.get_main_loop()
 	return bucle != null and bucle.get_script() != null
+
+
+# ---------------------------------------------------------------------------
+# Modo dios
+# ---------------------------------------------------------------------------
+
+func pin_valido(pin: String) -> bool:
+	return pin == PIN_MODO_DIOS
+
+
+## Cambia al guardado del modo dios y abre todo. Devuelve false si el PIN no es el correcto.
+func activar_modo_dios(pin: String) -> bool:
+	if not pin_valido(pin):
+		return false
+	if not modo_dios:
+		modo_dios = true
+		ruta_guardado = RUTA_GUARDADO_DIOS
+		cargar()
+		_mostrar_insignia_dios(true)
+	return true
+
+
+## Vuelve al guardado real (o al de pruebas si corre un arnes), sin tocar el del modo dios.
+func desactivar_modo_dios() -> void:
+	if not modo_dios:
+		return
+	modo_dios = false
+	ruta_guardado = RUTA_GUARDADO_PRUEBAS if _corre_desde_herramienta() else RUTA_GUARDADO
+	cargar()
+	_mostrar_insignia_dios(false)
+
+
+## Deja el guardado del modo dios como recien instalado. Nunca toca el guardado real.
+func borrar_guardado_dios() -> void:
+	if FileAccess.file_exists(RUTA_GUARDADO_DIOS):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(RUTA_GUARDADO_DIOS))
+	if modo_dios:
+		cargar()
+
+
+## Etiqueta fija en una esquina mientras el modo dios esta activo, para que nunca se confunda con el
+## juego real de los ninos. No recibe toques.
+func _mostrar_insignia_dios(mostrar: bool) -> void:
+	if not mostrar:
+		if _insignia_dios != null:
+			_insignia_dios.queue_free()
+			_insignia_dios = null
+		return
+	if _insignia_dios != null or not is_inside_tree():
+		return
+	_insignia_dios = CanvasLayer.new()
+	_insignia_dios.layer = 120
+	var etiqueta := Label.new()
+	etiqueta.text = "MODO DIOS"
+	etiqueta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	etiqueta.position = Vector2(560, 4)
+	etiqueta.add_theme_font_size_override("font_size", 18)
+	etiqueta.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	etiqueta.add_theme_color_override("font_outline_color", Color(0.25, 0.05, 0.3))
+	etiqueta.add_theme_constant_override("outline_size", 6)
+	_insignia_dios.add_child(etiqueta)
+	add_child(_insignia_dios)
 
 
 ## Carga `user://progreso.json`. Si no existe (primer arranque) o esta corrupto,
@@ -904,7 +975,7 @@ func borrar_parcial_batalla(id_batalla: String) -> void:
 ## true si hay al menos una batalla ganada: la seleccion muestra "¡Juntos!" (§3.1). En builds de
 ## depuracion, F5 en la seleccion lo fuerza en memoria (`forzar_modo_equipo_depuracion`).
 func modo_equipo_desbloqueado() -> bool:
-	if forzar_modo_equipo_depuracion:
+	if forzar_modo_equipo_depuracion or modo_dios:
 		return true
 	for batalla in _equipo()["batallas"].values():
 		if batalla is Dictionary and bool(batalla.get("ganada", false)):

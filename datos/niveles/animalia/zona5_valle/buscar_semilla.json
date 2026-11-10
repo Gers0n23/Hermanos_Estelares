@@ -1,0 +1,818 @@
+{
+  "id_nivel": "animalia_z5_buscar_semilla",
+  "motor": "buscar",
+  "perfil": "semilla",
+  "planeta": "animalia",
+  "zona": "zona5_valle",
+  "nota": "Generado por herramientas/generar_niveles_buscar.gd (HE-118, dev-godot 05-Nov-2026). Valores de partida de planeta-animalia-zonas.md §4.3 y politica de derrota HE-124 (motor-buscar.md §8.1 y §10). PROVISIONAL: calibrar con la maqueta HE-110 y el playtest. Los escondites son fijos: editables a mano; el arnes qa_test_buscar.gd mide que cada uno cumpla `visible_min`.",
+  "escena": {
+    "tamano": [
+      1280.0,
+      720.0
+    ],
+    "inicio_vista": [
+      0,
+      0
+    ],
+    "zona_util_max_y": 590.0,
+    "fondo": {
+      "cielo": [
+        "#F6C7A8",
+        "#FFF0D9"
+      ],
+      "lejos": [
+        {
+          "y": 320.0,
+          "color": "#C9A98F",
+          "amp": 70,
+          "ondas": 2
+        },
+        {
+          "y": 360.0,
+          "color": "#B79A82",
+          "amp": 30,
+          "ondas": 5
+        }
+      ],
+      "suelo": {
+        "y": 380.0,
+        "color": "#A7C26A"
+      },
+      "niebla": true,
+      "agua": [
+        {
+          "rect": [
+            793.599975585938,
+            420.0,
+            358.399993896484,
+            150.0
+          ],
+          "color": "#5CC8F0"
+        }
+      ]
+    }
+  },
+  "objetos": [
+    {
+      "id": "helecho_0",
+      "tipo": "helecho",
+      "pos": [
+        329.0,
+        444.0
+      ],
+      "escala": 0.88,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "arbol_1",
+      "tipo": "arbol",
+      "pos": [
+        424.0,
+        515.0
+      ],
+      "escala": 0.73,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "helecho_2",
+      "tipo": "helecho",
+      "pos": [
+        526.0,
+        547.0
+      ],
+      "escala": 0.86,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "volcan_3",
+      "tipo": "volcan",
+      "pos": [
+        593.0,
+        400.0
+      ],
+      "escala": 0.89,
+      "espejo": false,
+      "z": 0,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "huesos_4",
+      "tipo": "huesos",
+      "pos": [
+        663.0,
+        496.0
+      ],
+      "escala": 0.8,
+      "espejo": false,
+      "reaccion": "xilofono",
+      "sonido": "sfx/ui/toque.ogg"
+    },
+    {
+      "id": "roca_5",
+      "tipo": "roca",
+      "pos": [
+        752.0,
+        535.0
+      ],
+      "escala": 0.84,
+      "espejo": false,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "roca_6",
+      "tipo": "roca",
+      "pos": [
+        845.0,
+        410.0
+      ],
+      "escala": 0.72,
+      "espejo": true,
+      "reaccion": "rebotar",
+      "sonido": "sfx/ui/polvo_boing.ogg"
+    },
+    {
+      "id": "cristales_7",
+      "tipo": "cristales",
+      "pos": [
+        940.0,
+        410.0
+      ],
+      "escala": 0.88,
+      "espejo": false,
+      "reaccion": "xilofono",
+      "sonido": "sfx/ui/toque.ogg"
+    },
+    {
+      "id": "juncos_a0",
+      "tipo": "juncos",
+      "pos": [
+        854.0,
+        473.0
+      ],
+      "escala": 0.78,
+      "espejo": true,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    },
+    {
+      "id": "nenufar_a1",
+      "tipo": "nenufar",
+      "pos": [
+        1087.0,
+        533.0
+      ],
+      "escala": 0.87,
+      "espejo": true,
+      "reaccion": "salpicar",
+      "sonido": "sfx/ui/blup.ogg"
+    },
+    {
+      "id": "nube_0",
+      "tipo": "nube",
+      "pos": [
+        652.0,
+        201.0
+      ],
+      "escala": 0.77,
+      "reaccion": "puf",
+      "sonido": "sfx/ui/puf.ogg"
+    },
+    {
+      "id": "nido_0",
+      "tipo": "nido",
+      "pos": [
+        475.0,
+        347.0
+      ],
+      "escala": 0.66,
+      "z": 516.0,
+      "reaccion": "sacudir",
+      "sonido": "sfx/ui/polvo.ogg"
+    }
+  ],
+  "animales": [
+    {
+      "id": "trex",
+      "nombre": "T Rex",
+      "palabra": "T-REX",
+      "aspecto": {
+        "forma": "dino_bipedo",
+        "color": "#5DBB63",
+        "color2": "#C8F0A8",
+        "color3": "#FFC83A"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.5,
+      "nombre_voz": "voces/animalia/nombres/trex.wav",
+      "escondites": [
+        {
+          "pos": [
+            836.5,
+            532.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            734.0,
+            348.0,
+            194.0,
+            184.0
+          ],
+          "detras_de": "roca_5"
+        },
+        {
+          "pos": [
+            663.0,
+            486.5
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            594.0,
+            303.0,
+            172.0,
+            184.0
+          ],
+          "detras_de": "huesos_4"
+        },
+        {
+          "pos": [
+            608.0,
+            511.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.78,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            551.0,
+            327.0,
+            160.0,
+            184.0
+          ],
+          "detras_de": "arbol_1"
+        }
+      ]
+    },
+    {
+      "id": "spinosaurio",
+      "nombre": "Spino",
+      "palabra": "SPINO",
+      "aspecto": {
+        "forma": "dino_bipedo",
+        "color": "#5AA9E6",
+        "color2": "#C2E3FA",
+        "color3": "#FF8A3D",
+        "vela": true,
+        "puas": false
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.6,
+      "nombre_voz": "voces/animalia/nombres/spinosaurio.wav",
+      "escondites": [
+        {
+          "pos": [
+            936.5,
+            407.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            836.0,
+            223.0,
+            191.0,
+            174.0
+          ],
+          "detras_de": "roca_6"
+        },
+        {
+          "pos": [
+            549.0,
+            441.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            459.0,
+            257.0,
+            191.0,
+            164.0
+          ],
+          "detras_de": "helecho_0"
+        },
+        {
+          "pos": [
+            926.5,
+            397.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            882.0,
+            213.0,
+            146.0,
+            184.0
+          ],
+          "detras_de": "volcan_3"
+        }
+      ]
+    },
+    {
+      "id": "carnotauro",
+      "nombre": "Carno",
+      "palabra": "CARNO",
+      "aspecto": {
+        "forma": "dino_bipedo",
+        "color": "#E8743B",
+        "color2": "#FFD3B0",
+        "color3": "#FFC83A",
+        "cuernos": "carno"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.55,
+      "nombre_voz": "voces/animalia/nombres/carnotauro.wav",
+      "escondites": [
+        {
+          "pos": [
+            430.5,
+            544.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            335.0,
+            360.0,
+            117.0,
+            184.0
+          ],
+          "detras_de": "helecho_2"
+        },
+        {
+          "pos": [
+            978.5,
+            407.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            883.0,
+            223.0,
+            192.0,
+            174.0
+          ],
+          "detras_de": "roca_6"
+        },
+        {
+          "pos": [
+            663.0,
+            487.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            610.0,
+            303.0,
+            149.0,
+            184.0
+          ],
+          "detras_de": "huesos_4"
+        }
+      ]
+    },
+    {
+      "id": "triceratops",
+      "nombre": "Trice",
+      "palabra": "TRICE",
+      "aspecto": {
+        "forma": "dino_cuernos",
+        "color": "#B57EDC",
+        "color2": "#E6CCF5",
+        "cuernos": "tri",
+        "patas_gruesas": true,
+        "hocico": "normal"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.6,
+      "nombre_voz": "voces/animalia/nombres/triceratops.wav",
+      "escondites": [
+        {
+          "pos": [
+            793.0,
+            493.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            691.0,
+            309.0,
+            205.0,
+            184.0
+          ],
+          "detras_de": "huesos_4"
+        },
+        {
+          "pos": [
+            955.0,
+            407.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            852.0,
+            223.0,
+            205.0,
+            184.0
+          ],
+          "detras_de": "cristales_7"
+        },
+        {
+          "pos": [
+            855.0,
+            532.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            753.0,
+            348.0,
+            205.0,
+            184.0
+          ],
+          "detras_de": "roca_5"
+        }
+      ]
+    },
+    {
+      "id": "braquiosaurio",
+      "nombre": "Braquio",
+      "palabra": "BRAQUIO",
+      "aspecto": {
+        "forma": "cuadrupedo",
+        "color": "#7FC6E8",
+        "color2": "#C8EAF8",
+        "cuello": 1.6,
+        "patas_gruesas": true,
+        "largo": 1.1
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.4,
+      "nombre_voz": "voces/animalia/nombres/braquiosaurio.wav",
+      "escondites": [
+        {
+          "pos": [
+            555.5,
+            441.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            488.0,
+            257.0,
+            143.0,
+            174.0
+          ],
+          "detras_de": "helecho_0"
+        },
+        {
+          "pos": [
+            975.5,
+            407.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            900.0,
+            223.0,
+            151.0,
+            184.0
+          ],
+          "detras_de": "cristales_7"
+        },
+        {
+          "pos": [
+            967.0,
+            397.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.81,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            891.0,
+            213.0,
+            151.0,
+            184.0
+          ],
+          "detras_de": "volcan_3"
+        }
+      ]
+    },
+    {
+      "id": "mama_trex",
+      "nombre": "Mamá",
+      "palabra": "MAMÁ",
+      "aspecto": {
+        "forma": "dino_bipedo",
+        "color": "#3FA35F",
+        "color2": "#B8E8A0",
+        "color3": "#FF9EC7"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 0.45,
+      "nombre_voz": "voces/animalia/nombres/mama_trex.wav",
+      "escondites": [
+        {
+          "pos": [
+            965.5,
+            407.0
+          ],
+          "tamano": 184.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            908.0,
+            223.0,
+            160.0,
+            184.0
+          ],
+          "detras_de": "cristales_7"
+        },
+        {
+          "pos": [
+            845.0,
+            374.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            742.0,
+            190.0,
+            194.0,
+            143.0
+          ],
+          "detras_de": "roca_6"
+        },
+        {
+          "pos": [
+            935.5,
+            397.0
+          ],
+          "tamano": 184.0,
+          "espejo": true,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            833.0,
+            213.0,
+            194.0,
+            174.0
+          ],
+          "detras_de": "volcan_3"
+        }
+      ]
+    },
+    {
+      "id": "huevito",
+      "nombre": "Huevito",
+      "palabra": "HUEVITO",
+      "aspecto": {
+        "forma": "huevo",
+        "color": "#FFF1DC",
+        "color3": "#7FC6E8"
+      },
+      "sonido": "sfx/ui/blup.ogg",
+      "tono": 2.0,
+      "nombre_voz": "voces/animalia/nombres/huevito.wav",
+      "escondites": [
+        {
+          "pos": [
+            844.5,
+            532.0
+          ],
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            1.0,
+            0.0
+          ],
+          "caja": [
+            808.0,
+            420.0,
+            78.0,
+            112.0
+          ],
+          "detras_de": "roca_5"
+        },
+        {
+          "pos": [
+            384.5,
+            511.0
+          ],
+          "tamano": 112.0,
+          "espejo": true,
+          "visible": 0.84,
+          "asoma": [
+            -1.0,
+            0.0
+          ],
+          "caja": [
+            343.0,
+            399.0,
+            64.0,
+            112.0
+          ],
+          "detras_de": "arbol_1"
+        },
+        {
+          "pos": [
+            475.0,
+            341.0
+          ],
+          "tamano": 112.0,
+          "espejo": false,
+          "visible": 0.8,
+          "asoma": [
+            0.0,
+            -1.0
+          ],
+          "caja": [
+            434.0,
+            229.0,
+            83.0,
+            87.0
+          ],
+          "detras_de": "nido_0"
+        }
+      ],
+      "marca_especial": "animalia_huevo_z5"
+    }
+  ],
+  "objetivos": [
+    "trex",
+    "spinosaurio",
+    "carnotauro",
+    "triceratops",
+    "braquiosaurio",
+    "mama_trex",
+    "huevito"
+  ],
+  "objetivos_por_partida": 7,
+  "objetivos_fijos": [],
+  "senuelos": [],
+  "secretos": [],
+  "modo_lista": "libre",
+  "tarjetas_visibles": 3,
+  "mostrar_palabra": false,
+  "visible_min": 0.7,
+  "tamano_animal": 160.0,
+  "zona_toque_min_px": 160,
+  "margen_toque_px": 24,
+  "umbral_arrastre_px": 16,
+  "lupa": false,
+  "mapita": false,
+  "tiempo_par_s": 45.0,
+  "sol": {
+    "factor_par": 3.0,
+    "minimo_reintento_s": 60
+  },
+  "regalo_tras_derrotas": 2,
+  "ayuda_fuerte_tras_derrotas": {
+    "derrotas": 3,
+    "todos_asoman": true,
+    "sin_sol": true
+  },
+  "descanso_tras_derrotas": null,
+  "ayuda_idle_s": [
+    6,
+    10
+  ],
+  "pistas_cuestan_estrellita": false,
+  "puntos": {
+    "encontrado": 100,
+    "racha_max": 5,
+    "ojo_aguila": 100,
+    "dos_pasos": 100,
+    "por_segundo": 10
+  },
+  "racha_brote_s": 25,
+  "escenas": 2,
+  "ruido_semilla_s": [
+    5,
+    8
+  ],
+  "lineas_voz": {
+    "intro": "voces/animalia/buscar/semilla/intro.wav",
+    "instruccion": "voces/animalia/buscar/semilla/instruccion.wav",
+    "otra_vez": "voces/animalia/buscar/semilla/otra_vez.wav",
+    "derrota_gag": "voces/animalia/buscar/semilla/derrota_gag.wav",
+    "regalo": "voces/animalia/buscar/semilla/regalo.wav",
+    "ayuda_fuerte": "voces/animalia/buscar/semilla/ayuda_fuerte.wav",
+    "cuenta_toby": "voces/animalia/buscar/semilla/z5_cuenta_toby.wav",
+    "victoria": [
+      "voces/animalia/buscar/semilla/victoria_01.wav",
+      "voces/animalia/buscar/semilla/victoria_02.wav"
+    ],
+    "busca": {
+      "trex": "voces/animalia/buscar/semilla/llama_trex.wav",
+      "spinosaurio": "voces/animalia/buscar/semilla/llama_spinosaurio.wav",
+      "carnotauro": "voces/animalia/buscar/semilla/llama_carnotauro.wav",
+      "triceratops": "voces/animalia/buscar/semilla/llama_triceratops.wav",
+      "braquiosaurio": "voces/animalia/buscar/semilla/llama_braquiosaurio.wav",
+      "mama_trex": "voces/animalia/buscar/semilla/llama_mama_trex.wav",
+      "huevito": "voces/animalia/buscar/semilla/llama_huevito.wav"
+    },
+    "secreto": {}
+  }
+}
