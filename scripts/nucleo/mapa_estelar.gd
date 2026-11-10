@@ -139,7 +139,7 @@ func planetas_desbloqueados() -> int:
 		var siguiente: Dictionary = PLANETAS[abiertos]
 		if str(siguiente.get("mapa", "")) == "" or not ResourceLoader.exists(str(siguiente["mapa"])):
 			break
-		if not (abrir_planetas_dev or _viaje_cumplido(PLANETAS[abiertos - 1])):
+		if not (abrir_planetas_dev or Progreso.modo_dios or _viaje_cumplido(PLANETAS[abiertos - 1])):
 			break
 		abiertos += 1
 	return abiertos
@@ -167,7 +167,7 @@ func _leer_mapa(datos: Dictionary) -> Dictionary:
 ## Indice en PLANETAS del destino en espera (M9): el siguiente al ultimo abierto, si ese ultimo declara un
 ## `viaje_siguiente_requiere` que todavia no se cumple. -1 si no hay (o con el modo de desarrollo).
 func indice_destino_en_espera() -> int:
-	if abrir_planetas_dev or _desbloqueados >= PLANETAS.size():
+	if abrir_planetas_dev or Progreso.modo_dios or _desbloqueados >= PLANETAS.size():
 		return -1
 	var origen: Dictionary = PLANETAS[_desbloqueados - 1]
 	if not _leer_mapa(origen).get("viaje_siguiente_requiere", null) is Dictionary or _viaje_cumplido(origen):

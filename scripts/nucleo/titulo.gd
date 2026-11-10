@@ -17,10 +17,13 @@ const RUTA_SFX_TOQUE := "res://assets/audio/sfx/ui/confirmar.ogg"
 const RUTA_VOZ_INVITACION := "res://assets/audio/voces/nucleo/titulo_bienvenida_01.ogg"
 const SEGUNDOS_ENTRE_RECORDATORIOS := 12.0
 const RUTA_SIGUIENTE := "res://escenas/nucleo/seleccion_personaje.tscn"
+## Ajustes / zona de papas (pide PIN; ahi vive el modo dios).
+const RUTA_AJUSTES := "res://escenas/nucleo/ajustes.tscn"
 
 @onready var _boton_jugar: Node2D = $boton_jugar
 @onready var _temporizador_recordatorio: Timer = $temporizador_recordatorio
 @onready var _anillos_fondo: Node2D = $ilustracion/anillos_fondo
+@onready var _boton_ajustes: Control = $boton_papas
 
 var _tween_pulso: Tween
 var _ya_toco := false
@@ -34,6 +37,20 @@ func _ready() -> void:
 	_temporizador_recordatorio.wait_time = SEGUNDOS_ENTRE_RECORDATORIOS
 	_temporizador_recordatorio.timeout.connect(_reproducir_invitacion)
 	_temporizador_recordatorio.start()
+	# El boton de ajustes consume su toque (gui_input) antes que el `_unhandled_input` de toda la pantalla.
+	_boton_ajustes.gui_input.connect(_al_tocar_ajustes)
+
+
+func _al_tocar_ajustes(evento: InputEvent) -> void:
+	var toque := (evento is InputEventScreenTouch and (evento as InputEventScreenTouch).pressed) \
+		or (evento is InputEventMouseButton and (evento as InputEventMouseButton).pressed \
+		and (evento as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
+	if not toque or _ya_toco:
+		return
+	_boton_ajustes.accept_event()
+	_ya_toco = true
+	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
+	get_tree().change_scene_to_file(RUTA_AJUSTES)
 
 
 func _reproducir_invitacion() -> void:

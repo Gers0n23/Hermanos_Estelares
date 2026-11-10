@@ -90,6 +90,15 @@ static var _ruta_por_defecto := ""
 ## F4: el PO puede abrir todas las zonas para revisar variantes sin jugar las anteriores.
 static var todo_abierto := false
 
+
+## F4 o el modo dios de Ajustes (`Progreso.modo_dios`): todas las zonas y dorados abiertos.
+static func abrir_todo() -> bool:
+	if todo_abierto:
+		return true
+	var arbol := Engine.get_main_loop() as SceneTree
+	var progreso: Node = arbol.root.get_node_or_null("Progreso") if arbol != null else null
+	return progreso != null and bool(progreso.get("modo_dios"))
+
 ## Termino la secuencia de voces que celebra lo que cambio al volver (zona completa, regalo, zona que
 ## despierta). La entrega del album la espera para no cortar a Coco (HE-44 mecanicas #10, UX R11).
 signal celebracion_zona_terminada
@@ -247,13 +256,13 @@ func calcular_estado() -> void:
 				"perfil_nivel": _perfil_nivel(ruta_nivel) if jugable else "",
 				"puntua": _puntua_nivel(ruta_nivel) if jugable else false,
 				"dorado_ruta": ruta_dorado if hay_dorado else "", "dorado_completado": dorado_completado,
-				"dorado_disponible": hay_dorado and (estrellitas >= 3 or dorado_completado or todo_abierto)})
+				"dorado_disponible": hay_dorado and (estrellitas >= 3 or dorado_completado or abrir_todo())})
 		zonas.append({"datos": datos_zona, "estaciones": estaciones, "jugables": jugables, "completadas": completadas,
 			"completa": jugables > 0 and completadas == jugables, "abierta": false,
 			"secreta": bool(datos_zona.get("secreta", false)), "a_color": jugables > 0 and completadas == jugables})
 	for i in zonas.size():
 		var zona: Dictionary = zonas[i]
-		if i == 0 or todo_abierto:
+		if i == 0 or abrir_todo():
 			zona["abierta"] = true
 			continue
 		var anterior: Dictionary = zonas[i - 1]
