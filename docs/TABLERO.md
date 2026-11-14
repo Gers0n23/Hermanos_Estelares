@@ -50,7 +50,8 @@
   4. HE-80: `disenador-niveles` calibra con el simulador y las distribuciones del arnés (HE-79), por etapas (`etapas[]`, opción A con guardado entre etapas). De eso depende el gigante A.
   5. **Animalia, diseño (sin WIP de Dev)**: HE-D6 y HE-106 a HE-109 (🟡, decisiones delegadas por documentar); HE-112 (guion; las líneas van en TSV), HE-113 (storyboards en papel), HE-114 (arte SVG definitivo, ya no bloquea) y HE-115 🔄. HE-110 y HE-111 quedan opcionales: dejaron de ser puerta de la implementación.
 - **Pendientes del PO**:
-  - **video**: avisar cuando haya presupuesto para generarlo (se reemplazan los ganchos provisionales sin tocar la lógica);
+  - **cinemáticas (14-Nov)**: (1) en la nave terminada, ¿manda la guía de estilo (motores laterales, alas arcoíris y verde) o el sprite final `assets/sprites/nave/nave_estrella.png` (alas azul y rosa con estrella, sin motores laterales)? Afecta a ~20 piezas de video; (2) cuánto se parece el planeta 3D al arte existente (propuesta: Arcoíris y Animalia siguen sus referencias; los otros 4 nacen en Blender); (3) validar el movimiento de los 6 videos del taller (HE-127); (4) asignar el agente para HE-128 en la siguiente sesión;
+  - **video IA**: avisar cuando haya presupuesto, ahora solo para la intro 02, 04 y 06, el abrazo final de HE-39 y los sprites faltantes (se reemplazan los ganchos provisionales sin tocar la lógica);
   - **voces**: elegir entre Qwen3-TTS 0,6B (≈26 s por línea), 1,7B (≈50 s) u otra opción (plan B: Piper), con las muestras recibidas;
   - ~~Torre (de HE-88) y preguntas de Animalia (HE-D6, HE-106 a HE-109)~~: **delegadas al equipo por el PO (05-Nov)**; ya no son pendientes del PO;
   - **Animalia**: jugar los 4 juegos cuando estén listos para desplegar (HE-116 a HE-119) y el mapa (HE-120);
