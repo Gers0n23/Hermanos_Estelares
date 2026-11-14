@@ -141,6 +141,20 @@ func recuerdos_album(album: String) -> Array:
 	return lista
 
 
+## Modo dios (PO 10-Nov-2026): para revisar el album sin terminar el juego, todos los recuerdos quedan
+## encontrados en el guardado del modo dios (`progreso_dios.json`). Nunca toca el guardado real: sin
+## modo dios no hace nada. Idempotente: devuelve cuantos recuerdos nuevos marco.
+func conceder_todos_modo_dios() -> int:
+	var progreso := _progreso()
+	if progreso == null or not progreso.modo_dios:
+		return 0
+	var nuevos := 0
+	for rec in recuerdos:
+		if progreso.registrar_recuerdo(str(rec.get("id", "")), "dios"):
+			nuevos += 1
+	return nuevos
+
+
 ## [encontrados, visibles] de un album.
 func contar(album: String) -> Array:
 	var visibles := recuerdos_album(album)

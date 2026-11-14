@@ -10,6 +10,7 @@ Carpeta de **material fuente** (no se importa a Godot: hay un `.gdignore` al lad
 | `kenney/ui-pack/` | UI Pack (botones, paneles, iconos) | Kenney | CC0 1.0 | https://kenney.nl/assets/ui-pack |
 | `kenney/interface-sounds/` | Interface Sounds (sfx de UI) | Kenney | CC0 1.0 | https://kenney.nl/assets/interface-sounds |
 | `kenney/simple-space/` | Simple Space (naves, estrellas, meteoritos) | Kenney | CC0 1.0 | https://kenney.nl/assets/simple-space |
+| `kenney/music-jingles/` | Music Jingles (85 stingers .ogg: 8-bit, hit, pizzicato, sax, steel) | Kenney | CC0 1.0 | https://kenney.nl/assets/music-jingles |
 
 ## Reglas
 

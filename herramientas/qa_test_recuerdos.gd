@@ -104,13 +104,12 @@ func _probar_catalogo() -> void:
 		for k in suyos.size():
 			orden_ok = orden_ok and int(suyos[k]["orden"]) == k + 1 and str(suyos[k]["id"]) == "%s_%02d" % [hermano, k + 1]
 			edad_ok = edad_ok and str(suyos[k].get("edad", "")) != ""
-		_check(suyos.size() == 14 and orden_ok, "%s: 14 recuerdos %s_01..14 en orden de edad" % [hermano, hermano])
-		_check(edad_ok, "%s: cada recuerdo trae su edad sugerida" % hermano)
-	_check(por_album["familia"].size() == 9, "9 recuerdos familiares")
+		_check(suyos.size() == 32 and orden_ok, "%s: 32 recuerdos %s_01..32 en orden (viaje + 30 etapas + viaje final)" % [hermano, hermano])
+		_check(edad_ok, "%s: cada recuerdo trae su edad" % hermano)
+	_check(por_album["familia"].size() == 39, "39 recuerdos familiares (9 actuales + 30 por etapa)")
 	_check(str(_recuerdos.obtener("familia_01")["momento"]["tipo"]) == "primera_apertura", "familia_01 = primera apertura")
 	_check(str(_recuerdos.obtener("maxi_01")["momento"]["tipo"]) == "viaje", "maxi_01 = primer despegue (viaje)")
-	_check(str(_recuerdos.obtener("sofia_02")["momento"].get("zona", "")) == "zona2_charcos"
-		and str(_recuerdos.obtener("sofia_03")["momento"].get("zona", "")) == "zona4_islotes", "zonas 2 y 4 de Arcoiris dan la 2a y 3a foto")
+	_check(str(_recuerdos.obtener("maxi_02")["momento"].get("zona", "")) == "zona1_claro", "maxi_02 = zona 1 de Arcoiris (primera etapa)")
 
 
 func _probar_disponibilidad() -> void:
@@ -118,9 +117,9 @@ func _probar_disponibilidad() -> void:
 	_reiniciar_progreso()
 	for hermano in ["maxi", "nicole", "sofia"]:
 		var ids := _ids(_recuerdos.recuerdos_album(hermano))
-		_check(ids == ["%s_01" % hermano, "%s_02" % hermano, "%s_03" % hermano], "%s: hoy se ven 3 huecos (%s)" % [hermano, str(ids)])
-	_check(_ids(_recuerdos.recuerdos_album("familia")) == ["familia_01"], "familia: solo la primera apertura")
-	_check(not _recuerdos.esta_disponible(_recuerdos.obtener("maxi_04")), "planetas futuros sin mapa: ocultos")
+		_check(ids.size() == 11 and ids[0] == "%s_01" % hermano and ids[10] == "%s_11" % hermano, "%s: hoy se ven 11 huecos (viaje + 10 etapas de Arcoiris y Animalia)" % hermano)
+	_check(_ids(_recuerdos.recuerdos_album("familia")).size() == 11 and _ids(_recuerdos.recuerdos_album("familia"))[0] == "familia_01", "familia: primera apertura + 10 etapas")
+	_check(not _recuerdos.esta_disponible(_recuerdos.obtener("maxi_12")), "planetas futuros sin mapa (Melodia): ocultos")
 	_check(not _recuerdos.esta_disponible(_recuerdos.obtener("familia_02")), "pieza de nave: oculta hasta que exista su escena")
 	_check(not _recuerdos.esta_disponible(_recuerdos.obtener("familia_09")), "rescate final: oculto")
 

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "nota": "Catalogo de 'Las migas de papa' (docs/fichas/album-recuerdos.md §5 y §8). Reparto PLACEHOLDER: se ajusta al cerrar cada capitulo. 'edad' y 'sugerencia' son solo guia para el PO al elegir fotos. La foto y la voz reales se buscan por id en assets/recuerdos/fotos/<id>.jpg|.png y assets/recuerdos/voces/<id>.ogg|.wav (ver assets/recuerdos/LEEME.md). Un momento con 'requiere' solo aparece como hueco en el album cuando ese archivo existe (pantallas futuras). Placeholders versionados en assets/recuerdos/placeholders/ (recortes de assets/anclas/, regenerables con herramientas/preparar_recuerdos.py placeholders).",
+  "nota": "Catalogo de 'Las migas de papa' (docs/fichas/album-recuerdos.md §5 y §8). Reparto PLACEHOLDER: se ajusta al cerrar cada capitulo. 'edad' y 'sugerencia' son solo guia para el PO al elegir fotos. La foto y la voz reales se buscan por id en assets/recuerdos/fotos/<id>.jpg|.png y assets/recuerdos/voces/<id>.ogg|.wav (ver assets/recuerdos/LEEME.md). Un momento con 'requiere' solo aparece como hueco en el album cuando ese archivo existe (pantallas futuras). Placeholders versionados en assets/recuerdos/placeholders/ (recortes de assets/anclas/, regenerables con herramientas/preparar_recuerdos.py placeholders). 10-Nov-2026: escala de Maxi y Nicole redistribuida por edad real (fechas de nacimiento); pies solo donde la edad calza con uno existente.",
   "albumes": {
     "maxi": {
       "orden": 1,
@@ -124,670 +124,1115 @@
       "id": "maxi_01",
       "album": "maxi",
       "orden": 1,
-      "edad": "recién nacido",
-      "pie": "recuerdos_pie_recien_nacido",
+      "edad": "1 año y 3 meses",
+      "pie": "recuerdos_pie_1_ano_3_meses",
       "pie_en_audio": false,
-      "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
         "id": "primer_despegue",
         "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
-      },
-      "pista": "recuerdos_pista_viaje_despegue_01"
+      }
     },
     {
       "id": "maxi_02",
       "album": "maxi",
       "orden": 2,
-      "edad": "1 mes",
-      "pie": "recuerdos_pie_1_mes",
-      "pie_en_audio": false,
-      "sugerencia": "primer baño",
+      "edad": "1 año y 6 meses",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona2_charcos"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona1_claro",
+        "numero": 1
+      }
     },
     {
       "id": "maxi_03",
       "album": "maxi",
       "orden": 3,
-      "edad": "3 meses",
-      "pie": "recuerdos_pie_3_meses",
+      "edad": "1 año y 9 meses",
+      "pie": "recuerdos_pie_1_ano_9_meses",
       "pie_en_audio": false,
-      "sugerencia": "primera sonrisa",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona4_islotes"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona2_charcos",
+        "numero": 2
+      }
     },
     {
       "id": "maxi_04",
       "album": "maxi",
       "orden": 4,
-      "edad": "5 meses",
-      "pie": "recuerdos_pie_5_meses",
-      "pie_en_audio": false,
-      "sugerencia": "gateando",
+      "edad": "1 año y 10 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona3_chupetines",
+        "numero": 3
+      }
     },
     {
       "id": "maxi_05",
       "album": "maxi",
       "orden": 5,
-      "edad": "6 meses",
-      "pie": "recuerdos_pie_6_meses",
+      "edad": "2 años",
+      "pie": "recuerdos_pie_2_anos",
       "pie_en_audio": false,
-      "sugerencia": "primer cumpleaños",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes",
         "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+      }
     },
     {
       "id": "maxi_06",
       "album": "maxi",
       "orden": 6,
-      "edad": "8 meses",
-      "pie": "recuerdos_pie_8_meses",
-      "pie_en_audio": false,
-      "sugerencia": "primeros pasos",
+      "edad": "2 años",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona5_cima",
+        "numero": 5
+      }
     },
     {
       "id": "maxi_07",
       "album": "maxi",
       "orden": 7,
-      "edad": "10 meses",
-      "pie": "recuerdos_pie_10_meses",
-      "pie_en_audio": false,
-      "sugerencia": "con sus hermanos",
+      "edad": "2 años y 1 mes",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona1_campamento",
+        "numero": 1
+      }
     },
     {
       "id": "maxi_08",
       "album": "maxi",
       "orden": 8,
-      "edad": "1 año",
-      "pie": "recuerdos_pie_1_ano",
-      "pie_en_audio": false,
-      "sugerencia": "jugando",
+      "edad": "2 años y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
+        "planeta": "animalia",
+        "zona": "zona2_laguna",
         "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+      }
     },
     {
       "id": "maxi_09",
       "album": "maxi",
       "orden": 9,
-      "edad": "1 año y 3 meses",
-      "pie": "recuerdos_pie_1_ano_3_meses",
-      "pie_en_audio": false,
-      "sugerencia": "en el jardín",
+      "edad": "2 años y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona3_pradera",
+        "numero": 3
+      }
     },
     {
       "id": "maxi_10",
       "album": "maxi",
       "orden": 10,
-      "edad": "1 año y 6 meses",
-      "pie": "recuerdos_pie_1_ano_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "disfrazado/a",
+      "edad": "2 años y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona4_nidos",
+        "numero": 4
+      }
     },
     {
       "id": "maxi_11",
       "album": "maxi",
       "orden": 11,
-      "edad": "1 año y 9 meses",
-      "pie": "recuerdos_pie_1_ano_9_meses",
-      "pie_en_audio": false,
-      "sugerencia": "vacaciones",
+      "edad": "2 años y 4 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona5_valle",
+        "numero": 5
+      }
     },
     {
       "id": "maxi_12",
       "album": "maxi",
       "orden": 12,
-      "edad": "2 años",
-      "pie": "recuerdos_pie_2_anos",
+      "edad": "2 años y 6 meses",
+      "pie": "recuerdos_pie_2_anos_6_meses",
       "pie_en_audio": false,
-      "sugerencia": "en el colegio o jardín",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 1
+      }
     },
     {
       "id": "maxi_13",
       "album": "maxi",
       "orden": 13,
-      "edad": "2 años",
-      "pie": "recuerdos_pie_2_anos",
-      "pie_en_audio": false,
-      "sugerencia": "cumpleaños reciente",
+      "edad": "2 años y 6 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 2
+      }
     },
     {
       "id": "maxi_14",
       "album": "maxi",
       "orden": 14,
-      "edad": "hoy",
-      "pie": "recuerdos_pie_hoy",
+      "edad": "2 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "maxi_15",
+      "album": "maxi",
+      "orden": 15,
+      "edad": "2 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "maxi_16",
+      "album": "maxi",
+      "orden": 16,
+      "edad": "2 años y 8 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "maxi_17",
+      "album": "maxi",
+      "orden": 17,
+      "edad": "2 años y 8 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 1
+      }
+    },
+    {
+      "id": "maxi_18",
+      "album": "maxi",
+      "orden": 18,
+      "edad": "2 años y 9 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      }
+    },
+    {
+      "id": "maxi_19",
+      "album": "maxi",
+      "orden": 19,
+      "edad": "2 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 3
+      }
+    },
+    {
+      "id": "maxi_20",
+      "album": "maxi",
+      "orden": 20,
+      "edad": "2 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      }
+    },
+    {
+      "id": "maxi_21",
+      "album": "maxi",
+      "orden": 21,
+      "edad": "2 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 5
+      }
+    },
+    {
+      "id": "maxi_22",
+      "album": "maxi",
+      "orden": 22,
+      "edad": "2 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 1
+      }
+    },
+    {
+      "id": "maxi_23",
+      "album": "maxi",
+      "orden": 23,
+      "edad": "2 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      }
+    },
+    {
+      "id": "maxi_24",
+      "album": "maxi",
+      "orden": 24,
+      "edad": "3 años",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "maxi_25",
+      "album": "maxi",
+      "orden": 25,
+      "edad": "3 años y 1 mes",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "maxi_26",
+      "album": "maxi",
+      "orden": 26,
+      "edad": "3 años y 2 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "maxi_27",
+      "album": "maxi",
+      "orden": 27,
+      "edad": "3 años y 3 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 1
+      }
+    },
+    {
+      "id": "maxi_28",
+      "album": "maxi",
+      "orden": 28,
+      "edad": "3 años y 3 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      }
+    },
+    {
+      "id": "maxi_29",
+      "album": "maxi",
+      "orden": 29,
+      "edad": "3 años y 4 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 3
+      }
+    },
+    {
+      "id": "maxi_30",
+      "album": "maxi",
+      "orden": 30,
+      "edad": "3 años y 6 meses",
+      "pie": "recuerdos_pie_3_anos_6_meses",
       "pie_en_audio": false,
-      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      }
+    },
+    {
+      "id": "maxi_31",
+      "album": "maxi",
+      "orden": 31,
+      "edad": "3 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 5
+      }
+    },
+    {
+      "id": "maxi_32",
+      "album": "maxi",
+      "orden": 32,
+      "edad": "3 años y 9 meses",
       "momento": {
         "tipo": "viaje",
         "id": "viaje_final",
-        "destino": "coleccionauta",
         "requiere": "res://datos/planetas/coleccionauta/mapa.json"
-      },
-      "pista": "recuerdos_pista_viaje_final_01"
+      }
     },
     {
       "id": "nicole_01",
       "album": "nicole",
       "orden": 1,
-      "edad": "recién nacida",
-      "pie": "recuerdos_pie_recien_nacido",
+      "edad": "1 año",
+      "pie": "recuerdos_pie_1_ano",
       "pie_en_audio": false,
-      "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
         "id": "primer_despegue",
         "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
-      },
-      "pista": "recuerdos_pista_viaje_despegue_01"
+      }
     },
     {
       "id": "nicole_02",
       "album": "nicole",
       "orden": 2,
-      "edad": "3 meses",
-      "pie": "recuerdos_pie_3_meses",
-      "pie_en_audio": false,
-      "sugerencia": "primer baño",
+      "edad": "1 año",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona2_charcos"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona1_claro",
+        "numero": 1
+      }
     },
     {
       "id": "nicole_03",
       "album": "nicole",
       "orden": 3,
-      "edad": "6 meses",
-      "pie": "recuerdos_pie_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "primera sonrisa",
+      "edad": "1 año",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona4_islotes"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona2_charcos",
+        "numero": 2
+      }
     },
     {
       "id": "nicole_04",
       "album": "nicole",
       "orden": 4,
-      "edad": "9 meses",
-      "pie": "recuerdos_pie_9_meses",
-      "pie_en_audio": false,
-      "sugerencia": "gateando",
+      "edad": "1 año y 1 mes",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona3_chupetines",
+        "numero": 3
+      }
     },
     {
       "id": "nicole_05",
       "album": "nicole",
       "orden": 5,
-      "edad": "1 año",
-      "pie": "recuerdos_pie_1_ano",
-      "pie_en_audio": false,
-      "sugerencia": "primer cumpleaños",
+      "edad": "1 año y 1 mes",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes",
         "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+      }
     },
     {
       "id": "nicole_06",
       "album": "nicole",
       "orden": 6,
-      "edad": "1 año y 6 meses",
-      "pie": "recuerdos_pie_1_ano_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "primeros pasos",
+      "edad": "1 año y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona5_cima",
+        "numero": 5
+      }
     },
     {
       "id": "nicole_07",
       "album": "nicole",
       "orden": 7,
-      "edad": "2 años",
-      "pie": "recuerdos_pie_2_anos",
-      "pie_en_audio": false,
-      "sugerencia": "con sus hermanos",
+      "edad": "1 año y 4 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona1_campamento",
+        "numero": 1
+      }
     },
     {
       "id": "nicole_08",
       "album": "nicole",
       "orden": 8,
-      "edad": "2 años y 6 meses",
-      "pie": "recuerdos_pie_2_anos_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "jugando",
+      "edad": "1 año y 5 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
+        "planeta": "animalia",
+        "zona": "zona2_laguna",
         "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+      }
     },
     {
       "id": "nicole_09",
       "album": "nicole",
       "orden": 9,
-      "edad": "3 años",
-      "pie": "recuerdos_pie_3_anos",
-      "pie_en_audio": false,
-      "sugerencia": "en el jardín",
+      "edad": "1 año y 7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona3_pradera",
+        "numero": 3
+      }
     },
     {
       "id": "nicole_10",
       "album": "nicole",
       "orden": 10,
-      "edad": "3 años y 6 meses",
-      "pie": "recuerdos_pie_3_anos_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "disfrazado/a",
+      "edad": "2 años y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona4_nidos",
+        "numero": 4
+      }
     },
     {
       "id": "nicole_11",
       "album": "nicole",
       "orden": 11,
-      "edad": "4 años",
-      "pie": "recuerdos_pie_4_anos",
-      "pie_en_audio": false,
-      "sugerencia": "vacaciones",
+      "edad": "2 años y 8 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona5_valle",
+        "numero": 5
+      }
     },
     {
       "id": "nicole_12",
       "album": "nicole",
       "orden": 12,
-      "edad": "4 años y 6 meses",
-      "pie": "recuerdos_pie_4_anos_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "en el colegio o jardín",
+      "edad": "3 años y 2 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 1
+      }
     },
     {
       "id": "nicole_13",
       "album": "nicole",
       "orden": 13,
-      "edad": "5 años",
-      "pie": "recuerdos_pie_5_anos",
-      "pie_en_audio": false,
-      "sugerencia": "cumpleaños reciente",
+      "edad": "3 años y 7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 2
+      }
     },
     {
       "id": "nicole_14",
       "album": "nicole",
       "orden": 14,
-      "edad": "hoy",
-      "pie": "recuerdos_pie_hoy",
+      "edad": "4 años",
+      "pie": "recuerdos_pie_4_anos",
       "pie_en_audio": false,
-      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "nicole_15",
+      "album": "nicole",
+      "orden": 15,
+      "edad": "4 años y 6 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "nicole_16",
+      "album": "nicole",
+      "orden": 16,
+      "edad": "4 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "nicole_17",
+      "album": "nicole",
+      "orden": 17,
+      "edad": "5 años y 4 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 1
+      }
+    },
+    {
+      "id": "nicole_18",
+      "album": "nicole",
+      "orden": 18,
+      "edad": "5 años y 4 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      }
+    },
+    {
+      "id": "nicole_19",
+      "album": "nicole",
+      "orden": 19,
+      "edad": "5 años y 4 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 3
+      }
+    },
+    {
+      "id": "nicole_20",
+      "album": "nicole",
+      "orden": 20,
+      "edad": "5 años y 5 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      }
+    },
+    {
+      "id": "nicole_21",
+      "album": "nicole",
+      "orden": 21,
+      "edad": "5 años y 6 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 5
+      }
+    },
+    {
+      "id": "nicole_22",
+      "album": "nicole",
+      "orden": 22,
+      "edad": "5 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 1
+      }
+    },
+    {
+      "id": "nicole_23",
+      "album": "nicole",
+      "orden": 23,
+      "edad": "5 años y 8 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      }
+    },
+    {
+      "id": "nicole_24",
+      "album": "nicole",
+      "orden": 24,
+      "edad": "5 años y 9 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "nicole_25",
+      "album": "nicole",
+      "orden": 25,
+      "edad": "5 años y 9 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "nicole_26",
+      "album": "nicole",
+      "orden": 26,
+      "edad": "5 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "nicole_27",
+      "album": "nicole",
+      "orden": 27,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 1
+      }
+    },
+    {
+      "id": "nicole_28",
+      "album": "nicole",
+      "orden": 28,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      }
+    },
+    {
+      "id": "nicole_29",
+      "album": "nicole",
+      "orden": 29,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 3
+      }
+    },
+    {
+      "id": "nicole_30",
+      "album": "nicole",
+      "orden": 30,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      }
+    },
+    {
+      "id": "nicole_31",
+      "album": "nicole",
+      "orden": 31,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 5
+      }
+    },
+    {
+      "id": "nicole_32",
+      "album": "nicole",
+      "orden": 32,
+      "edad": "6 años",
+      "pie": "recuerdos_pie_6_anos",
+      "pie_en_audio": false,
       "momento": {
         "tipo": "viaje",
         "id": "viaje_final",
-        "destino": "coleccionauta",
         "requiere": "res://datos/planetas/coleccionauta/mapa.json"
-      },
-      "pista": "recuerdos_pista_viaje_final_01"
+      }
     },
     {
       "id": "sofia_01",
       "album": "sofia",
       "orden": 1,
-      "edad": "recién nacida",
+      "edad": "recién nacido",
       "pie": "recuerdos_pie_recien_nacido",
       "pie_en_audio": false,
-      "sugerencia": "recién nacido/a",
       "momento": {
         "tipo": "viaje",
         "id": "primer_despegue",
         "requiere": "res://escenas/nucleo/viaje_estelar.tscn"
-      },
-      "pista": "recuerdos_pista_viaje_despegue_01"
+      }
     },
     {
       "id": "sofia_02",
       "album": "sofia",
       "orden": 2,
-      "edad": "3 meses",
-      "pie": "recuerdos_pie_3_meses",
-      "pie_en_audio": false,
-      "sugerencia": "primer baño",
+      "edad": "1 mes",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona2_charcos"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_charcos_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona1_claro",
+        "numero": 1
+      }
     },
     {
       "id": "sofia_03",
       "album": "sofia",
       "orden": 3,
-      "edad": "6 meses",
-      "pie": "recuerdos_pie_6_meses",
+      "edad": "1 mes",
+      "pie": "recuerdos_pie_1_mes",
       "pie_en_audio": false,
-      "sugerencia": "primera sonrisa",
       "momento": {
         "tipo": "zona_completa",
         "planeta": "arcoiris",
-        "zona": "zona4_islotes"
-      },
-      "pista": "recuerdos_pista_zona_arcoiris_islotes_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/arcoiris_invitacion_01.ogg"
+        "zona": "zona2_charcos",
+        "numero": 2
+      }
     },
     {
       "id": "sofia_04",
       "album": "sofia",
       "orden": 4,
-      "edad": "1 año",
-      "pie": "recuerdos_pie_1_ano",
-      "pie_en_audio": false,
-      "sugerencia": "gateando",
+      "edad": "4 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona3_chupetines",
+        "numero": 3
+      }
     },
     {
       "id": "sofia_05",
       "album": "sofia",
       "orden": 5,
-      "edad": "1 año y 6 meses",
-      "pie": "recuerdos_pie_1_ano_6_meses",
+      "edad": "6 meses",
+      "pie": "recuerdos_pie_6_meses",
       "pie_en_audio": false,
-      "sugerencia": "primer cumpleaños",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "animalia",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes",
         "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_animalia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
+      }
     },
     {
       "id": "sofia_06",
       "album": "sofia",
       "orden": 6,
-      "edad": "2 años",
-      "pie": "recuerdos_pie_2_anos",
-      "pie_en_audio": false,
-      "sugerencia": "primeros pasos",
+      "edad": "6 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "arcoiris",
+        "zona": "zona5_cima",
+        "numero": 5
+      }
     },
     {
       "id": "sofia_07",
       "album": "sofia",
       "orden": 7,
-      "edad": "3 años",
-      "pie": "recuerdos_pie_3_anos",
-      "pie_en_audio": false,
-      "sugerencia": "con sus hermanos",
+      "edad": "6 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "melodia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona1_campamento",
+        "numero": 1
+      }
     },
     {
       "id": "sofia_08",
       "album": "sofia",
       "orden": 8,
-      "edad": "4 años",
-      "pie": "recuerdos_pie_4_anos",
-      "pie_en_audio": false,
-      "sugerencia": "jugando",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
+        "planeta": "animalia",
+        "zona": "zona2_laguna",
         "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+      }
     },
     {
       "id": "sofia_09",
       "album": "sofia",
       "orden": 9,
-      "edad": "5 años",
-      "pie": "recuerdos_pie_5_anos",
-      "pie_en_audio": false,
-      "sugerencia": "en el jardín",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "cuenta_cuentas",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_cuentacuentas_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/cuenta_cuentas_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona3_pradera",
+        "numero": 3
+      }
     },
     {
       "id": "sofia_10",
       "album": "sofia",
       "orden": 10,
-      "edad": "6 años",
-      "pie": "recuerdos_pie_6_anos",
-      "pie_en_audio": false,
-      "sugerencia": "disfrazado/a",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona4_nidos",
+        "numero": 4
+      }
     },
     {
       "id": "sofia_11",
       "album": "sofia",
       "orden": 11,
-      "edad": "6 años y 6 meses",
-      "pie": "recuerdos_pie_6_anos_6_meses",
-      "pie_en_audio": false,
-      "sugerencia": "vacaciones",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "letralandia",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_letralandia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/letralandia_invitacion_01.ogg"
+        "planeta": "animalia",
+        "zona": "zona5_valle",
+        "numero": 5
+      }
     },
     {
       "id": "sofia_12",
       "album": "sofia",
       "orden": 12,
-      "edad": "7 años",
-      "pie": "recuerdos_pie_7_anos",
-      "pie_en_audio": false,
-      "sugerencia": "en el colegio o jardín",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 2
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 1
+      }
     },
     {
       "id": "sofia_13",
       "album": "sofia",
       "orden": 13,
-      "edad": "8 años",
-      "pie": "recuerdos_pie_8_anos",
-      "pie_en_audio": false,
-      "sugerencia": "cumpleaños reciente",
+      "edad": "7 meses",
       "momento": {
         "tipo": "zona_completa",
-        "planeta": "corazon",
-        "numero": 4
-      },
-      "pista": "recuerdos_pista_zona_corazon_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/corazon_invitacion_01.ogg"
+        "planeta": "melodia",
+        "numero": 2
+      }
     },
     {
       "id": "sofia_14",
       "album": "sofia",
       "orden": 14,
-      "edad": "hoy",
-      "pie": "recuerdos_pie_hoy",
+      "edad": "8 meses",
+      "pie": "recuerdos_pie_8_meses",
       "pie_en_audio": false,
-      "sugerencia": "hoy",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "sofia_15",
+      "album": "sofia",
+      "orden": 15,
+      "edad": "9 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "sofia_16",
+      "album": "sofia",
+      "orden": 16,
+      "edad": "10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "sofia_17",
+      "album": "sofia",
+      "orden": 17,
+      "edad": "1 año",
+      "pie": "recuerdos_pie_1_ano",
+      "pie_en_audio": false,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 1
+      }
+    },
+    {
+      "id": "sofia_18",
+      "album": "sofia",
+      "orden": 18,
+      "edad": "1 año y 8 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      }
+    },
+    {
+      "id": "sofia_19",
+      "album": "sofia",
+      "orden": 19,
+      "edad": "2 años y 4 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 3
+      }
+    },
+    {
+      "id": "sofia_20",
+      "album": "sofia",
+      "orden": 20,
+      "edad": "3 años y 5 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      }
+    },
+    {
+      "id": "sofia_21",
+      "album": "sofia",
+      "orden": 21,
+      "edad": "4 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 5
+      }
+    },
+    {
+      "id": "sofia_22",
+      "album": "sofia",
+      "orden": 22,
+      "edad": "5 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 1
+      }
+    },
+    {
+      "id": "sofia_23",
+      "album": "sofia",
+      "orden": 23,
+      "edad": "7 años y 2 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      }
+    },
+    {
+      "id": "sofia_24",
+      "album": "sofia",
+      "orden": 24,
+      "edad": "7 años y 5 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "sofia_25",
+      "album": "sofia",
+      "orden": 25,
+      "edad": "7 años y 7 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "sofia_26",
+      "album": "sofia",
+      "orden": 26,
+      "edad": "7 años y 8 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "sofia_27",
+      "album": "sofia",
+      "orden": 27,
+      "edad": "7 años y 9 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 1
+      }
+    },
+    {
+      "id": "sofia_28",
+      "album": "sofia",
+      "orden": 28,
+      "edad": "7 años y 10 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      }
+    },
+    {
+      "id": "sofia_29",
+      "album": "sofia",
+      "orden": 29,
+      "edad": "7 años y 11 meses",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 3
+      }
+    },
+    {
+      "id": "sofia_30",
+      "album": "sofia",
+      "orden": 30,
+      "edad": "8 años",
+      "pie": "recuerdos_pie_8_anos",
+      "pie_en_audio": false,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      }
+    },
+    {
+      "id": "sofia_31",
+      "album": "sofia",
+      "orden": 31,
+      "edad": "8 años",
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 5
+      }
+    },
+    {
+      "id": "sofia_32",
+      "album": "sofia",
+      "orden": 32,
+      "edad": "8 años",
       "momento": {
         "tipo": "viaje",
         "id": "viaje_final",
-        "destino": "coleccionauta",
         "requiere": "res://datos/planetas/coleccionauta/mapa.json"
-      },
-      "pista": "recuerdos_pista_viaje_final_01"
+      }
     },
     {
       "id": "familia_01",
@@ -798,7 +1243,8 @@
       "pie_en_audio": false,
       "momento": {
         "tipo": "primera_apertura"
-      }
+      },
+      "rareza": "holografica"
     },
     {
       "id": "familia_02",
@@ -843,7 +1289,8 @@
         "requiere": "res://escenas/historia/pieza_nave_melodia.tscn"
       },
       "pista": "recuerdos_pista_pieza_melodia_01",
-      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+      "pista_respaldo": "res://assets/audio/voces/planetas/melodia_invitacion_01.ogg",
+      "rareza": "holografica"
     },
     {
       "id": "familia_05",
@@ -917,6 +1364,322 @@
         "requiere": "res://escenas/historia/rescate_final.tscn"
       },
       "pista": "recuerdos_pista_rescate_01"
+    },
+    {
+      "id": "familia_10",
+      "album": "familia",
+      "orden": 10,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona1_claro",
+        "numero": 1
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_11",
+      "album": "familia",
+      "orden": 11,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona2_charcos",
+        "numero": 2
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_12",
+      "album": "familia",
+      "orden": 12,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona3_chupetines",
+        "numero": 3
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_13",
+      "album": "familia",
+      "orden": 13,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona4_islotes",
+        "numero": 4
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_14",
+      "album": "familia",
+      "orden": 14,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "arcoiris",
+        "zona": "zona5_cima",
+        "numero": 5
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_15",
+      "album": "familia",
+      "orden": 15,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "zona": "zona1_campamento",
+        "numero": 1
+      },
+      "rareza": "holografica"
+    },
+    {
+      "id": "familia_16",
+      "album": "familia",
+      "orden": 16,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "zona": "zona2_laguna",
+        "numero": 2
+      }
+    },
+    {
+      "id": "familia_17",
+      "album": "familia",
+      "orden": 17,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "zona": "zona3_pradera",
+        "numero": 3
+      }
+    },
+    {
+      "id": "familia_18",
+      "album": "familia",
+      "orden": 18,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "zona": "zona4_nidos",
+        "numero": 4
+      }
+    },
+    {
+      "id": "familia_19",
+      "album": "familia",
+      "orden": 19,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "animalia",
+        "zona": "zona5_valle",
+        "numero": 5
+      }
+    },
+    {
+      "id": "familia_20",
+      "album": "familia",
+      "orden": 20,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 1
+      }
+    },
+    {
+      "id": "familia_21",
+      "album": "familia",
+      "orden": 21,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 2
+      }
+    },
+    {
+      "id": "familia_22",
+      "album": "familia",
+      "orden": 22,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "familia_23",
+      "album": "familia",
+      "orden": 23,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "familia_24",
+      "album": "familia",
+      "orden": 24,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "melodia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "familia_25",
+      "album": "familia",
+      "orden": 25,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 1
+      }
+    },
+    {
+      "id": "familia_26",
+      "album": "familia",
+      "orden": 26,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 2
+      }
+    },
+    {
+      "id": "familia_27",
+      "album": "familia",
+      "orden": 27,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 3
+      }
+    },
+    {
+      "id": "familia_28",
+      "album": "familia",
+      "orden": 28,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 4
+      }
+    },
+    {
+      "id": "familia_29",
+      "album": "familia",
+      "orden": 29,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "cuenta_cuentas",
+        "numero": 5
+      }
+    },
+    {
+      "id": "familia_30",
+      "album": "familia",
+      "orden": 30,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 1
+      }
+    },
+    {
+      "id": "familia_31",
+      "album": "familia",
+      "orden": 31,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 2
+      }
+    },
+    {
+      "id": "familia_32",
+      "album": "familia",
+      "orden": 32,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 3
+      }
+    },
+    {
+      "id": "familia_33",
+      "album": "familia",
+      "orden": 33,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 4
+      }
+    },
+    {
+      "id": "familia_34",
+      "album": "familia",
+      "orden": 34,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "letralandia",
+        "numero": 5
+      }
+    },
+    {
+      "id": "familia_35",
+      "album": "familia",
+      "orden": 35,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 1
+      }
+    },
+    {
+      "id": "familia_36",
+      "album": "familia",
+      "orden": 36,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 2
+      }
+    },
+    {
+      "id": "familia_37",
+      "album": "familia",
+      "orden": 37,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 3
+      }
+    },
+    {
+      "id": "familia_38",
+      "album": "familia",
+      "orden": 38,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 4
+      }
+    },
+    {
+      "id": "familia_39",
+      "album": "familia",
+      "orden": 39,
+      "momento": {
+        "tipo": "zona_completa",
+        "planeta": "corazon",
+        "numero": 5
+      }
     }
   ]
 }

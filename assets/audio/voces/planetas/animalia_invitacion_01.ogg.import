@@ -3,12 +3,11 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dnv68we3lla34"
-path="res://.godot/imported/animalia_invitacion_01.ogg-aaea21b2c40c0979e4acbf004f95ce07.oggvorbisstr"
+valid=false
 
 [deps]
 
 source_file="res://assets/audio/voces/planetas/animalia_invitacion_01.ogg"
-dest_files=["res://.godot/imported/animalia_invitacion_01.ogg-aaea21b2c40c0979e4acbf004f95ce07.oggvorbisstr"]
 
 [params]
 

@@ -121,7 +121,7 @@ Familiares, 9:
       "id": "maxi_01",
       "album": "maxi",
       "orden": 1,
-      "edad": "recién nacido",
+      "edad": "1 año y 3 meses",
       "momento": {"tipo": "viaje", "id": "primer_despegue"},
       "foto": "res://assets/recuerdos/fotos/maxi_01.jpg",
       "voz": "res://assets/recuerdos/voces/maxi_01.ogg"
@@ -223,3 +223,70 @@ Pendiente de la validación HE-44. Lo que cambió respecto de lo propuesto arrib
 - Entrega: el sobre se abre tras la frase de Cometa (+0,4 s, entre 3 y 6 s) con invitación a tocar a los 1,5 s; si el niño abre antes, Cometa se desvanece en 0,15 s; flash de polaroid; la foto no se cierra antes de terminar su audio (toques = reacción juguetona), se va sola 1,5 s después (4,5 s sin audio); en Semilla nunca se cierra por toque; ícono con 0,8 s de halo.
 - Mapa: la entrega espera la señal `celebracion_zona_terminada` (tope 15 s), no se desbloquea si ya se lanzó un juego y bloquea los toques del mapa mientras está activa. Marco dorado alcanzable (Pinta no cuenta).
 - Álbum: tocar fuera de la foto la cierra.
+
+## 11. Escala de Maxi y Nicole por edad real (PO, 10-nov-2026)
+
+**Por qué:** las fechas de nacimiento que dio el PO son Sofía 27-jun-2018, Nicole 12-oct-2020 y
+Maxi 26-nov-2022. A hoy tienen 8 años, 6 años y 3 años y 11 meses. La escala del §5 y el catálogo
+original asumían Maxi de 2 y Nicole de 5, así que las fotos reales no calzaban.
+
+**Opción elegida (B):** redistribuir las edades de los recuerdos de Maxi y Nicole según sus fotos
+reales. Sofía no cambia. Reglas aplicadas (decididas por el orquestador, con la aprobación del PO):
+
+- Cada foto ocupa el siguiente recuerdo en orden de edad. Los momentos (zonas, viajes) siguen en su
+  orden original.
+- La edad mostrada es la real de la foto (redondeada al mes).
+- El pie de voz se asigna solo si la edad calza con un pie ya grabado (±1 mes), sin repetir pie.
+  Si no calza, la foto va sin pie. No se grabó ninguna voz nueva.
+- `hoy` solo lleva una foto de menos de 2 meses.
+- La sugerencia del catálogo ya no aplica a Maxi ni a Nicole: sus fotos se eligieron por edad.
+
+**Estado tras el cambio:**
+
+- **Maxi:** 13 de 14 recuerdos con foto. `maxi_14` (hoy) queda como hueco porque su foto más
+  reciente tiene 2,4 meses. Pie en 5 de 13.
+- **Nicole:** 13 de 14 con foto. `nicole_01` (recién nacida) queda como hueco porque no hay foto de
+  esa edad. Pie en 3 de 13.
+- **Fotos sin recuerdo:** 2 de Maxi (04-feb-2025 y 25-sep-2025), por falta de hueco. Quedan en
+  `assets/recuerdos/banco/`.
+- **Sofía:** sin cambios. Hay unas 12 fotos suyas sin recuerdo de su edad. Se puede aplicar la
+  misma redistribución si el PO lo pide.
+- **Familiares:** 7 de 9. `familia_02` (mamá y papá con Sofía bebé) y `familia_07` (Navidad o 18 de
+  septiembre) quedan sin foto. `familia_05` (cumpleaños) y `familia_06` (vacaciones) se eligieron
+  por contenido y el PO debe revisarlas.
+- **Álbum familiar:** es visible para los tres perfiles (`scripts/nucleo/album_recuerdos.gd`,
+  `ALBUMES`), y cualquier hermano encuentra un recuerdo familiar (`scripts/autoloads/recuerdos.gd:183`).
+
+**Pendiente para el PO:** las fechas exactas de las fotos sin hueco solo se resuelven con recuerdos
+nuevos de 3 a 4 años, o con pies grabados para esas edades. Eso es decisión de contenido, no de código.
+
+## 12. Huecos por etapa (PO, 10-nov-2026)
+
+**Regla:** una foto por etapa completada. Una etapa es una zona del mapa de cada planeta (5 por
+planeta, la quinta secreta). Hay 6 planetas: **30 etapas**. Arcoíris y Animalia ya tienen mapa (10
+etapas); Melodía, Cuenta-Cuentas, Letralandia y Corazón no (20 etapas).
+
+**Huecos:**
+
+| Álbum | Cálculo | Huecos | Fotos | Faltan / sobran |
+|---|---|---|---|---|
+| Maxi | viaje inicial + 30 etapas + viaje final | 32 | 15 | faltan 17 |
+| Nicole | viaje inicial + 30 etapas + viaje final | 32 | 13 | faltan 19 |
+| Sofía | viaje inicial + 30 etapas + viaje final | 32 | 15 (+1 sin fecha) | faltan 17 |
+| Familia | 9 actuales + 30 etapas | 39 | 37 | 2 sin foto (`familia_02`, `familia_07`); sobran 13 |
+| **Total** | | **135** | **80 de 94** | faltan 53 de hermanos; sobran 13 familiares |
+
+**Visibles hoy** (con mapa de Arcoíris y Animalia): 11 por hermano y 11 familiares = **44**.
+**Ocultos hasta programar** los planetas restantes y las piezas, el rescate y el viaje final: **91**
+(80 de etapas en 4 planetas + 11 de piezas, rescate y viajes).
+
+**Familiares:** las fotos con mamá o papá son **holográficas** (`rareza: "holografica"`, borde arcoíris
+que gira). Las de dos o tres niños son láminas normales. Criterio por etiqueta: "familia" o "papa".
+
+**Pendiente del PO:**
+- Fotos que faltan por hermano (cifras arriba). Dime cuáles agregas y las coloco.
+- `IMG-5715.JPG` (Sofía, bebé con gorro) no tiene fecha: sin fecha no tiene edad y no puedo ubicarla.
+- Las 13 fotos familiares sobrantes: quedan en `assets/recuerdos/banco/`. Si quieres más huecos
+  familiares, el número es libre: basta con agregarlos al catálogo.
+- Sección 11 queda superseded: la escala de Maxi y Nicole ahora es una por etapa, no la de hitos
+  fijos.

@@ -79,6 +79,9 @@ func _ready() -> void:
 	for id in RETRATOS:
 		if ResourceLoader.exists(RETRATOS[id]):
 			_caras[id] = load(RETRATOS[id])
+	# Modo dios: se ven todas las fotos y huecos del album para revisarlo (solo en su guardado).
+	if _recuerdos() != null:
+		_recuerdos().conceder_todos_modo_dios()
 	_construir()
 	mostrar_portada()
 	_decir(_recuerdos().elegir_linea("album_invitacion") if _recuerdos() != null else "")

@@ -46,3 +46,8 @@ assets/recuerdos/voces/
 # terceros. Uso familiar sin publicar: el repo es publico, asi que NO se suben. Se regeneran con
 # `python -I herramientas/descargar_favoritos.py` (el catalogo datos/favoritos/catalogo.json si se versiona).
 assets/sprites/favoritos/
+
+# Fotos originales de la familia (PO 10-Nov-2026): 267 MB, NUNCA subir al repo publico.
+assets/Fotos/
+# Banco de fotos comprimidas y manifiesto de etiquetas (PO 10-Nov-2026): privado, nunca al repo.
+assets/recuerdos/banco/

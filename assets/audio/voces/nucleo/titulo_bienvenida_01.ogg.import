@@ -3,12 +3,11 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://chgo4btpqx0px"
-path="res://.godot/imported/titulo_bienvenida_01.ogg-b3d10e9278543c71477b8313ed72ce33.oggvorbisstr"
+valid=false
 
 [deps]
 
 source_file="res://assets/audio/voces/nucleo/titulo_bienvenida_01.ogg"
-dest_files=["res://.godot/imported/titulo_bienvenida_01.ogg-b3d10e9278543c71477b8313ed72ce33.oggvorbisstr"]
 
 [params]
 

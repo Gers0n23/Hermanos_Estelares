@@ -24,8 +24,10 @@ var hueco := false
 var nuevo := false:
 	set(valor):
 		nuevo = valor
-		set_process(nuevo)
+		set_process(nuevo or holografica)
 var dorado := false
+## Lamina holografica (rareza "holografica" del catalogo: fotos con papa o mama): borde arcoiris que gira.
+var holografica := false
 var mostrar_pie := true
 ## "cubrir" (miniatura: llena el marco) o "contener" (foto abierta: se ve entera).
 var ajuste_foto_real := "cubrir"
@@ -48,6 +50,8 @@ func _ready() -> void:
 func configurar(rec: Dictionary, es_hueco: bool) -> void:
 	recuerdo = rec
 	hueco = es_hueco
+	holografica = not es_hueco and str(rec.get("rareza", "")) == "holografica"
+	set_process(nuevo or holografica)
 	_foto_real = null
 	_imagen = {}
 	var recuerdos := get_node_or_null("/root/Recuerdos")
@@ -91,8 +95,11 @@ func _draw() -> void:
 	var caja := StyleBoxFlat.new()
 	caja.bg_color = Color(COLOR_PAPEL, 0.55) if hueco else COLOR_PAPEL
 	caja.set_corner_radius_all(int(lado.x * 0.06))
-	caja.border_color = DORADO if dorado else (Color(COLOR_CONTORNO, 0.5) if hueco else COLOR_CONTORNO)
-	caja.set_border_width_all(int(maxf(4.0, lado.x * (0.045 if dorado else 0.02))))
+	if holografica:
+		caja.border_color = Color.from_hsv(fmod(_tiempo * 0.12, 1.0), 0.45, 1.0)
+	else:
+		caja.border_color = DORADO if dorado else (Color(COLOR_CONTORNO, 0.5) if hueco else COLOR_CONTORNO)
+	caja.set_border_width_all(int(maxf(4.0, lado.x * (0.045 if (dorado or holografica) else 0.02))))
 	caja.shadow_color = Color(COLOR_CONTORNO, 0.18 if hueco else 0.35)
 	caja.shadow_offset = Vector2(0, lado.x * 0.025)
 	caja.shadow_size = 3
