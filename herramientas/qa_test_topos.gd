@@ -167,10 +167,12 @@ func _probar_niveles() -> void:
 			var regalo: Dictionary = nivel.get("regalo_tras_derrotas", {})
 			var esperado: Array = {"semilla": [2, 0.7], "brote": [2, 0.8], "estrella": [3, 0.85]}[perfil]
 			_check(int(regalo.get("derrotas", 0)) == esperado[0] and is_equal_approx(float(regalo.get("meta_factor", 0)), esperado[1]), "%s z%d: regalo tras %d derrotas, meta x %.2f" % [perfil, z + 1, esperado[0], esperado[1]])
-			_check(int(nivel.get("rondas", 0)) == (1 if perfil == "semilla" else 2), "%s z%d: rondas" % [perfil, z + 1])
+			# Arreglo del 15-Nov-2026 (feedback de los niños: muy largo): una sola ronda de <= 75 s en los tres perfiles.
+			_check(int(nivel.get("rondas", 0)) == 1, "%s z%d: una sola ronda" % [perfil, z + 1])
+			_check(float(nivel["duracion_s"]) <= 75.0, "%s z%d: ronda de <= 75 s (partida ~90 s con intro)" % [perfil, z + 1])
 			if perfil == "semilla":
 				_check(nivel.get("ayuda_fuerte_tras_derrotas", {}) is Dictionary and int(nivel["ayuda_fuerte_tras_derrotas"].get("derrotas", 0)) == 3, "semilla z%d: ayuda fuerte tras 3" % (z + 1))
-				_check(float(nivel["duracion_s"]) >= 45.0 and float(nivel["duracion_s"]) <= 60.0, "semilla z%d: ronda de 45-60 s" % (z + 1))
+				_check(float(nivel["duracion_s"]) >= 40.0 and float(nivel["duracion_s"]) <= 50.0, "semilla z%d: ronda de 40-50 s" % (z + 1))
 			else:
 				_check(int(nivel.get("descanso_tras_derrotas", 0)) == (3 if perfil == "brote" else 4), "%s z%d: descanso tras %d" % [perfil, z + 1, 3 if perfil == "brote" else 4])
 				var u: Dictionary = nivel.get("umbrales_puntaje", {})

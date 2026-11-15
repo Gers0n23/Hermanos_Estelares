@@ -15,10 +15,10 @@
   "aviso_s": 0.15,
   "pausa_entre_pedidos": 0.9,
   "pedidos": null,
-  "duracion_s": 60,
+  "duracion_s": 50,
   "rondas": 1,
-  "meta": 6,
-  "meta_ficha": 7,
+  "meta": 5,
+  "meta_ficha": 6,
   "repetir_sonido": "cada_3s",
   "ondas_visibles": "completas",
   "animales": [

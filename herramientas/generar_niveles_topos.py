@@ -91,6 +91,26 @@ UMBRALES = {
     "estrella": [(19150, 21100), (17400, 19900), (13200, 15050), (13600, 15900), (10100, 11550)],
 }
 
+# Arreglo rápido del 15-Nov-2026 (feedback de los niños: "es excesivamente largo"; plan-mejoras-animalia.md M1).
+# Brote y Estrella pasan de 2 rondas de 60 s a UNA ronda de 75 s (~90 s con intro y celebración); Semilla se
+# acorta 5-10 s. Las metas y los umbrales medidos para 60 s / 2 rondas se escalan en proporción al tiempo, para
+# mantener el mismo ritmo pedido y los mismos percentiles aproximados. PROVISIONAL: recalibrar con
+# herramientas/simular_topos.gd cuando haya Godot (y lo reemplaza el rediseño v2, M3-M4).
+DURACION_CORTA = 75
+DURACION_SEMILLA = [40, 45, 45, 50, 50]
+DURACION_SEMILLA_ANTES = [45, 50, 55, 60, 60]
+
+
+def escala_meta(meta, perfil, i):
+    if perfil == "semilla":
+        return max(3, round(meta * DURACION_SEMILLA[i] / DURACION_SEMILLA_ANTES[i]))
+    return round(meta * DURACION_CORTA / 60)
+
+
+def escala_umbral(valor):
+    # Los umbrales eran la suma de 2 rondas de 60 s (120 s de juego); redondeo a 50 puntos.
+    return int(round(valor * DURACION_CORTA / 120 / 50) * 50)
+
 
 def animal(id_, perfil, zona_i):
     a = {"id": id_, "sonido": "sfx/animalia/animales/%s.ogg" % id_, "nombre_voz": "voces/animalia/nombres/%s.wav" % id_}
@@ -157,10 +177,10 @@ def semilla(i):
         "aviso_s": 0.15,
         "pausa_entre_pedidos": 0.9,
         "pedidos": None,
-        "duracion_s": [45, 50, 55, 60, 60][i],
+        "duracion_s": DURACION_SEMILLA[i],
         "rondas": 1,
-        "meta": METAS["semilla"][i],
-        "meta_ficha": META_FICHA["semilla"][i],
+        "meta": escala_meta(METAS["semilla"][i], "semilla", i),
+        "meta_ficha": escala_meta(META_FICHA["semilla"][i], "semilla", i),
         "repetir_sonido": "cada_3s",
         "ondas_visibles": "completas",
         "animales": [animal(a, "semilla", i) for a in POOLS["semilla"][i] if not (i == 2 and a == "triceratops")]
@@ -188,7 +208,7 @@ def brote(i):
     sim = SIMILARES["brote"][i]
     d.update({
         "tema": ["Los amigos del campamento", "La orilla", "Las jirafas", "Arriba en los nidos", "El valle mágico"][i],
-        "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p25 (14 -> 18 por ronda), 2 rondas de 60 s, regalo tras 2 derrotas (meta x 0,8) y descanso tras 3. Umbrales de estrellitas: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+        "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p25 (14 -> 18 por ronda), 1 ronda de 75 s (arreglo rápido del 15-Nov por feedback: era muy largo), regalo tras 2 derrotas (meta x 0,8) y descanso tras 3. Umbrales de estrellitas: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
         "madrigueras": [4, 4, 6, 6, 6][i],
         "modo": "tandas",
         "asomados": [3, 3, 4, 4, 4][i],
@@ -196,10 +216,10 @@ def brote(i):
         "aviso_s": 0.15,
         "pausa_entre_pedidos": [0.7, 0.7, 0.65, 0.6, 0.6][i],
         "pedidos": None,
-        "duracion_s": 60,
-        "rondas": 2,
-        "meta": METAS["brote"][i],
-        "meta_ficha": META_FICHA["brote"][i],
+        "duracion_s": DURACION_CORTA,
+        "rondas": 1,
+        "meta": escala_meta(METAS["brote"][i], "brote", i),
+        "meta_ficha": escala_meta(META_FICHA["brote"][i], "brote", i),
         "repetir_sonido": ["una_vez", "una_vez", "no", "no", "no"][i],
         "ondas_visibles": "completas",
         "animales": [animal(a, "brote", i) for a in POOLS["brote"][i]],
@@ -210,7 +230,7 @@ def brote(i):
         "toby_dorado": {"cada_s": 15, "puntos": 300},
         "impostor": None,
         "puntos": {"acierto": 100, "racha_max": 5, "rapidito": 50, "rapidito_fraccion": 0.4, "doble": 200, "meta": 500},
-        "umbrales_puntaje": {"dos": UMBRALES["brote"][i][0], "tres": UMBRALES["brote"][i][1]},
+        "umbrales_puntaje": {"dos": escala_umbral(UMBRALES["brote"][i][0]), "tres": escala_umbral(UMBRALES["brote"][i][1])},
         "regalo_tras_derrotas": {"derrotas": 2, "meta_factor": 0.8},
         "ayuda_fuerte_tras_derrotas": None,
         "descanso_tras_derrotas": 3,
@@ -226,7 +246,7 @@ def estrella(i):
     continuo = i >= 2
     d.update({
         "tema": ["Cachorros", "Laguna y costa de Chile", "Pradera y altiplano", "Aves y selva", "El gran coro"][i],
-        "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p40 (20 -> 28 por ronda), 2 rondas de 60 s, regalo tras 3 derrotas (meta x 0,85), descanso tras 4 y pista con costo. Umbrales: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+        "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p40 (20 -> 28 por ronda), 1 ronda de 75 s (arreglo rápido del 15-Nov por feedback: era muy largo), regalo tras 3 derrotas (meta x 0,85), descanso tras 4 y pista con costo. Umbrales: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
         "madrigueras": [6, 6, 9, 9, 9][i],
         "modo": "continuo" if continuo else "tandas",
         "asomados": [4, 5, 4, 4, 4][i],
@@ -238,10 +258,10 @@ def estrella(i):
         "aviso_s": 0.08,
         "pausa_entre_pedidos": 0.5,
         "pedidos": None,
-        "duracion_s": 60,
-        "rondas": 2,
-        "meta": METAS["estrella"][i],
-        "meta_ficha": META_FICHA["estrella"][i],
+        "duracion_s": DURACION_CORTA,
+        "rondas": 1,
+        "meta": escala_meta(METAS["estrella"][i], "estrella", i),
+        "meta_ficha": escala_meta(META_FICHA["estrella"][i], "estrella", i),
         "repetir_sonido": "no",
         "ondas_visibles": "completas" if i < 2 else "minimas",
         "animales": [animal(a, "estrella", i) for a in POOLS["estrella"][i]],
@@ -252,7 +272,7 @@ def estrella(i):
         "toby_dorado": {"cada_s": 12, "puntos": 300},
         "impostor": {"cada_s": 15} if i == 4 else None,
         "puntos": {"acierto": 100, "racha_max": 5, "rapidito": 50, "rapidito_fraccion": 0.4, "doble": 200, "meta": 500},
-        "umbrales_puntaje": {"dos": UMBRALES["estrella"][i][0], "tres": UMBRALES["estrella"][i][1]},
+        "umbrales_puntaje": {"dos": escala_umbral(UMBRALES["estrella"][i][0]), "tres": escala_umbral(UMBRALES["estrella"][i][1])},
         "regalo_tras_derrotas": {"derrotas": 3, "meta_factor": 0.85},
         "ayuda_fuerte_tras_derrotas": None,
         "descanso_tras_derrotas": 4,

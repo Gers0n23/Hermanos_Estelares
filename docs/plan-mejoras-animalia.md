@@ -203,12 +203,26 @@ Impacto en el tablero: HE-116, HE-118 y HE-119 pasan a «v1 entregada, v2 en red
 HE-114 (arte de Animalia) cambia de alcance a «curar CC0 + accesorios» (M2/M6); HE-120 (mapa) puede reutilizar el
 arte CC0 de M2.
 
-## 6. Decisiones que necesita el PO
+## 6. Decisiones del PO (Gerson, 15-Nov-2026)
 
-1. **Controles del runner**: ¿aceptas dos botones (saltar / agacharse) y doble salto para Nicole y Sofía, como
-   excepción a la regla GDD §6 n.º 4? Maxi se queda con un solo toque. *Recomendación: sí.*
-2. **Arte CC0**: ¿aceptas que los animales de Animalia tengan el estilo del pack elegido aunque no sea idéntico al
-   de los hermanos y Cometa? *Recomendación: sí, con un solo pack para todo el planeta; Toby sigue siendo el nuestro.*
-3. **Escondite**: al descubrir al animal equivocado, ¿solo explica por qué no es (Nicole), o además gasta un
-   lupazo limitado (Sofía)? *Recomendación: lo segundo solo para Sofía.*
-4. **Duración**: ¿60-90 s por juego te parece bien como meta para los tres?
+1. **Controles del runner: SÍ.** Dos botones grandes (saltar / agacharse) y doble salto para Nicole y Sofía,
+   como excepción a la regla GDD §6 n.º 4. Maxi sigue con un solo toque. Objetivo del PO: «que se diviertan y
+   lo rejueguen» (rejugabilidad: huesos especiales, caminos alternativos, récords).
+2. **Arte CC0: SÍ, y ampliado.** Los animales usan el estilo del pack gratuito (Toby sigue siendo el nuestro).
+   **Además, toda la naturaleza** (árboles, rocas, flores, arbustos, pasto, agua, cercas, establo y escenario en
+   general) sale de packs CC0 en vez de dibujarse por código: «no es necesario reinventar todas esas cosas que
+   son repetitivas». Alcance de M2 y M6 ampliado; aplica también a `caminos`, al runner y al mapa (HE-120).
+3. **Lupazos limitados: Nicole y Sofía.** Descubrir al animal equivocado gasta un lupazo en los dos perfiles;
+   **Nicole tiene más lupas** que Sofía. Maxi no gasta lupas (solo escucha por qué no es).
+   Valores de partida: Nicole 5 lupazos por animal, Sofía 3 (los calibra `disenador-niveles`).
+4. **Duración: 90 s por juego como meta.** El PO cree que lo largo es sobre todo **lo repetitivo**: la
+   variedad de pedidos (v2) importa tanto como el tiempo.
+
+## 7. Hecho el 15-Nov-2026: M1 (arreglo rápido de «¿Quién habla?»)
+
+- `herramientas/generar_niveles_topos.py`: Brote y Estrella pasan de 2 rondas × 60 s a **1 ronda × 75 s**
+  (~90 s con intro y celebración); Semilla de 45-60 s a 40-50 s. Metas y umbrales de estrellitas escalados en
+  proporción al tiempo. 15 niveles `topos_*.json` regenerados (el modo equipo no cambia).
+- `herramientas/qa_test_topos.gd`: el arnés exige ahora 1 ronda y ≤ 75 s en los tres perfiles.
+- **Pendiente**: correr el arnés y recalibrar metas con `herramientas/simular_topos.gd` en un equipo con Godot
+  (en la sesión en la nube no hay Godot instalado). Los sonidos siguen siendo sintetizados hasta M2.

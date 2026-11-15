@@ -7,7 +7,7 @@
   "fondo_tema": "valle",
   "fondo": "",
   "tema": "El valle mágico",
-  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p25 (14 -> 18 por ronda), 2 rondas de 60 s, regalo tras 2 derrotas (meta x 0,8) y descanso tras 3. Umbrales de estrellitas: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
+  "nota": "HE-116 (05-Nov-2026). Valores [HE-124] de motor-topos.md §8.1: meta al p25 (14 -> 18 por ronda), 1 ronda de 75 s (arreglo rápido del 15-Nov por feedback: era muy largo), regalo tras 2 derrotas (meta x 0,8) y descanso tras 3. Umbrales de estrellitas: p50/p80 del jugador simulado (simular_topos.gd). PROVISIONAL.",
   "madrigueras": 6,
   "modo": "tandas",
   "asomados": 4,
@@ -15,10 +15,10 @@
   "aviso_s": 0.15,
   "pausa_entre_pedidos": 0.6,
   "pedidos": null,
-  "duracion_s": 60,
-  "rondas": 2,
-  "meta": 12,
-  "meta_ficha": 18,
+  "duracion_s": 75,
+  "rondas": 1,
+  "meta": 15,
+  "meta_ficha": 22,
   "repetir_sonido": "no",
   "ondas_visibles": "completas",
   "animales": [
@@ -99,8 +99,8 @@
     "meta": 500
   },
   "umbrales_puntaje": {
-    "dos": 7350,
-    "tres": 8800
+    "dos": 4600,
+    "tres": 5500
   },
   "regalo_tras_derrotas": {
     "derrotas": 2,
