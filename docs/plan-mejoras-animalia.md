@@ -218,6 +218,10 @@ arte CC0 de M2.
 4. **Duración: 90 s por juego como meta.** El PO cree que lo largo es sobre todo **lo repetitivo**: la
    variedad de pedidos (v2) importa tanto como el tiempo.
 
+5. **Versiones v1 entregadas**: HE-116, HE-118 y HE-119 se cierran como v1 (✅); la v2 las reemplaza
+   (HE-136 a HE-142) y así se libera el cupo de trabajo.
+6. **Duración del Escondite v2**: ~90 s con **2 animales** para Maxi y Nicole; **3 animales en ~2 min** para Sofía.
+
 ## 7. Hecho el 15-Nov-2026: M1 (arreglo rápido de «¿Quién habla?»)
 
 - `herramientas/generar_niveles_topos.py`: Brote y Estrella pasan de 2 rondas × 60 s a **1 ronda × 75 s**
