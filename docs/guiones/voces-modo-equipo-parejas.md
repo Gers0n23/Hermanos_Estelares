@@ -1,5 +1,9 @@
 # Guion de voz — Modo "¡Juntos!" y mejoras de Parejas de Coco (HE-58)
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> Papá y el Coleccionauta hablan en chileno suave y **no usan "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Maxi, Nicole y Sofía en español neutro. Cometa y Coco no cambian.
+> Solo se reescribió el texto entre comillas de « »; ids, sentido y largo se conservan.
+
 > Encargo de HE-58 (parte de guion). Fuentes: `docs/fichas/modo-equipo.md` (en especial §3, §4, §5 y
 > §8) y `docs/fichas/motor-emparejar.md` §10, **ya con las correcciones de la validación UX de HE-58**
 > (B1-B3, M1-M10, m1-m10). Este guion es **solo texto**: no genera audio ni toca los `.tsv`. Cuando el
@@ -256,7 +260,7 @@ vuela al centro y suena "¡Le toca a…!". Para no pisarse, `avanza_*` suena **j
 | nucleo_equipo_coleccionauta_avanza_02 | Coleccionauta | «¡Jo, jo, ya casi! ...¿O no? Nunca sé contar galletas.» | risa tonta y después duda | Variante | `voces/nucleo/equipo/coleccionauta/avanza_02.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_avanza_03 | Coleccionauta | «¡Boing! ¡Uy, casi me como la galleta!» | goloso, con risa | Variante | `voces/nucleo/equipo/coleccionauta/avanza_03.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_avanza_04 | Coleccionauta | «Un saltito... ¡y otro saltito! Bueno, solo uno.» | se agranda y se desinfla | Variante | `voces/nucleo/equipo/coleccionauta/avanza_04.wav` | casera (papá) |
-| nucleo_equipo_coleccionauta_par_01 | Coleccionauta | «¡Ay, no! ¡Se me resbalan las gafas!» | exagerado, cómico | El equipo forma un par (máx. 1 de cada 3) | `voces/nucleo/equipo/coleccionauta/par_01.wav` | casera (papá) |
+| nucleo_equipo_coleccionauta_par_01 | Coleccionauta | «¡Pucha! ¡Se me resbalan las gafas!» | exagerado, cómico | El equipo forma un par (máx. 1 de cada 3) | `voces/nucleo/equipo/coleccionauta/par_01.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_par_02 | Coleccionauta | «¡Otra pareja! ¿Cómo lo hacen?» | asombrado de verdad | Variante | `voces/nucleo/equipo/coleccionauta/par_02.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_par_03 | Coleccionauta | «¡Ay, no, no, no! ...Qué bien juegan, eso sí.» | quejón y luego sincero | Variante | `voces/nucleo/equipo/coleccionauta/par_03.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_retrocede_01 | Coleccionauta | «¡Uy, uy, uy! ¡Me resbalé para atrás!» | tambaleándose con la mochila-torre | Racha de 3 en un turno: tropieza y retrocede una galleta (M1) | `voces/nucleo/equipo/coleccionauta/retrocede_01.wav` | casera (papá) |
@@ -315,7 +319,7 @@ Son genéricas ("parejas", no "cartas"), así que sirven para cualquier juego en
 
 | id | personaje | texto | intención | disparador | ruta | grabación |
 |---|---|---|---|---|---|---|
-| nucleo_equipo_coleccionauta_aplaude_01 | Coleccionauta | «¡Ay, no llegué! ...Pero qué buen equipo. ¿Dónde venden uno?» | desilusión de broma y después admiración; la pregunta, en serio | El equipo gana (paso 1 de la fiesta; le cae confeti en las gafas-lupa) | `voces/nucleo/equipo/coleccionauta/aplaude_01.wav` | casera (papá) |
+| nucleo_equipo_coleccionauta_aplaude_01 | Coleccionauta | «¡Pucha, no llegué! ...Pero qué buen equipo. ¿Dónde venden uno?» | desilusión de broma y después admiración; la pregunta, en serio | El equipo gana (paso 1 de la fiesta; le cae confeti en las gafas-lupa) | `voces/nucleo/equipo/coleccionauta/aplaude_01.wav` | casera (papá) |
 | nucleo_equipo_coleccionauta_aplaude_02 | Coleccionauta | «¡Me ganaron! ¡Bravo! ...¿Un equipo cabe en mi mochila? No, ¿cierto?» | aplaudiendo, después pensativo y chistoso | Variante | `voces/nucleo/equipo/coleccionauta/aplaude_02.wav` | casera (papá) |
 
 ---

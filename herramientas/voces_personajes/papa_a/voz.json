@@ -1,0 +1,15 @@
+{
+  "personaje": "papa_a",
+  "estado": "APROBADA por el PO (21-Nov-2026) como variante A de la voz de papá: clonada del audio completo. Las tres sirven para distintos estados emocionales; falta asignarlas a cada línea.",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.wav",
+  "texto_referencia": "",
+  "diseno": {
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "fuente": "assets/ejemplos/Gerson.mp4"
+  },
+  "realce_agudos": 1.0
+}

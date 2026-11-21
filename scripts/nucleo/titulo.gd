@@ -27,10 +27,13 @@ const RUTA_AJUSTES := "res://escenas/nucleo/ajustes.tscn"
 
 var _tween_pulso: Tween
 var _ya_toco := false
+## Cometa saluda distinto la primera vez de la familia y al volver otro dia (narracion-cometa.md §5.1);
+## el saludo de "volvieron" suena una sola vez por sesion.
+static var _saludo_de_sesion_dicho := false
 
 
 func _ready() -> void:
-	_reproducir_invitacion()
+	_saludar()
 	_iniciar_pulso()
 	_iniciar_giro_anillos()
 	_iniciar_flote_cometa()
@@ -53,7 +56,25 @@ func _al_tocar_ajustes(evento: InputEvent) -> void:
 	get_tree().change_scene_to_file(RUTA_AJUSTES)
 
 
+func _saludar() -> void:
+	if _saludo_de_sesion_dicho:
+		_reproducir_invitacion()
+		return
+	_saludo_de_sesion_dicho = true
+	var momento := "menu:titulo_vuelta"
+	if not Progreso.cinematica_vista("nucleo:titulo_primera_vez"):
+		momento = "menu:titulo_primera_vez"
+		Progreso.marcar_cinematica_vista("nucleo:titulo_primera_vez")
+	var lineas := Narracion.lineas(momento)
+	if lineas.is_empty():
+		_reproducir_invitacion()
+	else:
+		Audio.reproducir_voces(lineas)
+
+
 func _reproducir_invitacion() -> void:
+	if Audio.esta_hablando():
+		return  # el recordatorio nunca pisa el saludo
 	Audio.reproducir_voz(RUTA_VOZ_INVITACION)
 
 

@@ -40,6 +40,9 @@ PLANETAS = {
                                                          "#FF8A3D"], "atmosfera": "#FFD9A0"},
     "corazon": {"nombre": "Corazón", "colores": ["#FFB3D6", "#9FDCFF", "#FF5F9E", "#FFB3D6", "#9FDCFF", "#FF5F9E"],
                 "atmosfera": "#FFE0F0"},
+    # la casa de los niños vista desde el espacio (viaje Tierra -> Arcoíris)
+    "tierra": {"nombre": "La Tierra", "colores": ["#4FA8FF", "#7DD87A", "#4FA8FF", "#8FE39A", "#6FD6E8", "#4FA8FF"],
+               "atmosfera": "#D8F2FF"},
     # provisional (no está en planeta_dibujado.gd): el destino final, hasta que HE-131 le dé su forma
     "coleccionauta": {"nombre": "Planeta del Coleccionauta", "colores": ["#3F2F7A", "#6B4FC0", "#8FE36B", "#6B4FC0",
                                                                          "#3F2F7A", "#FFD35C"], "atmosfera": "#B8FF9A"},

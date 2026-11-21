@@ -1,5 +1,9 @@
 # Guion de voz — Viaje arcade: el Coleccionauta y Cometa (HE-134)
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> El Coleccionauta habla en chileno suave y **no usa "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Cometa no cambia. Solo se reescribió el texto entre comillas de « »; ids, sentido
+> y largo se conservan.
+
 > Encargo de **HE-134** (21-Nov-2026). Fuentes: `docs/fichas/viaje-arcade.md` (§5.3 jefes, §7 derrota y ayudas,
 > §8 Coleccionauta, §10.3 claves de voz, §14 riesgos, §15.2 preguntas), `docs/minijuegos/viaje_arcade_propuesta.md`
 > §7.1 (decisiones del PO, que mandan), GDD §1 (tono y salvaguardas), §2 (Cometa), §6 regla 11 y el canon del
@@ -56,7 +60,7 @@ sopla), **sin castigar a la nave**.
 | Arcoíris → Animalia | `viaje_provoca_arcoiris_animalia` | «¡Un pincel para mi colección de rayas! ¡Jijiji, me hace cosquillas!» | goloso, riéndose de sí mismo | 3,5 s | Asoma de la aspiradora |
 | Arcoíris → Animalia | `viaje_huye_animalia` | «¡Animalia me llama! ¡Quiero ver a los animalitos! ¡Adiós!» | ilusionado, como niño que va al zoológico | 3,5 s | Se va rebotando |
 | Animalia → Melodía | `viaje_provoca_animalia_melodia` | «¡Un canto de pájaro para mi colección! ¡Hip!» | grandilocuente, y el hipo como gag | 3 s | Asoma del disco, con hipo |
-| Animalia → Melodía | `viaje_huye_melodia` | «¡Me voy a Melodía a bailar! ¡Uy, qué bonito el disco!» | feliz, cantando | 3 s | Se va bailando |
+| Animalia → Melodía | `viaje_huye_melodia` | «¡Me voy a Melodía a bailar! ¡Uy, qué bacán el disco!» | feliz, cantando | 3 s | Se va bailando |
 | Melodía → Cuenta-Cuentas | `viaje_provoca_melodia_cuenta_cuentas` | «¡Bolitas para contar! Una, dos… ¿cuántas eran? ¡Ustedes cuenten!» | confundido, y después invitando a los niños a contar | 4 s | Asoma de la grúa, con los dedos |
 | Melodía → Cuenta-Cuentas | `viaje_huye_cuenta_cuentas` | «¡Me voy a Cuenta-Cuentas a contar bien! ¡Uno, dos, tres!» | animado, como quien aprende | 3,5 s | Se va rebotando |
 | Cuenta-Cuentas → Letralandia | `viaje_provoca_cuenta_cuentas_letralandia` | «¡Un libro! ¡Léemelo tú, que yo no sé!» | goloso, después pidiendo ayuda de buena gana | 3 s | Asoma entre los bloques |
@@ -71,7 +75,7 @@ sopla), **sin castigar a la nave**.
 | Clave | Suena | Voz | Nota |
 |---|---|---|---|
 | `bolsa_revienta` | cada bolsa que se toca | **Sin voz**: sonido de bolsa con tilín | Un destello por bolsa (ficha §9.2) |
-| `viaje_bolsa_vacia` | la última bolsa | «¡Ay, ay, ay! ¡Se me acabó la bolsa!» (casera, ver §5) | Cómico, nunca de castigo: el niño ya ganó la bolsa |
+| `viaje_bolsa_vacia` | la última bolsa | «¡Ay, ay, ay! ¡Pucha, se me acabó la bolsa!» (casera, ver §5) | Cómico, nunca de castigo: el niño ya ganó la bolsa |
 | `gag_pinza` | el enredo de la antena o la pinza | **Sin voz**, con risa de Cometa | Dura ≤ 1 s; la nave se esquiva |
 | `cometa_celebra` | Cometa baila al verlo huir | **Sin voz**: baile y tilín | Cierra el encuentro |
 
@@ -104,7 +108,7 @@ Todas las líneas son **nuevas** (ninguna está grabada). Cada una tiene su id e
 | `viaje_provoca_arcoiris_animalia` | Coleccionauta | «¡Un pincel para mi colección de rayas! ¡Jijiji, me hace cosquillas!» | goloso, riéndose | Aspiradora | casera (papá) |
 | `viaje_huye_animalia` | Coleccionauta | «¡Animalia me llama! ¡Quiero ver a los animalitos! ¡Adiós!» | ilusionado | Se va rebotando | casera (papá) |
 | `viaje_provoca_animalia_melodia` | Coleccionauta | «¡Un canto de pájaro para mi colección! ¡Hip!» | grandilocuente, con hipo | Tocadiscos | casera (papá) |
-| `viaje_huye_melodia` | Coleccionauta | «¡Me voy a Melodía a bailar! ¡Uy, qué bonito el disco!» | feliz | Se va bailando | casera (papá) |
+| `viaje_huye_melodia` | Coleccionauta | «¡Me voy a Melodía a bailar! ¡Uy, qué bacán el disco!» | feliz | Se va bailando | casera (papá) |
 | `viaje_provoca_melodia_cuenta_cuentas` | Coleccionauta | «¡Bolitas para contar! Una, dos… ¿cuántas eran? ¡Ustedes cuenten!» | confundido, invitando | Grúa | casera (papá) |
 | `viaje_huye_cuenta_cuentas` | Coleccionauta | «¡Me voy a Cuenta-Cuentas a contar bien! ¡Uno, dos, tres!» | animado | Se va rebotando | casera (papá) |
 | `viaje_provoca_cuenta_cuentas_letralandia` | Coleccionauta | «¡Un libro! ¡Léemelo tú, que yo no sé!» | goloso, pide ayuda | Torre de bloques | casera (papá) |
@@ -113,7 +117,7 @@ Todas las líneas son **nuevas** (ninguna está grabada). Cada una tiene su id e
 | `viaje_huye_corazon` | Coleccionauta | «¡Me voy a Corazón, que allá dan abrazos de regalo!» | contento | Globitos | casera (papá) |
 | `viaje_provoca_corazon_coleccionauta` | Coleccionauta | «¡Un amigo para mi colección! ¿Cabe en mi mochila? …¡Mmm, no cabe!» | ilusionado, desconcertado | Su nave | casera (papá) |
 | `viaje_huye_coleccionauta` | Coleccionauta | «Un amigo no cabe en mi mochila… ¿me enseñan cómo se pide? ¡Adiós!» | pausado, pregunta | Se va en su nave | casera (papá) — §5.3 |
-| `viaje_bolsa_vacia` | Coleccionauta | «¡Ay, ay, ay! ¡Se me acabó la bolsa!» | cómico | Última bolsa | casera (papá) |
+| `viaje_bolsa_vacia` | Coleccionauta | «¡Ay, ay, ay! ¡Pucha, se me acabó la bolsa!» | cómico | Última bolsa | casera (papá) |
 | `viaje_cometa_mareado` | Cometa | «¡Uuuy… qué vueltas!» | mareado, riéndose | Gag de derrota | TTS de Cometa, o casera si la familia la graba (§5.1) |
 | `viaje_otra_vez` | Cometa | «¡Otra vez! Aquí empezamos.» | alegre | Reinicio | TTS de Cometa |
 | `viaje_regalo` | Cometa | «¡Un regalo de Cometa! ¡Escudo y disparo más fuerte!» | emocionado | Reinicio con regalo | TTS de Cometa |

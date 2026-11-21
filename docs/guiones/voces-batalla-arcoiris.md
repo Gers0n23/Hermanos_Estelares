@@ -1,5 +1,9 @@
 # Guion de voz — Batalla final del Planeta Arcoíris (HE-67)
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> Papá y el Coleccionauta hablan en chileno suave y **no usan "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Maxi, Nicole y Sofía en español neutro. Cometa y Coco no cambian.
+> Solo se reescribió el texto entre comillas de « »; ids, sentido y largo se conservan.
+
 > Encargo de HE-67. **Versión 2 (07-Oct-2026)**, alineada con:
 >
 > - `docs/fichas/modo-equipo.md` **v6** (07-Oct-2026): §5.2 (tope y turno perfecto), §8, §11.4 (claves
@@ -192,7 +196,7 @@ asomo, y nunca suena a pendiente (M7.3). Se elige una variante al azar.
 | id | personaje | texto | intención | duración | contexto | ruta | grabación |
 |---|---|---|---|---|---|---|---|
 | arcoiris_batalla_hito_01 | Coleccionauta | «¡Hola, hola! ¿Quién quiere jugar conmigo? ¡Traje mi mochila!» | vecino simpático que invita, asomándose desde la mochila-torre | 3,5 s | `voz_hito` (una vez por visita) | `voces/arcoiris/batalla/hito_01.wav` | casera (papá) |
-| arcoiris_batalla_hito_02 | Coleccionauta | «¡Yujuu! Aquí estoy... con galletas. Para mí. ...Bueno, les convido una.» | goloso y después generoso a regañadientes | 4,5 s | Variante | `voces/arcoiris/batalla/hito_02.wav` | casera (papá) |
+| arcoiris_batalla_hito_02 | Coleccionauta | «¡Yujuu! Acá estoy... con galletas. Para mí. ...Bueno, les convido una.» | goloso y después generoso a regañadientes | 4,5 s | Variante | `voces/arcoiris/batalla/hito_02.wav` | casera (papá) |
 | nucleo_batalla_hito | Cometa | «¡Es el Coleccionauta! ¡A la nave, equipo: cada carita a su ventana!» *(17-Oct, M8 de la UX HE-71, aprobado por delegación del PO; antes: «…necesitamos a los tres. ¿Están todos?», que con dos hermanos sonaba a que faltaba alguien)* | emocionado, de aventura | 3,5 s | Tocar el hito (también al retomar: es la invitación a reunirse) | `voces/nucleo/batalla/hito.wav` | TTS |
 | nucleo_batalla_todos_nave | Cometa | «¡Todos a la nave! Cada uno toca su carita.» | fiesta, invitando | 2,5 s | Entra la pantalla "¡todos a la nave!" (primera vez); tocar a Cometa la repite | `voces/nucleo/batalla/todos_nave.wav` | TTS |
 | nucleo_batalla_todos_nave_corta | Cometa | «¡Todos a la nave!» | alegre, como quien llama a la mesa; ya la conocen | 1,2 s | **[v2]** Pantalla "¡todos a la nave!" **al retomar**: suena solo si nadie toca un retrato en 4 s (§14.6) | `voces/nucleo/batalla/todos_nave_corta.wav` | TTS |
@@ -762,7 +766,7 @@ de malo**; si una línea suena a amenaza, se repite más chistosa.
 | 1 | arcoiris_batalla_teaser_coleccionauta | «¿Un planeta que recupera colores? ¡Para mi colección! ...Permiso, permiso, ¡voy saliendo!» | grandioso, después torpe y apurado | Se cuela en la video-llamada de la zona 3 |
 | 2 | arcoiris_batalla_teaser_papa (papá) | «¡Jajaja! ¡Allá va, con su mochila! Tranquilos, que ese se tropieza hasta con su sombra.» | muerto de la risa | Ídem, justo después |
 | 3 | arcoiris_batalla_hito_01 | «¡Hola, hola! ¿Quién quiere jugar conmigo? ¡Traje mi mochila!» | vecino simpático | El hito de la batalla en el mapa |
-| 4 | arcoiris_batalla_hito_02 | «¡Yujuu! Aquí estoy... con galletas. Para mí. ...Bueno, les convido una.» | goloso y después generoso | Ídem, variante |
+| 4 | arcoiris_batalla_hito_02 | «¡Yujuu! Acá estoy... con galletas. Para mí. ...Bueno, les convido una.» | goloso y después generoso | Ídem, variante |
 | 5 | arcoiris_batalla_entrada_aspira | «¡Ooh, qué colores más lindos! ¡Para mi colección! Sluurp... ¡Je, me hizo cosquillas!» | encantado, como en una dulcería | Entrada: aspira el arcoíris |
 | 6 | arcoiris_batalla_entrada_reto | «¿Los quieren de vuelta? ¡Gánenme tres juegos! ...¿O eran dos?» | desafío de juego, se confunde contando | Entrada: el reto |
 | 7 | arcoiris_batalla_rio_intro_coleccionauta | «¡Pintuuura!» | goloso, estirando la "u" | Empieza el Río |

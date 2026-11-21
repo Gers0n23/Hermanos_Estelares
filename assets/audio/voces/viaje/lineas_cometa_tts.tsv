@@ -1,0 +1,21 @@
+# Viaje arcade (HE-136): voces PROVISIONALES de Cometa con el TTS de Windows.
+# Texto: docs/guiones/voces-viaje-arcade.md §3; intro_*, sector_*, listo, record y primer_record salen
+# del borrador de la ficha docs/fichas/viaje-arcade.md §10.3 hasta que guionista los cierre.
+voces/viaje/cometa/viaje_intro_maxi.wav	¡Toca, y la nave va!
+voces/viaje/cometa/viaje_intro_nicole.wav	¡Mueve tu nave con el dedo, y apóyalo para disparar!
+voces/viaje/cometa/viaje_intro_sofia.wav	Mueve la nave con el dedo. Apóyalo para disparar. Las naves del Coleccionauta se lanzan en picada: ¡obsérvalas!
+voces/viaje/cometa/viaje_vamos.wav	¡Vamos!
+voces/viaje/cometa/viaje_sector_1.wav	¡Sector uno!
+voces/viaje/cometa/viaje_sector_2.wav	¡Sector dos!
+voces/viaje/cometa/viaje_sector_3.wav	¡Sector tres!
+voces/viaje/cometa/viaje_sector_4.wav	¡Sector cuatro!
+voces/viaje/cometa/viaje_sector_listo.wav	¡Sector listo!
+voces/viaje/cometa/viaje_aviso_jefe.wav	¡Cuidado, se prepara!
+voces/viaje/cometa/viaje_cometa_mareado.wav	¡Uuuy… qué vueltas!
+voces/viaje/cometa/viaje_otra_vez.wav	¡Otra vez! Aquí empezamos.
+voces/viaje/cometa/viaje_regalo.wav	¡Un regalo de Cometa! ¡Escudo y disparo más fuerte!
+voces/viaje/cometa/viaje_descanso.wav	¿Descansamos un ratito?
+voces/viaje/cometa/viaje_cometa_al_volante.wav	¡Brrrum! ¡Cometa al volante! ¡Hoy vienen de a poquito!
+voces/viaje/cometa/viaje_record.wav	¡Récord!
+voces/viaje/cometa/viaje_primer_record.wav	¡Tu primer récord!
+voces/viaje/cometa/viaje_adios.wav	¡Chao! ¡Nos vemos en el mapa!

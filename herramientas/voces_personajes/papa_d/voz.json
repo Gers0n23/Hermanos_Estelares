@@ -1,0 +1,14 @@
+{
+  "personaje": "papa_d",
+  "estado": "PRUEBA: clonada de la referencia de la familia; pendiente de aprobación del PO.",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.wav",
+  "texto_referencia": "",
+  "diseno": {
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "fuente": "herramientas\\voces_personajes\\papa_d\\fuente.wav"
+  }
+}

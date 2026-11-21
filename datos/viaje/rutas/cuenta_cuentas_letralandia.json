@@ -1,0 +1,519 @@
+{
+	"_fuente": "Generado por herramientas/generar_rutas_viaje.py (punto de partida para disenador-niveles).",
+	"id_ruta": "cuenta_cuentas_letralandia",
+	"origen": "cuenta_cuentas",
+	"destino": "letralandia",
+	"video": {
+		"despegue": "res://assets/video/viaje/viaje_cuenta_cuentas_a_letralandia_despegue.ogv",
+		"llegada": "res://assets/video/viaje/viaje_cuenta_cuentas_a_letralandia_llegada.ogv",
+		"empalme": "res://assets/video/viaje/empalme/cuenta_cuentas_letralandia.png",
+		"presentacion": "res://assets/video/presentacion/presentacion_letralandia.ogv"
+	},
+	"perfiles": {
+		"semilla": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.82,
+							"n": 4,
+							"forma": "v",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.87,
+							"n": 4,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.73,
+							"n": 2
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.75,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.33,
+							"n": 2,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.0,
+							"n": 4,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 2.17,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.23,
+							"n": 4,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.35,
+							"n": 5
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.17,
+							"n": 2,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.26,
+							"n": 2,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.08,
+							"n": 5,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "torre_bloques",
+				"vida": 230,
+				"fases": [
+					[
+						"rebota",
+						"abre"
+					]
+				],
+				"proyectil": "bloque"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_cuenta_cuentas_letralandia",
+				"huye": "viaje_huye_letralandia",
+				"bolsas": 3
+			}
+		},
+		"brote": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 2.22,
+							"n": 6,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.97,
+							"n": 6,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.74,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.07,
+							"n": 5,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.11,
+							"n": 3,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.7,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 3,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 2.12,
+							"n": 5,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.84,
+							"n": 5,
+							"forma": "v",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.73,
+							"n": 7
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.75,
+							"n": 3,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.65,
+							"n": 3,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.08,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.0,
+							"n": 1,
+							"abanico": false,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 1.92,
+							"n": 3,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.1,
+							"n": 3,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.22,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.28,
+							"n": 8,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.79,
+							"n": 5,
+							"forma": "v",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.3,
+							"n": 8
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 5,
+							"forma": "v",
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "torre_bloques",
+				"vida": 300,
+				"fases": [
+					[
+						"lluvia",
+						"rebota"
+					]
+				],
+				"proyectil": "bloque"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_cuenta_cuentas_letralandia",
+				"huye": "viaje_huye_letralandia",
+				"bolsas": 3
+			}
+		},
+		"estrella": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 1.56,
+							"n": 8,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.59,
+							"n": 4,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.06,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.67,
+							"n": 6,
+							"forma": "v"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.26,
+							"n": 8,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.03,
+							"n": 2,
+							"abanico": false,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.55,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 4,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 1.62,
+							"n": 4,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.18,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.09,
+							"n": 9
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.32,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.15,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.35,
+							"n": 4,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.38,
+							"n": 2,
+							"abanico": false,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.0,
+							"n": 2,
+							"abanico": false,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 1.02,
+							"n": 10,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.65,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.04,
+							"n": 10
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.03,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.55,
+							"n": 6,
+							"forma": "v",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.15,
+							"n": 4,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.26,
+							"n": 2,
+							"abanico": true
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.0,
+							"n": 2,
+							"abanico": true,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.43,
+							"n": 2,
+							"abanico": true,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.67,
+							"n": 6,
+							"forma": "v",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.19,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.21,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.37,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.18,
+							"n": 4,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.31,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.0,
+							"n": 11,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "torre_bloques",
+				"vida": 460,
+				"fases": [
+					[
+						"lluvia",
+						"rebota"
+					],
+					[
+						"lluvia",
+						"abanico"
+					]
+				],
+				"proyectil": "bloque"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_cuenta_cuentas_letralandia",
+				"huye": "viaje_huye_letralandia",
+				"bolsas": 3
+			}
+		}
+	}
+}

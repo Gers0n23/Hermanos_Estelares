@@ -1,0 +1,6 @@
+Use case: precise-object-edit
+Asset type: outfit swap correction, same scene and same faces
+Primary request: Edit the attached image. KEEP EXACTLY the same faces, hair, poses, positions, heights and background. ONLY CHANGE THE CLOTHES, by swapping them between the two girls, as follows:
+- SOFIA (the tallest girl, long curly dark hair, pink headphones): wears a plain pink and white horizontal striped t-shirt, light blue jeans and pink sneakers. NO space suit, NO helmet, NO star badge, NO boots, NO gloves.
+- NICOLE (the middle girl, dark hair in a high ponytail with a pink hair tie): wears a plain dark charcoal sweatshirt, blue jeans and pink sneakers.
+Constraints: no text or logos on any clothing. No astronaut elements anywhere. Same cartoon painted style and outlines.

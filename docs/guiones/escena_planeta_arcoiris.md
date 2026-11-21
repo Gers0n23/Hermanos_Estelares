@@ -1,5 +1,9 @@
 # Escena de historia — Planeta 1 (Arcoíris): «El ala pintada de Coco»
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> Papá y el Coleccionauta hablan en chileno suave y **no usan "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Maxi, Nicole y Sofía en español neutro. Cometa y Coco no cambian.
+> Solo se reescribió el texto entre comillas de « »; ids, sentido y largo se conservan.
+
 > Guion narrativo (HE-D5) — versión completa y definitiva del planeta 1 (los otros 5 planetas usan
 > `plantilla_escena_planeta.md` hasta que se aborde su tarjeta de contenido).
 > Fuente de verdad: `docs/diseno-juego.md` §1, §4; `docs/guia-estilo-generacion.md` §3 (fichas de
@@ -44,7 +48,7 @@ alta el color que "es" en cada momento, como parte del juego de imitar colores.
 | arcoiris_002 | Cometa | «Coco, ¡lo lograron los tres, cada uno jugando a su manera!» | celebra sin comparar a nadie |
 | arcoiris_003 | Nicole | «¡Pinté un charco entero de rosado, Coco! Como tú.» | orgullosa, conectando con Coco |
 | arcoiris_004 | Coco | «¡El rosado me queda regio! Miren... ahora soy... ¡rosado chicle!» | cambia de color en vivo (tic), tierna |
-| arcoiris_005 | Sofía | «Y yo até el azul con el amarillo. Salió verde. Química de planeta, nada mal.» | orgullosa, chistosa, presume su lógica |
+| arcoiris_005 | Sofía | «Y yo mezclé el azul con el amarillo. Salió verde. Química de planeta, nada mal.» | orgullosa, chistosa, presume su lógica |
 | arcoiris_006 | Maxi | «¡Yo toqué TODO!» | gritando feliz, sin culpa — así es su nivel |
 | arcoiris_007 | Coco | (riendo) «Tocaste todo... ¡y todo brilló! Así se juega en mi planeta, chiquitín.» | celebra a Maxi igual de grande que a sus hermanos |
 
@@ -85,11 +89,11 @@ raro como sombrero improvisado).
 |---|---|---|---|
 | arcoiris_010 | Cometa | «¡Sorpresa! Alguien quiere saludarlos.» | pícaro, contento |
 | arcoiris_011 | Papá | «¡Hermanos Estelares! Me contaron que ya tienen su primera pieza. ¡Una ala! Con esa y la otra, casi puedo volar yo también... si el Coleccionauta me presta sus lentes de lupa.» | bromista, orgulloso |
-| arcoiris_012 | Papá | «¿Vieron colores nuevos? Cuéntenme todos cuando nos veamos. Mientras tanto, sigan jugando tranquilos, que acá estoy la mar de bien.» | calma explícita, sin presión |
+| arcoiris_012 | Papá | «¿Vieron colores nuevos? Cuéntenme todos cuando nos veamos. Mientras tanto, sigan jugando tranquilos, que acá estoy muy bien, de verdad.» | calma explícita, sin presión |
 | arcoiris_013 | Nicole | «¡Papi, mezclamos azul con amarillo y salió verde!» | contándole encantada |
 | arcoiris_014 | Maxi | «¡Toqué TODO, papi!» | orgulloso, repite su logro |
 | arcoiris_015 | Sofía | «Vamos por la segunda pieza. No te aburras mucho allá.» | cariñosa, chistosa |
-| arcoiris_016 | Papá | «¿Yo, aburrido? Imposible, aquí el Coleccionauta me está enseñando a doblar servilletas en forma de pato. Los quiero, ¡nos vemos pronto!» | dad joke, cálido |
+| arcoiris_016 | Papá | «¿Yo, aburrido? Imposible, acá el Coleccionauta me está enseñando a doblar servilletas en forma de pato. Los quiero, ¡nos vemos pronto!» | dad joke, cálido |
 
 ## Beat 5 — Cierre y gancho al siguiente planeta
 

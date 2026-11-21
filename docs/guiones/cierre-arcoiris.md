@@ -1,5 +1,9 @@
 # Guion de voz — Cierre de la historia del Planeta Arcoíris: de la Torre al despegue
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> Papá y el Coleccionauta hablan en chileno suave y **no usan "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Maxi, Nicole y Sofía en español neutro. Cometa y Coco no cambian.
+> Solo se reescribió el texto entre comillas de « »; ids, sentido y largo se conservan.
+
 > **Versión 4 (17-Oct-2026): cambios de guion de la auditoría UX HE-71**
 > (`docs/validaciones/2026-10-13_ux-torre-cierre-arcoiris.md`). Ver el changelog en el §14. Los ids de la
 > v3 se mantienen; solo se agregan ids nuevos (marcados **[v4]**) y se cambian textos.

@@ -1,0 +1,15 @@
+{
+  "personaje": "maxi",
+  "estado": "Voz de Maxi APROBADA por el PO (21-Nov-2026). Clonada de assets/ejemplos/Maxi.mp4; sin realce de brillo.",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.wav",
+  "texto_referencia": "",
+  "diseno": {
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "fuente": "assets\\ejemplos\\Maxi.mp4"
+  },
+  "realce_agudos": 1.0
+}

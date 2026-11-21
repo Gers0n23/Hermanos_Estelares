@@ -27,6 +27,7 @@ import argparse
 import base64
 import io
 import json
+import math
 import sys
 import time
 import urllib.error
@@ -102,10 +103,11 @@ def sintetizar(texto: str, voz: dict, key: str) -> bytes:
         "text": texto,
         "language": voz.get("idioma", "Spanish"),
         "speaker_voice_embedding_file_url": voz["embedding_uri"],
-        "reference_text": voz["texto_referencia"],
         "temperature": voz.get("temperatura", 0.8),
         "max_new_tokens": 1500,
     }
+    if voz.get("texto_referencia"):  # opcional: sin texto, fal usa solo el embedding
+        cuerpo["reference_text"] = voz["texto_referencia"]
     req = urllib.request.Request(
         ENDPOINT_TTS, data=json.dumps(cuerpo).encode("utf-8"),
         headers={"Authorization": f"Key {key}", "Content-Type": "application/json"})
@@ -115,7 +117,20 @@ def sintetizar(texto: str, voz: dict, key: str) -> bytes:
         return r.read()
 
 
-def limpiar(mp3: bytes) -> tuple[np.ndarray, int]:
+def realzar_agudos(datos: np.ndarray, sr: int, ganancia_max: float) -> np.ndarray:
+    """Sube los agudos (de 2 a 4 kHz, en rampa hasta `ganancia_max`) para acercar el brillo de la
+    voz de referencia. Ganancia 1.0 = sin cambio. Se ajusta por personaje en voz.json."""
+    if ganancia_max == 1.0 or datos.size == 0:
+        return datos
+    espectro = np.fft.rfft(datos)
+    frec = np.fft.rfftfreq(len(datos), 1 / sr)
+    curva = np.clip(1 + (ganancia_max - 1) * (frec - 2000) / 2000, 1, ganancia_max)
+    salida = np.fft.irfft(espectro * curva, n=len(datos))
+    pico = float(np.abs(salida).max())
+    return salida * (PICO / pico) if pico > PICO else salida
+
+
+def limpiar(mp3: bytes, realce: float = 1.0) -> tuple[np.ndarray, int]:
     datos, sr = sf.read(io.BytesIO(mp3), dtype="float32")
     if datos.ndim > 1:
         datos = datos.mean(axis=1)
@@ -126,12 +141,19 @@ def limpiar(mp3: bytes) -> tuple[np.ndarray, int]:
     pico = float(np.abs(datos).max()) if datos.size else 0.0
     if pico > 0:
         datos = datos * (PICO / pico)
-    return datos, sr
+    return realzar_agudos(datos, sr, realce), sr
+
+
+VELOCIDAD_MINIMA = 4.5  # letras por segundo; por debajo, la voz sale arrastrada (HE-134, prueba 21-Nov)
 
 
 def duracion_razonable(segundos: float, texto: str) -> bool:
     # Los modelos generativos a veces "alargan" (balbuceo, repeticiones): se reintenta.
-    return segundos <= 2.5 + len(texto) * 0.12
+    if segundos > 2.5 + len(texto) * 0.12:
+        return False
+    # ...y a veces arrastran la voz: una línea larga muy lenta también se reintenta.
+    letras = sum(c.isalpha() for c in texto)
+    return letras < 12 or letras / max(segundos, 0.1) >= VELOCIDAD_MINIMA
 
 
 def guardar(destino: Path, datos: np.ndarray, sr: int) -> None:
@@ -170,7 +192,12 @@ def main() -> None:
         destino = lambda ruta: RAIZ / "assets" / "audio" / ruta
         lineas = [l for l in lineas if not (destino(l[0]).exists() and destino(l[0]).stat().st_mtime >= limite)]
     caracteres = sum(len(l[1]) for l in lineas)
-    print(f"{len(lineas)} líneas, {caracteres} caracteres (~USD {caracteres / 1000 * PRECIO_USD_POR_1000:.2f} sin reintentos)")
+    # fal cobra cada pedido por bloques de 1.000 caracteres REDONDEADOS HACIA ARRIBA (mínimo 1 bloque):
+    # una línea corta cuesta USD 0,09 igual (facturación real del 21-Nov-2026). Cada reintento es otro pedido.
+    bloques = sum(math.ceil(max(len(l[1]), 1) / 1000) for l in lineas)
+    costo = bloques * PRECIO_USD_POR_1000
+    print(f"{len(lineas)} líneas, {caracteres} caracteres, {bloques} pedidos cobrados -> "
+          f"USD {costo:.2f} sin reintentos; peor caso con {INTENTOS} intentos: USD {costo * INTENTOS:.2f}")
     if args.estimar:
         return
     if not lineas:
@@ -184,7 +211,7 @@ def main() -> None:
         destino = RAIZ / "assets" / "audio" / ruta
         for intento in range(1, INTENTOS + 1):
             try:
-                datos, sr = limpiar(sintetizar(texto, voz, key))
+                datos, sr = limpiar(sintetizar(texto, voz, key), voz.get("realce_agudos", 1.0))
                 segundos = len(datos) / sr
                 if not duracion_razonable(segundos, texto) and intento < INTENTOS:
                     print(f"  reintento ({segundos:.1f} s es demasiado largo): {ruta}")

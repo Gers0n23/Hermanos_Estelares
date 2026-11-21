@@ -41,7 +41,9 @@ const REGION_CARA := Rect2(146, 62, 220, 220)
 ## Centro de la nave sobre la superficie del planeta donde está posada (media altura del
 ## sprite a escala 0.2, menos un poquito para que se vea apoyada y no flotando).
 const ALTO_NAVE_SOBRE_PLANETA := 22.0
-const RUTA_VIAJE := "res://escenas/nucleo/viaje_estelar.tscn"
+## Viaje arcade v2 (HE-136, 21-Nov-2026): shmup que empalma con los videos de viaje. El viaje pixel
+## anterior (`viaje_estelar.tscn`) queda en el repo como respaldo.
+const RUTA_VIAJE := "res://escenas/nucleo/viaje_arcade.tscn"
 
 const COLORES_HERMANO := {
 	"maxi": Color("4aa8ff"),
@@ -76,6 +78,8 @@ const PLANETAS_DESBLOQUEADOS_STUB := 1
 static var abrir_planetas_dev := false
 ## M9: las variantes de `voz_destino_espera` se alternan entre visitas al Mapa (vive en la sesion).
 static var _indice_voz_espera := 0
+## «¿Se acuerdan?» suena una vez por sesion (narracion-cometa.md §5.2).
+static var _recuerdo_de_sesion_dicho := false
 
 const SFX_TILIN_TONO := 1.6
 const SEGUNDOS_FLECHITA := 2.0
@@ -109,6 +113,7 @@ var _nodos_planeta := {}
 var _mapas_leidos := {}
 ## M9: la voz del destino en espera suena como maximo una vez por visita.
 var _voz_espera_dicha := false
+var _voz_lejos_dicha := false
 var _flechita: Line2D
 
 
@@ -125,7 +130,7 @@ func _ready() -> void:
 	_iniciar_bob_nave()
 	_pintar_burbuja()
 	_registrar_regiones()
-	_reproducir_invitacion()
+	_narrar_entrada()
 	_temporizador_recordatorio.wait_time = SEGUNDOS_ENTRE_RECORDATORIOS
 	_temporizador_recordatorio.timeout.connect(_reproducir_invitacion)
 	_temporizador_recordatorio.start()
@@ -409,7 +414,41 @@ func _pintar_burbuja() -> void:
 ## avisa por consola sin romper la pantalla (mismo contrato ya usado en el resto del
 ## nucleo).
 func _reproducir_invitacion() -> void:
+	if Audio.esta_hablando():
+		return  # el recordatorio nunca pisa a Cometa narrando
 	Audio.reproducir_voz(_ruta_voz_actual)
+
+
+## Al entrar (narracion-cometa.md §5.2-§5.3): la primera vez de la familia, Cometa presenta el Mapa
+## Estelar; las demas, una vez por sesion, cuenta donde quedo la historia («¿Se acuerdan?»). Despues, la
+## invitacion de siempre. Todo va encolado: no pisa la voz con que la seleccion presento al hermano.
+func _narrar_entrada() -> void:
+	var lineas: Array = []
+	if not Progreso.cinematica_vista("nucleo:mapa_primera_vez"):
+		lineas.append_array(Narracion.lineas("menu:mapa_primera_vez"))
+		Progreso.marcar_cinematica_vista("nucleo:mapa_primera_vez")
+		_recuerdo_de_sesion_dicho = true
+	elif not _recuerdo_de_sesion_dicho:
+		_recuerdo_de_sesion_dicho = true
+		var momento := momento_recuerdo()
+		if momento != "":
+			lineas.append_array(Narracion.lineas(momento))
+	lineas.append(_ruta_voz_actual)
+	Audio.encolar_voces(lineas)
+
+
+## Que linea de «¿Se acuerdan?» corresponde al avance guardado ("" si todavia no empezaron).
+func momento_recuerdo() -> String:
+	var ubicacion := Progreso.obtener_ubicacion_nave(_id_perfil)
+	if not ubicacion in ["", "tierra", "arcoiris"]:
+		return "menu:recuerdo_planeta"
+	if Progreso.partida_hecha("arcoiris"):
+		return "menu:recuerdo_arcoiris_completo"
+	if Progreso.alguien_tiene_pieza_nave("arcoiris"):
+		return "menu:recuerdo_arcoiris_pieza"
+	if Progreso.obtener_destellos_planeta(_id_perfil, "arcoiris") > 0:
+		return "menu:recuerdo_arcoiris_gris"
+	return ""
 
 
 func _registrar_regiones() -> void:
@@ -447,6 +486,11 @@ func tocar_planeta_lejano(indice: int) -> void:
 		tween.tween_property(nodo, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	Audio.reproducir_sfx(RUTA_SFX_TOQUE, SFX_TILIN_TONO)
 	if indice != indice_destino_en_espera():
+		# «Ese planeta todavia esta muy lejos...» (narracion-cometa.md §5.3), una vez por visita.
+		if not _voz_lejos_dicha:
+			_voz_lejos_dicha = true
+			_temporizador_recordatorio.start()
+			Audio.reproducir_voces(Narracion.lineas("menu:mapa_lejos"))
 		return
 	var origen: Dictionary = PLANETAS[indice - 1]
 	_mostrar_flechita(datos["pos"], origen["pos"], float(datos["radio"]), float(origen["radio"]))
@@ -541,7 +585,7 @@ func _tocar_hangar() -> void:
 func _entrar_planeta(datos: Dictionary) -> void:
 	if _despegando:
 		return
-	# si la nave está en otro planeta, primero se viaja (minijuego pixel del viaje estelar)
+	# si la nave está en otro planeta, primero se viaja (viaje arcade entre planetas)
 	if Progreso.obtener_ubicacion_nave(_id_perfil) != str(datos["id"]) and ResourceLoader.exists(RUTA_VIAJE):
 		_viajar_a(datos)
 		return
@@ -595,6 +639,9 @@ func _viajar_a(datos: Dictionary) -> void:
 	var arbol := get_tree()
 	viaje.completado.connect(Progreso.registrar_viaje.bind(_id_perfil, destino), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	viaje.completado.connect(Callable(arbol, "change_scene_to_file").bind(siguiente).unbind(1), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	# casa o descanso: vuelve al mapa con la nave donde estaba; el checkpoint de la ruta queda guardado
+	if viaje.has_signal("salir_solicitado"):
+		viaje.salir_solicitado.connect(Callable(arbol, "change_scene_to_file").bind(scene_file_path), CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	arbol.root.add_child(viaje)
 	arbol.current_scene = viaje
 	queue_free()

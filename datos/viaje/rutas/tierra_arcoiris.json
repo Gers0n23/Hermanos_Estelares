@@ -1,0 +1,465 @@
+{
+	"_fuente": "Generado por herramientas/generar_rutas_viaje.py (punto de partida para disenador-niveles).",
+	"id_ruta": "tierra_arcoiris",
+	"origen": "tierra",
+	"destino": "arcoiris",
+	"video": {
+		"despegue": "res://assets/video/viaje/viaje_tierra_a_arcoiris_despegue.ogv",
+		"llegada": "res://assets/video/viaje/viaje_tierra_a_arcoiris_llegada.ogv",
+		"empalme": "res://assets/video/viaje/empalme/tierra_arcoiris.png",
+		"presentacion": "res://assets/video/presentacion/presentacion_arcoiris.ogv"
+	},
+	"perfiles": {
+		"semilla": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 1.97,
+							"n": 2,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.03,
+							"n": 4,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.7,
+							"n": 4,
+							"forma": "v"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.79,
+							"n": 2,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.14,
+							"n": 4,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.38,
+							"n": 4,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.63,
+							"n": 4,
+							"forma": "v",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.99,
+							"n": 5,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.97,
+							"n": 5
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.17,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.15,
+							"n": 2,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 2,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "meteorito_dormilon",
+				"vida": 230,
+				"fases": [
+					[
+						"rebota",
+						"abre"
+					]
+				],
+				"proyectil": "piedrita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_tierra_arcoiris",
+				"huye": "viaje_huye_arcoiris",
+				"bolsas": 3
+			}
+		},
+		"brote": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.67,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.85,
+							"n": 1,
+							"abanico": false,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.61,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.83,
+							"n": 3,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.22,
+							"n": 6,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.04,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.33,
+							"n": 6,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.9,
+							"n": 5,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.99,
+							"n": 1,
+							"abanico": false,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.82,
+							"n": 7
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.86,
+							"n": 3,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.39,
+							"n": 7,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.61,
+							"n": 3,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 5,
+							"forma": "v",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 2.11,
+							"n": 5,
+							"forma": "v",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.29,
+							"n": 3,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.32,
+							"n": 1,
+							"abanico": false
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.87,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.21,
+							"n": 3,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.16,
+							"n": 8
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.15,
+							"n": 5,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "meteorito_dormilon",
+				"vida": 300,
+				"fases": [
+					[
+						"lanza_fila",
+						"rebota"
+					]
+				],
+				"proyectil": "piedrita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_tierra_arcoiris",
+				"huye": "viaje_huye_arcoiris",
+				"bolsas": 3
+			}
+		},
+		"estrella": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.07,
+							"n": 2,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.29,
+							"n": 8,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.43,
+							"n": 8
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.26,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.36,
+							"n": 4,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.02,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.66,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 1.69,
+							"n": 4,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.39,
+							"n": 4,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.07,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.15,
+							"n": 9
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.04,
+							"n": 9,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.11,
+							"n": 6,
+							"forma": "v",
+							"capsula": "iman"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.65,
+							"n": 6,
+							"forma": "v",
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.0,
+							"n": 2,
+							"abanico": false,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.43,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.53,
+							"n": 10,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.53,
+							"n": 6,
+							"forma": "v"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.37,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.31,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.12,
+							"n": 2,
+							"abanico": true,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.19,
+							"n": 2,
+							"abanico": true
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.0,
+							"n": 10,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "meteorito_dormilon",
+				"vida": 460,
+				"fases": [
+					[
+						"lanza_fila",
+						"rebota"
+					],
+					[
+						"abanico",
+						"embiste"
+					]
+				],
+				"proyectil": "piedrita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_tierra_arcoiris",
+				"huye": "viaje_huye_arcoiris",
+				"bolsas": 3
+			}
+		}
+	}
+}

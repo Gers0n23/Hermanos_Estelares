@@ -620,6 +620,64 @@ func registrar_viaje(destellos: int, id_perfil: String, planeta_destino: String)
 	fijar_ubicacion_nave(id_perfil, planeta_destino)
 
 
+# --- Viaje arcade por hermano y ruta (HE-136; ficha viaje-arcade §7.6, §9.3 y §11, N-B2) ---
+# perfiles.<id>.viaje.<ruta> = {checkpoint, intro_vista, video_visto}; perfiles.<id>.records.viaje.<ruta>.
+# Se crean al vuelo, sin subir la version del guardado (mismo criterio que `_completar_v3`).
+
+func obtener_viaje(id_perfil: String, id_ruta: String) -> Dictionary:
+	var perfil := obtener_perfil(id_perfil)
+	var viaje: Dictionary = perfil.get("viaje", {}).get(id_ruta, {})
+	var copia := viaje.duplicate(true)
+	copia["record"] = obtener_record_viaje(id_perfil, id_ruta)
+	return copia
+
+
+func _viaje_ruta(id_perfil: String, id_ruta: String) -> Dictionary:
+	var perfil: Dictionary = _datos.get("perfiles", {}).get(id_perfil, {})
+	if perfil.is_empty():
+		return {}
+	if not perfil.get("viaje", null) is Dictionary:
+		perfil["viaje"] = {}
+	if not perfil["viaje"].get(id_ruta, null) is Dictionary:
+		perfil["viaje"][id_ruta] = {"checkpoint": null, "intro_vista": false, "video_visto": false}
+	return perfil["viaje"][id_ruta]
+
+
+## clave: "checkpoint" ({sector, oleada} o null), "intro_vista" o "video_visto".
+func fijar_viaje(id_perfil: String, id_ruta: String, clave: String, valor) -> void:
+	var viaje := _viaje_ruta(id_perfil, id_ruta)
+	if viaje.is_empty():
+		push_warning("Progreso.fijar_viaje: id_perfil desconocido '%s'" % id_perfil)
+		return
+	if viaje.get(clave) == valor:
+		return
+	viaje[clave] = valor
+	guardar()
+
+
+## Al completar la ruta su checkpoint se borra; intro y video vistos quedan (§7.6).
+func completar_viaje_ruta(id_perfil: String, id_ruta: String) -> void:
+	fijar_viaje(id_perfil, id_ruta, "checkpoint", null)
+
+
+func obtener_record_viaje(id_perfil: String, id_ruta: String) -> int:
+	return int(obtener_perfil(id_perfil).get("records", {}).get("viaje", {}).get(id_ruta, 0))
+
+
+## Guarda el récord si lo supera (el récord nunca baja, §7.3). Devuelve true si es récord nuevo.
+func registrar_record_viaje(id_perfil: String, id_ruta: String, puntaje: int) -> bool:
+	var perfil: Dictionary = _datos.get("perfiles", {}).get(id_perfil, {})
+	if perfil.is_empty() or puntaje <= obtener_record_viaje(id_perfil, id_ruta):
+		return false
+	if not perfil.get("records", null) is Dictionary:
+		perfil["records"] = {}
+	if not perfil["records"].get("viaje", null) is Dictionary:
+		perfil["records"]["viaje"] = {}
+	perfil["records"]["viaje"][id_ruta] = puntaje
+	guardar()
+	return true
+
+
 # ---------------------------------------------------------------------------
 # Volumen por perfil (GDD §6 regla 10; ver TODO en scripts/autoloads/audio.gd)
 # ---------------------------------------------------------------------------

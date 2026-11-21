@@ -1,0 +1,467 @@
+{
+	"_fuente": "Generado por herramientas/generar_rutas_viaje.py (punto de partida para disenador-niveles).",
+	"id_ruta": "arcoiris_animalia",
+	"origen": "arcoiris",
+	"destino": "animalia",
+	"video": {
+		"despegue": "res://assets/video/viaje/viaje_arcoiris_a_animalia_despegue.ogv",
+		"llegada": "res://assets/video/viaje/viaje_arcoiris_a_animalia_llegada.ogv",
+		"empalme": "res://assets/video/viaje/empalme/arcoiris_animalia.png",
+		"presentacion": "res://assets/video/presentacion/presentacion_animalia.ogv"
+	},
+	"perfiles": {
+		"semilla": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.64,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.13,
+							"n": 2,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.06,
+							"n": 2
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.1,
+							"n": 4,
+							"forma": "v",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.23,
+							"n": 4,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.01,
+							"n": 4,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.87,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.19,
+							"n": 5,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.27,
+							"n": 4,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.37,
+							"n": 5,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.29,
+							"n": 2,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 2,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "aspiradora",
+				"vida": 230,
+				"fases": [
+					[
+						"rebota",
+						"abre"
+					]
+				],
+				"proyectil": "cajita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_arcoiris_animalia",
+				"huye": "viaje_huye_animalia",
+				"bolsas": 3
+			}
+		},
+		"brote": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 2.09,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.93,
+							"n": 1,
+							"abanico": false,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.98,
+							"n": 6
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.95,
+							"n": 3,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.71,
+							"n": 6,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.83,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.22,
+							"n": 5,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 2.06,
+							"n": 5,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.77,
+							"n": 7,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.98,
+							"n": 3
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.88,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.24,
+							"n": 3,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.2,
+							"n": 7,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 5,
+							"forma": "v",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 1.6,
+							"n": 8,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.36,
+							"n": 1,
+							"abanico": false,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 3
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.17,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.35,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.36,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.21,
+							"n": 3,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "aspiradora",
+				"vida": 300,
+				"fases": [
+					[
+						"empuje",
+						"lanza_fila"
+					]
+				],
+				"proyectil": "cajita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_arcoiris_animalia",
+				"huye": "viaje_huye_animalia",
+				"bolsas": 3
+			}
+		},
+		"estrella": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.59,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.23,
+							"n": 8,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.55,
+							"n": 4
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.0,
+							"n": 8
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.58,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.27,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.23,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.19,
+							"n": 2,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.18,
+							"n": 4,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.66,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.08,
+							"n": 9
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.54,
+							"n": 2,
+							"abanico": false,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.19,
+							"n": 9,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.44,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.07,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.05,
+							"n": 10,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.46,
+							"n": 4
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.66,
+							"n": 2,
+							"abanico": true
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.12,
+							"n": 2,
+							"abanico": true,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.01,
+							"n": 10,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.16,
+							"n": 6,
+							"forma": "v"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "aspiradora",
+				"vida": 460,
+				"fases": [
+					[
+						"empuje",
+						"lanza_fila"
+					],
+					[
+						"abanico",
+						"empuje"
+					]
+				],
+				"proyectil": "cajita"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_arcoiris_animalia",
+				"huye": "viaje_huye_animalia",
+				"bolsas": 3
+			}
+		}
+	}
+}

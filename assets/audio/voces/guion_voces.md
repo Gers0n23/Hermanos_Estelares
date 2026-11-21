@@ -201,7 +201,7 @@ Guion completo con acotaciones: `docs/guiones/escena_intro.md`. Tabla lista para
 | intro_029 | Nicole | Beat 6 | «¡Voy a hacer amigos en cada planeta!» | `historia/intro/intro_029.ogg` | pendiente de grabar |
 | intro_030 | Maxi | Beat 6 | «¡Vamo vamo vamo!» | `historia/intro/intro_030.ogg` | pendiente de grabar |
 | intro_031 | Papá | Beat 7 — video-llamada | «¡Hola, mis campeones! Qué manera de salir de paseo sin avisar, ¿no? Miren dónde estoy... el Coleccionauta tiene una silla tan cómoda que casi ni quiero que me rescaten. Es broma, ¡los espero con muchas ganas!» | `historia/intro/intro_031.ogg` | pendiente de grabar |
-| intro_032 | Papá | Beat 7 | «Eso sí, no se apuren por mí, yo estoy la mar de bien. Ustedes disfruten el viaje, ¿ya?» | `historia/intro/intro_032.ogg` | pendiente de grabar |
+| intro_032 | Papá | Beat 7 | «Eso sí, no se apuren por mí, yo estoy muy bien, de verdad. Ustedes disfruten el viaje, ¿ya?» | `historia/intro/intro_032.ogg` | pendiente de grabar |
 | intro_033 | Maxi | Beat 7 | «¡Papi!» | `historia/intro/intro_033.ogg` | pendiente de grabar |
 | intro_034 | Nicole | Beat 7 | «¡Te extrañamos! ¡Ya vamos!» | `historia/intro/intro_034.ogg` | pendiente de grabar |
 | intro_035 | Sofía | Beat 7 | «Aguanta ahí, papá. Vamos a hacerlo bien hecho.» | `historia/intro/intro_035.ogg` | pendiente de grabar |
@@ -230,7 +230,7 @@ celebración de Beat 3 son las genéricas de `celebraciones/` (no se repiten aqu
 | arcoiris_009 | Cometa | Beat 2 | «¡La primera pieza! Miren cómo le queda a la nave.» | `historia/arcoiris/arcoiris_009.ogg` | pendiente de grabar |
 | arcoiris_010 | Cometa | Beat 4 — video-llamada | «¡Sorpresa! Alguien quiere saludarlos.» | `historia/arcoiris/arcoiris_010.ogg` | pendiente de grabar |
 | arcoiris_011 | Papá | Beat 4 | «¡Hermanos Estelares! Me contaron que ya tienen su primera pieza. ¡Una ala! Con esa y la otra, casi puedo volar yo también... si el Coleccionauta me presta sus lentes de lupa.» | `historia/arcoiris/arcoiris_011.ogg` | pendiente de grabar |
-| arcoiris_012 | Papá | Beat 4 | «¿Vieron colores nuevos? Cuéntenme todos cuando nos veamos. Mientras tanto, sigan jugando tranquilos, que acá estoy la mar de bien.» | `historia/arcoiris/arcoiris_012.ogg` | pendiente de grabar |
+| arcoiris_012 | Papá | Beat 4 | «¿Vieron colores nuevos? Cuéntenme todos cuando nos veamos. Mientras tanto, sigan jugando tranquilos, que acá estoy muy bien, de verdad.» | `historia/arcoiris/arcoiris_012.ogg` | pendiente de grabar |
 | arcoiris_013 | Nicole | Beat 4 | «¡Papi, mezclamos azul con amarillo y salió verde!» | `historia/arcoiris/arcoiris_013.ogg` | pendiente de grabar |
 | arcoiris_014 | Maxi | Beat 4 | «¡Toqué TODO, papi!» | `historia/arcoiris/arcoiris_014.ogg` | pendiente de grabar |
 | arcoiris_015 | Sofía | Beat 4 | «Vamos por la segunda pieza. No te aburras mucho allá.» | `historia/arcoiris/arcoiris_015.ogg` | pendiente de grabar |

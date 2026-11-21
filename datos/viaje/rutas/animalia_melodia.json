@@ -1,0 +1,521 @@
+{
+	"_fuente": "Generado por herramientas/generar_rutas_viaje.py (punto de partida para disenador-niveles).",
+	"id_ruta": "animalia_melodia",
+	"origen": "animalia",
+	"destino": "melodia",
+	"video": {
+		"despegue": "res://assets/video/viaje/viaje_animalia_a_melodia_despegue.ogv",
+		"llegada": "res://assets/video/viaje/viaje_animalia_a_melodia_llegada.ogv",
+		"empalme": "res://assets/video/viaje/empalme/animalia_melodia.png",
+		"presentacion": "res://assets/video/presentacion/presentacion_melodia.ogv"
+	},
+	"perfiles": {
+		"semilla": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 2.29,
+							"n": 4,
+							"forma": "v",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.71,
+							"n": 4,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.11,
+							"n": 4
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.08,
+							"n": 2,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.97,
+							"n": 4,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.23,
+							"n": 2,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 2.29,
+							"n": 5,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.12,
+							"n": 2,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.21,
+							"n": 4,
+							"forma": "onda"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.68,
+							"n": 4,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.96,
+							"n": 2,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.06,
+							"n": 5,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "tocadiscos",
+				"vida": 230,
+				"fases": [
+					[
+						"rebota",
+						"abre"
+					]
+				],
+				"proyectil": "nota"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_animalia_melodia",
+				"huye": "viaje_huye_melodia",
+				"bolsas": 3
+			}
+		},
+		"brote": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 2.01,
+							"n": 3,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.08,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.35,
+							"n": 3
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.69,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.85,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.33,
+							"n": 6
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 5,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.98,
+							"n": 1,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.2,
+							"n": 3,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.33,
+							"n": 3
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.38,
+							"n": 5,
+							"forma": "v",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.74,
+							"n": 1,
+							"abanico": false,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.75,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.0,
+							"n": 7,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "basura",
+							"espera": 2.07,
+							"n": 3,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.91,
+							"n": 5,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.69,
+							"n": 5,
+							"forma": "onda"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.29,
+							"n": 3,
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.08,
+							"n": 3,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.94,
+							"n": 1,
+							"abanico": false
+						},
+						{
+							"tipo": "torretas",
+							"espera": 2.0,
+							"n": 1,
+							"abanico": false,
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "tocadiscos",
+				"vida": 300,
+				"fases": [
+					[
+						"abanico",
+						"rebota"
+					]
+				],
+				"proyectil": "nota"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_animalia_melodia",
+				"huye": "viaje_huye_melodia",
+				"bolsas": 3
+			}
+		},
+		"estrella": {
+			"sectores": [
+				{
+					"oleadas": [
+						{
+							"tipo": "torretas",
+							"espera": 1.04,
+							"n": 2,
+							"abanico": false,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.25,
+							"n": 4,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.3,
+							"n": 8
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.45,
+							"n": 8
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.13,
+							"n": 6,
+							"forma": "v",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.62,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.21,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.1,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.27,
+							"n": 2,
+							"abanico": false,
+							"capsula": "arma"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.7,
+							"n": 2,
+							"abanico": false
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.04,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.18,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.06,
+							"n": 9,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.5,
+							"n": 9,
+							"capsula": "supernova"
+						},
+						{
+							"tipo": "basura",
+							"espera": 2.0,
+							"n": 4,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "formacion",
+							"espera": 1.17,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.15,
+							"n": 6,
+							"forma": "v",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.16,
+							"n": 10
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.02,
+							"n": 2,
+							"abanico": true
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.1,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.5,
+							"n": 2,
+							"abanico": true,
+							"capsula": "minicometas"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.6,
+							"n": 6,
+							"forma": "onda"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 2.0,
+							"n": 10,
+							"destello": true
+						}
+					]
+				},
+				{
+					"oleadas": [
+						{
+							"tipo": "meteoritos",
+							"espera": 1.16,
+							"n": 11,
+							"checkpoint": "inicio"
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.65,
+							"n": 6,
+							"forma": "onda",
+							"capsula": "arma"
+						},
+						{
+							"tipo": "meteoritos",
+							"espera": 1.33,
+							"n": 11
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.12,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 1.04,
+							"n": 6,
+							"forma": "onda",
+							"checkpoint": "mitad"
+						},
+						{
+							"tipo": "torretas",
+							"espera": 1.58,
+							"n": 2,
+							"abanico": true,
+							"capsula": "iman"
+						},
+						{
+							"tipo": "basura",
+							"espera": 1.22,
+							"n": 4
+						},
+						{
+							"tipo": "formacion",
+							"espera": 2.0,
+							"n": 6,
+							"forma": "onda",
+							"destello": true
+						}
+					]
+				}
+			],
+			"jefe": {
+				"id": "tocadiscos",
+				"vida": 460,
+				"fases": [
+					[
+						"abanico",
+						"rebota"
+					],
+					[
+						"abanico",
+						"embiste"
+					]
+				],
+				"proyectil": "nota"
+			},
+			"coleccionauta": {
+				"provoca": "viaje_provoca_animalia_melodia",
+				"huye": "viaje_huye_melodia",
+				"bolsas": 3
+			}
+		}
+	}
+}

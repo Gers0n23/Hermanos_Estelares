@@ -1,0 +1,86 @@
+# Narración de Cometa (docs/guiones/narracion-cometa.md), aprobada por el PO el 21-Nov-2026.
+# Alcance (PO, 21-Nov): solo hasta el segundo planeta: Tierra, Arcoíris, Animalia y los menús de ese tramo.
+# Generar: python herramientas/generar_voces_fal.py --lista herramientas/voces_personajes/lote_narracion_cometa.tsv
+# personaje: cometa
+voces/historia/narracion/narr_prologo_01.wav	Esta historia empieza en una casa como cualquier otra, una tarde llena de sol... y de juegos.
+voces/historia/narracion/narr_prologo_02.wav	Ahí viven tres hermanos. Sofía, la mayor, que siempre tiene un plan.
+voces/historia/narracion/narr_prologo_03.wav	Nicole, que hace amigos en todas partes y dibuja todo lo que imagina.
+voces/historia/narracion/narr_prologo_04.wav	Y Maxi, el más chiquito... ¡y el más valiente! A él nada lo asusta.
+voces/historia/narracion/narr_prologo_05.wav	Cuando estos tres juegan juntos, el living se convierte en... ¡cualquier cosa!
+voces/historia/narracion/narr_intro_antes_coleccionauta.wav	Lo que nadie sabía es que alguien muy despistado andaba buscando cosas increíbles para su colección...
+voces/historia/narracion/narr_intro_despues_destello.wav	¡Puf! Así, en un parpadeo, papá se fue de paseo con el Coleccionauta. ¿Y saben quién llegó un segundito tarde?
+voces/historia/narracion/narr_intro_yo.wav	...Yo. Jiji.
+voces/historia/intro/intro_012.ogg	¡Uuuy, tumbo! Jijiji... a ese aterrizaje le doy un 6 de 10.
+voces/historia/intro/intro_013.ogg	Buuu, lo perdí por segunditos... ¡otra vez! Ese Coleccionauta corre rapidísimo cuando quiere.
+voces/historia/intro/intro_017.ogg	¡Redondito y orgulloso! Hola, Hermanos Estelares. Bueno... todavía no lo son, eso viene ahora. Y sí, lo vi: ese despistado es mi amigo, el Coleccionauta.
+voces/historia/intro/intro_018.ogg	Lo conozco desde que éramos chicos —armamos naves juntos, en el mismo planeta—. Y anda coleccionando las cosas más increíbles del universo.
+voces/historia/intro/intro_018b.ogg	Y le pareció increíble el papá de ustedes, ¡por criar a tres niños tan buenos! Así que se lo llevó a su colección.
+voces/historia/intro/intro_020.ogg	¡Clarísimo que sí! El Coleccionauta es despistado y solitario, pero jamás malo. Seguro ya le ofreció una de sus galletas raras.
+voces/historia/intro/intro_022.ogg	¡Esa actitud! Por eso vine a buscarlos a ustedes tres.
+voces/historia/intro/intro_023.ogg	Para este viaje van a necesitar esto: sus trajes de Hermanos Estelares, con estrella de poder incluida.
+voces/historia/intro/intro_027.ogg	Y esta es nuestra nave-estrella. Quedó un poco averiada de tanto perseguir al Coleccionauta por la galaxia... por ahora solo le alcanza la energía para un saltito, el justo para llegar al primer planeta. ¡Las piezas que le faltan las conseguimos jugando!
+voces/historia/narracion/narr_intro_llamada_abre.wav	¡Miren, la nave está sonando! Es una videollamada... ¿de quién será?
+voces/historia/narracion/narr_intro_llamada_cierra.wav	Papá estaba tranquilo, cómodo y contento. Y los Hermanos Estelares... ¡listos para su primera misión!
+voces/historia/intro/intro_037.ogg	¿Listos para volar, Hermanos Estelares?
+voces/historia/narracion/narr_viaje_tierra_01.wav	¡Despegamos! Chao, patio; chao, casa... ¡hola, estrellas!
+voces/historia/narracion/narr_viaje_tierra_02.wav	A la nave le faltan seis piezas, pero le alcanza para un saltito: justo hasta el primer planeta.
+voces/historia/narracion/narr_viaje_tierra_03.wav	Y el primer planeta es... ¡el Planeta Arcoíris, el planeta de los colores!
+voces/historia/narracion/narr_arcoiris_presenta_01.wav	Desde lejos, el Planeta Arcoíris parece un dulce gigante de todos los colores.
+voces/historia/narracion/narr_arcoiris_presenta_02.wav	Pero mientras bajamos... ¿lo notan? Algo raro pasa aquí. ¡Se está poniendo gris!
+voces/historia/narracion/narr_arcoiris_mapa_01.wav	Este es el mapa del Planeta Arcoíris. Cada rincón donde juguemos... ¡le devuelve un color!
+voces/historia/narracion/narr_arcoiris_mapa_02.wav	Empecemos por el Claro del Trébol, donde está la frutilla gigante de Coco.
+voces/historia/narracion/narr_taller_1_01.wav	Coco nos regaló el ala izquierda, pintada con los colores que ustedes le devolvieron.
+voces/historia/narracion/narr_taller_1_02.wav	Clic, clac... ¡quedó perfecta! Primera pieza puesta. Faltan cinco.
+voces/historia/arcoiris/arcoiris_010.ogg	¡Sorpresa! Alguien quiere saludarlos.
+voces/historia/narracion/narr_arcoiris_llamada_cierra.wav	Papá está feliz... ¡y doblando servilletas! Así que nosotros, a seguir pintando el planeta.
+voces/historia/arcoiris/arcoiris_018.ogg	Vamos, Hermanos Estelares... el siguiente planeta nos espera, brillando allá lejos.
+voces/historia/narracion/narr_batalla_presenta_01.wav	Y justo cuando el planeta empezaba a brillar otra vez... ¿adivinen quién apareció?
+voces/historia/narracion/narr_batalla_presenta_02.wav	¡El Coleccionauta! Con su mochila llena de colores que se llevó sin pedir.
+voces/historia/narracion/narr_batalla_presenta_03.wav	Esta vez no está solo Coco. ¡Están los Hermanos Estelares, y juegan en equipo!
+voces/historia/narracion/narr_batalla_ganada.wav	¡Lo lograron, juntos! La torre cayó y los colores volvieron a su casa.
+voces/historia/narracion/narr_cierre_llamada_cierra.wav	¿Ladridos? ¿Rugidos? Hermanos Estelares... ¡parece que la próxima aventura tiene animales!
+voces/historia/narracion/narr_viaje_animalia_01.wav	Chao, Planeta Arcoíris... ¡y gracias, Coco! Ahora la nave vuela con un ala nueva.
+voces/historia/narracion/narr_album_coco.wav	Y en mi álbum de abrazos guardé un recuerdo nuevo: ¡el abrazo de Coco!
+voces/historia/narracion/narr_viaje_animalia_02.wav	Con una sola ala, la nave vuela un poquito de ladito... ¡agárrense! Jiji.
+voces/historia/narracion/narr_viaje_animalia_03.wav	El mapa que se le cayó al Coleccionauta apunta a Animalia, el planeta de los animales.
+voces/historia/narracion/narr_cap1_fin.wav	Y así terminó la primera aventura de los Hermanos Estelares. Pero el viaje... ¡recién empieza!
+voces/historia/narracion/narr_animalia_presenta_01.wav	¡Miren abajo! Selvas verdes, ríos y montañas... ¡el Planeta Animalia!
+voces/historia/narracion/narr_animalia_presenta_02.wav	Aquí viven animales de todos los tamaños. ¡Hasta algunos que hacen GRRR!
+voces/historia/narracion/narr_animalia_aterriza.wav	¡Aterrizamos en algo blandito! ...Ah, no, es una hoja gigante. Le doy un 8 de 10.
+voces/historia/narracion/narr_animalia_anfitrion.wav	¡Ese perrito con casco es Toby, el astronauta de Animalia!
+voces/historia/narracion/narr_animalia_pista.wav	Toby, ¿pasó por aquí un despistado con una mochila gigante?
+voces/historia/narracion/narr_taller_2_01.wav	Toby nos regaló el ala derecha, con su huellita pintada.
+voces/historia/narracion/narr_taller_2_02.wav	¡Dos alas! Ya no volamos de ladito. Faltan cuatro piezas.
+voces/historia/narracion/narr_animalia_llamada_abre.wav	¡Ring, ring estelar! La pantalla de la nave se está encendiendo...
+voces/historia/narracion/narr_animalia_llamada_cierra.wav	¡Papá ya tiene un loro! Él está feliz, así que nosotros seguimos la aventura.
+voces/historia/narracion/narr_album_toby.wav	¡Toby ya está en mi álbum de abrazos! Con lengüetazo incluido.
+voces/nucleo/titulo_primera_vez.wav	¡Hola! Soy Cometa. ¿Quieren escuchar una aventura? ¡Toquen la pantalla!
+voces/nucleo/titulo_bienvenida_01.ogg	¡Toca la pantalla para comenzar la aventura!
+voces/nucleo/titulo_vuelta_01.wav	¡Volvieron! Los estaba esperando. Toquen la pantalla y seguimos.
+voces/nucleo/seleccion_invitacion_01.ogg	¿Quién va a jugar? ¡Toca a tu Hermano Estelar!
+voces/nucleo/seleccion_maxi.wav	¡Maxi, el explorador valiente!
+voces/nucleo/seleccion_nicole.wav	¡Nicole, la amiga de todos!
+voces/nucleo/seleccion_sofia.wav	¡Sofía, la capitana de la misión!
+voces/nucleo/seleccion_invitacion_equipo.wav	¿Y si juegan juntos? ¡Toquen la nave!
+voces/nucleo/recuerdo_arcoiris_gris.wav	¿Se acuerdan? El Planeta Arcoíris se quedó gris, y Coco necesita sus colores. ¡Vamos a ayudarla!
+voces/nucleo/recuerdo_arcoiris_pieza.wav	La última vez, Coco nos regaló el ala. Pero todavía quedan rincones grises... ¡y alguien con una mochila muy llena!
+voces/nucleo/recuerdo_arcoiris_completo.wav	¡El Planeta Arcoíris ya brilla entero! Y el mapa del Coleccionauta apunta a Animalia.
+voces/nucleo/recuerdo_planeta.wav	¿Se acuerdan dónde íbamos? ¡Seguimos la aventura justo ahí!
+voces/nucleo/mapa_primera_vez_01.wav	Este es el Mapa Estelar. Aquí están todos los planetas de nuestro viaje.
+voces/nucleo/mapa_primera_vez_02.wav	Y allá, lejito, el planeta del Coleccionauta. Ahí está papá, tranquilo y feliz.
+voces/nucleo/mapa_lejos.wav	Ese planeta todavía está muy lejos. ¡Con más piezas, la nave va a llegar!
+voces/nucleo/mapa_coleccionauta.wav	¡Ahí vive el Coleccionauta! Primero armamos la nave, y después... ¡vamos por papá!
+voces/nucleo/hangar_primera_vez.wav	¡Bienvenidos al hangar! Aquí vemos cómo va quedando nuestra nave, pieza por pieza.
+voces/nucleo/hangar_falta_1.wav	Aquí va el ala izquierda. ¡La guarda Coco, en el Planeta Arcoíris!
+voces/nucleo/hangar_falta_2.wav	Aquí va el ala derecha. ¡La guarda Toby, en el Planeta Animalia!
+voces/nucleo/hangar_puesta_1.wav	El ala de Coco. ¡Brilla con los colores del Arcoíris!
+voces/nucleo/hangar_puesta_2.wav	El ala de Toby, con su huellita pintada. ¡Guau!
+voces/nucleo/cometa_toque_01.wav	¡Jiji, me hiciste cosquillas!
+voces/nucleo/cometa_toque_02.wav	¿Sabían que mi nave brilla como una estrella? ...Bueno, cuando no está chocada.
+voces/nucleo/cometa_toque_03.wav	Mi álbum de abrazos se va llenando, ¿vieron? ¡Gracias a ustedes!
+voces/nucleo/volver_mapa.wav	¿Volvemos al mapa? Todo lo que jugaron queda guardado.
+voces/nucleo/despedida.wav	¡Hasta la próxima, Hermanos Estelares! La nave los espera.
+voces/nucleo/pista_confirmar.wav	¿Te soplo una pista? Cuesta una estrellita. ¡Toca el globito si la quieres!
+voces/nucleo/pista_gratis.wav	¡Esta pista va de regalo! Mira, mira...
+voces/planetas/arcoiris_invitacion_01.ogg	¡Vamos al Planeta Arcoíris!
+voces/planetas/animalia_invitacion_01.ogg	¡Vamos al Planeta Animalia!

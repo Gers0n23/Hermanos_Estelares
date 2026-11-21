@@ -32,10 +32,17 @@ var _reproductor_voz: AudioStreamPlayer
 var _pool_sfx: Array[AudioStreamPlayer] = []
 var _tween_voz: Tween
 
+## Cola de narracion (`reproducir_voces` / `encolar_voces`).
+const PAUSA_ENTRE_VOCES := 0.35
+var _cola_voces: Array[String] = []
+var _pausa_cola := PAUSA_ENTRE_VOCES
+var _espera_cola := 0.0
+
 
 func _ready() -> void:
 	_reproductor_musica = _crear_reproductor(BUS_MUSICA)
 	_reproductor_voz = _crear_reproductor(BUS_VOZ)
+	_reproductor_voz.finished.connect(_al_terminar_voz)
 	for i in TAMANO_POOL_SFX:
 		_pool_sfx.append(_crear_reproductor(BUS_SFX))
 
@@ -92,6 +99,54 @@ func detener_musica() -> void:
 ## Si ya habia una voz sonando, la interrumpe: tocar a Cometa para repetir una
 ## instruccion siempre debe volver a sonar de inmediato (GDD §6 regla 2).
 func reproducir_voz(ruta: String) -> void:
+	_cola_voces.clear()  # una voz nueva (p. ej. un toque para repetir) corta la narracion en curso
+	_sonar_voz(ruta)
+
+
+## Narracion de varias lineas seguidas (Cometa narrador, `datos/historia/narracion.json`): corta lo que
+## sonaba y dice las lineas en orden, con `pausa` segundos entre una y otra. Cualquier `reproducir_voz`
+## posterior corta la cola (GDD §6 regla 2: tocar para repetir siempre responde de inmediato).
+func reproducir_voces(rutas: Array, pausa := PAUSA_ENTRE_VOCES) -> void:
+	_cola_voces.clear()
+	_espera_cola = 0.0
+	_reproductor_voz.stop()
+	encolar_voces(rutas, pausa)
+
+
+## Igual que `reproducir_voces`, pero espera a que termine la voz que ya sonaba: p. ej. al elegir a Maxi
+## suena «¡Maxi, el explorador valiente!» y el Mapa Estelar dice lo suyo despues, sin pisarla.
+func encolar_voces(rutas: Array, pausa := PAUSA_ENTRE_VOCES) -> void:
+	for ruta in rutas:
+		if str(ruta) != "":
+			_cola_voces.append(str(ruta))
+	_pausa_cola = pausa
+	if not _reproductor_voz.playing and _espera_cola <= 0.0:
+		_siguiente_de_la_cola()
+
+
+func _al_terminar_voz() -> void:
+	if not _cola_voces.is_empty():
+		_espera_cola = _pausa_cola
+
+
+func _process(delta: float) -> void:
+	if _espera_cola > 0.0:
+		_espera_cola -= delta
+		if _espera_cola <= 0.0 and not _reproductor_voz.playing:
+			_siguiente_de_la_cola()
+
+
+func _siguiente_de_la_cola() -> void:
+	_espera_cola = 0.0
+	while not _cola_voces.is_empty():
+		var ruta: String = _cola_voces.pop_front()
+		if ResourceLoader.exists(ruta):
+			_sonar_voz(ruta)
+			return
+		push_warning("Audio.encolar_voces: linea pendiente de grabar: %s" % ruta)
+
+
+func _sonar_voz(ruta: String) -> void:
 	if ruta == "":
 		return
 	if not ResourceLoader.exists(ruta):
@@ -109,12 +164,15 @@ func reproducir_voz(ruta: String) -> void:
 func reproducir_voz_stream(stream: AudioStream) -> void:
 	if stream == null:
 		return
+	_cola_voces.clear()
 	_restaurar_volumen_voz()
 	_reproductor_voz.stream = stream
 	_reproductor_voz.play()
 
 
 func detener_voz() -> void:
+	_cola_voces.clear()
+	_espera_cola = 0.0
 	_restaurar_volumen_voz()
 	_reproductor_voz.stop()
 
@@ -139,8 +197,9 @@ func _restaurar_volumen_voz() -> void:
 	_reproductor_voz.volume_db = 0.0
 
 
+## true tambien entre dos lineas de una narracion en cola (para que un recordatorio no la interrumpa).
 func esta_hablando() -> bool:
-	return _reproductor_voz.playing
+	return _reproductor_voz.playing or not _cola_voces.is_empty()
 
 
 ## Volumen lineal 0.0-1.0 por bus (GDD §6 regla 10). `zona_padres` (HE-12) llamara esto

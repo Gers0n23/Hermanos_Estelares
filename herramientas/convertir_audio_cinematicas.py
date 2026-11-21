@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Convierte la musica y las cinematicas al formato que Godot 4 reproduce.
 
-- Musica: MP3 de MiniMax -> OGG Vorbis (assets/audio/musica/...). Godot no reproduce
-  MP3 con loop limpio y el proyecto usa OGG para musica (guia audio-system).
+- Musica: MP3 crudos de MiniMax (assets/generadas/audio/musica/, staging con .gdignore)
+  -> OGG Vorbis en assets/audio/musica/ (Godot: OGG para musica, guia audio-system).
 - Cinematicas: video de poc/cinematica_blender/salida (mp4 maestro) + audio de MMAudio
-  (<stem>_mmaudio.mp4) -> Ogg Theora q5 con audio Vorbis (assets/video/cinematicas/).
-  Godot 4 solo reproduce .ogv en VideoStreamPlayer; el audio va en el mismo contenedor,
-  asi queda sincronizado y se enruta al bus SFX.
+  (<stem>_mmaudio.mp4) -> Ogg Theora q5 con audio Vorbis en assets/video/<tipo>/
+  (taller, presentacion, viaje, llegada). Godot 4 solo reproduce .ogv en
+  VideoStreamPlayer; el audio va en el mismo contenedor, asi queda sincronizado.
   Si no hay audio de MMAudio para un clip, se usa solo el video (sin audio).
 
 Sin costo: todo es local (ffmpeg). Los mp4 maestros no se tocan.
@@ -28,13 +28,11 @@ FFMPEG = Path(
 )
 ORIGEN = RAIZ / "poc" / "cinematica_blender" / "salida"
 SONIDOS = ORIGEN / "audio_mmaudio"
-MUSICA_ORIGEN = Path(
-    "C:/Users/gcordero/AppData/Local/Temp/claude/fcd0c04074dcdf66/"
-    "95ebbf13-e080-4a76-b271-b92719695e89/scratchpad/audio_prueba/musica_minimax_viaje.mp3"
-)
+MUSICA_CRUDA = RAIZ / "assets" / "generadas" / "audio" / "musica"
 MUSICA_PLANETAS = RAIZ / "assets" / "audio" / "musica" / "planetas"
 MUSICA_BASE = RAIZ / "assets" / "audio" / "musica" / "viaje_minimax.ogg"
-VIDEO_DESTINO = RAIZ / "assets" / "video" / "cinematicas"
+CINEMATICAS = RAIZ / "assets" / "video"  # videos Godot (.ogv); docs/cinematicas/cierre_arcoiris.md usa assets/video/<bloque>/
+TIPOS_CINEMATICA = ("taller", "presentacion", "viaje", "llegada")
 CALIDAD_THEORA = "5"
 CALIDAD_VORBIS = "5"
 
@@ -46,25 +44,33 @@ def _ffmpeg(*args: str) -> None:
         sys.exit(f"ERROR ffmpeg {' '.join(args)}\n{res.stderr[-1500:]}")
 
 
+def _tipo_cinematica(nombre: str) -> str:
+    for tipo in TIPOS_CINEMATICA:
+        if nombre.startswith(tipo if tipo != "llegada" else "llegada_nave"):
+            return tipo
+    raise SystemExit(f"ERROR: no reconozco el tipo de {nombre}")
+
+
 def convertir_musica() -> None:
     MUSICA_PLANETAS.mkdir(parents=True, exist_ok=True)
-    _ffmpeg("-i", str(MUSICA_ORIGEN), "-vn", "-c:a", "libvorbis", "-q:a", CALIDAD_VORBIS, str(MUSICA_BASE))
+    _ffmpeg("-i", str(MUSICA_CRUDA / "viaje_minimax.mp3"), "-vn", "-c:a", "libvorbis", "-q:a", CALIDAD_VORBIS, str(MUSICA_BASE))
     print(f"OK  {MUSICA_BASE.relative_to(RAIZ)}")
-    for mp3 in sorted(MUSICA_PLANETAS.glob("*.mp3")):
-        destino = mp3.with_suffix(".ogg")
+    for mp3 in sorted((MUSICA_CRUDA / "planetas").glob("*.mp3")):
+        destino = MUSICA_PLANETAS / (mp3.stem + ".ogg")
         _ffmpeg("-i", str(mp3), "-vn", "-c:a", "libvorbis", "-q:a", CALIDAD_VORBIS, str(destino))
         print(f"OK  {destino.relative_to(RAIZ)}")
 
 
 def convertir_cinematicas() -> None:
-    VIDEO_DESTINO.mkdir(parents=True, exist_ok=True)
     for ruta in sorted(ORIGEN.glob("*.mp4")):
         nombre = ruta.name
         if nombre.endswith("_foto_0270.png") or "_mmaudio" in nombre or nombre.startswith("prueba"):
             continue
         if not nombre.startswith(("taller_pieza", "presentacion", "viaje", "llegada_nave_v2")):
             continue
-        destino = VIDEO_DESTINO / (ruta.stem + ".ogv")
+        carpeta = CINEMATICAS / _tipo_cinematica(nombre)
+        carpeta.mkdir(parents=True, exist_ok=True)
+        destino = carpeta / (ruta.stem + ".ogv")
         sonido = SONIDOS / (ruta.stem + "_mmaudio.mp4")
         if sonido.exists():
             # Video del maestro + audio de MMAudio; -shortest evita colas de silencio.

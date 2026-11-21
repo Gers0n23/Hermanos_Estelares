@@ -1,0 +1,15 @@
+{
+  "personaje": "nicole",
+  "estado": "Voz de Nicole APROBADA por el PO (21-Nov-2026). Clonada de assets/ejemplos/Nicole.mp4; con realce de agudos (PO: 'se parece mucho más').",
+  "modelo": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "idioma": "Spanish",
+  "temperatura": 0.8,
+  "embedding": "embedding.safetensors",
+  "referencia": "referencia.wav",
+  "texto_referencia": "",
+  "diseno": {
+    "clonado": "fal-ai/qwen-3-tts/clone-voice/1.7b",
+    "fuente": "assets\\ejemplos\\Nicole.mp4"
+  },
+  "realce_agudos": 2.1
+}

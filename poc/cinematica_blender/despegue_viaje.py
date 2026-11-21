@@ -6,6 +6,10 @@ para que los dos videos empalmen.
 En Arcoíris el despegue es por el puente de 3 bandas (rojo, amarillo y azul;
 docs/cinematicas/cierre_arcoiris.md §12.2): la nave lo recorre y la punta la lanza al cielo.
 
+Con --planeta tierra (viaje Tierra -> Arcoíris) no hay superficie en Blender: el despegue es el del patio
+(despegue_tierra.py) y este script renderiza solo el acto 2 (de F_CORTE a F_FIN, saliendo del blanco).
+herramientas/armar_viaje_tierra.py pega los dos actos en viaje_tierra_a_arcoiris.mp4.
+
 Uso (Blender 4.5 LTS, sin interfaz):
   blender -b -P despegue_viaje.py -- --planeta arcoiris --fotos 1,60,100,140,200,260
   blender -b -P despegue_viaje.py -- --planeta arcoiris --video
@@ -22,23 +26,34 @@ from nave_comun import *  # noqa: E402,F401,F403
 from planeta_comun import *  # noqa: E402,F401,F403
 
 PLANETA = str(arg("--planeta", "arcoiris"))
-assert PLANETA in SUPERFICIES, f"--planeta: {', '.join(SUPERFICIES)}"
-DESTINO = ORDEN[ORDEN.index(PLANETA) + 1]
+TIERRA = PLANETA == "tierra"         # solo el acto 2: el despegue del patio es otro video
+assert TIERRA or PLANETA in SUPERFICIES, f"--planeta: tierra, {', '.join(SUPERFICIES)}"
+DESTINO = "arcoiris" if TIERRA else ORDEN[ORDEN.index(PLANETA) + 1]
 NOMBRE = arg("--nombre", f"viaje_{PLANETA}_a_{DESTINO}")
 random.seed(sum(ord(c) for c in PLANETA) + 7)
 PUENTE = PLANETA == "arcoiris"
 
 # ----------------------------------------------------------------------------- línea de tiempo (24 fps)
 F_MOTOR = 20                         # los motores ya rugen: empieza a subir
-F_CORTE = 150 if PUENTE else 112     # todo blanco: se cambia al espacio
-F_FIN = F_CORTE + 132                # ≈ 10,2 s (11,75 s con el puente)
+F_CORTE = 160 if TIERRA else 150 if PUENTE else 112     # todo blanco: se cambia al espacio
+F_FIN = F_CORTE + 132                # ≈ 10,2 s (11,75 s con el puente, 12,2 s desde el patio)
 preparar_render(F_FIN)
+if TIERRA:
+    ESC.frame_start = F_CORTE        # el acto 1 es despegue_tierra_v1.mp4
 
 # ----------------------------------------------------------------------------- decorados
-K = SUPERFICIES[PLANETA]()
-cual_cielo = cielo(K.cielo)
-escalon(cual_cielo, F_CORTE, 1.0, 0.0)
-dar_vida(K, 1, F_CORTE, 0)           # todos despiden a la nave saltando
+if TIERRA:
+    # sin superficie: el acto 1 (que no se renderiza) se anima sobre un suelo vacío en el origen
+    from types import SimpleNamespace
+    K = SimpleNamespace(escala_nave=1.0, terreno=SimpleNamespace(sobre=lambda *a: Vector((0.0, 0.0, 0.0))),
+                        posar=(0.0, 0.0), giro_nave=0.0, cam=(0.0, -14.0, 3.0), mira=(0.0, 0.0, 2.0), lente=32)
+    cual_cielo = cielo(((0.0, "#FFC08A"), (1.0, "#4A3F82")))
+    escalon(cual_cielo, F_CORTE, 1.0, 0.0)
+else:
+    K = SUPERFICIES[PLANETA]()
+    cual_cielo = cielo(K.cielo)
+    escalon(cual_cielo, F_CORTE, 1.0, 0.0)
+    dar_vida(K, 1, F_CORTE, 0)       # todos despiden a la nave saltando
 
 E = ESPACIO
 C0 = E + Vector((0.0, -14.0, 0.0))                    # cámara al salir del planeta

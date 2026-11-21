@@ -1,0 +1,7 @@
+Use case: precise-object-edit
+Asset type: outfit correction on a home-clothes still, same scene and same faces
+Primary request: Edit the attached image. KEEP EXACTLY the same faces, hair, poses, objects (pillow, crayons, cushion, toy car), positions, room and lighting. ONLY CHANGE THE CLOTHES:
+- SOFIA (the standing girl on the right, tallest, long curly dark hair, pink headphones, holding a pillow): REMOVE the astronaut suit, the helmet, the star badge, the boots and the gloves. She wears a plain pink and white horizontal striped t-shirt, light blue jeans and pink sneakers.
+- NICOLE (the girl sitting on the pink cushion drawing with crayons, dark hair in a high ponytail with a pink hair tie): wears a plain dark charcoal sweatshirt and blue jeans. Remove any pink-and-white striped top from her.
+- MAXI (the small boy with the toy car): keep exactly as he is.
+Constraints: no text or logos on any clothing. No astronaut elements anywhere in the image. Same cartoon painted style and outlines.

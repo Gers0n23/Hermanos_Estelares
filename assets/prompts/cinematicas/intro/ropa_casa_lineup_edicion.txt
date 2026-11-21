@@ -1,0 +1,8 @@
+Use case: precise-object-edit
+Asset type: edit of the approved character lineup, outfit change only
+Primary request: Edit the attached lineup of the three siblings. KEEP EXACTLY the same faces, skin tones, hair (including Sofia's curly hair and Nicole's ponytail), headphones on Sofia, body proportions, heights, standing pose, flat light grey background and the small brown ground patch. CHANGE ONLY THE CLOTHES: remove the astronaut suits, the bubble helmets and the glass domes, and the star badges, belts, gloves, knee pads and space boots. Dress them in everyday home clothes copied from the two outfit reference photos (clothing only; do not copy faces):
+- Maxi (smallest, left): plain navy short-sleeve t-shirt and light grey-blue printed shorts with a small leaf pattern, simple white sneakers. No text, no logos.
+- Nicole (middle): plain pink and white horizontal striped t-shirt, light blue jeans, pink sneakers. No text. Keep her hair as in the lineup.
+- Sofia (right, tallest): plain dark charcoal sweatshirt, blue jeans, pink sneakers. No text. Keep her curly hair and headphones.
+Style: same clean cartoon painted style and outlines as the lineup. No astronaut elements anywhere.
+Constraints: exactly three children, same relative heights, no text on clothing, no helmets, no suits.

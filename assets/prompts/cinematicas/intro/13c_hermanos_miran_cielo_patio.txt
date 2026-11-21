@@ -1,0 +1,11 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic still, siblings outside on the patio looking up at the sky as a ship takes off (the ship is NOT drawn; it is added later in animation), in everyday home clothes
+Primary request: Outside the house, on the backyard grass in the late afternoon, the three siblings look up at the sky with delight and wonder, as if something is flying away above them. Same faces, hair and proportions as the attached outfit lineup (canon characters). Same clothes as the attached lineup: Maxi in the navy t-shirt and printed shorts; Nicole (middle, ponytail) in the dark charcoal sweatshirt and jeans; Sofia (tallest, curly hair, pink headphones) in the pink and white striped t-shirt and jeans. No text on any clothing.
+Input images: the approved still of the living room (same style and same children); the outfit lineup (identity and clothes); official poster (style).
+Subject: exactly three siblings standing side by side on the grass, shielding eyes or pointing up with big happy grins. Maxi jumps with both arms up. Nicole claps. Sofia points up. Dust and a warm golden glow rise from the grass in front of them, and a bright light trail goes up into the top of the frame, with NO spaceship drawn in the picture.
+Scene/backdrop: backyard lawn, wooden fence on the left, a tree, the house wall with its warm-lit big window on the right, warm sunset sky with soft pastel clouds.
+Style/medium: the same high-polish digital painted cartoon as the approved living room still: soft clean outlines, rounded friendly shapes, painterly light. Not photorealistic, not 3D, not anime.
+Composition/framing: wide 16:9 shot, camera at a small child's eye level, the children in the lower half, the open sky in the upper half.
+Lighting/mood: wonder, joy, adventure. Never scary.
+Constraints: exactly three siblings, no astronaut suits, no helmets, no Cometa, no adults, no spaceship, NO TEXT anywhere, no logos.
+Avoid: a drawn spaceship or UFO, smoke that hides the children, suits or helmets, extra characters, readable text, watermark, 3D rendering look.

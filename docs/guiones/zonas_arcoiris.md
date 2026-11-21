@@ -37,6 +37,47 @@
 
 ---
 
+## 0. Cambio 21-Nov-2026: los colores se los LLEVÓ el Coleccionauta (decisión 4 del PO)
+
+Los colores de Arcoíris no se escondieron: el Coleccionauta se los llevó a su colección. Eso es lo que
+muestra la batalla, y el primer contacto con Coco lo revela. Las líneas de llegada que decían "se escondió"
+o "perdieron" contradecían eso. **Se mantienen los ids** y se reescriben solo los textos de llegada. Cada fila
+tiene la marca *cambio 21-Nov-2026* en la columna de intención.
+
+| id (sin cambiar) | Texto anterior | Texto nuevo | Motivo |
+|---|---|---|---|
+| arcoiris_mapa_zona_1_llegada | «…¡aquí se escondió el rojo!» | «…¡el Coleccionauta se llevó mi rojo! ¿Me ayudan a devolverlo?» | Decisión 4 del PO (zona 1, pedida por el PO). La pregunta invita a ayudar sin apurar |
+| arcoiris_mapa_zona_3_llegada | «Mis chupetines perdieron su azul... ¡vamos a buscarlo!» | «Mis chupetines se quedaron sin azul... ¡el Coleccionauta se lo llevó! ¡Vamos a traerlo de vuelta!» | Decisión 4 del PO (zona 3, pedida por el PO). "Perdieron" dejaba la idea de que se extraviaron solos |
+| arcoiris_mapa_zona_4_llegada | «…y aquí se escondieron el verde y el naranja.» | «…y al verde y al naranja también se los llevó el Coleccionauta.» | **Extensión** del mismo problema en la zona 4 (no la pidió el PO; se marca para su confirmación) |
+| arcoiris_mapa_zona_5_llegada | «Aquí arriba duerme el violeta... y el brillo de todo mi planeta.» | «Aquí arriba estaban mi violeta... y el brillo de todo mi planeta. ¡Hasta que el Coleccionauta se los llevó!» | **Extensión** en la zona 5: "duerme" también suena a escondido (no la pidió el PO; se marca para su confirmación) |
+
+Sin cambio, porque ya cuadran: `zona_2_llegada` ("le falta el amarillo"), todas las `completada`
+("¡Volvió el…!") y `secreta_lejana`/`secreta_revelada` (la cima "se despierta", no "se esconde").
+
+**Conciliación con la escena de llegada (21-Nov-2026, decisión B del PO)**: la escena
+`docs/guiones/escena_llegada_arcoiris.md` dice por primera vez el robo y pide ayuda (`arcoiris_llegada_014`).
+Por eso `arcoiris_mapa_zona_1_llegada` deja de ser la primera vez que se dice y pasa a ser **respaldo**: su texto
+nuevo de arriba no cambia, pero no debería sonar en la primera entrada si la escena ya se vio. **Propuesta, pendiente
+de confirmación del PO** (PREGUNTA a de la escena de llegada). Las llegadas de las zonas 2 a 5 repiten "se llevó" a
+propósito: cada zona devuelve su color y el robo se recuerda en cada una, en una línea corta. No hay contradicción.
+
+Los colores que nombra la escena de llegada son los que este guion ya usa: rojo, amarillo, azul, verde, naranja,
+violeta y brillo (siete). Coco usa "violeta" y "naranja", como fija el canon de un solo nombre por color (decisión de tono 5).
+
+**Fuera de este archivo (pendiente de editar por su dueño):**
+
+- `docs/guiones/escena_planeta_arcoiris.md`, `arcoiris_017`: «…y en los Islotes Flotantes todavía hay colores
+  escondidos...» contradice lo mismo. Propuesta: «…y en los Islotes Flotantes todavía me falta un poquito de
+  color...». La segunda frase sigue en secreto, como invitación.
+- ~~`docs/guiones/escena_planeta_arcoiris.md` no tiene escena de primer contacto con Coco.~~ **Resuelto (decisión B
+  del PO, 21-Nov-2026)**: la escena existe en `docs/guiones/escena_llegada_arcoiris.md` (ids `arcoiris_llegada_XXX`),
+  va después del despegue y del video de presentación, y antes de la zona 1. Revela el robo y deja a Coco pidiendo
+  ayuda. Ver la conciliación de abajo.
+- `assets/audio/voces/guion_voces.md` tiene el texto viejo de las filas de zona 1, 3 y 4 (y `arcoiris_017`):
+  sincronizar antes de generar audio. Las filas de Cometa y Coco de `zona_5` también cambian.
+
+---
+
 ## 1. Mapa del planeta — voces por zona
 
 Suenan en `escenas/planetas/arcoiris/mapa_arcoiris.tscn`. Las `llegada` y `completada` ya tienen clave en
@@ -54,7 +95,7 @@ Beat 1 ya celebra el azul, ver `escena_planeta_arcoiris.md`); el regalo de la zo
 
 | id | personaje | texto | intención | disparador | ruta sugerida | tipo |
 |---|---|---|---|---|---|---|
-| arcoiris_mapa_zona_1_llegada | Coco | «¡Este es el Claro del Trébol! ¿Ven la frutilla gigante? Está grisecita... ¡aquí se escondió el rojo!» | acogedora, señalando | Primera vez que se entra a la zona 1 | `voces/arcoiris/mapa/zona_1_llegada.wav` | reescrita |
+| arcoiris_mapa_zona_1_llegada | Coco | «¡Este es el Claro del Trébol! ¿Ven la frutilla gigante? Está grisecita... ¡el Coleccionauta se llevó mi rojo! ¿Me ayudan a devolverlo?» | acogedora, señalando; *cambio 21-Nov-2026 (§0)*; *respaldo desde la escena de llegada (ver §0)* | Primera vez que se entra a la zona 1 (propuesta: no suena si ya sonó la escena de llegada) | `voces/arcoiris/mapa/zona_1_llegada.wav` | reescrita |
 | arcoiris_mapa_zona_1_completada | Coco | «¡Volvió el rojo! Mírenme, mírenme... ¡ahora soy rojo frutilla!» | explota de alegría; pausa antes del color (tic) | Se completan todas las estaciones de la zona 1 | `voces/arcoiris/mapa/zona_1_completada.wav` | reescrita |
 | arcoiris_mapa_zona_1_regalo | Coco | «Les regalo mi pincel rojo. ¡Cuélguenlo en su nave!» | cariñosa, entregando | Tras `zona_1_completada`; el pincel vuela al hangar | `voces/arcoiris/mapa/zona_1_regalo.wav` | nueva |
 
@@ -72,7 +113,7 @@ Beat 1 ya celebra el azul, ver `escena_planeta_arcoiris.md`); el regalo de la zo
 | id | personaje | texto | intención | disparador | ruta sugerida | tipo |
 |---|---|---|---|---|---|---|
 | arcoiris_mapa_zona_3_abierta | Cometa | «¡Otro rincón despierto! ¡El Bosque de Chupetines! Mmm... huele a dulce.» | olfateando, goloso | La zona 3 toma color en el mapa | `voces/arcoiris/mapa/zona_3_abierta.wav` | nueva |
-| arcoiris_mapa_zona_3_llegada | Coco | «El Bosque de Chupetines. Mis chupetines perdieron su azul... ¡vamos a buscarlo!» | cómplice, de aventura | Primera vez que se entra a la zona 3 | `voces/arcoiris/mapa/zona_3_llegada.wav` | reescrita |
+| arcoiris_mapa_zona_3_llegada | Coco | «El Bosque de Chupetines. Mis chupetines se quedaron sin azul... ¡el Coleccionauta se lo llevó! ¡Vamos a traerlo de vuelta!» | cómplice, de aventura; *cambio 21-Nov-2026 (§0)* | Primera vez que se entra a la zona 3 | `voces/arcoiris/mapa/zona_3_llegada.wav` | reescrita |
 | arcoiris_mapa_zona_3_completada | Coco | «¡Volvió el azul! Ahora soy... ¡azul chupetín!» | feliz (tic). **No suena si en ese momento se dispara la escena de historia** | Zona 3 completa **sin** escena (p. ej. al rejugarla completa otro hermano que ya vio la escena, si así se implementa) | `voces/arcoiris/mapa/zona_3_completada.wav` | reescrita |
 | arcoiris_mapa_zona_3_regalo | Coco | «Un chupetín espiral azul, para su nave. ¡Pero no se lo coman, eh!» | con risa, retando de mentira | Después de la escena de historia (o tras `zona_3_completada`) | `voces/arcoiris/mapa/zona_3_regalo.wav` | nueva |
 
@@ -81,7 +122,7 @@ Beat 1 ya celebra el azul, ver `escena_planeta_arcoiris.md`); el regalo de la zo
 | id | personaje | texto | intención | disparador | ruta sugerida | tipo |
 |---|---|---|---|---|---|---|
 | arcoiris_mapa_zona_4_abierta | Cometa | «¡Miren allá! ¡Los Islotes Flotantes se despertaron! Flotan como malvaviscos.» | asombrado, soñador | La zona 4 toma color (al cerrar la escena de historia) | `voces/arcoiris/mapa/zona_4_abierta.wav` | nueva |
-| arcoiris_mapa_zona_4_llegada | Coco | «¡Los Islotes Flotantes! Flotan en una laguna de soda... y aquí se escondieron el verde y el naranja.» | burbujeante | Primera vez que se entra a la zona 4 | `voces/arcoiris/mapa/zona_4_llegada.wav` | reescrita |
+| arcoiris_mapa_zona_4_llegada | Coco | «¡Los Islotes Flotantes! Flotan en una laguna de soda... y al verde y al naranja también se los llevó el Coleccionauta.» | burbujeante; *cambio 21-Nov-2026 (§0), extensión por confirmar* | Primera vez que se entra a la zona 4 | `voces/arcoiris/mapa/zona_4_llegada.wav` | reescrita |
 | arcoiris_mapa_zona_4_completada | Coco | «¡Volvieron el verde y el naranja! Ahora soy... ¡verde menta con pintitas naranjas!» | encantada (tic doble) | Se completan todas las estaciones de la zona 4 | `voces/arcoiris/mapa/zona_4_completada.wav` | reescrita |
 | arcoiris_mapa_zona_4_regalo | Coco | «Les regalo una estrella flotante, verde y naranja. ¡Suéltenla y miren cómo flota!» | ilusionada | Tras `zona_4_completada` | `voces/arcoiris/mapa/zona_4_regalo.wav` | nueva |
 
@@ -91,7 +132,7 @@ Beat 1 ya celebra el azul, ver `escena_planeta_arcoiris.md`); el regalo de la zo
 |---|---|---|---|---|---|---|
 | arcoiris_mapa_secreta_lejana | Cometa | «¿Viste ese brillito allá arriba, en la montaña? Es un lugar secreto... ¡se despierta cuando pintemos los Islotes!» | en secreto, cómplice | Tocar el resplandor de la cima antes de revelarla | `voces/arcoiris/mapa/secreta_lejana.wav` | reescrita |
 | arcoiris_mapa_secreta_revelada | Cometa | «¡Miren arriba! ¡Apareció la Cima del Arcoíris, un lugar secreto! ¡Tiene una torta gigante!» | fiesta, sorpresa total | Se completa la zona 4 y se revela la cima | `voces/arcoiris/mapa/secreta_revelada.wav` | reescrita |
-| arcoiris_mapa_zona_5_llegada | Coco | «¡La Cima del Arcoíris! Aquí arriba duerme el violeta... y el brillo de todo mi planeta.» | susurrando al comienzo, crece al final | Primera vez que se entra a la zona 5 | `voces/arcoiris/mapa/zona_5_llegada.wav` | reescrita |
+| arcoiris_mapa_zona_5_llegada | Coco | «¡La Cima del Arcoíris! Aquí arriba estaban mi violeta... y el brillo de todo mi planeta. ¡Hasta que el Coleccionauta se los llevó!» | susurrando al comienzo, crece al final; *cambio 21-Nov-2026 (§0), extensión por confirmar* | Primera vez que se entra a la zona 5 | `voces/arcoiris/mapa/zona_5_llegada.wav` | reescrita |
 | arcoiris_mapa_zona_5_completada | Coco | «¡Volvió el violeta! ¡Y el brillo! Ahora soy... ¡arcoíris de pies a cabeza!» | la celebración más grande de Coco (tic) | Se completan todas las estaciones de la zona 5 | `voces/arcoiris/mapa/zona_5_completada.wav` | reescrita |
 | arcoiris_mapa_zona_5_regalo | Coco | «El plumón arcoíris de la cima. Es mi favorito... ¡y ahora es de ustedes!» | tierna, regalando lo más querido | Tras `zona_5_completada` | `voces/arcoiris/mapa/zona_5_regalo.wav` | nueva |
 | arcoiris_mapa_planeta_completo | Cometa | «¡El Planeta Arcoíris brilla entero! ¡Qué equipo más increíble!» | orgulloso; celebra al grupo, no a uno | Al volver al mapa tras `zona_5_regalo` (el planeta queda a todo color) | `voces/arcoiris/mapa/planeta_completo.wav` | nueva |

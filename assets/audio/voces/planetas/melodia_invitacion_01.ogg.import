@@ -3,11 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://bdnbbwcwirvrk"
-valid=false
+path="res://.godot/imported/melodia_invitacion_01.ogg-ce81aeceb5f5061d48b0b5f9c22dd5fc.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/voces/planetas/melodia_invitacion_01.ogg"
+dest_files=["res://.godot/imported/melodia_invitacion_01.ogg-ce81aeceb5f5061d48b0b5f9c22dd5fc.oggvorbisstr"]
 
 [params]
 

@@ -1,5 +1,9 @@
 # Guion — La prueba final cooperativa: «El coleccionista más solito de la galaxia»
 
+> **Regla de dialecto (decisión del PO, 21-Nov-2026)**: "chileno suave, y a los niños casi sin modismos, o más neutros".
+> Papá y el Coleccionauta hablan en chileno suave y **no usan "po"** (decisión del PO, 21-Nov-2026: la voz la pronuncia de forma artificial); Maxi, Nicole y Sofía en español neutro. Cometa y Coco no cambian.
+> Solo se reescribió el texto entre comillas de « »; ids, sentido y largo se conservan.
+
 > Guion narrativo (HE-D5), responde a la parte narrativa de P6 del GDD §9 (diseño detallado de la
 > prueba final cooperativa). **No resuelve** el diseño de UI/flujo de turnos del modo misión
 > familiar — eso sigue abierto para `disenador-mecanicas` + PO; este documento entrega la historia
@@ -40,7 +44,7 @@ Coleccionauta los recibe agitando los bracitos, su mochila-torre tambaleándose 
 |---|---|---|---|
 | final_001 | Coleccionauta | «¡Bienvenidos a la colección más increíble, asombrosa, fabulosa de tooooda la... espera, ¿dónde dejé mis anteojos-lupa? Ah. Los tengo puestos.» | grandilocuente que se pierde en un detalle chico (su tic) |
 | final_002 | Cometa | «¡Hola, viejo amigo! Te presento a los Hermanos Estelares.» | cálido, cómplice — se conocen de siempre |
-| final_003 | Coleccionauta | «¡Cometa! Cuánto tiempo... ¿todavía coleccionas amigos en vez de cosas? Qué raro eres.» | nostálgico, torpe-tierno, con cariño (no burla) |
+| final_003 | Coleccionauta | «¡Cometa! ¡Cuánto tiempo! ¿Todavía coleccionas amigos en vez de cosas? Qué raro eres.» | nostálgico, torpe-tierno, con cariño (no burla) |
 | final_004 | Sofía | «Venimos por nuestro papá.» | directa, líder, sin miedo |
 | final_005 | Coleccionauta | «¡Ah, sí! El papá más increíble que encontré en años. Está por acá, muy cómodo.» | orgulloso de su hallazgo, sin maldad |
 
@@ -102,7 +106,7 @@ lee en voz alta, armando el plan para sus hermanos.
 
 | id | Personaje | Línea | Intención |
 |---|---|---|---|
-| final_025 | Sofía | «Dice acá: "las llaves están donde nadie mira dos veces". Maxi, eso es para ti.» | líder, orgullosa de su hallazgo |
+| final_025 | Sofía | «Dice aquí: "las llaves están donde nadie mira dos veces". Maxi, eso es para ti.» | líder, orgullosa de su hallazgo |
 
 ### 5b — Nicole se hace amiga del Coleccionauta (el gesto que enseña sin sermón)
 
@@ -136,7 +140,7 @@ cojines con una llave de juguete — nunca una jaula) y papá sale estirándose,
 |---|---|---|---|
 | final_033 | Papá | «¡Al fin! Aunque las galletas de acá estaban riquísimas, así que no hay apuro.» | bromista, calmo, cero drama de escape |
 | final_034 | Maxi / Nicole / Sofía | *(celebración con gestos canon — ver `guion_voces.md`)* «¡¡Siiii!!» / «¡Lo logramos!» / «Misión cumplida, Hermanos Estelares.» | fiesta total, gestos reales de cada uno |
-| final_035 | Papá | (abrazando a los tres) «Estoy tan orgulloso de ustedes tres. Trabajar en equipo... eso sí que es increíble.» | cálido, celebra la acción sin sermonear |
+| final_035 | Papá | (abrazando a los tres) «Estoy tan orgulloso de ustedes tres. Trabajar en equipo... eso sí que es bacán.» | cálido, celebra la acción sin sermonear |
 
 ## Beat 7 — El Coleccionauta se une a la familia
 

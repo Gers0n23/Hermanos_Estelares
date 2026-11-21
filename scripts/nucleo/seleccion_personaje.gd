@@ -235,6 +235,8 @@ func _elegir_perfil(id_perfil: String) -> void:
 		return
 	_bloqueado = true
 	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
+	# «¡Maxi, el explorador valiente!» (narracion-cometa.md §5.1). El Mapa Estelar encola lo suyo despues.
+	Audio.reproducir_voces(Narracion.lineas("menu:seleccion_" + id_perfil))
 	Progreso.seleccionar_perfil(id_perfil)
 	get_tree().change_scene_to_file(RUTA_MAPA)
 

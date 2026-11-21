@@ -10,7 +10,9 @@ Las pistas que ya existan en la carpeta de salida no se vuelven a pagar.
 Uso:
   python herramientas/generar_musica_planetas.py --estimar
   python herramientas/generar_musica_planetas.py
-Salida: assets/audio/musica/planetas/<id>.mp3 (se convierte a .ogg con --ogg despues)
+Salida cruda (staging, con .gdignore): assets/generadas/audio/musica/planetas/<id>.mp3.
+Para llevarla al juego: herramientas/convertir_audio_cinematicas.py (genera el .ogg en
+assets/audio/musica/planetas/).
 """
 
 from __future__ import annotations
@@ -27,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import obtener_key  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
-SALIDA = RAIZ / "assets" / "audio" / "musica" / "planetas"
+SALIDA = RAIZ / "assets" / "generadas" / "audio" / "musica" / "planetas"
 MODELO = "fal-ai/minimax-music/v2.6"
 QUEUE_BASE = "https://queue.fal.run/{modelo}"
 PRECIO_USD_POR_PISTA = 0.15

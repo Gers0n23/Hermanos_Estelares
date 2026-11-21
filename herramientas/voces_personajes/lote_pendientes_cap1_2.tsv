@@ -1,0 +1,161 @@
+# Lote de voces sueltas que faltan hasta Animalia y que YA tienen voz creada y texto (catastro 21-Nov-2026,
+# docs/catastro-audio-hasta-animalia.md). Se genera con generar_voces_fal_agrupado.py (varias líneas por pedido).
+# personaje: cometa
+voces/arcoiris/emparejar/estrella/pista_z2.wav	Busca el color que se forma al mezclar los colores de la receta.
+voces/arcoiris/emparejar/estrella/pista_z3.wav	Da vuelta tres cartas. Si las tres son iguales, se quedan.
+voces/arcoiris/emparejar/estrella/pista_z4.wav	Cuando dos cartas cambian de lugar, síguelas con la mirada.
+voces/arcoiris/emparejar/estrella/pista_z5.wav	Mira bien hacia dónde apunta cada sombra.
+voces/arcoiris/formas/estrella/pista_marco_01.wav	Llena todos los cuadraditos. Tocando una pieza la giras, y con el espejo la das vuelta.
+voces/arcoiris/formas/estrella/pista_arma_01.wav	Mira la tarjeta con la figura terminada. ¿Qué pieza tiene la misma forma y el mismo tamaño?
+voces/arcoiris/mapa/secreta_lejana.wav	¿Viste ese brillito allá arriba, en la montaña? Es un lugar secreto... ¡se despierta cuando pintemos los Islotes!
+voces/arcoiris/mapa/secreta_revelada.wav	¡Miren arriba! ¡Apareció la Cima del Arcoíris, un lugar secreto! ¡Tiene una torta gigante!
+voces/arcoiris/mapa/zona_2_abierta.wav	¡Se despertó un rincón nuevo! ¡Los Charcos Saltarines! ¡Boing, boing!
+voces/arcoiris/mapa/zona_3_abierta.wav	¡Otro rincón despierto! ¡El Bosque de Chupetines! Mmm... huele a dulce.
+voces/arcoiris/mapa/zona_4_abierta.wav	¡Miren allá! ¡Los Islotes Flotantes se despertaron! Flotan como malvaviscos.
+voces/arcoiris/mapa/planeta_completo.wav	¡El Planeta Arcoíris brilla entero! ¡Qué equipo más increíble!
+voces/nucleo/hangar_primera_vez.wav	¡Bienvenidos al hangar! Aquí vemos cómo va quedando nuestra nave, pieza por pieza.
+voces/nucleo/hangar_falta_1.wav	Aquí va el ala izquierda. ¡La guarda Coco, en el Planeta Arcoíris!
+voces/nucleo/hangar_falta_2.wav	Aquí va el ala derecha. ¡La guarda Toby, en el Planeta Animalia!
+voces/nucleo/hangar_puesta_1.wav	El ala de Coco. ¡Brilla con los colores del Arcoíris!
+voces/nucleo/hangar_puesta_2.wav	El ala de Toby, con su huellita pintada. ¡Guau!
+voces/nucleo/cometa_toque_01.wav	¡Jiji, me hiciste cosquillas!
+voces/nucleo/cometa_toque_02.wav	¿Sabían que mi nave brilla como una estrella? ...Bueno, cuando no está chocada.
+voces/nucleo/cometa_toque_03.wav	Mi álbum de abrazos se va llenando, ¿vieron? ¡Gracias a ustedes!
+# personaje: coco
+voces/arcoiris/emparejar/estrella/acierto_par_02.wav	¡Memoria de campeona!
+voces/arcoiris/emparejar/estrella/acierto_par_03.wav	¡Uno menos! Vas muy bien.
+voces/arcoiris/emparejar/estrella/no_es_este_01.wav	Casi... esa no era, pero ahora sabes dónde está.
+voces/arcoiris/emparejar/estrella/no_es_este_02.wav	Todavía no. ¡Recuérdalas!
+voces/arcoiris/emparejar/estrella/acierto_especial_01.wav	¿El arcoíris secreto? ¡Muy pocos lo encuentran, Sofía!
+voces/arcoiris/emparejar/estrella/victoria_final_01.wav	¡Encontraste todas las figuras! Con esa memoria vas a liderar la misión.
+voces/arcoiris/emparejar/estrella/derrota_gag_01.wav	¡Jaja! ¡Las cartas se marearon y se mezclaron todas! Vamos, las ordenamos de nuevo.
+voces/arcoiris/emparejar/estrella/intro_z1.wav	¡Sofía, doce parejas escondidas! Algunas se parecen mucho. A ver esa memoria de líder.
+voces/arcoiris/emparejar/estrella/intro_z2.wav	Esta vez cada color busca su receta. El verde va con azul y amarillo. ¡Piensa y recuerda!
+voces/arcoiris/emparejar/estrella/intro_z3.wav	¡Tríos! Ahora hay que encontrar tres cartas iguales. ¡Un reto de campeona!
+voces/arcoiris/emparejar/estrella/intro_z4.wav	¡Mis cartas son traviesas! Cada vez que encuentras una pareja, dos cartas escondidas cambian de lugar. ¡Síguelas con la mirada!
+voces/arcoiris/emparejar/estrella/intro_z5.wav	¡El desafío final! Cada figura busca su sombra, pero cuidado: hay sombras dadas vuelta que parecen iguales. Y las cartas se mueven.
+voces/arcoiris/emparejar/estrella/intro_dorado.wav	¡Reto dorado! Dieciocho sombras traviesas y cartas que se mueven. ¿Te atreves, Sofía?
+voces/arcoiris/emparejar/estrella/pista_usada_01.wav	Te muestro una pareja. ¡Esa ayudita cuesta una estrellita!
+voces/arcoiris/emparejar/estrella/regalo_01.wav	Te regalo una pareja para empezar. ¡Vamos!
+voces/arcoiris/emparejar/estrella/victoria_dorado_01.wav	¡Completaste el reto dorado! Tu memoria es de otro planeta, Sofía.
+voces/arcoiris/emparejar/colores/naranja.wav	¡Naranja, como el gatito!
+voces/arcoiris/emparejar/semilla/intro_z2.wav	¡Hola otra vez, Maxi! Figuras, dinosaurios y autos... ¡toca dos iguales!
+voces/arcoiris/emparejar/brote/intro_z3.wav	¡Nicole, en mi Bosque de Chupetines las cartas se esconden! Da vuelta dos y busca las iguales. Dicen que hay un corazón mágico...
+voces/arcoiris/emparejar/reto/racha_2.wav	¡Dos seguidas!
+voces/arcoiris/emparejar/reto/racha_3.wav	¡Tres seguidas! ¡Ojos de estrella!
+voces/arcoiris/emparejar/reto/racha_4.wav	¡Cuatro! ¡No te para nadie!
+voces/arcoiris/emparejar/reto/racha_5.wav	¡Racha arcoíris! ¡Al máximo!
+voces/arcoiris/emparejar/reto/racha_sigue.wav	¡Y sigue la racha!
+voces/arcoiris/emparejar/reto/a_la_primera_01.wav	¡A la primera! ¡Qué suerte!
+voces/arcoiris/emparejar/reto/a_la_primera_02.wav	¡Sin buscar y a la primera! ¡Trébol de la suerte!
+voces/arcoiris/emparejar/reto/record_pasa.wav	¡Récord!
+voces/arcoiris/emparejar/reto/record_nuevo_01.wav	¡Nuevo récord! ¡Le ganaste a tu propio récord!
+voces/arcoiris/emparejar/reto/record_nuevo_02.wav	¡Nuevo récord! Este trofeo-cupcake es tuyo.
+voces/arcoiris/emparejar/reto/primer_record.wav	¡Tu primer récord! Aquí queda tu banderita.
+voces/arcoiris/emparejar/reto/vela_presenta.wav	¿Ves la velita? Si terminas antes de que se apague, ¡puntos extra!
+voces/arcoiris/emparejar/reto/vela_encendida.wav	¡La velita sigue encendida! ¡Puntos de regalo!
+voces/arcoiris/emparejar/reto/vela_dormida.wav	Shhh... la velita se quedó dormida. ¡Tú sigue, que cada pareja suma!
+voces/arcoiris/emparejar/reto/vistazo_mira.wav	¡Mira!
+voces/arcoiris/emparejar/reto/vistazo_presenta.wav	Al repartir, te muestro todas las cartas un ratito. ¡Míralas bien!
+voces/arcoiris/emparejar/reto/estrellitas_brote_1.wav	¡Terminaste! ¡Una estrella brillante para ti!
+voces/arcoiris/emparejar/reto/estrellitas_brote_2.wav	¡Dos estrellas! ¡Qué memoria!
+voces/arcoiris/emparejar/reto/estrellitas_brote_3.wav	¡Tres estrellas! ¡Memoria arcoíris!
+voces/arcoiris/emparejar/reto/otra_estrellita.wav	¡Con una racha larga sale otra estrellita!
+voces/arcoiris/formas/semilla/acierto_01.wav	¡Siii!
+voces/arcoiris/formas/semilla/acierto_02.wav	¡Ahí va!
+voces/arcoiris/formas/semilla/acierto_03.wav	¡Muy bien, Maxi!
+voces/arcoiris/formas/semilla/victoria_01.wav	¡Todas las formas en su casita! ¡Eres un campeón, Maxi!
+voces/arcoiris/formas/semilla/victoria_02.wav	¡Lo lograste, Maxi! ¡Bravo!
+voces/arcoiris/formas/semilla/risa_01.wav	¡Jijiji! ¡Cosquillas!
+voces/arcoiris/formas/semilla/risa_02.wav	¡Jajaja! ¡Qué risa!
+voces/arcoiris/formas/brote/acierto_01.wav	¡Encajó!
+voces/arcoiris/formas/brote/acierto_02.wav	¡Qué bien, Nicole!
+voces/arcoiris/formas/brote/acierto_03.wav	¡Perfecto!
+voces/arcoiris/formas/brote/no_es_este_01.wav	Esa no calza ahí. ¡Prueba otra!
+voces/arcoiris/formas/brote/no_es_este_02.wav	Casi, casi. ¡Mira bien la forma!
+voces/arcoiris/formas/brote/derrota_gag_01.wav	¡Uy! Las formas se amontonaron y se cayeron. ¡Jajaja! Vamos otra vez.
+voces/arcoiris/formas/brote/victoria_01.wav	¡Todas las formas en su lugar! ¡Eres increíble, Nicole!
+voces/arcoiris/formas/brote/victoria_02.wav	¡Lo lograste, Nicole! ¡Qué lindo quedó!
+voces/arcoiris/formas/estrella/acierto_01.wav	¡Calzó perfecto!
+voces/arcoiris/formas/estrella/acierto_02.wav	¡Buena, Sofía!
+voces/arcoiris/formas/estrella/acierto_03.wav	¡Esa era!
+voces/arcoiris/formas/estrella/no_es_este_01.wav	Esa pieza no va ahí. Mira bien la sombra.
+voces/arcoiris/formas/estrella/no_es_este_02.wav	Casi... prueba con otra pieza.
+voces/arcoiris/formas/estrella/figura_completa_01.wav	¡Figura lista!
+voces/arcoiris/formas/estrella/figura_completa_02.wav	¡Armaste otra figura!
+voces/arcoiris/formas/estrella/derrota_gag_01.wav	¡Jaja! ¡Las piezas se pusieron a bailar y se desordenaron! Vamos, tú puedes armarlas.
+voces/arcoiris/formas/estrella/victoria_01.wav	¡Armaste todas las figuras, Sofía! Eres una maestra de las formas.
+voces/arcoiris/formas/estrella/victoria_02.wav	¡Increíble! Con esa cabeza vas a liderar la misión.
+voces/arcoiris/formas/estrella/girar_01.wav	¡Es la pieza correcta, pero está chueca! Tócala para girarla.
+voces/arcoiris/formas/figuras/dino.wav	¡Roaaar! ¡Armaste un dinosaurio gigante!
+voces/arcoiris/formas/figuras/autito.wav	¡Brum, brum! ¡Armaste tu autito!
+voces/arcoiris/formas/figuras/casa.wav	¡Una casita!
+voces/arcoiris/formas/figuras/helado.wav	¡Un helado de frutilla!
+voces/arcoiris/formas/figuras/arbol.wav	¡Un árbol!
+voces/arcoiris/formas/figuras/cohete.wav	¡Un cohete listo para despegar!
+voces/arcoiris/formas/figuras/barco.wav	¡Un barquito velero!
+voces/arcoiris/formas/figuras/pez.wav	¡Un pez! ¡Blub, blub!
+voces/arcoiris/formas/figuras/abeto.wav	¡Un pino de Navidad!
+voces/arcoiris/formas/figuras/corona.wav	¡Una corona brillante! ¡Te queda preciosa!
+voces/arcoiris/formas/brote/especial_01.wav	¡El corazón dorado! ¡Te mando un corazón gigante, Nicole!
+voces/arcoiris/formas/semilla/intro_z5.wav	¡Maxi, vamos a armar algo gigante! ¡Pon cada pieza donde va!
+voces/arcoiris/formas/brote/intro_z5.wav	¡Nicole, armemos un jardín! Pon cada pieza en su lugar. Y dicen que hay un corazón dorado escondido...
+voces/arcoiris/formas/estrella/intro_dorado.wav	¡El reto dorado! El rectángulo clásico con las doce piezas. A muchos grandes les cuesta. Si te cansas, vuelve otro día y sigues donde quedaste.
+voces/arcoiris/formas/estrella/pista_usada_01.wav	Te ayudo con una pieza. ¡Esa ayudita cuesta una estrellita!
+voces/arcoiris/formas/estrella/espejo_sin_pieza_01.wav	Primero toca la pieza que quieres dar vuelta, y después el espejo.
+voces/arcoiris/formas/estrella/regalo_01.wav	Te regalo una pieza para empezar. ¡Tú puedes!
+voces/arcoiris/formas/estrella/prueba_superada_01.wav	¡Prueba superada! Vamos con la siguiente.
+voces/arcoiris/formas/estrella/prueba_superada_02.wav	¡Lo hiciste! Pero todavía queda otra.
+voces/arcoiris/formas/estrella/victoria_dorado_01.wav	¡Completaste el reto dorado! Eres una verdadera maestra de las formas, Sofía.
+voces/arcoiris/formas/estrella/intro_arma_z1.wav	¡Sofía, mira la tarjeta! Es la iglesia de Castro, en Chiloé: veinticinco piezas y sin líneas de ayuda. Si una pieza llega chueca, tócala para girarla.
+voces/arcoiris/formas/estrella/intro_arma_z2.wav	¡Los palafitos de Castro, casitas sobre el agua! Tres casas con sus pilotes. ¡Mira bien la tarjeta!
+voces/arcoiris/formas/estrella/intro_arma_z3.wav	¡Santiago con la cordillera! Arma la Torre Entel y el Costanera Center. Ojo, que hay piezas muy parecidas.
+voces/arcoiris/formas/estrella/intro_arma_z4.wav	¡Viajamos a Rapa Nui! Arma los moáis con sus sombreros rojos. Fíjate bien en el tamaño de cada pieza.
+voces/arcoiris/formas/estrella/intro_arma_z5.wav	¡El gran desafío de la cima! El castillo del cerro Santa Lucía, ¡con treinta piezas! ¡Tú puedes, Sofía!
+voces/arcoiris/formas/brote/intro_arma_z1.wav	¡Hola, Nicole! Vamos a armar una casita. Pon cada forma en su sombra del mismo color.
+voces/arcoiris/formas/brote/intro_arma_z2.wav	¡Nicole, armemos una micro, con sus ventanas y sus ruedas! ¡Brum, brum!
+voces/arcoiris/formas/brote/intro_arma_z3.wav	Ahora un faro, al lado del mar. Las sombras no tienen color. ¡Mira bien la forma, Nicole!
+voces/arcoiris/formas/brote/intro_arma_z4.wav	¡Un tren! Tiene ruedas grandes y ruedas chiquititas. Acerca cada pieza y se endereza solita.
+voces/arcoiris/formas/semilla/intro_arma_z1.wav	¡Hola, Maxi! Vamos a armar una casita con su sol. ¡Pon cada pieza donde va!
+voces/arcoiris/formas/semilla/intro_arma_z2.wav	¡Maxi, armemos un barquito! Y escucha cómo se ríen las piezas.
+voces/arcoiris/formas/semilla/intro_arma_z3.wav	¡Un arbolito de Navidad con su estrella! ¿Me ayudas a armarlo?
+voces/arcoiris/formas/semilla/intro_arma_z4.wav	¡Mira, Maxi! Un monito de nieve, grande y chiquitito. ¡Armémoslo!
+voces/arcoiris/formas/figuras/iglesia_chiloe.wav	¡Armaste la iglesia de Chiloé! ¡Qué linda te quedó!
+voces/arcoiris/formas/figuras/palafitos.wav	¡Los palafitos! Casitas que viven sobre el agua.
+voces/arcoiris/formas/figuras/santiago.wav	¡Santiago con su cordillera nevada! ¡Increíble!
+voces/arcoiris/formas/figuras/moais.wav	¡Los moáis de Rapa Nui! Llevan cientos de años mirando el cielo.
+voces/arcoiris/formas/figuras/castillo_santa_lucia.wav	¡El castillo del cerro Santa Lucía! Sofía, eres la reina de las formas.
+voces/arcoiris/formas/figuras/micro.wav	¡Una micro! ¡Todos arriba!
+voces/arcoiris/formas/figuras/faro.wav	¡Un faro! Su luz guía a los barcos de noche.
+voces/arcoiris/formas/figuras/tren.wav	¡Chu, chu! ¡Armaste un tren!
+voces/arcoiris/formas/figuras/monito_nieve.wav	¡Un monito de nieve! ¡Brrr, qué frío!
+voces/arcoiris/formas/estrella/intro_bandera_primero.wav	¡Sofía, primero una bandera, para calentar los dedos! Cada pieza va en su color. Si una llega chueca, tócala para girarla.
+voces/arcoiris/mapa/zona_1_llegada.wav	¡Este es el Claro del Trébol! ¿Ven la frutilla gigante? Está grisecita... ¡aquí se escondió el rojo!
+voces/arcoiris/mapa/zona_1_completada.wav	¡Volvió el rojo! Mírenme, mírenme... ¡ahora soy rojo frutilla!
+voces/arcoiris/mapa/zona_2_llegada.wav	¡Los Charcos Saltarines! La gelatina de limón tiembla porque le falta el amarillo. ¿Me ayudan?
+voces/arcoiris/mapa/zona_2_completada.wav	¡Volvió el amarillo! Ahora soy... ¡amarillo limón! ¡Brillo como un sol!
+voces/arcoiris/mapa/zona_3_llegada.wav	El Bosque de Chupetines. Mis chupetines perdieron su azul... ¡vamos a buscarlo!
+voces/arcoiris/mapa/zona_3_completada.wav	¡Volvió el azul! Ahora soy... ¡azul chupetín!
+voces/arcoiris/mapa/zona_4_llegada.wav	¡Los Islotes Flotantes! Flotan en una laguna de soda... y aquí se escondieron el verde y el naranja.
+voces/arcoiris/mapa/zona_4_completada.wav	¡Volvieron el verde y el naranja! Ahora soy... ¡verde menta con pintitas naranjas!
+voces/arcoiris/mapa/zona_5_llegada.wav	¡La Cima del Arcoíris! Aquí arriba duerme el violeta... y el brillo de todo mi planeta.
+voces/arcoiris/mapa/zona_5_completada.wav	¡Volvió el violeta! ¡Y el brillo! Ahora soy... ¡arcoíris de pies a cabeza!
+voces/arcoiris/mapa/juego_lluvia.wav	¡Lluvia de colores!
+voces/arcoiris/mapa/juego_formas.wav	¡Formas traviesas!
+voces/arcoiris/mapa/juego_parejas.wav	¡Parejas de Coco!
+voces/arcoiris/mapa/juego_pinta.wav	¡Pinta con Coco!
+voces/arcoiris/mapa/bienvenida.wav	¡Bienvenidos a mi Planeta Arcoíris! Se le perdieron los colores. Toca un rincón, y elige un juego para devolvérselos.
+voces/arcoiris/mapa/zona_dormida.wav	Ese rincón está dormidito, le falta color. ¡Juega todos los juegos de este lado y lo despertamos!
+voces/arcoiris/mapa/estacion_pronto.wav	¡Este juego todavía se está pintando! Prueba otro.
+voces/arcoiris/mapa/dorado_disponible.wav	¡Sofía! Apareció un reto dorado. Tócalo si te atreves.
+voces/arcoiris/mapa/zona_1_regalo.wav	Les regalo mi pincel rojo. ¡Cuélguenlo en su nave!
+voces/arcoiris/mapa/zona_2_regalo.wav	Tomen: una gota dorada saltarina. ¡Cuidado, que rebota! Boing.
+voces/arcoiris/mapa/zona_3_regalo.wav	Un chupetín espiral azul, para su nave. ¡Pero no se lo coman, eh!
+voces/arcoiris/mapa/zona_4_regalo.wav	Les regalo una estrella flotante, verde y naranja. ¡Suéltenla y miren cómo flota!
+voces/arcoiris/mapa/zona_5_regalo.wav	El plumón arcoíris de la cima. Es mi favorito... ¡y ahora es de ustedes!
+voces/arcoiris/mapa/zona_dormida_02.wav	Shhh... ese rincón está durmiendo siesta. ¡Lo despertamos cuando terminemos por acá!
+voces/arcoiris/mapa/estacion_repetida_01.wav	¡Otra vez! ¡Me encanta!
+voces/arcoiris/mapa/estacion_repetida_02.wav	¡Este juego de nuevo! ¡Yupi!
+voces/arcoiris/mapa/estacion_repetida_03.wav	¿Jugamos otra vez? Ahora soy... ¡verde de alegría!
+voces/arcoiris/mapa/juego_taller.wav	¡El taller de pinturas de Coco!
+voces/arcoiris/mapa/dorado_entrar.wav	¡Entramos al reto dorado! Ahora soy... ¡dorada de la emoción! ¡Vamos, campeona!

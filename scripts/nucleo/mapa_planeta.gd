@@ -90,6 +90,8 @@ static var _zona_elegida := {}
 static var _ruta_por_defecto := ""
 ## F4: el PO puede abrir todas las zonas para revisar variantes sin jugar las anteriores.
 static var todo_abierto := false
+## «¿Volvemos al mapa?» se dice una vez por sesion (narracion-cometa.md §5.4).
+static var _volver_mapa_dicho := false
 
 
 ## F4 o el modo dios de Ajustes (`Progreso.modo_dios`): todas las zonas y dorados abiertos.
@@ -403,7 +405,22 @@ func _celebrar_cambios() -> void:
 		celebracion_zona_terminada.emit()
 		return
 	if previo == null:
-		_decir_en_orden([_voz_de(voces.get("bienvenida", ""))], 0.5)
+		# Primera visita del hermano: Cometa narra la llegada (narracion-cometa.md §2.2 y §3.1) y despues
+		# suena la bienvenida del planeta. Encolado: si viene del viaje, espera a que termine la
+		# narracion de la presentacion del planeta.
+		var lineas: Array = []
+		var momento := "mapa:%s:primera_visita" % planeta_id
+		var progreso := get_node_or_null("/root/Progreso")
+		if progreso != null and not progreso.cinematica_vista(momento):
+			lineas = Narracion.lineas(momento)
+			progreso.marcar_cinematica_vista(momento)
+		var bienvenida := _voz_de(voces.get("bienvenida", ""))
+		if bienvenida != "":
+			lineas.append(bienvenida if bienvenida.begins_with("res://") else PREFIJO_AUDIO + bienvenida)
+		var audio := get_node_or_null("/root/Audio")
+		if audio != null:
+			_id_voces += 1
+			audio.encolar_voces(lineas)
 		return
 	var lista: Array = []
 	var todas_completas := true
@@ -1221,6 +1238,11 @@ func _volver_al_mapa_estelar() -> void:
 			progreso.limpiar_equipo()
 		get_tree().change_scene_to_file(RUTA_SELECCION)
 		return
+	# «¿Volvemos al mapa? Todo lo que jugaron queda guardado.» (narracion-cometa.md §5.4), una vez por sesion.
+	var audio := get_node_or_null("/root/Audio")
+	if audio != null and not _volver_mapa_dicho:
+		_volver_mapa_dicho = true
+		audio.reproducir_voces(Narracion.lineas("menu:volver_mapa"))
 	get_tree().change_scene_to_file(RUTA_MAPA_ESTELAR)
 
 

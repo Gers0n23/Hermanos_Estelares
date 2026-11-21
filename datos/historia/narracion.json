@@ -1,0 +1,44 @@
+{
+  "_fuente": "docs/guiones/narracion-cometa.md (aprobado por el PO el 21-Nov-2026). Cada momento es una lista de lineas que Cometa dice en orden (Audio.reproducir_voces / encolar_voces). Rutas relativas a assets/audio/. 'escena' dice quien lo reproduce hoy; 'pendiente' = la escena todavia no existe en el juego.",
+  "momentos": {
+    "menu:titulo_primera_vez": {"escena": "titulo.gd (primera vez de la familia)", "lineas": ["voces/nucleo/titulo_primera_vez.wav"]},
+    "menu:titulo_vuelta": {"escena": "titulo.gd (primera pantalla de titulo de cada sesion, desde la 2.a vez)", "lineas": ["voces/nucleo/titulo_vuelta_01.wav"]},
+    "menu:seleccion_maxi": {"escena": "seleccion_personaje.gd (al tocar la tarjeta)", "lineas": ["voces/nucleo/seleccion_maxi.wav"]},
+    "menu:seleccion_nicole": {"escena": "seleccion_personaje.gd (al tocar la tarjeta)", "lineas": ["voces/nucleo/seleccion_nicole.wav"]},
+    "menu:seleccion_sofia": {"escena": "seleccion_personaje.gd (al tocar la tarjeta)", "lineas": ["voces/nucleo/seleccion_sofia.wav"]},
+    "menu:mapa_primera_vez": {"escena": "mapa_estelar.gd (primera vez de la familia)", "lineas": ["voces/nucleo/mapa_primera_vez_01.wav"], "nota": "mapa_primera_vez_02 («allá, lejito, el planeta del Coleccionauta») espera a que el planeta del Coleccionauta se dibuje en el Mapa Estelar (HE-131): hoy no hay nada a donde mirar."},
+    "menu:recuerdo_arcoiris_gris": {"escena": "mapa_estelar.gd (una vez por sesion, desde la 2.a visita)", "lineas": ["voces/nucleo/recuerdo_arcoiris_gris.wav"]},
+    "menu:recuerdo_arcoiris_pieza": {"escena": "mapa_estelar.gd", "lineas": ["voces/nucleo/recuerdo_arcoiris_pieza.wav"]},
+    "menu:recuerdo_arcoiris_completo": {"escena": "mapa_estelar.gd", "lineas": ["voces/nucleo/recuerdo_arcoiris_completo.wav"]},
+    "menu:recuerdo_planeta": {"escena": "mapa_estelar.gd", "lineas": ["voces/nucleo/recuerdo_planeta.wav"]},
+    "menu:mapa_lejos": {"escena": "mapa_estelar.gd (tocar un planeta lejano que no es el destino en espera; una vez por visita)", "lineas": ["voces/nucleo/mapa_lejos.wav"]},
+    "menu:mapa_coleccionauta": {"escena": "pendiente: el planeta del Coleccionauta no esta en el Mapa Estelar (HE-131)", "lineas": ["voces/nucleo/mapa_coleccionauta.wav"]},
+    "menu:volver_mapa": {"escena": "mapa_planeta.gd (flecha de volver al Mapa Estelar; una vez por sesion)", "lineas": ["voces/nucleo/volver_mapa.wav"]},
+    "menu:despedida": {"escena": "pendiente: el juego no tiene boton de salir", "lineas": ["voces/nucleo/despedida.wav"]},
+
+    "intro:prologo": {"escena": "pendiente: cinematica de la intro (no existe en el juego)", "lineas": ["voces/historia/narracion/narr_prologo_01.wav", "voces/historia/narracion/narr_prologo_02.wav", "voces/historia/narracion/narr_prologo_03.wav", "voces/historia/narracion/narr_prologo_04.wav", "voces/historia/narracion/narr_prologo_05.wav"]},
+    "intro:antes_coleccionauta": {"escena": "pendiente: intro", "lineas": ["voces/historia/narracion/narr_intro_antes_coleccionauta.wav"]},
+    "intro:despues_destello": {"escena": "pendiente: intro", "lineas": ["voces/historia/narracion/narr_intro_despues_destello.wav", "voces/historia/narracion/narr_intro_yo.wav"]},
+    "intro:llamada_abre": {"escena": "pendiente: intro (videollamada)", "lineas": ["voces/historia/narracion/narr_intro_llamada_abre.wav"]},
+    "intro:llamada_cierra": {"escena": "pendiente: intro (videollamada)", "lineas": ["voces/historia/narracion/narr_intro_llamada_cierra.wav"]},
+
+    "viaje:tierra_arcoiris:despegue": {"escena": "viaje_arcade.gd (antes del juego, la primera vez de cada hermano en la ruta)", "lineas": ["voces/historia/narracion/narr_viaje_tierra_01.wav", "voces/historia/narracion/narr_viaje_tierra_02.wav", "voces/historia/narracion/narr_viaje_tierra_03.wav"]},
+    "viaje:tierra_arcoiris:presentacion": {"escena": "viaje_arcade.gd (sobre el video de presentacion; hoy la ruta Tierra -> Arcoiris no tiene video de llegada, asi que la presentacion no se ve: HE-140)", "lineas": ["voces/historia/narracion/narr_arcoiris_presenta_01.wav", "voces/historia/narracion/narr_arcoiris_presenta_02.wav"]},
+    "viaje:arcoiris_animalia:despegue": {"escena": "viaje_arcade.gd (sobre el video de despegue, la primera vez de cada hermano en la ruta)", "lineas": ["voces/historia/narracion/narr_viaje_animalia_01.wav", "voces/historia/narracion/narr_album_coco.wav", "voces/historia/narracion/narr_viaje_animalia_02.wav", "voces/historia/narracion/narr_viaje_animalia_03.wav"]},
+    "viaje:arcoiris_animalia:presentacion": {"escena": "viaje_arcade.gd (sobre el video de presentacion de Animalia)", "lineas": ["voces/historia/narracion/narr_animalia_presenta_01.wav", "voces/historia/narracion/narr_animalia_presenta_02.wav"]},
+
+    "mapa:arcoiris:primera_visita": {"escena": "mapa_planeta.gd (primera visita de cada hermano, antes de la bienvenida de Coco)", "lineas": ["voces/historia/narracion/narr_arcoiris_mapa_01.wav", "voces/historia/narracion/narr_arcoiris_mapa_02.wav"]},
+    "mapa:animalia:primera_visita": {"escena": "mapa_planeta.gd (primera visita de cada hermano, antes de la bienvenida)", "lineas": ["voces/historia/narracion/narr_animalia_aterriza.wav", "voces/historia/narracion/narr_animalia_anfitrion.wav", "voces/historia/narracion/narr_animalia_pista.wav"]},
+
+    "arcoiris:taller": {"escena": "pendiente: video del taller (HE-133)", "lineas": ["voces/historia/narracion/narr_taller_1_01.wav", "voces/historia/narracion/narr_taller_1_02.wav"]},
+    "arcoiris:llamada_cierra": {"escena": "pendiente: videollamada de Arcoiris", "lineas": ["voces/historia/narracion/narr_arcoiris_llamada_cierra.wav"]},
+    "arcoiris:batalla_presenta": {"escena": "pendiente: la batalla de Arcoiris no esta en el juego (escenas/nucleo/batalla.tscn no existe)", "lineas": ["voces/historia/narracion/narr_batalla_presenta_01.wav", "voces/historia/narracion/narr_batalla_presenta_02.wav", "voces/historia/narracion/narr_batalla_presenta_03.wav"]},
+    "arcoiris:batalla_ganada": {"escena": "pendiente: batalla", "lineas": ["voces/historia/narracion/narr_batalla_ganada.wav"]},
+    "arcoiris:cierre_llamada_cierra": {"escena": "pendiente: cierre de Arcoiris (HE-83/HE-85)", "lineas": ["voces/historia/narracion/narr_cierre_llamada_cierra.wav"]},
+    "arcoiris:cap1_fin": {"escena": "pendiente: cierre de Arcoiris, rama A", "lineas": ["voces/historia/narracion/narr_cap1_fin.wav"]},
+    "animalia:taller": {"escena": "pendiente: video del taller (HE-133)", "lineas": ["voces/historia/narracion/narr_taller_2_01.wav", "voces/historia/narracion/narr_taller_2_02.wav"]},
+    "animalia:llamada_abre": {"escena": "pendiente: videollamada de Animalia", "lineas": ["voces/historia/narracion/narr_animalia_llamada_abre.wav"]},
+    "animalia:llamada_cierra": {"escena": "pendiente: videollamada de Animalia", "lineas": ["voces/historia/narracion/narr_animalia_llamada_cierra.wav"]},
+    "animalia:album": {"escena": "pendiente: cierre de Animalia", "lineas": ["voces/historia/narracion/narr_album_toby.wav"]}
+  }
+}
