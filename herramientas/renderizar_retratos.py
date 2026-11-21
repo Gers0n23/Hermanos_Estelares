@@ -4,7 +4,7 @@ PO 27-Sep-2026: los personajes oficiales son los cortados en Krita, no los SVG d
 Hermanos: compone las piezas del rig cutout (assets/sprites/preview_<p>_rig/) con los
 mismos pivotes y z_index que el rig de Godot:
   <p>_base.png        pose de reposo (idéntica a la base recortada)
-  <p>_celebracion.png brazos arriba en V, girando cada pieza en sus articulaciones
+  (<p>_celebracion.png: ya no lo genera este script; ver herramientas/renderizar_celebraciones.py)
 Cometa: recortes de su hoja de referencia (herramientas/extraer_base.py) en
 assets/generadas/cometa_recortes/ -> cometa_base.png (frente) y cometa_saludo.png.
 
@@ -110,12 +110,11 @@ def hermano(p: str) -> None:
     reposo = componer(p, {})
     caja = reposo.getchannel("A").point(lambda a: 255 if a > 20 else 0).getbbox()
     escala = ALTURA / (caja[3] - caja[1])
-    for sufijo, pose in (("base", {}), ("celebracion", CELEBRACION)):
-        fig = reposo if not pose else componer(p, pose)
-        img = colocar(fig, escala, caja)
-        img.save(DESTINO / f"{p}_{sufijo}.png")
-        cortes = img.getchannel("A").point(lambda a: 255 if a > 20 else 0).getbbox()
-        print(f"  {p}_{sufijo}.png  escala {escala:.3f}  caja {cortes}")
+    # la celebración ya no sale de este rig: la genera herramientas/renderizar_celebraciones.py (HE-143)
+    img = colocar(reposo, escala, caja)
+    img.save(DESTINO / f"{p}_base.png")
+    cortes = img.getchannel("A").point(lambda a: 255 if a > 20 else 0).getbbox()
+    print(f"  {p}_base.png  escala {escala:.3f}  caja {cortes}")
 
 
 def cometa() -> None:

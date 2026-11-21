@@ -1,0 +1,4 @@
+Redraw EXACTLY the same child character from the first reference image (same face, same hair, same bubble helmet, same space suit, same colors, same proportions, same cartoon line art style and line thickness), front view, full body from helmet to boots, standing on both feet in the same leg pose.
+NEW POSE: "we did it!" victory cheer, both upper arms out to the sides at shoulder height and both elbows bent at a right angle so the forearms point straight up, closed happy fists at the height of the helmet, like a strong-pose cheer. Shoulders and elbows bend naturally, sleeves fold softly at the joints, anatomically natural for a child, no stiff or broken joints. Big open happy smile.
+The second reference image is the official character sheet: keep the suit details identical to it.
+Background: plain flat pure white, no shadow on the floor, no other objects, no text. Single character centered, entire body visible with margin around it.

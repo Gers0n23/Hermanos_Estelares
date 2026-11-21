@@ -288,6 +288,28 @@ PROVEEDORES = {
 }
 
 
+def estimar_costo(args) -> float:
+    """Costo aproximado por imagen (tarifas publicadas, nov-2026). Regla del PO: nunca
+    llamar a una API pagada sin pasar antes por --estimar y su OK sobre el costo."""
+    import math
+    if args.proveedor == "fal":
+        # FLUX.2 [pro]: $0,03 el primer MP de salida + $0,015 por cada MP extra de
+        # entrada (anclas) y salida, redondeado hacia arriba.
+        mp_entrada = 0.0
+        for a in args.ancla:
+            from PIL import Image
+            with Image.open(a) as im:
+                mp_entrada += im.width * im.height / 1e6
+        return 0.03 + 0.015 * math.ceil(mp_entrada)
+    if args.proveedor == "fal-gpt2":
+        return {"low": 0.015, "medium": 0.06, "high": 0.22}[args.calidad]
+    if args.proveedor == "fal-nano":
+        return 0.15
+    if args.proveedor == "fal-fill":
+        return 0.05
+    return 0.134  # gemini pro
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -306,7 +328,14 @@ def main() -> None:
     p.add_argument("--aspecto", default="1:1", help=f"Uno de: {', '.join(sorted(ASPECTOS))}")
     p.add_argument("--tamano", default="2K", choices=sorted(TAMANOS),
                    help="Solo aplica a gemini; en fal el tamano sale del aspecto (~1 MP)")
+    p.add_argument("--estimar", action="store_true",
+                   help="Solo imprime el costo estimado en USD y sale, SIN llamar a la API")
     args = p.parse_args()
+
+    if args.estimar:
+        print(f"COSTO ESTIMADO: USD {estimar_costo(args):.3f} por imagen "
+              f"({args.proveedor}, {len(args.ancla)} ancla(s)). No se llamo a la API.")
+        return
 
     if args.aspecto not in ASPECTOS:
         sys.exit(f"ERROR: aspecto '{args.aspecto}' no soportado. "

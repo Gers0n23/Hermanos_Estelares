@@ -1,0 +1,5 @@
+Redraw EXACTLY the same cartoon character from the first reference image (same face, same hair, same bubble helmet, same space suit, same colors, same proportions, same cartoon line art style and line thickness), front view, full body from helmet to boots.
+NEW POSE: happy victory cheer. His RIGHT arm (on the viewer's left) is raised high with a closed fist, a classic "hooray!" winner gesture, the raised arm beside the helmet with clear space between them, not overlapping the helmet. His other arm is down and relaxed at his side. He is doing a small happy jump, feet a little above the ground. Shoulders and elbows bend naturally, sleeves fold softly at the joints. Big open happy smile.
+The transparent bubble helmet stays in front of everything around the head. The suit has no zipper.
+The second reference image is the official character sheet: keep the suit details identical to it.
+Background: plain flat pure white, no shadow on the floor, no other objects, no text. Single character centered, entire body visible with margin around it.

@@ -126,6 +126,9 @@ func _draw() -> void:
 		_dibujar_imagen(_imagen, zona_foto, Color.WHITE)
 	if not hueco:
 		draw_rect(zona_foto, Color(COLOR_CONTORNO, 0.6), false, maxf(2.0, lado.x * 0.01))
+		# Esquineros solo cuando la foto llena el marco; con "contener" caerian sobre las franjas negras.
+		if ajuste_foto_real == "cubrir":
+			_dibujar_esquineros(zona_foto)
 
 	# Pie de la polaroid: numero del recuerdo (en el placeholder, grande) y edad (extra lector).
 	var y_pie := lado.y - pie * 0.5
@@ -153,11 +156,29 @@ func _draw() -> void:
 	_dibujar_brillos_dorados(lado)
 
 
+## Foto dorada (Sofia con estrellitas maximas): una estrella arriba, DENTRO del marco.
+## Antes iban pegadas a las 4 esquinas y se salian de la polaroid.
 func _dibujar_brillos_dorados(lado: Vector2) -> void:
 	if not dorado or hueco:
 		return
-	for p in [Vector2(0.0, 0.0), Vector2(lado.x, 0.0), Vector2(lado.x, lado.y), Vector2(0.0, lado.y)]:
-		Figura.dibujar(self, "estrella", DORADO, p, lado.x * 0.07, false)
+	Figura.dibujar(self, "estrella", DORADO, Vector2(lado.x * 0.5, lado.x * 0.035), lado.x * 0.045, false)
+
+
+## Esquineros de album: cuatro triangulos crema que sujetan la foto en cada esquina de la zona.
+func _dibujar_esquineros(zona: Rect2) -> void:
+	var s := zona.size.x * 0.12
+	var esquinas := [
+		[zona.position, Vector2(1, 1)],
+		[Vector2(zona.end.x, zona.position.y), Vector2(-1, 1)],
+		[Vector2(zona.position.x, zona.end.y), Vector2(1, -1)],
+		[zona.end, Vector2(-1, -1)],
+	]
+	for par in esquinas:
+		var p: Vector2 = par[0]
+		var d: Vector2 = par[1]
+		var puntos := PackedVector2Array([p, p + Vector2(d.x * s, 0.0), p + Vector2(0.0, d.y * s)])
+		draw_colored_polygon(puntos, Color(COLOR_PAPEL, 0.92))
+		Figura.contornear(self, puntos, maxf(2.0, size.x * 0.01))
 
 
 ## Dibuja `imagen` ({textura, region, ajuste}) dentro de `destino`: "cubrir" recorta al centro
@@ -179,7 +200,8 @@ func _dibujar_imagen(imagen: Dictionary, destino: Rect2, tinte: Color) -> void:
 		fuente.position.x += (region.size.x - fuente.size.x) / 2.0
 	else:
 		fuente.size.y = region.size.x / aspecto
-		fuente.position.y += (region.size.y - fuente.size.y) * 0.3
+		# Sesgo hacia arriba (0.1, antes 0.3): las cabezas van arriba; recortar el cuerpo es menos grave.
+		fuente.position.y += (region.size.y - fuente.size.y) * 0.1
 	draw_texture_rect_region(textura, destino, fuente, tinte)
 
 

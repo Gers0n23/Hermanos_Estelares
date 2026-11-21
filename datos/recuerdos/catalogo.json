@@ -7,10 +7,10 @@
       "color": "#4AA8FF",
       "retrato": "res://assets/sprites/personajes/maxi_base.png",
       "recorte_retrato": [
-        146,
-        62,
-        220,
-        220
+        122,
+        44,
+        268,
+        268
       ],
       "placeholder": "res://assets/recuerdos/placeholders/maxi.png",
       "recorte_placeholder": [],
@@ -21,10 +21,10 @@
       "color": "#FF5FAE",
       "retrato": "res://assets/sprites/personajes/nicole_base.png",
       "recorte_retrato": [
-        146,
-        62,
-        220,
-        220
+        122,
+        44,
+        268,
+        268
       ],
       "placeholder": "res://assets/recuerdos/placeholders/nicole.png",
       "recorte_placeholder": [],
@@ -35,10 +35,10 @@
       "color": "#4FD8E0",
       "retrato": "res://assets/sprites/personajes/sofia_base.png",
       "recorte_retrato": [
-        146,
-        62,
-        220,
-        220
+        122,
+        44,
+        268,
+        268
       ],
       "placeholder": "res://assets/recuerdos/placeholders/sofia.png",
       "recorte_placeholder": [],

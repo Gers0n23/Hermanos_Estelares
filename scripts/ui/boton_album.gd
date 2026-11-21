@@ -62,16 +62,20 @@ func _draw() -> void:
 	var centro := size / 2.0
 	var tam := minf(size.x, size.y)
 	if nuevos:
+		# Halo dorado claro que late (antes oscuro y marron, y se cortaba abajo).
 		var pulso := 0.5 + 0.5 * sin(_tiempo * 4.0)
 		for k in 3:
-			draw_circle(centro, tam * (0.46 + k * 0.07 + pulso * 0.04), Color(DORADO, 0.22 - k * 0.06))
+			draw_circle(centro, tam * (0.40 + k * 0.05 + pulso * 0.03), Color("#FFF3B0", 0.42 - k * 0.12))
 	dibujar_libro(self, centro, tam * 0.8, _tiempo)
 	if nuevos:
-		var p := centro + Vector2(tam * 0.36, -tam * 0.34)
-		Figura.dibujar(self, "estrella", DORADO, p, tam * (0.13 + 0.02 * sin(_tiempo * 6.0)), false)
+		# Destello DENTRO de la tapa, arriba a la izquierda: nada pegado fuera del libro.
+		var p := centro + Vector2(-tam * 0.27, -tam * 0.19)
+		Figura.dibujar(self, "estrella", DORADO, p, tam * (0.09 + 0.012 * sin(_tiempo * 6.0)), false)
 
 
-## Libro-album con una polaroid en la tapa y estrellitas alrededor. `tam` ~ ancho del libro.
+## Libro-album cerrado (icono): tapa morada con lomo y anillas metalicas, etiqueta crema con una
+## foto y un corazon, y hojas asomando por la derecha. Todo queda dentro de su caja: los destellos
+## van dentro de la tapa, no sueltos alrededor. `tam` ~ ancho del libro.
 static func dibujar_libro(lienzo: CanvasItem, centro: Vector2, tam: float, tiempo := 0.0) -> void:
 	var ancho := tam
 	var alto := tam * 0.78
@@ -80,36 +84,36 @@ static func dibujar_libro(lienzo: CanvasItem, centro: Vector2, tam: float, tiemp
 	sombra.bg_color = Color(COLOR_CONTORNO, 0.3)
 	sombra.set_corner_radius_all(int(tam * 0.1))
 	lienzo.draw_style_box(sombra, Rect2(r.position + Vector2(0, tam * 0.05), r.size))
-	# hojas (borde blanco) y tapa
+	# hojas asomando por la derecha (bloque de paginas)
 	var hojas := StyleBoxFlat.new()
 	hojas.bg_color = Color("#FFF8EE")
 	hojas.set_corner_radius_all(int(tam * 0.08))
 	hojas.border_color = COLOR_CONTORNO
 	hojas.set_border_width_all(int(maxf(3.0, tam * 0.03)))
-	lienzo.draw_style_box(hojas, Rect2(r.position + Vector2(tam * 0.04, -tam * 0.03), r.size))
+	lienzo.draw_style_box(hojas, Rect2(r.position + Vector2(tam * 0.05, tam * 0.02), r.size))
+	# tapa
 	var tapa := StyleBoxFlat.new()
 	tapa.bg_color = TAPA
-	tapa.set_corner_radius_all(int(tam * 0.1))
+	tapa.set_corner_radius_all(int(tam * 0.08))
 	tapa.border_color = COLOR_CONTORNO
 	tapa.set_border_width_all(int(maxf(3.0, tam * 0.035)))
 	lienzo.draw_style_box(tapa, r)
-	# lomo
-	lienzo.draw_rect(Rect2(r.position + Vector2(tam * 0.06, tam * 0.03), Vector2(tam * 0.1, alto - tam * 0.06)), TAPA.darkened(0.25))
-	# polaroid en la tapa, ladeada
-	var c := centro + Vector2(tam * 0.06, -tam * 0.02)
-	var lado := tam * 0.42
-	var puntos := PackedVector2Array()
-	for p in [Vector2(-0.5, -0.55), Vector2(0.5, -0.55), Vector2(0.5, 0.6), Vector2(-0.5, 0.6)]:
-		puntos.append(c + (p * lado).rotated(-0.12))
-	lienzo.draw_colored_polygon(puntos, Color("#FFF8EE"))
-	Figura.contornear(lienzo, puntos, maxf(2.0, tam * 0.02))
-	var foto := PackedVector2Array()
-	for p in [Vector2(-0.4, -0.45), Vector2(0.4, -0.45), Vector2(0.4, 0.3), Vector2(-0.4, 0.3)]:
-		foto.append(c + (p * lado).rotated(-0.12))
-	lienzo.draw_colored_polygon(foto, Color("#6FD6E8"))
-	Figura.dibujar(lienzo, "corazon", Color("#F26CA8"), c + Vector2(0, -lado * 0.08), lado * 0.22, false)
-	# estrellitas alrededor
+	# lomo con anillas metalicas
+	lienzo.draw_rect(Rect2(r.position + Vector2(tam * 0.035, tam * 0.06), Vector2(tam * 0.09, alto - tam * 0.12)), TAPA.darkened(0.3))
 	for k in 3:
-		var angulo := -PI * 0.85 + k * 0.5
-		var p2 := centro + Vector2.from_angle(angulo) * tam * 0.62
-		Figura.dibujar(lienzo, "estrella", DORADO, p2, tam * (0.08 + 0.015 * sin(tiempo * 3.0 + k)), false)
+		var p := r.position + Vector2(tam * 0.04, alto * (0.28 + 0.22 * k))
+		lienzo.draw_circle(p, tam * 0.05, COLOR_CONTORNO)
+		lienzo.draw_circle(p, tam * 0.035, Color("#D9DEE8"))
+	# etiqueta crema con foto y corazon
+	var etiqueta := Rect2(r.position + Vector2(tam * 0.2, alto * 0.14), Vector2(tam * 0.6, alto * 0.72))
+	var cartel := StyleBoxFlat.new()
+	cartel.bg_color = Color("#FFF8EE")
+	cartel.set_corner_radius_all(int(tam * 0.06))
+	cartel.border_color = COLOR_CONTORNO
+	cartel.set_border_width_all(int(maxf(2.0, tam * 0.025)))
+	lienzo.draw_style_box(cartel, etiqueta)
+	var foto := Rect2(etiqueta.position + Vector2.ONE * tam * 0.06, etiqueta.size - Vector2.ONE * tam * 0.12)
+	lienzo.draw_rect(foto, Color("#6FD6E8"))
+	Figura.dibujar(lienzo, "corazon", Color("#F26CA8"), foto.get_center(), tam * 0.14, false)
+	# destello dentro de la tapa, arriba a la derecha
+	Figura.dibujar(lienzo, "estrella", DORADO, r.position + Vector2(ancho * 0.88, alto * 0.16), tam * (0.07 + 0.012 * sin(tiempo * 3.0)), false)

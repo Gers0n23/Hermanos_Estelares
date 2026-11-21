@@ -19,6 +19,14 @@ dibujados. Todos estos PNG se generan con
   PROVISIONALES de la vista frontal de sus anclas (`herramientas/extraer_base.py`) para usarlos como
   stickers "amigos" del lienzo de Pinta (ficha motor-lienzo-libre §11.3). Se reemplazan cuando
   `disenador-personajes` entregue su arte de juego.
+- `maxi_celebracion.png`, `nicole_celebracion.png`, `sofia_celebracion.png` (21-Nov-2026, HE-143):
+  poses de victoria dibujadas con IA y recortadas por pieza (brazos arriba, casco delante), aprobadas
+  por el PO. Se generan con `python herramientas/renderizar_celebraciones.py` desde
+  `assets/generadas/poses_rig/{maxi_victoria_v1,nicole_victoria_v2,sofia_victoria_v1}/`. Mismo formato
+  que los `_base`: lienzo 512×768, pies en y=720, 649 px de alto (cabeza a pies). Reemplazan a las
+  versiones planas anteriores (en el historial de git). `renderizar_retratos.py` ya **no** genera
+  `_celebracion`; solo `_base`. La versión ¡gol! de Sofía queda en `assets/generadas/poses_brazos/`
+  como alternativa.
 - `herramientas/exportar_sprites.gd` ya **no** toca esta carpeta (los SVG de
   `assets/fuentes_svg/personajes/` quedan como historia).
 

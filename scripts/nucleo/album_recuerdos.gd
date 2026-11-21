@@ -4,9 +4,10 @@ extends Node2D
 ##
 ## Se abre desde la seleccion de personaje con el boton libro-album; cualquiera lo mira, sin
 ## elegir perfil antes. Tres vistas, todo por iconos y voz (GDD §6, sin texto obligatorio):
-## - PORTADA: 4 tapas grandes (Maxi, Nicole, Sofia y Familia) con la cara de cada uno.
-## - PAGINA: cuadricula de 2x3 polaroids (>=200x238 px, ficha: >180) en orden de edad. Se pasa
-##   de pagina con flechas grandes o deslizando. Los huecos son marcos con estrella y "?": al
+## - PORTADA: cuatro albumes apilados (Maxi, Nicole, Sofia y Familia). Cada tapa tiene la cara,
+##   el nombre y cuantas fotos hay encontradas en numeros. Sin estrellas.
+## - DOBLE PAGINA: el album abierto. Dos paginas con 4 polaroids cada una (8 por vista). Se pasa
+##   de vista con flechas (chevron) o deslizando. Los huecos son marcos con estrella y "?": al
 ##   tocarlos Cometa da la pista (si su linea ya esta grabada; si no, animacion sola).
 ## - FOTO ABIERTA: grande, vuelve a sonar la voz de la familia; boton grande de cerrar.
 ## Las fotos nuevas brillan la primera vez que se ven en su pagina y quedan marcadas como vistas.
@@ -16,9 +17,11 @@ extends Node2D
 ##
 ## UX HE-44 (03-Oct-2026, PROVISIONAL):
 ## - R6: las fotos rebotan al presionar pero actuan al SOLTAR: si el dedo casi no se movio, abren la
-##   foto; si se deslizo, pasan de pagina (antes el deslizar casi nunca funcionaba).
-## - R10: boton de Cometa de 116 px abajo a la derecha, como en los minijuegos: repite la instruccion
-##   (invitacion en la portada, la linea de la tapa en la pagina).
+##   foto; si se deslizo, pasan de pagina.
+## - R10: boton de Cometa de 116 px abajo a la derecha, como en los minijuegos: repite la instruccion.
+##
+## UX (21-Nov-2026, PO): sin icono de libro arriba en la portada; el boton de volver a los albumes
+## es un estante de portadas (no una flecha) para que no se confunda con las flechas de pagina.
 
 const FotoRecuerdo := preload("res://scripts/ui/foto_recuerdo.gd")
 const BotonAlbum := preload("res://scripts/ui/boton_album.gd")
@@ -34,15 +37,21 @@ const COLOR_PAPEL := Color("#FFF8EE")
 const DORADO := Color("#FFCB3D")
 const TURQUESA := Color("#45C6C0")
 const ALBUMES := ["maxi", "nicole", "sofia", "familia"]
+const NOMBRES := {"maxi": "Maxi", "nicole": "Nicole", "sofia": "Sofía", "familia": "Familia"}
+## Inclinacion de cada album en la pila de la portada (grados): que parezcan puestos a mano.
+const ANGULOS := [-2.0, 1.5, -1.0, 2.5]
 const RETRATOS := {
 	"maxi": "res://assets/sprites/personajes/maxi_base.png",
 	"nicole": "res://assets/sprites/personajes/nicole_base.png",
 	"sofia": "res://assets/sprites/personajes/sofia_base.png",
 }
-const RECORTE_CARA := Rect2(146, 62, 220, 220)
-const TAM_TAPA := Vector2(250, 340)
+## Encuadre de la cabeza (casco, pelo y mentón) en el retrato de 512×768. Se recorta en círculo.
+## Igual que `recorte_retrato` de datos/recuerdos/catalogo.json.
+const RECORTE_CARA := Rect2(122, 44, 268, 268)
+const TAM_TAPA := Vector2(230, 310)
 const TAM_CELDA := Vector2(200, 238)
-const POR_PAGINA := 6
+## Doble pagina: 4 fotos por pagina, dos paginas por vista.
+const POR_PAGINA := 8
 const DESLIZAR_MIN := 90.0
 const TOQUE_MAX := 20.0
 const RUTA_COMETA := "res://assets/sprites/personajes/cometa_base.png"
@@ -113,26 +122,33 @@ func _construir() -> void:
 	_ui.gui_input.connect(_al_deslizar)
 
 	_capa_portada = _capa("portada")
-	var x0 := (1280.0 - (TAM_TAPA.x * 4.0 + 40.0 * 3.0)) / 2.0
 	for i in ALBUMES.size():
 		var album: String = ALBUMES[i]
-		var tapa := _control(_capa_portada, Rect2(Vector2(x0 + i * (TAM_TAPA.x + 40.0), 210), TAM_TAPA), _dibujar_tapa.bind(album))
+		var centro_x := 640.0 + (i - 1.5) * 260.0
+		var y := 200.0 + (6.0 if i % 2 == 1 else -4.0)
+		var tapa := _control(_capa_portada, Rect2(Vector2(centro_x - TAM_TAPA.x / 2.0, y), TAM_TAPA), _dibujar_tapa.bind(album))
 		tapa.name = "tapa_%s" % album
-		tapa.tooltip_text = "Álbum de %s" % album.capitalize()
+		tapa.rotation = deg_to_rad(ANGULOS[i])
+		tapa.tooltip_text = "Álbum de %s" % NOMBRES[album]
 		tapa.gui_input.connect(_al_tocar.bind(abrir_album.bind(album)))
 		_tapas[album] = tapa
-	var libro := _control(_capa_portada, Rect2(560, 40, 160, 140), func(c: Control) -> void:
-		BotonAlbum.dibujar_libro(c, c.size / 2.0, 130.0, _tiempo))
-	libro.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	_capa_pagina = _capa("pagina")
+	# Album abierto (doble pagina): es el primer hijo, se dibuja debajo de todo lo demas.
+	var hoja := _control(_capa_pagina, Rect2(160, 140, 960, 575), _dibujar_hoja)
+	hoja.name = "hoja"
+	hoja.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var cabecera := _control(_capa_pagina, Rect2(580, 10, 120, 120), _dibujar_cabecera)
 	cabecera.name = "cabecera"
 	cabecera.gui_input.connect(_al_tocar.bind(_tocar_cabecera))
 	for k in POR_PAGINA:
-		var columna := k % 3
-		var fila := k / 3
-		var centro := Vector2(640.0 + (columna - 1) * 270.0, 268.0 + fila * 290.0)
+		# k 0-3: pagina izquierda; 4-7: pagina derecha. Dos columnas por pagina.
+		var lado_pagina := (k / 4) % 2
+		var i := k % 4
+		var columna := i % 2
+		var fila := i / 2
+		var x_pagina := 400.0 if lado_pagina == 0 else 880.0
+		var centro := Vector2(x_pagina + (columna * 2 - 1) * 115.0, 310.0 + fila * 260.0)
 		var celda: Control = FotoRecuerdo.new()
 		celda.name = "celda_%d" % k
 		celda.size = TAM_CELDA
@@ -142,12 +158,12 @@ func _construir() -> void:
 		celda.mouse_filter = Control.MOUSE_FILTER_STOP
 		celda.gui_input.connect(_al_tocar_celda.bind(k))
 		_celdas.append(celda)
-	_flecha_izq = _boton(_capa_pagina, Rect2(40, 300, 120, 120), Color("#FFF8EE"), _dibujar_flecha.bind(-1.0), pasar_pagina.bind(-1))
+	_flecha_izq = _boton(_capa_pagina, Rect2(24, 300, 120, 120), COLOR_PAPEL, _dibujar_flecha.bind(-1.0), pasar_pagina.bind(-1))
 	_flecha_izq.name = "flecha_izq"
-	_flecha_der = _boton(_capa_pagina, Rect2(1120, 300, 120, 120), Color("#FFF8EE"), _dibujar_flecha.bind(1.0), pasar_pagina.bind(1))
+	_flecha_der = _boton(_capa_pagina, Rect2(1136, 300, 120, 120), COLOR_PAPEL, _dibujar_flecha.bind(1.0), pasar_pagina.bind(1))
 	_flecha_der.name = "flecha_der"
 
-	_boton_volver = _boton(_ui, Rect2(24, 20, 112, 112), Color("#FFF8EE"), _dibujar_volver, volver)
+	_boton_volver = _boton(_ui, Rect2(24, 20, 112, 112), COLOR_PAPEL, _dibujar_volver, volver)
 	_boton_volver.name = "boton_volver"
 	_boton_cometa = _boton(_ui, Rect2(1144, 584, 116, 116), Color("#CFF5F1"), _dibujar_cometa, repetir_instruccion)
 	_boton_cometa.name = "boton_cometa"
@@ -169,7 +185,7 @@ func _construir() -> void:
 	_capa_foto.add_child(_foto_grande)
 	_foto_grande.mouse_filter = Control.MOUSE_FILTER_STOP
 	_foto_grande.gui_input.connect(_al_tocar.bind(_repetir_voz))
-	var cerrar := _boton(_capa_foto, Rect2(1136, 24, 120, 120), Color("#FFF8EE"), _dibujar_cerrar, cerrar_foto)
+	var cerrar := _boton(_capa_foto, Rect2(1136, 24, 120, 120), COLOR_PAPEL, _dibujar_cerrar, cerrar_foto)
 	cerrar.name = "boton_cerrar"
 
 
@@ -289,6 +305,7 @@ func _llenar_pagina() -> void:
 	_flecha_der.visible = varias
 	_flecha_izq.modulate.a = 0.45 if pagina == 0 else 1.0
 	_flecha_der.modulate.a = 0.45 if pagina >= paginas() - 1 else 1.0
+	_capa_pagina.get_node("hoja").queue_redraw()
 	_capa_pagina.get_node("cabecera").queue_redraw()
 
 
@@ -451,6 +468,8 @@ func _repetir_voz(con_sonido := true) -> void:
 # Dibujo
 # ---------------------------------------------------------------------------
 
+## Tapa de album de tela, apilada en la portada: lomo, etiqueta crema con la cara y el nombre,
+## y el conteo en numeros abajo. Sin estrellas.
 func _dibujar_tapa(c: Control, album: String) -> void:
 	var recuerdos := _recuerdos()
 	var color: Color = recuerdos.color_album(album) if recuerdos != null else DORADO
@@ -458,58 +477,106 @@ func _dibujar_tapa(c: Control, album: String) -> void:
 	var nuevos: bool = recuerdos != null and recuerdos.album_tiene_nuevos(album)
 	if nuevos:
 		var brillo := StyleBoxFlat.new()
-		brillo.bg_color = Color(DORADO, 0.3 + 0.25 * sin(_tiempo * 4.0))
-		brillo.set_corner_radius_all(40)
+		brillo.bg_color = Color(DORADO, 0.25 + 0.2 * sin(_tiempo * 4.0))
+		brillo.set_corner_radius_all(14)
 		for lado_margen in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
-			brillo.set_expand_margin(lado_margen, 12.0)
+			brillo.set_expand_margin(lado_margen, 10.0)
 		c.draw_style_box(brillo, Rect2(Vector2.ZERO, lado))
-	var caja := StyleBoxFlat.new()
-	caja.bg_color = color
-	caja.set_corner_radius_all(34)
-	caja.border_color = COLOR_CONTORNO
-	caja.set_border_width_all(6)
-	caja.shadow_color = Color(COLOR_CONTORNO, 0.35)
-	caja.shadow_offset = Vector2(0, 8)
-	caja.shadow_size = 3
-	c.draw_style_box(caja, Rect2(Vector2.ZERO, lado))
-	# lomo del album
-	c.draw_rect(Rect2(14, 16, 18, lado.y - 32), color.darkened(0.25))
-	var centro := Vector2(lado.x / 2.0 + 8.0, 130.0)
-	c.draw_circle(centro, 92.0, COLOR_PAPEL)
-	c.draw_arc(centro, 92.0, 0.0, TAU, 48, COLOR_CONTORNO, 5.0, true)
+	# hojas del bloque de paginas, asomando por la derecha y abajo
+	var hojas := StyleBoxFlat.new()
+	hojas.bg_color = Color("#F4EBDD")
+	hojas.set_corner_radius_all(6)
+	hojas.border_color = Color("#CFC2AA")
+	hojas.set_border_width_all(2)
+	c.draw_style_box(hojas, Rect2(Vector2(8, 6), lado - Vector2(8, 4)))
+	# tapa de tela
+	var tapa := StyleBoxFlat.new()
+	tapa.bg_color = color
+	tapa.set_corner_radius_all(8)
+	tapa.border_color = color.darkened(0.35)
+	tapa.set_border_width_all(3)
+	tapa.shadow_color = Color(0.05, 0.02, 0.15, 0.5)
+	tapa.shadow_offset = Vector2(4, 8)
+	tapa.shadow_size = 10
+	c.draw_style_box(tapa, Rect2(Vector2.ZERO, lado))
+	# trama fina de tela
+	for x in range(18, int(lado.x), 6):
+		c.draw_line(Vector2(x, 0), Vector2(x, lado.y), Color(0, 0, 0, 0.035), 1.0)
+	for y in range(0, int(lado.y), 6):
+		c.draw_line(Vector2(0, y), Vector2(lado.x, y), Color(1, 1, 1, 0.03), 1.0)
+	# lomo
+	c.draw_rect(Rect2(0, 0, 16, lado.y), color.darkened(0.25))
+	c.draw_rect(Rect2(16, 0, 2, lado.y), Color(1, 1, 1, 0.22))
+	# etiqueta crema con la cara y el nombre
+	var etiqueta := Rect2(lado.x * 0.2, lado.y * 0.12, lado.x * 0.72, lado.y * 0.62)
+	var cartel := StyleBoxFlat.new()
+	cartel.bg_color = COLOR_PAPEL
+	cartel.set_corner_radius_all(4)
+	cartel.border_color = Color(COLOR_CONTORNO, 0.5)
+	cartel.set_border_width_all(2)
+	c.draw_style_box(cartel, etiqueta)
+	var centro := etiqueta.get_center() + Vector2(0, -22)
 	if album == "familia":
-		for p in [["maxi", Vector2(-46, 22), 62.0], ["sofia", Vector2(46, 18), 70.0], ["nicole", Vector2(0, -26), 66.0]]:
+		for p in [["maxi", Vector2(-30, 12), 56.0], ["sofia", Vector2(30, 10), 60.0], ["nicole", Vector2(0, -16), 66.0]]:
 			_dibujar_cara(c, str(p[0]), centro + (p[1] as Vector2), float(p[2]))
-		Figura.dibujar(c, "corazon", Color("#F26CA8"), centro + Vector2(0, 58), 18.0, false)
 	else:
-		_dibujar_cara(c, album, centro, 150.0)
-	# progreso sin numeros: una estrellita por foto visible (llena = encontrada)
+		_dibujar_cara(c, album, centro, 116.0)
+	_texto(c, NOMBRES.get(album, album), Vector2(etiqueta.position.x, etiqueta.end.y - 14.0), etiqueta.size.x, 30, COLOR_CONTORNO)
+	# conteo en numeros (encontradas / total)
 	if recuerdos != null:
-		var visibles: Array = recuerdos.recuerdos_album(album)
-		var n := visibles.size()
-		var por_fila := 7
-		for k in n:
-			var fila := k / por_fila
-			var en_fila := mini(por_fila, n - fila * por_fila)
-			var x := lado.x / 2.0 + 8.0 + (k % por_fila - (en_fila - 1) / 2.0) * 28.0
-			var y := 262.0 + fila * 30.0
-			var encontrado: bool = recuerdos.esta_encontrado(str(visibles[k]["id"]))
-			Figura.dibujar(c, "estrella", DORADO if encontrado else Color(COLOR_PAPEL, 0.45), Vector2(x, y), 12.0, false)
-	if nuevos:
-		Figura.dibujar(c, "estrella", DORADO, Vector2(lado.x - 22, 22), 26.0 + 3.0 * sin(_tiempo * 6.0), false)
+		var conteo: Array = recuerdos.contar(album)
+		_texto(c, "%d / %d" % [conteo[0], conteo[1]], Vector2(16, lado.y - 34.0), lado.x - 16.0, 26, COLOR_PAPEL)
 
 
+## Album abierto: la funda asoma alrededor y dentro hay dos paginas con su pliegue central.
+func _dibujar_hoja(c: Control) -> void:
+	var recuerdos := _recuerdos()
+	var color: Color = recuerdos.color_album(album_abierto) if recuerdos != null and album_abierto != "" else DORADO
+	var funda := StyleBoxFlat.new()
+	funda.bg_color = color
+	funda.set_corner_radius_all(14)
+	funda.border_color = color.darkened(0.35)
+	funda.set_border_width_all(4)
+	funda.shadow_color = Color(0.05, 0.02, 0.15, 0.45)
+	funda.shadow_offset = Vector2(0, 10)
+	funda.shadow_size = 14
+	c.draw_style_box(funda, Rect2(Vector2(-14, -12), c.size + Vector2(28, 30)))
+	var papel := StyleBoxFlat.new()
+	papel.bg_color = Color("#FFF9EF")
+	papel.set_corner_radius_all(4)
+	c.draw_style_box(papel, Rect2(Vector2.ZERO, c.size))
+	# pliegue central: sombra suave a cada lado del lomo
+	var mitad := c.size.x / 2.0
+	c.draw_rect(Rect2(mitad - 36.0, 0.0, 36.0, c.size.y), Color(COLOR_CONTORNO, 0.05))
+	c.draw_rect(Rect2(mitad - 6.0, 0.0, 6.0, c.size.y), Color(COLOR_CONTORNO, 0.14))
+	c.draw_rect(Rect2(mitad, 0.0, 6.0, c.size.y), Color(COLOR_CONTORNO, 0.08))
+
+
+## Cara del personaje (`tam` = diametro) recortada en circulo: nunca se sale del marco redondo.
 func _dibujar_cara(c: Control, id: String, centro: Vector2, tam: float) -> void:
 	var textura: Texture2D = _caras.get(id)
 	if textura == null:
 		Figura.dibujar(c, "estrella", DORADO, centro, tam * 0.4, true)
 		return
-	c.draw_texture_rect_region(textura, Rect2(centro - Vector2.ONE * tam / 2.0, Vector2.ONE * tam), RECORTE_CARA)
+	_retrato_circular(c, textura, RECORTE_CARA, centro, tam / 2.0)
+
+
+## Dibuja la region `region` de `textura` dentro de un circulo (poligono con UV).
+func _retrato_circular(c: Control, textura: Texture2D, region: Rect2, centro: Vector2, radio: float) -> void:
+	var puntos := PackedVector2Array()
+	var uvs := PackedVector2Array()
+	var tam_textura := textura.get_size()
+	var pasos := 48
+	for k in pasos:
+		var q := Vector2.from_angle(TAU * k / pasos)
+		puntos.append(centro + q * radio)
+		uvs.append((region.position + (q + Vector2.ONE) * 0.5 * region.size) / tam_textura)
+	c.draw_polygon(puntos, PackedColorArray([Color.WHITE]), uvs, textura)
 
 
 func _dibujar_cabecera(c: Control) -> void:
 	var recuerdos := _recuerdos()
-	var color: Color = recuerdos.color_album(album_abierto) if recuerdos != null else DORADO
+	var color: Color = recuerdos.color_album(album_abierto) if recuerdos != null and album_abierto != "" else DORADO
 	var centro := c.size / 2.0
 	c.draw_circle(centro + Vector2(0, 5), 56.0, Color(COLOR_CONTORNO, 0.3))
 	c.draw_circle(centro, 56.0, color)
@@ -518,7 +585,7 @@ func _dibujar_cabecera(c: Control) -> void:
 		_dibujar_cara(c, "maxi", centro + Vector2(-26, 10), 52.0)
 		_dibujar_cara(c, "sofia", centro + Vector2(26, 8), 56.0)
 		_dibujar_cara(c, "nicole", centro + Vector2(0, -14), 54.0)
-	else:
+	elif album_abierto != "":
 		_dibujar_cara(c, album_abierto, centro, 96.0)
 	# puntitos de pagina
 	var total := paginas()
@@ -527,13 +594,42 @@ func _dibujar_cabecera(c: Control) -> void:
 		c.draw_circle(p, 7.0, DORADO if k == pagina else Color(1, 1, 1, 0.5))
 
 
+## Flecha de pagina: chevron grueso (distinto del icono de volver).
 func _dibujar_flecha(c: Control, direccion: float) -> void:
 	var centro := c.size / 2.0
-	var puntos := PackedVector2Array()
-	for p in [Vector2(-28, -12), Vector2(0, -12), Vector2(0, -32), Vector2(32, 0), Vector2(0, 32), Vector2(0, 12), Vector2(-28, 12)]:
-		puntos.append(centro + Vector2(p.x * direccion, p.y))
-	c.draw_colored_polygon(puntos, TURQUESA)
-	Figura.contornear(c, puntos, 5.0)
+	var pts := PackedVector2Array([centro + Vector2(-14.0 * direccion, -26.0), centro + Vector2(16.0 * direccion, 0.0), centro + Vector2(-14.0 * direccion, 26.0)])
+	c.draw_polyline(pts, COLOR_CONTORNO, 40.0, true)
+	c.draw_polyline(pts, TURQUESA, 24.0, true)
+
+
+## Volver: en la portada, una casa (vuelve a la seleccion). Dentro del album, un estante con
+## cuatro portadas: vuelve a los albumes. Asi no se confunde con las flechas de pagina.
+func _dibujar_volver(c: Control) -> void:
+	var centro := c.size / 2.0
+	if vista == "portada":
+		var casa := PackedVector2Array([centro + Vector2(-30, -2), centro + Vector2(0, -32), centro + Vector2(30, -2),
+			centro + Vector2(22, -2), centro + Vector2(22, 28), centro + Vector2(-22, 28), centro + Vector2(-22, -2)])
+		c.draw_colored_polygon(casa, Color("#FF9F4A"))
+		Figura.contornear(c, casa, 5.0)
+		c.draw_rect(Rect2(centro + Vector2(-8, 8), Vector2(16, 20)), COLOR_CONTORNO)
+		return
+	var colores := [Color("#4AA8FF"), Color("#FF5FAE"), Color("#4FD8E0"), Color("#FFCB3D")]
+	for k in 4:
+		var pos := centro + Vector2(float(k % 2) * 30.0 - 15.0, float(k / 2) * 30.0 - 15.0)
+		var portada := StyleBoxFlat.new()
+		portada.bg_color = colores[k]
+		portada.set_corner_radius_all(3)
+		portada.border_color = COLOR_CONTORNO
+		portada.set_border_width_all(3)
+		c.draw_style_box(portada, Rect2(pos - Vector2(12, 14), Vector2(24, 28)))
+
+
+func _dibujar_cerrar(c: Control) -> void:
+	var centro := c.size / 2.0
+	for angulo in [PI / 4.0, -PI / 4.0]:
+		var d := Vector2.from_angle(angulo) * 28.0
+		c.draw_line(centro - d, centro + d, COLOR_CONTORNO, 18.0, true)
+		c.draw_line(centro - d, centro + d, Color("#FF6B6B"), 10.0, true)
 
 
 func _dibujar_cometa(c: Control) -> void:
@@ -547,30 +643,15 @@ func _dibujar_cometa(c: Control) -> void:
 	c.draw_texture_rect(_textura_cometa, Rect2(Vector2((c.size.x - ancho) / 2.0, 8.0 + bote), Vector2(ancho, alto)), false)
 
 
-func _dibujar_volver(c: Control) -> void:
-	# casa si vuelve a la seleccion, flecha si vuelve dentro del album
-	var centro := c.size / 2.0
-	if vista == "portada":
-		var casa := PackedVector2Array([centro + Vector2(-30, -2), centro + Vector2(0, -32), centro + Vector2(30, -2),
-			centro + Vector2(22, -2), centro + Vector2(22, 28), centro + Vector2(-22, 28), centro + Vector2(-22, -2)])
-		c.draw_colored_polygon(casa, Color("#FF9F4A"))
-		Figura.contornear(c, casa, 5.0)
-		c.draw_rect(Rect2(centro + Vector2(-8, 8), Vector2(16, 20)), COLOR_CONTORNO)
-	else:
-		_dibujar_flecha(c, -1.0)
-
-
-func _dibujar_cerrar(c: Control) -> void:
-	var centro := c.size / 2.0
-	for angulo in [PI / 4.0, -PI / 4.0]:
-		var d := Vector2.from_angle(angulo) * 28.0
-		c.draw_line(centro - d, centro + d, COLOR_CONTORNO, 18.0, true)
-		c.draw_line(centro - d, centro + d, Color("#FF6B6B"), 10.0, true)
-
-
 # ---------------------------------------------------------------------------
 # Sonido y animaciones
 # ---------------------------------------------------------------------------
+
+func _texto(c: Control, texto: String, base: Vector2, ancho: float, tam: int, color := COLOR_CONTORNO) -> void:
+	if _fuente == null:
+		return
+	c.draw_string(_fuente, base, texto, HORIZONTAL_ALIGNMENT_CENTER, ancho, tam, color)
+
 
 func _decir(ruta: String) -> void:
 	if ruta == "":
