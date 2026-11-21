@@ -68,7 +68,7 @@
   - decidir si se graba a los niños en la cuenta regresiva y la fiesta (opcional: los tres o ninguno);
   - grabaciones caseras: 21 del cierre (19 del Coleccionauta y 2 de papá) + 1 de papá del guion v4 (`derrota_1_coleccionauta`) y 33 de papá para la batalla;
   - decisiones menores abiertas: monumentos de 16-20 piezas, P8 (alcance de las zonas 4-5), proveedor de video de HE-30 (postergado junto con el presupuesto de video). ~~Si el viaje estelar se registra como tarjeta~~: **resuelta el 21-Nov** (sí, épica del viaje arcade v2, HE-134 a HE-142);
-  - **viaje arcade v2 (21-Nov)**: las 8 preguntas de la propuesta ya están decididas (§7.1); la interpretación de Dev (si un niño sale a medias, al volver retoma el último checkpoint de esa ruta) la confirma la ficha HE-134.
+  - **viaje arcade v2 (21-Nov)**: las 8 preguntas de la propuesta ya están decididas (§7.1); la interpretación de Dev (si un niño sale a medias, al volver retoma el último checkpoint de esa ruta) la confirma la ficha HE-134. **Para cerrar HE-134 (21-Nov, SM)**: (a) destellos de Maxi al salir o reiniciar; (b) lectura de "victoria asegurada"; (c) velocidad 950 px/s; (d) grito de Maxi; (e) número de rutas, 6 o 7. Son decisiones de diseño de Maxi/Nicole/Sofía y del PO, no se delegan por no ser inferibles de decisiones previas.
 
 Historial completo del estado: ver [archivo/TABLERO-historico.md](archivo/TABLERO-historico.md).
 
