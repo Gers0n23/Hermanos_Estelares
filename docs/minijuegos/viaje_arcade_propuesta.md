@@ -105,7 +105,7 @@ del viaje; ningún otro minijuego lo usa.
 
 | Cambio | Referencia | Detalle |
 |---|---|---|
-| Arrastre relativo 1:1, sin retraso; Maxi mantiene "la nave va al dedo", más rápida (tasa 14/s) y desplazada 120 px arriba del dedo | Sky Force, 1945 Air Force (móvil) | Nicole y Sofía: la nave copia el desplazamiento del dedo desde donde lo apoyaron; el dedo nunca la tapa. Teclado: velocidad directa 700 px/s. `Input.use_accumulated_input = false` para precisión |
+| Arrastre relativo 1:1, sin retraso; Maxi mantiene "la nave va al dedo", más rápida (tasa 14/s) [SUPERADO por `docs/fichas/viaje-arcade.md` §4.2: seguimiento de 950 px/s máx., sin suavizado] y desplazada 120 px arriba del dedo | Sky Force, 1945 Air Force (móvil) | Nicole y Sofía: la nave copia el desplazamiento del dedo desde donde lo apoyaron; el dedo nunca la tapa. Teclado: velocidad directa 700 px/s. `Input.use_accumulated_input = false` para precisión |
 | Disparo automático con el dedo apoyado (todos); Maxi siempre | shmups móviles | Cadencia 6-8 tiros/s, balas grandes con estela y fogonazo |
 | Formaciones que entran en curva y se lanzan en picada | **Galaga** | La fila completa da bonus de puntaje y 3 destellos (ya existe la idea) |
 | Rocas grandes que se parten en 2 y luego en 4 | **Asteroids** | Ya existe a medias; se agrega el segundo corte en Estrella |
@@ -271,7 +271,7 @@ intentos.
 
 - **Se pierde** al quedarse sin corazones. Gag de ~1,5 s: la nave se desarma en pedacitos de colores y
   Cometa queda mareado (la animación actual, en 3D). Música que se "desinfla", nada de rojo ni zumbidos.
-- **"¡Otra vez!"**: cartel con botón ≥ 160 px o tocar en cualquier parte; **sin cuenta regresiva**. Se
+- **"¡Otra vez!"** [SUPERADO por `docs/fichas/viaje-arcade.md` §7.2: reinicio automático, sin cartel ni botón]: cartel con botón ≥ 160 px o tocar en cualquier parte; **sin cuenta regresiva**. Se
   sigue desde el **inicio del sector actual** con vidas llenas, arma en nivel 1 y **puntaje a 0** (el
   récord vale por "crédito": un récord con continues no cuenta, como en el arcade).
 - **Lo ganado queda ganado** (§6.11): los destellos de los sectores cerrados se conservan; los del

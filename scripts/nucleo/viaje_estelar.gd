@@ -136,7 +136,7 @@ const SFX_JEFE := "res://assets/audio/sfx/viaje/jefe.ogg"
 const SFX_JEFE_EXPLOTA := "res://assets/audio/sfx/viaje/jefe_explota.ogg"
 const SFX_ESCUADRILLA := "res://assets/audio/sfx/viaje/escuadrilla.ogg"
 ## Chiptune original (herramientas/componer_chiptune.py): loop del viaje y fanfarria al aterrizar.
-const MUSICA_VIAJE := "res://assets/audio/musica/viaje_estelar.ogg"
+const MUSICA_VIAJE := "res://assets/audio/musica/viaje_minimax.ogg"
 const MUSICA_LLEGADA := "res://assets/audio/musica/llegada_planeta.ogg"
 
 ## Perfil de dificultad; vacío = el del hermano seleccionado en `Progreso`.

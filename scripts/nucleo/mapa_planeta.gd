@@ -47,6 +47,7 @@ const Figura := preload("res://scripts/ui/figura_vectorial.gd")
 const RUTA_MAPA_ESTELAR := "res://escenas/nucleo/mapa_estelar.tscn"
 const RUTA_SELECCION := "res://escenas/nucleo/seleccion_personaje.tscn"
 const PREFIJO_AUDIO := "res://assets/audio/"
+const PREFIJO_MUSICA_PLANETA := "res://assets/audio/musica/planetas/"
 const RUTA_FUENTE := "res://assets/fuentes/fuente_baloo_800.tres"
 const RUTA_COMETA := "res://assets/sprites/personajes/cometa_base.png"
 const SFX_TOQUE := "res://assets/audio/sfx/ui/toque.ogg"
@@ -170,6 +171,7 @@ func _ready() -> void:
 		return
 	mapa = datos
 	planeta_id = str(mapa.get("planeta_id", ""))
+	_sonar_musica_planeta()
 	calcular_estado()
 	_construir_ui()
 	var clave := _clave()
@@ -179,6 +181,15 @@ func _ready() -> void:
 	_mostrar_estaciones()
 	if not modo_equipo:
 		_entregar_recuerdos_zonas()
+
+
+## Pista de fondo propia del planeta (variante de la base de MiniMax, en loop). El nombre del
+## archivo sale del `planeta_id` del mapa, asi que un planeta nuevo solo necesita su .ogg.
+func _sonar_musica_planeta() -> void:
+	var audio := get_node_or_null("/root/Audio")
+	if audio == null or planeta_id == "":
+		return
+	audio.reproducir_musica("%s%s.ogg" % [PREFIJO_MUSICA_PLANETA, planeta_id])
 
 
 func _process(delta: float) -> void:

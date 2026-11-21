@@ -1,0 +1,11 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic still, intro Beats 2-3 reaction, siblings in everyday home clothes (no astronaut suits)
+Primary request: The three siblings in their living room, in everyday clothes, staring wide-eyed at the empty spot in the room where a golden sparkle has just vanished. Same faces, hair and proportions as the attached height lineup (canon characters); the attached photos are used ONLY as a reference for everyday outfit style, never for faces or hair.
+Input images: official poster (overall style); height lineup of the three children (identity and scale); living room environment reference; two outfit reference photos (clothing only).
+Subject: exactly three siblings standing in a row, in front of the sofa, mouths slightly open, eyes like plates. Maxi (2, smallest, in the middle-left) hugs a cushion, wearing a plain navy t-shirt and grey-blue printed shorts (no text). Nicole (5, center) holds a crayon in one hand, wearing a plain pink and white striped t-shirt and light blue jeans (no text). Sofia (8, tallest, right) has one hand raised as if about to give an order, wearing a plain dark charcoal sweatshirt and blue jeans (no text).
+Scene/backdrop: the same living room, sunset light through the window, a few small golden sparkles still floating in the air in one corner, nothing dark.
+Style/medium: high-polish digital painted cartoon, soft clean outlines, rounded friendly shapes, painterly, not photorealistic, not anime.
+Composition/framing: medium-wide 16:9 shot, camera at a small child's eye level, all three visible, the empty corner of the room clearly visible in the frame.
+Lighting/mood: warm and curious, surprise but NO fear, no menace, no darkness.
+Constraints: exactly three siblings, no astronaut suits, no helmets, no Cometa, no adults, NO TEXT anywhere, no logos.
+Avoid: scared or crying expressions, dark mood, suits or helmets, extra characters, readable text, watermark.
