@@ -358,6 +358,7 @@ func _marcar_video_visto() -> void:
 
 func _cambiar_etapa(etapa: String) -> void:
 	_etapa = etapa
+	print("DEPURA etapa ", etapa, " t=", Time.get_ticks_msec())
 	_t_etapa = 0.0
 	match etapa:
 		"entrada":
