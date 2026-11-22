@@ -17,6 +17,7 @@ const ANIMALIA := "res://escenas/planetas/animalia/mapa_animalia.tscn"
 const MAPA_ESTELAR := "res://escenas/nucleo/mapa_estelar.tscn"
 const AJUSTES := "res://escenas/nucleo/ajustes.tscn"
 const TITULO := "res://escenas/nucleo/titulo.tscn"
+const AJUSTES_AUDIO := "user://ajustes_audio.cfg"
 
 var _fallos := 0
 var _oks := 0
@@ -57,6 +58,18 @@ func _initialize() -> void:
 	_progreso.borrar_guardado_dios()
 	_check(not FileAccess.file_exists(DIOS), "borrar guardado de prueba elimina solo el del modo dios")
 	_check(FileAccess.file_exists(PRUEBAS) and _md5(REAL) == md5_real, "el guardado real sigue intacto")
+
+	# Reiniciar partidas sin modo dios: todo vuelve a cero y el guardado queda recién creado.
+	_progreso.agregar_destellos("nicole", "arcoiris", 12)
+	_progreso.seleccionar_perfil("nicole")
+	_progreso.reiniciar_partidas()
+	_check(_progreso.obtener_destellos_totales("nicole") == 0 and _progreso.perfil_seleccionado == "",
+		"Reiniciar: los destellos vuelven a cero y no queda hermano elegido")
+	_check(FileAccess.file_exists(PRUEBAS) and _progreso.obtener_ids_perfiles().size() == 3,
+		"Reiniciar: quedan los 3 perfiles por defecto")
+	_check(_md5(REAL) == md5_real and _progreso.ruta_respaldo_reinicio() != "user://progreso_respaldo.json",
+		"Reiniciar desde el arnés no toca el guardado real ni su respaldo")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(_progreso.ruta_respaldo_reinicio()))
 
 	if _respaldo_dios != null:
 		var f := FileAccess.open(DIOS, FileAccess.WRITE)
@@ -108,6 +121,43 @@ func _probar_ajustes() -> void:
 	for d in _progreso.PIN_MODO_DIOS:
 		ajustes.ingresar_digito(d)
 	_check(ajustes.panel_visible(), "Ajustes: PIN correcto muestra el panel del modo dios")
+
+	# Volumen (21-Nov-2026): la barra cambia el bus y queda guardado al salir, en su propio archivo.
+	var audio: Node = get_root().get_node("Audio")
+	var respaldo_cfg = FileAccess.get_file_as_string(AJUSTES_AUDIO) if FileAccess.file_exists(AJUSTES_AUDIO) else null
+	var musica_antes: float = audio.obtener_volumen("Musica")
+	ajustes.fijar_volumen("Musica", 0.4)
+	_check(is_equal_approx(audio.obtener_volumen("Musica"), 0.4), "Ajustes: la barra de música cambia el volumen")
+	ajustes.fijar_volumen("Voz", 0.0)
+	var bus_voz := AudioServer.get_bus_index("Voz")
+	_check(AudioServer.is_bus_mute(bus_voz), "Ajustes: voz en 0 silencia el bus")
+	ajustes.queue_free()
+	await process_frame
+	var cfg := ConfigFile.new()
+	_check(cfg.load(AJUSTES_AUDIO) == OK and is_equal_approx(float(cfg.get_value("volumen", "Musica", -1.0)), 0.4),
+		"Ajustes: el volumen queda guardado al salir")
+	audio.set_volumen("Musica", musica_antes)
+	audio.set_volumen("Voz", 1.0)
+	if respaldo_cfg != null:
+		var f := FileAccess.open(AJUSTES_AUDIO, FileAccess.WRITE)
+		f.store_string(respaldo_cfg)
+		f.close()
+	else:
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(AJUSTES_AUDIO))
+
+	# Reiniciar partidas con el modo dios activo: borra el de pruebas (aquí hace de "real"), no el del dios.
+	ajustes = load(AJUSTES).instantiate()
+	get_root().add_child(ajustes)
+	await process_frame
+	for d in _progreso.PIN_MODO_DIOS:
+		ajustes.ingresar_digito(d)
+	ajustes._al_reiniciar()
+	_check(FileAccess.file_exists(PRUEBAS), "Reiniciar: el primer toque solo pide confirmación")
+	ajustes._al_reiniciar()
+	_check(not FileAccess.file_exists(PRUEBAS) and FileAccess.file_exists(_progreso.ruta_respaldo_reinicio()),
+		"Reiniciar: el segundo toque borra el guardado y deja respaldo")
+	_check(_progreso.modo_dios and _progreso.obtener_destellos_totales("sofia") == 77,
+		"Reiniciar en modo dios no toca el guardado del dios")
 	ajustes.queue_free()
 	await process_frame
 

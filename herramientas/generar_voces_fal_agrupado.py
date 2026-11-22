@@ -113,6 +113,7 @@ def recortar(pedazo: np.ndarray, sr: int, realce: float) -> np.ndarray:
 
 
 def main() -> None:
+    global SILENCIO_DB, SILENCIO_MIN_S
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--lista", required=True)
     ap.add_argument("--limite", type=int, default=LIMITE_CARACTERES, help="caracteres por pedido")
@@ -122,7 +123,15 @@ def main() -> None:
     ap.add_argument("--estimar", action="store_true")
     ap.add_argument("--solo-cortar", action="store_true",
                     help="no llama a fal: vuelve a cortar los _pedido_NN_completo.wav ya guardados (costo 0)")
+    ap.add_argument("--solo-pedidos", help="con --solo-cortar: solo estos pedidos, p. ej. 4,5,6")
+    ap.add_argument("--silencio-db", type=float, help=f"umbral de pausa en dB bajo el pico (por defecto {SILENCIO_DB}); "
+                    "Coco tiene más ruido de fondo y necesita -32 (prueba del 21-Nov-2026)")
+    ap.add_argument("--silencio-min", type=float, help=f"pausa mínima en s (por defecto {SILENCIO_MIN_S})")
     args = ap.parse_args()
+    if args.silencio_db is not None:
+        SILENCIO_DB = args.silencio_db
+    if args.silencio_min is not None:
+        SILENCIO_MIN_S = args.silencio_min
 
     bloques = agrupar(leer_lista(RAIZ / args.lista, None), args.limite)
     elegidos = bloques[args.desde_pedido - 1:]
@@ -139,7 +148,10 @@ def main() -> None:
 
     key = None if args.solo_cortar else obtener_key("FAL_KEY")
     voces: dict[str, dict] = {}
+    solo = {int(x) for x in args.solo_pedidos.split(",")} if args.solo_pedidos else None
     for i, bloque in enumerate(elegidos, args.desde_pedido):
+        if solo is not None and i not in solo:
+            continue
         voz = voces.setdefault(bloque[0][2], cargar_voz(bloque[0][2]))
         textos = [t for _, t, _ in bloque]
         base = RAIZ / "assets" / "audio" / (args.carpeta_prueba or "voces/_crudos_fal")

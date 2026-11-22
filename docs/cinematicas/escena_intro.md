@@ -162,6 +162,8 @@ el fotograma final de la toma.
 | 08 | Video-llamada de papá | Beat 7 · intro_031-032 | [M] | Papá | `papa_referencia.png`, `coleccionauta_referencia.png` (solo para el tono del desorden de fondo) | `08_videollamada_papa.txt` |
 | 09 | Hermanos respondiendo la llamada | Beat 7 · intro_033-036 | [M] | Maxi, Nicole, Sofía (trajeados) | `hermanos_alturas.png`, `casa_living_referencia.png` | *(pendiente — mismo patrón de `01`/`03`/`05`, keyframe nuevo con los 3 ya en su traje estelar frente a la llamada; no escrito todavía, ver Gaps abiertos)* |
 | 10 | Partida hacia el Mapa Estelar | Beat 8 · intro_037-038 | [V] Seedance 2.0 (4 personajes) | Cometa, Maxi, Nicole, Sofía (trajeados) | `cometa_referencia.png`, `hermanos_alturas.png`, `casa_living_referencia.png` | `10_partida_mapa_estelar.txt` + `_video.txt` |
+| 11 | Mamá llega y la nave despega (epílogo, PO 21-Nov-2026) | tras Beat 8 · sin líneas aún | [M] | Mamá (+ niños y Cometa diminutos en la cúpula) | `mama_referencia.png`, `07_nave_revelada_final.png` | `11_mama_llega_nave_despega.txt` |
+| 12 | Mamá despide desde la ventana (epílogo, PO 21-Nov-2026) | tras plano 11 · sin líneas aún | [M] | Mamá | `mama_referencia.png`, `casa_living_referencia.png` | `12_mama_despide_ventana.txt` |
 
 Duración de referencia por plano: los planos [V] apuntan a un clip de ~5 s que luego se
 sostiene/loopea en Godot mientras dura el diálogo del beat, igual que ya se hace con `Tween` para

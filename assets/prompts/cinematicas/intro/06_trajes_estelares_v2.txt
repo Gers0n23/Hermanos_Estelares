@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 5 (the siblings now wear their space suits)
+Primary request: The magic moment right after the transformation: the three siblings are now wearing their canon astronaut suits with bubble helmets, standing in the same living room, delighted, while golden light ribbons and sparkles still swirl around them. Cometa floats beside them, arms raised, proud.
+Input images: image 1 = official poster (painted style and the exact suits); image 2 = height lineup of the three siblings in their suits (exact faces, heights, suit colors); image 3 = Cometa reference sheet; image 4 = the living room keyframe (same room, same sunset light).
+Subject, left to right at a small child's eye level:
+- Maxi (2, smallest) in his white-and-blue suit with a gold star, bubble helmet, mid-jump with both fists up, shouting with joy.
+- Nicole (5) in her white-and-pink suit with a gold star, bubble helmet, hands clasped under her chin, enchanted.
+- Sofia (8, tallest, curly hair, pink headphones under the helmet) in her pink-and-turquoise suit with a gold star, hand on hip, a confident pleased grin.
+- Cometa floating at the right, both stubby arms raised as if conducting the magic, big grin.
+Golden ribbons of light still spiral around each child, little stars popping, warm fireworks-of-light feeling.
+Style/medium: high-polish digital painted cartoon, joyful, soft clean outlines, rounded friendly shapes, rich painterly light, not photorealistic, not anime, not 3D render.
+Constraints: exactly three siblings and Cometa, correct heights and suit colors exactly as in image 2, no adults, no text.
+Avoid: home clothes, wrong suit colors, missing or duplicated children, scary imagery, readable text, logos, watermark.

@@ -17,6 +17,10 @@ Genera en assets/audio/sfx/ui/:
   chisporroteo.ogg   (lienzo §10.2) el sol se quema fuera del cielo: chispitas crepitantes, cortas y suaves.
   rebobinar.ogg      (lienzo §10.3) deshacer: "bwip" que sube rapido, como rebobinar una cinta.
   fuuush.ogg         (lienzo §10.4) la escoba barre la hoja: soplido que sube y baja.
+  estrella_vuela.ogg (intro, Beat 5) una estrella de poder cruza volando: brillo que sube + campanita.
+  transformacion.ogg (intro, Beat 5) el traje se arma sobre el niño: escalera de campanitas que sube
+                     con un brillo de aire, ~1,8 s (lo que dura el barrido de luz de pies a cabeza).
+  fanfarria_trajes.ogg (intro, Beat 5) "¡ta-chán!" de los tres con traje: acorde mayor brillante.
 
 Uso:  python herramientas/componer_sfx_ui.py            (solo escribe los que faltan)
       python herramientas/componer_sfx_ui.py --forzar   (reescribe todos)
@@ -179,6 +183,71 @@ def sfx_fuuush() -> np.ndarray:
     return pista / np.max(np.abs(pista)) * 0.38
 
 
+def _brillo(segundos: float, desde: float, hasta: float, semilla: int) -> np.ndarray:
+    """Aire agudo filtrado que sube de brillo (pasa-bajos que se abre de `desde` a `hasta`)."""
+    n = int(segundos * FS)
+    t = np.arange(n) / FS
+    ruido = np.random.default_rng(semilla).normal(0, 1, n)
+    corte = np.linspace(desde, hasta, n)
+    k = 1 - np.exp(-2 * np.pi * corte / FS)
+    filtrado = np.zeros(n)
+    for i in range(1, n):
+        filtrado[i] = filtrado[i - 1] + k[i] * (ruido[i] - filtrado[i - 1])
+    agudo = ruido - filtrado  # nos quedamos con lo agudo: "shhhiiing"
+    return agudo * np.sin(np.pi * t / t[-1]) ** 2
+
+
+def _mezclar(largo: float, piezas: list[tuple[np.ndarray, float, float]]) -> np.ndarray:
+    pista = np.zeros(int(largo * FS))
+    for sonido, inicio, vol in piezas:
+        i = int(inicio * FS)
+        fin = min(len(pista), i + len(sonido))
+        pista[i:fin] += vol * sonido[: fin - i]
+    return pista
+
+
+def sfx_estrella_vuela() -> np.ndarray:
+    piezas = [(_brillo(0.6, 9000, 2500, 11), 0.0, 0.25)]
+    piezas += [(campanita(m, 0.6), 0.08 * i + 0.1, 0.5) for i, m in enumerate([84, 88, 91])]
+    pista = _mezclar(0.9, piezas)
+    return pista / np.max(np.abs(pista)) * 0.42
+
+
+def sfx_transformacion() -> np.ndarray:
+    escala = [72, 74, 76, 79, 81, 84, 86, 88, 91, 93, 96, 98]  # pentatónica que sube
+    piezas = [(_brillo(1.7, 8000, 1500, 7), 0.0, 0.35)]
+    piezas += [(campanita(m, 0.9), 0.12 * i, 0.55) for i, m in enumerate(escala)]
+    piezas += [(campanita(m, 1.4), 1.45, 0.5) for m in (84, 88, 91)]  # ¡listo!: acorde final
+    pista = _mezclar(2.6, piezas)
+    eco = int(0.09 * FS)
+    pista[eco:] += 0.25 * pista[:-eco].copy()
+    cola = int(0.3 * FS)
+    pista[-cola:] *= np.linspace(1, 0, cola)
+    return pista / np.max(np.abs(pista)) * 0.5
+
+
+def _metal(midi: float, segundos: float) -> np.ndarray:
+    """Tono de fanfarria suave (armónicos impares que se abren), sin estridencia."""
+    n = int(segundos * FS)
+    t = np.arange(n) / FS
+    f = frecuencia(midi)
+    apertura = np.minimum(1.0, t / 0.08)
+    tono = sum((apertura ** (h / 3)) * np.sin(2 * np.pi * f * h * t) / h for h in (1, 2, 3, 4, 5))
+    env = np.minimum(1.0, t / 0.02) * np.exp(-t / 0.9)
+    return tono * env
+
+
+def sfx_fanfarria_trajes() -> np.ndarray:
+    piezas = [(_metal(m, 0.25), 0.13 * i, 0.5) for i, m in enumerate([67, 72, 76])]  # sol-do-mi
+    piezas += [(_metal(m, 1.8), 0.42, 0.45) for m in (72, 76, 79, 84)]               # ¡do mayor!
+    piezas += [(campanita(m, 1.3), 0.42 + 0.06 * i, 0.4) for i, m in enumerate([88, 91, 96])]
+    piezas += [(_brillo(1.2, 9000, 3000, 5), 0.4, 0.2)]
+    pista = _mezclar(2.5, piezas)
+    cola = int(0.4 * FS)
+    pista[-cola:] *= np.linspace(1, 0, cola)
+    return pista / np.max(np.abs(pista)) * 0.5
+
+
 EFECTOS = {
     "zona_dormida.ogg": sfx_zona_dormida,
     "puf.ogg": sfx_puf,
@@ -189,6 +258,9 @@ EFECTOS = {
     "chisporroteo.ogg": sfx_chisporroteo,
     "rebobinar.ogg": sfx_rebobinar,
     "fuuush.ogg": sfx_fuuush,
+    "estrella_vuela.ogg": sfx_estrella_vuela,
+    "transformacion.ogg": sfx_transformacion,
+    "fanfarria_trajes.ogg": sfx_fanfarria_trajes,
 }
 
 

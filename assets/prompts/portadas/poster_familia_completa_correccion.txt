@@ -1,0 +1,13 @@
+Use case: illustration-story (correction of image 1)
+Asset type: vertical game key art poster, 3:4 portrait
+Primary request: Redraw image 1 keeping the same scene, the same Mom and Dad (their faces, clothes and loving embrace), the same floating grassy planet, the violet starry sky and the same layout with the parents behind and the three children in front. FIX ONE THING: the three children are far too small and look like tiny elves or dolls next to the adults. Make them real-size children with their true heights relative to their parents (Mom is 1.60 m, Dad a bit taller):
+- Sofia, 8 years old, about 1.30 m: the top of her helmet reaches Mom's shoulder.
+- Nicole, 5 years old, about 1.10 m: the top of her helmet reaches Mom's chest.
+- Maxi, 2 years old, about 0.90 m: the top of his helmet reaches the adults' waist.
+The children stand close in front of their parents, overlapping their legs, so the five read as one tight, hugging family. The children keep the same look as in the official poster (image 2): Sofia all-pink suit, curly black voluminous hair, pink headphones on the helmet; Nicole white suit with pink jacket and boots, long wavy dark-brown hair in a high ponytail, light-blue star; Maxi white suit with blue details and gold star; all three with transparent bubble helmets, big happy smiles. Child body proportions like real kids drawn in the poster style, not doll-like, not chibi figurines.
+Also: replace the ship in the background with the family's real ship from image 3 (round patched turquoise pod with a glass dome, golden patches, small thrusters), glowing softly.
+Input images: image 1 = previous poster to correct (composition, parents); image 2 = official game poster (children's look and painted style); image 3 = the family backyard scene, use ONLY the ship design from it (ignore the house and yard); image 4 = sibling height lineup (height order among the kids).
+Style/medium: high-polish digital painted cartoon, warm family adventure illustration, soft outlines, painterly gradients, rounded shapes, not photorealistic, not anime.
+Composition/framing: vertical poster, the family as one tight group in the middle and lower area, upper quarter clean with stars and nebula glow for a title.
+Constraints: exactly five people (Mom, Dad, Sofia, Nicole, Maxi), no text.
+Avoid: tiny children, doll-like children, elves, extra people, duplicate faces, aliens, sad expressions, readable text, logos, watermark.

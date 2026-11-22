@@ -1,0 +1,11 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro epilogue (Mom says goodbye from the living-room window)
+Primary request: Inside the cozy, now empty living room, Mom stands at the window waving goodbye to a tiny golden star-trail crossing the twilight sky. She smiles with pride and tenderness, one hand on her heart: "Go get Dad, my brave ones."
+Input images: image 1 = official game poster (painted style only); image 2 = Mom reference sheet (exact face, long straight dark-brown hair with caramel ends, knitted blue-grey and navy sweater, navy jeans, platform sneakers); image 3 = the family's living room (same sofa with turquoise and cream cushions, light wooden coffee table, floating shelf with plants, round beige rug, warm wooden floor).
+Subject: Mom seen in 3/4 from behind-side at the window, one hand waving, the other on her chest, a soft proud smile visible in profile, the tote bag dropped on the sofa. Clues the kids just left: a toy rocket, a pink headband and a little toy dinosaur on the rug, three cushions turned into a pretend spaceship. Outside the window, a deep violet-to-peach twilight sky with the first stars and a small golden comet-like streak (the ship) far away with a sparkle trail.
+Composition: medium-wide 16:9 interior, Mom on the left third, window on the center-right framing the sky, the toys in the lower foreground.
+Style/medium: high-polish digital painted cartoon, soft clean outlines, rounded friendly shapes, painterly warm light, not photorealistic, not anime.
+Lighting/mood: warm lamp light inside mixed with violet twilight from the window, golden rim light on Mom's hair; tender, hopeful, cozy, proud.
+Constraints: only Mom in frame, no children, no text.
+Avoid: crying, tears, sadness, loneliness, darkness, messy or scary room, readable text, logos, watermark.
+Mom proportions: Mom is a slim, stylized ADULT woman of 38, 1.60 m tall, with adult head-to-body proportions exactly as in her reference sheet (never chibi, never a big head, never a childlike face); the cartoon big-head proportions apply only to the children.

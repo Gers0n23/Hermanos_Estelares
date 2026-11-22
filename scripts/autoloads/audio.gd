@@ -18,6 +18,7 @@ const BUS_SFX := "SFX"
 const BUS_VOZ := "Voz"
 
 const TAMANO_POOL_SFX := 6
+const RUTA_AJUSTES_AUDIO := "user://ajustes_audio.cfg"
 
 ## Volumen lineal (0.0-1.0) recordado por bus, para poder consultarlo desde la UI de
 ## zona de padres (HE-12) sin tener que revertir de dB.
@@ -45,6 +46,7 @@ func _ready() -> void:
 	_reproductor_voz.finished.connect(_al_terminar_voz)
 	for i in TAMANO_POOL_SFX:
 		_pool_sfx.append(_crear_reproductor(BUS_SFX))
+	_cargar_volumenes()
 
 
 func _crear_reproductor(bus: String) -> AudioStreamPlayer:
@@ -202,8 +204,8 @@ func esta_hablando() -> bool:
 	return _reproductor_voz.playing or not _cola_voces.is_empty()
 
 
-## Volumen lineal 0.0-1.0 por bus (GDD §6 regla 10). `zona_padres` (HE-12) llamara esto
-## y `Progreso` persistira el valor por perfil.
+## Volumen lineal 0.0-1.0 por bus (GDD §6 regla 10). Lo ajusta la zona de papas (`ajustes.gd`);
+## para que quede guardado hay que llamar `guardar_volumenes()`.
 func set_volumen(bus: String, volumen_lineal: float) -> void:
 	volumen_lineal = clampf(volumen_lineal, 0.0, 1.0)
 	_volumenes[bus] = volumen_lineal
@@ -212,7 +214,26 @@ func set_volumen(bus: String, volumen_lineal: float) -> void:
 		push_warning("Audio.set_volumen: bus desconocido %s" % bus)
 		return
 	AudioServer.set_bus_volume_db(indice, linear_to_db(volumen_lineal) if volumen_lineal > 0.0 else -80.0)
+	AudioServer.set_bus_mute(indice, volumen_lineal <= 0.0)
 
 
 func obtener_volumen(bus: String) -> float:
 	return _volumenes.get(bus, 1.0)
+
+
+## Los volumenes son de la familia (de la tablet), no de un perfil ni de una partida: viven en su propio
+## archivo para que "Reiniciar partidas" y el modo dios no los toquen (decision por delegacion, 21-Nov-2026).
+func _cargar_volumenes() -> void:
+	var config := ConfigFile.new()
+	if config.load(RUTA_AJUSTES_AUDIO) != OK:
+		return
+	for bus in _volumenes.keys():
+		set_volumen(bus, float(config.get_value("volumen", bus, 1.0)))
+
+
+func guardar_volumenes() -> void:
+	var config := ConfigFile.new()
+	for bus in _volumenes.keys():
+		config.set_value("volumen", bus, _volumenes[bus])
+	if config.save(RUTA_AJUSTES_AUDIO) != OK:
+		push_warning("Audio.guardar_volumenes: no se pudo escribir %s" % RUTA_AJUSTES_AUDIO)

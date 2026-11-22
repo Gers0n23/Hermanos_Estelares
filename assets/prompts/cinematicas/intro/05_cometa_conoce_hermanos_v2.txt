@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beats 3-4 (Cometa meets the siblings, conversation)
+Primary request: Cometa, the small round turquoise alien, has just climbed out of his crashed little ship and is now happily talking with the three siblings in their living room, reassuring them. Warm, intimate huddle meant to hold on screen through several lines of dialogue.
+Input images: image 1 = official poster (overall painted style only); image 2 = Cometa reference sheet (exact design: turquoise teardrop body, tiny star antenna, little heart-shaped album on a strap); image 3 = the three siblings in their HOME CLOTHES lineup (exact faces, hair and clothes); image 4 = the living room keyframe with the siblings (same room, same light, same clothes).
+Subject: Cometa in the foreground slightly left of center, floating a little above the rug, one stubby arm on his heart album strap, the other gesturing gently, big warm reassuring smile. Behind him on the rug his small round turquoise ship lies tipped over on its side among sofa cushions, hatch open, a few golden sparkles. The three siblings close around him, at a small child's eye level:
+- Sofia (8, tallest, long curly dark hair, pink headphones, pink-and-white striped t-shirt, blue jeans) kneeling forward, attentive, leader posture.
+- Nicole (5, high ponytail, dark grey sweatshirt, blue jeans) hands clasped near her chest, tender curious smile.
+- Maxi (2, smallest, short dark hair, navy blue t-shirt, shorts with leaf print) sitting closest to Cometa, delighted, pointing at him.
+Style/medium: high-polish digital painted cartoon, cozy warmth, soft clean outlines, rounded friendly shapes, painterly gradients, not photorealistic, not anime, not 3D render.
+Lighting/mood: warm golden sunset light from the big window, safe and cozy, storytelling feeling.
+Constraints: exactly Cometa and the three siblings, NO astronaut suits yet, keep each child's clothes exactly as in image 3, no adults, no text.
+Avoid: astronaut suits, swapped clothes between Sofia and Nicole, extra characters, duplicated children, scared or sad expressions, readable text, watermark.

@@ -271,10 +271,10 @@ func _sonar(clave: String, tono := 1.0, db := 0.0) -> void:
 		audio.reproducir_sfx(SFX[clave], tono, db)
 
 
-func _musica(ruta: String) -> void:
+func _musica(ruta: String, bucle := true) -> void:
 	var audio := get_node_or_null("/root/Audio")
 	if audio != null:
-		audio.reproducir_musica(ruta)
+		audio.reproducir_musica(ruta, bucle)
 
 
 ## Voz con cola de una línea (N-A1): si hay acción en pantalla, espera a la próxima pantalla vacía.
@@ -358,7 +358,6 @@ func _marcar_video_visto() -> void:
 
 func _cambiar_etapa(etapa: String) -> void:
 	_etapa = etapa
-	print("DEPURA etapa ", etapa, " t=", Time.get_ticks_msec())
 	_t_etapa = 0.0
 	match etapa:
 		"entrada":
@@ -368,7 +367,11 @@ func _cambiar_etapa(etapa: String) -> void:
 			_musica(MUSICA_VIAJE)
 			_intro()
 		"resultados":
-			_musica(MUSICA_RESULTADOS)
+			_musica(MUSICA_RESULTADOS, false)     # fanfarria de 3,2 s: una vez, nunca en bucle
+		"salida", "video_llegada", "video_presentacion":
+			var audio := get_node_or_null("/root/Audio")
+			if audio != null:
+				audio.detener_musica()            # los videos traen su propio sonido
 
 
 # --- intro y fin ---------------------------------------------------------------------

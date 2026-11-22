@@ -17,6 +17,10 @@ const RUTA_SFX_TOQUE := "res://assets/audio/sfx/ui/confirmar.ogg"
 const RUTA_VOZ_INVITACION := "res://assets/audio/voces/nucleo/titulo_bienvenida_01.ogg"
 const SEGUNDOS_ENTRE_RECORDATORIOS := 12.0
 const RUTA_SIGUIENTE := "res://escenas/nucleo/seleccion_personaje.tscn"
+## La primera vez de la familia, "toca para empezar" abre la intro (la historia: papa, el Coleccionauta y
+## Cometa); la intro termina en la seleccion. Despues va directo a la seleccion.
+const RUTA_INTRO := "res://escenas/nucleo/intro.tscn"
+const ID_INTRO_VISTA := "nucleo:intro"
 ## Ajustes / zona de papas (pide PIN; ahi vive el modo dios).
 const RUTA_AJUSTES := "res://escenas/nucleo/ajustes.tscn"
 
@@ -123,7 +127,8 @@ func _al_tocar_pantalla(posicion: Vector2) -> void:
 	Audio.reproducir_sfx(RUTA_SFX_TOQUE)
 	_lanzar_chispas(posicion)
 	toque_para_empezar.emit()
-	get_tree().change_scene_to_file(RUTA_SIGUIENTE)
+	var destino := RUTA_SIGUIENTE if Progreso.cinematica_vista(ID_INTRO_VISTA) else RUTA_INTRO
+	get_tree().change_scene_to_file(destino)
 
 
 ## Rafaga de chispas doradas en el punto tocado (mismo lenguaje visual de "destellos").

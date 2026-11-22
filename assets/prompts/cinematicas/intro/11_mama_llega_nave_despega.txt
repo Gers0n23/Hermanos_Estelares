@@ -1,0 +1,12 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro epilogue (Mom gets home just as the star-ship leaves)
+Primary request: Mom arrives home from work at sunset, walking through the backyard gate, and looks up in astonishment: the children's star-ship is lifting off from the backyard into the purple sky. She is surprised but delighted, never scared.
+Input images: image 1 = official game poster (painted style only); image 2 = Mom reference sheet (exact face, long straight dark-brown hair with caramel ends, knitted blue-grey and navy sweater, navy jeans, platform sneakers, tan tote bag); image 3 = the family's backyard with the ship (same house wall, window with curtains, wooden table, plant pots, fence and sunset palette; the ship design must match exactly).
+Subject: Mom in the lower-left foreground seen in 3/4 from behind-side, one hand still holding her keys, the tote bag sliding off her shoulder, the other hand raised to her open mouth in a happy gasp, eyebrows up, eyes sparkling. Up in the sky on the right, the star-ship (same design as image 3) rising with a soft golden flame trail and sparkles; through its round glass dome, three tiny child silhouettes waving and a tiny round turquoise alien.
+Composition: wide 16:9 shot from a low angle near Mom, house wall and lit window on the right, open sunset sky taking most of the upper frame, clear diagonal from Mom's gaze to the ship.
+Style/medium: high-polish digital painted cartoon, soft clean outlines, rounded friendly shapes, warm golden-pink rim light, atmospheric gradients, not photorealistic, not anime.
+Lighting/mood: magical warm sunset, wonder and tenderness, a funny "I just missed them!" moment.
+Color palette: violet and lilac sky, golden ship glow and stars, warm skin and honey hair highlights, turquoise accents.
+Constraints: Mom is the only full-size person; the children are only tiny silhouettes inside the ship; no text.
+Avoid: fear, crying, worried face, darkness, fire danger, smoke clouds, readable text, logos, watermark.
+Mom proportions: Mom is a slim, stylized ADULT woman of 38, 1.60 m tall, with adult head-to-body proportions exactly as in her reference sheet (never chibi, never a big head, never a childlike face); the cartoon big-head proportions apply only to the children.

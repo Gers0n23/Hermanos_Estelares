@@ -16,11 +16,11 @@
     "menu:volver_mapa": {"escena": "mapa_planeta.gd (flecha de volver al Mapa Estelar; una vez por sesion)", "lineas": ["voces/nucleo/volver_mapa.wav"]},
     "menu:despedida": {"escena": "pendiente: el juego no tiene boton de salir", "lineas": ["voces/nucleo/despedida.wav"]},
 
-    "intro:prologo": {"escena": "pendiente: cinematica de la intro (no existe en el juego)", "lineas": ["voces/historia/narracion/narr_prologo_01.wav", "voces/historia/narracion/narr_prologo_02.wav", "voces/historia/narracion/narr_prologo_03.wav", "voces/historia/narracion/narr_prologo_04.wav", "voces/historia/narracion/narr_prologo_05.wav"]},
-    "intro:antes_coleccionauta": {"escena": "pendiente: intro", "lineas": ["voces/historia/narracion/narr_intro_antes_coleccionauta.wav"]},
-    "intro:despues_destello": {"escena": "pendiente: intro", "lineas": ["voces/historia/narracion/narr_intro_despues_destello.wav", "voces/historia/narracion/narr_intro_yo.wav"]},
-    "intro:llamada_abre": {"escena": "pendiente: intro (videollamada)", "lineas": ["voces/historia/narracion/narr_intro_llamada_abre.wav"]},
-    "intro:llamada_cierra": {"escena": "pendiente: intro (videollamada)", "lineas": ["voces/historia/narracion/narr_intro_llamada_cierra.wav"]},
+    "intro:prologo": {"escena": "escenas/nucleo/intro.tscn (la secuencia vive en datos/historia/intro.json)", "lineas": ["voces/historia/narracion/narr_prologo_01.wav", "voces/historia/narracion/narr_prologo_02.wav", "voces/historia/narracion/narr_prologo_03.wav", "voces/historia/narracion/narr_prologo_04.wav", "voces/historia/narracion/narr_prologo_05.wav"]},
+    "intro:antes_coleccionauta": {"escena": "escenas/nucleo/intro.tscn (la secuencia vive en datos/historia/intro.json)", "lineas": ["voces/historia/narracion/narr_intro_antes_coleccionauta.wav"]},
+    "intro:despues_destello": {"escena": "escenas/nucleo/intro.tscn (la secuencia vive en datos/historia/intro.json)", "lineas": ["voces/historia/narracion/narr_intro_despues_destello.wav", "voces/historia/narracion/narr_intro_yo.wav"]},
+    "intro:llamada_abre": {"escena": "escenas/nucleo/intro.tscn (la secuencia vive en datos/historia/intro.json)", "lineas": ["voces/historia/narracion/narr_intro_llamada_abre.wav"]},
+    "intro:llamada_cierra": {"escena": "escenas/nucleo/intro.tscn (la secuencia vive en datos/historia/intro.json)", "lineas": ["voces/historia/narracion/narr_intro_llamada_cierra.wav"]},
 
     "viaje:tierra_arcoiris:despegue": {"escena": "viaje_arcade.gd (antes del juego, la primera vez de cada hermano en la ruta)", "lineas": ["voces/historia/narracion/narr_viaje_tierra_01.wav", "voces/historia/narracion/narr_viaje_tierra_02.wav", "voces/historia/narracion/narr_viaje_tierra_03.wav"]},
     "viaje:tierra_arcoiris:presentacion": {"escena": "viaje_arcade.gd (sobre el video de presentacion; hoy la ruta Tierra -> Arcoiris no tiene video de llegada, asi que la presentacion no se ve: HE-140)", "lineas": ["voces/historia/narracion/narr_arcoiris_presenta_01.wav", "voces/historia/narracion/narr_arcoiris_presenta_02.wav"]},

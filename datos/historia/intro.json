@@ -1,0 +1,177 @@
+{
+  "_doc": "Intro de la aventura (docs/guiones/escena_intro.md + narracion-cometa.md §1.1-1.4). La reproduce scripts/historia/cinematica.gd. Cada plano es una imagen (con camara: [x, y, zoom], x/y de 0 a 1 sobre la imagen, zoom 1 = pantalla cubierta) o un video. 'voz' es el id de la linea: narr_* se busca en voces/historia/narracion/, el resto en voces/historia/intro/ (.ogg o .wav). Si la voz no existe, el texto se muestra como subtitulo provisional y se espera lo que tardaria en decirse.",
+  "id_vista": "nucleo:intro",
+  "siguiente": "res://escenas/nucleo/seleccion_personaje.tscn",
+  "musica": "",
+  "planos": [
+    {
+      "id": "01_tarde",
+      "imagen": "res://assets/cinematicas/intro/01_tarde_cualquiera.png",
+      "entrada": "fundido",
+      "camara": [0.5, 0.5, 1.0],
+      "pasos": [
+        {"voz": "narr_prologo_01", "quien": "Cometa", "texto": "Esta historia empieza en una casa como cualquier otra, una tarde llena de sol... y de juegos.", "foco": [0.5, 0.5, 1.12]},
+        {"voz": "narr_prologo_02", "quien": "Cometa", "texto": "Ahí viven tres hermanos. Sofía, la mayor, que siempre tiene un plan.", "foco": [0.72, 0.42, 1.8]},
+        {"voz": "intro_001", "quien": "Sofía", "texto": "Atención, tripulación... ¡el cojín gigante es un asteroide! Nadie lo toca.", "foco": [0.7, 0.4, 1.9]},
+        {"voz": "narr_prologo_03", "quien": "Cometa", "texto": "Nicole, que hace amigos en todas partes y dibuja todo lo que imagina.", "foco": [0.52, 0.6, 1.9]},
+        {"voz": "intro_003", "quien": "Nicole", "texto": "Miren, le hice una coleta rosada a mi dibujo del caballito.", "foco": [0.52, 0.62, 2.0]},
+        {"voz": "narr_prologo_04", "quien": "Cometa", "texto": "Y Maxi, el más chiquito... ¡y el más valiente! A él nada lo asusta.", "foco": [0.33, 0.64, 1.9]},
+        {"voz": "intro_002", "quien": "Maxi", "texto": "¡Vrrrum! ¡Dino-auto!", "foco": [0.36, 0.68, 2.0], "efecto": "saltito"},
+        {"voz": "narr_prologo_05", "quien": "Cometa", "texto": "Cuando estos tres juegan juntos, el living se convierte en... ¡cualquier cosa!", "foco": [0.5, 0.5, 1.0]},
+        {"voz": "narr_intro_antes_coleccionauta", "quien": "Cometa", "texto": "Lo que nadie sabía es que alguien muy despistado andaba buscando cosas increíbles para su colección...", "foco": [0.2, 0.45, 1.35]}
+      ]
+    },
+    {
+      "id": "01b_coleccionauta_llega",
+      "video": "res://assets/video/intro/01b_coleccionauta_llega.ogv",
+      "entrada": "fundido",
+      "pasos": []
+    },
+    {
+      "id": "02_coleccionauta",
+      "imagen": "res://assets/cinematicas/intro/02_coleccionauta_secuestro.png",
+      "entrada": "destello",
+      "camara": [0.5, 0.5, 1.0],
+      "pasos": [
+        {"sfx": "res://assets/audio/sfx/ui/chisporroteo.ogg"},
+        {"sfx": "res://assets/audio/sfx/ui/fiuu.ogg", "foco": [0.27, 0.45, 1.5], "pausa": 0.8},
+        {"voz": "intro_005", "quien": "El Coleccionauta", "texto": "¡Ohhh, pero miren nada más... un papá sonriente, con chaqueta de piloto y todo! ¡Increíble! Justo lo que me faltaba en la colección.", "foco": [0.3, 0.45, 1.45]},
+        {"voz": "intro_006", "quien": "Papá", "texto": "¿Eh? Un momentito, ni siquiera alcancé a avisar que iba a...", "foco": [0.72, 0.42, 1.55]}
+      ]
+    },
+    {
+      "id": "02_destello",
+      "video": "res://assets/video/intro/02_coleccionauta_secuestro.ogv",
+      "entrada": "corte",
+      "pasos": [
+        {"pausa": 2.6},
+        {"sfx": "res://assets/audio/sfx/ui/puf.ogg"}
+      ]
+    },
+    {
+      "id": "03_reaccion",
+      "imagen": "res://assets/cinematicas/intro/03_hermanos_reaccion.png",
+      "entrada": "corte",
+      "camara": [0.5, 0.5, 1.05],
+      "pasos": [
+        {"voz": "intro_008", "quien": "Sofía", "texto": "¡¿Qué?! ¿Adónde se fue papá?", "foco": [0.67, 0.42, 1.7]},
+        {"voz": "intro_009", "quien": "Nicole", "texto": "¿Se lo comió la lucecita brillante?", "foco": [0.46, 0.45, 1.8]},
+        {"voz": "intro_010", "quien": "Maxi", "texto": "¡Uuuh, luuuces!", "foco": [0.27, 0.52, 1.8], "efecto": "saltito"},
+        {"voz": "narr_intro_despues_destello", "quien": "Cometa", "texto": "¡Puf! Así, en un parpadeo, papá se fue de paseo con el Coleccionauta. ¿Y saben quién llegó un segundito tarde?", "foco": [0.5, 0.5, 1.0]}
+      ]
+    },
+    {
+      "id": "03b_cometa_tarde",
+      "video": "res://assets/video/intro/03b_cometa_tarde.ogv",
+      "entrada": "corte",
+      "pasos": [
+        {"pausa": 1.4},
+        {"voz": "narr_intro_yo", "quien": "Cometa", "texto": "...Yo. Jiji."}
+      ]
+    },
+    {
+      "id": "04_choque",
+      "imagen": "res://assets/cinematicas/intro/04_cometa_choque.png",
+      "entrada": "corte",
+      "camara": [0.7, 0.35, 1.5],
+      "pasos": [
+        {"sfx": "res://assets/audio/sfx/ui/fuuush.ogg", "foco": [0.38, 0.4, 1.25], "duracion_foco": 0.7},
+        {"sfx": "res://assets/audio/sfx/ui/polvo_boing.ogg", "efecto": "temblor", "pausa": 0.7},
+        {"voz": "intro_012", "quien": "Cometa", "texto": "¡Uuuy, tumbo! Jijiji... a ese aterrizaje le doy un 6 de 10.", "foco": [0.38, 0.32, 1.7]},
+        {"voz": "intro_013", "quien": "Cometa", "texto": "Buuu, lo perdí por segunditos... ¡otra vez! Ese Coleccionauta corre rapidísimo cuando quiere.", "foco": [0.4, 0.36, 1.5]}
+      ]
+    },
+    {
+      "id": "05_cometa_conoce",
+      "imagen": "res://assets/cinematicas/intro/05_cometa_conoce_hermanos.png",
+      "entrada": "fundido",
+      "camara": [0.5, 0.5, 1.0],
+      "pasos": [
+        {"voz": "intro_014", "quien": "Maxi", "texto": "¡Nave!", "foco": [0.6, 0.62, 1.7], "efecto": "saltito"},
+        {"voz": "intro_015", "quien": "Nicole", "texto": "¡Hola! ¿Estás bien, amiguito?", "foco": [0.76, 0.58, 1.7]},
+        {"voz": "intro_016", "quien": "Sofía", "texto": "Un momento... ¿tú hablas? ¿Y por qué eres tan redondito? Y... ¿tú viste al que se llevó a mi papá?", "foco": [0.53, 0.35, 1.7]},
+        {"voz": "intro_017", "quien": "Cometa", "texto": "¡Redondito y orgulloso! Hola, Hermanos Estelares. Bueno... todavía no lo son, eso viene ahora. Y sí, lo vi: ese despistado es mi amigo, el Coleccionauta.", "foco": [0.37, 0.3, 1.6]},
+        {"voz": "intro_018", "quien": "Cometa", "texto": "Lo conozco desde que éramos chicos —armamos naves juntos, en el mismo planeta—. Y anda coleccionando las cosas más increíbles del universo.", "foco": [0.42, 0.4, 1.2]},
+        {"voz": "intro_018b", "quien": "Cometa", "texto": "Y le pareció increíble el papá de ustedes, ¡por criar a tres niños tan buenos! Así que se lo llevó a su colección.", "foco": [0.5, 0.5, 1.0]},
+        {"voz": "intro_019", "quien": "Nicole", "texto": "¿Y está bien? ¿No tiene frío?", "foco": [0.76, 0.58, 1.7]},
+        {"voz": "intro_020", "quien": "Cometa", "texto": "¡Clarísimo que sí! El Coleccionauta es despistado y solitario, pero jamás malo. Seguro ya le ofreció una de sus galletas raras.", "foco": [0.37, 0.3, 1.6]},
+        {"voz": "intro_021", "quien": "Sofía", "texto": "Entonces... hay que ir a buscarlo.", "foco": [0.53, 0.35, 1.8]},
+        {"voz": "intro_022", "quien": "Cometa", "texto": "¡Esa actitud! Por eso vine a buscarlos a ustedes tres.", "foco": [0.5, 0.45, 1.05]}
+      ]
+    },
+    {
+      "id": "06_trajes",
+      "imagen": "res://assets/cinematicas/intro/05_cometa_conoce_hermanos.png",
+      "entrada": "corte",
+      "camara": [0.37, 0.3, 1.6],
+      "pasos": [
+        {"voz": "intro_023", "quien": "Cometa", "texto": "Para este viaje van a necesitar esto: sus trajes de Hermanos Estelares, con estrella de poder incluida.", "foco": [0.4, 0.4, 1.3]},
+        {"sfx": "res://assets/audio/sfx/ui/estrella_vuela.ogg", "foco": [0.37, 0.3, 1.9], "duracion_foco": 0.6, "efecto": "saltito", "pausa": 0.5}
+      ]
+    },
+    {
+      "id": "06b_transformacion",
+      "nota": "Pedido del PO 21-Nov-2026: mas enfasis en los trajes. Transformacion uno por uno (Maxi, Nicole, Sofia) con barrido de luz de ropa de casa a traje; dice intro_024 a intro_026. Ver scripts/nucleo/intro_trajes.gd",
+      "escena": "res://escenas/nucleo/intro_trajes.tscn",
+      "entrada": "destello",
+      "pasos": []
+    },
+    {
+      "id": "06c_trajes_living",
+      "nota": "Pedido del PO 21-Nov-2026: se mantiene la imagen de los tres con traje en el living, justo despues de la transformacion.",
+      "imagen": "res://assets/cinematicas/intro/06_trajes_estelares.png",
+      "entrada": "destello",
+      "camara": [0.5, 0.42, 1.25],
+      "pasos": [
+        {"sfx": "res://assets/audio/sfx/ui/estrella_vuela.ogg", "foco": [0.5, 0.5, 1.0], "duracion_foco": 4.2, "pausa": 4.5}
+      ]
+    },
+    {
+      "id": "07_nave_baja",
+      "video": "res://assets/video/llegada/llegada_nave_v2.ogv",
+      "entrada": "fundido",
+      "pasos": []
+    },
+    {
+      "id": "08_patio",
+      "imagen": "res://assets/cinematicas/intro/09_patio_nave_trajes.png",
+      "entrada": "fundido",
+      "camara": [0.5, 0.5, 1.0],
+      "pasos": [
+        {"voz": "intro_027", "quien": "Cometa", "texto": "Y esta es nuestra nave-estrella. Quedó un poco averiada de tanto perseguir al Coleccionauta por la galaxia... por ahora solo le alcanza la energía para un saltito, el justo para llegar al primer planeta. ¡Las piezas que le faltan las conseguimos jugando!", "foco": [0.62, 0.6, 1.25]},
+        {"voz": "intro_028", "quien": "Sofía", "texto": "¿Jugando? Me gusta cómo suena esa misión.", "foco": [0.27, 0.55, 1.8]},
+        {"voz": "intro_029", "quien": "Nicole", "texto": "¡Voy a hacer amigos en cada planeta!", "foco": [0.18, 0.58, 1.8]},
+        {"voz": "intro_030", "quien": "Maxi", "texto": "¡Vamos, vamos, vamos!", "foco": [0.08, 0.65, 1.8], "efecto": "saltito"},
+        {"voz": "narr_intro_llamada_abre", "quien": "Cometa", "texto": "¡Miren, la nave está sonando! Es una videollamada... ¿de quién será?", "foco": [0.62, 0.62, 1.4], "efecto": "temblor"}
+      ]
+    },
+    {
+      "id": "09_llamada",
+      "imagen": "res://assets/cinematicas/intro/08_videollamada_papa.png",
+      "marco": "llamada",
+      "entrada": "destello",
+      "camara": [0.5, 0.45, 1.0],
+      "pasos": [
+        {"voz": "intro_031", "quien": "Papá", "texto": "¡Hola, mis campeones! ¡Qué manera de salir de paseo sin avisar! Miren dónde estoy... el Coleccionauta tiene una silla tan cómoda que casi ni quiero que me rescaten. Es broma, ¡los espero con muchas ganas!", "foco": [0.5, 0.42, 1.15], "efecto": "hablar"},
+        {"voz": "intro_032", "quien": "Papá", "texto": "Eso sí, no se apuren por mí, yo estoy muy bien, de verdad. Ustedes disfruten el viaje, ¿ya?", "foco": [0.55, 0.4, 1.3], "efecto": "hablar"},
+        {"voz": "intro_033", "quien": "Maxi", "texto": "¡Papi!"},
+        {"voz": "intro_034", "quien": "Nicole", "texto": "¡Te extrañamos! ¡Ya vamos!"},
+        {"voz": "intro_035", "quien": "Sofía", "texto": "Aguanta ahí, papá. Vamos a hacerlo bien hecho."},
+        {"voz": "intro_036", "quien": "Papá", "texto": "Sé que sí. Los quiero un montón. ¡Nos vemos, Hermanos Estelares!", "foco": [0.5, 0.42, 1.2], "efecto": "hablar"}
+      ]
+    },
+    {
+      "id": "10_listos",
+      "imagen": "res://assets/cinematicas/intro/09_patio_nave_trajes.png",
+      "entrada": "destello",
+      "camara": [0.5, 0.5, 1.0],
+      "pasos": [
+        {"sfx": "res://assets/audio/sfx/ui/chisporroteo.ogg"},
+        {"voz": "narr_intro_llamada_cierra", "quien": "Cometa", "texto": "Papá estaba tranquilo, cómodo y contento. Y los Hermanos Estelares... ¡listos para su primera misión!", "foco": [0.35, 0.55, 1.2]},
+        {"voz": "intro_037", "quien": "Cometa", "texto": "¿Listos para volar, Hermanos Estelares?", "foco": [0.53, 0.4, 1.5]},
+        {"voz": "intro_038", "quien": "Todos", "texto": "¡¡Siiiií!!", "foco": [0.5, 0.5, 1.0], "efecto": "saltito"},
+        {"pausa": 0.8}
+      ]
+    }
+  ]
+}

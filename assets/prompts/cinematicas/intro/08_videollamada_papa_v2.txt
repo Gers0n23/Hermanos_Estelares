@@ -1,0 +1,10 @@
+Use case: illustration-story
+Asset type: 16:9 cinematic keyframe, intro Beat 7 (Dad's first video call, seen full screen)
+Primary request: Dad calls his children from inside El Coleccionauta's collection. He is comfortable, smiling and joking: the happiest "kidnapped" dad in the galaxy. This image will be shown inside a glowing round call frame drawn by the game, so paint it full-bleed with Dad centered and no frame of your own.
+Input images: image 1 = official poster (painted style only); image 2 = Dad reference sheet (exact face: glasses, short beard, curly dark hair; black leather jacket, white t-shirt, jeans); image 3 = El Coleccionauta reference sheet (only for the style and colors of his cluttered harmless collection).
+Subject: Dad sitting relaxed in a comically huge, squishy, mismatched purple armchair, waving at the camera with one hand and holding a big funny striped cookie in the other, warm open laugh. Behind him a cheerful jumble of collected oddities: a giant rubber duck, a traffic cone, a snow globe, a bunny slipper, a lamp shaped like a planet, shelves of trinkets, soft fairy lights. Cozy space-attic feeling, a round window with stars behind.
+Composition: medium shot, Dad centered from the waist up with generous headroom, clutter at the sides not covering his face.
+Style/medium: high-polish digital painted cartoon, warm and funny, soft clean outlines, rounded friendly shapes, painterly light, not photorealistic, not anime.
+Lighting/mood: warm amber and violet, cozy, reassuring, never a distress call.
+Constraints: only Dad in frame (El Coleccionauta not present), no frame or UI drawn, no text.
+Avoid: worried or sad expression, cage, bars, ropes, darkness, readable text, logos, watermark.

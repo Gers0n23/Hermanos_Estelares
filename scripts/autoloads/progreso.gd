@@ -38,6 +38,8 @@ const RUTA_GUARDADO_PRUEBAS := "user://progreso_pruebas.json"
 const RUTA_GUARDADO_DIOS := "user://progreso_dios.json"
 ## PIN de 4 digitos que pide Ajustes para entrar al modo dios. Cambiarlo aqui.
 const PIN_MODO_DIOS := "2468"
+## Copia del guardado real justo antes de "Reiniciar partidas" (se pisa en cada reinicio).
+const RUTA_RESPALDO_REINICIO := "user://progreso_respaldo.json"
 
 ## Version actual del formato de guardado. Subir este numero + agregar una funcion
 ## `_migrar_v<N>_a_v<N+1>(datos: Dictionary) -> Dictionary` es todo lo que hace falta
@@ -141,6 +143,31 @@ func borrar_guardado_dios() -> void:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(RUTA_GUARDADO_DIOS))
 	if modo_dios:
 		cargar()
+
+
+## Un arnes respalda el guardado de pruebas a un archivo propio: nunca pisa el respaldo del real.
+func ruta_respaldo_reinicio() -> String:
+	return RUTA_GUARDADO_PRUEBAS.replace(".json", "_respaldo.json") if _corre_desde_herramienta() \
+		else RUTA_RESPALDO_REINICIO
+
+
+## "Reiniciar partidas" de la zona de papas: deja el guardado REAL de los ninos como recien instalado
+## (los 3 perfiles, el album, el modo equipo, las batallas). Antes copia el archivo a
+## `RUTA_RESPALDO_REINICIO` por si fue un error (se puede recuperar a mano). Si el modo dios esta activo,
+## borra igual el guardado real y el modo dios sigue con el suyo. Los volumenes no se tocan (viven en Audio).
+func reiniciar_partidas() -> void:
+	var ruta_real := RUTA_GUARDADO_PRUEBAS if _corre_desde_herramienta() else RUTA_GUARDADO
+	if FileAccess.file_exists(ruta_real):
+		var origen := ProjectSettings.globalize_path(ruta_real)
+		var respaldo := ProjectSettings.globalize_path(ruta_respaldo_reinicio())
+		if DirAccess.copy_absolute(origen, respaldo) != OK:
+			push_warning("Progreso.reiniciar_partidas: no se pudo respaldar %s" % ruta_real)
+		DirAccess.remove_absolute(origen)
+	if modo_dios:
+		return
+	perfil_seleccionado = ""
+	equipo_activo.clear()
+	cargar()
 
 
 ## Etiqueta fija en una esquina mientras el modo dios esta activo, para que nunca se confunda con el

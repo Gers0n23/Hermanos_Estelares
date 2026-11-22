@@ -1,0 +1,13 @@
+Use case: illustration-story
+Asset type: vertical game key art poster, 3:4 portrait
+Primary request: A warm, magical family poster for the game "Los Hermanos Estelares": Mom with her two younger children, Maxi and Nicole, in space. Do not include any number, text, logo, title or watermark.
+Input images: image 1 = official game poster (style, space setting, how the sibling astronauts look); image 2 = Mom reference sheet (exact face, long straight dark-brown hair with caramel ends, star earrings; she wears her knitted blue-grey and navy sweater and jeans); image 3 = sibling height lineup (use ONLY Maxi, the smallest, and Nicole, the middle one; Sofia is NOT in this image).
+Scene/backdrop: floating on a soft glowing cloud of stardust in a violet nebula, pastel planets, golden stars, a friendly ringed planet behind them.
+Subject: exactly three characters. Mom kneeling in the center, hugging both kids with a big loving smile. On her left, Maxi (2 years old, the smallest, white space suit with blue details, gold star on his chest, transparent bubble helmet, short dark-brown hair, big brown eyes) sitting on her knee, laughing and pointing at a star. On her right, Nicole (5 years old, medium height, white suit with pink jacket and pink boots, light-blue star on her chest, heart belt, long wavy dark-brown hair in a high ponytail, bubble helmet) hugging Mom's neck and smiling at the viewer.
+Style/medium: high-polish digital painted cartoon, warm family adventure illustration, soft outlines, painterly gradients, rounded shapes, not photorealistic, not anime.
+Composition/framing: vertical poster, the three characters in the middle and lower area, close together as one group, upper quarter clean with stars and nebula glow for a title.
+Lighting/mood: tender, joyful, magical; golden rim light, soft pink and turquoise highlights.
+Color palette: deep indigo and violet space, golden stars, turquoise sparks, pink accents.
+Constraints: exactly Mom, Maxi and Nicole; canon height order (Maxi much smaller than Nicole); no text.
+Avoid: Sofia, extra children, duplicate faces, aliens, frightening expressions, readable text, logos, watermark.
+Mom proportions: Mom is a slim, stylized ADULT woman of 38, 1.60 m tall, with adult head-to-body proportions exactly as in her reference sheet (never chibi, never a big head, never a childlike face); the cartoon big-head proportions apply only to the children.

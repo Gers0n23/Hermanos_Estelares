@@ -8,8 +8,10 @@
           Tierra a la izquierda, y vuela hasta Arcoíris. Su último cuadro es el primero de presentacion_arcoiris.
 
 Resultado: poc/cinematica_blender/salida/viaje_tierra_a_arcoiris.mp4 (maestro) y
-assets/video/viaje/viaje_tierra_a_arcoiris.ogv (Theora q5; con audio si existe
-salida/audio_mmaudio/viaje_tierra_a_arcoiris_mmaudio.mp4). Después se corta con
+assets/video/viaje/viaje_tierra_a_arcoiris.ogv (Theora q5). Sonido: si existe
+salida/audio_mmaudio/viaje_tierra_a_arcoiris_mmaudio.mp4 se usa ese; si no, se presta el de
+viaje_arcoiris_a_animalia (decisión del PO, 21-Nov-2026: no pagar MMAudio para este clip), atrasado
+10 cuadros para que su corte en blanco (F_CORTE 150) caiga en el de este video (160) y terminen juntos. Después se corta con
 `python herramientas/cortar_videos_viaje.py tierra_arcoiris` para el viaje arcade.
 
 Sin costo: todo local (ffmpeg). Uso:  python herramientas/armar_viaje_tierra.py
@@ -27,7 +29,9 @@ ACTO2 = SALIDA / "partes" / "viaje_tierra_a_arcoiris_espacio.mp4"
 MAESTRO = SALIDA / "viaje_tierra_a_arcoiris.mp4"
 SONIDO = SALIDA / "audio_mmaudio" / "viaje_tierra_a_arcoiris_mmaudio.mp4"
 OGV = RAIZ / "assets" / "video" / "viaje" / "viaje_tierra_a_arcoiris.ogv"
+PRESTADO = SALIDA / "audio_mmaudio" / "viaje_arcoiris_a_animalia_mmaudio.mp4"
 F_CORTE = 160          # mismo valor que despegue_viaje.py con --planeta tierra
+F_CORTE_PRESTADO = 150
 
 
 def ffmpeg(*args: str) -> None:
@@ -49,9 +53,17 @@ def main() -> None:
     if SONIDO.exists():
         ffmpeg("-i", str(MAESTRO), "-i", str(SONIDO), "-map", "0:v:0", "-map", "1:a:0", "-c:v", "libtheora",
                "-q:v", "5", "-c:a", "libvorbis", "-q:a", "5", "-shortest", str(OGV))
+        audio = SONIDO.name
+    elif PRESTADO.exists():
+        atraso = round((F_CORTE - F_CORTE_PRESTADO) / 24 * 1000)
+        ffmpeg("-i", str(MAESTRO), "-i", str(PRESTADO), "-filter_complex",
+               f"[1:a]adelay={atraso}:all=1,apad,afade=t=in:d=0.4[a]", "-map", "0:v:0", "-map", "[a]",
+               "-c:v", "libtheora", "-q:v", "5", "-c:a", "libvorbis", "-q:a", "5", "-shortest", str(OGV))
+        audio = PRESTADO.name + " (prestado)"
     else:
         ffmpeg("-i", str(MAESTRO), "-map", "0:v:0", "-c:v", "libtheora", "-q:v", "5", "-an", str(OGV))
-    print("ogv", OGV.relative_to(RAIZ), "(audio: %s)" % ("sí" if SONIDO.exists() else "no"))
+        audio = "sin audio"
+    print("ogv", OGV.relative_to(RAIZ), "audio:", audio)
 
 
 if __name__ == "__main__":
